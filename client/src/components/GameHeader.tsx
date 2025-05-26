@@ -17,7 +17,7 @@ export function GameHeader({ gameState }: GameHeaderProps) {
         <div className="flex items-center space-x-3">
           {hauntConfig && (
             <img
-              src={`/haunt-assets/${gameState.currentHaunt}/logo.png`}
+              src={hauntConfig.logoPath}
               alt={`${hauntConfig.name} Logo`}
               className="w-12 h-12 rounded-full border-2 border-red-900"
             />
