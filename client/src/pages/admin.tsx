@@ -20,7 +20,6 @@ export default function Admin() {
     logoPath: "",
     triviaFile: "",
     adFile: "",
-    mode: "individual",
     tier: "basic",
     primaryColor: "#8B0000",
     secondaryColor: "#2D1B69",
@@ -53,7 +52,7 @@ export default function Admin() {
         logoPath: formData.logoPath || `/haunt-assets/${formData.id}/logo.png`,
         triviaFile: formData.triviaFile || `${formData.id}-trivia.json`,
         adFile: formData.adFile || `${formData.id}-ads.json`,
-        mode: formData.mode,
+        mode: "individual", // Default mode, will be managed in haunt dashboard
         tier: formData.tier,
         theme: {
           primaryColor: formData.primaryColor,
@@ -83,7 +82,6 @@ export default function Admin() {
         logoPath: "",
         triviaFile: "",
         adFile: "",
-        mode: "individual",
         tier: "basic",
         primaryColor: "#8B0000",
         secondaryColor: "#2D1B69",
@@ -187,19 +185,7 @@ export default function Admin() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="mode" className="text-white">Game Mode</Label>
-                  <Select value={formData.mode} onValueChange={(value) => handleInputChange('mode', value)}>
-                    <SelectTrigger className="bg-gray-800 border-gray-600 text-white">
-                      <SelectValue placeholder="Select game mode" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-gray-800 border-gray-600">
-                      <SelectItem value="individual" className="text-white hover:bg-gray-700">Individual</SelectItem>
-                      <SelectItem value="queue" className="text-white hover:bg-gray-700">Queue</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+              <div className="grid grid-cols-1 gap-4">
                 <div>
                   <Label htmlFor="tier" className="text-white">Subscription Tier</Label>
                   <Select value={formData.tier} onValueChange={(value) => handleInputChange('tier', value)}>
