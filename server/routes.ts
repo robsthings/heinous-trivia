@@ -60,6 +60,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // API route to save leaderboard entry
+  app.post("/api/leaderboard", async (req, res) => {
+    try {
+      const entry = req.body;
+      const savedEntry = await storage.saveLeaderboardEntry(entry);
+      res.json(savedEntry);
+    } catch (error) {
+      console.error("Failed to save leaderboard entry:", error);
+      res.status(500).json({ error: "Failed to save leaderboard entry" });
+    }
+  });
+
+  // API route to get leaderboard
+  app.get("/api/leaderboard/:hauntId?", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      const entries = await storage.getLeaderboard(hauntId);
+      res.json(entries);
+    } catch (error) {
+      console.error("Failed to get leaderboard:", error);
+      res.status(500).json({ error: "Failed to get leaderboard" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

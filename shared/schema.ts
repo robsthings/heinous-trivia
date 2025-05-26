@@ -8,13 +8,33 @@ export const users = pgTable("users", {
   password: text("password").notNull(),
 });
 
+export const leaderboardEntries = pgTable("leaderboard_entries", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  score: integer("score").notNull(),
+  date: timestamp("date").notNull().defaultNow(),
+  haunt: text("haunt").notNull(),
+  questionsAnswered: integer("questions_answered").notNull(),
+  correctAnswers: integer("correct_answers").notNull(),
+});
+
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
   password: true,
 });
 
+export const insertLeaderboardEntrySchema = createInsertSchema(leaderboardEntries).pick({
+  name: true,
+  score: true,
+  haunt: true,
+  questionsAnswered: true,
+  correctAnswers: true,
+});
+
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
+export type InsertLeaderboardEntry = z.infer<typeof insertLeaderboardEntrySchema>;
+export type LeaderboardEntryDb = typeof leaderboardEntries.$inferSelect;
 
 // Trivia game schemas
 export const triviaQuestionSchema = z.object({

@@ -116,25 +116,70 @@ export class GameManager {
     };
   }
 
-  static saveScore(playerName: string, state: GameState): void {
-    const leaderboard = this.getLeaderboard();
-    const entry: LeaderboardEntry = {
+  static async saveScore(playerName: string, state: GameState): Promise<void> {
+    const entry = {
       name: playerName,
       score: state.score,
-      date: new Date().toISOString(),
       haunt: state.currentHaunt,
       questionsAnswered: state.questionsAnswered,
       correctAnswers: state.correctAnswers,
     };
 
-    leaderboard.push(entry);
-    leaderboard.sort((a, b) => b.score - a.score);
-    const topTen = leaderboard.slice(0, 10);
+    try {
+      const response = await fetch('/api/leaderboard', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(entry),
+      });
 
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(topTen));
+      if (!response.ok) {
+        throw new Error('Failed to save score');
+      }
+    } catch (error) {
+      console.error('Failed to save score:', error);
+      // Fallback to localStorage if API fails
+      const localLeaderboard = this.getLocalLeaderboard();
+      const localEntry: LeaderboardEntry = {
+        ...entry,
+        date: new Date().toISOString(),
+      };
+      localLeaderboard.push(localEntry);
+      localLeaderboard.sort((a, b) => b.score - a.score);
+      const topTen = localLeaderboard.slice(0, 10);
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(topTen));
+    }
   }
 
-  static getLeaderboard(): LeaderboardEntry[] {
+  static async getLeaderboard(haunt?: string): Promise<LeaderboardEntry[]> {
+    try {
+      const url = haunt ? `/api/leaderboard/${haunt}` : '/api/leaderboard';
+      const response = await fetch(url);
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch leaderboard');
+      }
+      
+      const dbEntries = await response.json();
+      
+      // Transform database entries to match frontend format
+      return dbEntries.map((entry: any) => ({
+        name: entry.name,
+        score: entry.score,
+        date: entry.date,
+        haunt: entry.haunt,
+        questionsAnswered: entry.questionsAnswered,
+        correctAnswers: entry.correctAnswers,
+      }));
+    } catch (error) {
+      console.error('Failed to fetch leaderboard from database:', error);
+      // Fallback to localStorage
+      return this.getLocalLeaderboard();
+    }
+  }
+
+  private static getLocalLeaderboard(): LeaderboardEntry[] {
     const stored = localStorage.getItem(this.STORAGE_KEY);
     return stored ? JSON.parse(stored) : [];
   }

@@ -74,8 +74,8 @@ export default function Game() {
     window.open(link, '_blank');
   };
 
-  const handleSaveScore = (playerName: string) => {
-    GameManager.saveScore(playerName, gameState);
+  const handleSaveScore = async (playerName: string) => {
+    await GameManager.saveScore(playerName, gameState);
   };
 
   const handlePlayAgain = () => {
