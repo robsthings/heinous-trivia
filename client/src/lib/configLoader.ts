@@ -43,5 +43,8 @@ export class ConfigLoader {
 
 export function getHauntFromURL(): string {
   const urlParams = new URLSearchParams(window.location.search);
-  return urlParams.get('haunt') || 'widowshollow';
+  const hauntId = urlParams.get('haunt') || 'widowshollow';
+  console.log('🎃 Haunt ID from URL:', hauntId);
+  console.log('🔗 Current URL:', window.location.href);
+  return hauntId;
 }
