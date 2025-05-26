@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { firestore } from "@/lib/firebase";
@@ -19,6 +20,8 @@ export default function Admin() {
     logoPath: "",
     triviaFile: "",
     adFile: "",
+    mode: "individual",
+    tier: "basic",
     primaryColor: "#8B0000",
     secondaryColor: "#2D1B69",
     accentColor: "#FF6B35"
@@ -50,6 +53,8 @@ export default function Admin() {
         logoPath: formData.logoPath || `/haunt-assets/${formData.id}/logo.png`,
         triviaFile: formData.triviaFile || `${formData.id}-trivia.json`,
         adFile: formData.adFile || `${formData.id}-ads.json`,
+        mode: formData.mode,
+        tier: formData.tier,
         theme: {
           primaryColor: formData.primaryColor,
           secondaryColor: formData.secondaryColor,
@@ -78,6 +83,8 @@ export default function Admin() {
         logoPath: "",
         triviaFile: "",
         adFile: "",
+        mode: "individual",
+        tier: "basic",
         primaryColor: "#8B0000",
         secondaryColor: "#2D1B69",
         accentColor: "#FF6B35"
@@ -177,6 +184,34 @@ export default function Admin() {
                     placeholder={`${formData.id || 'hauntid'}-ads.json`}
                     className="bg-gray-800 border-gray-600 text-white"
                   />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="mode" className="text-white">Game Mode</Label>
+                  <Select value={formData.mode} onValueChange={(value) => handleInputChange('mode', value)}>
+                    <SelectTrigger className="bg-gray-800 border-gray-600 text-white">
+                      <SelectValue placeholder="Select game mode" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-gray-800 border-gray-600">
+                      <SelectItem value="individual" className="text-white hover:bg-gray-700">Individual</SelectItem>
+                      <SelectItem value="queue" className="text-white hover:bg-gray-700">Queue</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <Label htmlFor="tier" className="text-white">Subscription Tier</Label>
+                  <Select value={formData.tier} onValueChange={(value) => handleInputChange('tier', value)}>
+                    <SelectTrigger className="bg-gray-800 border-gray-600 text-white">
+                      <SelectValue placeholder="Select subscription tier" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-gray-800 border-gray-600">
+                      <SelectItem value="basic" className="text-white hover:bg-gray-700">Basic</SelectItem>
+                      <SelectItem value="pro" className="text-white hover:bg-gray-700">Pro</SelectItem>
+                      <SelectItem value="premium" className="text-white hover:bg-gray-700">Premium</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
 

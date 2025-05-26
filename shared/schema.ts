@@ -55,6 +55,8 @@ export const hauntConfigSchema = z.object({
   logoPath: z.string(),
   triviaFile: z.string(),
   adFile: z.string(),
+  mode: z.enum(["individual", "queue"]),
+  tier: z.enum(["basic", "pro", "premium"]),
   theme: z.object({
     primaryColor: z.string(),
     secondaryColor: z.string(),
