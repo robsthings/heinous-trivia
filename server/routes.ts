@@ -9,10 +9,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Serve static files from client/public directory
   app.use("/", express.static(path.resolve(process.cwd(), "client", "public")));
 
-  // API route to get haunt configuration
+  // API route to get haunt configuration (tries Firebase first, falls back to JSON files)
   app.get("/api/haunt/:hauntId", async (req, res) => {
     try {
       const { hauntId } = req.params;
+      
+      // Try Firebase first
+      try {
+        const firebaseConfig = await storage.getHauntConfig(hauntId);
+        if (firebaseConfig) {
+          return res.json(firebaseConfig);
+        }
+      } catch (firebaseError) {
+        console.log("Firebase unavailable, falling back to JSON files");
+      }
+      
+      // Fallback to JSON files
       const configPath = path.resolve(process.cwd(), "client", "public", "haunt-config", `${hauntId}.json`);
       
       if (!fs.existsSync(configPath)) {
@@ -72,15 +84,58 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // API route to get leaderboard
+  // API route to get leaderboard (hybrid: Firebase + PostgreSQL)
   app.get("/api/leaderboard/:hauntId?", async (req, res) => {
     try {
       const { hauntId } = req.params;
-      const entries = await storage.getLeaderboard(hauntId);
-      res.json(entries);
+      
+      // Get entries from both sources
+      const dbEntries = await storage.getLeaderboard(hauntId);
+      
+      let firebaseEntries = [];
+      try {
+        if (hauntId) {
+          const { FirebaseService } = await import("./firebase");
+          firebaseEntries = await FirebaseService.getLeaderboard(hauntId);
+        }
+      } catch (firebaseError) {
+        console.log("Firebase unavailable for leaderboard");
+      }
+      
+      // Combine and sort entries
+      const allEntries = [...dbEntries, ...firebaseEntries]
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 10);
+      
+      res.json(allEntries);
     } catch (error) {
       console.error("Failed to get leaderboard:", error);
       res.status(500).json({ error: "Failed to get leaderboard" });
+    }
+  });
+
+  // API route to save haunt configuration to Firebase
+  app.post("/api/haunt/:hauntId", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      const config = req.body;
+      const savedConfig = await storage.saveHauntConfig(hauntId, config);
+      res.json(savedConfig);
+    } catch (error) {
+      console.error("Failed to save haunt configuration:", error);
+      res.status(500).json({ error: "Failed to save haunt configuration" });
+    }
+  });
+
+  // API route to get all haunts
+  app.get("/api/haunts", async (req, res) => {
+    try {
+      const { FirebaseService } = await import("./firebase");
+      const haunts = await FirebaseService.getAllHaunts();
+      res.json(haunts);
+    } catch (error) {
+      console.error("Failed to get haunts:", error);
+      res.status(500).json({ error: "Failed to get haunts" });
     }
   });
 

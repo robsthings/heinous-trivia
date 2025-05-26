@@ -1,6 +1,7 @@
-import { users, leaderboardEntries, type User, type InsertUser, type InsertLeaderboardEntry, type LeaderboardEntryDb } from "@shared/schema";
+import { users, leaderboardEntries, type User, type InsertUser, type InsertLeaderboardEntry, type LeaderboardEntryDb, type HauntConfig } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc } from "drizzle-orm";
+import { FirebaseService } from "./firebase";
 
 // modify the interface with any CRUD methods
 // you might need
@@ -11,6 +12,8 @@ export interface IStorage {
   createUser(user: InsertUser): Promise<User>;
   saveLeaderboardEntry(entry: InsertLeaderboardEntry): Promise<LeaderboardEntryDb>;
   getLeaderboard(haunt?: string): Promise<LeaderboardEntryDb[]>;
+  saveHauntConfig(hauntId: string, config: HauntConfig): Promise<HauntConfig>;
+  getHauntConfig(hauntId: string): Promise<HauntConfig | null>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -53,6 +56,14 @@ export class DatabaseStorage implements IStorage {
       .from(leaderboardEntries)
       .orderBy(desc(leaderboardEntries.score))
       .limit(10);
+  }
+
+  async saveHauntConfig(hauntId: string, config: HauntConfig): Promise<HauntConfig> {
+    return await FirebaseService.saveHauntConfig(hauntId, config);
+  }
+
+  async getHauntConfig(hauntId: string): Promise<HauntConfig | null> {
+    return await FirebaseService.getHauntConfig(hauntId);
   }
 }
 

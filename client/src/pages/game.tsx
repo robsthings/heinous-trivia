@@ -6,6 +6,7 @@ import { GameEndScreen } from "@/components/GameEndScreen";
 import { Leaderboard } from "@/components/Leaderboard";
 import { ConfigLoader, getHauntFromURL } from "@/lib/configLoader";
 import { GameManager, type GameState } from "@/lib/gameState";
+import type { LeaderboardEntry } from "@shared/schema";
 
 export default function Game() {
   const [gameState, setGameState] = useState<GameState>(() => 
