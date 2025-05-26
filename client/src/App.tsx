@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Game from "@/pages/game";
 import Admin from "@/pages/admin";
+import HauntAdmin from "@/pages/haunt-admin";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -12,6 +13,7 @@ function Router() {
     <Switch>
       <Route path="/" component={Game} />
       <Route path="/admin" component={Admin} />
+      <Route path="/haunt-admin/:hauntId" component={HauntAdmin} />
       <Route component={NotFound} />
     </Switch>
   );
