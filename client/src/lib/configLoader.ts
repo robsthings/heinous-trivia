@@ -9,14 +9,18 @@ export class ConfigLoader {
       
       // Try Firebase first
       const docRef = doc(firestore, 'haunts', haunt);
+      console.log('🔍 Looking for document at path:', `haunts/${haunt}`);
+      
       const docSnap = await getDoc(docRef);
+      console.log('📄 Document exists:', docSnap.exists());
+      console.log('📄 Document data:', docSnap.data());
       
       if (docSnap.exists()) {
         const config = docSnap.data() as HauntConfig;
         console.log('✅ Firebase config loaded:', config);
         return config;
       } else {
-        console.log('⚠️ No Firebase config found, falling back to API');
+        console.log('⚠️ No Firebase config found at /haunts/' + haunt + ', falling back to API');
       }
       
       // Fallback to API
