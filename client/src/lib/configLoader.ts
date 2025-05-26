@@ -1,15 +1,45 @@
 import type { HauntConfig, TriviaQuestion, AdData } from "@shared/schema";
+import { firestore } from "./firebase";
+import { doc, getDoc } from "firebase/firestore";
 
 export class ConfigLoader {
   static async loadHauntConfig(haunt: string): Promise<HauntConfig | null> {
     try {
+      console.log('🔥 Attempting to load haunt config from Firebase:', haunt);
+      
+      // Try Firebase first
+      const docRef = doc(firestore, 'haunts', haunt);
+      const docSnap = await getDoc(docRef);
+      
+      if (docSnap.exists()) {
+        const config = docSnap.data() as HauntConfig;
+        console.log('✅ Firebase config loaded:', config);
+        return config;
+      } else {
+        console.log('⚠️ No Firebase config found, falling back to API');
+      }
+      
+      // Fallback to API
       const response = await fetch(`/api/haunt/${haunt}`);
       if (!response.ok) {
         throw new Error(`Failed to load haunt config: ${response.statusText}`);
       }
-      return await response.json();
+      const config = await response.json();
+      console.log('📁 API config loaded:', config);
+      return config;
     } catch (error) {
-      console.error('Failed to load haunt config:', error);
+      console.error('❌ Failed to load haunt config:', error);
+      
+      // Final fallback to API
+      try {
+        const response = await fetch(`/api/haunt/${haunt}`);
+        if (response.ok) {
+          return await response.json();
+        }
+      } catch (fallbackError) {
+        console.error('❌ API fallback also failed:', fallbackError);
+      }
+      
       return null;
     }
   }
