@@ -37,7 +37,10 @@ export default function Admin() {
     logoPath: "",
     triviaFile: "",
     adFile: "",
-    tier: "basic"
+    tier: "basic",
+    primaryColor: "#8B0000",
+    secondaryColor: "#2D1B69",
+    accentColor: "#FF6B35"
   });
 
   // Trivia Pack state
