@@ -48,6 +48,7 @@ export default function HauntAdmin() {
   
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [adFiles, setAdFiles] = useState<Array<{ file: File | null; link: string; id: string; title: string; description: string }>>([]);
+  const [adMetrics, setAdMetrics] = useState<Array<{ views: number; clicks: number }>>([]);
   
   // Custom trivia state
   const [customQuestions, setCustomQuestions] = useState<CustomTriviaQuestion[]>([]);
@@ -306,20 +307,50 @@ export default function HauntAdmin() {
       const adsRef = collection(firestore, 'haunt-ads', hauntId, 'ads');
       const querySnapshot = await getDocs(adsRef);
       
-      const ads: Array<{ id: string; imageUrl: string; link?: string }> = [];
+      const ads: Array<{ id: string; imageUrl: string; link?: string; title?: string; description?: string }> = [];
       querySnapshot.forEach((doc) => {
         const data = doc.data();
         ads.push({ 
           id: doc.id, 
           imageUrl: data.imageUrl,
-          link: data.link 
+          link: data.link,
+          title: data.title,
+          description: data.description
         });
       });
       
       setUploadedAds(ads);
       console.log('✅ Uploaded ads loaded:', ads);
+      
+      // Load metrics for each ad
+      await loadAdMetrics(ads.length);
     } catch (error) {
       console.error('❌ Failed to load uploaded ads:', error);
+    }
+  }
+
+  const loadAdMetrics = async (adCount: number) => {
+    try {
+      const metrics = [];
+      for (let i = 0; i < adCount; i++) {
+        const metricsRef = doc(firestore, 'ad-metrics', hauntId, 'ads', `ad${i}`);
+        const metricsSnap = await getDoc(metricsRef);
+        
+        if (metricsSnap.exists()) {
+          const data = metricsSnap.data();
+          metrics.push({
+            views: data.views || 0,
+            clicks: data.clicks || 0
+          });
+        } else {
+          metrics.push({ views: 0, clicks: 0 });
+        }
+      }
+      setAdMetrics(metrics);
+      console.log('📊 Ad metrics loaded:', metrics);
+    } catch (error) {
+      console.error('❌ Error loading ad metrics:', error);
+      setAdMetrics(new Array(adCount).fill({ views: 0, clicks: 0 }));
     }
   };
 
@@ -903,6 +934,103 @@ export default function HauntAdmin() {
                         </div>
                       </div>
                     ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* Ad Performance Analytics */}
+            {uploadedAds.length > 0 && adMetrics.length > 0 && (
+              <Card className="bg-gray-900/50 border-gray-700 mt-8">
+                <CardHeader>
+                  <CardTitle className="text-red-400">📊 Ad Performance Analytics</CardTitle>
+                  <p className="text-gray-300 text-sm">
+                    Track how your ads are performing with real player interactions.
+                  </p>
+                </CardHeader>
+                <CardContent>
+                  <div className="overflow-x-auto">
+                    <table className="w-full border-collapse">
+                      <thead>
+                        <tr className="border-b border-gray-600">
+                          <th className="text-left text-white font-semibold p-3">Ad Image</th>
+                          <th className="text-left text-white font-semibold p-3">Title</th>
+                          <th className="text-center text-white font-semibold p-3">Views</th>
+                          <th className="text-center text-white font-semibold p-3">Clicks</th>
+                          <th className="text-center text-white font-semibold p-3">CTR (%)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {uploadedAds.map((ad, index) => {
+                          const metrics = adMetrics[index] || { views: 0, clicks: 0 };
+                          const ctr = metrics.views > 0 ? ((metrics.clicks / metrics.views) * 100).toFixed(1) : '0.0';
+                          
+                          return (
+                            <tr key={ad.id} className="border-b border-gray-700 hover:bg-gray-800/50">
+                              <td className="p-3">
+                                <img
+                                  src={ad.imageUrl}
+                                  alt={`Ad ${index + 1}`}
+                                  className="w-16 h-16 object-cover rounded border border-gray-600"
+                                />
+                              </td>
+                              <td className="p-3">
+                                <p className="text-white font-medium">
+                                  {ad.title || `Ad #${index + 1}`}
+                                </p>
+                                <p className="text-gray-400 text-sm mt-1 line-clamp-2">
+                                  {ad.description || 'No description'}
+                                </p>
+                              </td>
+                              <td className="p-3 text-center">
+                                <span className="text-blue-400 font-bold text-lg">
+                                  {metrics.views.toLocaleString()}
+                                </span>
+                              </td>
+                              <td className="p-3 text-center">
+                                <span className="text-green-400 font-bold text-lg">
+                                  {metrics.clicks.toLocaleString()}
+                                </span>
+                              </td>
+                              <td className="p-3 text-center">
+                                <span className={`font-bold text-lg ${
+                                  parseFloat(ctr) >= 5 ? 'text-green-400' :
+                                  parseFloat(ctr) >= 2 ? 'text-yellow-400' : 'text-red-400'
+                                }`}>
+                                  {ctr}%
+                                </span>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                  
+                  {/* Analytics Summary */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 pt-6 border-t border-gray-700">
+                    <div className="text-center">
+                      <p className="text-gray-400 text-sm">Total Views</p>
+                      <p className="text-blue-400 font-bold text-2xl">
+                        {adMetrics.reduce((sum, metric) => sum + metric.views, 0).toLocaleString()}
+                      </p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-gray-400 text-sm">Total Clicks</p>
+                      <p className="text-green-400 font-bold text-2xl">
+                        {adMetrics.reduce((sum, metric) => sum + metric.clicks, 0).toLocaleString()}
+                      </p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-gray-400 text-sm">Average CTR</p>
+                      <p className="text-orange-400 font-bold text-2xl">
+                        {(() => {
+                          const totalViews = adMetrics.reduce((sum, metric) => sum + metric.views, 0);
+                          const totalClicks = adMetrics.reduce((sum, metric) => sum + metric.clicks, 0);
+                          return totalViews > 0 ? ((totalClicks / totalViews) * 100).toFixed(1) : '0.0';
+                        })()}%
+                      </p>
+                    </div>
                   </div>
                 </CardContent>
               </Card>

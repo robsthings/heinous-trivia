@@ -1,4 +1,52 @@
+import React from "react";
 import type { GameState } from "@/lib/gameState";
+import { firestore } from "@/lib/firebase";
+import { doc, updateDoc, increment, setDoc, getDoc } from "firebase/firestore";
+
+// Ad tracking functions
+async function trackAdView(hauntId: string, adIndex: number) {
+  try {
+    const metricsRef = doc(firestore, 'ad-metrics', hauntId, 'ads', `ad${adIndex}`);
+    
+    // Check if document exists
+    const docSnap = await getDoc(metricsRef);
+    if (docSnap.exists()) {
+      await updateDoc(metricsRef, {
+        views: increment(1)
+      });
+    } else {
+      await setDoc(metricsRef, {
+        views: 1,
+        clicks: 0
+      });
+    }
+    console.log(`📊 Tracked view for ad ${adIndex} in ${hauntId}`);
+  } catch (error) {
+    console.error('❌ Failed to track ad view:', error);
+  }
+}
+
+async function trackAdClick(hauntId: string, adIndex: number) {
+  try {
+    const metricsRef = doc(firestore, 'ad-metrics', hauntId, 'ads', `ad${adIndex}`);
+    
+    // Check if document exists
+    const docSnap = await getDoc(metricsRef);
+    if (docSnap.exists()) {
+      await updateDoc(metricsRef, {
+        clicks: increment(1)
+      });
+    } else {
+      await setDoc(metricsRef, {
+        views: 0,
+        clicks: 1
+      });
+    }
+    console.log(`🎯 Tracked click for ad ${adIndex} in ${hauntId}`);
+  } catch (error) {
+    console.error('❌ Failed to track ad click:', error);
+  }
+}
 
 interface InterstitialAdProps {
   gameState: GameState;
@@ -13,12 +61,18 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
   }
 
   const currentAd = gameState.ads[gameState.currentAdIndex % gameState.ads.length];
+  const adIndex = gameState.currentAdIndex % gameState.ads.length;
+  
+  // Track ad view when component mounts
+  React.useEffect(() => {
+    trackAdView(gameState.currentHaunt, adIndex);
+  }, [gameState.currentHaunt, adIndex]);
   
   // Log ad details as requested
   console.log('🎯 Displaying interstitial ad:', {
     adIndex: gameState.currentAdIndex,
     totalAds: gameState.ads.length,
-    currentAdIndex: gameState.currentAdIndex % gameState.ads.length,
+    currentAdIndex: adIndex,
     imagePath: currentAd.image,
     title: currentAd.title,
     hasLink: !!currentAd.link,
@@ -27,6 +81,7 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
 
   const handleVisitAd = () => {
     if (currentAd.link) {
+      trackAdClick(gameState.currentHaunt, adIndex);
       onVisitAd(currentAd.link);
     }
   };
