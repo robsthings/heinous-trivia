@@ -11,7 +11,39 @@ interface LeaderboardProps {
   currentPlayer?: string;
 }
 
-export function Leaderboard({ isVisible, leaderboard, onClose }: LeaderboardProps) {
+export function Leaderboard({ isVisible, leaderboard, onClose, hauntId, currentPlayer }: LeaderboardProps) {
+  const [hiddenPlayers, setHiddenPlayers] = useState<Record<string, boolean>>({});
+
+  // Listen for hidden player changes from the host panel
+  useEffect(() => {
+    if (!hauntId) return;
+
+    const roundRef = doc(firestore, 'activeRound', hauntId);
+    const unsubscribe = onSnapshot(roundRef, (doc) => {
+      if (doc.exists()) {
+        const data = doc.data();
+        setHiddenPlayers(data.hiddenPlayers || {});
+      }
+    });
+
+    return () => unsubscribe();
+  }, [hauntId]);
+
+  const getDisplayName = (playerName: string) => {
+    // Always show the current player their own name
+    if (playerName === currentPlayer) {
+      return playerName;
+    }
+    
+    // Hide other players' names if they're marked as hidden
+    if (hiddenPlayers[playerName]) {
+      const playerId = Math.abs(playerName.split('').reduce((a, b) => a + b.charCodeAt(0), 0)) % 9999;
+      return `Player ${String(playerId).padStart(4, '0')}`;
+    }
+    
+    return playerName;
+  };
+
   if (!isVisible) {
     return null;
   }
@@ -54,7 +86,7 @@ export function Leaderboard({ isVisible, leaderboard, onClose }: LeaderboardProp
                     <span>{index + 1}</span>
                   </div>
                   <div className="text-left">
-                    <span className="font-medium text-white block">{entry.name}</span>
+                    <span className="font-medium text-white block">{getDisplayName(entry.name)}</span>
                     <span className="text-xs text-gray-400">
                       {entry.correctAnswers}/{entry.questionsAnswered} correct
                     </span>

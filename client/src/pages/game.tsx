@@ -182,6 +182,8 @@ export default function Game() {
         isVisible={gameState.showLeaderboard}
         leaderboard={leaderboard}
         onClose={handleCloseLeaderboard}
+        hauntId={gameState.currentHaunt}
+        currentPlayer={playerId}
       />
     </div>
   );
