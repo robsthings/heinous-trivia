@@ -93,7 +93,6 @@ export class ConfigLoader {
           }
         }
       } catch (error) {
-        console.error('Firebase error loading trivia packs:', error);
         // Continue without pack questions
       }
       
@@ -102,13 +101,11 @@ export class ConfigLoader {
       
       // If no questions found, try to load from starter pack
       if (allQuestions.length === 0) {
-        console.log('No questions found, trying starter pack fallback...');
         try {
           const starterPackRef = doc(firestore, 'trivia-packs', 'starter-pack');
           const starterPackDoc = await getDoc(starterPackRef);
           
           if (starterPackDoc.exists()) {
-            console.log('Starter pack found!');
             const starterData = starterPackDoc.data();
             if (starterData && starterData.questions && Array.isArray(starterData.questions) && starterData.questions.length > 0) {
               allQuestions = starterData.questions.map((q: any) => ({
@@ -121,18 +118,11 @@ export class ConfigLoader {
                 explanation: `The correct answer is ${q.correct || q.answer || 'Unknown'}`,
                 points: 10
               }));
-              console.log(`✅ Loaded ${allQuestions.length} questions from starter pack`);
-            } else {
-              console.log('Starter pack has no questions array');
             }
-          } else {
-            console.log('Starter pack document does not exist');
           }
         } catch (error) {
-          console.log('❌ Starter pack error:', error);
+          // Starter pack fallback failed
         }
-      } else {
-        console.log(`Found ${allQuestions.length} questions from other sources`);
       }
       
       // Shuffle using Fisher-Yates algorithm
