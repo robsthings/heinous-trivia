@@ -73,10 +73,16 @@ export class ConfigLoader {
         
         querySnapshot.forEach((doc) => {
           const data = doc.data();
+          // Transform Firebase custom question format to TriviaQuestion format
           customQuestions.push({
-            question: data.question,
-            choices: data.choices,
-            correct: data.correct
+            id: doc.id,
+            text: data.question,
+            category: "Custom",
+            difficulty: 1,
+            answers: data.choices,
+            correctAnswer: data.choices.indexOf(data.correct),
+            explanation: `The correct answer is ${data.correct}`,
+            points: 10
           } as TriviaQuestion);
         });
         console.log('✅ Custom questions loaded:', customQuestions.length);

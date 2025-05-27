@@ -66,7 +66,7 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
       </div>
 
       <div className="space-y-3">
-        {currentQuestion.answers.map((answer, index) => (
+        {currentQuestion.answers?.map((answer, index) => (
           <button
             key={index}
             className={getButtonClass(index)}
