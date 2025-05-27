@@ -3,12 +3,24 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { firestore } from "@/lib/firebase";
-import { doc, setDoc } from "firebase/firestore";
-import type { HauntConfig } from "@shared/schema";
+import { doc, setDoc, collection, addDoc, getDocs } from "firebase/firestore";
+import type { HauntConfig, TriviaQuestion } from "@shared/schema";
+
+interface TriviaPack {
+  id?: string;
+  name: string;
+  description: string;
+  questions: TriviaQuestion[];
+  accessType: 'all' | 'tier' | 'select';
+  allowedTiers?: string[];
+  allowedHaunts?: string[];
+}
 
 export default function Admin() {
   const { toast } = useToast();
@@ -26,8 +38,96 @@ export default function Admin() {
     accentColor: "#FF6B35"
   });
 
+  // Trivia Pack state
+  const [packFormData, setPackFormData] = useState({
+    name: "",
+    description: "",
+    questionsJson: "",
+    accessType: "all" as 'all' | 'tier' | 'select',
+    allowedTiers: [] as string[],
+    allowedHaunts: [] as string[]
+  });
+  const [existingPacks, setExistingPacks] = useState<TriviaPack[]>([]);
+
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handlePackInputChange = (field: string, value: string | string[]) => {
+    setPackFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const loadTriviaPacks = async () => {
+    try {
+      const packsRef = collection(firestore, 'trivia-packs');
+      const querySnapshot = await getDocs(packsRef);
+      
+      const packs: TriviaPack[] = [];
+      querySnapshot.forEach((doc) => {
+        packs.push({ id: doc.id, ...doc.data() } as TriviaPack);
+      });
+      
+      setExistingPacks(packs);
+    } catch (error) {
+      console.error('Failed to load trivia packs:', error);
+    }
+  };
+
+  const handlePackSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!packFormData.name || !packFormData.questionsJson) {
+      toast({
+        title: "Error",
+        description: "Pack name and questions are required",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsLoading(true);
+    
+    try {
+      // Parse questions JSON
+      const questions = JSON.parse(packFormData.questionsJson);
+      
+      const triviaPack: TriviaPack = {
+        name: packFormData.name,
+        description: packFormData.description,
+        questions: questions,
+        accessType: packFormData.accessType,
+        allowedTiers: packFormData.allowedTiers,
+        allowedHaunts: packFormData.allowedHaunts
+      };
+
+      const docRef = await addDoc(collection(firestore, 'trivia-packs'), triviaPack);
+      
+      toast({
+        title: "Success!",
+        description: `Trivia pack "${packFormData.name}" created successfully`,
+      });
+
+      // Reset form
+      setPackFormData({
+        name: "",
+        description: "",
+        questionsJson: "",
+        accessType: "all",
+        allowedTiers: [],
+        allowedHaunts: []
+      });
+
+      loadTriviaPacks();
+    } catch (error) {
+      console.error('Failed to create trivia pack:', error);
+      toast({
+        title: "Error",
+        description: "Failed to create trivia pack. Please check your JSON format.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -53,7 +153,7 @@ export default function Admin() {
         triviaFile: formData.triviaFile || `${formData.id}-trivia.json`,
         adFile: formData.adFile || `${formData.id}-ads.json`,
         mode: "individual", // Default mode, will be managed in haunt dashboard
-        tier: formData.tier,
+        tier: formData.tier as "basic" | "pro" | "premium",
         theme: {
           primaryColor: formData.primaryColor,
           secondaryColor: formData.secondaryColor,
@@ -102,15 +202,27 @@ export default function Admin() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-red-900 p-4">
-      <div className="max-w-2xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         <Card className="bg-black/80 border-red-600 text-white">
           <CardHeader>
             <CardTitle className="text-3xl font-bold text-center text-red-500">
-              🎃 Heinous Trivia Admin
+              🎃 Heinous Trivia Uber Admin
             </CardTitle>
-            <p className="text-center text-gray-300">Add New Haunt Configuration</p>
+            <p className="text-center text-gray-300">Manage Haunts & Trivia Packs</p>
           </CardHeader>
           <CardContent>
+            <Tabs defaultValue="haunts" className="w-full">
+              <TabsList className="grid w-full grid-cols-2 bg-gray-800">
+                <TabsTrigger value="haunts" className="text-white data-[state=active]:bg-red-600">
+                  🏚️ Haunts
+                </TabsTrigger>
+                <TabsTrigger value="packs" className="text-white data-[state=active]:bg-red-600">
+                  🧠 Trivia Packs
+                </TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="haunts" className="mt-6">
+                <h3 className="text-xl font-bold text-red-400 mb-4">Add New Haunt</h3>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-2 gap-4">
                 <div>
@@ -266,12 +378,142 @@ export default function Admin() {
                 {isLoading ? "Saving to Firebase..." : "💾 Save Haunt Configuration"}
               </Button>
             </form>
+              </TabsContent>
+
+              <TabsContent value="packs" className="mt-6">
+                <div className="space-y-6">
+                  <h3 className="text-xl font-bold text-red-400 mb-4">Create Trivia Pack</h3>
+                  
+                  <form onSubmit={handlePackSubmit} className="space-y-6">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="packName" className="text-white">Pack Name *</Label>
+                        <Input
+                          id="packName"
+                          value={packFormData.name}
+                          onChange={(e) => handlePackInputChange('name', e.target.value)}
+                          placeholder="e.g., Horror Movie Classics"
+                          className="bg-gray-800 border-gray-600 text-white"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="packDescription" className="text-white">Description</Label>
+                        <Input
+                          id="packDescription"
+                          value={packFormData.description}
+                          onChange={(e) => handlePackInputChange('description', e.target.value)}
+                          placeholder="Pack description"
+                          className="bg-gray-800 border-gray-600 text-white"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <Label htmlFor="questionsJson" className="text-white">Questions JSON *</Label>
+                      <Textarea
+                        id="questionsJson"
+                        value={packFormData.questionsJson}
+                        onChange={(e) => handlePackInputChange('questionsJson', e.target.value)}
+                        placeholder='[{"id": "q1", "text": "Question?", "category": "Horror", "difficulty": 1, "answers": ["A", "B", "C", "D"], "correctAnswer": 0, "explanation": "Because...", "points": 10}]'
+                        className="bg-gray-800 border-gray-600 text-white min-h-32"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <Label className="text-white">Access Control</Label>
+                      <Select value={packFormData.accessType} onValueChange={(value: 'all' | 'tier' | 'select') => handlePackInputChange('accessType', value)}>
+                        <SelectTrigger className="bg-gray-800 border-gray-600 text-white">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent className="bg-gray-800 border-gray-600">
+                          <SelectItem value="all">All Haunts</SelectItem>
+                          <SelectItem value="tier">By Tier</SelectItem>
+                          <SelectItem value="select">Select Haunts</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    {packFormData.accessType === 'tier' && (
+                      <div>
+                        <Label className="text-white">Allowed Tiers</Label>
+                        <div className="flex gap-4 mt-2">
+                          {['basic', 'pro', 'premium'].map(tier => (
+                            <label key={tier} className="flex items-center gap-2 text-white">
+                              <Checkbox
+                                checked={packFormData.allowedTiers.includes(tier)}
+                                onCheckedChange={(checked) => {
+                                  if (checked) {
+                                    handlePackInputChange('allowedTiers', [...packFormData.allowedTiers, tier]);
+                                  } else {
+                                    handlePackInputChange('allowedTiers', packFormData.allowedTiers.filter(t => t !== tier));
+                                  }
+                                }}
+                              />
+                              {tier.charAt(0).toUpperCase() + tier.slice(1)}
+                            </label>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {packFormData.accessType === 'select' && (
+                      <div>
+                        <Label htmlFor="allowedHaunts" className="text-white">Allowed Haunt IDs (comma-separated)</Label>
+                        <Input
+                          id="allowedHaunts"
+                          value={packFormData.allowedHaunts.join(', ')}
+                          onChange={(e) => handlePackInputChange('allowedHaunts', e.target.value.split(',').map(h => h.trim()))}
+                          placeholder="widowshollow, mansionofmadness"
+                          className="bg-gray-800 border-gray-600 text-white"
+                        />
+                      </div>
+                    )}
+
+                    <Button 
+                      type="submit" 
+                      disabled={isLoading}
+                      className="w-full bg-red-600 hover:bg-red-700 text-white"
+                    >
+                      {isLoading ? "Creating Pack..." : "Create Trivia Pack"}
+                    </Button>
+                  </form>
+
+                  {existingPacks.length > 0 && (
+                    <div className="mt-8">
+                      <h4 className="text-lg font-bold text-red-400 mb-4">Existing Trivia Packs</h4>
+                      <div className="space-y-3">
+                        {existingPacks.map((pack) => (
+                          <Card key={pack.id} className="bg-gray-800 border-gray-600">
+                            <CardContent className="p-4">
+                              <div className="flex justify-between items-start">
+                                <div>
+                                  <h5 className="font-bold text-white">{pack.name}</h5>
+                                  <p className="text-gray-300 text-sm">{pack.description}</p>
+                                  <p className="text-gray-400 text-xs mt-1">
+                                    {pack.questions.length} questions • Access: {pack.accessType}
+                                  </p>
+                                </div>
+                              </div>
+                            </CardContent>
+                          </Card>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </TabsContent>
+            </Tabs>
           </CardContent>
         </Card>
 
         <div className="mt-6 text-center">
           <Button
-            onClick={() => window.location.href = '/'}
+            onClick={() => {
+              loadTriviaPacks();
+              window.location.href = '/';
+            }}
             variant="outline"
             className="border-red-600 text-red-500 hover:bg-red-600 hover:text-white"
           >
