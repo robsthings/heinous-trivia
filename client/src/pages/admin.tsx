@@ -228,6 +228,7 @@ export default function Admin() {
         adFile: formData.adFile || `${formData.id}-ads.json`,
         mode: "individual", // Default mode, will be managed in haunt dashboard
         tier: formData.tier as "basic" | "pro" | "premium",
+        isActive: true,
         theme: {
           primaryColor: formData.primaryColor,
           secondaryColor: formData.secondaryColor,
@@ -416,23 +417,15 @@ export default function Admin() {
                                   </Select>
                                 </div>
 
-                                {/* Game Mode */}
-                                <div className="space-y-1">
+                                {/* Game Mode - Display Only */}
+                                <div className="bg-gray-700/30 p-2 rounded">
                                   <Label className="text-white text-sm">Game Mode</Label>
-                                  <Select 
-                                    value={haunt.mode || 'individual'} 
-                                    onValueChange={(value) => 
-                                      updateHauntSubscription(haunt.id, { mode: value as 'individual' | 'queue' })
-                                    }
-                                  >
-                                    <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
-                                      <SelectValue />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                      <SelectItem value="individual">Individual Play</SelectItem>
-                                      <SelectItem value="queue">Group Mode</SelectItem>
-                                    </SelectContent>
-                                  </Select>
+                                  <p className="text-gray-300 text-sm mt-1">
+                                    {haunt.mode === 'queue' ? 'Group Mode' : 'Individual Play'}
+                                  </p>
+                                  <p className="text-gray-500 text-xs">
+                                    Controlled by haunt owner
+                                  </p>
                                 </div>
 
                               </div>
