@@ -8,6 +8,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { Footer } from "@/components/Footer";
+import { ExternalLink } from "lucide-react";
 import { firestore, storage } from "@/lib/firebase";
 import { doc, getDoc, updateDoc, collection, addDoc, getDocs, deleteDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -592,6 +594,15 @@ export default function HauntAdmin() {
                   Your <span className="text-white font-medium capitalize">{hauntConfig.tier}</span> tier allows up to{" "}
                   <span className="text-white font-medium">{getAdLimit(hauntConfig.tier)}</span> ads. Recommended size: 800x400 PNG.
                 </p>
+                <div className="mt-3">
+                  <Link 
+                    href="/upload-guidelines" 
+                    className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 underline"
+                  >
+                    <ExternalLink className="w-3 h-3" />
+                    Review our Upload Guidelines
+                  </Link>
+                </div>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
@@ -703,6 +714,15 @@ export default function HauntAdmin() {
               Create custom questions specific to your haunt. Your <span className="text-white font-medium capitalize">{hauntConfig.tier}</span> tier allows up to{" "}
               <span className="text-white font-medium">{getQuestionLimit(hauntConfig.tier)}</span> custom questions.
             </p>
+            <div className="mt-3">
+              <Link 
+                href="/upload-guidelines" 
+                className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 underline"
+              >
+                <ExternalLink className="w-3 h-3" />
+                Review our Upload Guidelines
+              </Link>
+            </div>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -794,6 +814,8 @@ export default function HauntAdmin() {
           </Button>
         </div>
       </div>
+      
+      <Footer />
     </div>
   );
 }
