@@ -10,7 +10,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { firestore } from "@/lib/firebase";
 import { doc, getDoc, updateDoc, collection, addDoc, getDocs, deleteDoc } from "firebase/firestore";
-import type { HauntConfig } from "@shared/schema";
+import type { HauntConfig, TriviaQuestion } from "@shared/schema";
+
+interface TriviaPack {
+  id: string;
+  name: string;
+  description: string;
+  questions: TriviaQuestion[];
+  accessType: 'all' | 'tier' | 'select';
+  allowedTiers?: string[];
+  allowedHaunts?: string[];
+}
 
 interface CustomTriviaQuestion {
   id?: string;
