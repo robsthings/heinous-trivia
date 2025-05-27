@@ -1083,7 +1083,10 @@ export default function Admin() {
                                               <div className="flex gap-1">
                                                 <Button
                                                   onClick={() => {
-                                                    alert(`Pack: ${pack.name}\nAccess: ${pack.accessType}\nQuestions: ${pack.questions.length}\nAssigned via: ${pack.accessType === 'all' ? 'Global access' : pack.accessType === 'tier' ? 'Tier-based access' : 'Direct assignment'}`);
+                                                    toast({
+                                                      title: `Pack: ${pack.name}`,
+                                                      description: `Access: ${pack.accessType} • Questions: ${pack.questions.length} • Assigned via: ${pack.accessType === 'all' ? 'Global access' : pack.accessType === 'tier' ? 'Tier-based access' : 'Direct assignment'}`,
+                                                    });
                                                   }}
                                                   variant="ghost"
                                                   size="sm"
