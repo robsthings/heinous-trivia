@@ -110,14 +110,7 @@ export class ConfigLoader {
 
   static async loadAdData(haunt: string): Promise<AdData[]> {
     try {
-      // Load core ads from JSON
-      const response = await fetch(`/api/ads/${haunt}`);
-      let coreAds: AdData[] = [];
-      if (response.ok) {
-        coreAds = await response.json();
-      }
-      
-      // Load custom ads from Firebase
+      // Load custom ads from Firebase FIRST (prioritize user uploads)
       const customAds: AdData[] = [];
       try {
         const adsRef = collection(firestore, 'haunt-ads', haunt, 'ads');
@@ -135,13 +128,25 @@ export class ConfigLoader {
             link: data.link
           });
         });
-        console.log('✅ Custom ads loaded:', customAds.length);
+        console.log('✅ Custom Firebase ads loaded:', customAds.length);
       } catch (error) {
-        console.log('⚠️ No custom ads found in Firebase, continuing...');
+        console.log('⚠️ No custom ads found in Firebase, loading default ads...');
       }
       
-      // Merge core and custom ads
-      const allAds = [...coreAds, ...customAds];
+      // Only load default ads if no custom ads exist
+      let coreAds: AdData[] = [];
+      if (customAds.length === 0) {
+        const response = await fetch(`/api/ads/${haunt}`);
+        if (response.ok) {
+          coreAds = await response.json();
+          console.log('✅ Default ads loaded as fallback:', coreAds.length);
+        }
+      } else {
+        console.log('🎯 Using custom ads exclusively');
+      }
+      
+      // Prioritize custom ads over default ones
+      const allAds = [...customAds, ...coreAds];
       console.log('🎯 Total ads available:', allAds.length);
       return allAds;
     } catch (error) {
