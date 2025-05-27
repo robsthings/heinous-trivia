@@ -8,8 +8,9 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { firestore } from "@/lib/firebase";
+import { firestore, storage } from "@/lib/firebase";
 import { doc, getDoc, updateDoc, collection, addDoc, getDocs, deleteDoc } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import type { HauntConfig, TriviaQuestion } from "@shared/schema";
 
 interface TriviaPack {
@@ -179,6 +180,51 @@ export default function HauntAdmin() {
 
   const removeAdSlot = (index: number) => {
     setAdFiles(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const uploadAdImage = async (file: File, adId: string, link?: string) => {
+    try {
+      setIsSaving(true);
+      
+      // Create storage reference
+      const storageRef = ref(storage, `haunt-assets/${hauntId}/ads/${adId}_${file.name}`);
+      
+      // Upload file
+      const snapshot = await uploadBytes(storageRef, file);
+      
+      // Get download URL
+      const downloadURL = await getDownloadURL(snapshot.ref);
+      
+      // Save ad data to Firestore
+      const adData = {
+        imageUrl: downloadURL,
+        link: link || "",
+        uploadedAt: new Date().toISOString(),
+        title: `Ad ${adId}`,
+        description: "Custom advertisement"
+      };
+      
+      const adsRef = collection(firestore, 'haunt-ads', hauntId, 'ads');
+      await addDoc(adsRef, adData);
+      
+      toast({
+        title: "Success!",
+        description: "Ad image uploaded successfully",
+      });
+      
+      // Reload ads
+      loadUploadedAds();
+      
+    } catch (error) {
+      console.error('❌ Failed to upload ad image:', error);
+      toast({
+        title: "Upload Failed",
+        description: "Failed to upload ad image. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   // Initialize ad slots when haunt config loads
@@ -621,6 +667,19 @@ export default function HauntAdmin() {
                           />
                         </div>
                       </div>
+                      
+                      {/* Upload Button */}
+                      {ad.file && (
+                        <div className="mt-4 flex justify-end">
+                          <Button
+                            onClick={() => uploadAdImage(ad.file!, ad.id, ad.link)}
+                            disabled={isSaving}
+                            className="bg-red-600 hover:bg-red-700 text-white"
+                          >
+                            {isSaving ? "Uploading..." : "🚀 Upload Ad Image"}
+                          </Button>
+                        </div>
+                      )}
                     </div>
                   ))}
                   
