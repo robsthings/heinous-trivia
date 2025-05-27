@@ -12,7 +12,7 @@ import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { firestore } from "@/lib/firebase";
 import { doc, setDoc, collection, addDoc, getDocs, updateDoc } from "firebase/firestore";
-import { ExternalLink, Settings, GamepadIcon, Crown, Zap, Gem } from "lucide-react";
+import { ExternalLink, Settings, GamepadIcon, Crown, Zap, Gem, Copy } from "lucide-react";
 import type { HauntConfig, TriviaQuestion } from "@shared/schema";
 
 interface TriviaPack {
@@ -108,6 +108,23 @@ export default function Admin() {
       toast({
         title: "Error",
         description: "Failed to update haunt subscription",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const copyToClipboard = async (text: string, description: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      toast({
+        title: "Copied!",
+        description: `${description} copied to clipboard`,
+      });
+    } catch (error) {
+      console.error('Failed to copy to clipboard:', error);
+      toast({
+        title: "Copy Failed",
+        description: "Could not copy to clipboard",
         variant: "destructive"
       });
     }
@@ -334,37 +351,72 @@ export default function Admin() {
                                 <p className="text-gray-400 text-sm mb-3">{haunt.description || 'No description'}</p>
                                 
                                 {/* Quick Links */}
-                                <div className="flex flex-wrap gap-2">
-                                  <Button 
-                                    size="sm" 
-                                    variant="outline"
-                                    className="h-8 text-xs border-blue-600 text-blue-400 hover:bg-blue-600 hover:text-white"
-                                    onClick={() => window.open(`/?haunt=${haunt.id}`, '_blank')}
-                                  >
-                                    <GamepadIcon className="h-3 w-3 mr-1" />
-                                    Game: /?haunt={haunt.id}
-                                    <ExternalLink className="h-3 w-3 ml-1" />
-                                  </Button>
-                                  <Button 
-                                    size="sm" 
-                                    variant="outline"
-                                    className="h-8 text-xs border-purple-600 text-purple-400 hover:bg-purple-600 hover:text-white"
-                                    onClick={() => window.open(`/haunt-admin/${haunt.id}`, '_blank')}
-                                  >
-                                    <Settings className="h-3 w-3 mr-1" />
-                                    Admin: /haunt-admin/{haunt.id}
-                                    <ExternalLink className="h-3 w-3 ml-1" />
-                                  </Button>
-                                  <Button 
-                                    size="sm" 
-                                    variant="outline"
-                                    className="h-8 text-xs border-green-600 text-green-400 hover:bg-green-600 hover:text-white"
-                                    onClick={() => window.open(`/host-panel/${haunt.id}`, '_blank')}
-                                  >
-                                    <Crown className="h-3 w-3 mr-1" />
-                                    Host Panel: /host-panel/{haunt.id}
-                                    <ExternalLink className="h-3 w-3 ml-1" />
-                                  </Button>
+                                <div className="space-y-2">
+                                  {/* Game Link */}
+                                  <div className="flex items-center gap-2">
+                                    <Button 
+                                      size="sm" 
+                                      variant="outline"
+                                      className="h-8 text-xs border-blue-600 text-blue-400 hover:bg-blue-600 hover:text-white flex-1"
+                                      onClick={() => window.open(`${window.location.origin}/?haunt=${haunt.id}`, '_blank')}
+                                    >
+                                      <GamepadIcon className="h-3 w-3 mr-1" />
+                                      Game: /?haunt={haunt.id}
+                                      <ExternalLink className="h-3 w-3 ml-1" />
+                                    </Button>
+                                    <Button 
+                                      size="sm" 
+                                      variant="ghost"
+                                      className="h-8 w-8 p-0 text-blue-400 hover:bg-blue-600 hover:text-white"
+                                      onClick={() => copyToClipboard(`${window.location.origin}/?haunt=${haunt.id}`, "Game URL")}
+                                    >
+                                      <Copy className="h-3 w-3" />
+                                    </Button>
+                                  </div>
+
+                                  {/* Admin Link */}
+                                  <div className="flex items-center gap-2">
+                                    <Button 
+                                      size="sm" 
+                                      variant="outline"
+                                      className="h-8 text-xs border-purple-600 text-purple-400 hover:bg-purple-600 hover:text-white flex-1"
+                                      onClick={() => window.open(`${window.location.origin}/haunt-admin/${haunt.id}`, '_blank')}
+                                    >
+                                      <Settings className="h-3 w-3 mr-1" />
+                                      Admin: /haunt-admin/{haunt.id}
+                                      <ExternalLink className="h-3 w-3 ml-1" />
+                                    </Button>
+                                    <Button 
+                                      size="sm" 
+                                      variant="ghost"
+                                      className="h-8 w-8 p-0 text-purple-400 hover:bg-purple-600 hover:text-white"
+                                      onClick={() => copyToClipboard(`${window.location.origin}/haunt-admin/${haunt.id}`, "Admin URL")}
+                                    >
+                                      <Copy className="h-3 w-3" />
+                                    </Button>
+                                  </div>
+
+                                  {/* Host Panel Link */}
+                                  <div className="flex items-center gap-2">
+                                    <Button 
+                                      size="sm" 
+                                      variant="outline"
+                                      className="h-8 text-xs border-green-600 text-green-400 hover:bg-green-600 hover:text-white flex-1"
+                                      onClick={() => window.open(`${window.location.origin}/host-panel/${haunt.id}`, '_blank')}
+                                    >
+                                      <Crown className="h-3 w-3 mr-1" />
+                                      Host Panel: /host-panel/{haunt.id}
+                                      <ExternalLink className="h-3 w-3 ml-1" />
+                                    </Button>
+                                    <Button 
+                                      size="sm" 
+                                      variant="ghost"
+                                      className="h-8 w-8 p-0 text-green-400 hover:bg-green-600 hover:text-white"
+                                      onClick={() => copyToClipboard(`${window.location.origin}/host-panel/${haunt.id}`, "Host Panel URL")}
+                                    >
+                                      <Copy className="h-3 w-3" />
+                                    </Button>
+                                  </div>
                                 </div>
                               </div>
 
