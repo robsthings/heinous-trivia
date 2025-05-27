@@ -779,6 +779,13 @@ export default function HauntAdmin() {
             {isSaving ? "Saving..." : "💾 Save Configuration"}
           </Button>
           <Button
+            onClick={() => window.open(`/host-panel/${hauntId}`, '_blank')}
+            variant="outline"
+            className="border-green-600 text-green-500 hover:bg-green-600 hover:text-white w-full sm:w-auto"
+          >
+            👑 Open Host Panel
+          </Button>
+          <Button
             onClick={() => window.location.href = `/?haunt=${hauntId}`}
             variant="outline"
             className="border-red-600 text-red-500 hover:bg-red-600 hover:text-white w-full sm:w-auto"
