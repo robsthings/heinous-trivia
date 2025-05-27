@@ -298,6 +298,153 @@ export default function Admin() {
                 </TabsTrigger>
               </TabsList>
 
+              {/* Haunt Management Tab */}
+              <TabsContent value="management" className="space-y-6">
+                <Card className="bg-gray-900/50 border-gray-700">
+                  <CardHeader>
+                    <CardTitle className="text-red-400 flex items-center gap-2">
+                      🏚️ All Participating Haunts
+                      <Badge variant="outline" className="text-gray-300">
+                        {allHaunts.length} haunts
+                      </Badge>
+                    </CardTitle>
+                    <p className="text-gray-400">Manage subscription levels and access for all haunts</p>
+                  </CardHeader>
+                  <CardContent>
+                    {allHaunts.length === 0 ? (
+                      <div className="text-center py-8">
+                        <p className="text-gray-400">No haunts found. Create your first haunt below!</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-4">
+                        {allHaunts.map((haunt) => (
+                          <div key={haunt.id} className="bg-gray-800/50 p-4 rounded-lg border border-gray-600">
+                            <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                              
+                              {/* Haunt Info */}
+                              <div className="flex-1">
+                                <div className="flex items-center gap-3 mb-2">
+                                  <h3 className="text-white font-bold text-lg">{haunt.name}</h3>
+                                  <Badge className={`flex items-center gap-1 ${getTierColor(haunt.tier)}`}>
+                                    {getTierIcon(haunt.tier)}
+                                    {haunt.tier?.toUpperCase()}
+                                  </Badge>
+                                </div>
+                                <p className="text-gray-400 text-sm mb-3">{haunt.description || 'No description'}</p>
+                                
+                                {/* Quick Links */}
+                                <div className="flex flex-wrap gap-2">
+                                  <Button 
+                                    size="sm" 
+                                    variant="outline"
+                                    className="h-8 text-xs border-blue-600 text-blue-400 hover:bg-blue-600 hover:text-white"
+                                    onClick={() => window.open(`/?haunt=${haunt.id}`, '_blank')}
+                                  >
+                                    <GamepadIcon className="h-3 w-3 mr-1" />
+                                    Game: /?haunt={haunt.id}
+                                    <ExternalLink className="h-3 w-3 ml-1" />
+                                  </Button>
+                                  <Button 
+                                    size="sm" 
+                                    variant="outline"
+                                    className="h-8 text-xs border-purple-600 text-purple-400 hover:bg-purple-600 hover:text-white"
+                                    onClick={() => window.open(`/haunt-admin/${haunt.id}`, '_blank')}
+                                  >
+                                    <Settings className="h-3 w-3 mr-1" />
+                                    Admin: /haunt-admin/{haunt.id}
+                                    <ExternalLink className="h-3 w-3 ml-1" />
+                                  </Button>
+                                  <Button 
+                                    size="sm" 
+                                    variant="outline"
+                                    className="h-8 text-xs border-green-600 text-green-400 hover:bg-green-600 hover:text-white"
+                                    onClick={() => window.open(`/host-panel/${haunt.id}`, '_blank')}
+                                  >
+                                    <Crown className="h-3 w-3 mr-1" />
+                                    Host Panel: /host-panel/{haunt.id}
+                                    <ExternalLink className="h-3 w-3 ml-1" />
+                                  </Button>
+                                </div>
+                              </div>
+
+                              {/* Subscription Controls */}
+                              <div className="flex flex-col gap-3 lg:w-64">
+                                
+                                {/* Active Toggle */}
+                                <div className="flex items-center justify-between bg-gray-700/50 p-2 rounded">
+                                  <Label className="text-white text-sm">Active</Label>
+                                  <Switch
+                                    checked={haunt.isActive !== false}
+                                    onCheckedChange={(checked) => 
+                                      updateHauntSubscription(haunt.id, { isActive: checked })
+                                    }
+                                  />
+                                </div>
+
+                                {/* Tier Selection */}
+                                <div className="space-y-1">
+                                  <Label className="text-white text-sm">Subscription Tier</Label>
+                                  <Select 
+                                    value={haunt.tier} 
+                                    onValueChange={(value) => 
+                                      updateHauntSubscription(haunt.id, { tier: value as 'basic' | 'pro' | 'premium' })
+                                    }
+                                  >
+                                    <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
+                                      <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      <SelectItem value="basic">
+                                        <div className="flex items-center gap-2">
+                                          <Crown className="h-4 w-4" />
+                                          Basic (5 questions, 3 ads)
+                                        </div>
+                                      </SelectItem>
+                                      <SelectItem value="pro">
+                                        <div className="flex items-center gap-2">
+                                          <Zap className="h-4 w-4" />
+                                          Pro (15 questions, 5 ads)
+                                        </div>
+                                      </SelectItem>
+                                      <SelectItem value="premium">
+                                        <div className="flex items-center gap-2">
+                                          <Gem className="h-4 w-4" />
+                                          Premium (50 questions, 10 ads)
+                                        </div>
+                                      </SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+
+                                {/* Game Mode */}
+                                <div className="space-y-1">
+                                  <Label className="text-white text-sm">Game Mode</Label>
+                                  <Select 
+                                    value={haunt.mode || 'individual'} 
+                                    onValueChange={(value) => 
+                                      updateHauntSubscription(haunt.id, { mode: value as 'individual' | 'queue' })
+                                    }
+                                  >
+                                    <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
+                                      <SelectValue />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                      <SelectItem value="individual">Individual Play</SelectItem>
+                                      <SelectItem value="queue">Group Mode</SelectItem>
+                                    </SelectContent>
+                                  </Select>
+                                </div>
+
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
               <TabsContent value="haunts" className="mt-6">
                 <h3 className="text-xl font-bold text-red-400 mb-4">Add New Haunt</h3>
             <form onSubmit={handleSubmit} className="space-y-6">
