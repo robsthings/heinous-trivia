@@ -314,9 +314,14 @@ export default function HauntAdmin() {
       
       setHauntConfig(updatedConfig);
       
+      // Clear the logo file after successful upload
+      if (logoFile) {
+        setLogoFile(null);
+      }
+      
       toast({
         title: "Success!",
-        description: "Haunt configuration updated successfully",
+        description: logoFile ? "Haunt configuration and logo updated successfully" : "Haunt configuration updated successfully",
       });
     } catch (error) {
       console.error('Failed to update haunt config:', error);
