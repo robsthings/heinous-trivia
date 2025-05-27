@@ -68,11 +68,13 @@ export class ConfigLoader {
       
       // If no questions found, try to load from starter pack
       if (allQuestions.length === 0) {
+        console.log('No questions found, trying starter pack fallback...');
         try {
           const starterPackRef = doc(firestore, 'trivia-packs', 'starter-pack');
           const starterPackDoc = await getDoc(starterPackRef);
           
           if (starterPackDoc.exists()) {
+            console.log('Starter pack found!');
             const starterData = starterPackDoc.data();
             if (starterData.questions && Array.isArray(starterData.questions)) {
               allQuestions = starterData.questions.map((q: any) => ({
@@ -81,12 +83,18 @@ export class ConfigLoader {
                 choices: q.choices || [],
                 correct: q.correct || q.answer
               }));
-              console.log(`Loaded ${allQuestions.length} questions from starter pack`);
+              console.log(`✅ Loaded ${allQuestions.length} questions from starter pack`);
+            } else {
+              console.log('Starter pack has no questions array');
             }
+          } else {
+            console.log('Starter pack document does not exist');
           }
         } catch (error) {
-          console.log('No starter pack available:', error);
+          console.log('❌ Starter pack error:', error);
         }
+      } else {
+        console.log(`Found ${allQuestions.length} questions from other sources`);
       }
       
       // Shuffle using Fisher-Yates algorithm
