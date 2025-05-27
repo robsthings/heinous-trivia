@@ -37,7 +37,16 @@ export class ConfigLoader {
           coreQuestions.push(...apiQuestions);
         }
       } catch (error) {
-        // Continue without core questions
+        // Fallback to default starter pack if haunt-specific questions not found
+        try {
+          const defaultResponse = await fetch('/api/questions/default');
+          if (defaultResponse.ok) {
+            const defaultQuestions = await defaultResponse.json();
+            coreQuestions.push(...defaultQuestions);
+          }
+        } catch (defaultError) {
+          console.log('No default questions available');
+        }
       }
       
       // Load custom questions from Firebase
