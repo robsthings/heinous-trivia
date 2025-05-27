@@ -28,17 +28,8 @@ export class ConfigLoader {
 
   static async loadTriviaQuestions(haunt: string): Promise<TriviaQuestion[]> {
     try {
-      // Load core questions from API
+      // Prioritize Firebase data over API calls
       const coreQuestions: TriviaQuestion[] = [];
-      try {
-        const response = await fetch(`/api/questions/${haunt}`);
-        if (response.ok) {
-          const apiQuestions = await response.json();
-          coreQuestions.push(...apiQuestions);
-        }
-      } catch (error) {
-        console.log(`No API questions found for ${haunt}`);
-      }
       
       // Load custom questions from Firebase
       const customQuestions: TriviaQuestion[] = [];
@@ -80,8 +71,12 @@ export class ConfigLoader {
               allQuestions = starterData.questions.map((q: any) => ({
                 id: q.id || `starter-${Math.random()}`,
                 text: q.question || q.text,
-                choices: q.choices || [],
-                correct: q.correct || q.answer
+                category: "Horror",
+                difficulty: 1,
+                answers: q.choices || [],
+                correctAnswer: q.choices ? q.choices.indexOf(q.correct || q.answer) : 0,
+                explanation: `The correct answer is ${q.correct || q.answer}`,
+                points: 10
               }));
               console.log(`✅ Loaded ${allQuestions.length} questions from starter pack`);
             } else {
@@ -133,16 +128,9 @@ export class ConfigLoader {
         // Continue without custom ads
       }
       
-      // Load default ads only if no custom ads exist
-      if (customAds.length === 0) {
-        try {
-          const response = await fetch(`/api/ads/${haunt}`);
-          if (response.ok) {
-            return await response.json();
-          }
-        } catch (error) {
-          // Continue without default ads
-        }
+      // Return custom ads from Firebase (no API fallback needed)
+      if (customAds.length > 0) {
+        return customAds;
       }
       
       return customAds;
@@ -155,5 +143,5 @@ export class ConfigLoader {
 
 export function getHauntFromURL(): string {
   const urlParams = new URLSearchParams(window.location.search);
-  return urlParams.get('haunt') || 'widowshollow';
+  return urlParams.get('haunt') || '';
 }

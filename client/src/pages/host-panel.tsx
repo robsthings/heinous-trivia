@@ -38,10 +38,43 @@ export default function HostPanel() {
   // Load questions on mount
   useEffect(() => {
     const loadQuestions = async () => {
-      if (!hauntId) return;
+      if (!hauntId) {
+        toast({
+          title: "Error",
+          description: "No haunt ID provided",
+          variant: "destructive"
+        });
+        return;
+      }
       
       setIsLoading(true);
       try {
+        // Verify haunt exists and user has access
+        const hauntRef = doc(firestore, 'haunts', hauntId);
+        const hauntSnap = await getDoc(hauntRef);
+        
+        if (!hauntSnap.exists()) {
+          toast({
+            title: "Haunt Not Found",
+            description: `Haunt '${hauntId}' does not exist`,
+            variant: "destructive"
+          });
+          return;
+        }
+        
+        const hauntData = hauntSnap.data();
+        
+        // Check authentication - ensure user has access to this haunt
+        const savedCode = localStorage.getItem(`heinous-admin-${hauntId}`);
+        if (!savedCode || savedCode !== hauntData.authCode) {
+          toast({
+            title: "Access Denied",
+            description: "You must authenticate to access this host panel",
+            variant: "destructive"
+          });
+          return;
+        }
+        
         const loadedQuestions = await ConfigLoader.loadTriviaQuestions(hauntId);
         // Take first 10 questions for the round
         setQuestions(loadedQuestions.slice(0, 10));

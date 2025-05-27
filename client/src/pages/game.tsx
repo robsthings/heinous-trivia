@@ -50,11 +50,20 @@ export default function Game() {
         setError(null);
 
         const haunt = gameState.currentHaunt;
+        
+        // Validate haunt parameter is provided
+        if (!haunt) {
+          setError("No haunt specified. Please access the game with a valid haunt parameter (?haunt=yourhaunt)");
+          setIsLoading(false);
+          return;
+        }
 
-        // Load haunt configuration
+        // Load haunt configuration from Firebase
         const hauntConfig = await ConfigLoader.loadHauntConfig(haunt);
         if (!hauntConfig) {
-          throw new Error(`Haunt configuration for '${haunt}' not found`);
+          setError(`Haunt '${haunt}' not found. Please check that this haunt exists and is properly configured.`);
+          setIsLoading(false);
+          return;
         }
 
         // Load trivia questions (includes fallback to starter pack)
