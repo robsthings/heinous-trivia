@@ -29,6 +29,7 @@ export default function Admin() {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [allHaunts, setAllHaunts] = useState<HauntConfig[]>([]);
+  const [editingHaunt, setEditingHaunt] = useState<HauntConfig | null>(null);
   const [formData, setFormData] = useState({
     id: "",
     name: "",
