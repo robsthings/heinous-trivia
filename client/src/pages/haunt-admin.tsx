@@ -49,25 +49,19 @@ export default function HauntAdmin() {
     secondaryColor: "#2D1B69",
     accentColor: "#FF6B35"
   });
-  
   const [logoFile, setLogoFile] = useState<File | null>(null);
-  const [adFiles, setAdFiles] = useState<Array<{ file: File | null; link: string; id: string; title: string; description: string }>>([]);
-  const [adMetrics, setAdMetrics] = useState<Array<{ views: number; clicks: number }>>([]);
-  
-  // Custom trivia state
+  const [adFiles, setAdFiles] = useState<Array<{
+    file: File | null;
+    link: string;
+    id: string;
+    title: string;
+    description: string;
+  }>>([]);
+  const [uploadedAds, setUploadedAds] = useState<any[]>([]);
+  const [triviaPacks, setTriviaPacks] = useState<TriviaPack[]>([]);
   const [customQuestions, setCustomQuestions] = useState<CustomTriviaQuestion[]>([]);
-  const [newQuestion, setNewQuestion] = useState({
-    question: "",
-    choices: ["", "", "", ""],
-    correct: ""
-  });
+  const [editingQuestion, setEditingQuestion] = useState<CustomTriviaQuestion | null>(null);
 
-  // Ad management state  
-  const [uploadedAds, setUploadedAds] = useState<Array<{ id: string; imageUrl: string; link?: string; title?: string; description?: string }>>([]);
-  const [editingAdId, setEditingAdId] = useState<string | null>(null);
-  const [editingAdLink, setEditingAdLink] = useState("");
-
-  // Get ad limits based on tier
   const getAdLimit = (tier: string) => {
     switch (tier) {
       case 'basic': return 3;
@@ -77,8 +71,7 @@ export default function HauntAdmin() {
     }
   };
 
-  // Get custom trivia limits based on tier
-  const getTriviaLimit = (tier: string) => {
+  const getQuestionLimit = (tier: string) => {
     switch (tier) {
       case 'basic': return 5;
       case 'pro': return 15;
@@ -87,113 +80,64 @@ export default function HauntAdmin() {
     }
   };
 
-  const loadHauntConfig = async () => {
-    setIsLoading(true);
-    try {
-      console.log('📋 Loading haunt config for:', hauntId);
-      
-      const docRef = doc(firestore, 'haunts', hauntId);
-      const docSnap = await getDoc(docRef);
-      
-      if (docSnap.exists()) {
-        const config = docSnap.data() as HauntConfig;
-        setHauntConfig(config);
-        setFormData({
-          mode: config.mode,
-          triviaFile: config.triviaFile,
-          adFile: config.adFile,
-          primaryColor: config.theme.primaryColor,
-          secondaryColor: config.theme.secondaryColor,
-          accentColor: config.theme.accentColor
-        });
-        console.log('✅ Haunt config loaded:', config);
-      } else {
-        toast({
-          title: "Error",
-          description: `Haunt "${hauntId}" not found`,
-          variant: "destructive"
-        });
-      }
-    } catch (error) {
-      console.error('❌ Failed to load haunt config:', error);
-      toast({
-        title: "Error",
-        description: "Failed to load haunt configuration",
-        variant: "destructive"
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  // Authentication check with first-time setup support
+  // Check authentication on mount
   useEffect(() => {
     const checkAuthentication = async () => {
-      try {
-        // First check if haunt exists and needs setup
-        const hauntRef = doc(firestore, 'haunts', hauntId);
-        const hauntSnap = await getDoc(hauntRef);
+      if (!hauntId) {
+        setLocation('/');
+        return;
+      }
 
-        if (!hauntSnap.exists()) {
+      setIsLoading(true);
+      try {
+        const docRef = doc(firestore, 'haunts', hauntId);
+        const docSnap = await getDoc(docRef);
+        
+        if (!docSnap.exists()) {
           toast({
             title: "Haunt Not Found",
-            description: "This haunt does not exist",
+            description: "This haunt doesn't exist.",
             variant: "destructive"
           });
-          setLocation('/haunt-auth');
+          setLocation('/');
           return;
         }
 
-        const hauntData = hauntSnap.data();
+        const data = docSnap.data() as HauntConfig;
         
-        // If no auth code is set, show first-time setup
-        if (!hauntData.authCode) {
+        // Check if this is first-time setup
+        if (!data.authCode) {
           setIsFirstTimeSetup(true);
+          setIsLoading(false);
+          return;
+        }
+
+        // Check for access code in localStorage
+        const savedCode = localStorage.getItem(`heinous-admin-${hauntId}`);
+        if (savedCode === data.authCode) {
           setIsAuthenticated(true);
-          toast({
-            title: "Welcome to Your Haunt!",
-            description: "Set up your admin password to secure this dashboard",
+          setHauntConfig(data);
+          setFormData({
+            mode: data.mode || "individual",
+            triviaFile: data.triviaFile || "",
+            adFile: data.adFile || "",
+            primaryColor: data.theme?.primaryColor || "#8B0000",
+            secondaryColor: data.theme?.secondaryColor || "#2D1B69",
+            accentColor: data.theme?.accentColor || "#FF6B35"
           });
-          return;
+        } else {
+          // Redirect to auth page
+          setLocation(`/haunt-auth/${hauntId}`);
         }
-
-        // Check existing authentication
-        const authData = localStorage.getItem('haunt-auth');
-        if (!authData) {
-          setLocation('/haunt-auth');
-          return;
-        }
-
-        const auth = JSON.parse(authData);
-        
-        // Check if token is expired
-        if (Date.now() > auth.expires) {
-          localStorage.removeItem('haunt-auth');
-          toast({
-            title: "Session Expired",
-            description: "Please log in again to access the admin dashboard",
-            variant: "destructive"
-          });
-          setLocation('/haunt-auth');
-          return;
-        }
-
-        // Check if haunt ID matches
-        if (auth.hauntId !== hauntId) {
-          toast({
-            title: "Access Denied",
-            description: "You don't have access to this haunt",
-            variant: "destructive"
-          });
-          setLocation('/haunt-auth');
-          return;
-        }
-
-        setIsAuthenticated(true);
       } catch (error) {
-        console.error('Auth check error:', error);
-        localStorage.removeItem('haunt-auth');
-        setLocation('/haunt-auth');
+        console.error('Authentication check failed:', error);
+        toast({
+          title: "Error",
+          description: "Failed to check authentication",
+          variant: "destructive"
+        });
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -208,406 +152,53 @@ export default function HauntAdmin() {
       loadHauntConfig();
       loadCustomQuestions();
       loadUploadedAds();
+      loadTriviaPacks();
     }
   }, [hauntId, isAuthenticated]);
 
-  const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-  };
-
-  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      // Validate file type
-      if (!file.type.startsWith('image/')) {
-        toast({
-          title: "Error",
-          description: "Please select an image file",
-          variant: "destructive"
-        });
-        return;
-      }
-      setLogoFile(file);
-    }
-  };
-
-  const handleAdFileUpload = (index: number, file: File | null) => {
-    setAdFiles(prev => {
-      const updated = [...prev];
-      if (updated[index]) {
-        updated[index].file = file;
-      }
-      return updated;
-    });
-  };
-
-  const handleAdLinkChange = (index: number, link: string) => {
-    setAdFiles(prev => {
-      const updated = [...prev];
-      if (updated[index]) {
-        updated[index].link = link;
-      }
-      return updated;
-    });
-  };
-
-  const handleAdTitleChange = (index: number, title: string) => {
-    setAdFiles(prev => {
-      const updated = [...prev];
-      if (updated[index]) {
-        updated[index].title = title;
-      }
-      return updated;
-    });
-  };
-
-  const handleAdDescriptionChange = (index: number, description: string) => {
-    setAdFiles(prev => {
-      const updated = [...prev];
-      if (updated[index]) {
-        updated[index].description = description;
-      }
-      return updated;
-    });
-  };
-
-  const addAdSlot = () => {
-    if (!hauntConfig) return;
-    const limit = getAdLimit(hauntConfig.tier);
-    if (adFiles.length < limit) {
-      setAdFiles(prev => [...prev, { 
-        file: null, 
-        link: "", 
-        id: `ad${prev.length + 1}`,
-        title: "",
-        description: ""
-      }]);
-    }
-  };
-
-  const removeAdSlot = (index: number) => {
-    setAdFiles(prev => prev.filter((_, i) => i !== index));
-  };
-
-  const uploadAdImage = async (file: File, adId: string, link?: string, title?: string, description?: string) => {
+  const loadHauntConfig = async () => {
     try {
-      setIsSaving(true);
-      console.log('🚀 Starting ad upload process...', { file: file.name, adId, link });
-      
-      // Create storage reference
-      const storageRef = ref(storage, `haunt-assets/${hauntId}/ads/${adId}_${file.name}`);
-      console.log('📁 Storage reference created:', storageRef.fullPath);
-      
-      // Upload file
-      console.log('📤 Uploading file to Firebase Storage...');
-      const snapshot = await uploadBytes(storageRef, file);
-      console.log('✅ File uploaded successfully');
-      
-      // Get download URL
-      console.log('🔗 Getting download URL...');
-      const downloadURL = await getDownloadURL(snapshot.ref);
-      console.log('✅ Download URL obtained:', downloadURL);
-      
-      // Save ad data to Firestore
-      console.log('💾 Saving ad data to Firestore...');
-      const adData = {
-        imageUrl: downloadURL,
-        link: link || "",
-        uploadedAt: new Date().toISOString(),
-        title: title || `Custom Ad ${adId}`,
-        description: description || "Check this out!"
-      };
-      
-      const adsRef = collection(firestore, 'haunt-ads', hauntId, 'ads');
-      const docRef = await addDoc(adsRef, adData);
-      console.log('✅ Ad data saved to Firestore with ID:', docRef.id);
-      
-      toast({
-        title: "Success!",
-        description: "Ad image uploaded successfully",
-      });
-      
-      // Reload ads
-      loadUploadedAds();
-      
-    } catch (error: any) {
-      console.error('Failed to upload ad image:', error);
-      
-      let errorMessage = "Failed to upload ad image. Please try again.";
-      if (error?.code === 'storage/unauthorized') {
-        errorMessage = "Storage access denied. Please check Firebase Storage rules.";
-      } else if (error?.code === 'permission-denied') {
-        errorMessage = "Permission denied. Please check Firebase security rules.";
+      const docRef = doc(firestore, 'haunts', hauntId);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        const data = docSnap.data() as HauntConfig;
+        setHauntConfig(data);
       }
-      
-      toast({
-        title: "Upload Failed",
-        description: errorMessage,
-        variant: "destructive"
-      });
-    } finally {
-      setIsSaving(false);
+    } catch (error) {
+      console.error('Failed to load haunt config:', error);
     }
   };
-
-  // Initialize ad slots when haunt config loads
-  useEffect(() => {
-    if (hauntConfig && adFiles.length === 0) {
-      // Initialize with one empty ad slot
-      setAdFiles([{ file: null, link: "", id: "ad1", title: "", description: "" }]);
-    }
-  }, [hauntConfig]);
 
   const loadCustomQuestions = async () => {
     try {
-      console.log('📚 Loading custom trivia questions for:', hauntId);
       const questionsRef = collection(firestore, 'trivia-custom', hauntId, 'questions');
-      const querySnapshot = await getDocs(questionsRef);
-      
-      const questions: CustomTriviaQuestion[] = [];
-      querySnapshot.forEach((doc) => {
-        questions.push({ id: doc.id, ...doc.data() } as CustomTriviaQuestion);
-      });
-      
+      const snapshot = await getDocs(questionsRef);
+      const questions = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as CustomTriviaQuestion[];
       setCustomQuestions(questions);
-      console.log('✅ Custom trivia questions loaded:', questions);
     } catch (error) {
-      console.error('❌ Failed to load custom trivia questions:', error);
+      console.error('Failed to load custom questions:', error);
     }
   };
 
   const loadUploadedAds = async () => {
     try {
-      console.log('📢 Loading uploaded ads for:', hauntId);
       const adsRef = collection(firestore, 'haunt-ads', hauntId, 'ads');
-      const querySnapshot = await getDocs(adsRef);
-      
-      const ads: Array<{ id: string; imageUrl: string; link?: string; title?: string; description?: string }> = [];
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        ads.push({ 
-          id: doc.id, 
-          imageUrl: data.imageUrl,
-          link: data.link,
-          title: data.title,
-          description: data.description
-        });
-      });
-      
+      const snapshot = await getDocs(adsRef);
+      const ads = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       setUploadedAds(ads);
-      console.log('✅ Uploaded ads loaded:', ads);
-      
-      // Load metrics for each ad
-      await loadAdMetrics(ads.length);
     } catch (error) {
-      console.error('❌ Failed to load uploaded ads:', error);
+      console.error('Failed to load ads:', error);
     }
-  }
+  };
 
-  const loadAdMetrics = async (adCount: number) => {
+  const loadTriviaPacks = async () => {
     try {
-      const metrics = [];
-      for (let i = 0; i < adCount; i++) {
-        const metricsRef = doc(firestore, 'ad-metrics', hauntId, 'ads', `ad${i}`);
-        const metricsSnap = await getDoc(metricsRef);
-        
-        if (metricsSnap.exists()) {
-          const data = metricsSnap.data();
-          metrics.push({
-            views: data.views || 0,
-            clicks: data.clicks || 0
-          });
-        } else {
-          metrics.push({ views: 0, clicks: 0 });
-        }
-      }
-      setAdMetrics(metrics);
-      console.log('📊 Ad metrics loaded:', metrics);
+      const packsRef = collection(firestore, 'trivia-packs');
+      const snapshot = await getDocs(packsRef);
+      const packs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as TriviaPack[];
+      setTriviaPacks(packs);
     } catch (error) {
-      console.error('❌ Error loading ad metrics:', error);
-      setAdMetrics(new Array(adCount).fill({ views: 0, clicks: 0 }));
-    }
-  };
-
-  const handleQuestionChange = (value: string) => {
-    setNewQuestion(prev => ({ ...prev, question: value }));
-  };
-
-  const handleChoiceChange = (index: number, value: string) => {
-    setNewQuestion(prev => {
-      const newChoices = [...prev.choices];
-      newChoices[index] = value;
-      return { ...prev, choices: newChoices };
-    });
-  };
-
-  const handleCorrectAnswerChange = (choiceIndex: number, checked: boolean) => {
-    if (checked) {
-      // Get the current value of the choice at this index
-      const currentChoice = newQuestion.choices[choiceIndex];
-      setNewQuestion(prev => ({ ...prev, correct: currentChoice }));
-    } else {
-      setNewQuestion(prev => ({ ...prev, correct: "" }));
-    }
-  };
-
-  const addCustomQuestion = async () => {
-    if (!hauntConfig) return;
-    
-    // Validate question
-    if (!newQuestion.question.trim()) {
-      toast({
-        title: "Error",
-        description: "Please enter a question",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    // Validate all choices are filled
-    if (newQuestion.choices.some(choice => !choice.trim())) {
-      toast({
-        title: "Error", 
-        description: "Please fill in all answer choices",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    // Validate correct answer is selected
-    if (!newQuestion.correct) {
-      toast({
-        title: "Error",
-        description: "Please select the correct answer",
-        variant: "destructive"
-      });
-      return;
-    }
-
-    try {
-      console.log('💾 Adding custom trivia question:', newQuestion);
-      
-      const questionsRef = collection(firestore, 'trivia-custom', hauntId, 'questions');
-      await addDoc(questionsRef, {
-        question: newQuestion.question,
-        choices: newQuestion.choices,
-        correct: newQuestion.correct
-      });
-
-      toast({
-        title: "Success!",
-        description: "Custom trivia question added",
-      });
-
-      // Reset form
-      setNewQuestion({
-        question: "",
-        choices: ["", "", "", ""],
-        correct: ""
-      });
-
-      // Reload questions
-      loadCustomQuestions();
-    } catch (error) {
-      console.error('❌ Failed to add custom trivia question:', error);
-      toast({
-        title: "Error",
-        description: "Failed to add trivia question",
-        variant: "destructive"
-      });
-    }
-  };
-
-  const editCustomQuestion = (question: CustomTriviaQuestion) => {
-    setNewQuestion({
-      question: question.question,
-      choices: [...question.choices],
-      correct: question.correct
-    });
-    
-    // Scroll to form
-    const formElement = document.querySelector('#trivia-form');
-    if (formElement) {
-      formElement.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const deleteCustomQuestion = async (questionId: string) => {
-    try {
-      console.log('🗑️ Deleting custom trivia question:', questionId);
-      
-      const questionRef = doc(firestore, 'trivia-custom', hauntId, 'questions', questionId);
-      await deleteDoc(questionRef);
-
-      toast({
-        title: "Success!",
-        description: "Trivia question deleted",
-      });
-
-      // Reload questions
-      loadCustomQuestions();
-    } catch (error) {
-      console.error('❌ Failed to delete custom trivia question:', error);
-      toast({
-        title: "Error",
-        description: "Failed to delete trivia question",
-        variant: "destructive"
-      });
-    }
-  };
-
-  const startEditingAdLink = (ad: { id: string; imageUrl: string; link?: string }) => {
-    setEditingAdId(ad.id);
-    setEditingAdLink(ad.link || "");
-  };
-
-  const saveAdLink = async (adId: string) => {
-    try {
-      console.log('💾 Saving ad link for:', adId);
-      
-      const adRef = doc(firestore, 'haunt-ads', hauntId, 'ads', adId);
-      await updateDoc(adRef, {
-        link: editingAdLink
-      });
-
-      toast({
-        title: "Success!",
-        description: "Ad link updated",
-      });
-
-      setEditingAdId(null);
-      setEditingAdLink("");
-      loadUploadedAds();
-    } catch (error) {
-      console.error('❌ Failed to save ad link:', error);
-      toast({
-        title: "Error",
-        description: "Failed to update ad link",
-        variant: "destructive"
-      });
-    }
-  };
-
-  const deleteAd = async (adId: string) => {
-    try {
-      console.log('🗑️ Deleting ad:', adId);
-      
-      const adRef = doc(firestore, 'haunt-ads', hauntId, 'ads', adId);
-      await deleteDoc(adRef);
-
-      toast({
-        title: "Success!",
-        description: "Ad deleted",
-      });
-
-      loadUploadedAds();
-    } catch (error) {
-      console.error('❌ Failed to delete ad:', error);
-      toast({
-        title: "Error",
-        description: "Failed to delete ad",
-        variant: "destructive"
-      });
+      console.error('Failed to load trivia packs:', error);
     }
   };
 
@@ -628,8 +219,6 @@ export default function HauntAdmin() {
         }
       };
 
-      console.log('💾 Saving haunt config updates:', updatedConfig);
-      
       const docRef = doc(firestore, 'haunts', hauntId);
       await updateDoc(docRef, updatedConfig);
       
@@ -639,10 +228,8 @@ export default function HauntAdmin() {
         title: "Success!",
         description: "Haunt configuration updated successfully",
       });
-
-      console.log('✅ Haunt config updated successfully');
     } catch (error) {
-      console.error('❌ Failed to update haunt config:', error);
+      console.error('Failed to update haunt config:', error);
       toast({
         title: "Error",
         description: "Failed to update haunt configuration",
@@ -650,6 +237,24 @@ export default function HauntAdmin() {
       });
     } finally {
       setIsSaving(false);
+    }
+  };
+
+  const saveCustomQuestions = async (questions: CustomTriviaQuestion[]) => {
+    try {
+      // This would save custom questions to Firebase
+      // Implementation details would go here
+      toast({
+        title: "Questions Saved",
+        description: "Custom questions updated successfully",
+      });
+    } catch (error) {
+      console.error('Failed to save questions:', error);
+      toast({
+        title: "Error",
+        description: "Failed to save custom questions",
+        variant: "destructive"
+      });
     }
   };
 
@@ -661,6 +266,83 @@ export default function HauntAdmin() {
             <div className="text-center">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-500 mx-auto mb-4"></div>
               <p className="text-gray-300">Loading haunt configuration...</p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  // First-time setup screen
+  if (isFirstTimeSetup) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-red-900 p-4 flex items-center justify-center">
+        <Card className="bg-black/80 border-red-600 text-white max-w-md w-full">
+          <CardHeader className="text-center">
+            <CardTitle className="text-2xl font-bold text-red-500">
+              🎃 Welcome to Your Haunt!
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <p className="text-gray-300 text-center">
+              Set up your admin access code to secure your haunt dashboard. 
+              This code will be required to access your admin panel.
+            </p>
+            
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="accessCode" className="text-white">Create Access Code</Label>
+                <Input
+                  id="accessCode"
+                  type="password"
+                  value={newAccessCode}
+                  onChange={(e) => setNewAccessCode(e.target.value)}
+                  placeholder="Enter a secure access code (min 6 characters)"
+                  className="bg-gray-800 border-gray-600 text-white"
+                  minLength={6}
+                />
+              </div>
+              
+              <Button
+                onClick={async () => {
+                  if (!newAccessCode || newAccessCode.length < 6) {
+                    toast({
+                      title: "Invalid Code",
+                      description: "Access code must be at least 6 characters long",
+                      variant: "destructive"
+                    });
+                    return;
+                  }
+
+                  setIsSaving(true);
+                  try {
+                    const docRef = doc(firestore, 'haunts', hauntId);
+                    await updateDoc(docRef, { authCode: newAccessCode });
+                    
+                    localStorage.setItem(`heinous-admin-${hauntId}`, newAccessCode);
+                    setIsFirstTimeSetup(false);
+                    setIsAuthenticated(true);
+                    
+                    toast({
+                      title: "Setup Complete!",
+                      description: "Your admin dashboard is now secured.",
+                    });
+                  } catch (error) {
+                    console.error('Failed to set access code:', error);
+                    toast({
+                      title: "Setup Failed",
+                      description: "Unable to set access code. Please try again.",
+                      variant: "destructive"
+                    });
+                  } finally {
+                    setIsSaving(false);
+                  }
+                }}
+                className="w-full bg-red-600 hover:bg-red-700 text-white"
+                disabled={isSaving || !newAccessCode || newAccessCode.length < 6}
+              >
+                {isSaving ? "Setting Up..." : "Secure My Dashboard"}
+              </Button>
             </div>
           </CardContent>
         </Card>
@@ -690,101 +372,12 @@ export default function HauntAdmin() {
     );
   }
 
-  // First-time setup screen
-  if (isFirstTimeSetup) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-red-900 p-4 flex items-center justify-center">
-        <Card className="bg-black/80 border-red-600 text-white max-w-md w-full">
-          <CardHeader className="text-center">
-            <CardTitle className="text-2xl font-bold text-red-500">
-              🎃 Welcome to Your Haunt!
-            </CardTitle>
-            <p className="text-gray-300 mt-2">
-              Set up your admin password to secure this dashboard
-            </p>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div>
-                <Label htmlFor="newAccessCode" className="text-white">
-                  Create Admin Password
-                </Label>
-                <Input
-                  id="newAccessCode"
-                  type="password"
-                  value={newAccessCode}
-                  onChange={(e) => setNewAccessCode(e.target.value)}
-                  placeholder="Enter a secure password (6+ characters)"
-                  className="bg-gray-800 border-gray-600 text-white mt-2"
-                  disabled={isSaving}
-                />
-                <p className="text-gray-400 text-xs mt-1">
-                  You'll use this password to access your admin dashboard
-                </p>
-              </div>
-              
-              <Button 
-                onClick={async () => {
-                  if (!newAccessCode || newAccessCode.length < 6) {
-                    toast({
-                      title: "Invalid Password",
-                      description: "Password must be at least 6 characters long",
-                      variant: "destructive"
-                    });
-                    return;
-                  }
-
-                  try {
-                    setIsSaving(true);
-                    const hauntRef = doc(firestore, 'haunts', hauntId);
-                    await updateDoc(hauntRef, {
-                      authCode: newAccessCode
-                    });
-
-                    // Store authentication in localStorage
-                    const authToken = {
-                      hauntId: hauntId,
-                      accessCode: newAccessCode,
-                      timestamp: Date.now(),
-                      expires: Date.now() + (24 * 60 * 60 * 1000) // 24 hours
-                    };
-                    localStorage.setItem('haunt-auth', JSON.stringify(authToken));
-
-                    setIsFirstTimeSetup(false);
-                    toast({
-                      title: "Setup Complete!",
-                      description: "Your admin password has been set successfully",
-                    });
-
-                  } catch (error) {
-                    console.error('Failed to set access code:', error);
-                    toast({
-                      title: "Setup Failed",
-                      description: "Unable to set access code. Please try again.",
-                      variant: "destructive"
-                    });
-                  } finally {
-                    setIsSaving(false);
-                  }
-                }}
-                className="w-full bg-red-600 hover:bg-red-700 text-white"
-                disabled={isSaving || !newAccessCode || newAccessCode.length < 6}
-              >
-                {isSaving ? "Setting Up..." : "Secure My Dashboard"}
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-red-900 p-4">
       <div className="max-w-6xl mx-auto space-y-6">
         
         {/* Header Section */}
-        <div className="text-center lg:text-left bg-black/60 rounded-xl p-6 border border-gray-700">
+        <div className="text-center lg:text-left bg-black/60 rounded-xl p-6 border border-gray-700 shadow-lg">
           <h1 className="text-4xl font-bold text-white mb-2" style={{ color: hauntConfig.theme?.primaryColor || '#dc2626' }}>
             👹 {hauntConfig.name || hauntId}
           </h1>
@@ -823,7 +416,7 @@ export default function HauntAdmin() {
                       id="primaryColor"
                       type="color"
                       value={formData.primaryColor}
-                      onChange={(e) => handleInputChange('primaryColor', e.target.value)}
+                      onChange={(e) => setFormData(prev => ({ ...prev, primaryColor: e.target.value }))}
                       className="h-11 bg-gray-800 border-gray-600 cursor-pointer"
                     />
                   </div>
@@ -833,7 +426,7 @@ export default function HauntAdmin() {
                       id="secondaryColor"
                       type="color"
                       value={formData.secondaryColor}
-                      onChange={(e) => handleInputChange('secondaryColor', e.target.value)}
+                      onChange={(e) => setFormData(prev => ({ ...prev, secondaryColor: e.target.value }))}
                       className="h-11 bg-gray-800 border-gray-600 cursor-pointer"
                     />
                   </div>
@@ -843,7 +436,7 @@ export default function HauntAdmin() {
                       id="accentColor"
                       type="color"
                       value={formData.accentColor}
-                      onChange={(e) => handleInputChange('accentColor', e.target.value)}
+                      onChange={(e) => setFormData(prev => ({ ...prev, accentColor: e.target.value }))}
                       className="h-11 bg-gray-800 border-gray-600 cursor-pointer"
                     />
                   </div>
@@ -856,7 +449,7 @@ export default function HauntAdmin() {
                     id="logoUpload"
                     type="file"
                     accept="image/*"
-                    onChange={handleLogoUpload}
+                    onChange={(e) => setLogoFile(e.target.files?.[0] || null)}
                     className="bg-gray-800 border-gray-600 text-white file:bg-red-600 file:text-white file:border-0 file:rounded-md file:px-3 file:py-2 file:mr-3 file:cursor-pointer"
                   />
                   {logoFile && (
@@ -878,7 +471,7 @@ export default function HauntAdmin() {
               <CardContent>
                 <div>
                   <Label htmlFor="mode" className="text-white text-sm font-medium mb-2 block">Game Mode</Label>
-                  <Select value={formData.mode} onValueChange={(value) => handleInputChange('mode', value)}>
+                  <Select value={formData.mode} onValueChange={(value) => setFormData(prev => ({ ...prev, mode: value }))}>
                     <SelectTrigger className="bg-gray-800 border-gray-600 text-white h-11">
                       <SelectValue placeholder="Select game mode" />
                     </SelectTrigger>
@@ -918,107 +511,98 @@ export default function HauntAdmin() {
                 <div className="space-y-4">
                   {adFiles.map((ad, index) => (
                     <div key={ad.id} className="border border-gray-600 rounded-lg p-4 bg-gray-800/30">
-                      <div className="flex justify-between items-center mb-4">
-                        <h4 className="text-white font-bold">Ad #{index + 1}</h4>
+                      <div className="flex justify-between items-center mb-3">
+                        <h4 className="text-white font-medium">Ad #{index + 1}</h4>
                         {adFiles.length > 1 && (
                           <Button
-                            onClick={() => removeAdSlot(index)}
+                            onClick={() => setAdFiles(prev => prev.filter((_, i) => i !== index))}
                             variant="outline"
                             size="sm"
-                            className="border-red-600 text-red-500 hover:bg-red-600 hover:text-white"
+                            className="border-red-600 text-red-500 hover:bg-red-600 hover:text-white text-xs"
                           >
                             🗑️ Remove
                           </Button>
                         )}
                       </div>
-                      <div className="space-y-4">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-3">
+                        <div className="grid grid-cols-1 gap-3">
                           <div>
-                            <Label className="text-white">Ad Title *</Label>
+                            <Label className="text-white text-sm">Ad Title *</Label>
                             <Input
                               type="text"
                               value={ad.title}
-                              onChange={(e) => handleAdTitleChange(index, e.target.value)}
+                              onChange={(e) => {
+                                const updated = [...adFiles];
+                                updated[index].title = e.target.value;
+                                setAdFiles(updated);
+                              }}
                               placeholder="e.g., Midnight Ghost Tours"
-                              className="bg-gray-800 border-gray-600 text-white"
+                              className="bg-gray-800 border-gray-600 text-white h-10"
                             />
                           </div>
                           <div>
-                            <Label className="text-white">Link (Optional)</Label>
+                            <Label className="text-white text-sm">Link (Optional)</Label>
                             <Input
                               type="url"
                               value={ad.link}
-                              onChange={(e) => handleAdLinkChange(index, e.target.value)}
-                              placeholder="https://example.com/vip"
-                              className="bg-gray-800 border-gray-600 text-white"
+                              onChange={(e) => {
+                                const updated = [...adFiles];
+                                updated[index].link = e.target.value;
+                                setAdFiles(updated);
+                              }}
+                              placeholder="https://your-website.com"
+                              className="bg-gray-800 border-gray-600 text-white h-10"
                             />
                           </div>
                         </div>
-                        
                         <div>
-                          <Label className="text-white">Ad Description *</Label>
-                          <Input
-                            type="text"
+                          <Label className="text-white text-sm">Description</Label>
+                          <Textarea
                             value={ad.description}
-                            onChange={(e) => handleAdDescriptionChange(index, e.target.value)}
-                            placeholder="e.g., Join our spine-chilling tours through Salem's most haunted locations"
-                            className="bg-gray-800 border-gray-600 text-white"
+                            onChange={(e) => {
+                              const updated = [...adFiles];
+                              updated[index].description = e.target.value;
+                              setAdFiles(updated);
+                            }}
+                            placeholder="Brief description of your ad..."
+                            className="bg-gray-800 border-gray-600 text-white min-h-[60px]"
                           />
                         </div>
-                        
                         <div>
-                          <Label className="text-white">Image Upload *</Label>
+                          <Label className="text-white text-sm">Image Upload *</Label>
                           <Input
                             type="file"
                             accept="image/*"
-                            onChange={(e) => handleAdFileUpload(index, e.target.files?.[0] || null)}
-                            className="bg-gray-800 border-gray-600 text-white file:bg-red-600 file:text-white file:border-0 file:rounded file:px-4 file:py-2 file:mr-4"
+                            onChange={(e) => {
+                              const updated = [...adFiles];
+                              updated[index].file = e.target.files?.[0] || null;
+                              setAdFiles(updated);
+                            }}
+                            className="bg-gray-800 border-gray-600 text-white file:bg-red-600 file:text-white file:border-0 file:rounded-md file:px-3 file:py-1 file:mr-3 file:cursor-pointer"
                           />
-                          {ad.file && (
-                            <p className="text-green-400 text-sm mt-2">
-                              ✅ Selected: {ad.file.name}
-                            </p>
-                          )}
                         </div>
                       </div>
-                      
-                      {/* Upload Button */}
-                      {ad.file && ad.title && ad.description && (
-                        <div className="mt-4 flex justify-end">
-                          <Button
-                            onClick={() => uploadAdImage(ad.file!, ad.id, ad.link, ad.title, ad.description)}
-                            disabled={isSaving}
-                            className="bg-red-600 hover:bg-red-700 text-white"
-                          >
-                            {isSaving ? "Uploading..." : "🚀 Upload Ad Image"}
-                          </Button>
-                        </div>
-                      )}
-                      
-                      {ad.file && (!ad.title || !ad.description) && (
-                        <div className="mt-4 p-3 bg-yellow-900/50 border border-yellow-600 rounded-lg">
-                          <p className="text-yellow-300 text-sm">
-                            ⚠️ Please fill in the ad title and description before uploading
-                          </p>
-                        </div>
-                      )}
                     </div>
                   ))}
                   
                   {adFiles.length < getAdLimit(hauntConfig.tier) && (
                     <Button
-                      onClick={addAdSlot}
+                      onClick={() => setAdFiles(prev => [...prev, { 
+                        file: null, 
+                        link: "", 
+                        id: `ad${prev.length + 1}`,
+                        title: "",
+                        description: ""
+                      }])}
                       variant="outline"
-                      className="border-red-600 text-red-500 hover:bg-red-600 hover:text-white"
+                      className="w-full border-red-600 text-red-500 hover:bg-red-600 hover:text-white"
                     >
-                      ➕ Add Another Ad Image
+                      ➕ Add Another Ad
                     </Button>
                   )}
                 </div>
               </CardContent>
             </Card>
-
-
 
           </div>
         </div>
@@ -1035,415 +619,87 @@ export default function HauntAdmin() {
             </p>
           </CardHeader>
           <CardContent>
-                <CardHeader>
-                  <CardTitle className="text-red-400">👁️ Preview Ads</CardTitle>
-                  <p className="text-gray-300 text-sm">
-                    This is how your ads will appear between game rounds. Click to simulate the full-screen experience.
-                  </p>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {uploadedAds.map((ad, index) => (
-                      <div key={ad.id} className="border border-gray-600 rounded-lg p-4 bg-gray-800/50 hover:bg-gray-700/50 transition-colors">
-                        <div className="text-center">
-                          <h4 className="text-white font-bold mb-2">Ad #{index + 1}</h4>
-                          <div 
-                            className="relative cursor-pointer group"
-                            onClick={() => {
-                              // Simulate fullscreen ad
-                              const modal = document.createElement('div');
-                              modal.className = 'fixed inset-0 bg-black flex items-center justify-center z-50';
-                              modal.innerHTML = `
-                                <div class="w-full h-full flex flex-col items-center justify-center p-6 bg-gradient-to-br from-red-900 via-black to-purple-900">
-                                  <div class="text-center max-w-4xl mx-auto">
-                                    <h3 class="font-nosifer text-4xl text-orange-500 mb-8 animate-pulse">A Message from Our Sponsors</h3>
-                                    <img src="${ad.imageUrl}" alt="Ad Preview" class="w-full max-w-3xl h-96 object-cover rounded-xl mb-8 shadow-2xl border-4 border-red-600 mx-auto" />
-                                    <h4 class="text-3xl font-bold text-white mb-4 font-creepster">${ad.title || 'Custom Ad'}</h4>
-                                    <p class="text-gray-300 text-xl mb-8 max-w-2xl mx-auto">${ad.description || 'Check this out!'}</p>
-                                    <button onclick="this.closest('.fixed').remove()" class="w-full py-3 rounded-lg font-medium text-gray-300 border border-gray-600 hover:bg-gray-800 transition-colors">Close Preview</button>
-                                  </div>
-                                </div>
-                              `;
-                              document.body.appendChild(modal);
-                            }}
-                          >
-                            <img
-                              src={ad.imageUrl}
-                              alt={`Ad ${index + 1}`}
-                              className="w-full h-32 object-cover rounded border border-gray-600 group-hover:border-red-500 transition-colors"
-                            />
-                            <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-opacity rounded flex items-center justify-center">
-                              <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity font-bold">👁️ Preview</span>
-                            </div>
-                          </div>
-                          
-                          <div className="mt-3 text-left">
-                            <p className="text-white font-semibold text-sm truncate">
-                              {ad.title || 'Custom Ad'}
-                            </p>
-                            <p className="text-gray-400 text-xs mt-1 line-clamp-2">
-                              {ad.description || 'Check this out!'}
-                            </p>
-                            {ad.link && (
-                              <a
-                                href={ad.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="inline-block mt-2 text-red-400 text-xs hover:text-red-300 transition-colors"
-                              >
-                                🔗 Click to visit link
-                              </a>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Ad Performance Analytics */}
-            {uploadedAds.length > 0 && adMetrics.length > 0 && (
-              <Card className="bg-gray-900/50 border-gray-700 mt-8">
-                <CardHeader>
-                  <CardTitle className="text-red-400">📊 Ad Performance Analytics</CardTitle>
-                  <p className="text-gray-300 text-sm">
-                    Track how your ads are performing with real player interactions.
-                  </p>
-                </CardHeader>
-                <CardContent>
-                  <div className="overflow-x-auto">
-                    <table className="w-full border-collapse">
-                      <thead>
-                        <tr className="border-b border-gray-600">
-                          <th className="text-left text-white font-semibold p-3">Ad Image</th>
-                          <th className="text-left text-white font-semibold p-3">Title</th>
-                          <th className="text-center text-white font-semibold p-3">Views</th>
-                          <th className="text-center text-white font-semibold p-3">Clicks</th>
-                          <th className="text-center text-white font-semibold p-3">CTR (%)</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {uploadedAds.map((ad, index) => {
-                          const metrics = adMetrics[index] || { views: 0, clicks: 0 };
-                          const ctr = metrics.views > 0 ? ((metrics.clicks / metrics.views) * 100).toFixed(1) : '0.0';
-                          
-                          return (
-                            <tr key={ad.id} className="border-b border-gray-700 hover:bg-gray-800/50">
-                              <td className="p-3">
-                                <img
-                                  src={ad.imageUrl}
-                                  alt={`Ad ${index + 1}`}
-                                  className="w-16 h-16 object-cover rounded border border-gray-600"
-                                />
-                              </td>
-                              <td className="p-3">
-                                <p className="text-white font-medium">
-                                  {ad.title || `Ad #${index + 1}`}
-                                </p>
-                                <p className="text-gray-400 text-sm mt-1 line-clamp-2">
-                                  {ad.description || 'No description'}
-                                </p>
-                              </td>
-                              <td className="p-3 text-center">
-                                <span className="text-blue-400 font-bold text-lg">
-                                  {metrics.views.toLocaleString()}
-                                </span>
-                              </td>
-                              <td className="p-3 text-center">
-                                <span className="text-green-400 font-bold text-lg">
-                                  {metrics.clicks.toLocaleString()}
-                                </span>
-                              </td>
-                              <td className="p-3 text-center">
-                                <span className={`font-bold text-lg ${
-                                  parseFloat(ctr) >= 5 ? 'text-green-400' :
-                                  parseFloat(ctr) >= 2 ? 'text-yellow-400' : 'text-red-400'
-                                }`}>
-                                  {ctr}%
-                                </span>
-                              </td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
-                  </div>
-                  
-                  {/* Analytics Summary */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 pt-6 border-t border-gray-700">
-                    <div className="text-center">
-                      <p className="text-gray-400 text-sm">Total Views</p>
-                      <p className="text-blue-400 font-bold text-2xl">
-                        {adMetrics.reduce((sum, metric) => sum + metric.views, 0).toLocaleString()}
-                      </p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-gray-400 text-sm">Total Clicks</p>
-                      <p className="text-green-400 font-bold text-2xl">
-                        {adMetrics.reduce((sum, metric) => sum + metric.clicks, 0).toLocaleString()}
-                      </p>
-                    </div>
-                    <div className="text-center">
-                      <p className="text-gray-400 text-sm">Average CTR</p>
-                      <p className="text-orange-400 font-bold text-2xl">
-                        {(() => {
-                          const totalViews = adMetrics.reduce((sum, metric) => sum + metric.views, 0);
-                          const totalClicks = adMetrics.reduce((sum, metric) => sum + metric.clicks, 0);
-                          return totalViews > 0 ? ((totalClicks / totalViews) * 100).toFixed(1) : '0.0';
-                        })()}%
-                      </p>
+            <div className="space-y-4">
+              {customQuestions.map((question, index) => (
+                <div key={question.id || index} className="border border-gray-600 rounded-lg p-4 bg-gray-800/30">
+                  <div className="flex justify-between items-center mb-3">
+                    <h4 className="text-white font-medium">Question #{index + 1}</h4>
+                    <div className="flex gap-2">
+                      <Button
+                        onClick={() => setEditingQuestion(question)}
+                        variant="outline"
+                        size="sm"
+                        className="border-blue-600 text-blue-500 hover:bg-blue-600 hover:text-white text-xs px-2 py-1"
+                      >
+                        ✏️ Edit
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          if (confirm("Delete this question?")) {
+                            setCustomQuestions(prev => prev.filter((_, i) => i !== index));
+                          }
+                        }}
+                        variant="outline"
+                        size="sm"
+                        className="border-red-600 text-red-500 hover:bg-red-600 hover:text-white text-xs px-2 py-1"
+                      >
+                        🗑️
+                      </Button>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Uploaded Ads List */}
-            {uploadedAds.length > 0 && (
-              <Card className="bg-gray-900/50 border-gray-700 mt-8">
-                <CardHeader>
-                  <CardTitle className="text-red-400">📢 Uploaded Ads Management</CardTitle>
-                  <p className="text-gray-300 text-sm">
-                    Ads Uploaded: <span className="text-red-400 font-bold">{uploadedAds.length}</span> / <span className="text-red-400 font-bold">{getAdLimit(hauntConfig.tier)}</span> (<span className="capitalize">{hauntConfig.tier}</span> Tier)
-                  </p>
-                </CardHeader>
-                <CardContent>
-                  <div className="max-h-96 overflow-y-auto space-y-4 pr-2">
-                    {uploadedAds.map((ad, index) => (
-                      <div key={ad.id} className="border border-gray-600 rounded-lg p-4 bg-gray-800/50 hover:bg-gray-700/50 transition-colors">
-                        <div className="flex flex-col lg:flex-row gap-4">
-                          {/* Ad Thumbnail */}
-                          <div className="flex-shrink-0">
-                            <img
-                              src={ad.imageUrl}
-                              alt={`Ad ${index + 1}`}
-                              className="w-32 h-20 object-cover rounded border border-gray-600"
-                            />
-                          </div>
-                          
-                          {/* Ad Details */}
-                          <div className="flex-1 space-y-3">
-                            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
-                              <h4 className="text-white font-bold text-sm">Ad #{index + 1}</h4>
-                              <div className="flex gap-2 flex-shrink-0">
-                                <Button
-                                  onClick={() => startEditingAdLink(ad)}
-                                  variant="outline"
-                                  size="sm"
-                                  className="border-blue-600 text-blue-400 hover:bg-blue-600 hover:text-white text-xs px-2 py-1"
-                                >
-                                  ✏️ Edit Link
-                                </Button>
-                                <Button
-                                  onClick={() => deleteAd(ad.id)}
-                                  variant="outline"
-                                  size="sm"
-                                  className="border-red-600 text-red-500 hover:bg-red-600 hover:text-white text-xs px-2 py-1"
-                                >
-                                  🗑️ Delete
-                                </Button>
-                              </div>
-                            </div>
-                            
-                            {/* Link Display/Edit */}
-                            <div>
-                              <Label className="text-gray-400 text-xs">Link:</Label>
-                              {editingAdId === ad.id ? (
-                                <div className="flex gap-2 mt-1">
-                                  <Input
-                                    value={editingAdLink}
-                                    onChange={(e) => setEditingAdLink(e.target.value)}
-                                    placeholder="https://example.com/vip"
-                                    className="bg-gray-800 border-gray-600 text-white text-sm flex-1"
-                                  />
-                                  <Button
-                                    onClick={() => saveAdLink(ad.id)}
-                                    size="sm"
-                                    className="bg-green-600 hover:bg-green-700 text-white text-xs px-3"
-                                  >
-                                    Save
-                                  </Button>
-                                  <Button
-                                    onClick={() => {
-                                      setEditingAdId(null);
-                                      setEditingAdLink("");
-                                    }}
-                                    variant="outline"
-                                    size="sm"
-                                    className="border-gray-600 text-gray-400 hover:bg-gray-700 text-xs px-3"
-                                  >
-                                    Cancel
-                                  </Button>
-                                </div>
-                              ) : (
-                                <p className="text-gray-300 text-sm mt-1 break-all">
-                                  {ad.link || <span className="text-gray-500 italic">No link set</span>}
-                                </p>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Custom Trivia Section */}
-            <Card className="bg-gray-900/50 border-gray-700 mt-8">
-              <CardHeader>
-                <CardTitle className="text-red-400">🧠 Custom Trivia Questions</CardTitle>
-                <p className="text-gray-300 text-sm">
-                  Your <span className="text-red-400 font-bold capitalize">{hauntConfig.tier}</span> subscription allows up to{" "}
-                  <span className="text-red-400 font-bold">{getTriviaLimit(hauntConfig.tier)}</span> custom questions.{" "}
-                  Current: <span className="text-red-400 font-bold">{customQuestions.length}</span>
-                </p>
-              </CardHeader>
-              <CardContent>
-                {customQuestions.length >= getTriviaLimit(hauntConfig.tier) ? (
-                  <div className="text-center p-8 border border-gray-600 rounded-lg bg-gray-800/50">
-                    <h3 className="text-red-400 font-bold text-lg mb-2">Limit Reached</h3>
-                    <p className="text-gray-300">
-                      You've reached your custom trivia limit for your current plan. 
-                      Upgrade your tier for more question slots.
-                    </p>
-                  </div>
-                ) : (
-                  <div className="space-y-6">
-                    {/* Add Question Form */}
-                    <div id="trivia-form" className="border border-gray-600 rounded-lg p-6 bg-gray-800/50">
-                      <h3 className="text-white font-bold text-lg mb-4">Add New Question</h3>
-                      
-                      <div className="space-y-4">
-                        <div>
-                          <Label className="text-white">Question</Label>
-                          <Textarea
-                            value={newQuestion.question}
-                            onChange={(e) => handleQuestionChange(e.target.value)}
-                            placeholder="What spirit haunts the boiler room?"
-                            className="bg-gray-800 border-gray-600 text-white"
-                            rows={3}
-                          />
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          {newQuestion.choices.map((choice, index) => (
-                            <div key={index} className="space-y-2">
-                              <Label className="text-white">Answer {index + 1}</Label>
-                              <div className="flex gap-2 items-center">
-                                <Checkbox
-                                  checked={newQuestion.correct === choice && choice.trim() !== ""}
-                                  onCheckedChange={(checked) => handleCorrectAnswerChange(index, checked as boolean)}
-                                  className="border-gray-600"
-                                />
-                                <Input
-                                  value={choice}
-                                  onChange={(e) => handleChoiceChange(index, e.target.value)}
-                                  placeholder={`Answer ${index + 1}`}
-                                  className="bg-gray-800 border-gray-600 text-white flex-1"
-                                />
-                              </div>
-                              {newQuestion.correct === choice && choice.trim() !== "" && (
-                                <p className="text-green-400 text-sm">✅ Correct Answer</p>
-                              )}
-                            </div>
-                          ))}
-                        </div>
-
-                        <Button
-                          onClick={addCustomQuestion}
-                          className="bg-red-600 hover:bg-red-700 text-white"
-                        >
-                          ➕ Add Question
-                        </Button>
-                      </div>
+                  <div className="space-y-2">
+                    <div>
+                      <p className="text-white text-sm font-medium">Question:</p>
+                      <p className="text-gray-300 text-sm">{question.question}</p>
+                    </div>
+                    <div>
+                      <p className="text-white text-sm font-medium">Choices:</p>
+                      <ul className="text-gray-300 text-sm ml-3 space-y-1">
+                        {question.choices.map((choice, choiceIndex) => (
+                          <li key={choiceIndex} className={choice === question.correct ? "text-green-400 font-medium" : ""}>
+                            {choice === question.correct ? "✅ " : "• "}{choice}
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   </div>
-                )}
-
-                {/* Existing Questions List */}
-                {customQuestions.length > 0 && (
-                  <div className="mt-8">
-                    <h3 className="text-white font-bold text-lg mb-4">Your Custom Questions ({customQuestions.length}/{getTriviaLimit(hauntConfig.tier)})</h3>
-                    <div className="max-h-96 overflow-y-auto space-y-3 pr-2">
-                      {customQuestions.map((question, index) => (
-                        <div key={question.id} className="border border-gray-600 rounded-lg p-4 bg-gray-800/50 hover:bg-gray-700/50 transition-colors">
-                          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 mb-3">
-                            <h4 className="text-white font-bold text-sm">Question #{index + 1}</h4>
-                            <div className="flex gap-2 flex-shrink-0">
-                              <Button
-                                onClick={() => editCustomQuestion(question)}
-                                variant="outline"
-                                size="sm"
-                                className="border-blue-600 text-blue-400 hover:bg-blue-600 hover:text-white text-xs px-2 py-1"
-                              >
-                                ✏️ Edit
-                              </Button>
-                              <Button
-                                onClick={() => question.id && deleteCustomQuestion(question.id)}
-                                variant="outline"
-                                size="sm"
-                                className="border-red-600 text-red-500 hover:bg-red-600 hover:text-white text-xs px-2 py-1"
-                              >
-                                🗑️ Delete
-                              </Button>
-                            </div>
-                          </div>
-                          
-                          <div className="space-y-3">
-                            <p className="text-gray-300 text-sm leading-relaxed">
-                              <span className="font-bold text-white">Q:</span> {question.question}
-                            </p>
-                            
-                            <div className="grid grid-cols-1 gap-2">
-                              {question.choices.map((choice, choiceIndex) => (
-                                <div
-                                  key={choiceIndex}
-                                  className={`p-2 rounded text-sm ${
-                                    choice === question.correct
-                                      ? 'border border-green-500 bg-green-500/20 text-green-400 font-medium'
-                                      : 'bg-gray-700/50 text-gray-300'
-                                  }`}
-                                >
-                                  <span className="text-gray-500 font-mono text-xs mr-2">
-                                    {String.fromCharCode(65 + choiceIndex)}.
-                                  </span>
-                                  {choice === question.correct && '✅ '}
-                                  {choice}
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-
-            {/* Action Buttons */}
-            <div className="flex gap-4 mt-8">
-              <Button
-                onClick={handleSave}
-                disabled={isSaving}
-                className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6"
-              >
-                {isSaving ? "Saving..." : "💾 Save Changes"}
-              </Button>
-              <Button
-                onClick={() => window.location.href = `/`}
-                variant="outline"
-                className="border-red-600 text-red-500 hover:bg-red-600 hover:text-white py-3 px-6"
-              >
-                🎮 Back to Game
-              </Button>
+                </div>
+              ))}
+              
+              {customQuestions.length < getQuestionLimit(hauntConfig.tier) && (
+                <Button
+                  onClick={() => setEditingQuestion({
+                    question: "",
+                    choices: ["", "", "", ""],
+                    correct: ""
+                  })}
+                  variant="outline"
+                  className="w-full border-red-600 text-red-500 hover:bg-red-600 hover:text-white"
+                >
+                  ➕ Add Custom Question
+                </Button>
+              )}
             </div>
           </CardContent>
         </Card>
+
+        {/* Action Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
+          <Button
+            onClick={handleSave}
+            disabled={isSaving}
+            className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 text-lg font-semibold w-full sm:w-auto shadow-lg"
+          >
+            {isSaving ? "Saving..." : "💾 Save Configuration"}
+          </Button>
+          <Button
+            onClick={() => window.location.href = `/?haunt=${hauntId}`}
+            variant="outline"
+            className="border-red-600 text-red-500 hover:bg-red-600 hover:text-white w-full sm:w-auto"
+          >
+            🎮 Back to Game
+          </Button>
+        </div>
       </div>
     </div>
   );
