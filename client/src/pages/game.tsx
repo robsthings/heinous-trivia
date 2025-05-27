@@ -6,7 +6,20 @@ import { GameEndScreen } from "@/components/GameEndScreen";
 import { Leaderboard } from "@/components/Leaderboard";
 import { ConfigLoader, getHauntFromURL } from "@/lib/configLoader";
 import { GameManager, type GameState } from "@/lib/gameState";
-import type { LeaderboardEntry } from "@shared/schema";
+import { firestore } from "@/lib/firebase";
+import { doc, onSnapshot, updateDoc } from "firebase/firestore";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import type { LeaderboardEntry, TriviaQuestion } from "@shared/schema";
+
+interface ActiveRound {
+  questionIndex: number;
+  question: TriviaQuestion;
+  status: "countdown" | "live" | "reveal" | "waiting";
+  startTime: number;
+  currentAnswers: Record<string, string>;
+  totalQuestions: number;
+}
 
 export default function Game() {
   const [gameState, setGameState] = useState<GameState>(() => 
@@ -15,6 +28,13 @@ export default function Game() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [leaderboard, setLeaderboard] = useState<any[]>([]);
+  const [activeRound, setActiveRound] = useState<ActiveRound | null>(null);
+  const [isGroupMode, setIsGroupMode] = useState(false);
+  const [playerId, setPlayerId] = useState<string>(() => 
+    `player_${Math.random().toString(36).substr(2, 9)}`
+  );
+  const [groupAnswer, setGroupAnswer] = useState<number | null>(null);
+  const [countdown, setCountdown] = useState(0);
 
   useEffect(() => {
     const initializeGame = async () => {

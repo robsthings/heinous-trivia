@@ -7,6 +7,7 @@ import Game from "@/pages/game";
 import Admin from "@/pages/admin";
 import HauntAdmin from "@/pages/haunt-admin";
 import HauntAuth from "@/pages/haunt-auth";
+import HostPanel from "@/pages/host-panel";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -17,6 +18,7 @@ function Router() {
       <Route path="/admin" component={Admin} />
       <Route path="/haunt-auth" component={HauntAuth} />
       <Route path="/haunt-admin/:hauntId" component={HauntAdmin} />
+      <Route path="/host-panel/:hauntId" component={HostPanel} />
       <Route component={NotFound} />
     </Switch>
   );
