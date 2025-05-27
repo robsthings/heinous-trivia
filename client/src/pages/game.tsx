@@ -80,7 +80,7 @@ export default function Game() {
   };
 
   const handlePlayAgain = () => {
-    setGameState(prev => GameManager.resetGame(prev));
+    setGameState(prev => GameManager.playAgain(prev));
   };
 
   const handleViewLeaderboard = () => {

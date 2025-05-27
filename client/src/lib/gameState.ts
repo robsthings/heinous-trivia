@@ -193,6 +193,21 @@ export class GameManager {
     };
   }
 
+  static playAgain(state: GameState): GameState {
+    // Reshuffle the existing questions for a new game experience
+    const reshuffledQuestions = this.shuffleQuestions(state.questions);
+    
+    return {
+      ...this.createInitialState(state.currentHaunt),
+      hauntConfig: state.hauntConfig,
+      questions: reshuffledQuestions,
+      ads: state.ads,
+      showEndScreen: false,
+      gameComplete: false,
+      showLeaderboard: false,
+    };
+  }
+
   static shuffleQuestions(questions: TriviaQuestion[]): TriviaQuestion[] {
     const shuffled = [...questions];
     for (let i = shuffled.length - 1; i > 0; i--) {
