@@ -837,11 +837,82 @@ export default function HauntAdmin() {
               </CardContent>
             </Card>
 
+            {/* Preview Ads Section */}
+            {uploadedAds.length > 0 && (
+              <Card className="bg-gray-900/50 border-gray-700 mt-8">
+                <CardHeader>
+                  <CardTitle className="text-red-400">👁️ Preview Ads</CardTitle>
+                  <p className="text-gray-300 text-sm">
+                    This is how your ads will appear between game rounds. Click to simulate the full-screen experience.
+                  </p>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {uploadedAds.map((ad, index) => (
+                      <div key={ad.id} className="border border-gray-600 rounded-lg p-4 bg-gray-800/50 hover:bg-gray-700/50 transition-colors">
+                        <div className="text-center">
+                          <h4 className="text-white font-bold mb-2">Ad #{index + 1}</h4>
+                          <div 
+                            className="relative cursor-pointer group"
+                            onClick={() => {
+                              // Simulate fullscreen ad
+                              const modal = document.createElement('div');
+                              modal.className = 'fixed inset-0 bg-black flex items-center justify-center z-50';
+                              modal.innerHTML = `
+                                <div class="w-full h-full flex flex-col items-center justify-center p-6 bg-gradient-to-br from-red-900 via-black to-purple-900">
+                                  <div class="text-center max-w-4xl mx-auto">
+                                    <h3 class="font-nosifer text-4xl text-orange-500 mb-8 animate-pulse">A Message from Our Sponsors</h3>
+                                    <img src="${ad.imageUrl}" alt="Ad Preview" class="w-full max-w-3xl h-96 object-cover rounded-xl mb-8 shadow-2xl border-4 border-red-600 mx-auto" />
+                                    <h4 class="text-3xl font-bold text-white mb-4 font-creepster">${ad.title || 'Custom Ad'}</h4>
+                                    <p class="text-gray-300 text-xl mb-8 max-w-2xl mx-auto">${ad.description || 'Check this out!'}</p>
+                                    <button onclick="this.closest('.fixed').remove()" class="w-full py-3 rounded-lg font-medium text-gray-300 border border-gray-600 hover:bg-gray-800 transition-colors">Close Preview</button>
+                                  </div>
+                                </div>
+                              `;
+                              document.body.appendChild(modal);
+                            }}
+                          >
+                            <img
+                              src={ad.imageUrl}
+                              alt={`Ad ${index + 1}`}
+                              className="w-full h-32 object-cover rounded border border-gray-600 group-hover:border-red-500 transition-colors"
+                            />
+                            <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-opacity rounded flex items-center justify-center">
+                              <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity font-bold">👁️ Preview</span>
+                            </div>
+                          </div>
+                          
+                          <div className="mt-3 text-left">
+                            <p className="text-white font-semibold text-sm truncate">
+                              {ad.title || 'Custom Ad'}
+                            </p>
+                            <p className="text-gray-400 text-xs mt-1 line-clamp-2">
+                              {ad.description || 'Check this out!'}
+                            </p>
+                            {ad.link && (
+                              <a
+                                href={ad.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-block mt-2 text-red-400 text-xs hover:text-red-300 transition-colors"
+                              >
+                                🔗 Click to visit link
+                              </a>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
             {/* Uploaded Ads List */}
             {uploadedAds.length > 0 && (
               <Card className="bg-gray-900/50 border-gray-700 mt-8">
                 <CardHeader>
-                  <CardTitle className="text-red-400">📢 Uploaded Ads</CardTitle>
+                  <CardTitle className="text-red-400">📢 Uploaded Ads Management</CardTitle>
                   <p className="text-gray-300 text-sm">
                     Ads Uploaded: <span className="text-red-400 font-bold">{uploadedAds.length}</span> / <span className="text-red-400 font-bold">{getAdLimit(hauntConfig.tier)}</span> (<span className="capitalize">{hauntConfig.tier}</span> Tier)
                   </p>
