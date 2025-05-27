@@ -233,8 +233,8 @@ export default function HauntAdmin() {
         imageUrl: downloadURL,
         link: link || "",
         uploadedAt: new Date().toISOString(),
-        title: `Ad ${adId}`,
-        description: "Custom advertisement"
+        title: title || `Custom Ad ${adId}`,
+        description: description || "Check this out!"
       };
       
       const adsRef = collection(firestore, 'haunt-ads', hauntId, 'ads');
@@ -688,9 +688,43 @@ export default function HauntAdmin() {
                           </Button>
                         )}
                       </div>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div>
+                            <Label className="text-white">Ad Title *</Label>
+                            <Input
+                              type="text"
+                              value={ad.title}
+                              onChange={(e) => handleAdTitleChange(index, e.target.value)}
+                              placeholder="e.g., Midnight Ghost Tours"
+                              className="bg-gray-800 border-gray-600 text-white"
+                            />
+                          </div>
+                          <div>
+                            <Label className="text-white">Link (Optional)</Label>
+                            <Input
+                              type="url"
+                              value={ad.link}
+                              onChange={(e) => handleAdLinkChange(index, e.target.value)}
+                              placeholder="https://example.com/vip"
+                              className="bg-gray-800 border-gray-600 text-white"
+                            />
+                          </div>
+                        </div>
+                        
                         <div>
-                          <Label className="text-white">Image Upload</Label>
+                          <Label className="text-white">Ad Description *</Label>
+                          <Input
+                            type="text"
+                            value={ad.description}
+                            onChange={(e) => handleAdDescriptionChange(index, e.target.value)}
+                            placeholder="e.g., Join our spine-chilling tours through Salem's most haunted locations"
+                            className="bg-gray-800 border-gray-600 text-white"
+                          />
+                        </div>
+                        
+                        <div>
+                          <Label className="text-white">Image Upload *</Label>
                           <Input
                             type="file"
                             accept="image/*"
@@ -703,28 +737,26 @@ export default function HauntAdmin() {
                             </p>
                           )}
                         </div>
-                        <div>
-                          <Label className="text-white">Link (Optional)</Label>
-                          <Input
-                            type="url"
-                            value={ad.link}
-                            onChange={(e) => handleAdLinkChange(index, e.target.value)}
-                            placeholder="https://example.com/vip"
-                            className="bg-gray-800 border-gray-600 text-white"
-                          />
-                        </div>
                       </div>
                       
                       {/* Upload Button */}
-                      {ad.file && (
+                      {ad.file && ad.title && ad.description && (
                         <div className="mt-4 flex justify-end">
                           <Button
-                            onClick={() => uploadAdImage(ad.file!, ad.id, ad.link)}
+                            onClick={() => uploadAdImage(ad.file!, ad.id, ad.link, ad.title, ad.description)}
                             disabled={isSaving}
                             className="bg-red-600 hover:bg-red-700 text-white"
                           >
                             {isSaving ? "Uploading..." : "🚀 Upload Ad Image"}
                           </Button>
+                        </div>
+                      )}
+                      
+                      {ad.file && (!ad.title || !ad.description) && (
+                        <div className="mt-4 p-3 bg-yellow-900/50 border border-yellow-600 rounded-lg">
+                          <p className="text-yellow-300 text-sm">
+                            ⚠️ Please fill in the ad title and description before uploading
+                          </p>
                         </div>
                       )}
                     </div>
