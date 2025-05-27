@@ -11,7 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { firestore } from "@/lib/firebase";
-import { doc, setDoc, collection, addDoc, getDocs, updateDoc } from "firebase/firestore";
+import { doc, setDoc, collection, addDoc, getDocs, updateDoc, deleteDoc } from "firebase/firestore";
 import { ExternalLink, Settings, GamepadIcon, Crown, Zap, Gem, Copy } from "lucide-react";
 import type { HauntConfig, TriviaQuestion } from "@shared/schema";
 
@@ -1175,38 +1175,57 @@ export default function Admin() {
                                                 >
                                                   👁️
                                                 </Button>
-                                                {pack.accessType === 'select' && (
-                                                  <Button
-                                                    onClick={async () => {
-                                                      if (confirm(`Remove "${pack.name}" access from "${haunt.name}"?`)) {
-                                                        try {
+                                                <Button
+                                                  onClick={async () => {
+                                                    const revokeAction = pack.accessType === 'select' ? 
+                                                      'Remove from direct assignment' :
+                                                      pack.accessType === 'tier' ?
+                                                      `Remove "${haunt.tier}" tier from pack access` :
+                                                      'Change pack from "All haunts" to selective access';
+                                                    
+                                                    if (confirm(`Revoke "${pack.name}" from "${haunt.name}"?\n\nAction: ${revokeAction}`)) {
+                                                      try {
+                                                        const packRef = doc(firestore, 'trivia-packs', pack.id!);
+                                                        
+                                                        if (pack.accessType === 'select') {
+                                                          // Remove from direct assignment
                                                           const updatedHaunts = (pack.allowedHaunts || []).filter(id => id !== haunt.id);
-                                                          const packRef = doc(firestore, 'trivia-packs', pack.id!);
                                                           await updateDoc(packRef, { allowedHaunts: updatedHaunts });
-                                                          
-                                                          // Refresh data
-                                                          await loadExistingPacks();
-                                                          
-                                                          toast({
-                                                            title: "Access Revoked",
-                                                            description: `Removed "${pack.name}" from ${haunt.name}`,
-                                                          });
-                                                        } catch (error) {
-                                                          toast({
-                                                            title: "Error",
-                                                            description: "Failed to revoke pack access",
-                                                            variant: "destructive"
+                                                        } else if (pack.accessType === 'tier') {
+                                                          // Remove this tier from pack's allowed tiers
+                                                          const updatedTiers = (pack.allowedTiers || []).filter(tier => tier !== haunt.tier);
+                                                          await updateDoc(packRef, { allowedTiers: updatedTiers });
+                                                        } else if (pack.accessType === 'all') {
+                                                          // Convert to selective access excluding this haunt
+                                                          const allOtherHaunts = allHaunts.filter(h => h.id !== haunt.id).map(h => h.id);
+                                                          await updateDoc(packRef, { 
+                                                            accessType: 'select',
+                                                            allowedHaunts: allOtherHaunts 
                                                           });
                                                         }
+                                                        
+                                                        // Refresh data
+                                                        await loadExistingPacks();
+                                                        
+                                                        toast({
+                                                          title: "Access Revoked",
+                                                          description: `Removed "${pack.name}" from ${haunt.name}`,
+                                                        });
+                                                      } catch (error) {
+                                                        toast({
+                                                          title: "Error",
+                                                          description: "Failed to revoke pack access",
+                                                          variant: "destructive"
+                                                        });
                                                       }
-                                                    }}
-                                                    variant="ghost"
-                                                    size="sm"
-                                                    className="text-red-400 hover:text-red-300 hover:bg-red-900/30"
-                                                  >
-                                                    🗑️
-                                                  </Button>
-                                                )}
+                                                    }
+                                                  }}
+                                                  variant="ghost"
+                                                  size="sm"
+                                                  className="text-red-400 hover:text-red-300 hover:bg-red-900/30"
+                                                >
+                                                  🗑️
+                                                </Button>
                                               </div>
                                             </div>
                                           </div>
