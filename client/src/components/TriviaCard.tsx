@@ -11,11 +11,12 @@ interface TriviaCardProps {
 export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: TriviaCardProps) {
   const currentQuestion = gameState.questions[gameState.currentQuestionIndex];
   
-  if (!currentQuestion) {
+  // Enhanced null checks to prevent crashes
+  if (!currentQuestion || !currentQuestion.answers || !Array.isArray(currentQuestion.answers)) {
     return (
       <div className="glass-card rounded-xl p-6 mt-4 animate-fade-in">
         <div className="text-center text-gray-300">
-          <p>Loading question...</p>
+          <p>Question unavailable - Please try refreshing the game</p>
         </div>
       </div>
     );

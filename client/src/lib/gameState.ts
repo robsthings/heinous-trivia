@@ -48,6 +48,13 @@ export class GameManager {
     if (state.selectedAnswer !== null) return state;
 
     const currentQuestion = state.questions[state.currentQuestionIndex];
+    
+    // Prevent crash from undefined question
+    if (!currentQuestion || typeof currentQuestion.correctAnswer !== 'number') {
+      console.error('Invalid question data, skipping answer selection');
+      return state;
+    }
+    
     const isCorrect = answerIndex === currentQuestion.correctAnswer;
     const points = isCorrect ? (currentQuestion.points || 100) : 0;
 

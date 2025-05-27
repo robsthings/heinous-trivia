@@ -10,7 +10,10 @@ export class ConfigLoader {
       const docSnap = await getDoc(docRef);
       
       if (docSnap.exists()) {
-        return docSnap.data() as HauntConfig;
+        const data = docSnap.data();
+        if (data && typeof data === 'object') {
+          return data as HauntConfig;
+        }
       }
       
       // Fallback to API
@@ -41,16 +44,17 @@ export class ConfigLoader {
           const data = doc.data();
           customQuestions.push({
             id: doc.id,
-            text: data.question,
+            text: data.question || data.text || 'Question text missing',
             category: "Custom",
             difficulty: 1,
-            answers: data.choices,
-            correctAnswer: data.choices.indexOf(data.correct),
-            explanation: `The correct answer is ${data.correct}`,
+            answers: data.choices || data.answers || [],
+            correctAnswer: Math.max(0, (data.choices || data.answers || []).indexOf(data.correct || data.answer || '')),
+            explanation: `The correct answer is ${data.correct || data.answer || 'Unknown'}`,
             points: 10
           } as TriviaQuestion);
         });
       } catch (error) {
+        console.error('Firebase error loading custom questions:', error);
         // Continue without custom questions
       }
 
@@ -74,12 +78,12 @@ export class ConfigLoader {
                 if (packData.questions && Array.isArray(packData.questions)) {
                   const mappedQuestions = packData.questions.map((q: any) => ({
                     id: q.id || `pack-${packId}-${Math.random()}`,
-                    text: q.question || q.text,
+                    text: q.question || q.text || 'Question text missing',
                     category: "Pack",
                     difficulty: 1,
-                    answers: q.choices || [],
-                    correctAnswer: q.choices ? q.choices.indexOf(q.correct || q.answer) : 0,
-                    explanation: `The correct answer is ${q.correct || q.answer}`,
+                    answers: q.choices || q.answers || [],
+                    correctAnswer: Math.max(0, (q.choices || q.answers || []).indexOf(q.correct || q.answer || '')),
+                    explanation: `The correct answer is ${q.correct || q.answer || 'Unknown'}`,
                     points: 10
                   }));
                   packQuestions.push(...mappedQuestions);
@@ -110,12 +114,12 @@ export class ConfigLoader {
             if (starterData.questions && Array.isArray(starterData.questions)) {
               allQuestions = starterData.questions.map((q: any) => ({
                 id: q.id || `starter-${Math.random()}`,
-                text: q.question || q.text,
+                text: q.question || q.text || 'Question text missing',
                 category: "Horror",
                 difficulty: 1,
-                answers: q.choices || [],
-                correctAnswer: q.choices ? q.choices.indexOf(q.correct || q.answer) : 0,
-                explanation: `The correct answer is ${q.correct || q.answer}`,
+                answers: q.choices || q.answers || [],
+                correctAnswer: Math.max(0, (q.choices || q.answers || []).indexOf(q.correct || q.answer || '')),
+                explanation: `The correct answer is ${q.correct || q.answer || 'Unknown'}`,
                 points: 10
               }));
               console.log(`✅ Loaded ${allQuestions.length} questions from starter pack`);
