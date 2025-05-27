@@ -213,8 +213,10 @@ export default function Game() {
               onChange={(e) => setTempName(e.target.value)}
               className="bg-gray-800 border-gray-600 text-white"
               maxLength={20}
-              onKeyPress={(e) => {
+              autoFocus
+              onKeyDown={(e) => {
                 if (e.key === 'Enter' && tempName.trim()) {
+                  e.preventDefault();
                   savePlayerInfo(tempName.trim());
                 }
               }}
@@ -225,9 +227,10 @@ export default function Game() {
           </div>
 
           <Button 
+            type="button"
             onClick={() => savePlayerInfo(tempName.trim())}
             disabled={!tempName.trim()}
-            className="w-full bg-red-600 hover:bg-red-700"
+            className="w-full bg-red-600 hover:bg-red-700 disabled:bg-gray-600 disabled:cursor-not-allowed"
           >
             {isGroupMode ? "Join Game" : "Start Playing"}
           </Button>
