@@ -80,10 +80,12 @@ export function SpookyLoader({
 
       {/* Main loader */}
       <div className="glass-card rounded-xl p-8 text-center max-w-md w-full mx-4 relative z-10">
-        {/* Pulsing skull icon */}
+        {/* Pulsing skull icon with spooky effects */}
         <div className="mb-6 relative">
-          <div className="text-6xl animate-pulse">💀</div>
+          <div className="text-6xl animate-pulse transform hover:scale-110 transition-transform duration-300">💀</div>
           <div className="absolute inset-0 text-6xl animate-ping opacity-30">👻</div>
+          <div className="absolute -inset-4 border border-red-500/20 rounded-full animate-pulse"></div>
+          <div className="absolute -inset-8 border border-orange-500/10 rounded-full animate-ping"></div>
         </div>
 
         {/* Loading text */}

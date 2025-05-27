@@ -306,14 +306,7 @@ export default function HostPanel() {
   };
 
   if (isLoading && !activeRound) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-red-900 flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-3xl font-bold text-red-400 mb-4">Loading Host Panel...</h1>
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-400 mx-auto"></div>
-        </div>
-      </div>
-    );
+    return <SpookyLoader message="Preparing your host chamber..." showProgress={true} />;
   }
 
   return (
