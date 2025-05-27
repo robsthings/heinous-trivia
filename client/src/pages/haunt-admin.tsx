@@ -285,9 +285,38 @@ export default function HauntAdmin() {
   const handleSave = async () => {
     if (!hauntConfig) return;
 
+    console.log('Save configuration started');
+    console.log('Logo file state:', logoFile ? logoFile.name : 'No logo file');
     setIsSaving(true);
     try {
       let logoPath = hauntConfig.logoPath;
+
+      // Upload logo if a new file was selected
+      if (logoFile) {
+        try {
+          // Check authentication status
+          const currentUser = auth.currentUser;
+          console.log('Current user:', currentUser ? currentUser.uid : 'Not authenticated');
+          
+          console.log('Uploading logo for haunt:', hauntId);
+          const logoRef = ref(storage, `haunt-assets/${hauntId}/logo.${logoFile.name.split('.').pop()}`);
+          console.log('Upload path:', `haunt-assets/${hauntId}/logo.${logoFile.name.split('.').pop()}`);
+          
+          const uploadResult = await uploadBytes(logoRef, logoFile);
+          console.log('Upload successful:', uploadResult);
+          
+          logoPath = await getDownloadURL(logoRef);
+          console.log('Download URL:', logoPath);
+        } catch (uploadError) {
+          console.error('Logo upload failed:', uploadError);
+          toast({
+            title: "Logo Upload Failed",
+            description: "Failed to upload logo. Please try again.",
+            variant: "destructive"
+          });
+          return; // Don't save config if logo upload fails
+        }
+      }
 
       // Upload logo if a new file was selected
       if (logoFile) {
