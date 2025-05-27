@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -7,9 +7,12 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
+import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
 import { firestore } from "@/lib/firebase";
-import { doc, setDoc, collection, addDoc, getDocs } from "firebase/firestore";
+import { doc, setDoc, collection, addDoc, getDocs, updateDoc } from "firebase/firestore";
+import { ExternalLink, Settings, GamepadIcon, Crown, Zap, Gem } from "lucide-react";
 import type { HauntConfig, TriviaQuestion } from "@shared/schema";
 
 interface TriviaPack {
@@ -25,6 +28,7 @@ interface TriviaPack {
 export default function Admin() {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const [allHaunts, setAllHaunts] = useState<HauntConfig[]>([]);
   const [formData, setFormData] = useState({
     id: "",
     name: "",
@@ -55,6 +59,76 @@ export default function Admin() {
 
   const handlePackInputChange = (field: string, value: string | string[]) => {
     setPackFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  // Load all haunts on component mount
+  useEffect(() => {
+    loadAllHaunts();
+  }, []);
+
+  const loadAllHaunts = async () => {
+    try {
+      const hauntsRef = collection(firestore, 'haunts');
+      const snapshot = await getDocs(hauntsRef);
+      const haunts: HauntConfig[] = [];
+      
+      snapshot.forEach((doc) => {
+        haunts.push({ ...doc.data(), id: doc.id } as HauntConfig);
+      });
+      
+      setAllHaunts(haunts.sort((a, b) => a.name.localeCompare(b.name)));
+    } catch (error) {
+      console.error('Failed to load haunts:', error);
+      toast({
+        title: "Error",
+        description: "Failed to load haunts list",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const updateHauntSubscription = async (hauntId: string, updates: Partial<HauntConfig>) => {
+    try {
+      const hauntRef = doc(firestore, 'haunts', hauntId);
+      await updateDoc(hauntRef, updates);
+      
+      // Update local state
+      setAllHaunts(prev => 
+        prev.map(haunt => 
+          haunt.id === hauntId ? { ...haunt, ...updates } : haunt
+        )
+      );
+
+      toast({
+        title: "Updated",
+        description: "Haunt subscription updated successfully",
+      });
+    } catch (error) {
+      console.error('Failed to update haunt:', error);
+      toast({
+        title: "Error",
+        description: "Failed to update haunt subscription",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const getTierIcon = (tier: string) => {
+    switch (tier) {
+      case 'basic': return <Crown className="h-4 w-4" />;
+      case 'pro': return <Zap className="h-4 w-4" />;
+      case 'premium': return <Gem className="h-4 w-4" />;
+      default: return null;
+    }
+  };
+
+  const getTierColor = (tier: string) => {
+    switch (tier) {
+      case 'basic': return 'bg-bronze-100 text-bronze-800 border-bronze-300';
+      case 'pro': return 'bg-silver-100 text-silver-800 border-silver-300';
+      case 'premium': return 'bg-gold-100 text-gold-800 border-gold-300';
+      default: return 'bg-gray-100 text-gray-800 border-gray-300';
+    }
   };
 
   const loadTriviaPacks = async () => {
@@ -211,8 +285,11 @@ export default function Admin() {
             <p className="text-center text-gray-300">Manage Haunts & Trivia Packs</p>
           </CardHeader>
           <CardContent>
-            <Tabs defaultValue="haunts" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 bg-gray-800">
+            <Tabs defaultValue="management" className="w-full">
+              <TabsList className="grid w-full grid-cols-3 bg-gray-800">
+                <TabsTrigger value="management" className="text-white data-[state=active]:bg-red-600">
+                  Haunt Management
+                </TabsTrigger>
                 <TabsTrigger value="haunts" className="text-white data-[state=active]:bg-red-600">
                   🏚️ Haunts
                 </TabsTrigger>
