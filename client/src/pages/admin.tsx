@@ -223,7 +223,14 @@ export default function Admin() {
         allowedHaunts: packFormData.allowedHaunts
       };
 
-      const docRef = await addDoc(collection(firestore, 'trivia-packs'), triviaPack);
+      // Use pack name as document ID for special packs like "starter-pack"
+      let docRef;
+      if (triviaPack.name === "starter-pack") {
+        docRef = doc(firestore, 'trivia-packs', 'starter-pack');
+        await setDoc(docRef, triviaPack);
+      } else {
+        docRef = await addDoc(collection(firestore, 'trivia-packs'), triviaPack);
+      }
       
       toast({
         title: "Success!",
