@@ -127,8 +127,11 @@ export default function Game() {
     window.open(link, '_blank');
   };
 
-  const handleSaveScore = async (playerName: string) => {
-    await GameManager.saveScore(playerName, gameState);
+  const handleSaveScore = async (inputPlayerName?: string) => {
+    const nameToUse = inputPlayerName || playerName;
+    await GameManager.saveScore(nameToUse, gameState);
+    const updatedLeaderboard = await GameManager.getLeaderboard(gameState.currentHaunt);
+    setLeaderboard(updatedLeaderboard);
   };
 
   const handlePlayAgain = () => {
@@ -282,6 +285,7 @@ export default function Game() {
         onSaveScore={handleSaveScore}
         onPlayAgain={handlePlayAgain}
         onViewLeaderboard={handleViewLeaderboard}
+        playerName={playerName}
       />
 
       <Leaderboard

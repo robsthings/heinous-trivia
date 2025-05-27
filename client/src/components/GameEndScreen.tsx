@@ -3,16 +3,18 @@ import type { GameState } from "@/lib/gameState";
 
 interface GameEndScreenProps {
   gameState: GameState;
-  onSaveScore: (playerName: string) => void;
+  onSaveScore: (playerName?: string) => void;
   onPlayAgain: () => void;
   onViewLeaderboard: () => void;
+  playerName?: string;
 }
 
 export function GameEndScreen({ 
   gameState, 
   onSaveScore, 
   onPlayAgain, 
-  onViewLeaderboard 
+  onViewLeaderboard,
+  playerName: savedPlayerName
 }: GameEndScreenProps) {
   const [playerName, setPlayerName] = useState("");
 
@@ -21,7 +23,11 @@ export function GameEndScreen({
   }
 
   const handleSaveAndRestart = () => {
-    if (playerName.trim()) {
+    if (savedPlayerName) {
+      // Automatically save with the persistent player name
+      onSaveScore();
+    } else if (playerName.trim()) {
+      // Fallback to manual input if no saved name
       onSaveScore(playerName.trim());
     }
     onPlayAgain();
@@ -43,16 +49,24 @@ export function GameEndScreen({
             </div>
           </div>
 
-          <div className="mb-6">
-            <input
-              type="text"
-              placeholder="Enter your name for the leaderboard"
-              className="w-full p-3 rounded-lg bg-gray-800 border border-red-900 text-white placeholder-gray-500 focus:outline-none focus:border-orange-500"
-              value={playerName}
-              onChange={(e) => setPlayerName(e.target.value)}
-              maxLength={20}
-            />
-          </div>
+          {savedPlayerName ? (
+            <div className="mb-6 text-center">
+              <div className="text-gray-300 text-sm mb-2">Playing as:</div>
+              <div className="text-white font-bold text-lg">{savedPlayerName}</div>
+              <div className="text-gray-400 text-xs mt-1">Score will be saved automatically</div>
+            </div>
+          ) : (
+            <div className="mb-6">
+              <input
+                type="text"
+                placeholder="Enter your name for the leaderboard"
+                className="w-full p-3 rounded-lg bg-gray-800 border border-red-900 text-white placeholder-gray-500 focus:outline-none focus:border-orange-500"
+                value={playerName}
+                onChange={(e) => setPlayerName(e.target.value)}
+                maxLength={20}
+              />
+            </div>
+          )}
 
           <div className="space-y-3">
             <button
