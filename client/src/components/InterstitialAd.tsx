@@ -8,10 +8,22 @@ interface InterstitialAdProps {
 
 export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAdProps) {
   if (!gameState.showAd || gameState.ads.length === 0) {
+    console.log('⚠️ No ads to display:', { showAd: gameState.showAd, adCount: gameState.ads.length });
     return null;
   }
 
   const currentAd = gameState.ads[gameState.currentAdIndex % gameState.ads.length];
+  
+  // Log ad details as requested
+  console.log('🎯 Displaying interstitial ad:', {
+    adIndex: gameState.currentAdIndex,
+    totalAds: gameState.ads.length,
+    currentAdIndex: gameState.currentAdIndex % gameState.ads.length,
+    imagePath: currentAd.image,
+    title: currentAd.title,
+    hasLink: !!currentAd.link,
+    link: currentAd.link
+  });
 
   const handleVisitAd = () => {
     if (currentAd.link) {
@@ -31,6 +43,14 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
             src={currentAd.image}
             alt={currentAd.title}
             className="w-full max-w-3xl h-96 object-cover rounded-xl mb-8 shadow-2xl border-4 border-red-600 mx-auto"
+            onError={(e) => {
+              console.error('❌ Ad image failed to load:', currentAd.image);
+              // Show placeholder if image fails
+              e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzMzIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkFkIFNwYWNlIEF2YWlsYWJsZTwvdGV4dD48L3N2Zz4=';
+            }}
+            onLoad={() => {
+              console.log('✅ Ad image loaded successfully:', currentAd.image);
+            }}
           />
           
           <h4 className="text-3xl font-bold text-white mb-4 font-creepster">
