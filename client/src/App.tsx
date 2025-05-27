@@ -8,6 +8,9 @@ import Admin from "@/pages/admin";
 import HauntAdmin from "@/pages/haunt-admin";
 import HauntAuth from "@/pages/haunt-auth";
 import HostPanel from "@/pages/host-panel";
+import Privacy from "@/pages/privacy";
+import Terms from "@/pages/terms";
+import UploadGuidelines from "@/pages/upload-guidelines";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -19,6 +22,9 @@ function Router() {
       <Route path="/haunt-auth/:hauntId" component={HauntAuth} />
       <Route path="/haunt-admin/:hauntId" component={HauntAdmin} />
       <Route path="/host-panel/:hauntId" component={HostPanel} />
+      <Route path="/privacy" component={Privacy} />
+      <Route path="/terms" component={Terms} />
+      <Route path="/upload-guidelines" component={UploadGuidelines} />
       <Route component={NotFound} />
     </Switch>
   );
