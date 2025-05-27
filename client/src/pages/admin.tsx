@@ -321,13 +321,9 @@ export default function Admin() {
         }
       };
 
-      console.log('🔥 Saving haunt config to Firebase:', hauntConfig);
-      
       // Save to Firebase
       const docRef = doc(firestore, 'haunts', formData.id);
       await setDoc(docRef, hauntConfig);
-      
-      console.log('✅ Haunt config saved successfully!');
       
       toast({
         title: "Success!",
@@ -564,7 +560,9 @@ export default function Admin() {
                                         triviaFile: haunt.triviaFile || "",
                                         adFile: haunt.adFile || "",
                                         tier: haunt.tier,
-
+                                        primaryColor: haunt.theme?.primaryColor || "#8B0000",
+                                        secondaryColor: haunt.theme?.secondaryColor || "#2D1B69",
+                                        accentColor: haunt.theme?.accentColor || "#FF6B35"
                                       });
                                     }}
                                     variant="outline"

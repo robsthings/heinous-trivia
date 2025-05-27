@@ -24,7 +24,6 @@ export class ConfigLoader {
       
       return null;
     } catch (error) {
-      console.error('Failed to load haunt config:', error);
       return null;
     }
   }
@@ -54,7 +53,6 @@ export class ConfigLoader {
           } as TriviaQuestion);
         });
       } catch (error) {
-        console.error('Firebase error loading custom questions:', error);
         // Continue without custom questions
       }
 
@@ -90,7 +88,7 @@ export class ConfigLoader {
                 }
               }
             } catch (packError) {
-              console.log(`Failed to load pack ${packId}:`, packError);
+              // Failed to load pack, continue
             }
           }
         }
