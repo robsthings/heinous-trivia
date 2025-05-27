@@ -5,64 +5,39 @@ import { doc, getDoc, collection, getDocs } from "firebase/firestore";
 export class ConfigLoader {
   static async loadHauntConfig(haunt: string): Promise<HauntConfig | null> {
     try {
-      console.log('🔥 Attempting to load haunt config from Firebase:', haunt);
-      
       // Try Firebase first
       const docRef = doc(firestore, 'haunts', haunt);
-      console.log('🔍 Looking for document at path:', `haunts/${haunt}`);
-      
       const docSnap = await getDoc(docRef);
-      console.log('📄 Document exists:', docSnap.exists());
-      console.log('📄 Document data:', docSnap.data());
       
       if (docSnap.exists()) {
-        const config = docSnap.data() as HauntConfig;
-        console.log('✅ Firebase config loaded:', config);
-        return config;
-      } else {
-        console.log('⚠️ No Firebase config found at /haunts/' + haunt + ', falling back to API');
+        return docSnap.data() as HauntConfig;
       }
       
       // Fallback to API
       const response = await fetch(`/api/haunt/${haunt}`);
-      if (!response.ok) {
-        throw new Error(`Failed to load haunt config: ${response.statusText}`);
+      if (response.ok) {
+        return await response.json();
       }
-      const config = await response.json();
-      console.log('📁 API config loaded:', config);
-      return config;
+      
+      return null;
     } catch (error) {
-      console.error('❌ Failed to load haunt config:', error);
-      
-      // Final fallback to API
-      try {
-        const response = await fetch(`/api/haunt/${haunt}`);
-        if (response.ok) {
-          return await response.json();
-        }
-      } catch (fallbackError) {
-        console.error('❌ API fallback also failed:', fallbackError);
-      }
-      
+      console.error('Failed to load haunt config:', error);
       return null;
     }
   }
 
   static async loadTriviaQuestions(haunt: string): Promise<TriviaQuestion[]> {
     try {
-      console.log('📚 Loading trivia questions for haunt:', haunt);
-      
-      // Load core questions from API/JSON files
+      // Load core questions from API
       const coreQuestions: TriviaQuestion[] = [];
       try {
         const response = await fetch(`/api/questions/${haunt}`);
         if (response.ok) {
           const apiQuestions = await response.json();
           coreQuestions.push(...apiQuestions);
-          console.log('✅ Core questions loaded:', coreQuestions.length);
         }
       } catch (error) {
-        console.log('⚠️ No core questions found via API, continuing...');
+        // Continue without core questions
       }
       
       // Load custom questions from Firebase
@@ -73,7 +48,6 @@ export class ConfigLoader {
         
         querySnapshot.forEach((doc) => {
           const data = doc.data();
-          // Transform Firebase custom question format to TriviaQuestion format
           customQuestions.push({
             id: doc.id,
             text: data.question,
@@ -85,32 +59,29 @@ export class ConfigLoader {
             points: 10
           } as TriviaQuestion);
         });
-        console.log('✅ Custom questions loaded:', customQuestions.length);
       } catch (error) {
-        console.log('⚠️ No custom questions found in Firebase, continuing...');
+        // Continue without custom questions
       }
       
       // Merge and shuffle all questions
       const allQuestions = [...coreQuestions, ...customQuestions];
-      console.log('🔀 Total questions before shuffle:', allQuestions.length);
       
-      // Shuffle the combined array
+      // Shuffle using Fisher-Yates algorithm
       for (let i = allQuestions.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [allQuestions[i], allQuestions[j]] = [allQuestions[j], allQuestions[i]];
       }
       
-      console.log('✅ Questions merged and shuffled:', allQuestions.length);
       return allQuestions;
     } catch (error) {
-      console.error('❌ Failed to load trivia questions:', error);
+      console.error('Failed to load trivia questions:', error);
       return [];
     }
   }
 
   static async loadAdData(haunt: string): Promise<AdData[]> {
     try {
-      // Load custom ads from Firebase FIRST (prioritize user uploads)
+      // Load custom ads from Firebase (prioritized)
       const customAds: AdData[] = [];
       try {
         const adsRef = collection(firestore, 'haunt-ads', haunt, 'ads');
@@ -118,39 +89,34 @@ export class ConfigLoader {
         
         querySnapshot.forEach((doc) => {
           const data = doc.data();
-          // Transform Firebase ad format to game format
           customAds.push({
             id: doc.id,
             title: data.title || "Custom Ad",
             description: data.description || "Check this out!",
-            image: data.imageUrl, // Map imageUrl to image property
-            duration: 5000, // 5 second default duration
+            image: data.imageUrl,
+            duration: 5000,
             link: data.link
           });
         });
-        console.log('✅ Custom Firebase ads loaded:', customAds.length);
       } catch (error) {
-        console.log('⚠️ No custom ads found in Firebase, loading default ads...');
+        // Continue without custom ads
       }
       
-      // Only load default ads if no custom ads exist
-      let coreAds: AdData[] = [];
+      // Load default ads only if no custom ads exist
       if (customAds.length === 0) {
-        const response = await fetch(`/api/ads/${haunt}`);
-        if (response.ok) {
-          coreAds = await response.json();
-          console.log('✅ Default ads loaded as fallback:', coreAds.length);
+        try {
+          const response = await fetch(`/api/ads/${haunt}`);
+          if (response.ok) {
+            return await response.json();
+          }
+        } catch (error) {
+          // Continue without default ads
         }
-      } else {
-        console.log('🎯 Using custom ads exclusively');
       }
       
-      // Prioritize custom ads over default ones
-      const allAds = [...customAds, ...coreAds];
-      console.log('🎯 Total ads available:', allAds.length);
-      return allAds;
+      return customAds;
     } catch (error) {
-      console.error('❌ Failed to load ad data:', error);
+      console.error('Failed to load ad data:', error);
       return [];
     }
   }
@@ -158,8 +124,5 @@ export class ConfigLoader {
 
 export function getHauntFromURL(): string {
   const urlParams = new URLSearchParams(window.location.search);
-  const hauntId = urlParams.get('haunt') || 'widowshollow';
-  console.log('🎃 Haunt ID from URL:', hauntId);
-  console.log('🔗 Current URL:', window.location.href);
-  return hauntId;
+  return urlParams.get('haunt') || 'widowshollow';
 }

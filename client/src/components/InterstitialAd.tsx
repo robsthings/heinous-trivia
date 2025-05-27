@@ -3,48 +3,22 @@ import type { GameState } from "@/lib/gameState";
 import { firestore } from "@/lib/firebase";
 import { doc, updateDoc, increment, setDoc, getDoc } from "firebase/firestore";
 
-// Ad tracking functions
-async function trackAdView(hauntId: string, adIndex: number) {
+// Consolidated ad tracking utility
+async function trackAdMetric(hauntId: string, adIndex: number, metric: 'views' | 'clicks') {
   try {
     const metricsRef = doc(firestore, 'ad-metrics', hauntId, 'ads', `ad${adIndex}`);
-    
-    // Check if document exists
     const docSnap = await getDoc(metricsRef);
+    
     if (docSnap.exists()) {
-      await updateDoc(metricsRef, {
-        views: increment(1)
-      });
+      await updateDoc(metricsRef, { [metric]: increment(1) });
     } else {
       await setDoc(metricsRef, {
-        views: 1,
-        clicks: 0
+        views: metric === 'views' ? 1 : 0,
+        clicks: metric === 'clicks' ? 1 : 0
       });
     }
-    console.log(`📊 Tracked view for ad ${adIndex} in ${hauntId}`);
   } catch (error) {
-    console.error('❌ Failed to track ad view:', error);
-  }
-}
-
-async function trackAdClick(hauntId: string, adIndex: number) {
-  try {
-    const metricsRef = doc(firestore, 'ad-metrics', hauntId, 'ads', `ad${adIndex}`);
-    
-    // Check if document exists
-    const docSnap = await getDoc(metricsRef);
-    if (docSnap.exists()) {
-      await updateDoc(metricsRef, {
-        clicks: increment(1)
-      });
-    } else {
-      await setDoc(metricsRef, {
-        views: 0,
-        clicks: 1
-      });
-    }
-    console.log(`🎯 Tracked click for ad ${adIndex} in ${hauntId}`);
-  } catch (error) {
-    console.error('❌ Failed to track ad click:', error);
+    console.error(`❌ Failed to track ad ${metric}:`, error);
   }
 }
 
@@ -56,7 +30,6 @@ interface InterstitialAdProps {
 
 export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAdProps) {
   if (!gameState.showAd || gameState.ads.length === 0) {
-    console.log('⚠️ No ads to display:', { showAd: gameState.showAd, adCount: gameState.ads.length });
     return null;
   }
 
@@ -65,23 +38,12 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
   
   // Track ad view when component mounts
   React.useEffect(() => {
-    trackAdView(gameState.currentHaunt, adIndex);
+    trackAdMetric(gameState.currentHaunt, adIndex, 'views');
   }, [gameState.currentHaunt, adIndex]);
-  
-  // Log ad details as requested
-  console.log('🎯 Displaying interstitial ad:', {
-    adIndex: gameState.currentAdIndex,
-    totalAds: gameState.ads.length,
-    currentAdIndex: adIndex,
-    imagePath: currentAd.image,
-    title: currentAd.title,
-    hasLink: !!currentAd.link,
-    link: currentAd.link
-  });
 
   const handleVisitAd = () => {
     if (currentAd.link) {
-      trackAdClick(gameState.currentHaunt, adIndex);
+      trackAdMetric(gameState.currentHaunt, adIndex, 'clicks');
       onVisitAd(currentAd.link);
     }
   };
@@ -99,12 +61,7 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
             alt={currentAd.title}
             className="w-full max-w-3xl h-96 object-cover rounded-xl mb-8 shadow-2xl border-4 border-red-600 mx-auto"
             onError={(e) => {
-              console.error('❌ Ad image failed to load:', currentAd.image);
-              // Show placeholder if image fails
               e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzMzIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkFkIFNwYWNlIEF2YWlsYWJsZTwvdGV4dD48L3N2Zz4=';
-            }}
-            onLoad={() => {
-              console.log('✅ Ad image loaded successfully:', currentAd.image);
             }}
           />
           
