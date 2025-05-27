@@ -62,9 +62,10 @@ export default function Admin() {
     setPackFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  // Load all haunts on component mount
+  // Load all haunts and trivia packs on component mount
   useEffect(() => {
     loadAllHaunts();
+    loadExistingPacks();
   }, []);
 
   const loadAllHaunts = async () => {
@@ -83,6 +84,36 @@ export default function Admin() {
       toast({
         title: "Error",
         description: "Failed to load haunts list",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const loadExistingPacks = async () => {
+    try {
+      const packsRef = collection(firestore, 'trivia-packs');
+      const snapshot = await getDocs(packsRef);
+      const packs: TriviaPack[] = [];
+      
+      snapshot.forEach((doc) => {
+        const data = doc.data();
+        packs.push({
+          id: doc.id,
+          name: data.name || 'Unnamed Pack',
+          description: data.description || '',
+          questions: data.questions || [],
+          accessType: data.accessType || 'all',
+          allowedTiers: data.allowedTiers || [],
+          allowedHaunts: data.allowedHaunts || []
+        });
+      });
+      
+      setExistingPacks(packs.sort((a, b) => a.name.localeCompare(b.name)));
+    } catch (error) {
+      console.error('Failed to load trivia packs:', error);
+      toast({
+        title: "Error",
+        description: "Failed to load trivia packs",
         variant: "destructive"
       });
     }
@@ -963,12 +994,54 @@ export default function Admin() {
                           <Card key={pack.id} className="bg-gray-800 border-gray-600">
                             <CardContent className="p-4">
                               <div className="flex justify-between items-start">
-                                <div>
+                                <div className="flex-1">
                                   <h5 className="font-bold text-white">{pack.name}</h5>
                                   <p className="text-gray-300 text-sm">{pack.description}</p>
                                   <p className="text-gray-400 text-xs mt-1">
                                     {pack.questions.length} questions • Access: {pack.accessType}
+                                    {pack.accessType === 'tier' && pack.allowedTiers?.length && (
+                                      <span> • Tiers: {pack.allowedTiers.join(', ')}</span>
+                                    )}
+                                    {pack.accessType === 'select' && pack.allowedHaunts?.length && (
+                                      <span> • Haunts: {pack.allowedHaunts.length}</span>
+                                    )}
                                   </p>
+                                </div>
+                                <div className="flex gap-2">
+                                  <Button
+                                    onClick={() => {
+                                      setPackFormData({
+                                        name: pack.name,
+                                        description: pack.description || "",
+                                        questionsJson: JSON.stringify(pack.questions, null, 2),
+                                        accessType: pack.accessType,
+                                        allowedTiers: pack.allowedTiers || [],
+                                        allowedHaunts: pack.allowedHaunts || []
+                                      });
+                                      // Scroll to form
+                                      document.querySelector('form')?.scrollIntoView({ behavior: 'smooth' });
+                                    }}
+                                    variant="outline"
+                                    size="sm"
+                                    className="border-blue-600 text-blue-400 hover:bg-blue-600 hover:text-white"
+                                  >
+                                    ✏️ Edit
+                                  </Button>
+                                  <Button
+                                    onClick={() => {
+                                      const questionsCount = pack.questions.length;
+                                      const accessInfo = pack.accessType === 'all' ? 'All haunts' : 
+                                                        pack.accessType === 'tier' ? `Tiers: ${pack.allowedTiers?.join(', ')}` :
+                                                        `${pack.allowedHaunts?.length || 0} selected haunts`;
+                                      
+                                      alert(`Pack: ${pack.name}\nDescription: ${pack.description || 'No description'}\nQuestions: ${questionsCount}\nAccess: ${accessInfo}\n\nClick "Edit" to modify this pack.`);
+                                    }}
+                                    variant="ghost"
+                                    size="sm"
+                                    className="text-gray-400 hover:text-white"
+                                  >
+                                    👁️ View
+                                  </Button>
                                 </div>
                               </div>
                             </CardContent>
