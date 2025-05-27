@@ -95,6 +95,7 @@ export class ConfigLoader {
           }
         }
       } catch (error) {
+        console.error('Firebase error loading trivia packs:', error);
         // Continue without pack questions
       }
       
@@ -111,7 +112,7 @@ export class ConfigLoader {
           if (starterPackDoc.exists()) {
             console.log('Starter pack found!');
             const starterData = starterPackDoc.data();
-            if (starterData.questions && Array.isArray(starterData.questions)) {
+            if (starterData && starterData.questions && Array.isArray(starterData.questions) && starterData.questions.length > 0) {
               allQuestions = starterData.questions.map((q: any) => ({
                 id: q.id || `starter-${Math.random()}`,
                 text: q.question || q.text || 'Question text missing',
