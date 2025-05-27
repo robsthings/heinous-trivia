@@ -145,6 +145,35 @@ export default function Admin() {
     }
   };
 
+  const resetHauntPassword = async (hauntId: string, hauntName: string) => {
+    const confirmed = window.confirm(
+      `Are you sure you want to reset the access code for "${hauntName}"?\n\nThis will:\n- Remove their current access code\n- Force them to set up a new one\n- Log them out of their admin panel\n\nThis action cannot be undone.`
+    );
+    
+    if (!confirmed) return;
+
+    try {
+      const hauntRef = doc(firestore, 'haunts', hauntId);
+      await updateDoc(hauntRef, { 
+        authCode: null,
+        authCodeResetAt: new Date().toISOString(),
+        authCodeResetBy: 'uber-admin'
+      });
+
+      toast({
+        title: "Access Code Reset",
+        description: `The access code for "${hauntName}" has been reset. They will need to set up a new code when they next visit their admin panel.`,
+      });
+    } catch (error) {
+      console.error('Failed to reset access code:', error);
+      toast({
+        title: "Error",
+        description: "Failed to reset access code. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
+
   const copyToClipboard = async (text: string, description: string) => {
     try {
       await navigator.clipboard.writeText(text);
@@ -522,29 +551,40 @@ export default function Admin() {
                                   </p>
                                 </div>
 
-                                {/* Edit Profile Button */}
-                                <Button
-                                  onClick={() => {
-                                    setEditingHaunt(haunt);
-                                    setFormData({
-                                      id: haunt.id,
-                                      name: haunt.name,
-                                      description: haunt.description || "",
-                                      logoPath: haunt.logoPath || "",
-                                      triviaFile: haunt.triviaFile || "",
-                                      adFile: haunt.adFile || "",
-                                      tier: haunt.tier,
-                                      primaryColor: haunt.theme?.primaryColor || "#8B0000",
-                                      secondaryColor: haunt.theme?.secondaryColor || "#2D1B69",
-                                      accentColor: haunt.theme?.accentColor || "#FF6B35"
-                                    });
-                                  }}
-                                  variant="outline"
-                                  size="sm"
-                                  className="w-full border-orange-600 text-orange-400 hover:bg-orange-600 hover:text-white"
-                                >
-                                  ✏️ Edit Profile
-                                </Button>
+                                {/* Admin Actions */}
+                                <div className="space-y-2">
+                                  <Button
+                                    onClick={() => {
+                                      setEditingHaunt(haunt);
+                                      setFormData({
+                                        id: haunt.id,
+                                        name: haunt.name,
+                                        description: haunt.description || "",
+                                        logoPath: haunt.logoPath || "",
+                                        triviaFile: haunt.triviaFile || "",
+                                        adFile: haunt.adFile || "",
+                                        tier: haunt.tier,
+                                        primaryColor: haunt.theme?.primaryColor || "#8B0000",
+                                        secondaryColor: haunt.theme?.secondaryColor || "#2D1B69",
+                                        accentColor: haunt.theme?.accentColor || "#FF6B35"
+                                      });
+                                    }}
+                                    variant="outline"
+                                    size="sm"
+                                    className="w-full border-orange-600 text-orange-400 hover:bg-orange-600 hover:text-white"
+                                  >
+                                    ✏️ Edit Profile
+                                  </Button>
+                                  
+                                  <Button
+                                    onClick={() => resetHauntPassword(haunt.id, haunt.name)}
+                                    variant="outline"
+                                    size="sm"
+                                    className="w-full border-red-600 text-red-400 hover:bg-red-600 hover:text-white"
+                                  >
+                                    🔑 Reset Access Code
+                                  </Button>
+                                </div>
 
                               </div>
                             </div>
