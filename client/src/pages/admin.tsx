@@ -336,7 +336,7 @@ export default function Admin() {
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="management" className="w-full">
-              <TabsList className="grid w-full grid-cols-3 bg-gray-800">
+              <TabsList className="grid w-full grid-cols-4 bg-gray-800">
                 <TabsTrigger value="management" className="text-white data-[state=active]:bg-red-600">
                   Haunt Management
                 </TabsTrigger>
@@ -345,6 +345,9 @@ export default function Admin() {
                 </TabsTrigger>
                 <TabsTrigger value="packs" className="text-white data-[state=active]:bg-red-600">
                   🧠 Trivia Packs
+                </TabsTrigger>
+                <TabsTrigger value="assignments" className="text-white data-[state=active]:bg-red-600">
+                  🎯 Pack Assignments
                 </TabsTrigger>
               </TabsList>
 
@@ -1051,6 +1054,123 @@ export default function Admin() {
                     </div>
                   )}
                 </div>
+              </TabsContent>
+
+              {/* Pack Assignments Tab */}
+              <TabsContent value="assignments" className="mt-6">
+                <Card className="bg-gray-900/50 border-gray-700">
+                  <CardHeader>
+                    <CardTitle className="text-purple-400 flex items-center gap-2">
+                      🎯 Trivia Pack Assignments
+                    </CardTitle>
+                    <p className="text-gray-300 text-sm">
+                      View and manage which trivia packs each haunt has access to
+                    </p>
+                  </CardHeader>
+                  <CardContent>
+                    {allHaunts.length === 0 ? (
+                      <p className="text-gray-400 text-center py-8">No haunts found</p>
+                    ) : (
+                      <div className="space-y-4">
+                        {allHaunts.map((haunt) => {
+                          // Find packs available to this haunt
+                          const availablePacks = existingPacks.filter(pack => {
+                            if (pack.accessType === 'all') return true;
+                            if (pack.accessType === 'tier' && pack.allowedTiers?.includes(haunt.tier)) return true;
+                            if (pack.accessType === 'select' && pack.allowedHaunts?.includes(haunt.id)) return true;
+                            return false;
+                          });
+
+                          return (
+                            <Card key={haunt.id} className="bg-gray-800 border-gray-600">
+                              <CardContent className="p-4">
+                                <div className="flex justify-between items-start mb-3">
+                                  <div>
+                                    <h4 className="font-bold text-white flex items-center gap-2">
+                                      {haunt.name}
+                                      <Badge variant="outline" className={
+                                        haunt.tier === 'premium' ? 'border-purple-500 text-purple-400' :
+                                        haunt.tier === 'pro' ? 'border-blue-500 text-blue-400' :
+                                        'border-green-500 text-green-400'
+                                      }>
+                                        {haunt.tier}
+                                      </Badge>
+                                      {!haunt.isActive && (
+                                        <Badge variant="destructive" className="text-xs">
+                                          Inactive
+                                        </Badge>
+                                      )}
+                                    </h4>
+                                    <p className="text-gray-400 text-sm">{haunt.description || 'No description'}</p>
+                                  </div>
+                                </div>
+
+                                <div className="space-y-3">
+                                  <div>
+                                    <h5 className="text-sm font-medium text-gray-300 mb-2">
+                                      Available Trivia Packs ({availablePacks.length})
+                                    </h5>
+                                    {availablePacks.length === 0 ? (
+                                      <p className="text-gray-500 text-sm italic">
+                                        No trivia packs assigned • Will use starter pack fallback
+                                      </p>
+                                    ) : (
+                                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                                        {availablePacks.map((pack) => (
+                                          <div key={pack.id} className="bg-gray-700/50 p-2 rounded">
+                                            <div className="flex justify-between items-center">
+                                              <div>
+                                                <p className="text-white text-sm font-medium">{pack.name}</p>
+                                                <p className="text-gray-400 text-xs">
+                                                  {pack.questions.length} questions • 
+                                                  {pack.accessType === 'all' ? ' All haunts' :
+                                                   pack.accessType === 'tier' ? ` ${pack.allowedTiers?.join(', ')} tier` :
+                                                   ' Direct assignment'}
+                                                </p>
+                                              </div>
+                                              <Button
+                                                onClick={() => {
+                                                  alert(`Pack: ${pack.name}\nAccess: ${pack.accessType}\nQuestions: ${pack.questions.length}\n\nTo revoke access, edit the pack's access settings.`);
+                                                }}
+                                                variant="ghost"
+                                                size="sm"
+                                                className="text-gray-400 hover:text-white"
+                                              >
+                                                👁️
+                                              </Button>
+                                            </div>
+                                          </div>
+                                        ))}
+                                      </div>
+                                    )}
+                                  </div>
+
+                                  <div className="pt-2 border-t border-gray-600">
+                                    <p className="text-xs text-gray-500">
+                                      Tier Limits: {haunt.tier === 'premium' ? '50' : haunt.tier === 'pro' ? '15' : '5'} questions per game •
+                                      Custom questions: Managed by haunt owner •
+                                      Pack access: Controlled via pack settings
+                                    </p>
+                                  </div>
+                                </div>
+                              </CardContent>
+                            </Card>
+                          );
+                        })}
+                      </div>
+                    )}
+
+                    <div className="mt-6 p-4 bg-blue-900/20 border border-blue-700 rounded-lg">
+                      <h4 className="text-blue-400 font-medium mb-2">💡 Managing Pack Access</h4>
+                      <ul className="text-sm text-gray-300 space-y-1">
+                        <li>• <strong>All haunts:</strong> Pack appears for every haunt regardless of tier</li>
+                        <li>• <strong>Tier access:</strong> Pack available to specific subscription tiers</li>
+                        <li>• <strong>Select haunts:</strong> Pack assigned to specific haunts only</li>
+                        <li>• <strong>To revoke access:</strong> Edit the pack's access settings in Trivia Packs tab</li>
+                      </ul>
+                    </div>
+                  </CardContent>
+                </Card>
               </TabsContent>
             </Tabs>
           </CardContent>
