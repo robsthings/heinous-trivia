@@ -57,10 +57,10 @@ export default function Game() {
           throw new Error(`Haunt configuration for '${haunt}' not found`);
         }
 
-        // Load trivia questions
+        // Load trivia questions (includes fallback to starter pack)
         const questions = await ConfigLoader.loadTriviaQuestions(haunt);
         if (questions.length === 0) {
-          throw new Error(`No trivia questions found for '${haunt}'`);
+          throw new Error(`No trivia questions available - check if starter pack exists`);
         }
 
         // Load ad data
