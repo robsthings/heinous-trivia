@@ -10,6 +10,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { Footer } from "@/components/Footer";
 import { ExternalLink } from "lucide-react";
+import { SpookyLoader } from "@/components/SpookyLoader";
+import { MiniSpookyLoader } from "@/components/MiniSpookyLoader";
 import { firestore, storage } from "@/lib/firebase";
 import { doc, getDoc, updateDoc, collection, addDoc, getDocs, deleteDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -337,18 +339,7 @@ export default function HauntAdmin() {
   };
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-red-900 p-4 flex items-center justify-center">
-        <Card className="bg-black/80 border-red-600 text-white">
-          <CardContent className="p-8">
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-500 mx-auto mb-4"></div>
-              <p className="text-gray-300">Loading haunt configuration...</p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    );
+    return <SpookyLoader message="Loading haunt configuration..." showProgress={true} />;
   }
 
   // First-time setup screen

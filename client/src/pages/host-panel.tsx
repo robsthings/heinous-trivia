@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useRoute } from "wouter";
 import { Footer } from "@/components/Footer";
+import { SpookyLoader } from "@/components/SpookyLoader";
+import { MiniSpookyLoader } from "@/components/MiniSpookyLoader";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";

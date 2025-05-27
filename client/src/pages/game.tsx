@@ -5,6 +5,8 @@ import { InterstitialAd } from "@/components/InterstitialAd";
 import { GameEndScreen } from "@/components/GameEndScreen";
 import { Leaderboard } from "@/components/Leaderboard";
 import { Footer } from "@/components/Footer";
+import { SpookyLoader } from "@/components/SpookyLoader";
+import { MiniSpookyLoader } from "@/components/MiniSpookyLoader";
 import { ConfigLoader, getHauntFromURL } from "@/lib/configLoader";
 import { GameManager, type GameState } from "@/lib/gameState";
 import { firestore } from "@/lib/firebase";
@@ -167,16 +169,7 @@ export default function Game() {
   };
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="glass-card rounded-xl p-8 text-center">
-          <h2 className="font-creepster text-2xl text-orange-500 mb-4">
-            Summoning the Spirits...
-          </h2>
-          <p className="text-gray-300">Loading your horror trivia experience</p>
-        </div>
-      </div>
-    );
+    return <SpookyLoader message="Loading your horror trivia experience" showProgress={true} />;
   }
 
   if (error) {
