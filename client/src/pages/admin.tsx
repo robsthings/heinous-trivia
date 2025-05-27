@@ -1038,6 +1038,35 @@ export default function Admin() {
                                     ✏️ Edit
                                   </Button>
                                   <Button
+                                    onClick={async () => {
+                                      if (confirm(`Delete "${pack.name}" trivia pack?\n\nThis action cannot be undone and will remove the pack from all haunts.`)) {
+                                        try {
+                                          const packRef = doc(firestore, 'trivia-packs', pack.id!);
+                                          await deleteDoc(packRef);
+                                          
+                                          // Refresh the list
+                                          await loadExistingPacks();
+                                          
+                                          toast({
+                                            title: "Pack Deleted",
+                                            description: `"${pack.name}" has been permanently removed`,
+                                          });
+                                        } catch (error) {
+                                          toast({
+                                            title: "Error",
+                                            description: "Failed to delete trivia pack",
+                                            variant: "destructive"
+                                          });
+                                        }
+                                      }
+                                    }}
+                                    variant="outline"
+                                    size="sm"
+                                    className="border-red-600 text-red-400 hover:bg-red-600 hover:text-white"
+                                  >
+                                    🗑️ Delete
+                                  </Button>
+                                  <Button
                                     onClick={() => {
                                       const questionsCount = pack.questions.length;
                                       const accessInfo = pack.accessType === 'all' ? 'All haunts' : 
