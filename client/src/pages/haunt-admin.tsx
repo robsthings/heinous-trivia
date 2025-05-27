@@ -36,6 +36,8 @@ export default function HauntAdmin() {
   const hauntId = params?.hauntId || "";
   const { toast } = useToast();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isFirstTimeSetup, setIsFirstTimeSetup] = useState(false);
+  const [newAccessCode, setNewAccessCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [hauntConfig, setHauntConfig] = useState<HauntConfig | null>(null);
@@ -124,10 +126,38 @@ export default function HauntAdmin() {
     }
   };
 
-  // Authentication check
+  // Authentication check with first-time setup support
   useEffect(() => {
-    const checkAuthentication = () => {
+    const checkAuthentication = async () => {
       try {
+        // First check if haunt exists and needs setup
+        const hauntRef = doc(firestore, 'haunts', hauntId);
+        const hauntSnap = await getDoc(hauntRef);
+
+        if (!hauntSnap.exists()) {
+          toast({
+            title: "Haunt Not Found",
+            description: "This haunt does not exist",
+            variant: "destructive"
+          });
+          setLocation('/haunt-auth');
+          return;
+        }
+
+        const hauntData = hauntSnap.data();
+        
+        // If no auth code is set, show first-time setup
+        if (!hauntData.authCode) {
+          setIsFirstTimeSetup(true);
+          setIsAuthenticated(true);
+          toast({
+            title: "Welcome to Your Haunt!",
+            description: "Set up your admin password to secure this dashboard",
+          });
+          return;
+        }
+
+        // Check existing authentication
         const authData = localStorage.getItem('haunt-auth');
         if (!authData) {
           setLocation('/haunt-auth');
@@ -161,6 +191,7 @@ export default function HauntAdmin() {
 
         setIsAuthenticated(true);
       } catch (error) {
+        console.error('Auth check error:', error);
         localStorage.removeItem('haunt-auth');
         setLocation('/haunt-auth');
       }
@@ -656,6 +687,95 @@ export default function HauntAdmin() {
                 className="border-red-600 text-red-500 hover:bg-red-600 hover:text-white"
               >
                 🎮 Back to Game
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  // First-time setup screen
+  if (isFirstTimeSetup) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-red-900 p-4 flex items-center justify-center">
+        <Card className="bg-black/80 border-red-600 text-white max-w-md w-full">
+          <CardHeader className="text-center">
+            <CardTitle className="text-2xl font-bold text-red-500">
+              🎃 Welcome to Your Haunt!
+            </CardTitle>
+            <p className="text-gray-300 mt-2">
+              Set up your admin password to secure this dashboard
+            </p>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div>
+                <Label htmlFor="newAccessCode" className="text-white">
+                  Create Admin Password
+                </Label>
+                <Input
+                  id="newAccessCode"
+                  type="password"
+                  value={newAccessCode}
+                  onChange={(e) => setNewAccessCode(e.target.value)}
+                  placeholder="Enter a secure password (6+ characters)"
+                  className="bg-gray-800 border-gray-600 text-white mt-2"
+                  disabled={isSaving}
+                />
+                <p className="text-gray-400 text-xs mt-1">
+                  You'll use this password to access your admin dashboard
+                </p>
+              </div>
+              
+              <Button 
+                onClick={async () => {
+                  if (!newAccessCode || newAccessCode.length < 6) {
+                    toast({
+                      title: "Invalid Password",
+                      description: "Password must be at least 6 characters long",
+                      variant: "destructive"
+                    });
+                    return;
+                  }
+
+                  try {
+                    setIsSaving(true);
+                    const hauntRef = doc(firestore, 'haunts', hauntId);
+                    await updateDoc(hauntRef, {
+                      authCode: newAccessCode
+                    });
+
+                    // Store authentication in localStorage
+                    const authToken = {
+                      hauntId: hauntId,
+                      accessCode: newAccessCode,
+                      timestamp: Date.now(),
+                      expires: Date.now() + (24 * 60 * 60 * 1000) // 24 hours
+                    };
+                    localStorage.setItem('haunt-auth', JSON.stringify(authToken));
+
+                    setIsFirstTimeSetup(false);
+                    toast({
+                      title: "Setup Complete!",
+                      description: "Your admin password has been set successfully",
+                    });
+
+                  } catch (error) {
+                    console.error('Failed to set access code:', error);
+                    toast({
+                      title: "Setup Failed",
+                      description: "Unable to set access code. Please try again.",
+                      variant: "destructive"
+                    });
+                  } finally {
+                    setIsSaving(false);
+                  }
+                }}
+                className="w-full bg-red-600 hover:bg-red-700 text-white"
+                disabled={isSaving || !newAccessCode || newAccessCode.length < 6}
+              >
+                {isSaving ? "Setting Up..." : "Secure My Dashboard"}
               </Button>
             </div>
           </CardContent>
