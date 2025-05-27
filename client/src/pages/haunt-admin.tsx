@@ -287,11 +287,21 @@ export default function HauntAdmin() {
 
     setIsSaving(true);
     try {
+      let logoPath = hauntConfig.logoPath;
+
+      // Upload logo if a new file was selected
+      if (logoFile) {
+        const logoRef = ref(storage, `haunt-assets/${hauntId}/logo.${logoFile.name.split('.').pop()}`);
+        await uploadBytes(logoRef, logoFile);
+        logoPath = await getDownloadURL(logoRef);
+      }
+
       const updatedConfig = {
         ...hauntConfig,
         mode: formData.mode as "individual" | "queue",
         triviaFile: formData.triviaFile,
         adFile: formData.adFile,
+        logoPath: logoPath,
         theme: {
           primaryColor: formData.primaryColor,
           secondaryColor: formData.secondaryColor,
