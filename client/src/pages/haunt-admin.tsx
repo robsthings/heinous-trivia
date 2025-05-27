@@ -640,7 +640,7 @@ export default function HauntAdmin() {
                   Your <span className="text-white font-medium capitalize">{hauntConfig.tier}</span> tier allows up to{" "}
                   <span className="text-white font-medium">{getAdLimit(hauntConfig.tier)}</span> ads. Recommended size: 800x400 PNG.
                 </p>
-                <div className="mt-3">
+                <div className="mt-3 flex gap-4">
                   <Link 
                     href="/upload-guidelines" 
                     className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 underline"
@@ -648,6 +648,13 @@ export default function HauntAdmin() {
                     <ExternalLink className="w-3 h-3" />
                     Review our Upload Guidelines
                   </Link>
+                  <a 
+                    href="/trivia-template.json"
+                    download="trivia-template.json"
+                    className="inline-flex items-center gap-1 text-sm text-green-400 hover:text-green-300 underline"
+                  >
+                    📥 Download Trivia Template
+                  </a>
                 </div>
               </CardHeader>
               <CardContent>

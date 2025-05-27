@@ -1,0 +1,27 @@
+[
+  {
+    "question": "What year was the first horror movie released?",
+    "choices": ["1896", "1910", "1922", "1931"],
+    "correct": "1896"
+  },
+  {
+    "question": "Which classic monster was created by Mary Shelley?",
+    "choices": ["Dracula", "The Wolfman", "Frankenstein's Monster", "The Mummy"],
+    "correct": "Frankenstein's Monster"
+  },
+  {
+    "question": "In which city is the TV show 'Supernatural' primarily set?",
+    "choices": ["Chicago", "Lawrence, Kansas", "New Orleans", "Salem"],
+    "correct": "Lawrence, Kansas"
+  },
+  {
+    "question": "What is the name of the hotel in Stephen King's 'The Shining'?",
+    "choices": ["The Stanley Hotel", "The Overlook Hotel", "The Grand Hotel", "The Haunted Hotel"],
+    "correct": "The Overlook Hotel"
+  },
+  {
+    "question": "Which horror movie features the character 'Chucky'?",
+    "choices": ["Child's Play", "Puppet Master", "Dead Silence", "Annabelle"],
+    "correct": "Child's Play"
+  }
+]
