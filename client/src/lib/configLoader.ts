@@ -37,16 +37,7 @@ export class ConfigLoader {
           coreQuestions.push(...apiQuestions);
         }
       } catch (error) {
-        // Fallback to default starter pack if haunt-specific questions not found
-        try {
-          const defaultResponse = await fetch('/api/questions/default');
-          if (defaultResponse.ok) {
-            const defaultQuestions = await defaultResponse.json();
-            coreQuestions.push(...defaultQuestions);
-          }
-        } catch (defaultError) {
-          console.log('No default questions available');
-        }
+        console.log(`No API questions found for ${haunt}`);
       }
       
       // Load custom questions from Firebase
@@ -73,7 +64,30 @@ export class ConfigLoader {
       }
       
       // Merge and shuffle all questions
-      const allQuestions = [...coreQuestions, ...customQuestions];
+      let allQuestions = [...coreQuestions, ...customQuestions];
+      
+      // If no questions found, try to load from starter pack
+      if (allQuestions.length === 0) {
+        try {
+          const starterPackRef = doc(firestore, 'trivia-packs', 'starter-pack');
+          const starterPackDoc = await getDoc(starterPackRef);
+          
+          if (starterPackDoc.exists()) {
+            const starterData = starterPackDoc.data();
+            if (starterData.questions && Array.isArray(starterData.questions)) {
+              allQuestions = starterData.questions.map((q: any) => ({
+                id: q.id || `starter-${Math.random()}`,
+                text: q.question || q.text,
+                choices: q.choices || [],
+                correct: q.correct || q.answer
+              }));
+              console.log(`Loaded ${allQuestions.length} questions from starter pack`);
+            }
+          }
+        } catch (error) {
+          console.log('No starter pack available:', error);
+        }
+      }
       
       // Shuffle using Fisher-Yates algorithm
       for (let i = allQuestions.length - 1; i > 0; i--) {
