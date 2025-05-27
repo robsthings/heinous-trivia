@@ -564,9 +564,7 @@ export default function Admin() {
                                         triviaFile: haunt.triviaFile || "",
                                         adFile: haunt.adFile || "",
                                         tier: haunt.tier,
-                                        primaryColor: haunt.theme?.primaryColor || "#8B0000",
-                                        secondaryColor: haunt.theme?.secondaryColor || "#2D1B69",
-                                        accentColor: haunt.theme?.accentColor || "#FF6B35"
+
                                       });
                                     }}
                                     variant="outline"
@@ -651,66 +649,7 @@ export default function Admin() {
                           </div>
                         </div>
 
-                        {/* Theme Colors */}
-                        <div className="space-y-4">
-                          <h3 className="text-white font-medium">Theme Colors</h3>
-                          
-                          <div className="space-y-3">
-                            <div>
-                              <Label htmlFor="edit-primary" className="text-white">Primary Color</Label>
-                              <div className="flex gap-2 mt-1">
-                                <Input
-                                  id="edit-primary"
-                                  type="color"
-                                  value={formData.primaryColor}
-                                  onChange={(e) => setFormData(prev => ({ ...prev, primaryColor: e.target.value }))}
-                                  className="w-16 h-10 p-1 bg-gray-800 border-gray-600"
-                                />
-                                <Input
-                                  value={formData.primaryColor}
-                                  onChange={(e) => setFormData(prev => ({ ...prev, primaryColor: e.target.value }))}
-                                  className="bg-gray-800 border-gray-600 text-white"
-                                />
-                              </div>
-                            </div>
 
-                            <div>
-                              <Label htmlFor="edit-secondary" className="text-white">Secondary Color</Label>
-                              <div className="flex gap-2 mt-1">
-                                <Input
-                                  id="edit-secondary"
-                                  type="color"
-                                  value={formData.secondaryColor}
-                                  onChange={(e) => setFormData(prev => ({ ...prev, secondaryColor: e.target.value }))}
-                                  className="w-16 h-10 p-1 bg-gray-800 border-gray-600"
-                                />
-                                <Input
-                                  value={formData.secondaryColor}
-                                  onChange={(e) => setFormData(prev => ({ ...prev, secondaryColor: e.target.value }))}
-                                  className="bg-gray-800 border-gray-600 text-white"
-                                />
-                              </div>
-                            </div>
-
-                            <div>
-                              <Label htmlFor="edit-accent" className="text-white">Accent Color</Label>
-                              <div className="flex gap-2 mt-1">
-                                <Input
-                                  id="edit-accent"
-                                  type="color"
-                                  value={formData.accentColor}
-                                  onChange={(e) => setFormData(prev => ({ ...prev, accentColor: e.target.value }))}
-                                  className="w-16 h-10 p-1 bg-gray-800 border-gray-600"
-                                />
-                                <Input
-                                  value={formData.accentColor}
-                                  onChange={(e) => setFormData(prev => ({ ...prev, accentColor: e.target.value }))}
-                                  className="bg-gray-800 border-gray-600 text-white"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
                       </div>
 
                       {/* Action Buttons */}
@@ -724,12 +663,7 @@ export default function Admin() {
                               const updatedHaunt: Partial<HauntConfig> = {
                                 name: formData.name,
                                 description: formData.description,
-                                tier: formData.tier as "basic" | "pro" | "premium",
-                                theme: {
-                                  primaryColor: formData.primaryColor,
-                                  secondaryColor: formData.secondaryColor,
-                                  accentColor: formData.accentColor
-                                }
+                                tier: formData.tier as "basic" | "pro" | "premium"
                               };
 
                               const hauntRef = doc(firestore, 'haunts', editingHaunt.id);
@@ -869,62 +803,7 @@ export default function Admin() {
                 </div>
               </div>
 
-              <div>
-                <Label className="text-white mb-4 block">Theme Colors</Label>
-                <div className="grid grid-cols-3 gap-4">
-                  <div>
-                    <Label htmlFor="primaryColor" className="text-sm text-gray-300">Primary</Label>
-                    <div className="flex gap-2">
-                      <Input
-                        id="primaryColor"
-                        type="color"
-                        value={formData.primaryColor}
-                        onChange={(e) => handleInputChange('primaryColor', e.target.value)}
-                        className="w-12 h-10 p-1 bg-gray-800 border-gray-600"
-                      />
-                      <Input
-                        value={formData.primaryColor}
-                        onChange={(e) => handleInputChange('primaryColor', e.target.value)}
-                        className="bg-gray-800 border-gray-600 text-white"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <Label htmlFor="secondaryColor" className="text-sm text-gray-300">Secondary</Label>
-                    <div className="flex gap-2">
-                      <Input
-                        id="secondaryColor"
-                        type="color"
-                        value={formData.secondaryColor}
-                        onChange={(e) => handleInputChange('secondaryColor', e.target.value)}
-                        className="w-12 h-10 p-1 bg-gray-800 border-gray-600"
-                      />
-                      <Input
-                        value={formData.secondaryColor}
-                        onChange={(e) => handleInputChange('secondaryColor', e.target.value)}
-                        className="bg-gray-800 border-gray-600 text-white"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <Label htmlFor="accentColor" className="text-sm text-gray-300">Accent</Label>
-                    <div className="flex gap-2">
-                      <Input
-                        id="accentColor"
-                        type="color"
-                        value={formData.accentColor}
-                        onChange={(e) => handleInputChange('accentColor', e.target.value)}
-                        className="w-12 h-10 p-1 bg-gray-800 border-gray-600"
-                      />
-                      <Input
-                        value={formData.accentColor}
-                        onChange={(e) => handleInputChange('accentColor', e.target.value)}
-                        className="bg-gray-800 border-gray-600 text-white"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
+
 
               <Button
                 type="submit"
