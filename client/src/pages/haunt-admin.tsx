@@ -294,9 +294,23 @@ export default function HauntAdmin() {
       // Upload logo if a new file was selected
       if (logoFile) {
         try {
-          // Check authentication status
+          // Force authentication check and wait for it
+          await new Promise((resolve) => {
+            const unsubscribe = auth.onAuthStateChanged((user) => {
+              unsubscribe();
+              resolve(user);
+            });
+          });
+          
           const currentUser = auth.currentUser;
           console.log('Current user:', currentUser ? currentUser.uid : 'Not authenticated');
+          
+          if (!currentUser) {
+            // Sign in anonymously if not authenticated
+            const { signInAnonymously } = await import('firebase/auth');
+            await signInAnonymously(auth);
+            console.log('Signed in anonymously for upload');
+          }
           
           console.log('Uploading logo for haunt:', hauntId);
           const logoRef = ref(storage, `haunt-assets/${hauntId}/logo.${logoFile.name.split('.').pop()}`);
