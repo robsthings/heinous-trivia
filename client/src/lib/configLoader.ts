@@ -53,9 +53,49 @@ export class ConfigLoader {
       } catch (error) {
         // Continue without custom questions
       }
+
+      // Load questions from assigned trivia packs
+      const packQuestions: TriviaQuestion[] = [];
+      try {
+        const hauntRef = doc(firestore, 'haunts', haunt);
+        const hauntSnap = await getDoc(hauntRef);
+        
+        if (hauntSnap.exists()) {
+          const hauntData = hauntSnap.data();
+          const assignedPacks = hauntData.assignedTriviaPacks || [];
+          
+          for (const packId of assignedPacks) {
+            try {
+              const packRef = doc(firestore, 'trivia-packs', packId);
+              const packSnap = await getDoc(packRef);
+              
+              if (packSnap.exists()) {
+                const packData = packSnap.data();
+                if (packData.questions && Array.isArray(packData.questions)) {
+                  const mappedQuestions = packData.questions.map((q: any) => ({
+                    id: q.id || `pack-${packId}-${Math.random()}`,
+                    text: q.question || q.text,
+                    category: "Pack",
+                    difficulty: 1,
+                    answers: q.choices || [],
+                    correctAnswer: q.choices ? q.choices.indexOf(q.correct || q.answer) : 0,
+                    explanation: `The correct answer is ${q.correct || q.answer}`,
+                    points: 10
+                  }));
+                  packQuestions.push(...mappedQuestions);
+                }
+              }
+            } catch (packError) {
+              console.log(`Failed to load pack ${packId}:`, packError);
+            }
+          }
+        }
+      } catch (error) {
+        // Continue without pack questions
+      }
       
       // Merge and shuffle all questions
-      let allQuestions = [...coreQuestions, ...customQuestions];
+      let allQuestions = [...coreQuestions, ...customQuestions, ...packQuestions];
       
       // If no questions found, try to load from starter pack
       if (allQuestions.length === 0) {
