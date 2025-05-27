@@ -202,6 +202,82 @@ export default function HauntAdmin() {
     }
   };
 
+  const unbreakMe = async () => {
+    setIsSaving(true);
+    try {
+      // Clear localStorage and sessionStorage for this haunt
+      const keysToRemove = [
+        `heinous-player-${hauntId}`,
+        `heinous-player-name-${hauntId}`,
+        `heinous-game-state-${hauntId}`,
+        `heinous-admin-cache-${hauntId}`
+      ];
+      
+      keysToRemove.forEach(key => {
+        localStorage.removeItem(key);
+        sessionStorage.removeItem(key);
+      });
+
+      // Re-fetch latest Firebase config
+      const docRef = doc(firestore, 'haunts', hauntId);
+      const docSnap = await getDoc(docRef);
+      
+      if (docSnap.exists()) {
+        const data = docSnap.data() as HauntConfig;
+        
+        // Validate and sanitize config with defaults
+        const sanitizedConfig = {
+          ...data,
+          name: data.name || `Haunt ${hauntId}`,
+          description: data.description || 'A mysterious horror experience',
+          mode: data.mode || 'individual',
+          tier: data.tier || 'basic',
+          theme: {
+            primaryColor: data.theme?.primaryColor || '#8B0000',
+            secondaryColor: data.theme?.secondaryColor || '#2D1B69',
+            accentColor: data.theme?.accentColor || '#FF6B35'
+          },
+          isActive: data.isActive !== false
+        };
+        
+        // Update Firebase with sanitized config
+        await updateDoc(docRef, sanitizedConfig);
+        setHauntConfig(sanitizedConfig);
+        
+        // Update form data
+        setFormData({
+          mode: sanitizedConfig.mode as "individual" | "queue",
+          triviaFile: sanitizedConfig.triviaFile || "",
+          adFile: sanitizedConfig.adFile || "",
+          primaryColor: sanitizedConfig.theme.primaryColor,
+          secondaryColor: sanitizedConfig.theme.secondaryColor,
+          accentColor: sanitizedConfig.theme.accentColor
+        });
+      }
+
+      // Reload all data sources
+      await Promise.all([
+        loadCustomQuestions(),
+        loadUploadedAds(),
+        loadTriviaPacks()
+      ]);
+
+      toast({
+        title: "🛠️ Haunt Reloaded!",
+        description: "Haunt reloaded and squeaky clean! All data refreshed and cache cleared.",
+      });
+    } catch (error) {
+      console.error('Failed to unbreak haunt:', error);
+      toast({
+        title: "Error",
+        description: "Failed to reload haunt data. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   const handleSave = async () => {
     if (!hauntConfig) return;
 
@@ -384,13 +460,23 @@ export default function HauntAdmin() {
           <p className="text-gray-300 text-lg mb-4">
             Manage your haunt configuration, trivia questions, and advertisements
           </p>
-          <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
+          <div className="flex flex-wrap gap-2 justify-center lg:justify-start items-center">
             <span className="px-3 py-1 bg-gray-800/80 text-gray-300 rounded-full text-sm border border-gray-600">
               Tier: <span className="text-white font-semibold capitalize">{hauntConfig.tier}</span>
             </span>
             <span className="px-3 py-1 bg-gray-800/80 text-gray-300 rounded-full text-sm border border-gray-600">
               Mode: <span className="text-white font-semibold capitalize">{hauntConfig.mode}</span>
             </span>
+            <Button
+              onClick={unbreakMe}
+              disabled={isSaving}
+              variant="outline"
+              size="sm"
+              className="border-red-500 text-red-400 hover:bg-red-500 hover:text-white bg-black/50"
+              title="If your game isn't behaving right, try this."
+            >
+              🛠️ Unbreak Me!
+            </Button>
           </div>
         </div>
 
