@@ -4,6 +4,7 @@ import { TriviaCard } from "@/components/TriviaCard";
 import { InterstitialAd } from "@/components/InterstitialAd";
 import { GameEndScreen } from "@/components/GameEndScreen";
 import { Leaderboard } from "@/components/Leaderboard";
+import { Footer } from "@/components/Footer";
 import { ConfigLoader, getHauntFromURL } from "@/lib/configLoader";
 import { GameManager, type GameState } from "@/lib/gameState";
 import { firestore } from "@/lib/firebase";
@@ -12,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { User, Users } from "lucide-react";
+import { Link } from "wouter";
 import type { LeaderboardEntry, TriviaQuestion } from "@shared/schema";
 
 interface ActiveRound {
@@ -243,6 +245,18 @@ export default function Game() {
           >
             {isGroupMode ? "Join Game" : "Start Playing"}
           </Button>
+          
+          <div className="text-xs text-gray-400 text-center mt-3 leading-relaxed">
+            By playing, you agree to our{" "}
+            <Link href="/privacy" className="text-red-400 hover:text-red-300 underline">
+              Privacy Policy
+            </Link>
+            {" "}and{" "}
+            <Link href="/terms" className="text-red-400 hover:text-red-300 underline">
+              Terms of Use
+            </Link>
+            .
+          </div>
         </CardContent>
       </Card>
     </div>
@@ -307,6 +321,8 @@ export default function Game() {
         hauntId={gameState.currentHaunt}
         currentPlayer={playerId}
       />
+      
+      <Footer />
     </div>
   );
 }
