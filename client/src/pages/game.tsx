@@ -9,7 +9,9 @@ import { GameManager, type GameState } from "@/lib/gameState";
 import { firestore } from "@/lib/firebase";
 import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { User, Users } from "lucide-react";
 import type { LeaderboardEntry, TriviaQuestion } from "@shared/schema";
 
 interface ActiveRound {
@@ -31,8 +33,13 @@ export default function Game() {
   const [activeRound, setActiveRound] = useState<ActiveRound | null>(null);
   const [isGroupMode, setIsGroupMode] = useState(false);
   const [playerId, setPlayerId] = useState<string>(() => 
-    `player_${Math.random().toString(36).substr(2, 9)}`
+    localStorage.getItem(`heinous-player-${getHauntFromURL()}`) || ""
   );
+  const [playerName, setPlayerName] = useState<string>(() => 
+    localStorage.getItem(`heinous-player-name-${getHauntFromURL()}`) || ""
+  );
+  const [showNamePrompt, setShowNamePrompt] = useState(false);
+  const [tempName, setTempName] = useState("");
   const [groupAnswer, setGroupAnswer] = useState<number | null>(null);
   const [countdown, setCountdown] = useState(0);
 
@@ -68,6 +75,16 @@ export default function Game() {
           questions: shuffledQuestions,
           ads,
         }));
+
+        // Check if haunt is configured for group mode
+        if (hauntConfig?.mode === "queue") {
+          setIsGroupMode(true);
+        }
+
+        // Initialize player if needed
+        if (!playerId || !playerName) {
+          setShowNamePrompt(true);
+        }
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Failed to initialize game';
         setError(errorMessage);
@@ -79,6 +96,20 @@ export default function Game() {
 
     initializeGame();
   }, [gameState.currentHaunt]);
+
+  const savePlayerInfo = (name: string) => {
+    const newPlayerId = playerId || `player_${Math.random().toString(36).substr(2, 9)}`;
+    const haunt = gameState.currentHaunt;
+    
+    // Save to localStorage for persistence
+    localStorage.setItem(`heinous-player-${haunt}`, newPlayerId);
+    localStorage.setItem(`heinous-player-name-${haunt}`, name);
+    
+    setPlayerId(newPlayerId);
+    setPlayerName(name);
+    setShowNamePrompt(false);
+    setTempName("");
+  };
 
   const handleSelectAnswer = (answerIndex: number) => {
     setGameState(prev => GameManager.selectAnswer(prev, answerIndex));
@@ -153,16 +184,91 @@ export default function Game() {
     );
   }
 
+  // Nickname Prompt Component
+  const NicknamePrompt = () => (
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+      <Card className="bg-black/90 border-red-600 text-white max-w-md w-full">
+        <CardHeader>
+          <CardTitle className="text-center text-red-500 flex items-center justify-center gap-2">
+            {isGroupMode ? <Users className="h-6 w-6" /> : <User className="h-6 w-6" />}
+            {isGroupMode ? "Join Group Game" : "Create Your Player Profile"}
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="text-center text-gray-300 text-sm">
+            {isGroupMode 
+              ? "Choose a name that other players will see during the group trivia session."
+              : "Choose a nickname for the leaderboard. Your name will be saved for future games."
+            }
+          </div>
+          
+          <div className="space-y-2">
+            <Input
+              type="text"
+              placeholder={isGroupMode ? "Your group name..." : "Your nickname..."}
+              value={tempName}
+              onChange={(e) => setTempName(e.target.value)}
+              className="bg-gray-800 border-gray-600 text-white"
+              maxLength={20}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter' && tempName.trim()) {
+                  savePlayerInfo(tempName.trim());
+                }
+              }}
+            />
+            <div className="text-xs text-gray-400 text-right">
+              {tempName.length}/20 characters
+            </div>
+          </div>
+
+          <Button 
+            onClick={() => savePlayerInfo(tempName.trim())}
+            disabled={!tempName.trim()}
+            className="w-full bg-red-600 hover:bg-red-700"
+          >
+            {isGroupMode ? "Join Game" : "Start Playing"}
+          </Button>
+        </CardContent>
+      </Card>
+    </div>
+  );
+
+  if (showNamePrompt) {
+    return <NicknamePrompt />;
+  }
+
   return (
     <div className="min-h-screen">
       <GameHeader gameState={gameState} />
       
       <main className="p-4">
-        <TriviaCard
-          gameState={gameState}
-          onSelectAnswer={handleSelectAnswer}
-          onNextQuestion={handleNextQuestion}
-        />
+        {isGroupMode && !activeRound ? (
+          <Card className="bg-gray-900/50 border-gray-700 text-white max-w-md mx-auto">
+            <CardHeader>
+              <CardTitle className="text-center text-red-400 flex items-center justify-center gap-2">
+                <Users className="h-6 w-6" />
+                Group Mode
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="text-center space-y-4">
+              <div className="text-gray-300">
+                Welcome, <span className="text-white font-bold">{playerName}</span>!
+              </div>
+              <div className="text-yellow-400 text-lg">
+                Waiting for host to start the game...
+              </div>
+              <div className="text-gray-400 text-sm">
+                The host will control when questions begin. Get ready for synchronized trivia fun!
+              </div>
+            </CardContent>
+          </Card>
+        ) : (
+          <TriviaCard
+            gameState={gameState}
+            onSelectAnswer={handleSelectAnswer}
+            onNextQuestion={handleNextQuestion}
+          />
+        )}
       </main>
 
       <InterstitialAd
