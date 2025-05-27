@@ -292,6 +292,10 @@ export default function HauntAdmin() {
       // Upload logo if a new file was selected
       if (logoFile) {
         try {
+          // Check authentication status
+          const currentUser = auth.currentUser;
+          console.log('Current user:', currentUser ? currentUser.uid : 'Not authenticated');
+          
           console.log('Uploading logo for haunt:', hauntId);
           const logoRef = ref(storage, `haunt-assets/${hauntId}/logo.${logoFile.name.split('.').pop()}`);
           console.log('Upload path:', `haunt-assets/${hauntId}/logo.${logoFile.name.split('.').pop()}`);
