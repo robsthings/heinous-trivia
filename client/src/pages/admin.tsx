@@ -1128,16 +1128,50 @@ export default function Admin() {
                                                    ' Direct assignment'}
                                                 </p>
                                               </div>
-                                              <Button
-                                                onClick={() => {
-                                                  alert(`Pack: ${pack.name}\nAccess: ${pack.accessType}\nQuestions: ${pack.questions.length}\n\nTo revoke access, edit the pack's access settings.`);
-                                                }}
-                                                variant="ghost"
-                                                size="sm"
-                                                className="text-gray-400 hover:text-white"
-                                              >
-                                                👁️
-                                              </Button>
+                                              <div className="flex gap-1">
+                                                <Button
+                                                  onClick={() => {
+                                                    alert(`Pack: ${pack.name}\nAccess: ${pack.accessType}\nQuestions: ${pack.questions.length}\nAssigned via: ${pack.accessType === 'all' ? 'Global access' : pack.accessType === 'tier' ? 'Tier-based access' : 'Direct assignment'}`);
+                                                  }}
+                                                  variant="ghost"
+                                                  size="sm"
+                                                  className="text-gray-400 hover:text-white"
+                                                >
+                                                  👁️
+                                                </Button>
+                                                {pack.accessType === 'select' && (
+                                                  <Button
+                                                    onClick={async () => {
+                                                      if (confirm(`Remove "${pack.name}" access from "${haunt.name}"?`)) {
+                                                        try {
+                                                          const updatedHaunts = (pack.allowedHaunts || []).filter(id => id !== haunt.id);
+                                                          const packRef = doc(firestore, 'trivia-packs', pack.id!);
+                                                          await updateDoc(packRef, { allowedHaunts: updatedHaunts });
+                                                          
+                                                          // Refresh data
+                                                          await loadExistingPacks();
+                                                          
+                                                          toast({
+                                                            title: "Access Revoked",
+                                                            description: `Removed "${pack.name}" from ${haunt.name}`,
+                                                          });
+                                                        } catch (error) {
+                                                          toast({
+                                                            title: "Error",
+                                                            description: "Failed to revoke pack access",
+                                                            variant: "destructive"
+                                                          });
+                                                        }
+                                                      }
+                                                    }}
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    className="text-red-400 hover:text-red-300 hover:bg-red-900/30"
+                                                  >
+                                                    🗑️
+                                                  </Button>
+                                                )}
+                                              </div>
                                             </div>
                                           </div>
                                         ))}
