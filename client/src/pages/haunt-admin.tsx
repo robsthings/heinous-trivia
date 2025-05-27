@@ -3,12 +3,21 @@ import { useRoute } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { firestore } from "@/lib/firebase";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc, collection, addDoc, getDocs, deleteDoc } from "firebase/firestore";
 import type { HauntConfig } from "@shared/schema";
+
+interface CustomTriviaQuestion {
+  id?: string;
+  question: string;
+  choices: string[];
+  correct: string;
+}
 
 export default function HauntAdmin() {
   const [, params] = useRoute("/haunt-admin/:hauntId");
@@ -28,6 +37,14 @@ export default function HauntAdmin() {
   
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [adFiles, setAdFiles] = useState<Array<{ file: File | null; link: string; id: string }>>([]);
+  
+  // Custom trivia state
+  const [customQuestions, setCustomQuestions] = useState<CustomTriviaQuestion[]>([]);
+  const [newQuestion, setNewQuestion] = useState({
+    question: "",
+    choices: ["", "", "", ""],
+    correct: ""
+  });
 
   // Get ad limits based on tier
   const getAdLimit = (tier: string) => {
@@ -39,12 +56,15 @@ export default function HauntAdmin() {
     }
   };
 
-  // Load haunt configuration on mount
-  useEffect(() => {
-    if (hauntId) {
-      loadHauntConfig();
+  // Get custom trivia limits based on tier
+  const getTriviaLimit = (tier: string) => {
+    switch (tier) {
+      case 'basic': return 5;
+      case 'pro': return 15;
+      case 'premium': return 50;
+      default: return 5;
     }
-  }, [hauntId]);
+  };
 
   const loadHauntConfig = async () => {
     setIsLoading(true);
@@ -84,6 +104,14 @@ export default function HauntAdmin() {
       setIsLoading(false);
     }
   };
+
+  // Load haunt configuration on mount
+  useEffect(() => {
+    if (hauntId) {
+      loadHauntConfig();
+      loadCustomQuestions();
+    }
+  }, [hauntId]);
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -144,6 +172,133 @@ export default function HauntAdmin() {
       setAdFiles([{ file: null, link: "", id: "ad1" }]);
     }
   }, [hauntConfig]);
+
+  const loadCustomQuestions = async () => {
+    try {
+      console.log('📚 Loading custom trivia questions for:', hauntId);
+      const questionsRef = collection(firestore, 'trivia-custom', hauntId, 'questions');
+      const querySnapshot = await getDocs(questionsRef);
+      
+      const questions: CustomTriviaQuestion[] = [];
+      querySnapshot.forEach((doc) => {
+        questions.push({ id: doc.id, ...doc.data() } as CustomTriviaQuestion);
+      });
+      
+      setCustomQuestions(questions);
+      console.log('✅ Custom trivia questions loaded:', questions);
+    } catch (error) {
+      console.error('❌ Failed to load custom trivia questions:', error);
+    }
+  };
+
+  const handleQuestionChange = (value: string) => {
+    setNewQuestion(prev => ({ ...prev, question: value }));
+  };
+
+  const handleChoiceChange = (index: number, value: string) => {
+    setNewQuestion(prev => {
+      const newChoices = [...prev.choices];
+      newChoices[index] = value;
+      return { ...prev, choices: newChoices };
+    });
+  };
+
+  const handleCorrectAnswerChange = (choice: string, checked: boolean) => {
+    if (checked) {
+      setNewQuestion(prev => ({ ...prev, correct: choice }));
+    }
+  };
+
+  const addCustomQuestion = async () => {
+    if (!hauntConfig) return;
+    
+    // Validate question
+    if (!newQuestion.question.trim()) {
+      toast({
+        title: "Error",
+        description: "Please enter a question",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Validate all choices are filled
+    if (newQuestion.choices.some(choice => !choice.trim())) {
+      toast({
+        title: "Error", 
+        description: "Please fill in all answer choices",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    // Validate correct answer is selected
+    if (!newQuestion.correct) {
+      toast({
+        title: "Error",
+        description: "Please select the correct answer",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      console.log('💾 Adding custom trivia question:', newQuestion);
+      
+      const questionsRef = collection(firestore, 'trivia-custom', hauntId, 'questions');
+      await addDoc(questionsRef, {
+        question: newQuestion.question,
+        choices: newQuestion.choices,
+        correct: newQuestion.correct
+      });
+
+      toast({
+        title: "Success!",
+        description: "Custom trivia question added",
+      });
+
+      // Reset form
+      setNewQuestion({
+        question: "",
+        choices: ["", "", "", ""],
+        correct: ""
+      });
+
+      // Reload questions
+      loadCustomQuestions();
+    } catch (error) {
+      console.error('❌ Failed to add custom trivia question:', error);
+      toast({
+        title: "Error",
+        description: "Failed to add trivia question",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const deleteCustomQuestion = async (questionId: string) => {
+    try {
+      console.log('🗑️ Deleting custom trivia question:', questionId);
+      
+      const questionRef = doc(firestore, 'trivia-custom', hauntId, 'questions', questionId);
+      await deleteDoc(questionRef);
+
+      toast({
+        title: "Success!",
+        description: "Trivia question deleted",
+      });
+
+      // Reload questions
+      loadCustomQuestions();
+    } catch (error) {
+      console.error('❌ Failed to delete custom trivia question:', error);
+      toast({
+        title: "Error",
+        description: "Failed to delete trivia question",
+        variant: "destructive"
+      });
+    }
+  };
 
   const handleSave = async () => {
     if (!hauntConfig) return;
@@ -458,6 +613,125 @@ export default function HauntAdmin() {
                     </div>
                   </div>
                 </div>
+              </CardContent>
+            </Card>
+
+            {/* Custom Trivia Section */}
+            <Card className="bg-gray-900/50 border-gray-700 mt-8">
+              <CardHeader>
+                <CardTitle className="text-red-400">🧠 Custom Trivia Questions</CardTitle>
+                <p className="text-gray-300 text-sm">
+                  Your <span className="text-red-400 font-bold capitalize">{hauntConfig.tier}</span> subscription allows up to{" "}
+                  <span className="text-red-400 font-bold">{getTriviaLimit(hauntConfig.tier)}</span> custom questions.{" "}
+                  Current: <span className="text-red-400 font-bold">{customQuestions.length}</span>
+                </p>
+              </CardHeader>
+              <CardContent>
+                {customQuestions.length >= getTriviaLimit(hauntConfig.tier) ? (
+                  <div className="text-center p-8 border border-gray-600 rounded-lg bg-gray-800/50">
+                    <h3 className="text-red-400 font-bold text-lg mb-2">Limit Reached</h3>
+                    <p className="text-gray-300">
+                      You've reached your custom trivia limit for your current plan. 
+                      Upgrade your tier for more question slots.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="space-y-6">
+                    {/* Add Question Form */}
+                    <div className="border border-gray-600 rounded-lg p-6 bg-gray-800/50">
+                      <h3 className="text-white font-bold text-lg mb-4">Add New Question</h3>
+                      
+                      <div className="space-y-4">
+                        <div>
+                          <Label className="text-white">Question</Label>
+                          <Textarea
+                            value={newQuestion.question}
+                            onChange={(e) => handleQuestionChange(e.target.value)}
+                            placeholder="What spirit haunts the boiler room?"
+                            className="bg-gray-800 border-gray-600 text-white"
+                            rows={3}
+                          />
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {newQuestion.choices.map((choice, index) => (
+                            <div key={index} className="space-y-2">
+                              <Label className="text-white">Answer {index + 1}</Label>
+                              <div className="flex gap-2 items-center">
+                                <Checkbox
+                                  checked={newQuestion.correct === choice}
+                                  onCheckedChange={(checked) => handleCorrectAnswerChange(choice, checked as boolean)}
+                                  className="border-gray-600"
+                                />
+                                <Input
+                                  value={choice}
+                                  onChange={(e) => handleChoiceChange(index, e.target.value)}
+                                  placeholder={`Answer ${index + 1}`}
+                                  className="bg-gray-800 border-gray-600 text-white flex-1"
+                                />
+                              </div>
+                              {newQuestion.correct === choice && (
+                                <p className="text-green-400 text-sm">✅ Correct Answer</p>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+
+                        <Button
+                          onClick={addCustomQuestion}
+                          className="bg-red-600 hover:bg-red-700 text-white"
+                        >
+                          ➕ Add Question
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Existing Questions List */}
+                {customQuestions.length > 0 && (
+                  <div className="mt-8">
+                    <h3 className="text-white font-bold text-lg mb-4">Your Custom Questions</h3>
+                    <div className="space-y-4">
+                      {customQuestions.map((question, index) => (
+                        <div key={question.id} className="border border-gray-600 rounded-lg p-4 bg-gray-800/50">
+                          <div className="flex justify-between items-start mb-3">
+                            <h4 className="text-white font-bold">Question #{index + 1}</h4>
+                            <Button
+                              onClick={() => question.id && deleteCustomQuestion(question.id)}
+                              variant="outline"
+                              size="sm"
+                              className="border-red-600 text-red-500 hover:bg-red-600 hover:text-white"
+                            >
+                              🗑️ Delete
+                            </Button>
+                          </div>
+                          
+                          <div className="space-y-3">
+                            <p className="text-gray-300">
+                              <span className="font-bold text-white">Q:</span> {question.question}
+                            </p>
+                            
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                              {question.choices.map((choice, choiceIndex) => (
+                                <div
+                                  key={choiceIndex}
+                                  className={`p-2 rounded border ${
+                                    choice === question.correct
+                                      ? 'border-green-500 bg-green-500/20 text-green-400'
+                                      : 'border-gray-600 text-gray-300'
+                                  }`}
+                                >
+                                  {choice === question.correct && '✅ '}{choice}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </CardContent>
             </Card>
 
