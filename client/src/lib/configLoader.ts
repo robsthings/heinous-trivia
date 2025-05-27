@@ -110,13 +110,41 @@ export class ConfigLoader {
 
   static async loadAdData(haunt: string): Promise<AdData[]> {
     try {
+      // Load core ads from JSON
       const response = await fetch(`/api/ads/${haunt}`);
-      if (!response.ok) {
-        throw new Error(`Failed to load ad data: ${response.statusText}`);
+      let coreAds: AdData[] = [];
+      if (response.ok) {
+        coreAds = await response.json();
       }
-      return await response.json();
+      
+      // Load custom ads from Firebase
+      const customAds: AdData[] = [];
+      try {
+        const adsRef = collection(firestore, 'haunt-ads', haunt, 'ads');
+        const querySnapshot = await getDocs(adsRef);
+        
+        querySnapshot.forEach((doc) => {
+          const data = doc.data();
+          // Transform Firebase ad format to game format
+          customAds.push({
+            id: doc.id,
+            title: data.title || "Custom Ad",
+            description: data.description || "Check this out!",
+            image: data.imageUrl, // Map imageUrl to image property
+            link: data.link
+          });
+        });
+        console.log('✅ Custom ads loaded:', customAds.length);
+      } catch (error) {
+        console.log('⚠️ No custom ads found in Firebase, continuing...');
+      }
+      
+      // Merge core and custom ads
+      const allAds = [...coreAds, ...customAds];
+      console.log('🎯 Total ads available:', allAds.length);
+      return allAds;
     } catch (error) {
-      console.error('Failed to load ad data:', error);
+      console.error('❌ Failed to load ad data:', error);
       return [];
     }
   }
