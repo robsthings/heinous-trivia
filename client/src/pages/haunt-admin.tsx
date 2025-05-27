@@ -185,17 +185,24 @@ export default function HauntAdmin() {
   const uploadAdImage = async (file: File, adId: string, link?: string) => {
     try {
       setIsSaving(true);
+      console.log('🚀 Starting ad upload process...', { file: file.name, adId, link });
       
       // Create storage reference
       const storageRef = ref(storage, `haunt-assets/${hauntId}/ads/${adId}_${file.name}`);
+      console.log('📁 Storage reference created:', storageRef.fullPath);
       
       // Upload file
+      console.log('📤 Uploading file to Firebase Storage...');
       const snapshot = await uploadBytes(storageRef, file);
+      console.log('✅ File uploaded successfully');
       
       // Get download URL
+      console.log('🔗 Getting download URL...');
       const downloadURL = await getDownloadURL(snapshot.ref);
+      console.log('✅ Download URL obtained:', downloadURL);
       
       // Save ad data to Firestore
+      console.log('💾 Saving ad data to Firestore...');
       const adData = {
         imageUrl: downloadURL,
         link: link || "",
@@ -205,7 +212,8 @@ export default function HauntAdmin() {
       };
       
       const adsRef = collection(firestore, 'haunt-ads', hauntId, 'ads');
-      await addDoc(adsRef, adData);
+      const docRef = await addDoc(adsRef, adData);
+      console.log('✅ Ad data saved to Firestore with ID:', docRef.id);
       
       toast({
         title: "Success!",
@@ -217,9 +225,22 @@ export default function HauntAdmin() {
       
     } catch (error) {
       console.error('❌ Failed to upload ad image:', error);
+      console.error('❌ Error details:', {
+        message: error.message,
+        code: error.code,
+        stack: error.stack
+      });
+      
+      let errorMessage = "Failed to upload ad image. Please try again.";
+      if (error.code === 'storage/unauthorized') {
+        errorMessage = "Storage access denied. Please check Firebase Storage rules.";
+      } else if (error.code === 'permission-denied') {
+        errorMessage = "Permission denied. Please check Firebase security rules.";
+      }
+      
       toast({
         title: "Upload Failed",
-        description: "Failed to upload ad image. Please try again.",
+        description: errorMessage,
         variant: "destructive"
       });
     } finally {
