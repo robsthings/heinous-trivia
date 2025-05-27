@@ -62,8 +62,8 @@ export default function HauntAdmin() {
     correct: ""
   });
 
-  // Ad management state
-  const [uploadedAds, setUploadedAds] = useState<Array<{ id: string; imageUrl: string; link?: string }>>([]);
+  // Ad management state  
+  const [uploadedAds, setUploadedAds] = useState<Array<{ id: string; imageUrl: string; link?: string; title?: string; description?: string }>>([]);
   const [editingAdId, setEditingAdId] = useState<string | null>(null);
   const [editingAdLink, setEditingAdLink] = useState("");
 
@@ -330,18 +330,13 @@ export default function HauntAdmin() {
       // Reload ads
       loadUploadedAds();
       
-    } catch (error) {
-      console.error('❌ Failed to upload ad image:', error);
-      console.error('❌ Error details:', {
-        message: error.message,
-        code: error.code,
-        stack: error.stack
-      });
+    } catch (error: any) {
+      console.error('Failed to upload ad image:', error);
       
       let errorMessage = "Failed to upload ad image. Please try again.";
-      if (error.code === 'storage/unauthorized') {
+      if (error?.code === 'storage/unauthorized') {
         errorMessage = "Storage access denied. Please check Firebase Storage rules.";
-      } else if (error.code === 'permission-denied') {
+      } else if (error?.code === 'permission-denied') {
         errorMessage = "Permission denied. Please check Firebase security rules.";
       }
       
@@ -623,7 +618,7 @@ export default function HauntAdmin() {
     try {
       const updatedConfig = {
         ...hauntConfig,
-        mode: formData.mode,
+        mode: formData.mode as "individual" | "queue",
         triviaFile: formData.triviaFile,
         adFile: formData.adFile,
         theme: {
