@@ -428,36 +428,7 @@ export default function HauntAdmin() {
                 </CardContent>
               </Card>
 
-              {/* File Paths Section */}
-              <Card className="bg-gray-900/50 border-gray-700">
-                <CardHeader>
-                  <CardTitle className="text-red-400">📁 Content Files</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div>
-                      <Label htmlFor="triviaFile" className="text-white">Trivia File</Label>
-                      <Input
-                        id="triviaFile"
-                        value={formData.triviaFile}
-                        onChange={(e) => handleInputChange('triviaFile', e.target.value)}
-                        placeholder={`${hauntId}-trivia.json`}
-                        className="bg-gray-800 border-gray-600 text-white"
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="adFile" className="text-white">Ad File</Label>
-                      <Input
-                        id="adFile"
-                        value={formData.adFile}
-                        onChange={(e) => handleInputChange('adFile', e.target.value)}
-                        placeholder={`${hauntId}-ads.json`}
-                        className="bg-gray-800 border-gray-600 text-white"
-                      />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+
             </div>
 
             {/* Logo Upload Section */}
