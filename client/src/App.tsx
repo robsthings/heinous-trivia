@@ -12,6 +12,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Game} />
+      <Route path="/game" component={Game} />
       <Route path="/admin" component={Admin} />
       <Route path="/haunt-admin/:hauntId" component={HauntAdmin} />
       <Route component={NotFound} />
