@@ -2,11 +2,13 @@ import { useState, useEffect } from "react";
 import { useRoute } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { firestore } from "@/lib/firebase";
 import { doc, setDoc, updateDoc, onSnapshot, getDoc } from "firebase/firestore";
 import { ConfigLoader } from "@/lib/configLoader";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Clock } from "lucide-react";
 import type { TriviaQuestion } from "@shared/schema";
 
 interface ActiveRound {
@@ -18,6 +20,7 @@ interface ActiveRound {
   totalQuestions: number;
   hiddenPlayers?: Record<string, boolean>;
   playerScores?: Record<string, number>;
+  countdownDuration?: number;
 }
 
 export default function HostPanel() {
@@ -30,6 +33,7 @@ export default function HostPanel() {
   const [isLoading, setIsLoading] = useState(false);
   const [countdown, setCountdown] = useState(0);
   const [allPlayers, setAllPlayers] = useState<Record<string, { score: number; lastSeen: number }>>({});
+  const [countdownDuration, setCountdownDuration] = useState(3);
 
   // Load questions on mount
   useEffect(() => {
@@ -126,14 +130,15 @@ export default function HostPanel() {
     if (!activeRound) return;
 
     try {
-      // Start 3-second countdown
-      setCountdown(3);
+      // Start custom countdown
+      setCountdown(countdownDuration);
       
       // Update status to countdown
       const roundRef = doc(firestore, 'activeRound', hauntId);
       await updateDoc(roundRef, {
         status: "countdown",
-        startTime: Date.now()
+        startTime: Date.now(),
+        countdownDuration: countdownDuration
       });
 
       // After countdown, set to live
@@ -142,11 +147,11 @@ export default function HostPanel() {
           status: "live"
         });
         setCountdown(0);
-      }, 3000);
+      }, countdownDuration * 1000);
 
       toast({
         title: "Question Started",
-        description: "Players can now answer the question!",
+        description: `${countdownDuration}-second countdown started!`,
       });
     } catch (error) {
       console.error('Failed to start question:', error);
@@ -366,6 +371,31 @@ export default function HostPanel() {
                   <CardTitle className="text-red-400">🎛️ Host Controls</CardTitle>
                 </CardHeader>
                 <CardContent>
+                  {/* Countdown Timer Setting */}
+                  <div className="mb-6 p-4 bg-gray-800/50 rounded-lg border border-gray-600">
+                    <div className="flex items-center gap-4">
+                      <Clock className="h-5 w-5 text-yellow-400" />
+                      <Label htmlFor="countdown" className="text-white font-medium">
+                        Countdown Duration
+                      </Label>
+                      <div className="flex items-center gap-2">
+                        <Input
+                          id="countdown"
+                          type="number"
+                          min="1"
+                          max="30"
+                          value={countdownDuration}
+                          onChange={(e) => setCountdownDuration(Math.max(1, Math.min(30, parseInt(e.target.value) || 3)))}
+                          className="w-20 bg-gray-700 border-gray-600 text-white"
+                        />
+                        <span className="text-gray-300 text-sm">seconds</span>
+                      </div>
+                      <div className="text-gray-400 text-sm">
+                        Time players see countdown before question goes live
+                      </div>
+                    </div>
+                  </div>
+
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     
                     {!activeRound ? (
