@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useRoute } from "wouter";
+import { useRoute, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -32,8 +32,10 @@ interface CustomTriviaQuestion {
 
 export default function HauntAdmin() {
   const [, params] = useRoute("/haunt-admin/:hauntId");
+  const [, setLocation] = useLocation();
   const hauntId = params?.hauntId || "";
   const { toast } = useToast();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [hauntConfig, setHauntConfig] = useState<HauntConfig | null>(null);

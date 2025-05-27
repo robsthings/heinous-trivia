@@ -1,0 +1,156 @@
+import { useState } from "react";
+import { useLocation } from "wouter";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useToast } from "@/hooks/use-toast";
+import { firestore } from "@/lib/firebase";
+import { doc, getDoc } from "firebase/firestore";
+
+export default function HauntAuth() {
+  const [, setLocation] = useLocation();
+  const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    hauntId: "",
+    accessCode: ""
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.hauntId || !formData.accessCode) {
+      toast({
+        title: "Missing Information",
+        description: "Please enter both Haunt ID and Access Code",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      // Check if haunt exists and verify access code
+      const hauntRef = doc(firestore, 'haunts', formData.hauntId);
+      const hauntSnap = await getDoc(hauntRef);
+
+      if (!hauntSnap.exists()) {
+        toast({
+          title: "Haunt Not Found",
+          description: "The specified haunt does not exist",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      const hauntData = hauntSnap.data();
+      
+      // Check if access code matches
+      if (hauntData.authCode !== formData.accessCode) {
+        toast({
+          title: "Access Denied",
+          description: "Invalid access code for this haunt",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      // Store authentication in localStorage
+      const authToken = {
+        hauntId: formData.hauntId,
+        accessCode: formData.accessCode,
+        timestamp: Date.now(),
+        expires: Date.now() + (24 * 60 * 60 * 1000) // 24 hours
+      };
+      localStorage.setItem('haunt-auth', JSON.stringify(authToken));
+
+      toast({
+        title: "Access Granted",
+        description: `Welcome to ${hauntData.name} admin dashboard!`,
+      });
+
+      // Redirect to haunt admin dashboard
+      setLocation(`/haunt-admin/${formData.hauntId}`);
+
+    } catch (error) {
+      console.error('Authentication error:', error);
+      toast({
+        title: "Authentication Failed",
+        description: "Unable to verify access. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-red-900 flex items-center justify-center p-4">
+      <div className="w-full max-w-md">
+        <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-sm">
+          <CardHeader className="text-center">
+            <CardTitle className="text-red-400 text-2xl font-creepster">
+              🎃 Haunt Admin Access
+            </CardTitle>
+            <p className="text-gray-300 text-sm mt-2">
+              Enter your haunt credentials to access the admin dashboard
+            </p>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <Label htmlFor="hauntId" className="text-white">
+                  Haunt ID
+                </Label>
+                <Input
+                  id="hauntId"
+                  type="text"
+                  value={formData.hauntId}
+                  onChange={(e) => setFormData(prev => ({ ...prev, hauntId: e.target.value }))}
+                  placeholder="e.g., widowshollow"
+                  className="bg-gray-800 border-gray-600 text-white mt-2"
+                  disabled={isLoading}
+                />
+                <p className="text-gray-400 text-xs mt-1">
+                  The unique identifier for your haunt
+                </p>
+              </div>
+
+              <div>
+                <Label htmlFor="accessCode" className="text-white">
+                  Access Code
+                </Label>
+                <Input
+                  id="accessCode"
+                  type="password"
+                  value={formData.accessCode}
+                  onChange={(e) => setFormData(prev => ({ ...prev, accessCode: e.target.value }))}
+                  placeholder="Enter your access code"
+                  className="bg-gray-800 border-gray-600 text-white mt-2"
+                  disabled={isLoading}
+                />
+                <p className="text-gray-400 text-xs mt-1">
+                  The secret code provided by your haunt administrator
+                </p>
+              </div>
+
+              <Button 
+                type="submit" 
+                className="w-full bg-red-600 hover:bg-red-700 text-white"
+                disabled={isLoading}
+              >
+                {isLoading ? "Verifying..." : "Access Admin Dashboard"}
+              </Button>
+            </form>
+
+            <div className="mt-6 pt-6 border-t border-gray-600">
+              <p className="text-gray-400 text-xs text-center">
+                Need access? Contact your haunt administrator for credentials.
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+}

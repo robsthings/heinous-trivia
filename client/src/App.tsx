@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Game from "@/pages/game";
 import Admin from "@/pages/admin";
 import HauntAdmin from "@/pages/haunt-admin";
+import HauntAuth from "@/pages/haunt-auth";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -14,6 +15,7 @@ function Router() {
       <Route path="/" component={Game} />
       <Route path="/game" component={Game} />
       <Route path="/admin" component={Admin} />
+      <Route path="/haunt-auth" component={HauntAuth} />
       <Route path="/haunt-admin/:hauntId" component={HauntAdmin} />
       <Route component={NotFound} />
     </Switch>
