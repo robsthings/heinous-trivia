@@ -14,6 +14,7 @@ export default function Game() {
   );
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [leaderboard, setLeaderboard] = useState<any[]>([]);
 
   useEffect(() => {
     const initializeGame = async () => {
@@ -83,7 +84,9 @@ export default function Game() {
     setGameState(prev => GameManager.playAgain(prev));
   };
 
-  const handleViewLeaderboard = () => {
+  const handleViewLeaderboard = async () => {
+    const leaderboardData = await GameManager.getLeaderboard();
+    setLeaderboard(leaderboardData);
     setGameState(prev => ({
       ...prev,
       showLeaderboard: true,
@@ -157,7 +160,7 @@ export default function Game() {
 
       <Leaderboard
         isVisible={gameState.showLeaderboard}
-        leaderboard={GameManager.getLeaderboard()}
+        leaderboard={leaderboard}
         onClose={handleCloseLeaderboard}
       />
     </div>
