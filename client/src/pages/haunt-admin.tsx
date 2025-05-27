@@ -203,9 +203,13 @@ export default function HauntAdmin() {
     });
   };
 
-  const handleCorrectAnswerChange = (choice: string, checked: boolean) => {
+  const handleCorrectAnswerChange = (choiceIndex: number, checked: boolean) => {
     if (checked) {
-      setNewQuestion(prev => ({ ...prev, correct: choice }));
+      // Get the current value of the choice at this index
+      const currentChoice = newQuestion.choices[choiceIndex];
+      setNewQuestion(prev => ({ ...prev, correct: currentChoice }));
+    } else {
+      setNewQuestion(prev => ({ ...prev, correct: "" }));
     }
   };
 
@@ -659,8 +663,8 @@ export default function HauntAdmin() {
                               <Label className="text-white">Answer {index + 1}</Label>
                               <div className="flex gap-2 items-center">
                                 <Checkbox
-                                  checked={newQuestion.correct === choice}
-                                  onCheckedChange={(checked) => handleCorrectAnswerChange(choice, checked as boolean)}
+                                  checked={newQuestion.correct === choice && choice.trim() !== ""}
+                                  onCheckedChange={(checked) => handleCorrectAnswerChange(index, checked as boolean)}
                                   className="border-gray-600"
                                 />
                                 <Input
@@ -670,7 +674,7 @@ export default function HauntAdmin() {
                                   className="bg-gray-800 border-gray-600 text-white flex-1"
                                 />
                               </div>
-                              {newQuestion.correct === choice && (
+                              {newQuestion.correct === choice && choice.trim() !== "" && (
                                 <p className="text-green-400 text-sm">✅ Correct Answer</p>
                               )}
                             </div>
