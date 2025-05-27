@@ -280,6 +280,20 @@ export default function HauntAdmin() {
     }
   };
 
+  const editCustomQuestion = (question: CustomTriviaQuestion) => {
+    setNewQuestion({
+      question: question.question,
+      choices: [...question.choices],
+      correct: question.correct
+    });
+    
+    // Scroll to form
+    const formElement = document.querySelector('#trivia-form');
+    if (formElement) {
+      formElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const deleteCustomQuestion = async (questionId: string) => {
     try {
       console.log('🗑️ Deleting custom trivia question:', questionId);
@@ -613,7 +627,7 @@ export default function HauntAdmin() {
                 ) : (
                   <div className="space-y-6">
                     {/* Add Question Form */}
-                    <div className="border border-gray-600 rounded-lg p-6 bg-gray-800/50">
+                    <div id="trivia-form" className="border border-gray-600 rounded-lg p-6 bg-gray-800/50">
                       <h3 className="text-white font-bold text-lg mb-4">Add New Question</h3>
                       
                       <div className="space-y-4">
@@ -666,38 +680,52 @@ export default function HauntAdmin() {
                 {/* Existing Questions List */}
                 {customQuestions.length > 0 && (
                   <div className="mt-8">
-                    <h3 className="text-white font-bold text-lg mb-4">Your Custom Questions</h3>
-                    <div className="space-y-4">
+                    <h3 className="text-white font-bold text-lg mb-4">Your Custom Questions ({customQuestions.length}/{getTriviaLimit(hauntConfig.tier)})</h3>
+                    <div className="max-h-96 overflow-y-auto space-y-3 pr-2">
                       {customQuestions.map((question, index) => (
-                        <div key={question.id} className="border border-gray-600 rounded-lg p-4 bg-gray-800/50">
-                          <div className="flex justify-between items-start mb-3">
-                            <h4 className="text-white font-bold">Question #{index + 1}</h4>
-                            <Button
-                              onClick={() => question.id && deleteCustomQuestion(question.id)}
-                              variant="outline"
-                              size="sm"
-                              className="border-red-600 text-red-500 hover:bg-red-600 hover:text-white"
-                            >
-                              🗑️ Delete
-                            </Button>
+                        <div key={question.id} className="border border-gray-600 rounded-lg p-4 bg-gray-800/50 hover:bg-gray-700/50 transition-colors">
+                          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3 mb-3">
+                            <h4 className="text-white font-bold text-sm">Question #{index + 1}</h4>
+                            <div className="flex gap-2 flex-shrink-0">
+                              <Button
+                                onClick={() => editCustomQuestion(question)}
+                                variant="outline"
+                                size="sm"
+                                className="border-blue-600 text-blue-400 hover:bg-blue-600 hover:text-white text-xs px-2 py-1"
+                              >
+                                ✏️ Edit
+                              </Button>
+                              <Button
+                                onClick={() => question.id && deleteCustomQuestion(question.id)}
+                                variant="outline"
+                                size="sm"
+                                className="border-red-600 text-red-500 hover:bg-red-600 hover:text-white text-xs px-2 py-1"
+                              >
+                                🗑️ Delete
+                              </Button>
+                            </div>
                           </div>
                           
                           <div className="space-y-3">
-                            <p className="text-gray-300">
+                            <p className="text-gray-300 text-sm leading-relaxed">
                               <span className="font-bold text-white">Q:</span> {question.question}
                             </p>
                             
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                            <div className="grid grid-cols-1 gap-2">
                               {question.choices.map((choice, choiceIndex) => (
                                 <div
                                   key={choiceIndex}
-                                  className={`p-2 rounded border ${
+                                  className={`p-2 rounded text-sm ${
                                     choice === question.correct
-                                      ? 'border-green-500 bg-green-500/20 text-green-400'
-                                      : 'border-gray-600 text-gray-300'
+                                      ? 'border border-green-500 bg-green-500/20 text-green-400 font-medium'
+                                      : 'bg-gray-700/50 text-gray-300'
                                   }`}
                                 >
-                                  {choice === question.correct && '✅ '}{choice}
+                                  <span className="text-gray-500 font-mono text-xs mr-2">
+                                    {String.fromCharCode(65 + choiceIndex)}.
+                                  </span>
+                                  {choice === question.correct && '✅ '}
+                                  {choice}
                                 </div>
                               ))}
                             </div>
