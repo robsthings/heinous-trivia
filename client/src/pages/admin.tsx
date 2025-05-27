@@ -481,6 +481,30 @@ export default function Admin() {
                                   </p>
                                 </div>
 
+                                {/* Edit Profile Button */}
+                                <Button
+                                  onClick={() => {
+                                    setEditingHaunt(haunt);
+                                    setFormData({
+                                      id: haunt.id,
+                                      name: haunt.name,
+                                      description: haunt.description || "",
+                                      logoPath: haunt.logoPath || "",
+                                      triviaFile: haunt.triviaFile || "",
+                                      adFile: haunt.adFile || "",
+                                      tier: haunt.tier,
+                                      primaryColor: haunt.theme?.primaryColor || "#8B0000",
+                                      secondaryColor: haunt.theme?.secondaryColor || "#2D1B69",
+                                      accentColor: haunt.theme?.accentColor || "#FF6B35"
+                                    });
+                                  }}
+                                  variant="outline"
+                                  size="sm"
+                                  className="w-full border-orange-600 text-orange-400 hover:bg-orange-600 hover:text-white"
+                                >
+                                  ✏️ Edit Profile
+                                </Button>
+
                               </div>
                             </div>
                           </div>
@@ -489,6 +513,187 @@ export default function Admin() {
                     )}
                   </CardContent>
                 </Card>
+
+                {/* Edit Haunt Profile Section */}
+                {editingHaunt && (
+                  <Card className="bg-gray-900/50 border-orange-600 shadow-lg mt-6">
+                    <CardHeader>
+                      <CardTitle className="text-orange-400 flex items-center gap-2">
+                        ✏️ Edit Haunt Profile: {editingHaunt.name}
+                      </CardTitle>
+                      <p className="text-gray-300 text-sm">
+                        Update haunt details, theme colors, and configuration settings.
+                      </p>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        
+                        {/* Basic Information */}
+                        <div className="space-y-4">
+                          <h3 className="text-white font-medium">Basic Information</h3>
+                          
+                          <div>
+                            <Label htmlFor="edit-name" className="text-white">Haunt Name</Label>
+                            <Input
+                              id="edit-name"
+                              value={formData.name}
+                              onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                              className="bg-gray-800 border-gray-600 text-white"
+                              placeholder="Enter haunt name"
+                            />
+                          </div>
+
+                          <div>
+                            <Label htmlFor="edit-description" className="text-white">Description</Label>
+                            <Textarea
+                              id="edit-description"
+                              value={formData.description}
+                              onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+                              className="bg-gray-800 border-gray-600 text-white"
+                              placeholder="Brief description of the haunt"
+                              rows={3}
+                            />
+                          </div>
+
+                          <div>
+                            <Label htmlFor="edit-tier" className="text-white">Subscription Tier</Label>
+                            <Select value={formData.tier} onValueChange={(value) => setFormData(prev => ({ ...prev, tier: value }))}>
+                              <SelectTrigger className="bg-gray-800 border-gray-600 text-white">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="basic">Basic (5 questions, 3 ads)</SelectItem>
+                                <SelectItem value="pro">Pro (15 questions, 5 ads)</SelectItem>
+                                <SelectItem value="premium">Premium (50 questions, 10 ads)</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                        </div>
+
+                        {/* Theme Colors */}
+                        <div className="space-y-4">
+                          <h3 className="text-white font-medium">Theme Colors</h3>
+                          
+                          <div className="space-y-3">
+                            <div>
+                              <Label htmlFor="edit-primary" className="text-white">Primary Color</Label>
+                              <div className="flex gap-2 mt-1">
+                                <Input
+                                  id="edit-primary"
+                                  type="color"
+                                  value={formData.primaryColor}
+                                  onChange={(e) => setFormData(prev => ({ ...prev, primaryColor: e.target.value }))}
+                                  className="w-16 h-10 p-1 bg-gray-800 border-gray-600"
+                                />
+                                <Input
+                                  value={formData.primaryColor}
+                                  onChange={(e) => setFormData(prev => ({ ...prev, primaryColor: e.target.value }))}
+                                  className="bg-gray-800 border-gray-600 text-white"
+                                />
+                              </div>
+                            </div>
+
+                            <div>
+                              <Label htmlFor="edit-secondary" className="text-white">Secondary Color</Label>
+                              <div className="flex gap-2 mt-1">
+                                <Input
+                                  id="edit-secondary"
+                                  type="color"
+                                  value={formData.secondaryColor}
+                                  onChange={(e) => setFormData(prev => ({ ...prev, secondaryColor: e.target.value }))}
+                                  className="w-16 h-10 p-1 bg-gray-800 border-gray-600"
+                                />
+                                <Input
+                                  value={formData.secondaryColor}
+                                  onChange={(e) => setFormData(prev => ({ ...prev, secondaryColor: e.target.value }))}
+                                  className="bg-gray-800 border-gray-600 text-white"
+                                />
+                              </div>
+                            </div>
+
+                            <div>
+                              <Label htmlFor="edit-accent" className="text-white">Accent Color</Label>
+                              <div className="flex gap-2 mt-1">
+                                <Input
+                                  id="edit-accent"
+                                  type="color"
+                                  value={formData.accentColor}
+                                  onChange={(e) => setFormData(prev => ({ ...prev, accentColor: e.target.value }))}
+                                  className="w-16 h-10 p-1 bg-gray-800 border-gray-600"
+                                />
+                                <Input
+                                  value={formData.accentColor}
+                                  onChange={(e) => setFormData(prev => ({ ...prev, accentColor: e.target.value }))}
+                                  className="bg-gray-800 border-gray-600 text-white"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Action Buttons */}
+                      <div className="flex gap-4 mt-6 pt-4 border-t border-gray-700">
+                        <Button
+                          onClick={async () => {
+                            if (!editingHaunt) return;
+
+                            setIsLoading(true);
+                            try {
+                              const updatedHaunt: Partial<HauntConfig> = {
+                                name: formData.name,
+                                description: formData.description,
+                                tier: formData.tier as "basic" | "pro" | "premium",
+                                theme: {
+                                  primaryColor: formData.primaryColor,
+                                  secondaryColor: formData.secondaryColor,
+                                  accentColor: formData.accentColor
+                                }
+                              };
+
+                              const hauntRef = doc(firestore, 'haunts', editingHaunt.id);
+                              await updateDoc(hauntRef, updatedHaunt);
+
+                              // Update local state
+                              setAllHaunts(prev => 
+                                prev.map(haunt => 
+                                  haunt.id === editingHaunt.id ? { ...haunt, ...updatedHaunt } : haunt
+                                )
+                              );
+
+                              setEditingHaunt(null);
+                              toast({
+                                title: "Success!",
+                                description: "Haunt profile updated successfully",
+                              });
+                            } catch (error) {
+                              console.error('Failed to update haunt profile:', error);
+                              toast({
+                                title: "Error",
+                                description: "Failed to update haunt profile",
+                                variant: "destructive"
+                              });
+                            } finally {
+                              setIsLoading(false);
+                            }
+                          }}
+                          disabled={isLoading || !formData.name}
+                          className="bg-orange-600 hover:bg-orange-700 text-white"
+                        >
+                          {isLoading ? "Saving..." : "💾 Save Changes"}
+                        </Button>
+
+                        <Button
+                          onClick={() => setEditingHaunt(null)}
+                          variant="outline"
+                          className="border-gray-600 text-gray-400 hover:bg-gray-700"
+                        >
+                          Cancel
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
               </TabsContent>
 
               <TabsContent value="haunts" className="mt-6">
