@@ -315,7 +315,7 @@ export default function Game() {
         currentPlayer={playerId}
       />
       
-      <Footer />
+      <Footer showInstallButton={true} />
     </div>
   );
 }
