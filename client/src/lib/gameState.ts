@@ -65,8 +65,8 @@ export class GameManager {
   static nextQuestion(state: GameState): GameState {
     const nextIndex = state.currentQuestionIndex + 1;
     
-    // Check if we've completed 5 questions and should show an ad
-    if (state.questionsAnswered > 0 && state.questionsAnswered % this.QUESTIONS_PER_ROUND === 0) {
+    // Check if we've completed 3 questions and should show an ad (more frequent ads)
+    if (state.questionsAnswered > 0 && state.questionsAnswered % 3 === 0) {
       if (nextIndex >= state.questions.length) {
         // Game complete
         return {

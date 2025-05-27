@@ -131,6 +131,7 @@ export class ConfigLoader {
             title: data.title || "Custom Ad",
             description: data.description || "Check this out!",
             image: data.imageUrl, // Map imageUrl to image property
+            duration: 5000, // 5 second default duration
             link: data.link
           });
         });

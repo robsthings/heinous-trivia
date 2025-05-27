@@ -20,23 +20,23 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-95 flex items-center justify-center p-4 z-50">
-      <div className="glass-card rounded-xl p-6 max-w-sm w-full animate-fade-in">
-        <div className="text-center">
-          <h3 className="font-nosifer text-xl text-orange-500 mb-4">
+    <div className="fixed inset-0 bg-black flex items-center justify-center z-50">
+      <div className="w-full h-full flex flex-col items-center justify-center p-6 bg-gradient-to-br from-red-900 via-black to-purple-900 animate-fade-in">
+        <div className="text-center max-w-4xl mx-auto">
+          <h3 className="font-nosifer text-4xl text-orange-500 mb-8 animate-pulse">
             A Message from Our Sponsors
           </h3>
           
           <img
             src={currentAd.image}
             alt={currentAd.title}
-            className="w-full h-48 object-cover rounded-lg mb-4"
+            className="w-full max-w-3xl h-96 object-cover rounded-xl mb-8 shadow-2xl border-4 border-red-600 mx-auto"
           />
           
-          <h4 className="text-lg font-medium text-white mb-2">
+          <h4 className="text-3xl font-bold text-white mb-4 font-creepster">
             {currentAd.title}
           </h4>
-          <p className="text-gray-300 text-sm mb-4">
+          <p className="text-gray-300 text-xl mb-8 max-w-2xl mx-auto">
             {currentAd.description}
           </p>
           
