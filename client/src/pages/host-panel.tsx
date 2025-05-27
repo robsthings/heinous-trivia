@@ -6,6 +6,7 @@ import { useToast } from "@/hooks/use-toast";
 import { firestore } from "@/lib/firebase";
 import { doc, setDoc, updateDoc, onSnapshot, getDoc } from "firebase/firestore";
 import { ConfigLoader } from "@/lib/configLoader";
+import { Eye, EyeOff } from "lucide-react";
 import type { TriviaQuestion } from "@shared/schema";
 
 interface ActiveRound {
@@ -15,6 +16,8 @@ interface ActiveRound {
   startTime: number;
   currentAnswers: Record<string, string>;
   totalQuestions: number;
+  hiddenPlayers?: Record<string, boolean>;
+  playerScores?: Record<string, number>;
 }
 
 export default function HostPanel() {
@@ -26,6 +29,7 @@ export default function HostPanel() {
   const [activeRound, setActiveRound] = useState<ActiveRound | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [countdown, setCountdown] = useState(0);
+  const [allPlayers, setAllPlayers] = useState<Record<string, { score: number; lastSeen: number }>>({});
 
   // Load questions on mount
   useEffect(() => {
@@ -225,6 +229,32 @@ export default function HostPanel() {
     }
   };
 
+  const togglePlayerVisibility = async (playerName: string) => {
+    if (!activeRound) return;
+
+    try {
+      const currentHidden = activeRound.hiddenPlayers || {};
+      const newHiddenStatus = !currentHidden[playerName];
+      
+      const roundRef = doc(firestore, 'activeRound', hauntId);
+      await updateDoc(roundRef, {
+        [`hiddenPlayers.${playerName}`]: newHiddenStatus
+      });
+
+      toast({
+        title: newHiddenStatus ? "Player Hidden" : "Player Shown",
+        description: `${playerName} is now ${newHiddenStatus ? 'hidden from' : 'visible on'} public leaderboards`,
+      });
+    } catch (error) {
+      console.error('Failed to toggle player visibility:', error);
+      toast({
+        title: "Error",
+        description: "Failed to update player visibility",
+        variant: "destructive"
+      });
+    }
+  };
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case "countdown": return "text-yellow-400";
@@ -400,6 +430,70 @@ export default function HostPanel() {
                         </div>
                       ))}
                     </div>
+                  </CardContent>
+                </Card>
+              )}
+
+              {/* Moderate Leaderboard */}
+              {activeRound && (
+                <Card className="bg-gray-900/50 border-gray-700">
+                  <CardHeader>
+                    <CardTitle className="text-red-400">🛡️ Moderate Leaderboard</CardTitle>
+                    <p className="text-gray-400 text-sm">Control player name visibility on public leaderboards</p>
+                  </CardHeader>
+                  <CardContent>
+                    {Object.keys(activeRound.currentAnswers).length > 0 ? (
+                      <div className="space-y-3">
+                        {Object.keys(activeRound.currentAnswers).map((playerId) => {
+                          const isHidden = activeRound.hiddenPlayers?.[playerId] || false;
+                          const playerScore = activeRound.playerScores?.[playerId] || 0;
+                          
+                          return (
+                            <div key={playerId} className="flex items-center justify-between bg-gray-800/50 p-3 rounded border border-gray-600">
+                              <div className="flex items-center space-x-3">
+                                <div className="text-white font-medium">
+                                  {playerId}
+                                </div>
+                                <div className="text-gray-400 text-sm">
+                                  Score: {playerScore}
+                                </div>
+                                {isHidden && (
+                                  <div className="text-yellow-400 text-xs bg-yellow-900/30 px-2 py-1 rounded">
+                                    HIDDEN
+                                  </div>
+                                )}
+                              </div>
+                              
+                              <Button
+                                onClick={() => togglePlayerVisibility(playerId)}
+                                variant="ghost"
+                                size="sm"
+                                className={`h-8 w-8 p-0 ${
+                                  isHidden 
+                                    ? 'text-yellow-400 hover:text-yellow-300' 
+                                    : 'text-green-400 hover:text-green-300'
+                                }`}
+                                title={isHidden ? 'Show player on leaderboards' : 'Hide player from leaderboards'}
+                              >
+                                {isHidden ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                              </Button>
+                            </div>
+                          );
+                        })}
+                        
+                        <div className="mt-4 p-3 bg-blue-900/20 border border-blue-600 rounded">
+                          <p className="text-blue-300 text-sm">
+                            <strong>ℹ️ Note:</strong> Hidden players will see "Player ####" instead of their name on public leaderboards, 
+                            but can still see their own name in their game view.
+                          </p>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="text-center text-gray-400 py-6">
+                        <p>No players have joined this round yet.</p>
+                        <p className="text-sm mt-2">Players will appear here when they submit answers.</p>
+                      </div>
+                    )}
                   </CardContent>
                 </Card>
               )}

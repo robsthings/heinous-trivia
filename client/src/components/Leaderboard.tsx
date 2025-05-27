@@ -1,9 +1,14 @@
+import { useState, useEffect } from "react";
+import { firestore } from "@/lib/firebase";
+import { doc, onSnapshot } from "firebase/firestore";
 import type { LeaderboardEntry } from "@shared/schema";
 
 interface LeaderboardProps {
   isVisible: boolean;
   leaderboard: LeaderboardEntry[];
   onClose: () => void;
+  hauntId?: string;
+  currentPlayer?: string;
 }
 
 export function Leaderboard({ isVisible, leaderboard, onClose }: LeaderboardProps) {
