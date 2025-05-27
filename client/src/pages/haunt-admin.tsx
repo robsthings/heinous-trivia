@@ -12,7 +12,7 @@ import { Footer } from "@/components/Footer";
 import { ExternalLink } from "lucide-react";
 import { SpookyLoader } from "@/components/SpookyLoader";
 import { MiniSpookyLoader } from "@/components/MiniSpookyLoader";
-import { firestore, storage } from "@/lib/firebase";
+import { firestore, storage, auth } from "@/lib/firebase";
 import { doc, getDoc, updateDoc, collection, addDoc, getDocs, deleteDoc } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import type { HauntConfig, TriviaQuestion } from "@shared/schema";
@@ -563,7 +563,11 @@ export default function HauntAdmin() {
                     id="logoUpload"
                     type="file"
                     accept="image/*"
-                    onChange={(e) => setLogoFile(e.target.files?.[0] || null)}
+                    onChange={(e) => {
+                      const file = e.target.files?.[0] || null;
+                      console.log('Logo file selected:', file ? file.name : 'No file');
+                      setLogoFile(file);
+                    }}
                     className="bg-gray-800 border-gray-600 text-white file:bg-red-600 file:text-white file:border-0 file:rounded-md file:px-3 file:py-2 file:mr-3 file:cursor-pointer"
                   />
                   {logoFile && (
