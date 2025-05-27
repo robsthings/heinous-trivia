@@ -55,13 +55,7 @@ export default function HauntAuth() {
       }
 
       // Store authentication in localStorage
-      const authToken = {
-        hauntId: formData.hauntId,
-        accessCode: formData.accessCode,
-        timestamp: Date.now(),
-        expires: Date.now() + (24 * 60 * 60 * 1000) // 24 hours
-      };
-      localStorage.setItem('haunt-auth', JSON.stringify(authToken));
+      localStorage.setItem(`heinous-admin-${hauntId}`, accessCode);
 
       toast({
         title: "Access Granted",
@@ -69,7 +63,7 @@ export default function HauntAuth() {
       });
 
       // Redirect to haunt admin dashboard
-      setLocation(`/haunt-admin/${formData.hauntId}`);
+      setLocation(`/haunt-admin/${hauntId}`);
 
     } catch (error) {
       console.error('Authentication error:', error);
@@ -104,11 +98,9 @@ export default function HauntAuth() {
                 <Input
                   id="hauntId"
                   type="text"
-                  value={formData.hauntId}
-                  onChange={(e) => setFormData(prev => ({ ...prev, hauntId: e.target.value }))}
-                  placeholder="e.g., widowshollow"
-                  className="bg-gray-800 border-gray-600 text-white mt-2"
-                  disabled={isLoading}
+                  value={hauntId}
+                  readOnly
+                  className="bg-gray-800 border-gray-600 text-white mt-2 opacity-75"
                 />
                 <p className="text-gray-400 text-xs mt-1">
                   The unique identifier for your haunt
@@ -122,14 +114,14 @@ export default function HauntAuth() {
                 <Input
                   id="accessCode"
                   type="password"
-                  value={formData.accessCode}
-                  onChange={(e) => setFormData(prev => ({ ...prev, accessCode: e.target.value }))}
+                  value={accessCode}
+                  onChange={(e) => setAccessCode(e.target.value)}
                   placeholder="Enter your access code"
                   className="bg-gray-800 border-gray-600 text-white mt-2"
                   disabled={isLoading}
                 />
                 <p className="text-gray-400 text-xs mt-1">
-                  The secret code provided by your haunt administrator
+                  The secret code you set up for this haunt
                 </p>
               </div>
 
