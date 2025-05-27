@@ -3,7 +3,7 @@ import { useToast } from "@/hooks/use-toast";
 import { usePWAInstall } from "@/hooks/use-pwa-install";
 
 export function PWAInstallButton() {
-  const { isInstallable, isInstalled, install } = usePWAInstall();
+  const { isInstallable, isInstalled, isMobile, install } = usePWAInstall();
   const { toast } = useToast();
 
   const handleInstallClick = async () => {
@@ -23,8 +23,8 @@ export function PWAInstallButton() {
     }
   };
 
-  // Don't show if already installed
-  if (isInstalled) return null;
+  // Don't show if already installed or not on mobile
+  if (isInstalled || !isMobile) return null;
 
   return (
     <Button

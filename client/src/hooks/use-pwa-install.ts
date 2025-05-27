@@ -13,8 +13,18 @@ export function usePWAInstall() {
   const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [isInstallable, setIsInstallable] = useState(false);
   const [isInstalled, setIsInstalled] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    // Check if device is mobile
+    const checkIfMobile = () => {
+      const userAgent = navigator.userAgent;
+      const isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+      const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      const isSmallScreen = window.innerWidth <= 768;
+      setIsMobile(isMobileDevice || (isTouchDevice && isSmallScreen));
+    };
+
     // Check if already installed
     const checkIfInstalled = () => {
       const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
@@ -22,6 +32,7 @@ export function usePWAInstall() {
       setIsInstalled(isStandalone || isIOSStandalone);
     };
 
+    checkIfMobile();
     checkIfInstalled();
 
     // Listen for install prompt
@@ -70,6 +81,7 @@ export function usePWAInstall() {
   return {
     isInstallable,
     isInstalled,
+    isMobile,
     install
   };
 }
