@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLocation } from "wouter";
+import { useLocation, useRoute } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,19 +10,18 @@ import { doc, getDoc } from "firebase/firestore";
 
 export default function HauntAuth() {
   const [, setLocation] = useLocation();
+  const [, params] = useRoute("/haunt-auth/:hauntId");
+  const hauntId = params?.hauntId || "";
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    hauntId: "",
-    accessCode: ""
-  });
+  const [accessCode, setAccessCode] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.hauntId || !formData.accessCode) {
+    if (!hauntId || !accessCode) {
       toast({
         title: "Missing Information",
-        description: "Please enter both Haunt ID and Access Code",
+        description: "Please enter your access code",
         variant: "destructive"
       });
       return;
@@ -31,7 +30,7 @@ export default function HauntAuth() {
     setIsLoading(true);
     try {
       // Check if haunt exists and verify access code
-      const hauntRef = doc(firestore, 'haunts', formData.hauntId);
+      const hauntRef = doc(firestore, 'haunts', hauntId);
       const hauntSnap = await getDoc(hauntRef);
 
       if (!hauntSnap.exists()) {
@@ -46,7 +45,7 @@ export default function HauntAuth() {
       const hauntData = hauntSnap.data();
       
       // Check if access code matches
-      if (hauntData.authCode !== formData.accessCode) {
+      if (hauntData.authCode !== accessCode) {
         toast({
           title: "Access Denied",
           description: "Invalid access code for this haunt",

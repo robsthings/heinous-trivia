@@ -16,7 +16,7 @@ function Router() {
       <Route path="/" component={Game} />
       <Route path="/game" component={Game} />
       <Route path="/admin" component={Admin} />
-      <Route path="/haunt-auth" component={HauntAuth} />
+      <Route path="/haunt-auth/:hauntId" component={HauntAuth} />
       <Route path="/haunt-admin/:hauntId" component={HauntAdmin} />
       <Route path="/host-panel/:hauntId" component={HostPanel} />
       <Route component={NotFound} />
