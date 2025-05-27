@@ -781,95 +781,143 @@ export default function HauntAdmin() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-red-900 p-4">
-      <div className="max-w-4xl mx-auto">
-        <Card className="bg-black/80 border-red-600 text-white">
-          <CardHeader>
-            <CardTitle className="text-3xl font-bold text-center text-red-500">
-              👹 {hauntConfig.name} Admin
-            </CardTitle>
-            <p className="text-center text-gray-300">Manage your haunt settings</p>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {/* Game Mode Section */}
-              <Card className="bg-gray-900/50 border-gray-700">
-                <CardHeader>
-                  <CardTitle className="text-red-400">🎮 Game Mode</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div>
-                      <Label htmlFor="currentMode" className="text-white">Current Mode</Label>
-                      <div className="text-2xl font-bold text-red-400 capitalize">
-                        {hauntConfig.mode}
-                      </div>
-                    </div>
-                    <div>
-                      <Label htmlFor="mode" className="text-white">Switch Mode</Label>
-                      <Select value={formData.mode} onValueChange={(value) => handleInputChange('mode', value)}>
-                        <SelectTrigger className="bg-gray-800 border-gray-600 text-white">
-                          <SelectValue placeholder="Select game mode" />
-                        </SelectTrigger>
-                        <SelectContent className="bg-gray-800 border-gray-600">
-                          <SelectItem value="individual" className="text-white hover:bg-gray-700">
-                            Individual - Players compete individually
-                          </SelectItem>
-                          <SelectItem value="queue" className="text-white hover:bg-gray-700">
-                            Queue - Players join a waiting queue
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+      <div className="max-w-6xl mx-auto space-y-6">
+        
+        {/* Header Section */}
+        <div className="text-center lg:text-left bg-black/60 rounded-xl p-6 border border-gray-700">
+          <h1 className="text-4xl font-bold text-white mb-2" style={{ color: hauntConfig.theme?.primaryColor || '#dc2626' }}>
+            👹 {hauntConfig.name || hauntId}
+          </h1>
+          <p className="text-gray-300 text-lg mb-4">
+            Manage your haunt configuration, trivia questions, and advertisements
+          </p>
+          <div className="flex flex-wrap gap-2 justify-center lg:justify-start">
+            <span className="px-3 py-1 bg-gray-800/80 text-gray-300 rounded-full text-sm border border-gray-600">
+              Tier: <span className="text-white font-semibold capitalize">{hauntConfig.tier}</span>
+            </span>
+            <span className="px-3 py-1 bg-gray-800/80 text-gray-300 rounded-full text-sm border border-gray-600">
+              Mode: <span className="text-white font-semibold capitalize">{hauntConfig.mode}</span>
+            </span>
+          </div>
+        </div>
 
-
-            </div>
-
-            {/* Logo Upload Section */}
-            <Card className="bg-gray-900/50 border-gray-700 mt-8">
-              <CardHeader>
-                <CardTitle className="text-red-400">🖼️ Logo Image</CardTitle>
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+          
+          {/* Left Column */}
+          <div className="space-y-6">
+            
+            {/* Haunt Branding Section */}
+            <Card className="bg-black/60 border-gray-600 shadow-lg">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-xl font-semibold text-white flex items-center gap-2" style={{ color: hauntConfig.theme?.primaryColor || '#dc2626' }}>
+                  🎨 Haunt Branding
+                </CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <p className="text-gray-300 text-sm">
-                    Upload your haunt logo. Recommended size: 600x300 PNG
-                  </p>
+              <CardContent className="space-y-4">
+                
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div>
-                    <Label htmlFor="logoUpload" className="text-white">Logo Upload</Label>
+                    <Label htmlFor="primaryColor" className="text-white text-sm font-medium mb-2 block">Primary Color</Label>
                     <Input
-                      id="logoUpload"
-                      type="file"
-                      accept="image/*"
-                      onChange={handleLogoUpload}
-                      className="bg-gray-800 border-gray-600 text-white file:bg-red-600 file:text-white file:border-0 file:rounded file:px-4 file:py-2 file:mr-4"
+                      id="primaryColor"
+                      type="color"
+                      value={formData.primaryColor}
+                      onChange={(e) => handleInputChange('primaryColor', e.target.value)}
+                      className="h-11 bg-gray-800 border-gray-600 cursor-pointer"
                     />
-                    {logoFile && (
-                      <p className="text-green-400 text-sm mt-2">
-                        ✅ Selected: {logoFile.name}
-                      </p>
-                    )}
                   </div>
+                  <div>
+                    <Label htmlFor="secondaryColor" className="text-white text-sm font-medium mb-2 block">Secondary Color</Label>
+                    <Input
+                      id="secondaryColor"
+                      type="color"
+                      value={formData.secondaryColor}
+                      onChange={(e) => handleInputChange('secondaryColor', e.target.value)}
+                      className="h-11 bg-gray-800 border-gray-600 cursor-pointer"
+                    />
+                  </div>
+                  <div>
+                    <Label htmlFor="accentColor" className="text-white text-sm font-medium mb-2 block">Accent Color</Label>
+                    <Input
+                      id="accentColor"
+                      type="color"
+                      value={formData.accentColor}
+                      onChange={(e) => handleInputChange('accentColor', e.target.value)}
+                      className="h-11 bg-gray-800 border-gray-600 cursor-pointer"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <Label htmlFor="logoUpload" className="text-white text-sm font-medium mb-2 block">Logo Upload</Label>
+                  <p className="text-gray-400 text-xs mb-2">Recommended size: 600x300 PNG</p>
+                  <Input
+                    id="logoUpload"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleLogoUpload}
+                    className="bg-gray-800 border-gray-600 text-white file:bg-red-600 file:text-white file:border-0 file:rounded-md file:px-3 file:py-2 file:mr-3 file:cursor-pointer"
+                  />
+                  {logoFile && (
+                    <p className="text-green-400 text-xs mt-2 flex items-center gap-1">
+                      ✅ Selected: {logoFile.name}
+                    </p>
+                  )}
                 </div>
               </CardContent>
             </Card>
 
-            {/* Ad Images Section */}
-            <Card className="bg-gray-900/50 border-gray-700 mt-8">
-              <CardHeader>
-                <CardTitle className="text-red-400">📢 Advertisement Images</CardTitle>
-                <p className="text-gray-300 text-sm">
-                  Your <span className="text-red-400 font-bold capitalize">{hauntConfig.tier}</span> subscription tier allows up to{" "}
-                  <span className="text-red-400 font-bold">{getAdLimit(hauntConfig.tier)}</span> ad images. 
-                  Recommended size: 800x400 PNG.
+            {/* Game Configuration Section */}
+            <Card className="bg-black/60 border-gray-600 shadow-lg">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-xl font-semibold text-white flex items-center gap-2" style={{ color: hauntConfig.theme?.primaryColor || '#dc2626' }}>
+                  ⚙️ Game Configuration
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div>
+                  <Label htmlFor="mode" className="text-white text-sm font-medium mb-2 block">Game Mode</Label>
+                  <Select value={formData.mode} onValueChange={(value) => handleInputChange('mode', value)}>
+                    <SelectTrigger className="bg-gray-800 border-gray-600 text-white h-11">
+                      <SelectValue placeholder="Select game mode" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-gray-800 border-gray-600">
+                      <SelectItem value="individual" className="text-white hover:bg-gray-700">
+                        Individual Mode - Players compete individually
+                      </SelectItem>
+                      <SelectItem value="queue" className="text-white hover:bg-gray-700">
+                        Group Mode - Host-controlled synchronized sessions
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <p className="text-gray-400 text-xs mt-1">
+                    Current: <span className="text-white font-medium capitalize">{hauntConfig.mode}</span> mode
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+          </div>
+
+          {/* Right Column */}
+          <div className="space-y-6">
+
+            {/* Ad Management Section */}
+            <Card className="bg-black/60 border-gray-600 shadow-lg">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-xl font-semibold text-white flex items-center gap-2" style={{ color: hauntConfig.theme?.primaryColor || '#dc2626' }}>
+                  📢 Ad Management
+                </CardTitle>
+                <p className="text-gray-400 text-sm mt-2">
+                  Your <span className="text-white font-medium capitalize">{hauntConfig.tier}</span> tier allows up to{" "}
+                  <span className="text-white font-medium">{getAdLimit(hauntConfig.tier)}</span> ads. Recommended size: 800x400 PNG.
                 </p>
               </CardHeader>
               <CardContent>
-                <div className="space-y-6">
+                <div className="space-y-4">
                   {adFiles.map((ad, index) => (
-                    <div key={ad.id} className="border border-gray-600 rounded-lg p-4 bg-gray-800/50">
+                    <div key={ad.id} className="border border-gray-600 rounded-lg p-4 bg-gray-800/30">
                       <div className="flex justify-between items-center mb-4">
                         <h4 className="text-white font-bold">Ad #{index + 1}</h4>
                         {adFiles.length > 1 && (
@@ -970,71 +1018,23 @@ export default function HauntAdmin() {
               </CardContent>
             </Card>
 
-            {/* Theme Colors Section */}
-            <Card className="bg-gray-900/50 border-gray-700 mt-8">
-              <CardHeader>
-                <CardTitle className="text-red-400">🎨 Theme Colors</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  <div>
-                    <Label htmlFor="primaryColor" className="text-white">Primary Color</Label>
-                    <div className="flex gap-2 mt-2">
-                      <Input
-                        id="primaryColor"
-                        type="color"
-                        value={formData.primaryColor}
-                        onChange={(e) => handleInputChange('primaryColor', e.target.value)}
-                        className="w-16 h-10 p-1 bg-gray-800 border-gray-600"
-                      />
-                      <Input
-                        value={formData.primaryColor}
-                        onChange={(e) => handleInputChange('primaryColor', e.target.value)}
-                        className="bg-gray-800 border-gray-600 text-white"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <Label htmlFor="secondaryColor" className="text-white">Secondary Color</Label>
-                    <div className="flex gap-2 mt-2">
-                      <Input
-                        id="secondaryColor"
-                        type="color"
-                        value={formData.secondaryColor}
-                        onChange={(e) => handleInputChange('secondaryColor', e.target.value)}
-                        className="w-16 h-10 p-1 bg-gray-800 border-gray-600"
-                      />
-                      <Input
-                        value={formData.secondaryColor}
-                        onChange={(e) => handleInputChange('secondaryColor', e.target.value)}
-                        className="bg-gray-800 border-gray-600 text-white"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <Label htmlFor="accentColor" className="text-white">Accent Color</Label>
-                    <div className="flex gap-2 mt-2">
-                      <Input
-                        id="accentColor"
-                        type="color"
-                        value={formData.accentColor}
-                        onChange={(e) => handleInputChange('accentColor', e.target.value)}
-                        className="w-16 h-10 p-1 bg-gray-800 border-gray-600"
-                      />
-                      <Input
-                        value={formData.accentColor}
-                        onChange={(e) => handleInputChange('accentColor', e.target.value)}
-                        className="bg-gray-800 border-gray-600 text-white"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
 
-            {/* Preview Ads Section */}
-            {uploadedAds.length > 0 && (
-              <Card className="bg-gray-900/50 border-gray-700 mt-8">
+
+          </div>
+        </div>
+
+        {/* Custom Trivia Section - Full Width */}
+        <Card className="bg-black/60 border-gray-600 shadow-lg">
+          <CardHeader className="pb-4">
+            <CardTitle className="text-xl font-semibold text-white flex items-center gap-2" style={{ color: hauntConfig.theme?.primaryColor || '#dc2626' }}>
+              📝 Custom Trivia Questions
+            </CardTitle>
+            <p className="text-gray-400 text-sm mt-2">
+              Create custom questions specific to your haunt. Your <span className="text-white font-medium capitalize">{hauntConfig.tier}</span> tier allows up to{" "}
+              <span className="text-white font-medium">{getQuestionLimit(hauntConfig.tier)}</span> custom questions.
+            </p>
+          </CardHeader>
+          <CardContent>
                 <CardHeader>
                   <CardTitle className="text-red-400">👁️ Preview Ads</CardTitle>
                   <p className="text-gray-300 text-sm">
