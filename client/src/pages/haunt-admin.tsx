@@ -47,7 +47,7 @@ export default function HauntAdmin() {
   });
   
   const [logoFile, setLogoFile] = useState<File | null>(null);
-  const [adFiles, setAdFiles] = useState<Array<{ file: File | null; link: string; id: string }>>([]);
+  const [adFiles, setAdFiles] = useState<Array<{ file: File | null; link: string; id: string; title: string; description: string }>>([]);
   
   // Custom trivia state
   const [customQuestions, setCustomQuestions] = useState<CustomTriviaQuestion[]>([]);
@@ -170,11 +170,37 @@ export default function HauntAdmin() {
     });
   };
 
+  const handleAdTitleChange = (index: number, title: string) => {
+    setAdFiles(prev => {
+      const updated = [...prev];
+      if (updated[index]) {
+        updated[index].title = title;
+      }
+      return updated;
+    });
+  };
+
+  const handleAdDescriptionChange = (index: number, description: string) => {
+    setAdFiles(prev => {
+      const updated = [...prev];
+      if (updated[index]) {
+        updated[index].description = description;
+      }
+      return updated;
+    });
+  };
+
   const addAdSlot = () => {
     if (!hauntConfig) return;
     const limit = getAdLimit(hauntConfig.tier);
     if (adFiles.length < limit) {
-      setAdFiles(prev => [...prev, { file: null, link: "", id: `ad${prev.length + 1}` }]);
+      setAdFiles(prev => [...prev, { 
+        file: null, 
+        link: "", 
+        id: `ad${prev.length + 1}`,
+        title: "",
+        description: ""
+      }]);
     }
   };
 
@@ -182,7 +208,7 @@ export default function HauntAdmin() {
     setAdFiles(prev => prev.filter((_, i) => i !== index));
   };
 
-  const uploadAdImage = async (file: File, adId: string, link?: string) => {
+  const uploadAdImage = async (file: File, adId: string, link?: string, title?: string, description?: string) => {
     try {
       setIsSaving(true);
       console.log('🚀 Starting ad upload process...', { file: file.name, adId, link });
@@ -252,7 +278,7 @@ export default function HauntAdmin() {
   useEffect(() => {
     if (hauntConfig && adFiles.length === 0) {
       // Initialize with one empty ad slot
-      setAdFiles([{ file: null, link: "", id: "ad1" }]);
+      setAdFiles([{ file: null, link: "", id: "ad1", title: "", description: "" }]);
     }
   }, [hauntConfig]);
 
