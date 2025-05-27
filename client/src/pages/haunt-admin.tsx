@@ -124,14 +124,61 @@ export default function HauntAdmin() {
     }
   };
 
-  // Load haunt configuration on mount
+  // Authentication check
   useEffect(() => {
+    const checkAuthentication = () => {
+      try {
+        const authData = localStorage.getItem('haunt-auth');
+        if (!authData) {
+          setLocation('/haunt-auth');
+          return;
+        }
+
+        const auth = JSON.parse(authData);
+        
+        // Check if token is expired
+        if (Date.now() > auth.expires) {
+          localStorage.removeItem('haunt-auth');
+          toast({
+            title: "Session Expired",
+            description: "Please log in again to access the admin dashboard",
+            variant: "destructive"
+          });
+          setLocation('/haunt-auth');
+          return;
+        }
+
+        // Check if haunt ID matches
+        if (auth.hauntId !== hauntId) {
+          toast({
+            title: "Access Denied",
+            description: "You don't have access to this haunt",
+            variant: "destructive"
+          });
+          setLocation('/haunt-auth');
+          return;
+        }
+
+        setIsAuthenticated(true);
+      } catch (error) {
+        localStorage.removeItem('haunt-auth');
+        setLocation('/haunt-auth');
+      }
+    };
+
     if (hauntId) {
+      checkAuthentication();
+    }
+  }, [hauntId, setLocation, toast]);
+
+  // Load haunt configuration after authentication
+  useEffect(() => {
+    if (hauntId && isAuthenticated) {
       loadHauntConfig();
       loadCustomQuestions();
       loadUploadedAds();
     }
-  }, [hauntId]);
+  }, [hauntId, isAuthenticated]);
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
