@@ -46,6 +46,11 @@ export default function HauntAdmin() {
     correct: ""
   });
 
+  // Ad management state
+  const [uploadedAds, setUploadedAds] = useState<Array<{ id: string; imageUrl: string; link?: string }>>([]);
+  const [editingAdId, setEditingAdId] = useState<string | null>(null);
+  const [editingAdLink, setEditingAdLink] = useState("");
+
   // Get ad limits based on tier
   const getAdLimit = (tier: string) => {
     switch (tier) {
@@ -110,6 +115,7 @@ export default function HauntAdmin() {
     if (hauntId) {
       loadHauntConfig();
       loadCustomQuestions();
+      loadUploadedAds();
     }
   }, [hauntId]);
 
@@ -188,6 +194,29 @@ export default function HauntAdmin() {
       console.log('✅ Custom trivia questions loaded:', questions);
     } catch (error) {
       console.error('❌ Failed to load custom trivia questions:', error);
+    }
+  };
+
+  const loadUploadedAds = async () => {
+    try {
+      console.log('📢 Loading uploaded ads for:', hauntId);
+      const adsRef = collection(firestore, 'haunt-ads', hauntId, 'ads');
+      const querySnapshot = await getDocs(adsRef);
+      
+      const ads: Array<{ id: string; imageUrl: string; link?: string }> = [];
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        ads.push({ 
+          id: doc.id, 
+          imageUrl: data.imageUrl,
+          link: data.link 
+        });
+      });
+      
+      setUploadedAds(ads);
+      console.log('✅ Uploaded ads loaded:', ads);
+    } catch (error) {
+      console.error('❌ Failed to load uploaded ads:', error);
     }
   };
 
@@ -313,6 +342,61 @@ export default function HauntAdmin() {
       toast({
         title: "Error",
         description: "Failed to delete trivia question",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const startEditingAdLink = (ad: { id: string; imageUrl: string; link?: string }) => {
+    setEditingAdId(ad.id);
+    setEditingAdLink(ad.link || "");
+  };
+
+  const saveAdLink = async (adId: string) => {
+    try {
+      console.log('💾 Saving ad link for:', adId);
+      
+      const adRef = doc(firestore, 'haunt-ads', hauntId, 'ads', adId);
+      await updateDoc(adRef, {
+        link: editingAdLink
+      });
+
+      toast({
+        title: "Success!",
+        description: "Ad link updated",
+      });
+
+      setEditingAdId(null);
+      setEditingAdLink("");
+      loadUploadedAds();
+    } catch (error) {
+      console.error('❌ Failed to save ad link:', error);
+      toast({
+        title: "Error",
+        description: "Failed to update ad link",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const deleteAd = async (adId: string) => {
+    try {
+      console.log('🗑️ Deleting ad:', adId);
+      
+      const adRef = doc(firestore, 'haunt-ads', hauntId, 'ads', adId);
+      await deleteDoc(adRef);
+
+      toast({
+        title: "Success!",
+        description: "Ad deleted",
+      });
+
+      loadUploadedAds();
+    } catch (error) {
+      console.error('❌ Failed to delete ad:', error);
+      toast({
+        title: "Error",
+        description: "Failed to delete ad",
         variant: "destructive"
       });
     }
@@ -604,6 +688,98 @@ export default function HauntAdmin() {
                 </div>
               </CardContent>
             </Card>
+
+            {/* Uploaded Ads List */}
+            {uploadedAds.length > 0 && (
+              <Card className="bg-gray-900/50 border-gray-700 mt-8">
+                <CardHeader>
+                  <CardTitle className="text-red-400">📢 Uploaded Ads</CardTitle>
+                  <p className="text-gray-300 text-sm">
+                    Ads Uploaded: <span className="text-red-400 font-bold">{uploadedAds.length}</span> / <span className="text-red-400 font-bold">{getAdLimit(hauntConfig.tier)}</span> (<span className="capitalize">{hauntConfig.tier}</span> Tier)
+                  </p>
+                </CardHeader>
+                <CardContent>
+                  <div className="max-h-96 overflow-y-auto space-y-4 pr-2">
+                    {uploadedAds.map((ad, index) => (
+                      <div key={ad.id} className="border border-gray-600 rounded-lg p-4 bg-gray-800/50 hover:bg-gray-700/50 transition-colors">
+                        <div className="flex flex-col lg:flex-row gap-4">
+                          {/* Ad Thumbnail */}
+                          <div className="flex-shrink-0">
+                            <img
+                              src={ad.imageUrl}
+                              alt={`Ad ${index + 1}`}
+                              className="w-32 h-20 object-cover rounded border border-gray-600"
+                            />
+                          </div>
+                          
+                          {/* Ad Details */}
+                          <div className="flex-1 space-y-3">
+                            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
+                              <h4 className="text-white font-bold text-sm">Ad #{index + 1}</h4>
+                              <div className="flex gap-2 flex-shrink-0">
+                                <Button
+                                  onClick={() => startEditingAdLink(ad)}
+                                  variant="outline"
+                                  size="sm"
+                                  className="border-blue-600 text-blue-400 hover:bg-blue-600 hover:text-white text-xs px-2 py-1"
+                                >
+                                  ✏️ Edit Link
+                                </Button>
+                                <Button
+                                  onClick={() => deleteAd(ad.id)}
+                                  variant="outline"
+                                  size="sm"
+                                  className="border-red-600 text-red-500 hover:bg-red-600 hover:text-white text-xs px-2 py-1"
+                                >
+                                  🗑️ Delete
+                                </Button>
+                              </div>
+                            </div>
+                            
+                            {/* Link Display/Edit */}
+                            <div>
+                              <Label className="text-gray-400 text-xs">Link:</Label>
+                              {editingAdId === ad.id ? (
+                                <div className="flex gap-2 mt-1">
+                                  <Input
+                                    value={editingAdLink}
+                                    onChange={(e) => setEditingAdLink(e.target.value)}
+                                    placeholder="https://example.com/vip"
+                                    className="bg-gray-800 border-gray-600 text-white text-sm flex-1"
+                                  />
+                                  <Button
+                                    onClick={() => saveAdLink(ad.id)}
+                                    size="sm"
+                                    className="bg-green-600 hover:bg-green-700 text-white text-xs px-3"
+                                  >
+                                    Save
+                                  </Button>
+                                  <Button
+                                    onClick={() => {
+                                      setEditingAdId(null);
+                                      setEditingAdLink("");
+                                    }}
+                                    variant="outline"
+                                    size="sm"
+                                    className="border-gray-600 text-gray-400 hover:bg-gray-700 text-xs px-3"
+                                  >
+                                    Cancel
+                                  </Button>
+                                </div>
+                              ) : (
+                                <p className="text-gray-300 text-sm mt-1 break-all">
+                                  {ad.link || <span className="text-gray-500 italic">No link set</span>}
+                                </p>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
 
             {/* Custom Trivia Section */}
             <Card className="bg-gray-900/50 border-gray-700 mt-8">
