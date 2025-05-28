@@ -46,18 +46,17 @@ export class GameManager {
 
   static selectAnswer(state: GameState, answerIndex: number): GameState {
     if (state.selectedAnswer !== null) return state;
-
+    
+    // Answer bounds check
     const currentQuestion = state.questions[state.currentQuestionIndex];
+    if (answerIndex < 0 || answerIndex >= currentQuestion?.answers?.length) {
+      console.warn("Invalid answer selected");
+      return state;
+    }
     
     // Prevent crash from undefined question
     if (!currentQuestion || typeof currentQuestion.correctAnswer !== 'number') {
       console.error('Invalid question data, skipping answer selection');
-      return state;
-    }
-    
-    // Validate answer index bounds
-    if (answerIndex < 0 || answerIndex >= (currentQuestion.answers?.length || 0)) {
-      console.error('Answer index out of bounds:', answerIndex);
       return state;
     }
     

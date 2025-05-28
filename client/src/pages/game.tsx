@@ -172,6 +172,12 @@ export default function Game() {
   };
 
   const handleSelectAnswer = (answerIndex: number) => {
+    // Answer bounds check
+    const currentQuestion = gameState.questions[gameState.currentQuestionIndex];
+    if (answerIndex < 0 || answerIndex >= currentQuestion?.answers?.length) {
+      console.warn("Invalid answer selected");
+      return;
+    }
     setGameState(prev => GameManager.selectAnswer(prev, answerIndex));
   };
 

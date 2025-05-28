@@ -71,7 +71,14 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
           <button
             key={index}
             className={getButtonClass(index)}
-            onClick={() => onSelectAnswer(index)}
+            onClick={() => {
+              // Answer bounds check
+              if (index < 0 || index >= currentQuestion.answers?.length) {
+                console.warn("Invalid answer selected");
+                return;
+              }
+              onSelectAnswer(index);
+            }}
             disabled={gameState.selectedAnswer !== null}
           >
             <div className="flex items-center">
