@@ -94,6 +94,11 @@ export default function HauntAdmin() {
 
       setIsLoading(true);
       try {
+        // Authenticate before loading data
+        if (!auth.currentUser) {
+          await signInAnonymously(auth);
+        }
+        
         const docRef = doc(firestore, 'haunts', hauntId);
         const docSnap = await getDoc(docRef);
         
