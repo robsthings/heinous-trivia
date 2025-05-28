@@ -33,6 +33,7 @@ interface CustomTriviaQuestion {
   question: string;
   choices: string[];
   correct: string;
+  explanation?: string;
 }
 
 export default function HauntAdmin() {
@@ -404,6 +405,7 @@ export default function HauntAdmin() {
           question: question.question,
           choices: question.choices,
           correct: question.correct,
+          explanation: question.explanation || `The correct answer is ${question.correct}`,
           timestamp: new Date().toISOString()
         });
       }
@@ -914,7 +916,8 @@ export default function HauntAdmin() {
                   onClick={() => setEditingQuestion({
                     question: "",
                     choices: ["", "", "", ""],
-                    correct: ""
+                    correct: "",
+                    explanation: ""
                   })}
                   variant="outline"
                   className="w-full border-red-600 text-red-500 hover:bg-red-600 hover:text-white"
@@ -998,6 +1001,20 @@ export default function HauntAdmin() {
                     <Label className="text-white text-sm">Correct</Label>
                   </div>
                 ))}
+              </div>
+              
+              <div>
+                <Label className="text-white">Explanation (Optional)</Label>
+                <Textarea
+                  value={editingQuestion.explanation || ""}
+                  onChange={(e) => setEditingQuestion(prev => prev ? {...prev, explanation: e.target.value} : null)}
+                  placeholder="Explain why this is the correct answer (will show after they answer)..."
+                  className="bg-gray-800 border-gray-600 text-white"
+                  rows={3}
+                />
+                <p className="text-gray-400 text-xs mt-1">
+                  This explanation will appear after players answer the question to help them learn.
+                </p>
               </div>
               
               <div className="flex gap-3 pt-4">
