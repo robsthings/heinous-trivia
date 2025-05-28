@@ -10,9 +10,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
-import { firestore, auth } from "@/lib/firebase";
+import { firestore, auth, storage } from "@/lib/firebase";
 import { doc, setDoc, collection, addDoc, getDocs, updateDoc, deleteDoc } from "firebase/firestore";
 import { signInAnonymously } from "firebase/auth";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { ExternalLink, Settings, GamepadIcon, Crown, Zap, Gem, Copy } from "lucide-react";
 import type { HauntConfig, TriviaQuestion } from "@shared/schema";
 
@@ -310,6 +311,83 @@ export default function Admin() {
       setExistingPacks(packs);
     } catch (error) {
       console.error('Failed to load trivia packs:', error);
+    }
+  };
+
+  const loadDefaultAds = async () => {
+    try {
+      if (!auth.currentUser) {
+        await signInAnonymously(auth);
+      }
+      
+      const adsRef = collection(firestore, 'default-ads');
+      const querySnapshot = await getDocs(adsRef);
+      
+      const ads: any[] = [];
+      querySnapshot.forEach((doc) => {
+        ads.push({ id: doc.id, ...doc.data() });
+      });
+      
+      setDefaultAds(ads);
+    } catch (error) {
+      console.error('Failed to load default ads:', error);
+    }
+  };
+
+  const saveDefaultAds = async () => {
+    try {
+      if (!auth.currentUser) {
+        await signInAnonymously(auth);
+      }
+      
+      // Clear existing default ads
+      const adsRef = collection(firestore, 'default-ads');
+      const existingAds = await getDocs(adsRef);
+      
+      for (const adDoc of existingAds.docs) {
+        await deleteDoc(adDoc.ref);
+      }
+      
+      // Upload and save new default ads
+      let savedAdsCount = 0;
+      for (const ad of defaultAdFiles) {
+        if (ad.file) {
+          try {
+            // Upload image to Firebase Storage
+            const imageRef = ref(storage, `default-ads/${ad.id}.${ad.file.name.split('.').pop()}`);
+            await uploadBytes(imageRef, ad.file);
+            const imageUrl = await getDownloadURL(imageRef);
+            
+            // Save ad data to Firestore
+            await addDoc(adsRef, {
+              title: ad.title || "Default Ad",
+              description: ad.description || "Discover more!",
+              link: ad.link || "#",
+              imageUrl: imageUrl,
+              timestamp: new Date().toISOString()
+            });
+            savedAdsCount++;
+          } catch (error) {
+            console.error('Failed to upload default ad:', error);
+          }
+        }
+      }
+      
+      toast({
+        title: "Success!",
+        description: `${savedAdsCount} default ads saved successfully`,
+      });
+      
+      // Refresh the ads list
+      loadDefaultAds();
+      setDefaultAdFiles([]);
+    } catch (error) {
+      console.error('Failed to save default ads:', error);
+      toast({
+        title: "Error",
+        description: "Failed to save default ads",
+        variant: "destructive"
+      });
     }
   };
 
@@ -1375,6 +1453,167 @@ export default function Admin() {
                         <li>• <strong>Tier access:</strong> Pack available to specific subscription tiers</li>
                         <li>• <strong>Select haunts:</strong> Pack assigned to specific haunts only</li>
                         <li>• <strong>To revoke access:</strong> Edit the pack's access settings in Trivia Packs tab</li>
+                      </ul>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              {/* Default Ads Tab */}
+              <TabsContent value="default-ads" className="space-y-6">
+                <Card className="bg-gray-900/50 border-gray-700">
+                  <CardHeader>
+                    <CardTitle className="text-red-400 flex items-center gap-2">
+                      📢 Default Ads Management
+                      <Badge variant="outline" className="text-gray-300">
+                        {defaultAds.length} active
+                      </Badge>
+                    </CardTitle>
+                    <p className="text-gray-400">
+                      These ads will show for haunts that haven't uploaded their own ads. Perfect for promoting the game itself or other content.
+                    </p>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    
+                    {/* Current Default Ads */}
+                    {defaultAds.length > 0 && (
+                      <div className="space-y-4">
+                        <h3 className="text-white font-medium">Current Default Ads</h3>
+                        <div className="grid gap-4">
+                          {defaultAds.map((ad) => (
+                            <div key={ad.id} className="bg-gray-800/50 p-4 rounded-lg border border-gray-600">
+                              <div className="flex items-center gap-4">
+                                {ad.imageUrl && (
+                                  <img src={ad.imageUrl} alt={ad.title} className="w-16 h-16 object-cover rounded" />
+                                )}
+                                <div className="flex-1">
+                                  <h4 className="text-white font-medium">{ad.title}</h4>
+                                  <p className="text-gray-400 text-sm">{ad.description}</p>
+                                  {ad.link && (
+                                    <a href={ad.link} target="_blank" rel="noopener noreferrer" className="text-blue-400 text-xs">
+                                      {ad.link}
+                                    </a>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Upload New Default Ads */}
+                    <div className="space-y-4">
+                      <h3 className="text-white font-medium">Upload New Default Ads</h3>
+                      <p className="text-gray-400 text-sm">
+                        These will replace any existing default ads. Great for promoting new features, other haunts, or the game itself.
+                      </p>
+                      
+                      {defaultAdFiles.map((adFile, index) => (
+                        <div key={adFile.id} className="bg-gray-800/30 p-4 rounded-lg border border-gray-600">
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                              <Label className="text-white text-sm">Ad Image *</Label>
+                              <Input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => {
+                                  const file = e.target.files?.[0] || null;
+                                  setDefaultAdFiles(prev => prev.map((ad, i) => 
+                                    i === index ? { ...ad, file } : ad
+                                  ));
+                                }}
+                                className="bg-gray-700 border-gray-600 text-white"
+                              />
+                            </div>
+                            <div>
+                              <Label className="text-white text-sm">Ad Title</Label>
+                              <Input
+                                value={adFile.title}
+                                onChange={(e) => {
+                                  setDefaultAdFiles(prev => prev.map((ad, i) => 
+                                    i === index ? { ...ad, title: e.target.value } : ad
+                                  ));
+                                }}
+                                placeholder="e.g., Play More Horror Trivia!"
+                                className="bg-gray-700 border-gray-600 text-white"
+                              />
+                            </div>
+                            <div>
+                              <Label className="text-white text-sm">Description</Label>
+                              <Input
+                                value={adFile.description}
+                                onChange={(e) => {
+                                  setDefaultAdFiles(prev => prev.map((ad, i) => 
+                                    i === index ? { ...ad, description: e.target.value } : ad
+                                  ));
+                                }}
+                                placeholder="e.g., Discover more haunts and challenges!"
+                                className="bg-gray-700 border-gray-600 text-white"
+                              />
+                            </div>
+                            <div>
+                              <Label className="text-white text-sm">Link (Optional)</Label>
+                              <Input
+                                value={adFile.link}
+                                onChange={(e) => {
+                                  setDefaultAdFiles(prev => prev.map((ad, i) => 
+                                    i === index ? { ...ad, link: e.target.value } : ad
+                                  ));
+                                }}
+                                placeholder="https://..."
+                                className="bg-gray-700 border-gray-600 text-white"
+                              />
+                            </div>
+                          </div>
+                          <Button
+                            onClick={() => {
+                              setDefaultAdFiles(prev => prev.filter((_, i) => i !== index));
+                            }}
+                            variant="ghost"
+                            size="sm"
+                            className="mt-2 text-red-400 hover:text-red-300"
+                          >
+                            🗑️ Remove
+                          </Button>
+                        </div>
+                      ))}
+                      
+                      <div className="flex gap-3">
+                        <Button
+                          onClick={() => {
+                            setDefaultAdFiles(prev => [...prev, {
+                              file: null,
+                              link: "",
+                              id: `default-ad-${Date.now()}`,
+                              title: "",
+                              description: ""
+                            }]);
+                          }}
+                          variant="outline"
+                          className="border-blue-600 text-blue-400 hover:bg-blue-600 hover:text-white"
+                        >
+                          ➕ Add Default Ad
+                        </Button>
+                        
+                        {defaultAdFiles.length > 0 && (
+                          <Button
+                            onClick={saveDefaultAds}
+                            className="bg-green-600 hover:bg-green-700 text-white"
+                          >
+                            💾 Save Default Ads
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="p-4 bg-blue-900/20 border border-blue-700 rounded-lg">
+                      <h4 className="text-blue-400 font-medium mb-2">💡 How Default Ads Work</h4>
+                      <ul className="text-sm text-gray-300 space-y-1">
+                        <li>• Default ads only show when a haunt hasn't uploaded their own ads</li>
+                        <li>• Perfect for promoting the game, new features, or other haunts</li>
+                        <li>• These ads will appear in all games where the haunt owner hasn't added custom ads</li>
+                        <li>• You can upload multiple default ads that will rotate randomly</li>
                       </ul>
                     </div>
                   </CardContent>
