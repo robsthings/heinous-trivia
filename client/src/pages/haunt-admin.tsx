@@ -350,6 +350,16 @@ export default function HauntAdmin() {
       
       setHauntConfig(updatedConfig);
       
+      // Save custom questions if any exist
+      if (customQuestions.length > 0) {
+        await saveCustomQuestions(customQuestions);
+      }
+      
+      // Save ads if any exist
+      if (adFiles.length > 0 && adFiles.some(ad => ad.file && ad.title && ad.link)) {
+        await saveAds();
+      }
+      
       // Clear the logo file after successful upload
       if (logoFile) {
         setLogoFile(null);
@@ -357,7 +367,7 @@ export default function HauntAdmin() {
       
       toast({
         title: "Success!",
-        description: logoFile ? "Haunt configuration and logo updated successfully" : "Haunt configuration updated successfully",
+        description: "Haunt configuration, questions, and ads saved successfully!",
       });
     } catch (error) {
       console.error('Failed to update haunt config:', error);
@@ -373,17 +383,88 @@ export default function HauntAdmin() {
 
   const saveCustomQuestions = async (questions: CustomTriviaQuestion[]) => {
     try {
-      // This would save custom questions to Firebase
-      // Implementation details would go here
+      // Clear existing questions first
+      const questionsRef = collection(firestore, 'trivia-custom', hauntId, 'questions');
+      const existingQuestions = await getDocs(questionsRef);
+      
+      // Delete existing questions
+      for (const questionDoc of existingQuestions.docs) {
+        await deleteDoc(questionDoc.ref);
+      }
+      
+      // Add new questions
+      for (const question of questions) {
+        await addDoc(questionsRef, {
+          question: question.question,
+          choices: question.choices,
+          correct: question.correct,
+          timestamp: new Date().toISOString()
+        });
+      }
+      
       toast({
         title: "Questions Saved",
-        description: "Custom questions updated successfully",
+        description: `${questions.length} custom questions saved successfully`,
       });
     } catch (error) {
       console.error('Failed to save questions:', error);
       toast({
         title: "Error",
         description: "Failed to save custom questions",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const saveAds = async () => {
+    try {
+      // Clear existing ads first
+      const adsRef = collection(firestore, 'haunt-ads', hauntId, 'ads');
+      const existingAds = await getDocs(adsRef);
+      
+      // Delete existing ads
+      for (const adDoc of existingAds.docs) {
+        await deleteDoc(adDoc.ref);
+      }
+      
+      // Upload and save new ads
+      for (const ad of adFiles) {
+        if (ad.file && ad.title && ad.link) {
+          try {
+            // Upload image to Firebase Storage
+            const imageRef = ref(storage, `haunt-assets/${hauntId}/ads/${ad.id}.${ad.file.name.split('.').pop()}`);
+            await uploadBytes(imageRef, ad.file);
+            const imageUrl = await getDownloadURL(imageRef);
+            
+            // Save ad data to Firestore
+            await addDoc(adsRef, {
+              title: ad.title,
+              description: ad.description,
+              link: ad.link,
+              imageUrl: imageUrl,
+              timestamp: new Date().toISOString()
+            });
+          } catch (uploadError) {
+            console.error(`Failed to upload ad ${ad.title}:`, uploadError);
+            toast({
+              title: "Ad Upload Failed",
+              description: `Failed to upload ad "${ad.title}". Please try again.`,
+              variant: "destructive"
+            });
+            return;
+          }
+        }
+      }
+      
+      toast({
+        title: "Ads Saved",
+        description: `${adFiles.length} ads saved successfully`,
+      });
+    } catch (error) {
+      console.error('Failed to save ads:', error);
+      toast({
+        title: "Error",
+        description: "Failed to save ads",
         variant: "destructive"
       });
     }
