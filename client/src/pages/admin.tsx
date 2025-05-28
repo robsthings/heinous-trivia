@@ -73,9 +73,12 @@ export default function Admin() {
     try {
       // Authenticate before loading data
       if (!auth.currentUser) {
+        console.log('Attempting anonymous authentication...');
         await signInAnonymously(auth);
+        console.log('Authentication successful:', auth.currentUser);
       }
       
+      console.log('Loading haunts with user:', auth.currentUser?.uid);
       const hauntsRef = collection(firestore, 'haunts');
       const snapshot = await getDocs(hauntsRef);
       const haunts: HauntConfig[] = [];
