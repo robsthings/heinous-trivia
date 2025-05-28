@@ -120,7 +120,7 @@ export class ConfigLoader {
             difficulty: 1,
             answers: answerChoices,
             correctAnswer: correctAnswerIndex,
-            explanation: `The correct answer is ${answerChoices[correctAnswerIndex] || 'Unknown'}`,
+            explanation: data.explanation || `The correct answer is ${answerChoices[correctAnswerIndex] || 'Unknown'}`,
             points: data.points || 10
           } as TriviaQuestion);
           questionCount++;
@@ -166,7 +166,7 @@ export class ConfigLoader {
                       difficulty: 1,
                       answers: answerChoices,
                       correctAnswer: correctAnswerIndex,
-                      explanation: `The correct answer is ${answerChoices[correctAnswerIndex] || 'Unknown'}`,
+                      explanation: q.explanation || `The correct answer is ${answerChoices[correctAnswerIndex] || 'Unknown'}`,
                       points: q.points || 10
                     };
                   });
