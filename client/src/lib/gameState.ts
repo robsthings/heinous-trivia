@@ -120,10 +120,28 @@ export class GameManager {
   }
 
   static closeAd(state: GameState): GameState {
+    // Check if we need to advance to next question or end game
+    const nextIndex = state.currentQuestionIndex + 1;
+    
+    if (nextIndex >= state.questions.length) {
+      // Game complete after this ad
+      return {
+        ...state,
+        showAd: false,
+        gameComplete: true,
+        showEndScreen: true,
+        currentAdIndex: state.ads.length > 0 ? (state.currentAdIndex + 1) % state.ads.length : 0,
+      };
+    }
+    
+    // Continue to next question
     return {
       ...state,
       showAd: false,
-      currentQuestionIndex: state.currentQuestionIndex + 1,
+      currentQuestionIndex: nextIndex,
+      selectedAnswer: null,
+      showFeedback: false,
+      isCorrect: false,
       currentAdIndex: state.ads.length > 0 ? (state.currentAdIndex + 1) % state.ads.length : 0,
     };
   }
