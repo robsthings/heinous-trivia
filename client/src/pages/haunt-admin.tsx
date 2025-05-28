@@ -14,6 +14,7 @@ import { SpookyLoader } from "@/components/SpookyLoader";
 import { MiniSpookyLoader } from "@/components/MiniSpookyLoader";
 import { firestore, storage, auth } from "@/lib/firebase";
 import { doc, getDoc, updateDoc, collection, addDoc, getDocs, deleteDoc } from "firebase/firestore";
+import { signInAnonymously } from "firebase/auth";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import type { HauntConfig, TriviaQuestion } from "@shared/schema";
 

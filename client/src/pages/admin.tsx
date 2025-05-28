@@ -71,6 +71,11 @@ export default function Admin() {
 
   const loadAllHaunts = async () => {
     try {
+      // Authenticate before loading data
+      if (!auth.currentUser) {
+        await signInAnonymously(auth);
+      }
+      
       const hauntsRef = collection(firestore, 'haunts');
       const snapshot = await getDocs(hauntsRef);
       const haunts: HauntConfig[] = [];
@@ -92,6 +97,11 @@ export default function Admin() {
 
   const loadExistingPacks = async () => {
     try {
+      // Authenticate before loading data
+      if (!auth.currentUser) {
+        await signInAnonymously(auth);
+      }
+      
       const packsRef = collection(firestore, 'trivia-packs');
       const snapshot = await getDocs(packsRef);
       const packs: TriviaPack[] = [];
