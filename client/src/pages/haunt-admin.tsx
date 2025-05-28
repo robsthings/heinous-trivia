@@ -949,6 +949,93 @@ export default function HauntAdmin() {
         </div>
       </div>
       
+      {/* Custom Question Edit Modal */}
+      {editingQuestion && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+          <Card className="bg-gray-900 border-gray-600 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <CardHeader>
+              <CardTitle className="text-white">
+                {editingQuestion.question ? "Edit Question" : "Add New Question"}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <Label className="text-white">Question *</Label>
+                <Textarea
+                  value={editingQuestion.question}
+                  onChange={(e) => setEditingQuestion(prev => prev ? {...prev, question: e.target.value} : null)}
+                  placeholder="Enter your trivia question..."
+                  className="bg-gray-800 border-gray-600 text-white"
+                />
+              </div>
+              
+              <div className="space-y-3">
+                <Label className="text-white">Answer Choices *</Label>
+                {editingQuestion.choices.map((choice, index) => (
+                  <div key={index} className="flex gap-2 items-center">
+                    <Input
+                      value={choice}
+                      onChange={(e) => {
+                        const newChoices = [...editingQuestion.choices];
+                        newChoices[index] = e.target.value;
+                        setEditingQuestion(prev => prev ? {...prev, choices: newChoices} : null);
+                      }}
+                      placeholder={`Choice ${index + 1}`}
+                      className="bg-gray-800 border-gray-600 text-white"
+                    />
+                    <Checkbox
+                      checked={editingQuestion.correct === choice}
+                      onCheckedChange={(checked) => {
+                        if (checked) {
+                          setEditingQuestion(prev => prev ? {...prev, correct: choice} : null);
+                        }
+                      }}
+                      className="border-gray-600"
+                    />
+                    <Label className="text-white text-sm">Correct</Label>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="flex gap-3 pt-4">
+                <Button
+                  onClick={() => {
+                    if (editingQuestion.question && editingQuestion.choices.every(c => c.trim()) && editingQuestion.correct) {
+                      if (editingQuestion.question && customQuestions.find(q => q.question === editingQuestion.question)) {
+                        // Update existing
+                        setCustomQuestions(prev => prev.map(q => 
+                          q.question === editingQuestion.question ? editingQuestion : q
+                        ));
+                      } else {
+                        // Add new
+                        setCustomQuestions(prev => [...prev, {...editingQuestion, id: `q${Date.now()}`}]);
+                      }
+                      setEditingQuestion(null);
+                    } else {
+                      toast({
+                        title: "Missing Information",
+                        description: "Please fill in all fields and select a correct answer",
+                        variant: "destructive"
+                      });
+                    }
+                  }}
+                  className="bg-green-600 hover:bg-green-700 text-white"
+                >
+                  Save Question
+                </Button>
+                <Button
+                  onClick={() => setEditingQuestion(null)}
+                  variant="outline"
+                  className="border-gray-600 text-gray-400"
+                >
+                  Cancel
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+      
       <Footer />
     </div>
   );
