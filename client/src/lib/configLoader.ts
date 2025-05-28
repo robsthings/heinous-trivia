@@ -59,7 +59,7 @@ export class ConfigLoader {
                 difficulty: 1,
                 answers: answerChoices,
                 correctAnswer: correctAnswerIndex,
-                explanation: `The correct answer is ${answerChoices[correctAnswerIndex] || 'Unknown'}`,
+                explanation: q.explanation || `The correct answer is ${answerChoices[correctAnswerIndex] || 'Unknown'}`,
                 points: q.points || 10
               };
             });
