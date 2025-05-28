@@ -375,9 +375,67 @@ export default function Admin() {
     }
   };
 
+  // Show authentication status prominently
+  const [authStatus, setAuthStatus] = useState('checking');
+  
+  useEffect(() => {
+    const checkAuth = () => {
+      if (auth.currentUser) {
+        setAuthStatus('authenticated');
+      } else {
+        setAuthStatus('not-authenticated');
+      }
+    };
+    
+    checkAuth();
+    const unsubscribe = auth.onAuthStateChanged(checkAuth);
+    return unsubscribe;
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-red-900 p-4">
       <div className="max-w-4xl mx-auto">
+        
+        {/* Authentication Status Card */}
+        <Card className="bg-yellow-900/80 border-yellow-600 text-white mb-4">
+          <CardContent className="pt-6">
+            <div className="text-center">
+              <h3 className="text-xl font-bold mb-2">🔐 Authentication Status</h3>
+              <p className="mb-4">Status: {authStatus === 'authenticated' ? '✅ Authenticated' : '❌ Not Authenticated'}</p>
+              <p className="text-sm mb-4">User: {auth.currentUser?.uid || 'None'}</p>
+              
+              <Button 
+                onClick={async () => {
+                  try {
+                    console.log('Manual authentication attempt...');
+                    await signInAnonymously(auth);
+                    console.log('Authentication successful!', auth.currentUser);
+                    toast({
+                      title: "Success!",
+                      description: "Authentication successful",
+                    });
+                    setAuthStatus('authenticated');
+                    // Reload data after successful auth
+                    loadAllHaunts();
+                    loadExistingPacks();
+                  } catch (error) {
+                    console.error('Authentication failed:', error);
+                    toast({
+                      title: "Authentication Failed",
+                      description: error.message,
+                      variant: "destructive"
+                    });
+                  }
+                }}
+                className="bg-green-600 hover:bg-green-700 text-lg px-8 py-3"
+                disabled={authStatus === 'authenticated'}
+              >
+                {authStatus === 'authenticated' ? '✅ Already Signed In' : '🔐 Sign In to Firebase'}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
         <Card className="bg-black/80 border-red-600 text-white">
           <CardHeader>
             <CardTitle className="text-3xl font-bold text-center text-red-500">
