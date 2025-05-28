@@ -10,8 +10,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
-import { firestore } from "@/lib/firebase";
+import { firestore, auth } from "@/lib/firebase";
 import { doc, setDoc, collection, addDoc, getDocs, updateDoc, deleteDoc } from "firebase/firestore";
+import { signInAnonymously } from "firebase/auth";
 import { ExternalLink, Settings, GamepadIcon, Crown, Zap, Gem, Copy } from "lucide-react";
 import type { HauntConfig, TriviaQuestion } from "@shared/schema";
 
@@ -304,6 +305,11 @@ export default function Admin() {
     setIsLoading(true);
     
     try {
+      // Authenticate before saving
+      if (!auth.currentUser) {
+        await signInAnonymously(auth);
+      }
+      
       const hauntConfig: HauntConfig = {
         id: formData.id,
         name: formData.name,
