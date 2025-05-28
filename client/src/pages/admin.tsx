@@ -188,6 +188,69 @@ export default function Admin() {
     }
   };
 
+  const deleteHaunt = async (hauntId: string, hauntName: string) => {
+    const confirmed = window.confirm(
+      `🚨 DANGER: Delete "${hauntName}" permanently?\n\nThis will:\n- Delete the haunt configuration\n- Delete all custom questions\n- Delete all uploaded ads\n- Delete all leaderboard data\n- Make the game URL unusable\n\nThis action CANNOT BE UNDONE!\n\nType "DELETE" to confirm this permanent deletion.`
+    );
+    
+    if (!confirmed) return;
+
+    const doubleConfirm = prompt(`To permanently delete "${hauntName}", type DELETE in all caps:`);
+    if (doubleConfirm !== "DELETE") {
+      toast({
+        title: "Deletion Cancelled",
+        description: "Haunt was not deleted.",
+      });
+      return;
+    }
+
+    try {
+      // Delete haunt document
+      const hauntRef = doc(firestore, 'haunts', hauntId);
+      await deleteDoc(hauntRef);
+
+      // Delete custom questions
+      try {
+        const questionsRef = collection(firestore, 'trivia-custom', hauntId, 'questions');
+        const questionsSnapshot = await getDocs(questionsRef);
+        const deletePromises = questionsSnapshot.docs.map(doc => deleteDoc(doc.ref));
+        await Promise.all(deletePromises);
+      } catch (error) {
+        console.warn('No custom questions to delete');
+      }
+
+      // Delete ads
+      try {
+        const adsRef = collection(firestore, 'haunt-ads', hauntId, 'ads');
+        const adsSnapshot = await getDocs(adsRef);
+        const deletePromises = adsSnapshot.docs.map(doc => deleteDoc(doc.ref));
+        await Promise.all(deletePromises);
+      } catch (error) {
+        console.warn('No ads to delete');
+      }
+
+      // Update local state
+      setAllHaunts(prev => prev.filter(haunt => haunt.id !== hauntId));
+      
+      // Clear editing state if this haunt was being edited
+      if (editingHaunt?.id === hauntId) {
+        setEditingHaunt(null);
+      }
+
+      toast({
+        title: "Haunt Deleted",
+        description: `"${hauntName}" has been permanently deleted.`,
+      });
+    } catch (error) {
+      console.error('Failed to delete haunt:', error);
+      toast({
+        title: "Error",
+        description: "Failed to delete haunt. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
+
   const copyToClipboard = async (text: string, description: string) => {
     try {
       await navigator.clipboard.writeText(text);
@@ -683,6 +746,15 @@ export default function Admin() {
                                     className="w-full border-orange-600 text-orange-400 hover:bg-orange-600 hover:text-white"
                                   >
                                     ✏️ Edit Profile
+                                  </Button>
+                                  
+                                  <Button
+                                    onClick={() => deleteHaunt(haunt.id, haunt.name)}
+                                    variant="outline"
+                                    size="sm"
+                                    className="w-full border-red-600 text-red-400 hover:bg-red-600 hover:text-white"
+                                  >
+                                    🗑️ Delete Haunt
                                   </Button>
                                   
                                   <Button
