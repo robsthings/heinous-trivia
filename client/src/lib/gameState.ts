@@ -55,6 +55,12 @@ export class GameManager {
       return state;
     }
     
+    // Validate answer index bounds
+    if (answerIndex < 0 || answerIndex >= (currentQuestion.answers?.length || 0)) {
+      console.error('Answer index out of bounds:', answerIndex);
+      return state;
+    }
+    
     const isCorrect = answerIndex === currentQuestion.correctAnswer;
     const points = isCorrect ? (currentQuestion.points || 100) : 0;
 
@@ -119,7 +125,7 @@ export class GameManager {
       ...state,
       showAd: false,
       currentQuestionIndex: state.currentQuestionIndex + 1,
-      currentAdIndex: (state.currentAdIndex + 1) % state.ads.length,
+      currentAdIndex: state.ads.length > 0 ? (state.currentAdIndex + 1) % state.ads.length : 0,
     };
   }
 

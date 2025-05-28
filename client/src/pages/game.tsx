@@ -73,15 +73,40 @@ export default function Game() {
 
         // Load trivia questions (includes fallback to starter pack)
         const questions = await ConfigLoader.loadTriviaQuestions(haunt);
-        if (questions.length === 0) {
-          throw new Error(`No trivia questions available - check if starter pack exists`);
+        
+        // Validate questions array and format
+        if (!Array.isArray(questions) || questions.length === 0) {
+          setError("No trivia questions found! Please ensure the starter pack is properly configured.");
+          setIsLoading(false);
+          return;
+        }
+        
+        // Validate question format to prevent crashes
+        const validQuestions = questions.filter(q => 
+          q && 
+          q.text && 
+          Array.isArray(q.answers) && 
+          q.answers.length > 0 && 
+          typeof q.correctAnswer === 'number' && 
+          q.correctAnswer >= 0 && 
+          q.correctAnswer < q.answers.length
+        );
+        
+        if (validQuestions.length === 0) {
+          setError("No valid trivia questions found! All questions have formatting issues.");
+          setIsLoading(false);
+          return;
+        }
+        
+        if (validQuestions.length < questions.length) {
+          console.warn(`Filtered out ${questions.length - validQuestions.length} malformed questions`);
         }
 
         // Load ad data
         const ads = await ConfigLoader.loadAdData(haunt);
 
         // Shuffle questions for variety
-        const shuffledQuestions = GameManager.shuffleQuestions(questions);
+        const shuffledQuestions = GameManager.shuffleQuestions(validQuestions);
 
         setGameState(prev => ({
           ...prev,
