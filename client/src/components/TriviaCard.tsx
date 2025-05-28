@@ -11,6 +11,11 @@ interface TriviaCardProps {
 export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: TriviaCardProps) {
   const currentQuestion = gameState.questions[gameState.currentQuestionIndex];
   
+  // Get theme colors from haunt config
+  const primaryColor = gameState.hauntConfig?.theme?.primaryColor || '#8B0000';
+  const secondaryColor = gameState.hauntConfig?.theme?.secondaryColor || '#2D1B69';
+  const accentColor = gameState.hauntConfig?.theme?.accentColor || '#FF6B35';
+  
   // Enhanced null checks to prevent crashes
   if (!currentQuestion || !currentQuestion.answers || !Array.isArray(currentQuestion.answers)) {
     return (
@@ -25,14 +30,18 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
   const answerLabels = ['A', 'B', 'C', 'D'];
 
   const getButtonClass = (index: number) => {
-    let baseClass = "horror-button w-full p-4 rounded-lg text-left font-medium text-white hover:scale-[1.02] transition-transform";
+    let baseClass = "w-full p-4 rounded-lg text-left font-medium text-white hover:scale-[1.02] transition-all duration-200 border-2";
     
     if (gameState.showFeedback && gameState.selectedAnswer !== null) {
       if (index === currentQuestion.correctAnswer) {
-        baseClass += " correct-answer";
+        baseClass += " border-green-500 bg-green-600/20";
       } else if (index === gameState.selectedAnswer) {
-        baseClass += " wrong-answer";
+        baseClass += " border-red-500 bg-red-600/20";
+      } else {
+        baseClass += ` border-gray-600 bg-gray-800/30`;
       }
+    } else {
+      baseClass += ` border-gray-600 bg-gray-800/30 hover:border-[${accentColor}] hover:bg-[${primaryColor}]/20`;
     }
     
     return baseClass;
@@ -42,9 +51,10 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
     return Array.from({ length: 5 }, (_, i) => (
       <div
         key={i}
-        className={`w-2 h-2 rounded-full ${
-          i < difficulty ? 'bg-orange-500' : 'bg-gray-600'
-        }`}
+        className="w-2 h-2 rounded-full"
+        style={{ 
+          backgroundColor: i < difficulty ? accentColor : '#4B5563' 
+        }}
       />
     ));
   };
@@ -57,7 +67,10 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
         </h2>
         
         <div className="flex items-center space-x-3 mb-4">
-          <span className="bg-purple-900 text-white px-3 py-1 rounded-full text-sm font-medium">
+          <span 
+            className="text-white px-3 py-1 rounded-full text-sm font-medium"
+            style={{ backgroundColor: secondaryColor }}
+          >
             {currentQuestion.category}
           </span>
           <div className="flex space-x-1">
@@ -82,7 +95,10 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
             disabled={gameState.selectedAnswer !== null}
           >
             <div className="flex items-center">
-              <span className="w-8 h-8 bg-red-900 rounded-full flex items-center justify-center text-sm font-bold mr-4">
+              <span 
+                className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-4 text-white"
+                style={{ backgroundColor: primaryColor }}
+              >
                 {answerLabels[index]}
               </span>
               <span>{answer}</span>

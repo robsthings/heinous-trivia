@@ -7,6 +7,11 @@ interface GameHeaderProps {
 export function GameHeader({ gameState }: GameHeaderProps) {
   const { hauntConfig, score, currentQuestionIndex, questionsAnswered } = gameState;
   
+  // Get theme colors from haunt config
+  const primaryColor = gameState.hauntConfig?.theme?.primaryColor || '#8B0000';
+  const secondaryColor = gameState.hauntConfig?.theme?.secondaryColor || '#2D1B69';
+  const accentColor = gameState.hauntConfig?.theme?.accentColor || '#FF6B35';
+  
   const totalQuestions = Math.min(gameState.questions.length, 5);
   const progress = totalQuestions > 0 ? ((questionsAnswered % 5) / totalQuestions) * 100 : 0;
   const currentQuestionDisplay = (questionsAnswered % 5) + 1;
