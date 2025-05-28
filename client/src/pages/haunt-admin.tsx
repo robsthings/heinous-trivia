@@ -996,7 +996,7 @@ export default function HauntAdmin() {
               
               <div className="flex gap-3 pt-4">
                 <Button
-                  onClick={() => {
+                  onClick={async () => {
                     if (editingQuestion.question && editingQuestion.choices.every(c => c.trim()) && editingQuestion.correct) {
                       if (editingQuestion.question && customQuestions.find(q => q.question === editingQuestion.question)) {
                         // Update existing
@@ -1007,6 +1007,11 @@ export default function HauntAdmin() {
                         // Add new
                         setCustomQuestions(prev => [...prev, {...editingQuestion, id: `q${Date.now()}`}]);
                       }
+                      // Save questions immediately after adding/editing
+                      const updatedQuestions = editingQuestion.question && customQuestions.find(q => q.question === editingQuestion.question) 
+                        ? customQuestions.map(q => q.question === editingQuestion.question ? editingQuestion : q)
+                        : [...customQuestions, {...editingQuestion, id: `q${Date.now()}`}];
+                      saveCustomQuestions(updatedQuestions);
                       setEditingQuestion(null);
                     } else {
                       toast({
