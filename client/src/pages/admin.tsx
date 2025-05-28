@@ -341,13 +341,18 @@ export default function Admin() {
       };
 
       // Save to Firebase
+      console.log('Attempting to save haunt:', hauntConfig);
       const docRef = doc(firestore, 'haunts', formData.id);
       await setDoc(docRef, hauntConfig);
       
+      console.log('Haunt saved successfully!');
       toast({
         title: "Success!",
         description: `Haunt "${formData.name}" saved to Firebase`,
       });
+      
+      // Reload haunts list to show the new haunt
+      await loadAllHaunts();
 
       // Clear form
       setFormData({
@@ -367,7 +372,7 @@ export default function Admin() {
       console.error('❌ Failed to save haunt config:', error);
       toast({
         title: "Error",
-        description: "Failed to save haunt configuration",
+        description: `Failed to save haunt configuration: ${error.message || error}`,
         variant: "destructive"
       });
     } finally {
