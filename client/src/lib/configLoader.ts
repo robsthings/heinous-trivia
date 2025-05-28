@@ -221,12 +221,33 @@ export class ConfigLoader {
         // Continue without custom ads
       }
       
-      // Return custom ads from Firebase (no API fallback needed)
+      // If haunt has custom ads, return them
       if (customAds.length > 0) {
         return customAds;
       }
       
-      return customAds;
+      // Otherwise, load default ads set by Uber Admin
+      const defaultAds: AdData[] = [];
+      try {
+        const defaultAdsRef = collection(firestore, 'default-ads');
+        const defaultQuerySnapshot = await getDocs(defaultAdsRef);
+        
+        defaultQuerySnapshot.forEach((doc) => {
+          const data = doc.data();
+          defaultAds.push({
+            id: doc.id,
+            title: data.title || "Default Ad",
+            description: data.description || "Discover more!",
+            image: data.imageUrl,
+            duration: 5000,
+            link: data.link
+          });
+        });
+      } catch (error) {
+        // Continue without default ads
+      }
+      
+      return defaultAds;
     } catch (error) {
       console.error('Failed to load ad data:', error);
       return [];

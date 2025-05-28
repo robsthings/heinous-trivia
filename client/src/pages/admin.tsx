@@ -55,6 +55,16 @@ export default function Admin() {
   });
   const [existingPacks, setExistingPacks] = useState<TriviaPack[]>([]);
 
+  // Default Ads state
+  const [defaultAds, setDefaultAds] = useState<any[]>([]);
+  const [defaultAdFiles, setDefaultAdFiles] = useState<Array<{
+    file: File | null;
+    link: string;
+    id: string;
+    title: string;
+    description: string;
+  }>>([]);
+
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
@@ -67,6 +77,7 @@ export default function Admin() {
   useEffect(() => {
     loadAllHaunts();
     loadExistingPacks();
+    loadDefaultAds();
   }, []);
 
   const loadAllHaunts = async () => {
@@ -544,7 +555,7 @@ export default function Admin() {
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="management" className="w-full">
-              <TabsList className="grid w-full grid-cols-4 bg-gray-800">
+              <TabsList className="grid w-full grid-cols-5 bg-gray-800">
                 <TabsTrigger value="management" className="text-white data-[state=active]:bg-red-600">
                   Haunt Management
                 </TabsTrigger>
@@ -556,6 +567,9 @@ export default function Admin() {
                 </TabsTrigger>
                 <TabsTrigger value="assignments" className="text-white data-[state=active]:bg-red-600">
                   🎯 Pack Assignments
+                </TabsTrigger>
+                <TabsTrigger value="default-ads" className="text-white data-[state=active]:bg-red-600">
+                  📢 Default Ads
                 </TabsTrigger>
               </TabsList>
 
