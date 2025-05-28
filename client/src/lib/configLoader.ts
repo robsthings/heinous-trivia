@@ -30,16 +30,61 @@ export class ConfigLoader {
 
   static async loadTriviaQuestions(haunt: string): Promise<TriviaQuestion[]> {
     try {
-      // Prioritize Firebase data over API calls
-      const coreQuestions: TriviaQuestion[] = [];
-      
-      // Load custom questions from Firebase
-      const customQuestions: TriviaQuestion[] = [];
+      // Always start with the starter pack (100+ questions base)
+      const starterQuestions: TriviaQuestion[] = [];
       try {
+        const starterPackRef = doc(firestore, 'trivia-packs', 'starter-pack');
+        const starterPackDoc = await getDoc(starterPackRef);
+        
+        if (starterPackDoc.exists()) {
+          const starterData = starterPackDoc.data();
+          if (starterData && starterData.questions && Array.isArray(starterData.questions) && starterData.questions.length > 0) {
+            starterQuestions.push(...starterData.questions.map((q: any) => ({
+              id: q.id || `starter-${Math.random()}`,
+              text: q.question || q.text || 'Question text missing',
+              category: "Horror",
+              difficulty: 1,
+              answers: q.choices || q.answers || [],
+              correctAnswer: Math.max(0, (q.choices || q.answers || []).indexOf(q.correct || q.answer || '')),
+              explanation: `The correct answer is ${q.correct || q.answer || 'Unknown'}`,
+              points: 10
+            })));
+          }
+        }
+      } catch (error) {
+        console.warn('Failed to load starter pack questions:', error);
+      }
+      
+      // Load custom questions from Firebase (limited by tier)
+      const customQuestions: TriviaQuestion[] = [];
+      let customQuestionLimit = 5; // Default basic tier limit
+      
+      try {
+        // Get haunt config to check tier
+        const hauntRef = doc(firestore, 'haunts', haunt);
+        const hauntSnap = await getDoc(hauntRef);
+        
+        if (hauntSnap.exists()) {
+          const hauntData = hauntSnap.data();
+          const tier = hauntData.tier || 'basic';
+          
+          // Set limits based on tier
+          if (tier === 'premium') {
+            customQuestionLimit = 50;
+          } else if (tier === 'pro') {
+            customQuestionLimit = 15;
+          } else {
+            customQuestionLimit = 5; // basic
+          }
+        }
+        
         const questionsRef = collection(firestore, 'trivia-custom', haunt, 'questions');
         const querySnapshot = await getDocs(questionsRef);
         
+        let questionCount = 0;
         querySnapshot.forEach((doc) => {
+          if (questionCount >= customQuestionLimit) return; // Respect tier limits
+          
           const data = doc.data();
           customQuestions.push({
             id: doc.id,
@@ -51,6 +96,7 @@ export class ConfigLoader {
             explanation: `The correct answer is ${data.correct || data.answer || 'Unknown'}`,
             points: 10
           } as TriviaQuestion);
+          questionCount++;
         });
       } catch (error) {
         // Continue without custom questions
@@ -96,34 +142,8 @@ export class ConfigLoader {
         // Continue without pack questions
       }
       
-      // Merge and shuffle all questions
-      let allQuestions = [...coreQuestions, ...customQuestions, ...packQuestions];
-      
-      // If no questions found, try to load from starter pack
-      if (allQuestions.length === 0) {
-        try {
-          const starterPackRef = doc(firestore, 'trivia-packs', 'starter-pack');
-          const starterPackDoc = await getDoc(starterPackRef);
-          
-          if (starterPackDoc.exists()) {
-            const starterData = starterPackDoc.data();
-            if (starterData && starterData.questions && Array.isArray(starterData.questions) && starterData.questions.length > 0) {
-              allQuestions = starterData.questions.map((q: any) => ({
-                id: q.id || `starter-${Math.random()}`,
-                text: q.question || q.text || 'Question text missing',
-                category: "Horror",
-                difficulty: 1,
-                answers: q.choices || q.answers || [],
-                correctAnswer: Math.max(0, (q.choices || q.answers || []).indexOf(q.correct || q.answer || '')),
-                explanation: `The correct answer is ${q.correct || q.answer || 'Unknown'}`,
-                points: 10
-              }));
-            }
-          }
-        } catch (error) {
-          // Starter pack fallback failed
-        }
-      }
+      // Merge all question sources - starter pack provides the base
+      let allQuestions = [...starterQuestions, ...customQuestions, ...packQuestions];
       
       // Shuffle using Fisher-Yates algorithm
       for (let i = allQuestions.length - 1; i > 0; i--) {

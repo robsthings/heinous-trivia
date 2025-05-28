@@ -21,7 +21,7 @@ export interface GameState {
 
 export class GameManager {
   private static readonly STORAGE_KEY = 'heinous-trivia-leaderboard';
-  private static readonly QUESTIONS_PER_ROUND = 5;
+  private static readonly QUESTIONS_PER_ROUND = 20; // Longer gameplay sessions
 
   static createInitialState(haunt: string): GameState {
     return {
