@@ -1156,6 +1156,7 @@ export default function HauntAdmin() {
       )}
       
       <Footer />
+      </div>
     </div>
   );
 }
