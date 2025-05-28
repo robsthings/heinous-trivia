@@ -960,9 +960,7 @@ export default function HauntAdmin() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-
-                
-                {customQuestions.map((question, index) => (
+              {customQuestions.map((question, index) => (
                 <div key={question.id || index} className="border border-gray-600 rounded-lg p-4 bg-gray-800/30">
                   <div className="flex justify-between items-center mb-3">
                     <h4 className="text-white font-medium">Question #{index + 1}</h4>
@@ -1022,7 +1020,6 @@ export default function HauntAdmin() {
                   ➕ Add Custom Question
                 </Button>
               )}
-              </div>
             </div>
           </CardContent>
         </Card>
@@ -1051,8 +1048,7 @@ export default function HauntAdmin() {
             🎮 Back to Game
           </Button>
         </div>
-      </div>
-      
+        
       {/* Custom Question Edit Modal */}
       {editingQuestion && (
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
