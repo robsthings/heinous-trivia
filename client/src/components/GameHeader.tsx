@@ -12,9 +12,9 @@ export function GameHeader({ gameState }: GameHeaderProps) {
   const secondaryColor = gameState.hauntConfig?.theme?.secondaryColor || '#2D1B69';
   const accentColor = gameState.hauntConfig?.theme?.accentColor || '#FF6B35';
   
-  const totalQuestions = Math.min(gameState.questions.length, 5);
-  const progress = totalQuestions > 0 ? ((questionsAnswered % 5) / totalQuestions) * 100 : 0;
-  const currentQuestionDisplay = (questionsAnswered % 5) + 1;
+  const totalQuestions = 20; // Full trivia session
+  const progress = totalQuestions > 0 ? (questionsAnswered / totalQuestions) * 100 : 0;
+  const currentQuestionDisplay = questionsAnswered + 1;
 
   return (
     <header className="glass-card mx-4 mt-4 p-4 rounded-lg border-red-900">
