@@ -960,45 +960,7 @@ export default function HauntAdmin() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {/* CSV Upload Section */}
-              <div className="border border-gray-600 rounded-lg p-4 bg-gray-800/30">
-                <h4 className="text-white font-medium mb-3 flex items-center gap-2">
-                  📊 Upload Spreadsheet Questions
-                </h4>
-                <p className="text-gray-400 text-sm mb-3">
-                  Upload a CSV file with your trivia questions. Much easier than typing each one!
-                </p>
-                
-                <div className="space-y-3">
-                  <div>
-                    <Label className="text-white text-sm">Choose CSV File</Label>
-                    <Input
-                      type="file"
-                      accept=".csv,.xlsx,.xls"
-                      onChange={handleCSVUpload}
-                      className="bg-gray-800 border-gray-600 text-white file:bg-red-600 file:text-white file:border-none file:rounded file:px-3 file:py-1"
-                    />
-                  </div>
-                  
-                  <div className="text-xs text-gray-400 bg-gray-900/50 p-3 rounded">
-                    <p className="font-medium text-white mb-1">CSV Format Required:</p>
-                    <p>Columns: question, choice1, choice2, choice3, choice4, correct_answer, explanation, category, difficulty</p>
-                    <p className="mt-1">• correct_answer should be 1, 2, 3, or 4 (matching choice1-4)</p>
-                    <p>• difficulty should be 1-5 (1=easy, 5=expert)</p>
-                    <a 
-                      href="data:text/csv;charset=utf-8,question,choice1,choice2,choice3,choice4,correct_answer,explanation,category,difficulty%0A'What year was the movie Psycho released?','1958','1960','1962','1964',2,'Psycho was released in 1960 by Alfred Hitchcock','Horror Movies',2"
-                      download="trivia-template.csv"
-                      className="inline-block mt-2 text-blue-400 hover:text-blue-300 underline"
-                    >
-                      📥 Download CSV Template
-                    </a>
-                  </div>
-                </div>
-              </div>
 
-              {/* Manual Questions */}
-              <div className="border-t border-gray-600 pt-4">
-                <h4 className="text-white font-medium mb-3">Manual Questions</h4>
                 
                 {customQuestions.map((question, index) => (
                 <div key={question.id || index} className="border border-gray-600 rounded-lg p-4 bg-gray-800/30">
