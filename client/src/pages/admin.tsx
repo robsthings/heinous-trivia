@@ -384,6 +384,37 @@ export default function Admin() {
               🎃 Heinous Trivia Uber Admin
             </CardTitle>
             <p className="text-center text-gray-300">Manage Haunts & Trivia Packs</p>
+            <div className="text-center mt-4">
+              <Button 
+                onClick={async () => {
+                  try {
+                    console.log('Manual authentication attempt...');
+                    await signInAnonymously(auth);
+                    console.log('Authentication successful!', auth.currentUser);
+                    toast({
+                      title: "Success!",
+                      description: "Authentication successful",
+                    });
+                    // Reload data after successful auth
+                    loadAllHaunts();
+                    loadExistingPacks();
+                  } catch (error) {
+                    console.error('Authentication failed:', error);
+                    toast({
+                      title: "Authentication Failed",
+                      description: error.message,
+                      variant: "destructive"
+                    });
+                  }
+                }}
+                className="bg-green-600 hover:bg-green-700"
+              >
+                🔐 Sign In to Firebase
+              </Button>
+              <p className="text-sm text-gray-400 mt-2">
+                Current user: {auth.currentUser ? auth.currentUser.uid : 'Not authenticated'}
+              </p>
+            </div>
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="management" className="w-full">
