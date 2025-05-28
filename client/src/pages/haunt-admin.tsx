@@ -960,7 +960,6 @@ export default function HauntAdmin() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              
               {/* CSV Upload Section */}
               <div className="border border-gray-600 rounded-lg p-4 bg-gray-800/30">
                 <h4 className="text-white font-medium mb-3 flex items-center gap-2">
@@ -1000,8 +999,8 @@ export default function HauntAdmin() {
               {/* Manual Questions */}
               <div className="border-t border-gray-600 pt-4">
                 <h4 className="text-white font-medium mb-3">Manual Questions</h4>
-              
-              {customQuestions.map((question, index) => (
+                
+                {customQuestions.map((question, index) => (
                 <div key={question.id || index} className="border border-gray-600 rounded-lg p-4 bg-gray-800/30">
                   <div className="flex justify-between items-center mb-3">
                     <h4 className="text-white font-medium">Question #{index + 1}</h4>
@@ -1061,6 +1060,7 @@ export default function HauntAdmin() {
                   ➕ Add Custom Question
                 </Button>
               )}
+              </div>
             </div>
           </CardContent>
         </Card>
