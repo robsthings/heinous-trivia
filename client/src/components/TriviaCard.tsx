@@ -16,6 +16,14 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
   const secondaryColor = gameState.hauntConfig?.theme?.secondaryColor || '#2D1B69';
   const accentColor = gameState.hauntConfig?.theme?.accentColor || '#FF6B35';
   
+  // Apply custom CSS properties for theme colors
+  useEffect(() => {
+    const root = document.documentElement;
+    root.style.setProperty('--haunt-primary', primaryColor);
+    root.style.setProperty('--haunt-secondary', secondaryColor);
+    root.style.setProperty('--haunt-accent', accentColor);
+  }, [primaryColor, secondaryColor, accentColor]);
+  
   // Enhanced null checks to prevent crashes
   if (!currentQuestion || !currentQuestion.answers || !Array.isArray(currentQuestion.answers)) {
     return (
@@ -41,7 +49,7 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
         baseClass += ` border-gray-600 bg-gray-800/30`;
       }
     } else {
-      baseClass += ` border-gray-600 bg-gray-800/30 hover:border-[${accentColor}] hover:bg-[${primaryColor}]/20`;
+      baseClass += ` border-gray-600 bg-gray-800/30 haunt-themed-button`;
     }
     
     return baseClass;

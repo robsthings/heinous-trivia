@@ -174,3 +174,20 @@
     transform: translateY(0);
   }
 }
+
+/* Haunt Theme Customization */
+:root {
+  --haunt-primary: #8B0000;
+  --haunt-secondary: #2D1B69;
+  --haunt-accent: #FF6B35;
+}
+
+.haunt-themed-button:hover {
+  border-color: var(--haunt-accent) !important;
+  background-color: color-mix(in srgb, var(--haunt-primary) 20%, transparent) !important;
+}
+
+.haunt-difficulty-star {
+  background-color: var(--haunt-accent);
+  box-shadow: 0 4px 6px color-mix(in srgb, var(--haunt-accent) 50%, transparent);
+}
