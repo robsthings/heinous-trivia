@@ -355,8 +355,8 @@ export default function HauntAdmin() {
         await saveCustomQuestions(customQuestions);
       }
       
-      // Save ads if any exist
-      if (adFiles.length > 0 && adFiles.some(ad => ad.file && ad.title && ad.link)) {
+      // Save ads if any exist (save whatever ads have at least a file)
+      if (adFiles.length > 0 && adFiles.some(ad => ad.file)) {
         await saveAds();
       }
       
@@ -427,38 +427,35 @@ export default function HauntAdmin() {
         await deleteDoc(adDoc.ref);
       }
       
-      // Upload and save new ads
+      // Upload and save new ads (only those with image files)
+      let savedAdsCount = 0;
       for (const ad of adFiles) {
-        if (ad.file && ad.title && ad.link) {
+        if (ad.file) {
           try {
             // Upload image to Firebase Storage
             const imageRef = ref(storage, `haunt-assets/${hauntId}/ads/${ad.id}.${ad.file.name.split('.').pop()}`);
             await uploadBytes(imageRef, ad.file);
             const imageUrl = await getDownloadURL(imageRef);
             
-            // Save ad data to Firestore
+            // Save ad data to Firestore (use defaults for missing fields)
             await addDoc(adsRef, {
-              title: ad.title,
-              description: ad.description,
-              link: ad.link,
+              title: ad.title || "Untitled Ad",
+              description: ad.description || "Check this out!",
+              link: ad.link || "#",
               imageUrl: imageUrl,
               timestamp: new Date().toISOString()
             });
+            savedAdsCount++;
           } catch (uploadError) {
-            console.error(`Failed to upload ad ${ad.title}:`, uploadError);
-            toast({
-              title: "Ad Upload Failed",
-              description: `Failed to upload ad "${ad.title}". Please try again.`,
-              variant: "destructive"
-            });
-            return;
+            console.error(`Failed to upload ad ${ad.title || 'Untitled'}:`, uploadError);
+            // Continue with other ads instead of stopping
           }
         }
       }
       
       toast({
         title: "Ads Saved",
-        description: `${adFiles.length} ads saved successfully`,
+        description: `${savedAdsCount} ads saved successfully`,
       });
     } catch (error) {
       console.error('Failed to save ads:', error);
