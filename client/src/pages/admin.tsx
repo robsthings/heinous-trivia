@@ -633,20 +633,20 @@ export default function Admin() {
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="management" className="w-full">
-              <TabsList className="grid w-full grid-cols-5 bg-gray-800">
-                <TabsTrigger value="management" className="text-white data-[state=active]:bg-red-600">
-                  Haunt Management
+              <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-5 bg-gray-800">
+                <TabsTrigger value="management" className="text-white data-[state=active]:bg-red-600 text-xs md:text-sm">
+                  Management
                 </TabsTrigger>
-                <TabsTrigger value="haunts" className="text-white data-[state=active]:bg-red-600">
+                <TabsTrigger value="haunts" className="text-white data-[state=active]:bg-red-600 text-xs md:text-sm">
                   🏚️ Haunts
                 </TabsTrigger>
-                <TabsTrigger value="packs" className="text-white data-[state=active]:bg-red-600">
-                  🧠 Trivia Packs
+                <TabsTrigger value="packs" className="text-white data-[state=active]:bg-red-600 text-xs md:text-sm">
+                  🧠 Packs
                 </TabsTrigger>
-                <TabsTrigger value="assignments" className="text-white data-[state=active]:bg-red-600">
-                  🎯 Pack Assignments
+                <TabsTrigger value="assignments" className="text-white data-[state=active]:bg-red-600 text-xs md:text-sm">
+                  🎯 Assignments
                 </TabsTrigger>
-                <TabsTrigger value="default-ads" className="text-white data-[state=active]:bg-red-600">
+                <TabsTrigger value="default-ads" className="text-white data-[state=active]:bg-red-600 text-xs md:text-sm">
                   📢 Default Ads
                 </TabsTrigger>
               </TabsList>
