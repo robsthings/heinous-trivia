@@ -9,6 +9,7 @@ import { SpookyLoader } from "@/components/SpookyLoader";
 import { MiniSpookyLoader } from "@/components/MiniSpookyLoader";
 import { ConfigLoader, getHauntFromURL } from "@/lib/configLoader";
 import { GameManager, type GameState } from "@/lib/gameState";
+import { generateManifest, updateMetaThemeColor } from "@/lib/manifestGenerator";
 import { firestore } from "@/lib/firebase";
 import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { Button } from "@/components/ui/button";
@@ -88,6 +89,27 @@ export default function Game() {
           questions: shuffledQuestions,
           ads,
         }));
+
+        // Update PWA manifest with haunt-specific start URL
+        const manifest = generateManifest(hauntConfig, haunt);
+        const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+        const manifestUrl = URL.createObjectURL(manifestBlob);
+        
+        // Update manifest link
+        let manifestLink = document.querySelector('link[rel="manifest"]') as HTMLLinkElement;
+        if (manifestLink) {
+          manifestLink.href = manifestUrl;
+        } else {
+          manifestLink = document.createElement('link');
+          manifestLink.rel = 'manifest';
+          manifestLink.href = manifestUrl;
+          document.head.appendChild(manifestLink);
+        }
+
+        // Update theme color
+        if (hauntConfig?.theme?.primaryColor) {
+          updateMetaThemeColor(hauntConfig.theme.primaryColor);
+        }
 
         // Check if haunt is configured for group mode
         if (hauntConfig?.mode === "queue") {

@@ -1,8 +1,9 @@
 import type { HauntConfig } from "@shared/schema";
 
-export function generateManifest(hauntConfig?: HauntConfig | null) {
+export function generateManifest(hauntConfig?: HauntConfig | null, hauntId?: string) {
   const primaryColor = hauntConfig?.theme?.primaryColor || "#8B0000";
   const backgroundColor = "#0A0A0A";
+  const startUrl = hauntId ? `/?haunt=${hauntId}` : "/";
   
   return {
     name: "Heinous Trivia",
@@ -12,7 +13,7 @@ export function generateManifest(hauntConfig?: HauntConfig | null) {
     background_color: backgroundColor,
     display: "standalone",
     scope: "/",
-    start_url: "/",
+    start_url: startUrl,
     orientation: "portrait-primary",
     categories: ["games", "entertainment", "trivia"],
     icons: [
