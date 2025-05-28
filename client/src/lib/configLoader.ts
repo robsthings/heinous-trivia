@@ -39,16 +39,32 @@ export class ConfigLoader {
         if (starterPackDoc.exists()) {
           const starterData = starterPackDoc.data();
           if (starterData && starterData.questions && Array.isArray(starterData.questions) && starterData.questions.length > 0) {
-            starterQuestions.push(...starterData.questions.map((q: any) => ({
-              id: q.id || `starter-${Math.random()}`,
-              text: q.question || q.text || 'Question text missing',
-              category: "Horror",
-              difficulty: 1,
-              answers: q.choices || q.answers || [],
-              correctAnswer: Math.max(0, (q.choices || q.answers || []).indexOf(q.correct || q.answer || '')),
-              explanation: `The correct answer is ${q.correct || q.answer || 'Unknown'}`,
-              points: 10
-            })));
+            // Normalize question format for consistency
+            const normalizedQuestions = starterData.questions.map((q: any) => {
+              const answerChoices = q.answers || q.choices || [];
+              const correctAnswerText = q.correct || q.answer || q.correctAnswer;
+              let correctAnswerIndex = 0;
+              
+              // Handle different correct answer formats
+              if (typeof correctAnswerText === 'number') {
+                correctAnswerIndex = correctAnswerText;
+              } else if (typeof correctAnswerText === 'string') {
+                correctAnswerIndex = Math.max(0, answerChoices.indexOf(correctAnswerText));
+              }
+              
+              return {
+                id: q.id || `starter-${Math.random()}`,
+                text: q.question || q.text || 'Question text missing',
+                category: "Horror",
+                difficulty: 1,
+                answers: answerChoices,
+                correctAnswer: correctAnswerIndex,
+                explanation: `The correct answer is ${answerChoices[correctAnswerIndex] || 'Unknown'}`,
+                points: q.points || 10
+              };
+            });
+            
+            starterQuestions.push(...normalizedQuestions);
           }
         }
       } catch (error) {
@@ -86,15 +102,26 @@ export class ConfigLoader {
           if (questionCount >= customQuestionLimit) return; // Respect tier limits
           
           const data = doc.data();
+          const answerChoices = data.answers || data.choices || [];
+          const correctAnswerText = data.correct || data.answer || data.correctAnswer;
+          let correctAnswerIndex = 0;
+          
+          // Handle different correct answer formats
+          if (typeof correctAnswerText === 'number') {
+            correctAnswerIndex = correctAnswerText;
+          } else if (typeof correctAnswerText === 'string') {
+            correctAnswerIndex = Math.max(0, answerChoices.indexOf(correctAnswerText));
+          }
+          
           customQuestions.push({
             id: doc.id,
             text: data.question || data.text || 'Question text missing',
             category: "Custom",
             difficulty: 1,
-            answers: data.choices || data.answers || [],
-            correctAnswer: Math.max(0, (data.choices || data.answers || []).indexOf(data.correct || data.answer || '')),
-            explanation: `The correct answer is ${data.correct || data.answer || 'Unknown'}`,
-            points: 10
+            answers: answerChoices,
+            correctAnswer: correctAnswerIndex,
+            explanation: `The correct answer is ${answerChoices[correctAnswerIndex] || 'Unknown'}`,
+            points: data.points || 10
           } as TriviaQuestion);
           questionCount++;
         });
@@ -120,17 +147,30 @@ export class ConfigLoader {
               if (packSnap.exists()) {
                 const packData = packSnap.data();
                 if (packData.questions && Array.isArray(packData.questions)) {
-                  const mappedQuestions = packData.questions.map((q: any) => ({
-                    id: q.id || `pack-${packId}-${Math.random()}`,
-                    text: q.question || q.text || 'Question text missing',
-                    category: "Pack",
-                    difficulty: 1,
-                    answers: q.choices || q.answers || [],
-                    correctAnswer: Math.max(0, (q.choices || q.answers || []).indexOf(q.correct || q.answer || '')),
-                    explanation: `The correct answer is ${q.correct || q.answer || 'Unknown'}`,
-                    points: 10
-                  }));
-                  packQuestions.push(...mappedQuestions);
+                  const normalizedPackQuestions = packData.questions.map((q: any) => {
+                    const answerChoices = q.answers || q.choices || [];
+                    const correctAnswerText = q.correct || q.answer || q.correctAnswer;
+                    let correctAnswerIndex = 0;
+                    
+                    // Handle different correct answer formats
+                    if (typeof correctAnswerText === 'number') {
+                      correctAnswerIndex = correctAnswerText;
+                    } else if (typeof correctAnswerText === 'string') {
+                      correctAnswerIndex = Math.max(0, answerChoices.indexOf(correctAnswerText));
+                    }
+                    
+                    return {
+                      id: q.id || `pack-${packId}-${Math.random()}`,
+                      text: q.question || q.text || 'Question text missing',
+                      category: "Pack",
+                      difficulty: 1,
+                      answers: answerChoices,
+                      correctAnswer: correctAnswerIndex,
+                      explanation: `The correct answer is ${answerChoices[correctAnswerIndex] || 'Unknown'}`,
+                      points: q.points || 10
+                    };
+                  });
+                  packQuestions.push(...normalizedPackQuestions);
                 }
               }
             } catch (packError) {
