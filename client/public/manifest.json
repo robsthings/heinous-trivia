@@ -1,20 +1,32 @@
 {
   "name": "Heinous Trivia",
   "short_name": "Heinous",
+  "description": "Horror-themed trivia game hosted by the villainous Dr. Heinous",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#000000",
+  "orientation": "portrait-primary",
+  "background_color": "#0A0A0A",
   "theme_color": "#8B0000",
+  "categories": ["games", "entertainment", "trivia"],
   "icons": [
+    {
+      "src": "/icons/icon-128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
     {
       "src": "/icons/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "/icons/icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
