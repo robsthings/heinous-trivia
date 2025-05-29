@@ -75,7 +75,58 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
                 alt={currentAd.title}
                 className="w-full h-32 sm:h-40 lg:h-64 object-cover rounded-lg shadow-2xl border-2 border-red-600"
                 onError={(e) => {
-                  e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzMzIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkFkIFNwYWNlIEF2YWlsYWJsZTwvdGV4dD48L3N2Zz4=';
+                  // Create a better fallback image with haunt branding
+                  const canvas = document.createElement('canvas');
+                  canvas.width = 800;
+                  canvas.height = 400;
+                  const ctx = canvas.getContext('2d');
+                  
+                  if (ctx) {
+                    // Dark horror-themed background
+                    ctx.fillStyle = '#1a1a1a';
+                    ctx.fillRect(0, 0, 800, 400);
+                    
+                    // Red accent border
+                    ctx.strokeStyle = '#8B0000';
+                    ctx.lineWidth = 8;
+                    ctx.strokeRect(4, 4, 792, 392);
+                    
+                    // Title text
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = 'bold 36px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(currentAd.title || 'Advertisement', 400, 180);
+                    
+                    // Subtitle
+                    ctx.fillStyle = '#cccccc';
+                    ctx.font = '24px Arial';
+                    ctx.fillText('Heinous Trivia Sponsor', 400, 220);
+                    
+                    // Description if available
+                    if (currentAd.description) {
+                      ctx.fillStyle = '#aaaaaa';
+                      ctx.font = '18px Arial';
+                      const words = currentAd.description.split(' ');
+                      let line = '';
+                      let y = 260;
+                      
+                      for (let n = 0; n < words.length; n++) {
+                        const testLine = line + words[n] + ' ';
+                        const metrics = ctx.measureText(testLine);
+                        const testWidth = metrics.width;
+                        if (testWidth > 600 && n > 0) {
+                          ctx.fillText(line, 400, y);
+                          line = words[n] + ' ';
+                          y += 25;
+                        } else {
+                          line = testLine;
+                        }
+                      }
+                      ctx.fillText(line, 400, y);
+                    }
+                  }
+                  
+                  e.currentTarget.src = canvas.toDataURL();
                 }}
               />
             </div>
