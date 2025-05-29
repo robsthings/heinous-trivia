@@ -205,15 +205,24 @@ export default function Game() {
   };
 
   const handlePlayAgain = async () => {
+    console.log('🔄 Play Again clicked - reloading questions and ads...');
+    
     // Reload fresh questions and ads for each new game
     const allQuestions = await ConfigLoader.loadTriviaQuestions(gameState.currentHaunt);
     const freshAds = await ConfigLoader.loadAdData(gameState.currentHaunt);
+    
+    console.log(`✅ Reloaded ${allQuestions.length} total questions for new game`);
     
     const validQuestions = allQuestions.filter(q => 
       q.text && q.answers && q.answers.length >= 2
     );
     
+    if (validQuestions.length < allQuestions.length) {
+      console.warn(`⚠️ Filtered out ${allQuestions.length - validQuestions.length} invalid questions`);
+    }
+    
     const shuffledQuestions = GameManager.shuffleQuestions(validQuestions);
+    console.log(`🎲 Shuffled questions for fresh gameplay experience`);
     
     setGameState(prev => ({
       ...GameManager.playAgain(prev),
