@@ -49,57 +49,61 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
   };
 
   return (
-    <div className="fixed inset-0 bg-black z-50">
-      <div className="w-full h-full bg-gradient-to-br from-red-900 via-black to-purple-900 animate-fade-in">
-        {/* Mobile Layout - Stack Content Vertically */}
-        <div className="h-full flex flex-col p-3 sm:p-6">
+    <div className="fixed inset-0 bg-black z-50 overflow-hidden">
+      <div className="w-full h-full bg-gradient-to-br from-red-900 via-black to-purple-900">
+        {/* Mobile-First Responsive Layout */}
+        <div className="h-full flex flex-col justify-between p-4 max-w-md mx-auto lg:max-w-4xl">
           
-          {/* Header */}
-          <div className="text-center mb-4 sm:mb-6">
-            <h3 className="font-nosifer text-lg sm:text-2xl md:text-3xl text-orange-500 animate-pulse leading-tight">
+          {/* Header - Compact on mobile */}
+          <div className="text-center py-2 flex-shrink-0">
+            <h3 className="font-nosifer text-base sm:text-xl lg:text-3xl text-orange-500 animate-pulse leading-tight">
               A Message from Our Sponsors
             </h3>
+            {/* Mobile layout indicator - only visible on small screens */}
+            <div className="sm:hidden text-xs text-gray-500 mt-1">Mobile Layout v2.0</div>
           </div>
           
-          {/* Ad Content - Flexible Height */}
-          <div className="flex-1 flex flex-col justify-center items-center min-h-0">
+          {/* Main Content - Centered and Responsive */}
+          <div className="flex-1 flex flex-col justify-center items-center space-y-4 min-h-0">
             
-            {/* Ad Image */}
-            <div className="w-full max-w-sm sm:max-w-lg mb-4 sm:mb-6">
+            {/* Ad Image - Responsive sizes */}
+            <div className="w-full max-w-xs sm:max-w-sm lg:max-w-2xl">
               <img
                 src={currentAd.image}
                 alt={currentAd.title}
-                className="w-full h-40 sm:h-48 md:h-64 object-cover rounded-lg shadow-2xl border-2 border-red-600"
+                className="w-full h-32 sm:h-40 lg:h-64 object-cover rounded-lg shadow-2xl border-2 border-red-600"
                 onError={(e) => {
                   e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzMzIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkFkIFNwYWNlIEF2YWlsYWJsZTwvdGV4dD48L3N2Zz4=';
                 }}
               />
             </div>
             
-            {/* Ad Text */}
-            <div className="text-center max-w-sm sm:max-w-md">
-              <h4 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-2 sm:mb-3 font-creepster">
+            {/* Ad Text - Compact on mobile */}
+            <div className="text-center px-4 max-w-xs sm:max-w-sm lg:max-w-xl">
+              <h4 className="text-base sm:text-lg lg:text-2xl font-bold text-white mb-2 font-creepster line-clamp-2">
                 {currentAd.title}
               </h4>
-              <p className="text-gray-300 text-sm sm:text-base mb-4 sm:mb-6 leading-relaxed">
+              <p className="text-gray-300 text-xs sm:text-sm lg:text-base leading-relaxed line-clamp-3">
                 {currentAd.description}
               </p>
             </div>
           </div>
           
-          {/* Buttons - Fixed at Bottom */}
-          <div className="space-y-3 w-full max-w-sm mx-auto">
+          {/* Action Buttons - Always visible at bottom */}
+          <div className="space-y-3 w-full max-w-xs sm:max-w-sm mx-auto flex-shrink-0 pt-4">
             {currentAd.link && (
               <button
-                className="horror-button w-full py-4 rounded-lg font-medium text-white text-base touch-manipulation"
+                className="horror-button w-full py-3 sm:py-4 rounded-lg font-medium text-white text-sm sm:text-base select-none"
                 onClick={handleVisitAd}
+                style={{ touchAction: 'manipulation' }}
               >
                 Learn More
               </button>
             )}
             <button
-              className="w-full py-4 rounded-lg font-medium text-gray-300 border-2 border-gray-600 hover:bg-gray-800 transition-colors text-base touch-manipulation"
+              className="w-full py-3 sm:py-4 rounded-lg font-medium text-gray-300 border-2 border-gray-600 hover:bg-gray-800 transition-colors text-sm sm:text-base select-none"
               onClick={onClose}
+              style={{ touchAction: 'manipulation' }}
             >
               Continue Playing
             </button>
