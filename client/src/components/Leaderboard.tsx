@@ -76,8 +76,16 @@ export function Leaderboard({ isVisible, leaderboard, onClose, hauntId, currentP
         <div className="space-y-3 mb-6 max-h-96 overflow-y-auto">
           {isLoading ? (
             <div className="text-center text-gray-400 py-8">
-              <div className="animate-spin w-8 h-8 border-2 border-orange-500 border-t-transparent rounded-full mx-auto mb-4"></div>
-              <p>Loading leaderboard...</p>
+              <div className="relative mx-auto mb-4 w-16 h-16">
+                {/* Spinning skull animation */}
+                <div className="absolute inset-0 animate-spin">
+                  <div className="w-16 h-16 text-orange-500 text-4xl flex items-center justify-center">💀</div>
+                </div>
+                {/* Pulsing aura effect */}
+                <div className="absolute inset-0 animate-pulse bg-orange-500/20 rounded-full blur-sm"></div>
+              </div>
+              <p className="animate-pulse text-orange-400 font-creepster">Summoning the spirits...</p>
+              <p className="text-xs mt-2 text-gray-500 animate-pulse">The dead are revealing their scores</p>
             </div>
           ) : leaderboard.length === 0 ? (
             <div className="text-center text-gray-400 py-8">
