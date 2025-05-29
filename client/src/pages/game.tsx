@@ -205,8 +205,10 @@ export default function Game() {
   };
 
   const handlePlayAgain = async () => {
-    // Reload all questions for fresh variety
+    // Reload fresh questions and ads for each new game
     const allQuestions = await ConfigLoader.loadTriviaQuestions(gameState.currentHaunt);
+    const freshAds = await ConfigLoader.loadAdData(gameState.currentHaunt);
+    
     const validQuestions = allQuestions.filter(q => 
       q.text && q.answers && q.answers.length >= 2
     );
@@ -216,6 +218,8 @@ export default function Game() {
     setGameState(prev => ({
       ...GameManager.playAgain(prev),
       questions: shuffledQuestions,
+      ads: freshAds,
+      currentAdIndex: 0, // Reset ad counter for fresh rotation
     }));
   };
 

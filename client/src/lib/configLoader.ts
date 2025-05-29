@@ -185,6 +185,13 @@ export class ConfigLoader {
       // Merge all question sources - starter pack provides the base
       let allQuestions = [...starterQuestions, ...customQuestions, ...packQuestions];
       
+      console.log(`Question loading for ${haunt}:`, {
+        starterQuestions: starterQuestions.length,
+        customQuestions: customQuestions.length,
+        packQuestions: packQuestions.length,
+        totalQuestions: allQuestions.length
+      });
+      
       // Shuffle using Fisher-Yates algorithm
       for (let i = allQuestions.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
