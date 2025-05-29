@@ -90,9 +90,15 @@ export default function HauntAdmin() {
       const questions: CustomTriviaQuestion[] = [];
 
       for (let i = 1; i < lines.length; i++) {
-        const values = lines[i].split(',').map(v => v.trim().replace(/['"]/g, ''));
+        const line = lines[i].trim();
+        if (!line) continue; // Skip empty lines
         
-        if (values.length !== headers.length) continue;
+        const values = line.split(',').map(v => v.trim().replace(/['"]/g, ''));
+        
+        // Be more flexible with column count - pad with empty strings if needed
+        while (values.length < headers.length) {
+          values.push('');
+        }
 
         const questionData: Record<string, string> = {};
         headers.forEach((header, index) => {

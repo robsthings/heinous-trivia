@@ -200,8 +200,19 @@ export default function Game() {
     setLeaderboard(updatedLeaderboard);
   };
 
-  const handlePlayAgain = () => {
-    setGameState(prev => GameManager.playAgain(prev));
+  const handlePlayAgain = async () => {
+    // Reload all questions for fresh variety
+    const allQuestions = await ConfigLoader.loadTriviaQuestions(gameState.currentHaunt);
+    const validQuestions = allQuestions.filter(q => 
+      q.text && q.answers && q.answers.length >= 2
+    );
+    
+    const shuffledQuestions = GameManager.shuffleQuestions(validQuestions);
+    
+    setGameState(prev => ({
+      ...GameManager.playAgain(prev),
+      questions: shuffledQuestions,
+    }));
   };
 
   const handleViewLeaderboard = async () => {
