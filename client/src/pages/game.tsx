@@ -197,14 +197,10 @@ export default function Game() {
     const nameToUse = inputPlayerName || playerName;
     console.log('Saving score for:', nameToUse, 'Score:', gameState.score, 'Haunt:', gameState.currentHaunt);
     await GameManager.saveScore(nameToUse, gameState);
-    console.log('Score saved, fetching updated leaderboard...');
+    console.log('Score saved, clearing cached leaderboard...');
     
-    // Add a small delay to ensure database has processed the save
-    setTimeout(async () => {
-      const updatedLeaderboard = await GameManager.getLeaderboard(gameState.currentHaunt);
-      console.log('Updated leaderboard:', updatedLeaderboard);
-      setLeaderboard(updatedLeaderboard);
-    }, 500);
+    // Clear cached leaderboard data to force fresh fetch
+    setLeaderboard([]);
   };
 
   const handlePlayAgain = async () => {
@@ -245,6 +241,7 @@ export default function Game() {
     setGameState(prev => ({
       ...prev,
       showLeaderboard: false,
+      showEndScreen: prev.gameComplete, // Show end screen if game is complete
     }));
   };
 
