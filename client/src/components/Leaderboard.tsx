@@ -66,58 +66,58 @@ export function Leaderboard({ isVisible, leaderboard, onClose, hauntId, currentP
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-95 flex items-center justify-center p-4 z-50">
-      <div className="glass-card rounded-xl p-6 max-w-md w-full animate-fade-in">
-        <div className="text-center mb-6">
-          <h2 className="font-creepster text-3xl text-orange-500 mb-2">Hall of Horror</h2>
-          <p className="text-gray-300">Top 10 Nightmare Navigators</p>
+    <div className="fixed inset-0 bg-black bg-opacity-95 flex items-center justify-center p-3 sm:p-4 z-50">
+      <div className="glass-card rounded-xl p-4 sm:p-6 max-w-sm sm:max-w-md w-full animate-fade-in max-h-[90vh] overflow-hidden flex flex-col">
+        <div className="text-center mb-4 sm:mb-6">
+          <h2 className="font-creepster text-2xl sm:text-3xl text-orange-500 mb-2">Hall of Horror</h2>
+          <p className="text-gray-300 text-sm sm:text-base">Top 10 Nightmare Navigators</p>
         </div>
 
-        <div className="space-y-3 mb-6 max-h-96 overflow-y-auto">
+        <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6 flex-1 overflow-y-auto">
           {isLoading ? (
-            <div className="text-center text-gray-400 py-8">
-              <div className="relative mx-auto mb-4 w-16 h-16">
+            <div className="text-center text-gray-400 py-6 sm:py-8">
+              <div className="relative mx-auto mb-3 sm:mb-4 w-12 h-12 sm:w-16 sm:h-16">
                 {/* Spinning skull animation */}
                 <div className="absolute inset-0 animate-spin">
-                  <div className="w-16 h-16 text-orange-500 text-4xl flex items-center justify-center">💀</div>
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 text-orange-500 text-2xl sm:text-4xl flex items-center justify-center">💀</div>
                 </div>
                 {/* Pulsing aura effect */}
                 <div className="absolute inset-0 animate-pulse bg-orange-500/20 rounded-full blur-sm"></div>
               </div>
-              <p className="animate-pulse text-orange-400 font-creepster">Summoning the spirits...</p>
+              <p className="animate-pulse text-orange-400 font-creepster text-sm sm:text-base">Summoning the spirits...</p>
               <p className="text-xs mt-2 text-gray-500 animate-pulse">The dead are revealing their scores</p>
             </div>
           ) : leaderboard.length === 0 ? (
-            <div className="text-center text-gray-400 py-8">
-              <p>No scores recorded yet.</p>
-              <p className="text-sm mt-2">Be the first to join the Hall of Horror!</p>
+            <div className="text-center text-gray-400 py-6 sm:py-8">
+              <p className="text-sm sm:text-base">No scores recorded yet.</p>
+              <p className="text-xs sm:text-sm mt-2">Be the first to join the Hall of Horror!</p>
             </div>
           ) : (
             leaderboard.slice(0, 10).map((entry, index) => (
               <div
                 key={`${entry.name}-${entry.date}`}
-                className="flex items-center justify-between p-3 bg-gray-800 rounded-lg border border-purple-900"
+                className="flex items-center justify-between p-2 sm:p-3 bg-gray-800 rounded-lg border border-purple-900"
               >
-                <div className="flex items-center space-x-3">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${getRankColor(index)}`}>
+                <div className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1">
+                  <div className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold flex-shrink-0 ${getRankColor(index)}`}>
                     <span>{index + 1}</span>
                   </div>
-                  <div className="text-left">
-                    <span className="font-medium text-white block">{getDisplayName(entry.name)}</span>
+                  <div className="text-left min-w-0 flex-1">
+                    <span className="font-medium text-white block text-sm sm:text-base truncate">{getDisplayName(entry.name)}</span>
                     <span className="text-xs text-gray-400">
                       {entry.correctAnswers}/{entry.questionsAnswered} correct
                     </span>
                   </div>
                 </div>
-                <div className="text-orange-500 font-bold">{entry.score}</div>
+                <div className="text-orange-500 font-bold text-sm sm:text-base flex-shrink-0 ml-2">{entry.score}</div>
               </div>
             ))
           )}
         </div>
 
-        <div className="text-center">
+        <div className="text-center flex-shrink-0">
           <button
-            className="horror-button px-8 py-3 rounded-lg font-medium text-white"
+            className="horror-button px-6 sm:px-8 py-3 rounded-lg font-medium text-white text-sm sm:text-base touch-manipulation"
             onClick={onClose}
           >
             Back to Game

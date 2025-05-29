@@ -38,7 +38,7 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
   const answerLabels = ['A', 'B', 'C', 'D'];
 
   const getButtonClass = (index: number) => {
-    let baseClass = "w-full p-4 rounded-lg text-left font-medium text-white hover:scale-[1.02] transition-all duration-200 border-2";
+    let baseClass = "w-full p-3 sm:p-4 rounded-lg text-left font-medium text-white hover:scale-[1.02] transition-all duration-200 border-2 touch-manipulation";
     
     if (gameState.showFeedback && gameState.selectedAnswer !== null) {
       if (index === currentQuestion.correctAnswer) {
@@ -68,15 +68,15 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
   };
 
   return (
-    <div className="glass-card rounded-xl p-6 mt-4 animate-fade-in">
-      <div className="mb-6">
-        <h2 className="font-creepster text-2xl text-white mb-4 leading-tight">
+    <div className="glass-card rounded-xl p-4 sm:p-6 mt-4 animate-fade-in">
+      <div className="mb-4 sm:mb-6">
+        <h2 className="font-creepster text-lg sm:text-xl md:text-2xl text-white mb-3 sm:mb-4 leading-tight">
           {currentQuestion.text}
         </h2>
         
-        <div className="flex items-center space-x-3 mb-4">
+        <div className="flex items-center flex-wrap gap-2 sm:gap-3 mb-3 sm:mb-4">
           <span 
-            className="text-white px-3 py-1 rounded-full text-sm font-medium"
+            className="text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium"
             style={{ backgroundColor: secondaryColor }}
           >
             {currentQuestion.category}
@@ -87,7 +87,7 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
         </div>
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-2 sm:space-y-3">
         {currentQuestion.answers?.map((answer, index) => (
           <button
             key={index}
@@ -104,36 +104,36 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
           >
             <div className="flex items-center">
               <span 
-                className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold mr-4 text-white"
+                className="w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold mr-3 sm:mr-4 text-white flex-shrink-0"
                 style={{ backgroundColor: primaryColor }}
               >
                 {answerLabels[index]}
               </span>
-              <span>{answer}</span>
+              <span className="text-sm sm:text-base text-left break-words">{answer}</span>
             </div>
           </button>
         ))}
       </div>
 
       {gameState.showFeedback && (
-        <div className={`mt-6 p-4 rounded-lg border animate-slide-up ${
+        <div className={`mt-4 sm:mt-6 p-3 sm:p-4 rounded-lg border animate-slide-up ${
           gameState.isCorrect 
             ? 'bg-green-900 border-green-600' 
             : 'bg-red-900 border-red-600'
         }`}>
-          <div className="flex items-start space-x-3">
-            <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
+          <div className="flex items-start space-x-2 sm:space-x-3">
+            <div className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
               gameState.isCorrect ? 'bg-green-500' : 'bg-red-500'
             }`}>
-              <span className="text-white text-sm">
+              <span className="text-white text-xs sm:text-sm">
                 {gameState.isCorrect ? '✓' : '✗'}
               </span>
             </div>
             <div>
-              <p className="font-medium text-white">
+              <p className="font-medium text-white text-sm sm:text-base">
                 {gameState.isCorrect ? 'Correct!' : 'Incorrect!'}
               </p>
-              <p className="text-gray-100 text-sm mt-1">
+              <p className="text-gray-100 text-xs sm:text-sm mt-1">
                 {currentQuestion.explanation}
               </p>
             </div>
@@ -142,9 +142,9 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
       )}
 
       {gameState.showFeedback && (
-        <div className="mt-6 flex justify-center">
+        <div className="mt-4 sm:mt-6 flex justify-center">
           <button
-            className="horror-button px-8 py-3 rounded-lg font-medium text-white hover:scale-105 transition-transform"
+            className="horror-button px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-medium text-white hover:scale-105 transition-transform text-sm sm:text-base touch-manipulation"
             onClick={onNextQuestion}
           >
             Next Question
