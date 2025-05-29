@@ -267,15 +267,15 @@ export default function Game() {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="glass-card rounded-xl p-8 text-center max-w-md">
-          <h2 className="font-creepster text-2xl text-red-500 mb-4">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-purple-900 to-black p-3 sm:p-4">
+        <div className="glass-card rounded-xl p-4 sm:p-6 md:p-8 text-center max-w-sm sm:max-w-md w-full">
+          <h2 className="font-creepster text-xl sm:text-2xl text-red-500 mb-3 sm:mb-4">
             The Spirits Are Restless
           </h2>
-          <p className="text-gray-300 mb-4">{error}</p>
+          <p className="text-gray-300 mb-4 sm:mb-6 text-sm sm:text-base">{error}</p>
           <button
             onClick={() => window.location.reload()}
-            className="horror-button px-6 py-3 rounded-lg font-medium text-white"
+            className="horror-button px-4 sm:px-6 py-3 rounded-lg font-medium text-white text-sm sm:text-base w-full sm:w-auto"
           >
             Try Again
           </button>
@@ -353,26 +353,26 @@ export default function Game() {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black">
       <GameHeader gameState={gameState} />
       
-      <main className="p-4">
+      <main className="px-3 sm:px-4 pb-20">
         {isGroupMode && !activeRound ? (
-          <Card className="bg-gray-900/50 border-gray-700 text-white max-w-md mx-auto">
+          <Card className="bg-gray-900/50 border-gray-700 text-white max-w-sm sm:max-w-md mx-auto">
             <CardHeader>
-              <CardTitle className="text-center text-red-400 flex items-center justify-center gap-2">
-                <Users className="h-6 w-6" />
+              <CardTitle className="text-center text-red-400 flex items-center justify-center gap-2 text-lg sm:text-xl">
+                <Users className="h-5 w-5 sm:h-6 sm:w-6" />
                 Group Mode
               </CardTitle>
             </CardHeader>
-            <CardContent className="text-center space-y-4">
-              <div className="text-gray-300">
+            <CardContent className="text-center space-y-3 sm:space-y-4">
+              <div className="text-gray-300 text-sm sm:text-base">
                 Welcome, <span className="text-white font-bold">{playerName}</span>!
               </div>
-              <div className="text-yellow-400 text-lg">
+              <div className="text-yellow-400 text-base sm:text-lg">
                 Waiting for host to start the game...
               </div>
-              <div className="text-gray-400 text-sm">
+              <div className="text-gray-400 text-xs sm:text-sm">
                 The host will control when questions begin. Get ready for synchronized trivia fun!
               </div>
             </CardContent>
