@@ -62,10 +62,15 @@ export class DatabaseStorage implements IStorage {
       id: hauntId,
       name: config.name,
       description: config.description,
-      theme: config.theme,
+      logoPath: config.logoPath || "",
+      triviaFile: config.triviaFile || "",
+      adFile: config.adFile || "",
+      mode: config.mode,
       tier: config.tier,
       isActive: config.isActive,
-      gameMode: config.gameMode,
+      isPublished: config.isPublished ?? true,
+      authCode: config.authCode,
+      themeData: JSON.stringify(config.theme),
     };
 
     await db.insert(hauntConfigs)
@@ -75,10 +80,15 @@ export class DatabaseStorage implements IStorage {
         set: {
           name: config.name,
           description: config.description,
-          theme: config.theme,
+          logoPath: config.logoPath || "",
+          triviaFile: config.triviaFile || "",
+          adFile: config.adFile || "",
+          mode: config.mode,
           tier: config.tier,
           isActive: config.isActive,
-          gameMode: config.gameMode,
+          isPublished: config.isPublished ?? true,
+          authCode: config.authCode,
+          themeData: JSON.stringify(config.theme),
           updatedAt: new Date(),
         }
       });
@@ -94,12 +104,18 @@ export class DatabaseStorage implements IStorage {
     }
 
     return {
+      id: result.id,
       name: result.name,
       description: result.description,
-      theme: result.theme,
-      tier: result.tier,
+      logoPath: result.logoPath,
+      triviaFile: result.triviaFile,
+      adFile: result.adFile,
+      mode: (result.mode === "queue" ? "queue" : "individual") as "individual" | "queue",
+      tier: (["basic", "pro", "premium"].includes(result.tier) ? result.tier : "basic") as "basic" | "pro" | "premium",
       isActive: result.isActive,
-      gameMode: result.gameMode,
+      isPublished: result.isPublished,
+      authCode: result.authCode ?? undefined,
+      theme: JSON.parse(result.themeData),
     };
   }
 }

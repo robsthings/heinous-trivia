@@ -581,6 +581,7 @@ export default function Admin() {
         mode: "individual", // Default mode, will be managed in haunt dashboard
         tier: formData.tier as "basic" | "pro" | "premium",
         isActive: true,
+        isPublished: true, // New haunts are published by default
         theme: {
           primaryColor: formData.primaryColor,
           secondaryColor: formData.secondaryColor,
@@ -861,6 +862,17 @@ export default function Admin() {
                                     checked={haunt.isActive !== false}
                                     onCheckedChange={(checked) => 
                                       updateHauntSubscription(haunt.id, { isActive: checked })
+                                    }
+                                  />
+                                </div>
+
+                                {/* Published Toggle */}
+                                <div className="flex items-center justify-between bg-gray-700/50 p-2 rounded">
+                                  <Label className="text-white text-sm">Published</Label>
+                                  <Switch
+                                    checked={haunt.isPublished !== false}
+                                    onCheckedChange={(checked) => 
+                                      updateHauntSubscription(haunt.id, { isPublished: checked })
                                     }
                                   />
                                 </div>
