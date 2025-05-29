@@ -22,7 +22,19 @@ export function GameEndScreen({
     return null;
   }
 
-  const handleSaveAndRestart = () => {
+  const handleSaveAndViewLeaderboard = async () => {
+    if (savedPlayerName) {
+      // Automatically save with the persistent player name
+      await onSaveScore();
+    } else if (playerName.trim()) {
+      // Fallback to manual input if no saved name
+      await onSaveScore(playerName.trim());
+    }
+    // After saving, show leaderboard to see the new score
+    onViewLeaderboard();
+  };
+
+  const handlePlayAgain = () => {
     if (savedPlayerName) {
       // Automatically save with the persistent player name
       onSaveScore();
@@ -71,15 +83,21 @@ export function GameEndScreen({
           <div className="space-y-3">
             <button
               className="horror-button w-full py-3 rounded-lg font-medium text-white"
-              onClick={handleSaveAndRestart}
+              onClick={handleSaveAndViewLeaderboard}
             >
-              Save Score & Play Again
+              Save Score & View Leaderboard
+            </button>
+            <button
+              className="w-full py-3 rounded-lg font-medium text-gray-300 border border-gray-600 hover:bg-gray-800 transition-colors"
+              onClick={handlePlayAgain}
+            >
+              Play Again
             </button>
             <button
               className="w-full py-3 rounded-lg font-medium text-gray-300 border border-gray-600 hover:bg-gray-800 transition-colors"
               onClick={onViewLeaderboard}
             >
-              View Leaderboard
+              View Leaderboard Only
             </button>
           </div>
         </div>
