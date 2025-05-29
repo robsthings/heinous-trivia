@@ -36,6 +36,13 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
   const currentAd = gameState.ads[gameState.currentAdIndex % gameState.ads.length];
   const adIndex = gameState.currentAdIndex % gameState.ads.length;
   
+  // Debug log to check ad data structure
+  React.useEffect(() => {
+    console.log('Current ad data:', currentAd);
+    console.log('Ad image URL:', currentAd?.image);
+    console.log('All ads:', gameState.ads);
+  }, [currentAd, gameState.ads]);
+  
   // Track ad view when component mounts
   React.useEffect(() => {
     trackAdMetric(gameState.currentHaunt, adIndex, 'views');
