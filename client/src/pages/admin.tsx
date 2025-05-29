@@ -676,7 +676,7 @@ export default function Admin() {
                     console.error('Authentication failed:', error);
                     toast({
                       title: "Authentication Failed",
-                      description: error.message,
+                      description: error instanceof Error ? error.message : String(error),
                       variant: "destructive"
                     });
                   }
@@ -714,7 +714,7 @@ export default function Admin() {
                     console.error('Authentication failed:', error);
                     toast({
                       title: "Authentication Failed",
-                      description: error.message,
+                      description: error instanceof Error ? error.message : String(error),
                       variant: "destructive"
                     });
                   }
