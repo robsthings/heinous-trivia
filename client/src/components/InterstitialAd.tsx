@@ -59,8 +59,10 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
             <h3 className="font-nosifer text-base sm:text-xl lg:text-3xl text-orange-500 animate-pulse leading-tight">
               A Message from Our Sponsors
             </h3>
-            {/* Mobile layout indicator - only visible on small screens */}
-            <div className="sm:hidden text-xs text-yellow-400 mt-1 bg-black/50 px-2 py-1 rounded">Mobile Layout v2.0 - ACTIVE</div>
+            {/* Mobile layout indicator - visible on all screens for debugging */}
+            <div className="text-xs text-yellow-400 mt-1 bg-red-600 px-2 py-1 rounded font-bold">
+              MOBILE LAYOUT v3.0 - {window.innerWidth}px
+            </div>
           </div>
           
           {/* Main Content - Centered and Responsive */}
