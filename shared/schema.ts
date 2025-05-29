@@ -28,6 +28,7 @@ export const hauntConfigs = pgTable("haunt_configs", {
   mode: text("mode").notNull().default("individual"),
   tier: text("tier").notNull(),
   isActive: boolean("is_active").notNull().default(true),
+  isPublished: boolean("is_published").notNull().default(true),
   authCode: text("auth_code"),
   themeData: text("theme_data").notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
@@ -57,6 +58,7 @@ export const insertHauntConfigSchema = createInsertSchema(hauntConfigs).pick({
   mode: true,
   tier: true,
   isActive: true,
+  isPublished: true,
   authCode: true,
   themeData: true,
 });
@@ -90,6 +92,7 @@ export const hauntConfigSchema = z.object({
   mode: z.enum(["individual", "queue"]),
   tier: z.enum(["basic", "pro", "premium"]),
   isActive: z.boolean().default(true),
+  isPublished: z.boolean().default(true),
   authCode: z.string().optional(),
   theme: z.object({
     primaryColor: z.string(),
