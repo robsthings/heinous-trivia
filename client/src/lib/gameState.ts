@@ -159,6 +159,7 @@ export class GameManager {
   }
 
   static async saveScore(playerName: string, state: GameState): Promise<void> {
+    console.log('Saving score for:', playerName, 'Score:', state.score, 'Haunt:', state.currentHaunt);
     const entry = {
       name: playerName,
       score: state.score,
