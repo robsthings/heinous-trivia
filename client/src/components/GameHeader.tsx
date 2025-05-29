@@ -5,7 +5,7 @@ interface GameHeaderProps {
 }
 
 export function GameHeader({ gameState }: GameHeaderProps) {
-  const { hauntConfig, score, currentQuestionIndex, questionsAnswered } = gameState;
+  const { hauntConfig, score, currentQuestionIndex, questionsAnswered, correctAnswers } = gameState;
   
   // Get theme colors from haunt config
   const primaryColor = gameState.hauntConfig?.theme?.primaryColor || '#8B0000';
@@ -13,8 +13,9 @@ export function GameHeader({ gameState }: GameHeaderProps) {
   const accentColor = gameState.hauntConfig?.theme?.accentColor || '#FF6B35';
   
   const totalQuestions = 20; // Full trivia session
+  // Use currentQuestionIndex + 1 for current position, questionsAnswered for progress
+  const currentQuestionDisplay = currentQuestionIndex + 1;
   const progress = totalQuestions > 0 ? (questionsAnswered / totalQuestions) * 100 : 0;
-  const currentQuestionDisplay = questionsAnswered + 1;
 
   return (
     <header className="glass-card mx-4 mt-4 p-4 rounded-lg border-red-900">
@@ -52,7 +53,7 @@ export function GameHeader({ gameState }: GameHeaderProps) {
       <div className="mt-4">
         <div className="flex justify-between text-sm text-gray-300 mb-2">
           <span>
-            Question {currentQuestionDisplay} of {totalQuestions}
+            Question {currentQuestionDisplay} of {totalQuestions} • {correctAnswers}/{questionsAnswered} correct
           </span>
           <span>{Math.round(progress)}%</span>
         </div>
