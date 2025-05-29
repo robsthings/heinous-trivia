@@ -38,12 +38,8 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
   
   // Debug log to check ad data structure
   React.useEffect(() => {
-    console.log('Current ad data:', currentAd);
-    console.log('Ad image URL:', currentAd?.image);
-    console.log('Ad imageUrl:', currentAd?.imageUrl);
-    console.log('Available properties:', Object.keys(currentAd || {}));
-    console.log('All ads:', gameState.ads);
-  }, [currentAd, gameState.ads]);
+    console.log('Loading ad image from:', currentAd.image || currentAd.imageUrl);
+  }, [currentAd]);
   
   // Track ad view when component mounts
   React.useEffect(() => {
