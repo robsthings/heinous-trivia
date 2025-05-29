@@ -1,173 +1,62 @@
 import type { HauntConfig, TriviaQuestion, AdData } from "@shared/schema";
+import { firestore } from "./firebase";
+import { doc, getDoc, collection, getDocs } from "firebase/firestore";
 
 export class ConfigLoader {
   static async loadHauntConfig(haunt: string): Promise<HauntConfig | null> {
     try {
-      // Use API route as primary method
-      const response = await fetch(`/api/haunt/${haunt}`);
-      if (response.ok) {
-        return await response.json();
+      const docRef = doc(firestore, 'haunts', haunt);
+      const docSnap = await getDoc(docRef);
+      
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        if (data && typeof data === 'object') {
+          return data as HauntConfig;
+        }
       }
       
       return null;
     } catch (error) {
+      console.error('Failed to load haunt config:', error);
       return null;
     }
   }
 
   static async loadTriviaQuestions(haunt: string): Promise<TriviaQuestion[]> {
     try {
+      let allQuestions: TriviaQuestion[] = [];
 
-      // Load custom questions based on tier limits
-      const customQuestions: TriviaQuestion[] = [];
-      let customQuestionLimit = 5; // Default basic tier limit
-      
+      // Load trivia packs with "all" access type
       try {
-        // Get haunt config to check tier
-        const hauntRef = doc(firestore, 'haunts', haunt);
-        const hauntSnap = await getDoc(hauntRef);
+        const packsQuery = collection(firestore, 'trivia-packs');
+        const packsSnapshot = await getDocs(packsQuery);
         
-        if (hauntSnap.exists()) {
-          const hauntData = hauntSnap.data();
-          const tier = hauntData.tier || 'basic';
-          
-          // Set limits based on tier
-          if (tier === 'premium') {
-            customQuestionLimit = 50;
-          } else if (tier === 'pro') {
-            customQuestionLimit = 15;
-          } else {
-            customQuestionLimit = 5; // basic
+        packsSnapshot.docs.forEach(doc => {
+          const pack = doc.data();
+          if (pack.accessType === 'all' && pack.questions) {
+            allQuestions.push(...pack.questions);
           }
-        }
-        
-        const questionsRef = collection(firestore, 'trivia-custom', haunt, 'questions');
-        const querySnapshot = await getDocs(questionsRef);
-        
-        let questionCount = 0;
-        querySnapshot.forEach((doc) => {
-          if (questionCount >= customQuestionLimit) return; // Respect tier limits
-          
-          const data = doc.data();
-          const answerChoices = data.answers || data.choices || [];
-          const correctAnswerText = data.correct || data.answer || data.correctAnswer;
-          let correctAnswerIndex = 0;
-          
-          // Handle different correct answer formats
-          if (typeof correctAnswerText === 'number') {
-            correctAnswerIndex = correctAnswerText;
-          } else if (typeof correctAnswerText === 'string') {
-            correctAnswerIndex = Math.max(0, answerChoices.indexOf(correctAnswerText));
-          }
-          
-          customQuestions.push({
-            id: doc.id,
-            text: data.question || data.text || 'Question text missing',
-            category: "Custom",
-            difficulty: 1,
-            answers: answerChoices,
-            correctAnswer: correctAnswerIndex,
-            explanation: data.explanation || `The correct answer is ${answerChoices[correctAnswerIndex] || 'Unknown'}`,
-            points: data.points || 10
-          } as TriviaQuestion);
-          questionCount++;
         });
       } catch (error) {
-        // Continue without custom questions
+        console.log('No trivia packs found');
       }
 
-      // Load questions from assigned trivia packs and packs with "all" access
-      const packQuestions: TriviaQuestion[] = [];
+      // Load haunt-specific custom trivia
       try {
-        // First get explicitly assigned packs for this haunt
-        const hauntRef = doc(firestore, 'haunts', haunt);
-        const hauntSnap = await getDoc(hauntRef);
-        let assignedPacks: string[] = [];
+        const customTriviaRef = doc(firestore, 'trivia-custom', haunt);
+        const customTriviaSnap = await getDoc(customTriviaRef);
         
-        if (hauntSnap.exists()) {
-          const hauntData = hauntSnap.data();
-          assignedPacks = hauntData.assignedTriviaPacks || [];
-        }
-        
-        // Also get all packs with "all" access type that should be available to every haunt
-        const packsRef = collection(firestore, 'trivia-packs');
-        const allPacksSnap = await getDocs(packsRef);
-        
-        const packsToLoad: string[] = [...assignedPacks];
-        
-        allPacksSnap.forEach((doc) => {
-          const packData = doc.data();
-          if (packData.accessType === 'all' && !packsToLoad.includes(doc.id)) {
-            packsToLoad.push(doc.id);
-          }
-        });
-        
-        console.log(`Loading trivia packs for ${haunt}: ${packsToLoad.join(', ')}`);
-        
-        for (const packId of packsToLoad) {
-          try {
-            const packRef = doc(firestore, 'trivia-packs', packId);
-            const packSnap = await getDoc(packRef);
-            
-            if (packSnap.exists()) {
-              const packData = packSnap.data();
-              if (packData.questions && Array.isArray(packData.questions)) {
-                const normalizedPackQuestions = packData.questions.map((q: any) => {
-                  const answerChoices = q.answers || q.choices || [];
-                  const correctAnswerText = q.correct || q.answer || q.correctAnswer;
-                  let correctAnswerIndex = 0;
-                  
-                  // Handle different correct answer formats
-                  if (typeof correctAnswerText === 'number') {
-                    correctAnswerIndex = correctAnswerText;
-                  } else if (typeof correctAnswerText === 'string') {
-                    correctAnswerIndex = Math.max(0, answerChoices.indexOf(correctAnswerText));
-                  }
-                  
-                  return {
-                    id: q.id || `pack-${packId}-${Math.random()}`,
-                    text: q.question || q.text || 'Question text missing',
-                    category: "Pack",
-                    difficulty: 1,
-                    answers: answerChoices,
-                    correctAnswer: correctAnswerIndex,
-                    explanation: q.explanation || `The correct answer is ${answerChoices[correctAnswerIndex] || 'Unknown'}`,
-                    points: q.points || 10
-                  };
-                });
-                packQuestions.push(...normalizedPackQuestions);
-              }
-            }
-          } catch (packError) {
-            // Failed to load pack, continue
+        if (customTriviaSnap.exists()) {
+          const customData = customTriviaSnap.data();
+          if (customData && customData.questions) {
+            allQuestions.push(...customData.questions);
           }
         }
       } catch (error) {
-        // Continue without pack questions
+        console.log('No custom trivia found for haunt');
       }
-      
-      // Merge all question sources - starter pack provides the base
-      let allQuestions = [...starterQuestions, ...customQuestions, ...packQuestions];
-      
-      console.log(`Question loading for ${haunt}: Starter(${starterQuestions.length}) + Custom(${customQuestions.length}) + Packs(${packQuestions.length}) = Total(${allQuestions.length})`);
-      
-      if (starterQuestions.length === 0) {
-        console.warn('❌ No starter pack questions loaded - this should never happen!');
-      }
-      if (customQuestions.length === 0) {
-        console.log('ℹ️ No custom questions found for this haunt');
-      }
-      if (packQuestions.length === 0) {
-        console.log('ℹ️ No trivia pack questions loaded for this haunt');
-      }
-      
-      // Shuffle using Fisher-Yates algorithm
-      for (let i = allQuestions.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [allQuestions[i], allQuestions[j]] = [allQuestions[j], allQuestions[i]];
-      }
-      
-      return allQuestions;
+
+      return this.shuffleArray(allQuestions);
     } catch (error) {
       console.error('Failed to load trivia questions:', error);
       return [];
@@ -176,51 +65,41 @@ export class ConfigLoader {
 
   static async loadAdData(haunt: string): Promise<AdData[]> {
     try {
-      // Load custom ads from Firebase (prioritized)
-      const customAds: AdData[] = [];
+      let allAds: AdData[] = [];
+
+      // Load haunt-specific ads
       try {
-        const adsRef = collection(firestore, 'haunt-ads', haunt, 'ads');
-        const querySnapshot = await getDocs(adsRef);
+        const adsQuery = collection(firestore, 'haunt-ads', haunt, 'ads');
+        const adsSnapshot = await getDocs(adsQuery);
         
-        querySnapshot.forEach((doc) => {
-          const data = doc.data();
-          customAds.push({
-            id: doc.id,
-            title: data.title || "Custom Ad",
-            description: data.description || "Advertisement",
-            image: data.imageUrl || "",
-            link: data.link || "",
-            duration: data.duration || 5000
-          });
+        adsSnapshot.docs.forEach(doc => {
+          const ad = doc.data();
+          if (ad) {
+            allAds.push(ad as AdData);
+          }
         });
       } catch (error) {
-        // Continue if custom ads fail to load
+        console.log('No haunt-specific ads found');
       }
-      
-      // If no custom ads, load default ads
-      if (customAds.length === 0) {
+
+      // Load default ads if no haunt-specific ads
+      if (allAds.length === 0) {
         try {
-          const defaultAdsRef = collection(firestore, 'default-ads', 'ads');
-          const querySnapshot = await getDocs(defaultAdsRef);
+          const defaultAdsQuery = collection(firestore, 'default-ads', 'ads');
+          const defaultAdsSnapshot = await getDocs(defaultAdsQuery);
           
-          querySnapshot.forEach((doc) => {
-            const data = doc.data();
-            customAds.push({
-              id: doc.id,
-              title: data.title || "Default Ad",
-              description: data.description || "Advertisement",
-              image: data.imageUrl || "",
-              link: data.link || "",
-              duration: data.duration || 5000
-            });
+          defaultAdsSnapshot.docs.forEach(doc => {
+            const ad = doc.data();
+            if (ad) {
+              allAds.push(ad as AdData);
+            }
           });
         } catch (error) {
-          // Continue without ads
+          console.log('No default ads found');
         }
       }
-      
-      // Shuffle ads to prevent repetitive sequences
-      return this.shuffleArray(customAds);
+
+      return this.shuffleArray(allAds);
     } catch (error) {
       console.error('Failed to load ad data:', error);
       return [];
@@ -239,5 +118,5 @@ export class ConfigLoader {
 
 export function getHauntFromURL(): string {
   const urlParams = new URLSearchParams(window.location.search);
-  return urlParams.get('haunt') || '';
+  return urlParams.get('haunt') || 'headquarters';
 }
