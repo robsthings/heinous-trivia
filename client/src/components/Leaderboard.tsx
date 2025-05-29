@@ -9,9 +9,10 @@ interface LeaderboardProps {
   onClose: () => void;
   hauntId?: string;
   currentPlayer?: string;
+  isLoading?: boolean;
 }
 
-export function Leaderboard({ isVisible, leaderboard, onClose, hauntId, currentPlayer }: LeaderboardProps) {
+export function Leaderboard({ isVisible, leaderboard, onClose, hauntId, currentPlayer, isLoading = false }: LeaderboardProps) {
   const [hiddenPlayers, setHiddenPlayers] = useState<Record<string, boolean>>({});
   
   // Debug logging to track leaderboard updates
@@ -73,7 +74,12 @@ export function Leaderboard({ isVisible, leaderboard, onClose, hauntId, currentP
         </div>
 
         <div className="space-y-3 mb-6 max-h-96 overflow-y-auto">
-          {leaderboard.length === 0 ? (
+          {isLoading ? (
+            <div className="text-center text-gray-400 py-8">
+              <div className="animate-spin w-8 h-8 border-2 border-orange-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+              <p>Loading leaderboard...</p>
+            </div>
+          ) : leaderboard.length === 0 ? (
             <div className="text-center text-gray-400 py-8">
               <p>No scores recorded yet.</p>
               <p className="text-sm mt-2">Be the first to join the Hall of Horror!</p>

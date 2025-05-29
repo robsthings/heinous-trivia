@@ -35,6 +35,7 @@ export default function Game() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [leaderboard, setLeaderboard] = useState<any[]>([]);
+  const [leaderboardLoading, setLeaderboardLoading] = useState(false);
   const [activeRound, setActiveRound] = useState<ActiveRound | null>(null);
   const [isGroupMode, setIsGroupMode] = useState(false);
   const [playerId, setPlayerId] = useState<string>(() => 
