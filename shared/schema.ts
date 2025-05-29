@@ -22,10 +22,14 @@ export const hauntConfigs = pgTable("haunt_configs", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
   description: text("description").notNull(),
-  theme: text("theme").notNull(),
+  logoPath: text("logo_path").notNull().default(""),
+  triviaFile: text("trivia_file").notNull().default(""),
+  adFile: text("ad_file").notNull().default(""),
+  mode: text("mode").notNull().default("individual"),
   tier: text("tier").notNull(),
   isActive: boolean("is_active").notNull().default(true),
-  gameMode: text("game_mode").notNull().default("individual"),
+  authCode: text("auth_code"),
+  themeData: text("theme_data").notNull(),
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
@@ -47,10 +51,14 @@ export const insertHauntConfigSchema = createInsertSchema(hauntConfigs).pick({
   id: true,
   name: true,
   description: true,
-  theme: true,
+  logoPath: true,
+  triviaFile: true,
+  adFile: true,
+  mode: true,
   tier: true,
   isActive: true,
-  gameMode: true,
+  authCode: true,
+  themeData: true,
 });
 
 export type InsertUser = z.infer<typeof insertUserSchema>;

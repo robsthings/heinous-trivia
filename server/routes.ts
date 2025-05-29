@@ -107,12 +107,64 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const questionsPath = path.resolve(process.cwd(), "client", "public", "questions", `${hauntId}-trivia.json`);
       
-      if (!fs.existsSync(questionsPath)) {
-        return res.status(404).json({ error: `Trivia questions for '${hauntId}' not found` });
+      if (fs.existsSync(questionsPath)) {
+        const questionsData = JSON.parse(fs.readFileSync(questionsPath, "utf-8"));
+        return res.json(questionsData);
       }
-
-      const questionsData = JSON.parse(fs.readFileSync(questionsPath, "utf-8"));
-      res.json(questionsData);
+      
+      // Fallback to default questions if no haunt-specific questions exist
+      const defaultQuestions = [
+        {
+          id: "default001",
+          text: "In which horror movie does a young girl's head spin 360 degrees?",
+          choices: ["The Exorcist", "Poltergeist", "The Omen", "Rosemary's Baby"],
+          correct: "The Exorcist"
+        },
+        {
+          id: "default002", 
+          text: "What is the name of the killer in the 'Halloween' movie series?",
+          choices: ["Jason Voorhees", "Freddy Krueger", "Michael Myers", "Ghostface"],
+          correct: "Michael Myers"
+        },
+        {
+          id: "default003",
+          text: "Which Stephen King novel features a haunted hotel?",
+          choices: ["Pet Sematary", "The Shining", "It", "Carrie"],
+          correct: "The Shining"
+        },
+        {
+          id: "default004",
+          text: "What weapon does Jason Voorhees typically use?",
+          choices: ["Chainsaw", "Machete", "Knife", "Axe"],
+          correct: "Machete"
+        },
+        {
+          id: "default005",
+          text: "In 'A Nightmare on Elm Street', what is Freddy Krueger's weakness?",
+          choices: ["Silver", "Fire", "Being forgotten", "Holy water"],
+          correct: "Being forgotten"
+        },
+        {
+          id: "default006",
+          text: "Which horror movie features the phrase 'Here's Johnny!'?",
+          choices: ["Psycho", "The Shining", "Halloween", "Friday the 13th"],
+          correct: "The Shining"
+        },
+        {
+          id: "default007",
+          text: "What type of doll is Chucky?",
+          choices: ["Cabbage Patch Kid", "Barbie", "Good Guy", "American Girl"],
+          correct: "Good Guy"
+        },
+        {
+          id: "default008",
+          text: "In which movie do teenagers get killed at a summer camp?",
+          choices: ["Halloween", "Friday the 13th", "Scream", "I Know What You Did Last Summer"],
+          correct: "Friday the 13th"
+        }
+      ];
+      
+      res.json(defaultQuestions);
     } catch (error) {
       res.status(500).json({ error: "Failed to load trivia questions" });
     }
