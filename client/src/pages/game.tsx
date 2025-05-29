@@ -116,21 +116,8 @@ export default function Game() {
           ads,
         }));
 
-        // Update PWA manifest with haunt-specific start URL
-        const manifest = generateManifest(hauntConfig, haunt);
-        const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
-        const manifestUrl = URL.createObjectURL(manifestBlob);
-        
-        // Update manifest link
-        let manifestLink = document.querySelector('link[rel="manifest"]') as HTMLLinkElement;
-        if (manifestLink) {
-          manifestLink.href = manifestUrl;
-        } else {
-          manifestLink = document.createElement('link');
-          manifestLink.rel = 'manifest';
-          manifestLink.href = manifestUrl;
-          document.head.appendChild(manifestLink);
-        }
+        // Update PWA theme color only (keep static manifest)
+        // Note: Dynamic manifest removed to prevent blob URL warnings
 
         // Update theme color
         if (hauntConfig?.theme?.primaryColor) {

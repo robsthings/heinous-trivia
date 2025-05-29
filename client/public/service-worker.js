@@ -24,7 +24,10 @@ self.addEventListener('install', (event) => {
 // Fetch event - serve from cache when offline
 self.addEventListener('fetch', (event) => {
   // Skip chrome-extension and other non-http requests to prevent cache errors
-  if (!event.request.url.startsWith('http')) {
+  if (!event.request.url.startsWith('http') || 
+      event.request.url.startsWith('chrome-extension://') ||
+      event.request.url.startsWith('moz-extension://') ||
+      event.request.url.startsWith('blob:')) {
     return;
   }
   
@@ -41,13 +44,14 @@ self.addEventListener('fetch', (event) => {
             return response;
           }
 
-          // Clone the response
-          const responseToCache = response.clone();
-
-          caches.open(CACHE_NAME)
-            .then((cache) => {
-              cache.put(event.request, responseToCache);
-            });
+          // Only cache same-origin requests to avoid CORS issues
+          if (event.request.url.startsWith(self.location.origin)) {
+            const responseToCache = response.clone();
+            caches.open(CACHE_NAME)
+              .then((cache) => {
+                cache.put(event.request, responseToCache);
+              });
+          }
 
           return response;
         }).catch(() => {
