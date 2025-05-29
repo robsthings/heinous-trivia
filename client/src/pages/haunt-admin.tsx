@@ -930,6 +930,77 @@ export default function HauntAdmin() {
                       ➕ Add Another Ad
                     </Button>
                   )}
+
+                  {/* Current Uploaded Ads */}
+                  {uploadedAds.length > 0 && (
+                    <div className="mt-8 pt-6 border-t border-gray-600">
+                      <h3 className="text-white font-medium mb-4 flex items-center gap-2">
+                        📋 Current Ads ({uploadedAds.length})
+                      </h3>
+                      <div className="space-y-3">
+                        {uploadedAds.map((ad) => (
+                          <div key={ad.id} className="bg-gray-800/50 p-4 rounded-lg border border-gray-600">
+                            <div className="flex items-start justify-between gap-4">
+                              <div className="flex-1">
+                                <div className="flex items-start gap-3">
+                                  {ad.imageUrl && (
+                                    <img 
+                                      src={ad.imageUrl} 
+                                      alt={ad.title}
+                                      className="w-16 h-12 object-cover rounded border border-gray-500"
+                                    />
+                                  )}
+                                  <div className="flex-1">
+                                    <h4 className="text-white font-medium">{ad.title || 'Untitled Ad'}</h4>
+                                    {ad.description && (
+                                      <p className="text-gray-400 text-sm mt-1">{ad.description}</p>
+                                    )}
+                                    {ad.link && (
+                                      <a 
+                                        href={ad.link} 
+                                        target="_blank" 
+                                        rel="noopener noreferrer"
+                                        className="text-blue-400 hover:text-blue-300 text-xs mt-1 inline-flex items-center gap-1"
+                                      >
+                                        <ExternalLink className="w-3 h-3" />
+                                        {ad.link}
+                                      </a>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                              <Button
+                                onClick={async () => {
+                                  if (confirm('Are you sure you want to delete this ad?')) {
+                                    try {
+                                      await deleteDoc(doc(firestore, 'haunt-ads', hauntId, 'ads', ad.id));
+                                      await loadUploadedAds(); // Refresh the list
+                                      toast({
+                                        title: "Ad Deleted",
+                                        description: "The ad has been successfully removed.",
+                                      });
+                                    } catch (error) {
+                                      console.error('Failed to delete ad:', error);
+                                      toast({
+                                        title: "Delete Failed",
+                                        description: "Unable to delete the ad. Please try again.",
+                                        variant: "destructive"
+                                      });
+                                    }
+                                  }
+                                }}
+                                variant="outline"
+                                size="sm"
+                                className="border-red-600 text-red-500 hover:bg-red-600 hover:text-white"
+                              >
+                                🗑️ Delete
+                              </Button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>
