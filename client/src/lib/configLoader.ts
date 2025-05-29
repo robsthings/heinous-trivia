@@ -185,12 +185,17 @@ export class ConfigLoader {
       // Merge all question sources - starter pack provides the base
       let allQuestions = [...starterQuestions, ...customQuestions, ...packQuestions];
       
-      console.log(`Question loading for ${haunt}:`, {
-        starterQuestions: starterQuestions.length,
-        customQuestions: customQuestions.length,
-        packQuestions: packQuestions.length,
-        totalQuestions: allQuestions.length
-      });
+      console.log(`Question loading for ${haunt}: Starter(${starterQuestions.length}) + Custom(${customQuestions.length}) + Packs(${packQuestions.length}) = Total(${allQuestions.length})`);
+      
+      if (starterQuestions.length === 0) {
+        console.warn('❌ No starter pack questions loaded - this should never happen!');
+      }
+      if (customQuestions.length === 0) {
+        console.log('ℹ️ No custom questions found for this haunt');
+      }
+      if (packQuestions.length === 0) {
+        console.log('ℹ️ No trivia pack questions loaded for this haunt');
+      }
       
       // Shuffle using Fisher-Yates algorithm
       for (let i = allQuestions.length - 1; i > 0; i--) {

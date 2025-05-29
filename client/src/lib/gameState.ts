@@ -246,6 +246,8 @@ export class GameManager {
     // Reshuffle the existing questions for a new game experience
     const reshuffledQuestions = this.shuffleQuestions(state.questions);
     
+    console.log(`🔄 Play Again: Reshuffled ${reshuffledQuestions.length} questions for fresh gameplay`);
+    
     return {
       ...this.createInitialState(state.currentHaunt),
       hauntConfig: state.hauntConfig,
