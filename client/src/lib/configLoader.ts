@@ -61,17 +61,16 @@ export class ConfigLoader {
                 correctAnswer: correctAnswerIndex,
                 explanation: q.explanation || `The correct answer is ${answerChoices[correctAnswerIndex] || 'Unknown'}`,
                 points: q.points || 10
-              };
+              } as TriviaQuestion;
             });
-            
             starterQuestions.push(...normalizedQuestions);
           }
         }
       } catch (error) {
-        console.warn('Failed to load starter pack questions:', error);
+        console.error('Failed to load starter pack:', error);
       }
-      
-      // Load custom questions from Firebase (limited by tier)
+
+      // Load custom questions based on tier limits
       const customQuestions: TriviaQuestion[] = [];
       let customQuestionLimit = 5; // Default basic tier limit
       
@@ -146,54 +145,53 @@ export class ConfigLoader {
         const packsRef = collection(firestore, 'trivia-packs');
         const allPacksSnap = await getDocs(packsRef);
         
-        const packsToLoad = new Set(assignedPacks);
+        const packsToLoad: string[] = [...assignedPacks];
         
         allPacksSnap.forEach((doc) => {
           const packData = doc.data();
-          if (packData.accessType === 'all') {
-            packsToLoad.add(doc.id);
+          if (packData.accessType === 'all' && !packsToLoad.includes(doc.id)) {
+            packsToLoad.push(doc.id);
           }
         });
         
-        console.log(`Loading trivia packs for ${haunt}: ${Array.from(packsToLoad).join(', ')}`);
+        console.log(`Loading trivia packs for ${haunt}: ${packsToLoad.join(', ')}`);
         
         for (const packId of packsToLoad) {
-            try {
-              const packRef = doc(firestore, 'trivia-packs', packId);
-              const packSnap = await getDoc(packRef);
-              
-              if (packSnap.exists()) {
-                const packData = packSnap.data();
-                if (packData.questions && Array.isArray(packData.questions)) {
-                  const normalizedPackQuestions = packData.questions.map((q: any) => {
-                    const answerChoices = q.answers || q.choices || [];
-                    const correctAnswerText = q.correct || q.answer || q.correctAnswer;
-                    let correctAnswerIndex = 0;
-                    
-                    // Handle different correct answer formats
-                    if (typeof correctAnswerText === 'number') {
-                      correctAnswerIndex = correctAnswerText;
-                    } else if (typeof correctAnswerText === 'string') {
-                      correctAnswerIndex = Math.max(0, answerChoices.indexOf(correctAnswerText));
-                    }
-                    
-                    return {
-                      id: q.id || `pack-${packId}-${Math.random()}`,
-                      text: q.question || q.text || 'Question text missing',
-                      category: "Pack",
-                      difficulty: 1,
-                      answers: answerChoices,
-                      correctAnswer: correctAnswerIndex,
-                      explanation: q.explanation || `The correct answer is ${answerChoices[correctAnswerIndex] || 'Unknown'}`,
-                      points: q.points || 10
-                    };
-                  });
-                  packQuestions.push(...normalizedPackQuestions);
-                }
+          try {
+            const packRef = doc(firestore, 'trivia-packs', packId);
+            const packSnap = await getDoc(packRef);
+            
+            if (packSnap.exists()) {
+              const packData = packSnap.data();
+              if (packData.questions && Array.isArray(packData.questions)) {
+                const normalizedPackQuestions = packData.questions.map((q: any) => {
+                  const answerChoices = q.answers || q.choices || [];
+                  const correctAnswerText = q.correct || q.answer || q.correctAnswer;
+                  let correctAnswerIndex = 0;
+                  
+                  // Handle different correct answer formats
+                  if (typeof correctAnswerText === 'number') {
+                    correctAnswerIndex = correctAnswerText;
+                  } else if (typeof correctAnswerText === 'string') {
+                    correctAnswerIndex = Math.max(0, answerChoices.indexOf(correctAnswerText));
+                  }
+                  
+                  return {
+                    id: q.id || `pack-${packId}-${Math.random()}`,
+                    text: q.question || q.text || 'Question text missing',
+                    category: "Pack",
+                    difficulty: 1,
+                    answers: answerChoices,
+                    correctAnswer: correctAnswerIndex,
+                    explanation: q.explanation || `The correct answer is ${answerChoices[correctAnswerIndex] || 'Unknown'}`,
+                    points: q.points || 10
+                  };
+                });
+                packQuestions.push(...normalizedPackQuestions);
               }
-            } catch (packError) {
-              // Failed to load pack, continue
             }
+          } catch (packError) {
+            // Failed to load pack, continue
           }
         }
       } catch (error) {
@@ -241,43 +239,40 @@ export class ConfigLoader {
           customAds.push({
             id: doc.id,
             title: data.title || "Custom Ad",
-            description: data.description || "Check this out!",
-            image: data.imageUrl,
-            duration: 5000,
-            link: data.link
+            description: data.description || "Advertisement",
+            image: data.imageUrl || "",
+            link: data.link || "",
+            duration: data.duration || 5000
           });
         });
       } catch (error) {
-        // Continue without custom ads
+        // Continue if custom ads fail to load
       }
       
-      // If haunt has custom ads, shuffle and return them
-      if (customAds.length > 0) {
-        return ConfigLoader.shuffleArray(customAds);
-      }
-      
-      // Otherwise, load default ads set by Uber Admin
-      const defaultAds: AdData[] = [];
-      try {
-        const defaultAdsRef = collection(firestore, 'default-ads');
-        const defaultQuerySnapshot = await getDocs(defaultAdsRef);
-        
-        defaultQuerySnapshot.forEach((doc) => {
-          const data = doc.data();
-          defaultAds.push({
-            id: doc.id,
-            title: data.title || "Default Ad",
-            description: data.description || "Discover more!",
-            image: data.imageUrl,
-            duration: 5000,
-            link: data.link
+      // If no custom ads, load default ads
+      if (customAds.length === 0) {
+        try {
+          const defaultAdsRef = collection(firestore, 'default-ads', 'ads');
+          const querySnapshot = await getDocs(defaultAdsRef);
+          
+          querySnapshot.forEach((doc) => {
+            const data = doc.data();
+            customAds.push({
+              id: doc.id,
+              title: data.title || "Default Ad",
+              description: data.description || "Advertisement",
+              image: data.imageUrl || "",
+              link: data.link || "",
+              duration: data.duration || 5000
+            });
           });
-        });
-      } catch (error) {
-        // Continue without default ads
+        } catch (error) {
+          // Continue without ads
+        }
       }
       
-      return ConfigLoader.shuffleArray(defaultAds);
+      // Shuffle ads to prevent repetitive sequences
+      return this.shuffleArray(customAds);
     } catch (error) {
       console.error('Failed to load ad data:', error);
       return [];
