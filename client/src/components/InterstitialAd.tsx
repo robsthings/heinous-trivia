@@ -80,7 +80,7 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
             {/* Ad Image - Responsive sizes */}
             <div className="w-full max-w-xs sm:max-w-sm lg:max-w-2xl">
               <img
-                src={currentAd.image}
+                src={currentAd.image || currentAd.imageUrl}
                 alt={currentAd.title}
                 className="w-full h-32 sm:h-40 lg:h-64 object-cover rounded-lg shadow-2xl border-2 border-red-600"
                 onError={(e) => {

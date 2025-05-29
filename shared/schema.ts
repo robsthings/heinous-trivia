@@ -102,12 +102,14 @@ export const hauntConfigSchema = z.object({
 });
 
 export const adDataSchema = z.object({
-  id: z.string(),
+  id: z.string().optional(),
   title: z.string(),
   description: z.string(),
-  image: z.string(),
+  image: z.string().optional(),
+  imageUrl: z.string().optional(),
   link: z.string().optional(),
   duration: z.number().default(5000),
+  timestamp: z.string().optional(),
 });
 
 export const leaderboardEntrySchema = z.object({
