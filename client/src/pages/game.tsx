@@ -222,8 +222,9 @@ export default function Game() {
   const handleViewLeaderboard = async () => {
     console.log('Opening leaderboard, fetching fresh data for haunt:', gameState.currentHaunt);
     
-    // Clear existing leaderboard first to prevent showing stale data
+    // Clear existing leaderboard and show loading state
     setLeaderboard([]);
+    setLeaderboardLoading(true);
     
     // Show leaderboard in loading state
     setGameState(prev => ({
@@ -236,6 +237,7 @@ export default function Game() {
     const leaderboardData = await GameManager.getLeaderboard(gameState.currentHaunt);
     console.log('Fresh leaderboard data:', leaderboardData);
     setLeaderboard(leaderboardData);
+    setLeaderboardLoading(false);
   };
 
   const handleCloseLeaderboard = () => {
@@ -391,6 +393,7 @@ export default function Game() {
         onClose={handleCloseLeaderboard}
         hauntId={gameState.currentHaunt}
         currentPlayer={playerId}
+        isLoading={leaderboardLoading}
       />
       
       <Footer showInstallButton={true} />
