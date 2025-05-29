@@ -13,6 +13,9 @@ interface LeaderboardProps {
 
 export function Leaderboard({ isVisible, leaderboard, onClose, hauntId, currentPlayer }: LeaderboardProps) {
   const [hiddenPlayers, setHiddenPlayers] = useState<Record<string, boolean>>({});
+  
+  // Debug logging to track leaderboard updates
+  console.log('Leaderboard component render - isVisible:', isVisible, 'entries:', leaderboard.length, 'hauntId:', hauntId);
 
   // Listen for hidden player changes from the host panel
   useEffect(() => {

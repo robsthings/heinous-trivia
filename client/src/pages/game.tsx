@@ -198,9 +198,13 @@ export default function Game() {
     console.log('Saving score for:', nameToUse, 'Score:', gameState.score, 'Haunt:', gameState.currentHaunt);
     await GameManager.saveScore(nameToUse, gameState);
     console.log('Score saved, fetching updated leaderboard...');
-    const updatedLeaderboard = await GameManager.getLeaderboard(gameState.currentHaunt);
-    console.log('Updated leaderboard:', updatedLeaderboard);
-    setLeaderboard(updatedLeaderboard);
+    
+    // Add a small delay to ensure database has processed the save
+    setTimeout(async () => {
+      const updatedLeaderboard = await GameManager.getLeaderboard(gameState.currentHaunt);
+      console.log('Updated leaderboard:', updatedLeaderboard);
+      setLeaderboard(updatedLeaderboard);
+    }, 500);
   };
 
   const handlePlayAgain = async () => {
@@ -219,7 +223,9 @@ export default function Game() {
   };
 
   const handleViewLeaderboard = async () => {
+    console.log('Opening leaderboard, fetching fresh data for haunt:', gameState.currentHaunt);
     const leaderboardData = await GameManager.getLeaderboard(gameState.currentHaunt);
+    console.log('Fresh leaderboard data:', leaderboardData);
     setLeaderboard(leaderboardData);
     setGameState(prev => ({
       ...prev,
