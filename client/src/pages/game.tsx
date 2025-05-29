@@ -195,8 +195,11 @@ export default function Game() {
 
   const handleSaveScore = async (inputPlayerName?: string) => {
     const nameToUse = inputPlayerName || playerName;
+    console.log('Saving score for:', nameToUse, 'Score:', gameState.score, 'Haunt:', gameState.currentHaunt);
     await GameManager.saveScore(nameToUse, gameState);
+    console.log('Score saved, fetching updated leaderboard...');
     const updatedLeaderboard = await GameManager.getLeaderboard(gameState.currentHaunt);
+    console.log('Updated leaderboard:', updatedLeaderboard);
     setLeaderboard(updatedLeaderboard);
   };
 
@@ -216,7 +219,7 @@ export default function Game() {
   };
 
   const handleViewLeaderboard = async () => {
-    const leaderboardData = await GameManager.getLeaderboard();
+    const leaderboardData = await GameManager.getLeaderboard(gameState.currentHaunt);
     setLeaderboard(leaderboardData);
     setGameState(prev => ({
       ...prev,
