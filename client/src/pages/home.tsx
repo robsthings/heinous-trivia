@@ -39,15 +39,10 @@ export default function Home() {
                 <h3 className="text-xl font-semibold text-red-400 mb-3">
                   🎃 For Haunt Owners
                 </h3>
-                <p className="text-sm text-gray-300 mb-4">
-                  Ready to create your own horror trivia experience? 
-                  Set up custom questions, themes, and leaderboards for your visitors.
+                <p className="text-sm text-gray-300">
+                  Want to create your own horror trivia experience? 
+                  Contact us directly to set up custom questions, themes, and leaderboards for your visitors.
                 </p>
-                <Link href="/admin">
-                  <Button className="horror-button px-6 py-3 rounded-lg font-medium text-white">
-                    Create Your Haunt 👻
-                  </Button>
-                </Link>
               </div>
             </div>
           </div>
