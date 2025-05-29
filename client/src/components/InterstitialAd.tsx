@@ -49,47 +49,62 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
   };
 
   return (
-    <div className="fixed inset-0 bg-black flex items-center justify-center z-50">
-      <div className="w-full h-full flex flex-col items-center justify-center p-4 sm:p-6 bg-gradient-to-br from-red-900 via-black to-purple-900 animate-fade-in overflow-y-auto">
-        <div className="text-center max-w-4xl mx-auto w-full">
-          <h3 className="font-nosifer text-2xl sm:text-3xl md:text-4xl text-orange-500 mb-6 sm:mb-8 animate-pulse">
-            A Message from Our Sponsors
-          </h3>
+    <div className="fixed inset-0 bg-black z-50">
+      <div className="w-full h-full bg-gradient-to-br from-red-900 via-black to-purple-900 animate-fade-in">
+        {/* Mobile Layout - Stack Content Vertically */}
+        <div className="h-full flex flex-col p-3 sm:p-6">
           
-          <div className="mb-6 sm:mb-8">
-            <img
-              src={currentAd.image}
-              alt={currentAd.title}
-              className="w-full max-w-lg sm:max-w-2xl md:max-w-3xl h-48 sm:h-64 md:h-96 object-cover rounded-xl shadow-2xl border-2 sm:border-4 border-red-600 mx-auto"
-              onError={(e) => {
-                e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzMzIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkFkIFNwYWNlIEF2YWlsYWJsZTwvdGV4dD48L3N2Zz4=';
-              }}
-            />
+          {/* Header */}
+          <div className="text-center mb-4 sm:mb-6">
+            <h3 className="font-nosifer text-lg sm:text-2xl md:text-3xl text-orange-500 animate-pulse leading-tight">
+              A Message from Our Sponsors
+            </h3>
           </div>
           
-          <h4 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-3 sm:mb-4 font-creepster px-2">
-            {currentAd.title}
-          </h4>
-          <p className="text-gray-300 text-base sm:text-lg md:text-xl mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
-            {currentAd.description}
-          </p>
+          {/* Ad Content - Flexible Height */}
+          <div className="flex-1 flex flex-col justify-center items-center min-h-0">
+            
+            {/* Ad Image */}
+            <div className="w-full max-w-sm sm:max-w-lg mb-4 sm:mb-6">
+              <img
+                src={currentAd.image}
+                alt={currentAd.title}
+                className="w-full h-40 sm:h-48 md:h-64 object-cover rounded-lg shadow-2xl border-2 border-red-600"
+                onError={(e) => {
+                  e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjQwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMzMzIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIyNCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkFkIFNwYWNlIEF2YWlsYWJsZTwvdGV4dD48L3N2Zz4=';
+                }}
+              />
+            </div>
+            
+            {/* Ad Text */}
+            <div className="text-center max-w-sm sm:max-w-md">
+              <h4 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-2 sm:mb-3 font-creepster">
+                {currentAd.title}
+              </h4>
+              <p className="text-gray-300 text-sm sm:text-base mb-4 sm:mb-6 leading-relaxed">
+                {currentAd.description}
+              </p>
+            </div>
+          </div>
           
-          <div className="space-y-3 px-4 max-w-md mx-auto">
+          {/* Buttons - Fixed at Bottom */}
+          <div className="space-y-3 w-full max-w-sm mx-auto">
             {currentAd.link && (
               <button
-                className="horror-button w-full py-3 sm:py-4 rounded-lg font-medium text-white text-sm sm:text-base"
+                className="horror-button w-full py-4 rounded-lg font-medium text-white text-base touch-manipulation"
                 onClick={handleVisitAd}
               >
                 Learn More
               </button>
             )}
             <button
-              className="w-full py-3 sm:py-4 rounded-lg font-medium text-gray-300 border border-gray-600 hover:bg-gray-800 transition-colors text-sm sm:text-base"
+              className="w-full py-4 rounded-lg font-medium text-gray-300 border-2 border-gray-600 hover:bg-gray-800 transition-colors text-base touch-manipulation"
               onClick={onClose}
             >
               Continue Playing
             </button>
           </div>
+          
         </div>
       </div>
     </div>
