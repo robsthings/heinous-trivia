@@ -1,4 +1,4 @@
-const CACHE_NAME = 'heinous-trivia-v1';
+const CACHE_NAME = 'heinous-trivia-v2';
 const urlsToCache = [
   '/',
   '/manifest.json',
