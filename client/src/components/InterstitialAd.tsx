@@ -60,7 +60,7 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
               A Message from Our Sponsors
             </h3>
             {/* Mobile layout indicator - only visible on small screens */}
-            <div className="sm:hidden text-xs text-gray-500 mt-1">Mobile Layout v2.0</div>
+            <div className="sm:hidden text-xs text-yellow-400 mt-1 bg-black/50 px-2 py-1 rounded">Mobile Layout v2.0 - ACTIVE</div>
           </div>
           
           {/* Main Content - Centered and Responsive */}
