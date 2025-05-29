@@ -23,14 +23,13 @@ export function GameEndScreen({
   }
 
   const handleSaveAndViewLeaderboard = async () => {
+    // Save score if we have a name
     if (savedPlayerName) {
-      // Automatically save with the persistent player name
       await onSaveScore();
     } else if (playerName.trim()) {
-      // Fallback to manual input if no saved name
       await onSaveScore(playerName.trim());
     }
-    // After saving, show leaderboard to see the new score
+    // Always show leaderboard after attempting to save
     onViewLeaderboard();
   };
 

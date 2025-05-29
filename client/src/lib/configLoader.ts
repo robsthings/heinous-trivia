@@ -221,9 +221,9 @@ export class ConfigLoader {
         // Continue without custom ads
       }
       
-      // If haunt has custom ads, return them
+      // If haunt has custom ads, shuffle and return them
       if (customAds.length > 0) {
-        return customAds;
+        return ConfigLoader.shuffleArray(customAds);
       }
       
       // Otherwise, load default ads set by Uber Admin
@@ -247,11 +247,20 @@ export class ConfigLoader {
         // Continue without default ads
       }
       
-      return defaultAds;
+      return ConfigLoader.shuffleArray(defaultAds);
     } catch (error) {
       console.error('Failed to load ad data:', error);
       return [];
     }
+  }
+
+  static shuffleArray<T>(array: T[]): T[] {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
   }
 }
 
