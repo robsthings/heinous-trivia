@@ -1,6 +1,4 @@
 import type { HauntConfig, TriviaQuestion, AdData } from "@shared/schema";
-import { firestore } from "./firebase";
-import { doc, getDoc, collection, getDocs } from "firebase/firestore";
 
 export class ConfigLoader {
   static async loadHauntConfig(haunt: string): Promise<HauntConfig | null> {
@@ -19,45 +17,6 @@ export class ConfigLoader {
 
   static async loadTriviaQuestions(haunt: string): Promise<TriviaQuestion[]> {
     try {
-      // Always start with the starter pack (100+ questions base)
-      const starterQuestions: TriviaQuestion[] = [];
-      try {
-        const starterPackRef = doc(firestore, 'trivia-packs', 'starter-pack');
-        const starterPackDoc = await getDoc(starterPackRef);
-        
-        if (starterPackDoc.exists()) {
-          const starterData = starterPackDoc.data();
-          if (starterData && starterData.questions && Array.isArray(starterData.questions) && starterData.questions.length > 0) {
-            // Normalize question format for consistency
-            const normalizedQuestions = starterData.questions.map((q: any) => {
-              const answerChoices = q.answers || q.choices || [];
-              const correctAnswerText = q.correct || q.answer || q.correctAnswer;
-              let correctAnswerIndex = 0;
-              
-              // Handle different correct answer formats
-              if (typeof correctAnswerText === 'number') {
-                correctAnswerIndex = correctAnswerText;
-              } else if (typeof correctAnswerText === 'string') {
-                correctAnswerIndex = Math.max(0, answerChoices.indexOf(correctAnswerText));
-              }
-              
-              return {
-                id: q.id || `starter-${Math.random()}`,
-                text: q.question || q.text || 'Question text missing',
-                category: "Horror",
-                difficulty: 1,
-                answers: answerChoices,
-                correctAnswer: correctAnswerIndex,
-                explanation: q.explanation || `The correct answer is ${answerChoices[correctAnswerIndex] || 'Unknown'}`,
-                points: q.points || 10
-              } as TriviaQuestion;
-            });
-            starterQuestions.push(...normalizedQuestions);
-          }
-        }
-      } catch (error) {
-        console.error('Failed to load starter pack:', error);
-      }
 
       // Load custom questions based on tier limits
       const customQuestions: TriviaQuestion[] = [];
