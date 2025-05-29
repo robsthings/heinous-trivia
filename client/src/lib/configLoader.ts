@@ -129,17 +129,35 @@ export class ConfigLoader {
         // Continue without custom questions
       }
 
-      // Load questions from assigned trivia packs
+      // Load questions from assigned trivia packs and packs with "all" access
       const packQuestions: TriviaQuestion[] = [];
       try {
+        // First get explicitly assigned packs for this haunt
         const hauntRef = doc(firestore, 'haunts', haunt);
         const hauntSnap = await getDoc(hauntRef);
+        let assignedPacks: string[] = [];
         
         if (hauntSnap.exists()) {
           const hauntData = hauntSnap.data();
-          const assignedPacks = hauntData.assignedTriviaPacks || [];
-          
-          for (const packId of assignedPacks) {
+          assignedPacks = hauntData.assignedTriviaPacks || [];
+        }
+        
+        // Also get all packs with "all" access type that should be available to every haunt
+        const packsRef = collection(firestore, 'trivia-packs');
+        const allPacksSnap = await getDocs(packsRef);
+        
+        const packsToLoad = new Set(assignedPacks);
+        
+        allPacksSnap.forEach((doc) => {
+          const packData = doc.data();
+          if (packData.accessType === 'all') {
+            packsToLoad.add(doc.id);
+          }
+        });
+        
+        console.log(`Loading trivia packs for ${haunt}: ${Array.from(packsToLoad).join(', ')}`);
+        
+        for (const packId of packsToLoad) {
             try {
               const packRef = doc(firestore, 'trivia-packs', packId);
               const packSnap = await getDoc(packRef);
