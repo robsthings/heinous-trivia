@@ -48,27 +48,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Quick Access Links */}
-        <div className="mt-16 text-center space-y-4">
-          <h3 className="text-xl font-semibold text-gray-300">Quick Access</h3>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/admin">
-              <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-700">
-                🔧 Admin Portal
-              </Button>
-            </Link>
-            <Link href="/privacy">
-              <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-700">
-                📋 Privacy Policy
-              </Button>
-            </Link>
-            <Link href="/terms">
-              <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-700">
-                📜 Terms of Service
-              </Button>
-            </Link>
-          </div>
-        </div>
+
       </div>
 
       <Footer showInstallButton={true} />
