@@ -224,14 +224,21 @@ export default function Game() {
 
   const handleViewLeaderboard = async () => {
     console.log('Opening leaderboard, fetching fresh data for haunt:', gameState.currentHaunt);
-    const leaderboardData = await GameManager.getLeaderboard(gameState.currentHaunt);
-    console.log('Fresh leaderboard data:', leaderboardData);
-    setLeaderboard(leaderboardData);
+    
+    // Clear existing leaderboard first to prevent showing stale data
+    setLeaderboard([]);
+    
+    // Show leaderboard in loading state
     setGameState(prev => ({
       ...prev,
       showLeaderboard: true,
       showEndScreen: false,
     }));
+    
+    // Fetch fresh data
+    const leaderboardData = await GameManager.getLeaderboard(gameState.currentHaunt);
+    console.log('Fresh leaderboard data:', leaderboardData);
+    setLeaderboard(leaderboardData);
   };
 
   const handleCloseLeaderboard = () => {
