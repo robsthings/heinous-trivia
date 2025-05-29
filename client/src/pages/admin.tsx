@@ -621,7 +621,7 @@ export default function Admin() {
       console.error('❌ Failed to save haunt config:', error);
       toast({
         title: "Error",
-        description: `Failed to save haunt configuration: ${error.message || error}`,
+        description: `Failed to save haunt configuration: ${error instanceof Error ? error.message : String(error)}`,
         variant: "destructive"
       });
     } finally {
