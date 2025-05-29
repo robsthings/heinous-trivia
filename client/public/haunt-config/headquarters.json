@@ -1,0 +1,16 @@
+{
+  "id": "headquarters",
+  "name": "Heinous Headquarters",
+  "description": "Dr. Heinous's official headquarters for spine-chilling trivia challenges",
+  "logoPath": "",
+  "triviaFile": "",
+  "adFile": "",
+  "mode": "individual",
+  "tier": "basic",
+  "isActive": true,
+  "theme": {
+    "primaryColor": "#8B0000",
+    "secondaryColor": "#4B0000",
+    "accentColor": "#FF4500"
+  }
+}
