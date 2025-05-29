@@ -5,18 +5,7 @@ import { doc, getDoc, collection, getDocs } from "firebase/firestore";
 export class ConfigLoader {
   static async loadHauntConfig(haunt: string): Promise<HauntConfig | null> {
     try {
-      // Try Firebase first
-      const docRef = doc(firestore, 'haunts', haunt);
-      const docSnap = await getDoc(docRef);
-      
-      if (docSnap.exists()) {
-        const data = docSnap.data();
-        if (data && typeof data === 'object') {
-          return data as HauntConfig;
-        }
-      }
-      
-      // Fallback to API
+      // Use API route as primary method
       const response = await fetch(`/api/haunt/${haunt}`);
       if (response.ok) {
         return await response.json();

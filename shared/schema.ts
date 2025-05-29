@@ -18,6 +18,18 @@ export const leaderboardEntries = pgTable("leaderboard_entries", {
   correctAnswers: integer("correct_answers").notNull(),
 });
 
+export const hauntConfigs = pgTable("haunt_configs", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  description: text("description").notNull(),
+  theme: text("theme").notNull(),
+  tier: text("tier").notNull(),
+  isActive: boolean("is_active").notNull().default(true),
+  gameMode: text("game_mode").notNull().default("individual"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+});
+
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
   password: true,
@@ -31,10 +43,22 @@ export const insertLeaderboardEntrySchema = createInsertSchema(leaderboardEntrie
   correctAnswers: true,
 });
 
+export const insertHauntConfigSchema = createInsertSchema(hauntConfigs).pick({
+  id: true,
+  name: true,
+  description: true,
+  theme: true,
+  tier: true,
+  isActive: true,
+  gameMode: true,
+});
+
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 export type InsertLeaderboardEntry = z.infer<typeof insertLeaderboardEntrySchema>;
 export type LeaderboardEntryDb = typeof leaderboardEntries.$inferSelect;
+export type InsertHauntConfig = z.infer<typeof insertHauntConfigSchema>;
+export type HauntConfigDb = typeof hauntConfigs.$inferSelect;
 
 // Trivia game schemas
 export const triviaQuestionSchema = z.object({

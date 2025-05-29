@@ -1,7 +1,6 @@
-import { users, leaderboardEntries, type User, type InsertUser, type InsertLeaderboardEntry, type LeaderboardEntryDb, type HauntConfig } from "@shared/schema";
+import { users, leaderboardEntries, hauntConfigs, type User, type InsertUser, type InsertLeaderboardEntry, type LeaderboardEntryDb, type HauntConfig, type InsertHauntConfig, type HauntConfigDb } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc } from "drizzle-orm";
-import { FirebaseService } from "./firebase";
 
 // modify the interface with any CRUD methods
 // you might need
@@ -59,11 +58,49 @@ export class DatabaseStorage implements IStorage {
   }
 
   async saveHauntConfig(hauntId: string, config: HauntConfig): Promise<HauntConfig> {
-    return await FirebaseService.saveHauntConfig(hauntId, config);
+    const insertData: InsertHauntConfig = {
+      id: hauntId,
+      name: config.name,
+      description: config.description,
+      theme: config.theme,
+      tier: config.tier,
+      isActive: config.isActive,
+      gameMode: config.gameMode,
+    };
+
+    await db.insert(hauntConfigs)
+      .values(insertData)
+      .onConflictDoUpdate({
+        target: hauntConfigs.id,
+        set: {
+          name: config.name,
+          description: config.description,
+          theme: config.theme,
+          tier: config.tier,
+          isActive: config.isActive,
+          gameMode: config.gameMode,
+          updatedAt: new Date(),
+        }
+      });
+
+    return config;
   }
 
   async getHauntConfig(hauntId: string): Promise<HauntConfig | null> {
-    return await FirebaseService.getHauntConfig(hauntId);
+    const [result] = await db.select().from(hauntConfigs).where(eq(hauntConfigs.id, hauntId));
+    
+    if (!result) {
+      return null;
+    }
+
+    return {
+      name: result.name,
+      description: result.description,
+      theme: result.theme,
+      tier: result.tier,
+      isActive: result.isActive,
+      gameMode: result.gameMode,
+    };
   }
 }
 
