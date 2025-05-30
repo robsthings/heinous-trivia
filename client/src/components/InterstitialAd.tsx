@@ -82,7 +82,7 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
               <img
                 src={currentAd.image || currentAd.imageUrl}
                 alt={currentAd.title}
-                className="w-full h-32 sm:h-40 lg:h-64 object-cover rounded-lg shadow-2xl border-2 border-red-600"
+                className="w-full h-32 sm:h-40 lg:h-64 object-contain rounded-lg shadow-2xl border-2 border-red-600"
                 onError={(e) => {
                   // Create a better fallback image with haunt branding
                   const canvas = document.createElement('canvas');
