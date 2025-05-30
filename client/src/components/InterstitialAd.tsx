@@ -44,11 +44,18 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
   }, [gameState.currentHaunt, adIndex]);
 
   const handleVisitAd = () => {
-    if (currentAd.link) {
+    if (currentAd.link && currentAd.link !== '#' && currentAd.link.startsWith('http')) {
       trackAdMetric(gameState.currentHaunt, adIndex, 'clicks');
       onVisitAd(currentAd.link);
     }
   };
+
+  // Check if we have a valid link
+  const hasValidLink = currentAd.link && currentAd.link !== '#' && currentAd.link.startsWith('http');
+  
+  // Debug the link validation
+  console.log('Ad link:', currentAd.link);
+  console.log('Has valid link:', hasValidLink);
 
   return (
     <div className="fixed inset-0 bg-black z-50 overflow-hidden">
@@ -146,7 +153,7 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
           
           {/* Action Buttons - Always visible at bottom */}
           <div className="space-y-3 w-full max-w-xs sm:max-w-sm mx-auto flex-shrink-0 pt-4">
-            {currentAd.link && currentAd.link !== '#' && currentAd.link.startsWith('http') && (
+            {hasValidLink && (
               <button
                 className="horror-button w-full py-3 sm:py-4 rounded-lg font-medium text-white text-sm sm:text-base select-none"
                 onClick={handleVisitAd}
