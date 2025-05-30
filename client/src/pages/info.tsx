@@ -35,7 +35,7 @@ export default function Info() {
           <div className="grid md:grid-cols-3 gap-8">
             {/* For Your Guests */}
             <div className="bg-black/60 border border-red-600 rounded-lg p-6">
-              <h3 className="text-xl font-bold text-red-400 mb-4">🪦 For Your Guests</h3>
+              <h3 className="text-xl font-bold text-red-400 mb-4">👻 For Your Guests</h3>
               <ul className="space-y-3 text-gray-300">
                 <li className="flex items-start gap-2">
                   <span>🎮</span>
