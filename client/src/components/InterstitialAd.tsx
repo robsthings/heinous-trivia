@@ -91,8 +91,7 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
               <img
                 src={currentAd.image || currentAd.imageUrl}
                 alt={currentAd.title}
-                className="hidden w-full max-h-[50vh] sm:max-h-[60vh] rounded-lg shadow-2xl border-2 border-red-600"
-                style={{ objectFit: 'contain', height: 'auto' }}
+                className="hidden w-full max-h-[70vh] h-auto object-contain rounded-lg shadow-2xl border-2 border-red-600"
                 onLoad={(e) => {
                   // Show the image and hide the fallback if it loads successfully
                   const target = e.target as HTMLImageElement;
