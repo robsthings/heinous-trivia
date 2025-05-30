@@ -1,5 +1,4 @@
 import { Link } from "wouter";
-import imagePath from "/image (25).png";
 
 export default function Info() {
   return (
@@ -16,7 +15,7 @@ export default function Info() {
               The most spine-chilling trivia experience that transforms any location into a haunted battleground of wits
             </p>
             <img 
-              src={imagePath} 
+              src="/image (25).png" 
               alt="Heinous Trivia Horror Experience"
               className="w-full max-w-2xl mx-auto rounded-lg shadow-2xl border-2 border-red-600"
             />
