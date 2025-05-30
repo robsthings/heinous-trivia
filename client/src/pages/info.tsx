@@ -47,7 +47,7 @@ export default function Info() {
                 </li>
                 <li className="flex items-start gap-2">
                   <span>🏆</span>
-                  <span>Leaderboards + multiplayer = guests stay longer</span>
+                  <span>Leaderboards + multiplayer = guests stay engaged</span>
                 </li>
               </ul>
             </div>
