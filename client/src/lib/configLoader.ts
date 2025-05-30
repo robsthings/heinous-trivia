@@ -65,44 +65,25 @@ export class ConfigLoader {
 
   static async loadAdData(haunt: string): Promise<AdData[]> {
     try {
-      let allAds: AdData[] = [];
-
-      // Load haunt-specific ads
-      try {
-        const adsQuery = collection(firestore, 'haunt-ads', haunt, 'ads');
-        const adsSnapshot = await getDocs(adsQuery);
-        
-        adsSnapshot.docs.forEach(doc => {
-          const ad = doc.data();
-          if (ad) {
-            allAds.push(ad as AdData);
-          }
-        });
-      } catch (error) {
-        console.log('No haunt-specific ads found');
-      }
-
-      // Load default ads if no haunt-specific ads
-      if (allAds.length === 0) {
-        try {
-          const defaultAdsQuery = collection(firestore, 'default-ads', 'ads');
-          const defaultAdsSnapshot = await getDocs(defaultAdsQuery);
-          
-          defaultAdsSnapshot.docs.forEach(doc => {
-            const ad = doc.data();
-            if (ad) {
-              allAds.push(ad as AdData);
-            }
-          });
-        } catch (error) {
-          console.log('No default ads found');
+      const adsQuery = collection(firestore, 'haunt-ads', haunt, 'ads');
+      const adsSnapshot = await getDocs(adsQuery);
+      
+      const allAds: AdData[] = [];
+      adsSnapshot.docs.forEach(doc => {
+        const ad = doc.data();
+        if (ad) {
+          allAds.push(ad as AdData);
         }
+      });
+
+      if (allAds.length === 0) {
+        console.warn(`No ads found for haunt: ${haunt}`);
       }
 
       return this.shuffleArray(allAds);
     } catch (error) {
-      console.error('Failed to load ad data:', error);
-      return [];
+      console.error('Failed to load ad data from Firebase:', error);
+      throw error;
     }
   }
 

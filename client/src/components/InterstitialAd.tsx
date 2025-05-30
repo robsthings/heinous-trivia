@@ -170,7 +170,16 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
           
           {/* Action Buttons - Always visible at bottom */}
           <div className="space-y-3 w-full max-w-xs sm:max-w-sm mx-auto flex-shrink-0 pt-4">
-            {/* Hide Learn More button since ads have placeholder links */}
+            {/* Only show Learn More button if valid link exists */}
+            {hasValidLink && (
+              <button
+                className="w-full py-3 sm:py-4 bg-red-700 hover:bg-red-600 text-white rounded-lg font-medium transition-colors text-sm sm:text-base select-none"
+                onClick={handleVisitAd}
+                style={{ touchAction: 'manipulation' }}
+              >
+                Learn More
+              </button>
+            )}
             <button
               className="w-full py-3 sm:py-4 rounded-lg font-medium text-gray-300 border-2 border-gray-600 hover:bg-gray-800 transition-colors text-sm sm:text-base select-none"
               onClick={onClose}
