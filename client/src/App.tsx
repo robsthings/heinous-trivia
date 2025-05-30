@@ -12,6 +12,7 @@ import HostPanel from "@/pages/host-panel";
 import Privacy from "@/pages/privacy";
 import Terms from "@/pages/terms";
 import UploadGuidelines from "@/pages/upload-guidelines";
+import Info from "@/pages/info";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -38,6 +39,7 @@ function Router() {
       <Route path="/privacy" component={Privacy} />
       <Route path="/terms" component={Terms} />
       <Route path="/upload-guidelines" component={UploadGuidelines} />
+      <Route path="/info" component={Info} />
       <Route component={NotFound} />
     </Switch>
   );
