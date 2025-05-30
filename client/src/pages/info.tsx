@@ -32,30 +32,62 @@ export default function Info() {
           <h2 className="font-nosifer text-3xl sm:text-4xl text-orange-500 text-center mb-12">
             Unleash Terror Through Trivia
           </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* For Your Guests */}
             <div className="bg-black/60 border border-red-600 rounded-lg p-6">
-              <h3 className="text-xl font-bold text-red-400 mb-4">Coming Soon</h3>
-              <p className="text-gray-300">Additional features and capabilities will be announced in future updates</p>
+              <h3 className="text-xl font-bold text-red-400 mb-4">🪦 For Your Guests</h3>
+              <ul className="space-y-3 text-gray-300">
+                <li className="flex items-start gap-2">
+                  <span>🎮</span>
+                  <span>Mobile gameplay on any device</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span>🧠</span>
+                  <span>Custom trivia that fits your brand</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span>🏆</span>
+                  <span>Leaderboards + multiplayer = guests stay longer</span>
+                </li>
+              </ul>
             </div>
+
+            {/* For You */}
             <div className="bg-black/60 border border-red-600 rounded-lg p-6">
-              <h3 className="text-xl font-bold text-red-400 mb-4">👻 Multiplayer Mayhem</h3>
-              <p className="text-gray-300">Real-time synchronized gameplay where players battle for survival through spine-tingling questions</p>
+              <h3 className="text-xl font-bold text-red-400 mb-4">🧙‍♂️ For You</h3>
+              <ul className="space-y-3 text-gray-300">
+                <li className="flex items-start gap-2">
+                  <span>📈</span>
+                  <span>Live analytics on player activity</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span>🎨</span>
+                  <span>Complete theme control (logos, colors, ads)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span>⚙️</span>
+                  <span>Easy setup – no devs, no hassle</span>
+                </li>
+              </ul>
             </div>
+
+            {/* Add-On Revenue */}
             <div className="bg-black/60 border border-red-600 rounded-lg p-6">
-              <h3 className="text-xl font-bold text-red-400 mb-4">🔥 Progressive Web App</h3>
-              <p className="text-gray-300">Works on any device, no downloads needed. Instant horror at your fingertips</p>
-            </div>
-            <div className="bg-black/60 border border-red-600 rounded-lg p-6">
-              <h3 className="text-xl font-bold text-red-400 mb-4">💀 Custom Branding</h3>
-              <p className="text-gray-300">Your logo, your colors, your terror. Complete white-label customization</p>
-            </div>
-            <div className="bg-black/60 border border-red-600 rounded-lg p-6">
-              <h3 className="text-xl font-bold text-red-400 mb-4">📊 Live Analytics</h3>
-              <p className="text-gray-300">Track engagement, monitor player behavior, optimize your horror experience</p>
-            </div>
-            <div className="bg-black/60 border border-red-600 rounded-lg p-6">
-              <h3 className="text-xl font-bold text-red-400 mb-4">⚡ Instant Setup</h3>
-              <p className="text-gray-300">Go from concept to live haunt in minutes. No technical expertise required</p>
+              <h3 className="text-xl font-bold text-red-400 mb-4">🧳 Add-On Revenue</h3>
+              <ul className="space-y-3 text-gray-300">
+                <li className="flex items-start gap-2">
+                  <span>💰</span>
+                  <span>In-game ad slots (for your merch or sponsors)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span>🔁</span>
+                  <span>Return play incentives</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span>🎟️</span>
+                  <span>Event-based upgrades (holiday themes, seasonal packs)</span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
