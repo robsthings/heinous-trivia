@@ -170,7 +170,7 @@ export default function Info() {
             Book Your Free Demo Now
           </a>
           <p className="text-sm text-gray-400 mt-4">
-            Get a custom demo and pricing quote within 24 hours
+            Let's build your haunted trivia experience — response within 24 hours.
           </p>
         </div>
       </div>
