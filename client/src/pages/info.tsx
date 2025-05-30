@@ -11,8 +11,11 @@ export default function Info() {
             <h1 className="font-nosifer text-4xl sm:text-6xl lg:text-7xl text-red-500 mb-6 animate-pulse">
               HEINOUS TRIVIA
             </h1>
-            <p className="text-xl sm:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
-              The most spine-chilling trivia experience that transforms any location into a haunted battleground of wits
+            <h2 className="text-xl sm:text-2xl text-gray-300 mb-2 max-w-3xl mx-auto leading-relaxed">
+              Turn Your Haunted Attraction Into a Game Guests Won't Forget
+            </h2>
+            <p className="text-lg sm:text-xl text-gray-400 mb-8 max-w-3xl mx-auto leading-relaxed">
+              A fully branded, scream-worthy trivia experience — built for lines, lobbies, and loyalty.
             </p>
             <img 
               src="/image (25).png" 
