@@ -79,7 +79,7 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
             
             {/* Ad Image - Full display */}
             <div className="w-full px-4">
-              <div className="w-full bg-gradient-to-br from-purple-900 to-red-900 rounded-lg shadow-2xl border-2 border-red-600 p-8 text-center" style={{ maxHeight: '300px' }}>
+              <div className="w-full bg-gradient-to-br from-purple-900 to-red-900 rounded-lg shadow-2xl border-2 border-red-600 p-8 text-center max-h-[50vh] sm:max-h-[60vh] flex flex-col justify-center">
                 <div className="text-6xl mb-4">🎃</div>
                 <h4 className="font-nosifer text-xl text-orange-400 mb-3">
                   {currentAd.title}
@@ -91,8 +91,8 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
               <img
                 src={currentAd.image || currentAd.imageUrl}
                 alt={currentAd.title}
-                className="hidden w-full h-auto rounded-lg shadow-2xl border-2 border-red-600"
-                style={{ maxHeight: '300px', objectFit: 'contain' }}
+                className="hidden w-full max-h-[50vh] sm:max-h-[60vh] rounded-lg shadow-2xl border-2 border-red-600"
+                style={{ objectFit: 'contain', height: 'auto' }}
                 onLoad={(e) => {
                   // Show the image and hide the fallback if it loads successfully
                   const target = e.target as HTMLImageElement;
