@@ -31,8 +31,8 @@ export default function Info() {
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="bg-black/60 border border-red-600 rounded-lg p-6">
-              <h3 className="text-xl font-bold text-red-400 mb-4">🎃 Custom Horror Themes</h3>
-              <p className="text-gray-300">Transform your venue into any horror setting - haunted mansions, zombie apocalypse, supernatural encounters</p>
+              <h3 className="text-xl font-bold text-red-400 mb-4">Coming Soon</h3>
+              <p className="text-gray-300">Additional features and capabilities will be announced in future updates</p>
             </div>
             <div className="bg-black/60 border border-red-600 rounded-lg p-6">
               <h3 className="text-xl font-bold text-red-400 mb-4">👻 Multiplayer Mayhem</h3>
