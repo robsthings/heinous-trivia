@@ -167,7 +167,7 @@ export default function Info() {
             href="mailto:ResirWrecked@yahoo.com?subject=Heinous Trivia Inquiry"
             className="inline-block bg-red-600 hover:bg-red-700 text-white font-bold text-xl px-12 py-4 rounded-lg shadow-2xl transform hover:scale-105 transition-all duration-200"
           >
-            👻 Contact Me Now
+            Book Your Free Demo Now
           </a>
           <p className="text-sm text-gray-400 mt-4">
             Get a custom demo and pricing quote within 24 hours
