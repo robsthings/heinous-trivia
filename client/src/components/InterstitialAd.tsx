@@ -53,9 +53,9 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
   // Check if we have a valid link
   const hasValidLink = currentAd.link && currentAd.link !== '#' && currentAd.link.startsWith('http');
   
-  // Debug the link validation
-  console.log('Ad link:', currentAd.link);
-  console.log('Has valid link:', hasValidLink);
+  // Debug the link validation - UPDATED v2
+  console.log('UPDATED - Ad link:', currentAd.link);
+  console.log('UPDATED - Has valid link:', hasValidLink);
 
   return (
     <div className="fixed inset-0 bg-black z-50 overflow-hidden">
@@ -70,7 +70,7 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
             </h3>
             {/* Mobile layout indicator - visible on all screens for debugging */}
             <div className="text-xs text-yellow-400 mt-1 bg-red-600 px-2 py-1 rounded font-bold">
-              MOBILE LAYOUT v3.0 - {window.innerWidth}px
+              CACHE FIXED v4.0 - {window.innerWidth}px - {Date.now()}
             </div>
           </div>
           
