@@ -79,11 +79,27 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
             
             {/* Ad Image - Full display */}
             <div className="w-full px-4">
+              <div className="w-full bg-gradient-to-br from-purple-900 to-red-900 rounded-lg shadow-2xl border-2 border-red-600 p-8 text-center" style={{ maxHeight: '300px' }}>
+                <div className="text-6xl mb-4">🎃</div>
+                <h4 className="font-nosifer text-xl text-orange-400 mb-3">
+                  {currentAd.title}
+                </h4>
+                <p className="text-gray-300 text-sm leading-relaxed">
+                  {currentAd.description}
+                </p>
+              </div>
               <img
                 src={currentAd.image || currentAd.imageUrl}
                 alt={currentAd.title}
-                className="w-full h-auto rounded-lg shadow-2xl border-2 border-red-600"
+                className="hidden w-full h-auto rounded-lg shadow-2xl border-2 border-red-600"
                 style={{ maxHeight: '300px', objectFit: 'contain' }}
+                onLoad={(e) => {
+                  // Show the image and hide the fallback if it loads successfully
+                  const target = e.target as HTMLImageElement;
+                  const fallback = target.previousElementSibling as HTMLElement;
+                  target.classList.remove('hidden');
+                  fallback.style.display = 'none';
+                }}
                 onError={(e) => {
                   // Create a better fallback image with haunt branding
                   const canvas = document.createElement('canvas');
