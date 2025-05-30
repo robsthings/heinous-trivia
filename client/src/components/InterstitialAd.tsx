@@ -77,12 +77,13 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
           {/* Main Content - Centered and Responsive */}
           <div className="flex-1 flex flex-col justify-center items-center space-y-4 min-h-0">
             
-            {/* Ad Image - Responsive sizes */}
-            <div className="w-full max-w-xs sm:max-w-sm lg:max-w-2xl bg-black rounded-lg overflow-hidden">
+            {/* Ad Image - Full display */}
+            <div className="w-full px-4">
               <img
                 src={currentAd.image || currentAd.imageUrl}
                 alt={currentAd.title}
-                className="w-full max-h-48 sm:max-h-56 lg:max-h-80 object-contain rounded-lg shadow-2xl border-2 border-red-600"
+                className="w-full h-auto rounded-lg shadow-2xl border-2 border-red-600"
+                style={{ maxHeight: '300px', objectFit: 'contain' }}
                 onError={(e) => {
                   // Create a better fallback image with haunt branding
                   const canvas = document.createElement('canvas');
