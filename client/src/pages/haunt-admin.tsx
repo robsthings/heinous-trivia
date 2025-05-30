@@ -67,6 +67,14 @@ export default function HauntAdmin() {
   const [triviaPacks, setTriviaPacks] = useState<TriviaPack[]>([]);
   const [customQuestions, setCustomQuestions] = useState<CustomTriviaQuestion[]>([]);
   const [editingQuestion, setEditingQuestion] = useState<CustomTriviaQuestion | null>(null);
+  const [editingAd, setEditingAd] = useState<any | null>(null);
+  const [showNewAdForm, setShowNewAdForm] = useState(false);
+  const [newAdData, setNewAdData] = useState({
+    title: '',
+    description: '',
+    link: '',
+    file: null as File | null
+  });
 
   // CSV Upload Handler
   const handleCSVUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -576,6 +584,84 @@ export default function HauntAdmin() {
     }
   };
 
+  const updateExistingAd = async (adId: string, updates: any) => {
+    try {
+      const adRef = doc(firestore, 'haunt-ads', hauntId, 'ads', adId);
+      await updateDoc(adRef, updates);
+      
+      // Reload ads to show updated data
+      await loadUploadedAds();
+      
+      toast({
+        title: "Ad Updated",
+        description: "Ad updated successfully!",
+      });
+    } catch (error) {
+      console.error('Failed to update ad:', error);
+      toast({
+        title: "Error",
+        description: "Failed to update ad",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const deleteExistingAd = async (adId: string) => {
+    try {
+      const adRef = doc(firestore, 'haunt-ads', hauntId, 'ads', adId);
+      await deleteDoc(adRef);
+      
+      // Reload ads to show updated list
+      await loadUploadedAds();
+      
+      toast({
+        title: "Ad Deleted",
+        description: "Ad deleted successfully!",
+      });
+    } catch (error) {
+      console.error('Failed to delete ad:', error);
+      toast({
+        title: "Error",
+        description: "Failed to delete ad",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const addNewAd = async (newAd: { title: string; description: string; link: string; file: File }) => {
+    try {
+      // Upload image to Firebase Storage
+      const imageRef = ref(storage, `haunt-assets/${hauntId}/ads/${Date.now()}.${newAd.file.name.split('.').pop()}`);
+      await uploadBytes(imageRef, newAd.file);
+      const imageUrl = await getDownloadURL(imageRef);
+      
+      // Save ad data to Firestore
+      const adsRef = collection(firestore, 'haunt-ads', hauntId, 'ads');
+      await addDoc(adsRef, {
+        title: newAd.title || "Untitled Ad",
+        description: newAd.description || "Check this out!",
+        link: newAd.link || "#",
+        imageUrl: imageUrl,
+        timestamp: new Date().toISOString()
+      });
+      
+      // Reload ads to show new ad
+      await loadUploadedAds();
+      
+      toast({
+        title: "Ad Added",
+        description: "New ad added successfully!",
+      });
+    } catch (error) {
+      console.error('Failed to add ad:', error);
+      toast({
+        title: "Error",
+        description: "Failed to add ad",
+        variant: "destructive"
+      });
+    }
+  };
+
   if (isLoading) {
     return <SpookyLoader message="Loading haunt configuration..." showProgress={true} />;
   }
@@ -838,7 +924,71 @@ export default function HauntAdmin() {
                 </div>
               </CardHeader>
               <CardContent>
+                {/* Current Ads Section */}
+                {uploadedAds.length > 0 && (
+                  <div className="space-y-4 mb-6">
+                    <h3 className="text-white font-medium">Current Ads</h3>
+                    {uploadedAds.map((ad) => (
+                      <div key={ad.id} className="border border-gray-600 rounded-lg p-4 bg-gray-800/30">
+                        <div className="flex justify-between items-start mb-3">
+                          <div className="flex-1">
+                            <h4 className="text-white font-medium">{ad.title}</h4>
+                            <p className="text-gray-400 text-sm">{ad.description}</p>
+                            {ad.link && ad.link !== "#" && (
+                              <a href={ad.link} target="_blank" rel="noopener noreferrer" 
+                                 className="text-blue-400 text-sm hover:underline flex items-center gap-1 mt-1">
+                                <ExternalLink className="w-3 h-3" />
+                                {ad.link}
+                              </a>
+                            )}
+                          </div>
+                          <div className="flex gap-2">
+                            <Button
+                              onClick={() => setEditingAd(ad)}
+                              variant="outline"
+                              size="sm"
+                              className="border-blue-600 text-blue-400 hover:bg-blue-600 hover:text-white"
+                            >
+                              Edit
+                            </Button>
+                            <Button
+                              onClick={() => deleteExistingAd(ad.id)}
+                              variant="outline"
+                              size="sm"
+                              className="border-red-600 text-red-400 hover:bg-red-600 hover:text-white"
+                            >
+                              Delete
+                            </Button>
+                          </div>
+                        </div>
+                        {ad.imageUrl && (
+                          <img 
+                            src={ad.imageUrl} 
+                            alt={ad.title}
+                            className="w-full max-w-xs h-24 object-cover rounded border border-gray-600"
+                          />
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Add New Ad Button */}
+                {uploadedAds.length < getAdLimit(hauntConfig.tier) && (
+                  <div className="mb-4">
+                    <Button
+                      onClick={() => setShowNewAdForm(true)}
+                      variant="outline"
+                      className="border-green-600 text-green-400 hover:bg-green-600 hover:text-white"
+                    >
+                      + Add New Ad
+                    </Button>
+                  </div>
+                )}
+
+                {/* Legacy Bulk Upload Section */}
                 <div className="space-y-4">
+                  <h3 className="text-white font-medium border-t border-gray-600 pt-4">Bulk Upload (replaces all ads)</h3>
                   {adFiles.map((ad, index) => (
                     <div key={ad.id} className="border border-gray-600 rounded-lg p-4 bg-gray-800/30">
                       <div className="flex justify-between items-center mb-3">
@@ -1214,6 +1364,153 @@ export default function HauntAdmin() {
                 </Button>
                 <Button
                   onClick={() => setEditingQuestion(null)}
+                  variant="outline"
+                  className="border-gray-600 text-gray-400"
+                >
+                  Cancel
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {/* Edit Ad Modal */}
+      {editingAd && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+          <Card className="bg-black/90 border-red-600 text-white max-w-md w-full">
+            <CardHeader>
+              <CardTitle className="text-xl font-bold text-red-500">Edit Ad</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <Label className="text-white text-sm font-medium mb-2 block">Title</Label>
+                <Input
+                  value={editingAd.title}
+                  onChange={(e) => setEditingAd({...editingAd, title: e.target.value})}
+                  className="bg-gray-800 border-gray-600 text-white"
+                />
+              </div>
+              <div>
+                <Label className="text-white text-sm font-medium mb-2 block">Description</Label>
+                <Textarea
+                  value={editingAd.description}
+                  onChange={(e) => setEditingAd({...editingAd, description: e.target.value})}
+                  className="bg-gray-800 border-gray-600 text-white"
+                />
+              </div>
+              <div>
+                <Label className="text-white text-sm font-medium mb-2 block">Link (optional)</Label>
+                <Input
+                  value={editingAd.link}
+                  onChange={(e) => setEditingAd({...editingAd, link: e.target.value})}
+                  placeholder="https://example.com or leave blank"
+                  className="bg-gray-800 border-gray-600 text-white"
+                />
+              </div>
+              {editingAd.imageUrl && (
+                <div>
+                  <Label className="text-white text-sm font-medium mb-2 block">Current Image</Label>
+                  <img 
+                    src={editingAd.imageUrl} 
+                    alt={editingAd.title}
+                    className="w-full max-w-xs h-24 object-cover rounded border border-gray-600"
+                  />
+                </div>
+              )}
+              <div className="flex gap-2">
+                <Button
+                  onClick={async () => {
+                    await updateExistingAd(editingAd.id, {
+                      title: editingAd.title,
+                      description: editingAd.description,
+                      link: editingAd.link || "#"
+                    });
+                    setEditingAd(null);
+                  }}
+                  className="bg-green-600 hover:bg-green-700 text-white"
+                >
+                  Save Changes
+                </Button>
+                <Button
+                  onClick={() => setEditingAd(null)}
+                  variant="outline"
+                  className="border-gray-600 text-gray-400"
+                >
+                  Cancel
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {/* New Ad Modal */}
+      {showNewAdForm && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+          <Card className="bg-black/90 border-red-600 text-white max-w-md w-full">
+            <CardHeader>
+              <CardTitle className="text-xl font-bold text-red-500">Add New Ad</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <Label className="text-white text-sm font-medium mb-2 block">Title</Label>
+                <Input
+                  value={newAdData.title}
+                  onChange={(e) => setNewAdData({...newAdData, title: e.target.value})}
+                  className="bg-gray-800 border-gray-600 text-white"
+                />
+              </div>
+              <div>
+                <Label className="text-white text-sm font-medium mb-2 block">Description</Label>
+                <Textarea
+                  value={newAdData.description}
+                  onChange={(e) => setNewAdData({...newAdData, description: e.target.value})}
+                  className="bg-gray-800 border-gray-600 text-white"
+                />
+              </div>
+              <div>
+                <Label className="text-white text-sm font-medium mb-2 block">Link (optional)</Label>
+                <Input
+                  value={newAdData.link}
+                  onChange={(e) => setNewAdData({...newAdData, link: e.target.value})}
+                  placeholder="https://example.com or leave blank"
+                  className="bg-gray-800 border-gray-600 text-white"
+                />
+              </div>
+              <div>
+                <Label className="text-white text-sm font-medium mb-2 block">Image</Label>
+                <Input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => setNewAdData({...newAdData, file: e.target.files?.[0] || null})}
+                  className="bg-gray-800 border-gray-600 text-white file:bg-red-600 file:text-white file:border-0 file:rounded-md file:px-3 file:py-2 file:mr-3 file:cursor-pointer"
+                />
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  onClick={async () => {
+                    if (newAdData.title && newAdData.description && newAdData.file) {
+                      await addNewAd(newAdData as { title: string; description: string; link: string; file: File });
+                      setNewAdData({ title: '', description: '', link: '', file: null });
+                      setShowNewAdForm(false);
+                    } else {
+                      toast({
+                        title: "Missing Fields",
+                        description: "Please fill in title, description, and select an image",
+                        variant: "destructive"
+                      });
+                    }
+                  }}
+                  className="bg-green-600 hover:bg-green-700 text-white"
+                >
+                  Add Ad
+                </Button>
+                <Button
+                  onClick={() => {
+                    setNewAdData({ title: '', description: '', link: '', file: null });
+                    setShowNewAdForm(false);
+                  }}
                   variant="outline"
                   className="border-gray-600 text-gray-400"
                 >
