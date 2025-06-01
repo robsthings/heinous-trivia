@@ -127,6 +127,7 @@ export default function Info() {
                 <li>✓ 5 branded ads maximum</li>
                 <li>✓ Advanced horror themes</li>
                 <li>✓ Custom branding & colors</li>
+                <li>✓ Group Party Mode</li>
                 <li>✓ Real-time multiplayer</li>
                 <li>✓ Analytics dashboard</li>
                 <li>✓ Priority support</li>
@@ -143,6 +144,7 @@ export default function Info() {
                 <li>✓ 10 branded ads maximum</li>
                 <li>✓ Unlimited horror themes</li>
                 <li>✓ Complete white-label solution</li>
+                <li>✓ Group Party Mode</li>
                 <li>✓ Advanced multiplayer features</li>
                 <li>✓ Custom integrations</li>
                 <li>✓ One additional Basic game</li>
