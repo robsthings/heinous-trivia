@@ -116,6 +116,9 @@ export default function Game() {
           ads,
         }));
 
+        // Store the haunt ID for launcher persistence
+        localStorage.setItem("lastHauntId", haunt);
+
         // Update PWA theme color only (keep static manifest)
         // Note: Dynamic manifest removed to prevent blob URL warnings
 
