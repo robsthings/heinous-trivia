@@ -172,16 +172,16 @@ export default function Info() {
           <p className="text-sm text-gray-400 mt-4">
             Let's build your haunted trivia experience — response within 24 hours.
           </p>
-          <ul className="text-sm text-gray-400 mt-4 space-y-1 max-w-xs mx-auto">
-            <li className="flex items-center gap-2">
+          <ul className="text-sm text-gray-400 mt-4 space-y-1 max-w-xs mx-auto text-center">
+            <li className="flex items-center justify-center gap-2">
               <span>✔️</span>
               <span>No tech skills needed</span>
             </li>
-            <li className="flex items-center gap-2">
+            <li className="flex items-center justify-center gap-2">
               <span>✔️</span>
               <span>Custom preview</span>
             </li>
-            <li className="flex items-center gap-2">
+            <li className="flex items-center justify-center gap-2">
               <span>✔️</span>
               <span>Simple Pricing</span>
             </li>
