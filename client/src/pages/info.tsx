@@ -104,9 +104,7 @@ export default function Info() {
               <span className="font-bold text-sm">🎃 Introductory Pricing!</span>
             </div>
           </div>
-          <p className="text-center text-yellow-400 text-sm mb-8 italic">
-            Honest pricing while we figure out operating costs! 🤷‍♂️
-          </p>
+
           <div className="grid md:grid-cols-3 gap-8">
             {/* Basic Tier */}
             <div className="bg-gradient-to-b from-gray-800 to-black border-2 border-gray-600 rounded-lg p-8 text-center">
