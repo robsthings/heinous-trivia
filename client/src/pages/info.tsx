@@ -191,6 +191,26 @@ export default function Info() {
               <span>Simple Pricing</span>
             </li>
           </ul>
+
+          {/* Security & Standards Badges */}
+          <div className="flex flex-wrap justify-center gap-4 mt-8 pt-6 border-t border-gray-800">
+            <div className="flex items-center gap-2 bg-green-900/30 border border-green-600 rounded-lg px-3 py-2">
+              <span className="text-green-400">🔒</span>
+              <span className="text-xs text-green-300 font-medium">HTTPS Encrypted</span>
+            </div>
+            <div className="flex items-center gap-2 bg-blue-900/30 border border-blue-600 rounded-lg px-3 py-2">
+              <span className="text-blue-400">🛡️</span>
+              <span className="text-xs text-blue-300 font-medium">Firebase Secured</span>
+            </div>
+            <div className="flex items-center gap-2 bg-purple-900/30 border border-purple-600 rounded-lg px-3 py-2">
+              <span className="text-purple-400">📱</span>
+              <span className="text-xs text-purple-300 font-medium">PWA Compliant</span>
+            </div>
+            <div className="flex items-center gap-2 bg-orange-900/30 border border-orange-600 rounded-lg px-3 py-2">
+              <span className="text-orange-400">⚡</span>
+              <span className="text-xs text-orange-300 font-medium">99.9% Uptime</span>
+            </div>
+          </div>
         </div>
       </div>
 
