@@ -878,7 +878,11 @@ export default function HauntAdmin() {
               <CardContent>
                 <div>
                   <Label htmlFor="mode" className="text-white text-sm font-medium mb-2 block">Game Mode</Label>
-                  <Select value={formData.mode} onValueChange={(value) => setFormData(prev => ({ ...prev, mode: value }))}>
+                  <Select 
+                    value={formData.mode} 
+                    onValueChange={(value) => setFormData(prev => ({ ...prev, mode: value }))}
+                    disabled={hauntConfig.tier === "basic" && formData.mode !== "individual"}
+                  >
                     <SelectTrigger className="bg-gray-800 border-gray-600 text-white h-11">
                       <SelectValue placeholder="Select game mode" />
                     </SelectTrigger>
@@ -886,13 +890,23 @@ export default function HauntAdmin() {
                       <SelectItem value="individual" className="text-white hover:bg-gray-700">
                         Individual Mode - Players compete individually
                       </SelectItem>
-                      <SelectItem value="queue" className="text-white hover:bg-gray-700">
+                      <SelectItem 
+                        value="queue" 
+                        className={`${hauntConfig.tier === "basic" ? "text-gray-500 cursor-not-allowed" : "text-white hover:bg-gray-700"}`}
+                        disabled={hauntConfig.tier === "basic"}
+                      >
                         Group Mode - Host-controlled synchronized sessions
+                        {hauntConfig.tier === "basic" && <span className="text-xs text-gray-500 ml-2">(Pro/Premium only)</span>}
                       </SelectItem>
                     </SelectContent>
                   </Select>
                   <p className="text-gray-400 text-xs mt-1">
                     Current: <span className="text-white font-medium capitalize">{hauntConfig.mode}</span> mode
+                    {hauntConfig.tier === "basic" && (
+                      <span className="block text-orange-400 text-xs mt-1">
+                        Upgrade to Pro or Premium to unlock Group Mode for synchronized multiplayer sessions
+                      </span>
+                    )}
                   </p>
                 </div>
               </CardContent>

@@ -124,8 +124,8 @@ export default function Game() {
           updateMetaThemeColor(hauntConfig.theme.primaryColor);
         }
 
-        // Check if haunt is configured for group mode
-        if (hauntConfig?.mode === "queue") {
+        // Check if haunt is configured for group mode and has proper tier access
+        if (hauntConfig?.mode === "queue" && (hauntConfig?.tier === "pro" || hauntConfig?.tier === "premium")) {
           setIsGroupMode(true);
         }
 
