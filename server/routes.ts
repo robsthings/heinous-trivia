@@ -88,30 +88,53 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { hauntId } = req.params;
       const { timeRange } = req.query;
       
-      // For now, return structure with zero values until data collection is implemented
-      // This shows the dashboard structure for Pro/Premium members
-      const analyticsData = {
-        totalGames: 0,
-        uniquePlayers: 0,
-        returnPlayerRate: 0,
-        adClickThrough: 0,
-        bestQuestions: [],
-        competitiveMetrics: {
-          averageScore: 0,
-          topScore: 0,
-          participationRate: 0,
-        },
-        averageGroupSize: 0,
-        timeRangeData: {
-          daily: [],
-          weekly: [],
-        },
-      };
-      
+      const analyticsData = await storage.getAnalyticsData(hauntId, timeRange as string || '30d');
       res.json(analyticsData);
     } catch (error) {
       console.error("Failed to get analytics data:", error);
       res.status(500).json({ error: "Failed to get analytics data" });
+    }
+  });
+
+  // API routes for tracking analytics events
+  app.post("/api/analytics/session", async (req, res) => {
+    try {
+      const session = await storage.createGameSession(req.body);
+      res.json(session);
+    } catch (error) {
+      console.error("Failed to create game session:", error);
+      res.status(500).json({ error: "Failed to create game session" });
+    }
+  });
+
+  app.put("/api/analytics/session/:sessionId", async (req, res) => {
+    try {
+      const { sessionId } = req.params;
+      await storage.updateGameSession(parseInt(sessionId), req.body);
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Failed to update game session:", error);
+      res.status(500).json({ error: "Failed to update game session" });
+    }
+  });
+
+  app.post("/api/analytics/ad-interaction", async (req, res) => {
+    try {
+      await storage.trackAdInteraction(req.body);
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Failed to track ad interaction:", error);
+      res.status(500).json({ error: "Failed to track ad interaction" });
+    }
+  });
+
+  app.post("/api/analytics/question-performance", async (req, res) => {
+    try {
+      await storage.trackQuestionPerformance(req.body);
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Failed to track question performance:", error);
+      res.status(500).json({ error: "Failed to track question performance" });
     }
   });
 
