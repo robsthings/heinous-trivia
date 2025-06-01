@@ -25,18 +25,23 @@ export function GameHeader({ gameState }: GameHeaderProps) {
             <img
               src={hauntConfig.logoPath}
               alt={`${hauntConfig.name} Logo`}
-              className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 flex-shrink-0"
+              className={`${hauntConfig.tier === 'premium' ? 'w-14 h-14 sm:w-16 sm:h-16' : 'w-10 h-10 sm:w-12 sm:h-12'} rounded-full border-2 flex-shrink-0`}
               style={{ borderColor: primaryColor }}
             />
           )}
           <div className="min-w-0 flex-1">
             <h1 
-              className="font-creepster text-lg sm:text-xl truncate"
+              className={`font-creepster truncate ${hauntConfig?.tier === 'premium' ? 'text-xl sm:text-2xl' : 'text-lg sm:text-xl'}`}
               style={{ color: accentColor }}
             >
               {hauntConfig?.name || 'Loading...'}
             </h1>
-            <p className="text-xs sm:text-sm text-gray-300 opacity-75">Hosted by Dr. Heinous</p>
+            {hauntConfig?.tier !== 'premium' && (
+              <p className="text-xs sm:text-sm text-gray-300 opacity-75">Hosted by Dr. Heinous</p>
+            )}
+            {hauntConfig?.tier === 'premium' && (
+              <p className="text-xs sm:text-sm text-gray-300 opacity-75">Premium Experience</p>
+            )}
           </div>
         </div>
         <div className="text-right flex-shrink-0 ml-2">
