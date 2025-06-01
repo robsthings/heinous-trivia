@@ -120,8 +120,16 @@ export default function Game() {
         // Store the haunt ID for launcher persistence
         localStorage.setItem("lastHauntId", haunt);
 
-        // Update PWA theme color only (keep static manifest)
-        // Note: Dynamic manifest removed to prevent blob URL warnings
+        // Inject dynamic manifest for haunt-specific PWA
+        const existingManifest = document.querySelector('link[rel="manifest"]');
+        if (existingManifest) {
+          existingManifest.remove();
+        }
+        
+        const manifestLink = document.createElement('link');
+        manifestLink.rel = 'manifest';
+        manifestLink.href = `/api/manifest/${haunt}`;
+        document.head.appendChild(manifestLink);
 
         // Update theme color
         if (hauntConfig?.theme?.primaryColor) {
