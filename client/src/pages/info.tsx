@@ -146,7 +146,7 @@ export default function Info() {
                 <li>✓ Advanced multiplayer features</li>
                 <li>✓ Custom integrations</li>
                 <li>✓ One additional Basic game</li>
-                <li>✓ 24/7 phone support</li>
+                <li>✓ Near white-label experience</li>
               </ul>
               <p className="text-sm text-gray-400">Enterprise solution for large venues and franchises</p>
             </div>
