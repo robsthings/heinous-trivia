@@ -43,6 +43,7 @@ export default function Terms() {
                   <li>• Haunt administrators may create and manage their own trivia experiences</li>
                   <li>• You must provide accurate information when required</li>
                   <li>• You are responsible for maintaining the security of your access credentials</li>
+                  <li>• By using Pro and Premium features, you consent to analytics data collection for business insights</li>
                 </ul>
               </section>
 

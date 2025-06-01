@@ -38,6 +38,12 @@ export default function Privacy() {
                   <li>• Haunt admin authentication codes for secure access</li>
                   <li>• Custom trivia questions and advertisements uploaded by haunt operators</li>
                   <li>• Game session data including answers and participation metrics</li>
+                  <li>• Analytics data for Pro and Premium subscribers including:</li>
+                  <li className="ml-6">- Anonymous player identifiers for tracking return visits</li>
+                  <li className="ml-6">- Question performance metrics and response times</li>
+                  <li className="ml-6">- Advertisement interaction data (views and clicks)</li>
+                  <li className="ml-6">- Session duration and completion rates</li>
+                  <li className="ml-6">- Group play participation statistics</li>
                 </ul>
               </section>
 
@@ -48,6 +54,11 @@ export default function Privacy() {
                   <li>• To authenticate haunt administrators and protect their content</li>
                   <li>• To improve game performance and user experience</li>
                   <li>• To enable real-time multiplayer features and group gameplay</li>
+                  <li>• To generate business analytics for Pro and Premium subscribers including:</li>
+                  <li className="ml-6">- Player engagement and retention metrics</li>
+                  <li className="ml-6">- Content performance analysis for trivia questions</li>
+                  <li className="ml-6">- Advertisement effectiveness tracking</li>
+                  <li className="ml-6">- Game session insights and completion rates</li>
                 </ul>
               </section>
 
@@ -57,8 +68,10 @@ export default function Privacy() {
               </section>
 
               <section>
-                <h2 className="text-xl font-semibold text-white mb-3">Data Retention</h2>
-                <p>Game scores and player data are retained for leaderboard functionality. Haunt configurations and custom content are maintained while the haunt remains active. You may request data deletion by contacting your haunt administrator.</p>
+                <h2 className="text-xl font-semibold text-white mb-3">Data Retention and Analytics</h2>
+                <p>Game scores and player data are retained for leaderboard functionality. Haunt configurations and custom content are maintained while the haunt remains active.</p>
+                <p className="mt-2">For Pro and Premium subscribers, we collect anonymous analytics data to provide business insights. Player identifiers are randomized and cannot be linked to personal information. Analytics data is retained for up to 90 days to generate meaningful performance reports.</p>
+                <p className="mt-2">You may request data deletion by contacting your haunt administrator.</p>
               </section>
 
               <section>

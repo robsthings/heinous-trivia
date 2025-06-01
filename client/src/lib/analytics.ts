@@ -26,13 +26,11 @@ export class AnalyticsTracker {
         finalScore: 0,
       };
 
-      const response = await apiRequest<{ id: number }>("/api/analytics/session", {
-        method: "POST",
-        body: JSON.stringify(sessionData),
-      });
+      const response = await apiRequest("/api/analytics/session", "POST", sessionData);
+      const data = await response.json() as { id: number };
 
-      this.currentSessionId = response.id;
-      return response.id;
+      this.currentSessionId = data.id;
+      return data.id;
     } catch (error) {
       console.warn("Failed to start analytics session:", error);
       return null;
@@ -44,15 +42,13 @@ export class AnalyticsTracker {
     if (!this.currentSessionId) return;
 
     try {
-      await apiRequest(`/api/analytics/session/${this.currentSessionId}`, {
-        method: "PUT",
-        body: JSON.stringify({
-          questionsAnswered,
-          correctAnswers,
-          finalScore,
-          completedAt: new Date().toISOString(),
-        }),
-      });
+      const updateData = {
+        questionsAnswered,
+        correctAnswers,
+        finalScore,
+        completedAt: new Date().toISOString(),
+      };
+      await apiRequest(`/api/analytics/session/${this.currentSessionId}`, "PUT", updateData);
     } catch (error) {
       console.warn("Failed to complete analytics session:", error);
     }
@@ -61,15 +57,13 @@ export class AnalyticsTracker {
   // Track ad interactions
   static async trackAdView(hauntId: string, adIndex: number): Promise<void> {
     try {
-      await apiRequest("/api/analytics/ad-interaction", {
-        method: "POST",
-        body: JSON.stringify({
-          sessionId: this.currentSessionId,
-          haunt: hauntId,
-          adIndex,
-          action: "view",
-        }),
-      });
+      const data = {
+        sessionId: this.currentSessionId,
+        haunt: hauntId,
+        adIndex,
+        action: "view",
+      };
+      await apiRequest("/api/analytics/ad-interaction", "POST", data);
     } catch (error) {
       console.warn("Failed to track ad view:", error);
     }
@@ -77,15 +71,13 @@ export class AnalyticsTracker {
 
   static async trackAdClick(hauntId: string, adIndex: number): Promise<void> {
     try {
-      await apiRequest("/api/analytics/ad-interaction", {
-        method: "POST",
-        body: JSON.stringify({
-          sessionId: this.currentSessionId,
-          haunt: hauntId,
-          adIndex,
-          action: "click",
-        }),
-      });
+      const data = {
+        sessionId: this.currentSessionId,
+        haunt: hauntId,
+        adIndex,
+        action: "click",
+      };
+      await apiRequest("/api/analytics/ad-interaction", "POST", data);
     } catch (error) {
       console.warn("Failed to track ad click:", error);
     }
@@ -100,17 +92,15 @@ export class AnalyticsTracker {
     timeToAnswer?: number
   ): Promise<void> {
     try {
-      await apiRequest("/api/analytics/question-performance", {
-        method: "POST",
-        body: JSON.stringify({
-          sessionId: this.currentSessionId,
-          haunt: hauntId,
-          questionText,
-          questionPack,
-          wasCorrect,
-          timeToAnswer: timeToAnswer || null,
-        }),
-      });
+      const data = {
+        sessionId: this.currentSessionId,
+        haunt: hauntId,
+        questionText,
+        questionPack,
+        wasCorrect,
+        timeToAnswer: timeToAnswer || null,
+      };
+      await apiRequest("/api/analytics/question-performance", "POST", data);
     } catch (error) {
       console.warn("Failed to track question performance:", error);
     }

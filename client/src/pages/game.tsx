@@ -9,6 +9,7 @@ import { SpookyLoader } from "@/components/SpookyLoader";
 import { MiniSpookyLoader } from "@/components/MiniSpookyLoader";
 import { ConfigLoader, getHauntFromURL } from "@/lib/configLoader";
 import { GameManager, type GameState } from "@/lib/gameState";
+import { AnalyticsTracker } from "@/lib/analytics";
 import { updateMetaThemeColor } from "@/lib/manifestGenerator";
 import { firestore } from "@/lib/firebase";
 import { doc, onSnapshot, updateDoc } from "firebase/firestore";
