@@ -96,9 +96,17 @@ export default function Info() {
       {/* Pricing Section */}
       <div className="py-16">
         <div className="max-w-6xl mx-auto px-4">
-          <h2 className="font-nosifer text-3xl sm:text-4xl text-orange-500 text-center mb-12">
-            Choose Your Level of Terror
-          </h2>
+          <div className="relative">
+            <h2 className="font-nosifer text-3xl sm:text-4xl text-orange-500 text-center mb-12">
+              Choose Your Level of Terror
+            </h2>
+            <div className="absolute -top-2 right-1/4 bg-gradient-to-r from-yellow-500 to-orange-500 text-black px-4 py-2 rounded-lg transform rotate-12 shadow-lg">
+              <span className="font-bold text-sm">🎃 Introductory Pricing!</span>
+            </div>
+          </div>
+          <p className="text-center text-yellow-400 text-sm mb-8 italic">
+            Honest pricing while we figure out operating costs! 🤷‍♂️
+          </p>
           <div className="grid md:grid-cols-3 gap-8">
             {/* Basic Tier */}
             <div className="bg-gradient-to-b from-gray-800 to-black border-2 border-gray-600 rounded-lg p-8 text-center">
