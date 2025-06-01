@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import express from "express";
 import { createServer, type Server } from "http";
-import { storage } from "./storage";
+import { FirebaseService } from "./firebase";
 import path from "path";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -88,7 +88,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { hauntId } = req.params;
       const { timeRange } = req.query;
       
-      const analyticsData = await storage.getAnalyticsData(hauntId, timeRange as string || '30d');
+      const analyticsData = await FirebaseService.getAnalyticsData(hauntId, timeRange as string || '30d');
       res.json(analyticsData);
     } catch (error) {
       console.error("Failed to get analytics data:", error);
@@ -99,7 +99,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // API routes for tracking analytics events
   app.post("/api/analytics/session", async (req, res) => {
     try {
-      const session = await storage.createGameSession(req.body);
+      const { hauntId, ...sessionData } = req.body;
+      const session = await FirebaseService.saveGameSession(hauntId, sessionData);
       res.json(session);
     } catch (error) {
       console.error("Failed to create game session:", error);
@@ -110,7 +111,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.put("/api/analytics/session/:sessionId", async (req, res) => {
     try {
       const { sessionId } = req.params;
-      await storage.updateGameSession(parseInt(sessionId), req.body);
+      await FirebaseService.updateGameSession(sessionId, req.body);
       res.json({ success: true });
     } catch (error) {
       console.error("Failed to update game session:", error);
@@ -120,7 +121,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/analytics/ad-interaction", async (req, res) => {
     try {
-      await storage.trackAdInteraction(req.body);
+      const { hauntId, ...interactionData } = req.body;
+      await FirebaseService.saveAdInteraction(hauntId, interactionData);
       res.json({ success: true });
     } catch (error) {
       console.error("Failed to track ad interaction:", error);
@@ -130,7 +132,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/analytics/question-performance", async (req, res) => {
     try {
-      await storage.trackQuestionPerformance(req.body);
+      const { hauntId, ...performanceData } = req.body;
+      await FirebaseService.saveQuestionPerformance(hauntId, performanceData);
       res.json({ success: true });
     } catch (error) {
       console.error("Failed to track question performance:", error);

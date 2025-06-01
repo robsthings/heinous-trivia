@@ -44,7 +44,10 @@ export { firestore };
 // Collection references
 export const COLLECTIONS = {
   HAUNTS: 'haunts',
-  LEADERBOARDS: 'leaderboards'
+  LEADERBOARDS: 'leaderboards',
+  GAME_SESSIONS: 'game_sessions',
+  AD_INTERACTIONS: 'ad_interactions',
+  QUESTION_PERFORMANCE: 'question_performance'
 } as const;
 
 // Helper functions for Firestore operations
@@ -111,5 +114,120 @@ export class FirebaseService {
       id: doc.id,
       ...doc.data()
     }));
+  }
+
+  // Analytics methods
+  static async saveGameSession(hauntId: string, sessionData: any) {
+    if (!firestore) {
+      throw new Error('Firebase not configured');
+    }
+    const docRef = await firestore.collection(COLLECTIONS.GAME_SESSIONS).add({
+      ...sessionData,
+      hauntId,
+      createdAt: new Date()
+    });
+    return { id: docRef.id, ...sessionData };
+  }
+
+  static async updateGameSession(sessionId: string, updates: any) {
+    if (!firestore) {
+      throw new Error('Firebase not configured');
+    }
+    await firestore.collection(COLLECTIONS.GAME_SESSIONS).doc(sessionId).update({
+      ...updates,
+      updatedAt: new Date()
+    });
+  }
+
+  static async saveAdInteraction(hauntId: string, interactionData: any) {
+    if (!firestore) {
+      throw new Error('Firebase not configured');
+    }
+    await firestore.collection(COLLECTIONS.AD_INTERACTIONS).add({
+      ...interactionData,
+      hauntId,
+      createdAt: new Date()
+    });
+  }
+
+  static async saveQuestionPerformance(hauntId: string, performanceData: any) {
+    if (!firestore) {
+      throw new Error('Firebase not configured');
+    }
+    await firestore.collection(COLLECTIONS.QUESTION_PERFORMANCE).add({
+      ...performanceData,
+      hauntId,
+      createdAt: new Date()
+    });
+  }
+
+  static async getAnalyticsData(hauntId: string, timeRange: string) {
+    if (!firestore) {
+      throw new Error('Firebase not configured');
+    }
+
+    const daysAgo = parseInt(timeRange.replace('d', ''));
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - daysAgo);
+
+    // Get game sessions
+    const sessionsSnapshot = await firestore
+      .collection(COLLECTIONS.GAME_SESSIONS)
+      .where('hauntId', '==', hauntId)
+      .where('createdAt', '>=', startDate)
+      .get();
+
+    const sessions = sessionsSnapshot.docs.map(doc => doc.data());
+
+    // Get ad interactions
+    const adSnapshot = await firestore
+      .collection(COLLECTIONS.AD_INTERACTIONS)
+      .where('hauntId', '==', hauntId)
+      .where('createdAt', '>=', startDate)
+      .get();
+
+    const adInteractions = adSnapshot.docs.map(doc => doc.data());
+
+    // Get question performance
+    const questionSnapshot = await firestore
+      .collection(COLLECTIONS.QUESTION_PERFORMANCE)
+      .where('hauntId', '==', hauntId)
+      .where('createdAt', '>=', startDate)
+      .get();
+
+    const questionData = questionSnapshot.docs.map(doc => doc.data());
+
+    // Calculate analytics
+    const totalGames = sessions.length;
+    const uniquePlayers = new Set(sessions.map(s => s.playerId)).size;
+    const completedSessions = sessions.filter(s => s.completedAt);
+    const returnPlayers = sessions.filter(s => 
+      sessions.some(other => other.playerId === s.playerId && other.createdAt < s.createdAt)
+    );
+
+    const adViews = adInteractions.filter(a => a.interactionType === 'view').length;
+    const adClicks = adInteractions.filter(a => a.interactionType === 'click').length;
+
+    const correctAnswers = questionData.filter(q => q.isCorrect).length;
+    const totalAnswers = questionData.length;
+
+    return {
+      totalGames,
+      uniquePlayers,
+      returnPlayerRate: uniquePlayers > 0 ? (returnPlayers.length / uniquePlayers) * 100 : 0,
+      adClickThrough: adViews > 0 ? (adClicks / adViews) * 100 : 0,
+      bestQuestions: [], // Would need more complex aggregation
+      competitiveMetrics: {
+        averageScore: completedSessions.length > 0 ? 
+          completedSessions.reduce((sum, s) => sum + (s.finalScore || 0), 0) / completedSessions.length : 0,
+        topScore: Math.max(...completedSessions.map(s => s.finalScore || 0), 0),
+        participationRate: totalAnswers > 0 ? (correctAnswers / totalAnswers) * 100 : 0
+      },
+      averageGroupSize: 1, // Would need group session tracking
+      timeRangeData: {
+        daily: [],
+        weekly: []
+      }
+    };
   }
 }
