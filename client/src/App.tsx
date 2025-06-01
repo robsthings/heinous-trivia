@@ -9,6 +9,7 @@ import Admin from "@/pages/admin";
 import HauntAdmin from "@/pages/haunt-admin";
 import HauntAuth from "@/pages/haunt-auth";
 import HostPanel from "@/pages/host-panel";
+import Analytics from "@/pages/analytics";
 import Privacy from "@/pages/privacy";
 import Terms from "@/pages/terms";
 import UploadGuidelines from "@/pages/upload-guidelines";

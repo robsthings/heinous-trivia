@@ -35,6 +35,39 @@ export const hauntConfigs = pgTable("haunt_configs", {
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
+export const gameSessions = pgTable("game_sessions", {
+  id: serial("id").primaryKey(),
+  playerId: text("player_id").notNull(), // UUID or identifier for player
+  haunt: text("haunt").notNull(),
+  sessionType: text("session_type").notNull(), // "individual" or "group"
+  groupId: text("group_id"), // for group sessions
+  questionsAnswered: integer("questions_answered").notNull(),
+  correctAnswers: integer("correct_answers").notNull(),
+  finalScore: integer("final_score").notNull(),
+  startedAt: timestamp("started_at").notNull().defaultNow(),
+  completedAt: timestamp("completed_at"),
+});
+
+export const adInteractions = pgTable("ad_interactions", {
+  id: serial("id").primaryKey(),
+  sessionId: integer("session_id").references(() => gameSessions.id),
+  haunt: text("haunt").notNull(),
+  adIndex: integer("ad_index").notNull(),
+  action: text("action").notNull(), // "view" or "click"
+  timestamp: timestamp("timestamp").notNull().defaultNow(),
+});
+
+export const questionPerformance = pgTable("question_performance", {
+  id: serial("id").primaryKey(),
+  sessionId: integer("session_id").references(() => gameSessions.id),
+  haunt: text("haunt").notNull(),
+  questionText: text("question_text").notNull(),
+  questionPack: text("question_pack").notNull(), // "basic", "advanced", "elite"
+  wasCorrect: boolean("was_correct").notNull(),
+  timeToAnswer: integer("time_to_answer"), // milliseconds
+  timestamp: timestamp("timestamp").notNull().defaultNow(),
+});
+
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
   password: true,
@@ -63,12 +96,45 @@ export const insertHauntConfigSchema = createInsertSchema(hauntConfigs).pick({
   themeData: true,
 });
 
+export const insertGameSessionSchema = createInsertSchema(gameSessions).pick({
+  playerId: true,
+  haunt: true,
+  sessionType: true,
+  groupId: true,
+  questionsAnswered: true,
+  correctAnswers: true,
+  finalScore: true,
+  completedAt: true,
+});
+
+export const insertAdInteractionSchema = createInsertSchema(adInteractions).pick({
+  sessionId: true,
+  haunt: true,
+  adIndex: true,
+  action: true,
+});
+
+export const insertQuestionPerformanceSchema = createInsertSchema(questionPerformance).pick({
+  sessionId: true,
+  haunt: true,
+  questionText: true,
+  questionPack: true,
+  wasCorrect: true,
+  timeToAnswer: true,
+});
+
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 export type InsertLeaderboardEntry = z.infer<typeof insertLeaderboardEntrySchema>;
 export type LeaderboardEntryDb = typeof leaderboardEntries.$inferSelect;
 export type InsertHauntConfig = z.infer<typeof insertHauntConfigSchema>;
 export type HauntConfigDb = typeof hauntConfigs.$inferSelect;
+export type InsertGameSession = z.infer<typeof insertGameSessionSchema>;
+export type GameSessionDb = typeof gameSessions.$inferSelect;
+export type InsertAdInteraction = z.infer<typeof insertAdInteractionSchema>;
+export type AdInteractionDb = typeof adInteractions.$inferSelect;
+export type InsertQuestionPerformance = z.infer<typeof insertQuestionPerformanceSchema>;
+export type QuestionPerformanceDb = typeof questionPerformance.$inferSelect;
 
 // Trivia game schemas
 export const triviaQuestionSchema = z.object({
