@@ -195,7 +195,7 @@ export default function Info() {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-4 md:mb-0">
               <h3 className="font-nosifer text-xl text-red-500">HEINOUS TRIVIA</h3>
-              <p className="text-gray-400 text-sm">Taking Over The World - Once Queue Line at a Time!</p>
+              <p className="text-gray-400 text-sm">Taking Over The World - One Queue Line at a Time!</p>
             </div>
             <div className="flex space-x-6 text-sm">
               <Link href="/privacy" className="text-gray-400 hover:text-white transition-colors">
