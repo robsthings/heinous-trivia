@@ -107,7 +107,7 @@ export default function Info() {
               <ul className="text-left space-y-3 mb-8 text-gray-300">
                 <li>✓ Up to 5 custom questions</li>
                 <li>✓ 3 branded ads maximum</li>
-                <li>✓ Basic horror themes</li>
+                <li>✓ Basic question packs</li>
                 <li>✓ Individual Player Mode</li>
                 <li>✓ Mobile-responsive design</li>
                 <li>✓ Player leaderboards</li>
@@ -126,7 +126,7 @@ export default function Info() {
               <ul className="text-left space-y-3 mb-8 text-gray-300">
                 <li>✓ Up to 15 custom questions</li>
                 <li>✓ 5 branded ads maximum</li>
-                <li>✓ Advanced horror themes</li>
+                <li>✓ Advanced question packs</li>
                 <li>✓ Custom branding & colors</li>
                 <li>✓ Individual Player Mode</li>
                 <li>✓ Group Party Mode</li>
@@ -144,7 +144,7 @@ export default function Info() {
               <ul className="text-left space-y-3 mb-8 text-gray-300">
                 <li>✓ Up to 50 custom questions</li>
                 <li>✓ 10 branded ads maximum</li>
-                <li>✓ Unlimited horror themes</li>
+                <li>✓ Elite question packs</li>
                 <li>✓ Custom branding & colors</li>
                 <li>✓ Individual Player Mode</li>
                 <li>✓ Group Party Mode</li>
