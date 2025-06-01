@@ -112,7 +112,7 @@ export default function Info() {
                 <li>✓ Player leaderboards</li>
                 <li>✓ Email support</li>
               </ul>
-              <p className="text-sm text-gray-400">Perfect for small venues and events</p>
+
             </div>
 
             {/* Pro Tier */}
@@ -131,7 +131,7 @@ export default function Info() {
                 <li>✓ Analytics dashboard</li>
                 <li>✓ Priority support</li>
               </ul>
-              <p className="text-sm text-gray-400">Ideal for bars, restaurants, and entertainment venues</p>
+
             </div>
 
             {/* Premium Tier */}
@@ -148,7 +148,7 @@ export default function Info() {
                 <li>✓ One additional Basic game</li>
                 <li>✓ Near white-label experience</li>
               </ul>
-              <p className="text-sm text-gray-400">Enterprise solution for large venues and franchises</p>
+
             </div>
           </div>
         </div>
