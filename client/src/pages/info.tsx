@@ -103,7 +103,7 @@ export default function Info() {
             {/* Basic Tier */}
             <div className="bg-gradient-to-b from-gray-800 to-black border-2 border-gray-600 rounded-lg p-8 text-center">
               <h3 className="font-nosifer text-2xl text-white mb-4">BASIC</h3>
-              <div className="text-4xl font-bold text-gray-300 mb-6">$99<span className="text-lg">/month</span></div>
+              <div className="text-4xl font-bold text-gray-300 mb-6">$99<span className="text-lg">/season</span></div>
               <ul className="text-left space-y-3 mb-8 text-gray-300">
                 <li>✓ Up to 5 custom questions</li>
                 <li>✓ 3 branded ads maximum</li>
@@ -121,7 +121,7 @@ export default function Info() {
                 MOST POPULAR
               </div>
               <h3 className="font-nosifer text-2xl text-red-400 mb-4">PRO</h3>
-              <div className="text-4xl font-bold text-white mb-6">$199<span className="text-lg">/month</span></div>
+              <div className="text-4xl font-bold text-white mb-6">$199<span className="text-lg">/season</span></div>
               <ul className="text-left space-y-3 mb-8 text-gray-300">
                 <li>✓ Up to 15 custom questions</li>
                 <li>✓ 5 branded ads maximum</li>
@@ -137,7 +137,7 @@ export default function Info() {
             {/* Premium Tier */}
             <div className="bg-gradient-to-b from-purple-900 to-black border-2 border-purple-500 rounded-lg p-8 text-center">
               <h3 className="font-nosifer text-2xl text-purple-400 mb-4">PREMIUM</h3>
-              <div className="text-4xl font-bold text-white mb-6">$399<span className="text-lg">/month</span></div>
+              <div className="text-4xl font-bold text-white mb-6">$399<span className="text-lg">/season</span></div>
               <ul className="text-left space-y-3 mb-8 text-gray-300">
                 <li>✓ Up to 50 custom questions</li>
                 <li>✓ 10 branded ads maximum</li>
