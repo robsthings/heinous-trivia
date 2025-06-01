@@ -17,8 +17,8 @@ export class AnalyticsTracker {
   static async startSession(hauntId: string, sessionType: 'individual' | 'group', groupId?: string): Promise<number | null> {
     try {
       const sessionData = {
+        hauntId,
         playerId: getPlayerId(),
-        haunt: hauntId,
         sessionType,
         groupId: groupId || null,
         questionsAnswered: 0,
