@@ -2,6 +2,7 @@ import type { Express } from "express";
 import express from "express";
 import { createServer, type Server } from "http";
 import { FirebaseService } from "./firebase";
+import { hauntConfigSchema, leaderboardEntrySchema } from "@shared/schema";
 import path from "path";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -10,70 +11,61 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.sendFile(path.resolve(process.cwd(), "client", "public", "launcher.html"));
   });
 
-  // Serve static files from client/public directory
-  app.use("/", express.static(path.resolve(process.cwd(), "client", "public")));
-
-
-
-  // API route to save leaderboard entry
-  app.post("/api/leaderboard", async (req, res) => {
+  // Save leaderboard entry
+  app.post("/api/leaderboard/:hauntId", async (req, res) => {
     try {
-      const entry = req.body;
-      const savedEntry = await storage.saveLeaderboardEntry(entry);
-      res.json(savedEntry);
+      const { hauntId } = req.params;
+      const entryData = leaderboardEntrySchema.parse(req.body);
+      
+      const entry = await FirebaseService.saveLeaderboardEntry(hauntId, entryData);
+      res.json(entry);
     } catch (error) {
-      console.error("Failed to save leaderboard entry:", error);
+      console.error("Error saving leaderboard entry:", error);
       res.status(500).json({ error: "Failed to save leaderboard entry" });
     }
   });
 
-  // API route to get leaderboard (hybrid: Firebase + PostgreSQL)
-  app.get("/api/leaderboard/:hauntId?", async (req, res) => {
+  // Get leaderboard
+  app.get("/api/leaderboard/:hauntId", async (req, res) => {
     try {
       const { hauntId } = req.params;
-      
-      // Get entries from both sources
-      const dbEntries = await storage.getLeaderboard(hauntId);
-      
-      let firebaseEntries = [];
-      try {
-        if (hauntId) {
-          const { FirebaseService } = await import("./firebase");
-          firebaseEntries = await FirebaseService.getLeaderboard(hauntId);
-        }
-      } catch (firebaseError) {
-        console.log("Firebase unavailable for leaderboard");
-      }
-      
-      // Combine and sort entries
-      const allEntries = [...dbEntries, ...firebaseEntries]
-        .sort((a, b) => b.score - a.score)
-        .slice(0, 10);
-      
-      res.json(allEntries);
+      const leaderboard = await FirebaseService.getLeaderboard(hauntId);
+      res.json(leaderboard);
     } catch (error) {
-      console.error("Failed to get leaderboard:", error);
-      res.status(500).json({ error: "Failed to get leaderboard" });
+      console.error("Error fetching leaderboard:", error);
+      res.status(500).json({ error: "Failed to fetch leaderboard" });
     }
   });
 
-  // API route to save haunt configuration to Firebase
-  app.post("/api/haunt/:hauntId", async (req, res) => {
+  // Get haunt configuration
+  app.get("/api/haunt-config/:hauntId", async (req, res) => {
     try {
       const { hauntId } = req.params;
-      const config = req.body;
-      const savedConfig = await storage.saveHauntConfig(hauntId, config);
-      res.json(savedConfig);
+      const config = await FirebaseService.getHauntConfig(hauntId);
+      res.json(config);
     } catch (error) {
-      console.error("Failed to save haunt configuration:", error);
-      res.status(500).json({ error: "Failed to save haunt configuration" });
+      console.error("Error fetching haunt config:", error);
+      res.status(500).json({ error: "Failed to fetch configuration" });
     }
   });
 
-  // API route to get all haunts
+  // Save haunt configuration
+  app.post("/api/haunt-config/:hauntId", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      const config = hauntConfigSchema.parse(req.body);
+      
+      await FirebaseService.saveHauntConfig(hauntId, config);
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error saving haunt config:", error);
+      res.status(500).json({ error: "Failed to save configuration" });
+    }
+  });
+
+  // Get all haunts
   app.get("/api/haunts", async (req, res) => {
     try {
-      const { FirebaseService } = await import("./firebase");
       const haunts = await FirebaseService.getAllHaunts();
       res.json(haunts);
     } catch (error) {
@@ -93,6 +85,41 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Failed to get analytics data:", error);
       res.status(500).json({ error: "Failed to get analytics data" });
+    }
+  });
+
+  // Global analytics for admin panel
+  app.get("/api/admin/analytics", async (req, res) => {
+    try {
+      const { timeRange } = req.query;
+      const haunts = await FirebaseService.getAllHaunts();
+      
+      const globalAnalytics = {
+        totalHaunts: haunts.length,
+        proHaunts: haunts.filter(h => h.tier === 'pro').length,
+        premiumHaunts: haunts.filter(h => h.tier === 'premium').length,
+        hauntBreakdown: []
+      };
+
+      // Get analytics for each haunt
+      for (const haunt of haunts) {
+        try {
+          const hauntAnalytics = await FirebaseService.getAnalyticsData(haunt.id, timeRange as string || '30d');
+          globalAnalytics.hauntBreakdown.push({
+            hauntId: haunt.id,
+            name: haunt.name || haunt.id,
+            tier: haunt.tier || 'basic',
+            ...hauntAnalytics
+          });
+        } catch (error) {
+          console.warn(`Failed to get analytics for haunt ${haunt.id}:`, error);
+        }
+      }
+
+      res.json(globalAnalytics);
+    } catch (error) {
+      console.error("Failed to get global analytics:", error);
+      res.status(500).json({ error: "Failed to get global analytics" });
     }
   });
 
@@ -145,7 +172,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/manifest/:hauntId", async (req, res) => {
     try {
       const { hauntId } = req.params;
-      const config = await storage.getHauntConfig(hauntId);
+      const config = await FirebaseService.getHauntConfig(hauntId);
       
       const manifest = {
         name: config?.name || "Heinous Trivia",
