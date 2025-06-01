@@ -108,6 +108,7 @@ export default function Info() {
                 <li>✓ Up to 5 custom questions</li>
                 <li>✓ 3 branded ads maximum</li>
                 <li>✓ Basic horror themes</li>
+                <li>✓ Individual Player Mode</li>
                 <li>✓ Mobile-responsive design</li>
                 <li>✓ Player leaderboards</li>
                 <li>✓ Email support</li>
@@ -127,6 +128,7 @@ export default function Info() {
                 <li>✓ 5 branded ads maximum</li>
                 <li>✓ Advanced horror themes</li>
                 <li>✓ Custom branding & colors</li>
+                <li>✓ Individual Player Mode</li>
                 <li>✓ Group Party Mode</li>
                 <li>✓ Real-time multiplayer</li>
                 <li>✓ Analytics dashboard</li>
@@ -144,6 +146,7 @@ export default function Info() {
                 <li>✓ 10 branded ads maximum</li>
                 <li>✓ Unlimited horror themes</li>
                 <li>✓ Complete white-label solution</li>
+                <li>✓ Individual Player Mode</li>
                 <li>✓ Group Party Mode</li>
                 <li>✓ Advanced multiplayer features</li>
                 <li>✓ Custom integrations</li>
