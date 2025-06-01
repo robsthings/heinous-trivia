@@ -5,13 +5,13 @@ import { storage } from "./storage";
 import path from "path";
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Serve static files from client/public directory
-  app.use("/", express.static(path.resolve(process.cwd(), "client", "public")));
-
-  // Specific route for launcher (without .html extension)
+  // Specific route for launcher (without .html extension) - must come before static serving
   app.get("/launcher", (req, res) => {
     res.sendFile(path.resolve(process.cwd(), "client", "public", "launcher.html"));
   });
+
+  // Serve static files from client/public directory
+  app.use("/", express.static(path.resolve(process.cwd(), "client", "public")));
 
 
 
