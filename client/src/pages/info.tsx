@@ -145,8 +145,10 @@ export default function Info() {
                 <li>✓ Up to 50 custom questions</li>
                 <li>✓ 10 branded ads maximum</li>
                 <li>✓ Unlimited horror themes</li>
+                <li>✓ Custom branding & colors</li>
                 <li>✓ Individual Player Mode</li>
                 <li>✓ Group Party Mode</li>
+                <li>✓ Analytics dashboard</li>
                 <li>✓ One additional Basic game</li>
                 <li>✓ Near white-label experience</li>
                 <li>✓ Priority support</li>
