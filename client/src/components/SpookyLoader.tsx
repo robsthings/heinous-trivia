@@ -3,11 +3,13 @@ import { useState, useEffect } from "react";
 interface SpookyLoaderProps {
   message?: string;
   showProgress?: boolean;
+  hauntConfig?: any;
 }
 
 export function SpookyLoader({ 
   message = "Summoning the Spirits...", 
-  showProgress = false 
+  showProgress = false,
+  hauntConfig 
 }: SpookyLoaderProps) {
   const [dots, setDots] = useState("...");
   const [progress, setProgress] = useState(0);
@@ -80,12 +82,26 @@ export function SpookyLoader({
 
       {/* Main loader */}
       <div className="glass-card rounded-xl p-8 text-center max-w-md w-full mx-4 relative z-10">
-        {/* Pulsing skull icon with spooky effects */}
+        {/* Haunt Logo or Default Icons */}
         <div className="mb-6 relative">
-          <div className="text-6xl animate-pulse transform hover:scale-110 transition-transform duration-300">💀</div>
-          <div className="absolute inset-0 text-6xl animate-ping opacity-30">👻</div>
-          <div className="absolute -inset-4 border border-red-500/20 rounded-full animate-pulse"></div>
-          <div className="absolute -inset-8 border border-orange-500/10 rounded-full animate-ping"></div>
+          {hauntConfig?.logoPath ? (
+            <div className="relative">
+              <img 
+                src={hauntConfig.logoPath} 
+                alt={hauntConfig.name || "Haunt Logo"}
+                className="w-24 h-24 mx-auto object-contain animate-pulse"
+              />
+              <div className="absolute -inset-4 border border-red-500/20 rounded-full animate-pulse"></div>
+              <div className="absolute -inset-8 border border-orange-500/10 rounded-full animate-ping"></div>
+            </div>
+          ) : (
+            <div>
+              <div className="text-6xl animate-pulse transform hover:scale-110 transition-transform duration-300">💀</div>
+              <div className="absolute inset-0 text-6xl animate-ping opacity-30">👻</div>
+              <div className="absolute -inset-4 border border-red-500/20 rounded-full animate-pulse"></div>
+              <div className="absolute -inset-8 border border-orange-500/10 rounded-full animate-ping"></div>
+            </div>
+          )}
         </div>
 
         {/* Loading text */}

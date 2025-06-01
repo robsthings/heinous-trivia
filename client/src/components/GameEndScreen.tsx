@@ -48,6 +48,16 @@ export function GameEndScreen({
     <div className="fixed inset-0 bg-black bg-opacity-95 flex items-center justify-center p-3 sm:p-4 z-50">
       <div className="glass-card rounded-xl p-4 sm:p-6 max-w-sm sm:max-w-md w-full animate-fade-in max-h-[90vh] overflow-y-auto">
         <div className="text-center">
+          {/* Haunt Logo */}
+          {gameState.hauntConfig?.logoPath && (
+            <div className="mb-6">
+              <img 
+                src={gameState.hauntConfig.logoPath} 
+                alt={gameState.hauntConfig.name || "Haunt Logo"}
+                className="w-24 h-24 mx-auto object-contain"
+              />
+            </div>
+          )}
           <h2 className="font-creepster text-2xl sm:text-3xl text-orange-500 mb-2">Game Over</h2>
           <p className="text-gray-300 mb-4 sm:mb-6 text-sm sm:text-base">Dr. Heinous is pleased with your performance...</p>
           

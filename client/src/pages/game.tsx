@@ -249,7 +249,7 @@ export default function Game() {
   };
 
   if (isLoading) {
-    return <SpookyLoader message="Loading your horror trivia experience" showProgress={true} />;
+    return <SpookyLoader message="Loading your horror trivia experience" showProgress={true} hauntConfig={gameState.hauntConfig} />;
   }
 
   if (error) {
