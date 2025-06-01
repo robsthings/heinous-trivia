@@ -96,14 +96,9 @@ export default function Info() {
       {/* Pricing Section */}
       <div className="py-16">
         <div className="max-w-6xl mx-auto px-4">
-          <div className="relative">
-            <h2 className="font-nosifer text-3xl sm:text-4xl text-orange-500 text-center mb-12">
-              Choose Your Level of Terror
-            </h2>
-            <div className="absolute -top-2 right-1/4 bg-gradient-to-r from-yellow-500 to-orange-500 text-black px-4 py-2 rounded-lg transform rotate-12 shadow-lg">
-              <span className="font-bold text-sm">🎃 Introductory Pricing!</span>
-            </div>
-          </div>
+          <h2 className="font-nosifer text-3xl sm:text-4xl text-orange-500 text-center mb-12">
+            Choose Your Level of Terror
+          </h2>
 
           <div className="grid md:grid-cols-3 gap-8">
             {/* Basic Tier */}
@@ -160,6 +155,13 @@ export default function Info() {
                 <li>✓ Priority support</li>
               </ul>
 
+            </div>
+          </div>
+          
+          {/* Introductory Pricing Sticker */}
+          <div className="flex justify-center mt-8">
+            <div className="bg-gradient-to-r from-yellow-500 to-orange-500 text-black px-4 py-2 rounded-lg transform -rotate-6 shadow-lg">
+              <span className="font-bold text-sm">🎃 Introductory Pricing!</span>
             </div>
           </div>
         </div>
