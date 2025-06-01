@@ -149,6 +149,7 @@ export default function Info() {
                 <li>✓ Group Party Mode</li>
                 <li>✓ One additional Basic game</li>
                 <li>✓ Near white-label experience</li>
+                <li>✓ Priority support</li>
               </ul>
 
             </div>
