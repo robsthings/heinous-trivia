@@ -50,8 +50,13 @@ app.use((req, res, next) => {
 });
 
 (async () => {
-  // Add launcher route before other routes to ensure it takes priority
+  // Add launcher routes before other routes to ensure they take priority
   app.get("/launcher", (req, res) => {
+    res.sendFile(path.resolve(process.cwd(), "client", "public", "launcher.html"));
+  });
+
+  // Haunt-specific launcher route
+  app.get("/launcher/:hauntId", (req, res) => {
     res.sendFile(path.resolve(process.cwd(), "client", "public", "launcher.html"));
   });
 

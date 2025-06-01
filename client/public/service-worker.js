@@ -8,6 +8,7 @@ self.addEventListener('install', event => {
         '/',
         '/index.html',
         '/manifest.json',
+        '/launcher.html',
       ]);
     })
   );

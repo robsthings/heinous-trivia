@@ -138,6 +138,61 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Dynamic manifest generation for PWA
+  app.get("/api/manifest/:hauntId", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      const config = await storage.getHauntConfig(hauntId);
+      
+      const manifest = {
+        name: config?.name || "Heinous Trivia",
+        short_name: config?.name || "Heinous",
+        description: config?.description || "Horror-themed trivia game hosted by the villainous Dr. Heinous",
+        theme_color: config?.theme?.primaryColor || "#8B0000",
+        background_color: "#0A0A0A",
+        display: "standalone",
+        scope: "/",
+        start_url: `/launcher/${hauntId}`,
+        orientation: "portrait-primary",
+        categories: ["games", "entertainment", "trivia"],
+        icons: [
+          {
+            src: "/icons/icon-128.png",
+            sizes: "128x128",
+            type: "image/png",
+            purpose: "any maskable"
+          },
+          {
+            src: "/icons/icon-192.png",
+            sizes: "192x192",
+            type: "image/png",
+            purpose: "any maskable"
+          },
+          {
+            src: "/icons/icon-512.png",
+            sizes: "512x512",
+            type: "image/png",
+            purpose: "any maskable"
+          }
+        ],
+        screenshots: [
+          {
+            src: "/icons/icon-512.png",
+            sizes: "512x512",
+            type: "image/png",
+            form_factor: "narrow"
+          }
+        ]
+      };
+
+      res.setHeader('Content-Type', 'application/manifest+json');
+      res.json(manifest);
+    } catch (error) {
+      console.error("Error generating manifest:", error);
+      res.status(500).json({ error: "Failed to generate manifest" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
