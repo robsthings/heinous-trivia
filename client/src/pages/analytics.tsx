@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useRoute } from "wouter";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -28,8 +29,9 @@ interface AnalyticsData {
 }
 
 export default function Analytics() {
+  const [, params] = useRoute("/analytics/:hauntId");
   const [timeRange, setTimeRange] = useState<"7d" | "30d" | "90d">("30d");
-  const [hauntId, setHauntId] = useState<string>("headquarters"); // Default haunt
+  const hauntId = params?.hauntId || "headquarters";
 
   const { data: analyticsData, isLoading } = useQuery<AnalyticsData>({
     queryKey: ["/api/analytics", hauntId, timeRange],

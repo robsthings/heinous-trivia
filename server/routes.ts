@@ -82,6 +82,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // API route to get analytics data (Pro/Premium feature)
+  app.get("/api/analytics/:hauntId", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      const { timeRange } = req.query;
+      
+      // For now, return structure with zero values until data collection is implemented
+      // This shows the dashboard structure for Pro/Premium members
+      const analyticsData = {
+        totalGames: 0,
+        uniquePlayers: 0,
+        returnPlayerRate: 0,
+        adClickThrough: 0,
+        bestQuestions: [],
+        competitiveMetrics: {
+          averageScore: 0,
+          topScore: 0,
+          participationRate: 0,
+        },
+        averageGroupSize: 0,
+        timeRangeData: {
+          daily: [],
+          weekly: [],
+        },
+      };
+      
+      res.json(analyticsData);
+    } catch (error) {
+      console.error("Failed to get analytics data:", error);
+      res.status(500).json({ error: "Failed to get analytics data" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

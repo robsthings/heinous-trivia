@@ -794,6 +794,17 @@ export default function HauntAdmin() {
             >
               🛠️ Unbreak Me!
             </Button>
+            {(hauntConfig.tier === 'pro' || hauntConfig.tier === 'premium') && (
+              <Button
+                onClick={() => setLocation(`/analytics/${hauntId}`)}
+                variant="outline"
+                size="sm"
+                className="border-purple-500 text-purple-400 hover:bg-purple-500 hover:text-white bg-black/50"
+                title="View detailed analytics and performance metrics"
+              >
+                📊 Analytics
+              </Button>
+            )}
           </div>
         </div>
 
