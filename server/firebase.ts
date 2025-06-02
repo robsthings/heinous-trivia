@@ -4,9 +4,8 @@ import { getFirestore } from 'firebase-admin/firestore';
 // Check if Firebase is properly configured
 const isFirebaseConfigured = () => {
   return !!(
-    process.env.VITE_FIREBASE_PROJECT_ID &&
-    process.env.FIREBASE_PRIVATE_KEY &&
-    process.env.FIREBASE_CLIENT_EMAIL
+    process.env.FIREBASE_SERVICE_ACCOUNT_JSON || 
+    (process.env.VITE_FIREBASE_PROJECT_ID && process.env.FIREBASE_PRIVATE_KEY && process.env.FIREBASE_CLIENT_EMAIL)
   );
 };
 
@@ -17,12 +16,30 @@ let firestore;
 if (isFirebaseConfigured()) {
   try {
     if (getApps().length === 0) {
-      firebaseApp = initializeApp({
-        credential: cert({
+      let credential;
+      
+      // Try using the complete JSON service account first
+      if (process.env.FIREBASE_SERVICE_ACCOUNT_JSON) {
+        const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_JSON);
+        credential = cert(serviceAccount);
+      } else {
+        // Fall back to individual environment variables
+        let privateKey = process.env.FIREBASE_PRIVATE_KEY;
+        if (privateKey) {
+          privateKey = privateKey.replace(/^["']|["']$/g, '');
+          privateKey = privateKey.replace(/\\n/g, '\n');
+          privateKey = privateKey.trim();
+        }
+        
+        credential = cert({
           projectId: process.env.VITE_FIREBASE_PROJECT_ID,
-          privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+          privateKey: privateKey,
           clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-        }),
+        });
+      }
+
+      firebaseApp = initializeApp({
+        credential: credential,
         databaseURL: `https://${process.env.VITE_FIREBASE_PROJECT_ID}-default-rtdb.firebaseio.com/`
       });
     } else {
@@ -31,7 +48,7 @@ if (isFirebaseConfigured()) {
     firestore = getFirestore(firebaseApp);
     console.log('Firebase Admin SDK initialized successfully');
   } catch (error) {
-    console.warn('Firebase initialization failed:', error.message);
+    console.error('Firebase initialization failed:', error);
     firestore = null;
   }
 } else {
@@ -199,16 +216,16 @@ export class FirebaseService {
 
     // Calculate analytics
     const totalGames = sessions.length;
-    const uniquePlayers = new Set(sessions.map(s => s.playerId)).size;
-    const completedSessions = sessions.filter(s => s.completedAt);
-    const returnPlayers = sessions.filter(s => 
-      sessions.some(other => other.playerId === s.playerId && other.createdAt < s.createdAt)
+    const uniquePlayers = new Set(sessions.map((s: any) => s.playerId)).size;
+    const completedSessions = sessions.filter((s: any) => s.completedAt);
+    const returnPlayers = sessions.filter((s: any) => 
+      sessions.some((other: any) => other.playerId === s.playerId && other.createdAt < s.createdAt)
     );
 
-    const adViews = adInteractions.filter(a => a.interactionType === 'view').length;
-    const adClicks = adInteractions.filter(a => a.interactionType === 'click').length;
+    const adViews = adInteractions.filter((a: any) => a.interactionType === 'view').length;
+    const adClicks = adInteractions.filter((a: any) => a.interactionType === 'click').length;
 
-    const correctAnswers = questionData.filter(q => q.isCorrect).length;
+    const correctAnswers = questionData.filter((q: any) => q.isCorrect).length;
     const totalAnswers = questionData.length;
 
     return {
@@ -219,8 +236,8 @@ export class FirebaseService {
       bestQuestions: [], // Would need more complex aggregation
       competitiveMetrics: {
         averageScore: completedSessions.length > 0 ? 
-          completedSessions.reduce((sum, s) => sum + (s.finalScore || 0), 0) / completedSessions.length : 0,
-        topScore: Math.max(...completedSessions.map(s => s.finalScore || 0), 0),
+          completedSessions.reduce((sum: number, s: any) => sum + (s.finalScore || 0), 0) / completedSessions.length : 0,
+        topScore: Math.max(...completedSessions.map((s: any) => s.finalScore || 0), 0),
         participationRate: totalAnswers > 0 ? (correctAnswers / totalAnswers) * 100 : 0
       },
       averageGroupSize: 1, // Would need group session tracking
