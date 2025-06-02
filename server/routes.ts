@@ -4,11 +4,69 @@ import { createServer, type Server } from "http";
 import { FirebaseService } from "./firebase";
 import { hauntConfigSchema, leaderboardEntrySchema } from "@shared/schema";
 import path from "path";
+import multer from "multer";
+import fs from "fs/promises";
+
+// Configure multer for file uploads
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: async (req, file, cb) => {
+      const hauntId = req.body.hauntId;
+      const uploadDir = path.resolve(process.cwd(), "client", "public", "haunt-assets", hauntId);
+      
+      try {
+        await fs.mkdir(uploadDir, { recursive: true });
+        cb(null, uploadDir);
+      } catch (error) {
+        cb(error as Error | null, uploadDir);
+      }
+    },
+    filename: (req, file, cb) => {
+      const ext = path.extname(file.originalname);
+      cb(null, `bg${ext}`);
+    }
+  }),
+  limits: {
+    fileSize: 5 * 1024 * 1024 // 5MB limit
+  },
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith('image/')) {
+      cb(null, true);
+    } else {
+      cb(new Error('Only image files are allowed'));
+    }
+  }
+});
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Specific route for launcher (without .html extension) - must come before static serving
   app.get("/launcher", (req, res) => {
     res.sendFile(path.resolve(process.cwd(), "client", "public", "launcher.html"));
+  });
+
+  // Upload background image for haunt
+  app.post("/api/upload-background", upload.single('background'), async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ error: "No file uploaded" });
+      }
+
+      const hauntId = req.body.hauntId;
+      if (!hauntId) {
+        return res.status(400).json({ error: "Haunt ID is required" });
+      }
+
+      const relativePath = `/haunt-assets/${hauntId}/bg${path.extname(req.file.originalname)}`;
+      
+      res.json({ 
+        success: true, 
+        path: relativePath,
+        message: "Background uploaded successfully"
+      });
+    } catch (error) {
+      console.error("Error uploading background:", error);
+      res.status(500).json({ error: "Failed to upload background" });
+    }
   });
 
   // Save leaderboard entry
@@ -150,25 +208,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { timeRange } = req.query;
       const haunts = await FirebaseService.getAllHaunts();
       
-      const globalAnalytics = {
+      const globalAnalytics: {
+        totalHaunts: number;
+        proHaunts: number;
+        premiumHaunts: number;
+        hauntBreakdown: any[];
+      } = {
         totalHaunts: haunts.length,
-        proHaunts: haunts.filter(h => h.tier === 'pro').length,
-        premiumHaunts: haunts.filter(h => h.tier === 'premium').length,
+        proHaunts: haunts.filter((h: any) => h.tier === 'pro').length,
+        premiumHaunts: haunts.filter((h: any) => h.tier === 'premium').length,
         hauntBreakdown: []
       };
 
       // Get analytics for each haunt
       for (const haunt of haunts) {
         try {
-          const hauntAnalytics = await FirebaseService.getAnalyticsData(haunt.id, timeRange as string || '30d');
+          const hauntAnalytics = await FirebaseService.getAnalyticsData((haunt as any).id, timeRange as string || '30d');
           globalAnalytics.hauntBreakdown.push({
-            hauntId: haunt.id,
-            name: haunt.name || haunt.id,
-            tier: haunt.tier || 'basic',
+            hauntId: (haunt as any).id,
+            name: (haunt as any).name || (haunt as any).id,
+            tier: (haunt as any).tier || 'basic',
             ...hauntAnalytics
           });
         } catch (error) {
-          console.warn(`Failed to get analytics for haunt ${haunt.id}:`, error);
+          console.warn(`Failed to get analytics for haunt ${(haunt as any).id}:`, error);
         }
       }
 
