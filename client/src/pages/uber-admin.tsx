@@ -53,6 +53,7 @@ export default function UberAdmin() {
     const fetchGlobalAnalytics = async () => {
       try {
         setIsLoading(true);
+        console.log('🔍 Fetching analytics...');
         const response = await fetch(`/api/admin/analytics?timeRange=${timeRange}`);
         
         if (!response.ok) {
@@ -60,13 +61,16 @@ export default function UberAdmin() {
         }
         
         const data = await response.json();
+        console.log('📊 Analytics data:', data);
         setAnalytics(data);
         
         // Load haunt configurations - get all haunts directly for the skins editor
         try {
+          console.log('🏚️ Fetching haunts...');
           const hauntsResponse = await fetch('/api/haunts');
           if (hauntsResponse.ok) {
             const allHaunts = await hauntsResponse.json();
+            console.log('🏚️ Haunts data:', allHaunts);
             const configs: Record<string, HauntConfig> = {};
             
             for (const haunt of allHaunts) {
@@ -89,6 +93,7 @@ export default function UberAdmin() {
                 };
               }
             }
+            console.log('⚙️ Haunt configs:', configs);
             setHauntConfigs(configs);
             
             // Set first haunt as selected if none selected
