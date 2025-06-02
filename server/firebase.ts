@@ -4,8 +4,9 @@ import { getFirestore } from 'firebase-admin/firestore';
 // Check if Firebase is properly configured
 const isFirebaseConfigured = () => {
   return !!(
-    process.env.FIREBASE_SERVICE_ACCOUNT_JSON || 
-    (process.env.VITE_FIREBASE_PROJECT_ID && process.env.FIREBASE_PRIVATE_KEY && process.env.FIREBASE_CLIENT_EMAIL)
+    process.env.VITE_FIREBASE_PROJECT_ID && 
+    process.env.FIREBASE_PRIVATE_KEY && 
+    process.env.FIREBASE_CLIENT_EMAIL
   );
 };
 
@@ -18,25 +19,19 @@ if (isFirebaseConfigured()) {
     if (getApps().length === 0) {
       let credential;
       
-      // Try using the complete JSON service account first
-      if (process.env.FIREBASE_SERVICE_ACCOUNT_JSON) {
-        const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_JSON);
-        credential = cert(serviceAccount);
-      } else {
-        // Fall back to individual environment variables
-        let privateKey = process.env.FIREBASE_PRIVATE_KEY;
-        if (privateKey) {
-          privateKey = privateKey.replace(/^["']|["']$/g, '');
-          privateKey = privateKey.replace(/\\n/g, '\n');
-          privateKey = privateKey.trim();
-        }
-        
-        credential = cert({
-          projectId: process.env.VITE_FIREBASE_PROJECT_ID,
-          privateKey: privateKey,
-          clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-        });
+      // Use individual environment variables (original working setup)
+      let privateKey = process.env.FIREBASE_PRIVATE_KEY;
+      if (privateKey) {
+        privateKey = privateKey.replace(/^["']|["']$/g, '');
+        privateKey = privateKey.replace(/\\n/g, '\n');
+        privateKey = privateKey.trim();
       }
+      
+      credential = cert({
+        projectId: process.env.VITE_FIREBASE_PROJECT_ID,
+        privateKey: privateKey,
+        clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+      });
 
       firebaseApp = initializeApp({
         credential: credential,
