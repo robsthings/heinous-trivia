@@ -62,20 +62,42 @@ export default function UberAdmin() {
         const data = await response.json();
         setAnalytics(data);
         
-        // Load haunt configurations
-        if (data.hauntBreakdown) {
-          const configs: Record<string, HauntConfig> = {};
-          for (const haunt of data.hauntBreakdown) {
-            try {
-              const configResponse = await fetch(`/api/haunt-config/${haunt.hauntId}`);
-              if (configResponse.ok) {
-                configs[haunt.hauntId] = await configResponse.json();
+        // Load haunt configurations - get all haunts directly for the skins editor
+        try {
+          const hauntsResponse = await fetch('/api/haunts');
+          if (hauntsResponse.ok) {
+            const allHaunts = await hauntsResponse.json();
+            const configs: Record<string, HauntConfig> = {};
+            
+            for (const haunt of allHaunts) {
+              try {
+                const configResponse = await fetch(`/api/haunt-config/${haunt.id}`);
+                if (configResponse.ok) {
+                  configs[haunt.id] = await configResponse.json();
+                } else {
+                  // Create basic config if none exists
+                  configs[haunt.id] = {
+                    name: haunt.name || haunt.id,
+                    tier: haunt.tier || 'basic'
+                  };
+                }
+              } catch (error) {
+                console.error(`Failed to load config for ${haunt.id}:`, error);
+                configs[haunt.id] = {
+                  name: haunt.name || haunt.id,
+                  tier: haunt.tier || 'basic'
+                };
               }
-            } catch (error) {
-              console.error(`Failed to load config for ${haunt.hauntId}:`, error);
+            }
+            setHauntConfigs(configs);
+            
+            // Set first haunt as selected if none selected
+            if (!selectedHaunt && allHaunts.length > 0) {
+              setSelectedHaunt(allHaunts[0].id);
             }
           }
-          setHauntConfigs(configs);
+        } catch (error) {
+          console.error('Failed to load haunts for skins editor:', error);
         }
       } catch (error) {
         console.error("Failed to load global analytics:", error);
@@ -406,20 +428,20 @@ export default function UberAdmin() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2">
-                    {analytics?.hauntBreakdown.map((haunt) => (
+                    {Object.entries(hauntConfigs).map(([hauntId, config]) => (
                       <Button
-                        key={haunt.hauntId}
-                        variant={selectedHaunt === haunt.hauntId ? "default" : "outline"}
+                        key={hauntId}
+                        variant={selectedHaunt === hauntId ? "default" : "outline"}
                         className={`w-full justify-start ${
-                          selectedHaunt === haunt.hauntId 
+                          selectedHaunt === hauntId 
                             ? "bg-purple-600 hover:bg-purple-700" 
                             : "border-slate-600 text-gray-300 hover:bg-slate-700"
                         }`}
-                        onClick={() => setSelectedHaunt(haunt.hauntId)}
+                        onClick={() => setSelectedHaunt(hauntId)}
                       >
                         <div className="flex flex-col items-start">
-                          <span className="font-medium">{haunt.name}</span>
-                          <span className="text-xs opacity-70">{haunt.hauntId}</span>
+                          <span className="font-medium">{config.name}</span>
+                          <span className="text-xs opacity-70">{hauntId}</span>
                         </div>
                       </Button>
                     ))}
