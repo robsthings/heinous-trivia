@@ -1,0 +1,4983 @@
+🔧 Firebase config: {hasApiKey: true, hasProjectId: true, hasAppId: true, projectId: ' heinous-trivia'}
+index-Ds9TBhg4.js:3626 🔥 Firebase app initialized
+index-Ds9TBhg4.js:3666 Attempting anonymous authentication...
+index-Ds9TBhg4.js:3666 Authentication successful: di {providerId: 'firebase', proactiveRefresh: TJ, reloadUserInfo: {…}, reloadListener: null, uid: 'RQe8OZbJj1MGjl3H0vn25oyZAqQ2', …}
+index-Ds9TBhg4.js:3666 Loading haunts with user: RQe8OZbJj1MGjl3H0vn25oyZAqQ2
+index-Ds9TBhg4.js:616 
+            
+            
+           GET https://firestore.googleapis.com/google.firestore.v1.Firestore/Listen/channel?gsessionid=4wG1V9XvNrqcYCyTVHwL8T_FJZ1uK5t6XDSvrbtFozQ&VER=8&database=projects%2F%20heinous-trivia%2Fdatabases%2F(default)&RID=rpc&SID=lWMY-QTvdz6End89GGu7-g&AID=0&CI=0&TYPE=xmlhttp&zx=1zcrlm2hztqr&t=1 400 (Bad Request)
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+K4 @ index-Ds9TBhg4.js:1888
+n3 @ index-Ds9TBhg4.js:1966
+await in n3
+MY @ index-Ds9TBhg4.js:1966
+rT @ index-Ds9TBhg4.js:1951
+(anonymous) @ index-Ds9TBhg4.js:2011
+(anonymous) @ index-Ds9TBhg4.js:2011
+await in (anonymous)
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+ZY @ index-Ds9TBhg4.js:2011
+rr @ index-Ds9TBhg4.js:2282
+b @ index-Ds9TBhg4.js:3666
+await in b
+(anonymous) @ index-Ds9TBhg4.js:3666
+Zv @ index-Ds9TBhg4.js:40
+ac @ index-Ds9TBhg4.js:40
+YC @ index-Ds9TBhg4.js:40
+Js @ index-Ds9TBhg4.js:38
+Tz @ index-Ds9TBhg4.js:40
+ma @ index-Ds9TBhg4.js:40
+DD @ index-Ds9TBhg4.js:40
+_ @ index-Ds9TBhg4.js:25
+k @ index-Ds9TBhg4.js:25Understand this error
+index-Ds9TBhg4.js:432 [2025-06-02T02:53:15.496Z]  @firebase/firestore: Firestore (11.8.0): WebChannelConnection RPC 'Listen' stream 0x6542d4a1 transport errored. Name: undefined Message: undefined
+oK @ index-Ds9TBhg4.js:432
+warn @ index-Ds9TBhg4.js:432
+zc @ index-Ds9TBhg4.js:664
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+K4 @ index-Ds9TBhg4.js:1888
+n3 @ index-Ds9TBhg4.js:1966
+await in n3
+MY @ index-Ds9TBhg4.js:1966
+rT @ index-Ds9TBhg4.js:1951
+(anonymous) @ index-Ds9TBhg4.js:2011
+(anonymous) @ index-Ds9TBhg4.js:2011
+await in (anonymous)
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+ZY @ index-Ds9TBhg4.js:2011
+rr @ index-Ds9TBhg4.js:2282
+b @ index-Ds9TBhg4.js:3666
+await in b
+(anonymous) @ index-Ds9TBhg4.js:3666
+Zv @ index-Ds9TBhg4.js:40
+ac @ index-Ds9TBhg4.js:40
+YC @ index-Ds9TBhg4.js:40
+Js @ index-Ds9TBhg4.js:38
+Tz @ index-Ds9TBhg4.js:40
+ma @ index-Ds9TBhg4.js:40
+DD @ index-Ds9TBhg4.js:40
+_ @ index-Ds9TBhg4.js:25
+k @ index-Ds9TBhg4.js:25Understand this warning
+index-Ds9TBhg4.js:616 
+            
+            
+           GET https://firestore.googleapis.com/google.firestore.v1.Firestore/Listen/channel?gsessionid=ZLEqEjDOB_E5h_tPG982FCVuKpyxFiLaYyypPXaN8oE&VER=8&database=projects%2F%20heinous-trivia%2Fdatabases%2F(default)&RID=rpc&SID=SMDv6WXUaCMKLmt5IWXV7A&AID=0&CI=0&TYPE=xmlhttp&zx=4hz1kjp7mx2q&t=1 net::ERR_ABORTED 400 (Bad Request)
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903
+setTimeout
+start @ index-Ds9TBhg4.js:1903
+createAndSchedule @ index-Ds9TBhg4.js:1903
+enqueueAfterDelay @ index-Ds9TBhg4.js:2101
+f_ @ index-Ds9TBhg4.js:1842
+x_ @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+yY @ index-Ds9TBhg4.js:1888
+close @ index-Ds9TBhg4.js:1857
+W_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+u_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+K4 @ index-Ds9TBhg4.js:1888
+n3 @ index-Ds9TBhg4.js:1966
+await in n3
+MY @ index-Ds9TBhg4.js:1966
+rT @ index-Ds9TBhg4.js:1951
+(anonymous) @ index-Ds9TBhg4.js:2011
+(anonymous) @ index-Ds9TBhg4.js:2011
+await in (anonymous)
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+ZY @ index-Ds9TBhg4.js:2011
+rr @ index-Ds9TBhg4.js:2282
+b @ index-Ds9TBhg4.js:3666
+await in b
+(anonymous) @ index-Ds9TBhg4.js:3666
+Zv @ index-Ds9TBhg4.js:40
+ac @ index-Ds9TBhg4.js:40
+YC @ index-Ds9TBhg4.js:40
+Js @ index-Ds9TBhg4.js:38
+Tz @ index-Ds9TBhg4.js:40
+ma @ index-Ds9TBhg4.js:40
+DD @ index-Ds9TBhg4.js:40
+_ @ index-Ds9TBhg4.js:25
+k @ index-Ds9TBhg4.js:25Understand this error
+index-Ds9TBhg4.js:432 [2025-06-02T02:53:15.632Z]  @firebase/firestore: Firestore (11.8.0): WebChannelConnection RPC 'Listen' stream 0x6542d4a2 transport errored. Name: undefined Message: undefined
+oK @ index-Ds9TBhg4.js:432
+warn @ index-Ds9TBhg4.js:432
+zc @ index-Ds9TBhg4.js:664
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903
+setTimeout
+start @ index-Ds9TBhg4.js:1903
+createAndSchedule @ index-Ds9TBhg4.js:1903
+enqueueAfterDelay @ index-Ds9TBhg4.js:2101
+f_ @ index-Ds9TBhg4.js:1842
+x_ @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+yY @ index-Ds9TBhg4.js:1888
+close @ index-Ds9TBhg4.js:1857
+W_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+u_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+K4 @ index-Ds9TBhg4.js:1888
+n3 @ index-Ds9TBhg4.js:1966
+await in n3
+MY @ index-Ds9TBhg4.js:1966
+rT @ index-Ds9TBhg4.js:1951
+(anonymous) @ index-Ds9TBhg4.js:2011
+(anonymous) @ index-Ds9TBhg4.js:2011
+await in (anonymous)
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+ZY @ index-Ds9TBhg4.js:2011
+rr @ index-Ds9TBhg4.js:2282
+b @ index-Ds9TBhg4.js:3666
+await in b
+(anonymous) @ index-Ds9TBhg4.js:3666
+Zv @ index-Ds9TBhg4.js:40
+ac @ index-Ds9TBhg4.js:40
+YC @ index-Ds9TBhg4.js:40
+Js @ index-Ds9TBhg4.js:38
+Tz @ index-Ds9TBhg4.js:40
+ma @ index-Ds9TBhg4.js:40
+DD @ index-Ds9TBhg4.js:40
+_ @ index-Ds9TBhg4.js:25
+k @ index-Ds9TBhg4.js:25Understand this warning
+index-Ds9TBhg4.js:616 
+            
+            
+           GET https://firestore.googleapis.com/google.firestore.v1.Firestore/Listen/channel?gsessionid=yOvyQZWZYPcsA9qIwK2Gt6IYoPXp4XniLLkcVDHSd7c&VER=8&database=projects%2F%20heinous-trivia%2Fdatabases%2F(default)&RID=rpc&SID=vjL81LqCoiN9g1Mml7GVoQ&AID=0&CI=0&TYPE=xmlhttp&zx=lli6c4wl1m4t&t=1 400 (Bad Request)
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903
+setTimeout
+start @ index-Ds9TBhg4.js:1903
+createAndSchedule @ index-Ds9TBhg4.js:1903
+enqueueAfterDelay @ index-Ds9TBhg4.js:2101
+f_ @ index-Ds9TBhg4.js:1842
+x_ @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+yY @ index-Ds9TBhg4.js:1888
+close @ index-Ds9TBhg4.js:1857
+W_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+u_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903
+setTimeout
+start @ index-Ds9TBhg4.js:1903
+createAndSchedule @ index-Ds9TBhg4.js:1903
+enqueueAfterDelay @ index-Ds9TBhg4.js:2101
+f_ @ index-Ds9TBhg4.js:1842
+x_ @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+yY @ index-Ds9TBhg4.js:1888
+close @ index-Ds9TBhg4.js:1857
+W_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+u_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+K4 @ index-Ds9TBhg4.js:1888
+n3 @ index-Ds9TBhg4.js:1966
+await in n3
+MY @ index-Ds9TBhg4.js:1966
+rT @ index-Ds9TBhg4.js:1951
+(anonymous) @ index-Ds9TBhg4.js:2011
+(anonymous) @ index-Ds9TBhg4.js:2011Understand this error
+index-Ds9TBhg4.js:432 [2025-06-02T02:53:16.865Z]  @firebase/firestore: Firestore (11.8.0): WebChannelConnection RPC 'Listen' stream 0x6542d4a3 transport errored. Name: undefined Message: undefined
+oK @ index-Ds9TBhg4.js:432
+warn @ index-Ds9TBhg4.js:432
+zc @ index-Ds9TBhg4.js:664
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903
+setTimeout
+start @ index-Ds9TBhg4.js:1903
+createAndSchedule @ index-Ds9TBhg4.js:1903
+enqueueAfterDelay @ index-Ds9TBhg4.js:2101
+f_ @ index-Ds9TBhg4.js:1842
+x_ @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+yY @ index-Ds9TBhg4.js:1888
+close @ index-Ds9TBhg4.js:1857
+W_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+u_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903
+setTimeout
+start @ index-Ds9TBhg4.js:1903
+createAndSchedule @ index-Ds9TBhg4.js:1903
+enqueueAfterDelay @ index-Ds9TBhg4.js:2101
+f_ @ index-Ds9TBhg4.js:1842
+x_ @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+yY @ index-Ds9TBhg4.js:1888
+close @ index-Ds9TBhg4.js:1857
+W_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+u_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857Understand this warning
+index-Ds9TBhg4.js:616 
+            
+            
+           GET https://firestore.googleapis.com/google.firestore.v1.Firestore/Listen/channel?gsessionid=8BOcHHnzfNeeO_wHJ5cckQeSlXco8uLpDNeVfTyPVX8&VER=8&database=projects%2F%20heinous-trivia%2Fdatabases%2F(default)&RID=rpc&SID=aYlR9TuA4GoIk2LmtuHjhw&AID=0&CI=0&TYPE=xmlhttp&zx=d6555syqykxt&t=1 400 (Bad Request)
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903
+setTimeout
+start @ index-Ds9TBhg4.js:1903
+createAndSchedule @ index-Ds9TBhg4.js:1903
+enqueueAfterDelay @ index-Ds9TBhg4.js:2101
+f_ @ index-Ds9TBhg4.js:1842
+x_ @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+yY @ index-Ds9TBhg4.js:1888
+close @ index-Ds9TBhg4.js:1857
+W_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+u_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903
+setTimeout
+start @ index-Ds9TBhg4.js:1903
+createAndSchedule @ index-Ds9TBhg4.js:1903
+enqueueAfterDelay @ index-Ds9TBhg4.js:2101
+f_ @ index-Ds9TBhg4.js:1842
+x_ @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+yY @ index-Ds9TBhg4.js:1888
+close @ index-Ds9TBhg4.js:1857
+W_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+u_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903Understand this error
+index-Ds9TBhg4.js:432 [2025-06-02T02:53:19.082Z]  @firebase/firestore: Firestore (11.8.0): WebChannelConnection RPC 'Listen' stream 0x6542d4a4 transport errored. Name: undefined Message: undefined
+oK @ index-Ds9TBhg4.js:432
+warn @ index-Ds9TBhg4.js:432
+zc @ index-Ds9TBhg4.js:664
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903
+setTimeout
+start @ index-Ds9TBhg4.js:1903
+createAndSchedule @ index-Ds9TBhg4.js:1903
+enqueueAfterDelay @ index-Ds9TBhg4.js:2101
+f_ @ index-Ds9TBhg4.js:1842
+x_ @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+yY @ index-Ds9TBhg4.js:1888
+close @ index-Ds9TBhg4.js:1857
+W_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+u_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903
+setTimeout
+start @ index-Ds9TBhg4.js:1903
+createAndSchedule @ index-Ds9TBhg4.js:1903
+enqueueAfterDelay @ index-Ds9TBhg4.js:2101
+f_ @ index-Ds9TBhg4.js:1842
+x_ @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+yY @ index-Ds9TBhg4.js:1888
+close @ index-Ds9TBhg4.js:1857
+W_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+u_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857Understand this warning
+index-Ds9TBhg4.js:616 
+            
+            
+           GET https://firestore.googleapis.com/google.firestore.v1.Firestore/Listen/channel?gsessionid=9h16dKNMEiZ3oFgn18X5B9jiBoH4DP04rB_37x9IbVY&VER=8&database=projects%2F%20heinous-trivia%2Fdatabases%2F(default)&RID=rpc&SID=C4euu_6IlTy6lgtySOBBdg&AID=0&CI=0&TYPE=xmlhttp&zx=lwpvqn9s226b&t=1 400 (Bad Request)
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903
+setTimeout
+start @ index-Ds9TBhg4.js:1903
+createAndSchedule @ index-Ds9TBhg4.js:1903
+enqueueAfterDelay @ index-Ds9TBhg4.js:2101
+f_ @ index-Ds9TBhg4.js:1842
+x_ @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+yY @ index-Ds9TBhg4.js:1888
+close @ index-Ds9TBhg4.js:1857
+W_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+u_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903
+setTimeout
+start @ index-Ds9TBhg4.js:1903
+createAndSchedule @ index-Ds9TBhg4.js:1903
+enqueueAfterDelay @ index-Ds9TBhg4.js:2101
+f_ @ index-Ds9TBhg4.js:1842
+x_ @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+yY @ index-Ds9TBhg4.js:1888
+close @ index-Ds9TBhg4.js:1857
+W_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+u_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903Understand this error
+index-Ds9TBhg4.js:432 [2025-06-02T02:53:21.322Z]  @firebase/firestore: Firestore (11.8.0): WebChannelConnection RPC 'Listen' stream 0x6542d4a5 transport errored. Name: undefined Message: undefined
+oK @ index-Ds9TBhg4.js:432
+warn @ index-Ds9TBhg4.js:432
+zc @ index-Ds9TBhg4.js:664
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903
+setTimeout
+start @ index-Ds9TBhg4.js:1903
+createAndSchedule @ index-Ds9TBhg4.js:1903
+enqueueAfterDelay @ index-Ds9TBhg4.js:2101
+f_ @ index-Ds9TBhg4.js:1842
+x_ @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+yY @ index-Ds9TBhg4.js:1888
+close @ index-Ds9TBhg4.js:1857
+W_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+u_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903
+setTimeout
+start @ index-Ds9TBhg4.js:1903
+createAndSchedule @ index-Ds9TBhg4.js:1903
+enqueueAfterDelay @ index-Ds9TBhg4.js:2101
+f_ @ index-Ds9TBhg4.js:1842
+x_ @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+yY @ index-Ds9TBhg4.js:1888
+close @ index-Ds9TBhg4.js:1857
+W_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+u_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857Understand this warning
+index-Ds9TBhg4.js:616 
+            
+            
+           GET https://firestore.googleapis.com/google.firestore.v1.Firestore/Listen/channel?gsessionid=S3dfHnAQDszXCi8unhdMuHuR7pJYFfewIb8B-SlQ1zo&VER=8&database=projects%2F%20heinous-trivia%2Fdatabases%2F(default)&RID=rpc&SID=HwsSL1K539Z-rBIGDnvs4A&AID=0&CI=0&TYPE=xmlhttp&zx=irp9ksmc537g&t=1 400 (Bad Request)
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903
+setTimeout
+start @ index-Ds9TBhg4.js:1903
+createAndSchedule @ index-Ds9TBhg4.js:1903
+enqueueAfterDelay @ index-Ds9TBhg4.js:2101
+f_ @ index-Ds9TBhg4.js:1842
+x_ @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+yY @ index-Ds9TBhg4.js:1888
+close @ index-Ds9TBhg4.js:1857
+W_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+u_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903
+setTimeout
+start @ index-Ds9TBhg4.js:1903
+createAndSchedule @ index-Ds9TBhg4.js:1903
+enqueueAfterDelay @ index-Ds9TBhg4.js:2101
+f_ @ index-Ds9TBhg4.js:1842
+x_ @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+yY @ index-Ds9TBhg4.js:1888
+close @ index-Ds9TBhg4.js:1857
+W_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+u_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903Understand this error
+index-Ds9TBhg4.js:432 [2025-06-02T02:53:25.574Z]  @firebase/firestore: Firestore (11.8.0): WebChannelConnection RPC 'Listen' stream 0x6542d4a6 transport errored. Name: undefined Message: undefined
+oK @ index-Ds9TBhg4.js:432
+warn @ index-Ds9TBhg4.js:432
+zc @ index-Ds9TBhg4.js:664
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903
+setTimeout
+start @ index-Ds9TBhg4.js:1903
+createAndSchedule @ index-Ds9TBhg4.js:1903
+enqueueAfterDelay @ index-Ds9TBhg4.js:2101
+f_ @ index-Ds9TBhg4.js:1842
+x_ @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+yY @ index-Ds9TBhg4.js:1888
+close @ index-Ds9TBhg4.js:1857
+W_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+u_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903
+setTimeout
+start @ index-Ds9TBhg4.js:1903
+createAndSchedule @ index-Ds9TBhg4.js:1903
+enqueueAfterDelay @ index-Ds9TBhg4.js:2101
+f_ @ index-Ds9TBhg4.js:1842
+x_ @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+yY @ index-Ds9TBhg4.js:1888
+close @ index-Ds9TBhg4.js:1857
+W_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+u_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857Understand this warning
+index-Ds9TBhg4.js:616 
+            
+            
+           GET https://firestore.googleapis.com/google.firestore.v1.Firestore/Listen/channel?gsessionid=nbPtkvfJCyN4DjdcC1cuF2UEfDGnj3HND9MR2ZgoC9s&VER=8&database=projects%2F%20heinous-trivia%2Fdatabases%2F(default)&RID=rpc&SID=Un2I5R-5xtSyHLP6VD2kKQ&AID=0&CI=0&TYPE=xmlhttp&zx=7ll6lxipbyce&t=1 400 (Bad Request)
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903
+setTimeout
+start @ index-Ds9TBhg4.js:1903
+createAndSchedule @ index-Ds9TBhg4.js:1903
+enqueueAfterDelay @ index-Ds9TBhg4.js:2101
+f_ @ index-Ds9TBhg4.js:1842
+x_ @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+yY @ index-Ds9TBhg4.js:1888
+close @ index-Ds9TBhg4.js:1857
+W_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+u_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903
+setTimeout
+start @ index-Ds9TBhg4.js:1903
+createAndSchedule @ index-Ds9TBhg4.js:1903
+enqueueAfterDelay @ index-Ds9TBhg4.js:2101
+f_ @ index-Ds9TBhg4.js:1842
+x_ @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+yY @ index-Ds9TBhg4.js:1888
+close @ index-Ds9TBhg4.js:1857
+W_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+u_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903Understand this error
+index-Ds9TBhg4.js:432 [2025-06-02T02:53:30.087Z]  @firebase/firestore: Firestore (11.8.0): WebChannelConnection RPC 'Listen' stream 0x6542d4a7 transport errored. Name: undefined Message: undefined
+oK @ index-Ds9TBhg4.js:432
+warn @ index-Ds9TBhg4.js:432
+zc @ index-Ds9TBhg4.js:664
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903
+setTimeout
+start @ index-Ds9TBhg4.js:1903
+createAndSchedule @ index-Ds9TBhg4.js:1903
+enqueueAfterDelay @ index-Ds9TBhg4.js:2101
+f_ @ index-Ds9TBhg4.js:1842
+x_ @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+yY @ index-Ds9TBhg4.js:1888
+close @ index-Ds9TBhg4.js:1857
+W_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+u_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903
+setTimeout
+start @ index-Ds9TBhg4.js:1903
+createAndSchedule @ index-Ds9TBhg4.js:1903
+enqueueAfterDelay @ index-Ds9TBhg4.js:2101
+f_ @ index-Ds9TBhg4.js:1842
+x_ @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+yY @ index-Ds9TBhg4.js:1888
+close @ index-Ds9TBhg4.js:1857
+W_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+u_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857Understand this warning
+index-Ds9TBhg4.js:616 
+            
+            
+           GET https://firestore.googleapis.com/google.firestore.v1.Firestore/Listen/channel?gsessionid=-di4icaQXu256WhER_RZGStRm3SJZD1LVZNvuJkkOTA&VER=8&database=projects%2F%20heinous-trivia%2Fdatabases%2F(default)&RID=rpc&SID=SCASq5T1UY_xi1r5M2S15A&AID=0&CI=0&TYPE=xmlhttp&zx=s5gk89mnk44z&t=1 400 (Bad Request)
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903
+setTimeout
+start @ index-Ds9TBhg4.js:1903
+createAndSchedule @ index-Ds9TBhg4.js:1903
+enqueueAfterDelay @ index-Ds9TBhg4.js:2101
+f_ @ index-Ds9TBhg4.js:1842
+x_ @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+yY @ index-Ds9TBhg4.js:1888
+close @ index-Ds9TBhg4.js:1857
+W_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+u_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903
+setTimeout
+start @ index-Ds9TBhg4.js:1903
+createAndSchedule @ index-Ds9TBhg4.js:1903
+enqueueAfterDelay @ index-Ds9TBhg4.js:2101
+f_ @ index-Ds9TBhg4.js:1842
+x_ @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+yY @ index-Ds9TBhg4.js:1888
+close @ index-Ds9TBhg4.js:1857
+W_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+u_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903Understand this error
+index-Ds9TBhg4.js:432 [2025-06-02T02:53:37.872Z]  @firebase/firestore: Firestore (11.8.0): WebChannelConnection RPC 'Listen' stream 0x6542d4a8 transport errored. Name: undefined Message: undefined
+oK @ index-Ds9TBhg4.js:432
+warn @ index-Ds9TBhg4.js:432
+zc @ index-Ds9TBhg4.js:664
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903
+setTimeout
+start @ index-Ds9TBhg4.js:1903
+createAndSchedule @ index-Ds9TBhg4.js:1903
+enqueueAfterDelay @ index-Ds9TBhg4.js:2101
+f_ @ index-Ds9TBhg4.js:1842
+x_ @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+yY @ index-Ds9TBhg4.js:1888
+close @ index-Ds9TBhg4.js:1857
+W_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+u_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903
+setTimeout
+start @ index-Ds9TBhg4.js:1903
+createAndSchedule @ index-Ds9TBhg4.js:1903
+enqueueAfterDelay @ index-Ds9TBhg4.js:2101
+f_ @ index-Ds9TBhg4.js:1842
+x_ @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+yY @ index-Ds9TBhg4.js:1888
+close @ index-Ds9TBhg4.js:1857
+W_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+u_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857Understand this warning
+index-Ds9TBhg4.js:616 
+            
+            
+           GET https://firestore.googleapis.com/google.firestore.v1.Firestore/Listen/channel?gsessionid=Icx4ogLC1cfdY23XVK-AFSSwScLDvj6Vv2uXRcjehX4&VER=8&database=projects%2F%20heinous-trivia%2Fdatabases%2F(default)&RID=rpc&SID=opWzEhnpjelzXNlWWiMI3g&AID=0&CI=0&TYPE=xmlhttp&zx=r68tqbr7fx6v&t=1 400 (Bad Request)
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903
+setTimeout
+start @ index-Ds9TBhg4.js:1903
+createAndSchedule @ index-Ds9TBhg4.js:1903
+enqueueAfterDelay @ index-Ds9TBhg4.js:2101
+f_ @ index-Ds9TBhg4.js:1842
+x_ @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+yY @ index-Ds9TBhg4.js:1888
+close @ index-Ds9TBhg4.js:1857
+W_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+u_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903
+setTimeout
+start @ index-Ds9TBhg4.js:1903
+createAndSchedule @ index-Ds9TBhg4.js:1903
+enqueueAfterDelay @ index-Ds9TBhg4.js:2101
+f_ @ index-Ds9TBhg4.js:1842
+x_ @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+yY @ index-Ds9TBhg4.js:1888
+close @ index-Ds9TBhg4.js:1857
+W_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+u_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903Understand this error
+index-Ds9TBhg4.js:432 [2025-06-02T02:53:44.882Z]  @firebase/firestore: Firestore (11.8.0): WebChannelConnection RPC 'Listen' stream 0x6542d4a9 transport errored. Name: undefined Message: undefined
+oK @ index-Ds9TBhg4.js:432
+warn @ index-Ds9TBhg4.js:432
+zc @ index-Ds9TBhg4.js:664
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903
+setTimeout
+start @ index-Ds9TBhg4.js:1903
+createAndSchedule @ index-Ds9TBhg4.js:1903
+enqueueAfterDelay @ index-Ds9TBhg4.js:2101
+f_ @ index-Ds9TBhg4.js:1842
+x_ @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+yY @ index-Ds9TBhg4.js:1888
+close @ index-Ds9TBhg4.js:1857
+W_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+u_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+Promise.then
+auth @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1842
+(anonymous) @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+handleDelayElapsed @ index-Ds9TBhg4.js:1903
+(anonymous) @ index-Ds9TBhg4.js:1903
+setTimeout
+start @ index-Ds9TBhg4.js:1903
+createAndSchedule @ index-Ds9TBhg4.js:1903
+enqueueAfterDelay @ index-Ds9TBhg4.js:2101
+f_ @ index-Ds9TBhg4.js:1842
+x_ @ index-Ds9TBhg4.js:1857
+start @ index-Ds9TBhg4.js:1857
+ZS @ index-Ds9TBhg4.js:1888
+yY @ index-Ds9TBhg4.js:1888
+close @ index-Ds9TBhg4.js:1857
+W_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+u_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+(anonymous) @ index-Ds9TBhg4.js:1812
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+wl.sa @ index-Ds9TBhg4.js:619
+ua @ index-Ds9TBhg4.js:619
+LP @ index-Ds9TBhg4.js:619
+Yu @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+$P @ index-Ds9TBhg4.js:619
+t.Fa @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+DP @ index-Ds9TBhg4.js:619
+tx @ index-Ds9TBhg4.js:616
+Wo.Y @ index-Ds9TBhg4.js:615
+Wo.ca @ index-Ds9TBhg4.js:615
+ip @ index-Ds9TBhg4.js:611
+Vn @ index-Ds9TBhg4.js:611
+IP @ index-Ds9TBhg4.js:618
+t.bb @ index-Ds9TBhg4.js:618
+t.Ea @ index-Ds9TBhg4.js:618
+nd @ index-Ds9TBhg4.js:617
+t.Pa @ index-Ds9TBhg4.js:616
+Promise.then
+TP @ index-Ds9TBhg4.js:616
+t.Sa @ index-Ds9TBhg4.js:616
+Promise.then
+t.send @ index-Ds9TBhg4.js:616
+t.ea @ index-Ds9TBhg4.js:618
+uP @ index-Ds9TBhg4.js:615
+Z0 @ index-Ds9TBhg4.js:615
+t.Ga @ index-Ds9TBhg4.js:619
+q @ index-Ds9TBhg4.js:611
+Promise.then
+W @ index-Ds9TBhg4.js:611
+gp @ index-Ds9TBhg4.js:619
+t.connect @ index-Ds9TBhg4.js:619
+pr.m @ index-Ds9TBhg4.js:619
+Zo @ index-Ds9TBhg4.js:1812
+send @ index-Ds9TBhg4.js:1797
+L_ @ index-Ds9TBhg4.js:1857
+H_ @ index-Ds9TBhg4.js:1857
+JS @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1888
+vY @ index-Ds9TBhg4.js:1888
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:2101
+Promise.then
+rc @ index-Ds9TBhg4.js:2101
+enqueue @ index-Ds9TBhg4.js:2101
+enqueueAndForget @ index-Ds9TBhg4.js:2101
+(anonymous) @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857
+a_ @ index-Ds9TBhg4.js:1797
+(anonymous) @ index-Ds9TBhg4.js:1812
+setTimeout
+T_ @ index-Ds9TBhg4.js:1812
+G_ @ index-Ds9TBhg4.js:1857
+K_ @ index-Ds9TBhg4.js:1857
+(anonymous) @ index-Ds9TBhg4.js:1857Understand this warning
