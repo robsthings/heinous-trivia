@@ -5,27 +5,10 @@ import { FirebaseService } from "./firebase";
 import { hauntConfigSchema, leaderboardEntrySchema } from "@shared/schema";
 import path from "path";
 import multer from "multer";
-import fs from "fs/promises";
 
-// Configure multer for file uploads
+// Configure multer for memory storage (for Firebase upload)
 const upload = multer({
-  storage: multer.diskStorage({
-    destination: async (req, file, cb) => {
-      const hauntId = req.body.hauntId;
-      const uploadDir = path.resolve(process.cwd(), "client", "public", "haunt-assets", hauntId);
-      
-      try {
-        await fs.mkdir(uploadDir, { recursive: true });
-        cb(null, uploadDir);
-      } catch (error) {
-        cb(error as Error | null, uploadDir);
-      }
-    },
-    filename: (req, file, cb) => {
-      const ext = path.extname(file.originalname);
-      cb(null, `bg${ext}`);
-    }
-  }),
+  storage: multer.memoryStorage(),
   limits: {
     fileSize: 5 * 1024 * 1024 // 5MB limit
   },
@@ -45,28 +28,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Upload background image for haunt
-  app.post("/api/upload-background", upload.single('background'), async (req, res) => {
-    try {
-      if (!req.file) {
-        return res.status(400).json({ error: "No file uploaded" });
-      }
+  app.post("/api/upload-background", (req, res) => {
+    console.log("📁 Upload endpoint hit");
+    
+    upload.single('background')(req, res, async (err) => {
+      try {
+        if (err) {
+          console.error("Multer error:", err);
+          return res.status(400).json({ error: err.message });
+        }
 
-      const hauntId = req.body.hauntId;
-      if (!hauntId) {
-        return res.status(400).json({ error: "Haunt ID is required" });
-      }
+        if (!req.file) {
+          console.log("❌ No file uploaded");
+          return res.status(400).json({ error: "No file uploaded" });
+        }
 
-      const relativePath = `/haunt-assets/${hauntId}/bg${path.extname(req.file.originalname)}`;
-      
-      res.json({ 
-        success: true, 
-        path: relativePath,
-        message: "Background uploaded successfully"
-      });
-    } catch (error) {
-      console.error("Error uploading background:", error);
-      res.status(500).json({ error: "Failed to upload background" });
-    }
+        const hauntId = req.body.hauntId;
+        if (!hauntId) {
+          console.log("❌ No haunt ID provided");
+          return res.status(400).json({ error: "Haunt ID is required" });
+        }
+
+        console.log("✅ File uploaded:", req.file.filename, "for haunt:", hauntId);
+        const relativePath = `/haunt-assets/${hauntId}/bg${path.extname(req.file.originalname)}`;
+        
+        res.json({ 
+          success: true, 
+          path: relativePath,
+          message: "Background uploaded successfully"
+        });
+      } catch (error) {
+        console.error("Error uploading background:", error);
+        res.status(500).json({ error: "Failed to upload background" });
+      }
+    });
   });
 
   // Save leaderboard entry
