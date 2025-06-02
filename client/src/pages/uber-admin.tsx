@@ -119,28 +119,16 @@ export default function UberAdmin() {
 
     setUploadingBackground(true);
     try {
-      const formData = new FormData();
-      formData.append('background', file);
-      formData.append('hauntId', hauntId);
-
-      const response = await fetch('/api/upload-background', {
-        method: 'POST',
-        body: formData
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to upload background');
+      // For now, we'll use a URL input instead of file upload
+      // This will be more reliable in deployed environments
+      const imageUrl = prompt('Please enter the URL of your background image:');
+      if (imageUrl) {
+        await updateHauntTheme(hauntId, {
+          background: imageUrl
+        });
       }
-
-      const result = await response.json();
-      
-      // Update the haunt config with new background path
-      await updateHauntTheme(hauntId, {
-        background: result.path
-      });
-
     } catch (error) {
-      console.error('Failed to upload background:', error);
+      console.error('Failed to set background:', error);
     } finally {
       setUploadingBackground(false);
     }
