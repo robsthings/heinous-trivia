@@ -49,6 +49,62 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Initialize database with sample data
+  app.post("/api/initialize-data", async (req, res) => {
+    try {
+      // Create initial trivia pack
+      await FirebaseService.saveHauntConfig('trivia-packs/horror-basics', {
+        accessType: 'all',
+        name: 'Horror Basics',
+        description: 'Classic horror trivia',
+        questions: [
+          {
+            question: "Which horror movie features the character Freddy Krueger?",
+            choices: ["Halloween", "Friday the 13th", "A Nightmare on Elm Street", "Scream"],
+            correct: "A Nightmare on Elm Street",
+            explanation: "Freddy Krueger is the main antagonist of the A Nightmare on Elm Street series."
+          },
+          {
+            question: "What is the name of the hotel in Stephen King's 'The Shining'?",
+            choices: ["Bates Motel", "The Overlook Hotel", "Hotel California", "The Stanley Hotel"],
+            correct: "The Overlook Hotel",
+            explanation: "The Overlook Hotel is the haunted location where the Torrance family stays."
+          },
+          {
+            question: "In which movie does the phrase 'Here's Johnny!' appear?",
+            choices: ["Psycho", "The Shining", "Halloween", "The Exorcist"],
+            correct: "The Shining",
+            explanation: "Jack Nicholson's character says this iconic line in The Shining."
+          }
+        ]
+      });
+
+      // Create sample haunt configs
+      await FirebaseService.saveHauntConfig('widowshollow', {
+        name: "Widow's Hollow",
+        theme: "Victorian Gothic",
+        primaryColor: "#8B0000",
+        secondaryColor: "#2F1B14",
+        tier: "premium",
+        logo: "/icons/icon-192.png"
+      });
+
+      await FirebaseService.saveHauntConfig('headquarters', {
+        name: "Dr. Heinous HQ",
+        theme: "Classic Horror",
+        primaryColor: "#8B0000",
+        secondaryColor: "#2F1B14",
+        tier: "basic",
+        logo: "/icons/icon-192.png"
+      });
+
+      res.json({ success: true, message: "Initial data created" });
+    } catch (error) {
+      console.error("Error initializing data:", error);
+      res.status(500).json({ error: "Failed to initialize data" });
+    }
+  });
+
   // Save haunt configuration
   app.post("/api/haunt-config/:hauntId", async (req, res) => {
     try {
