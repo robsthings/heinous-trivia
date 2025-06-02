@@ -47,7 +47,7 @@ export default function UberAdmin() {
   const [timeRange, setTimeRange] = useState<"7d" | "30d" | "90d">("30d");
   const [selectedHaunt, setSelectedHaunt] = useState<string | null>(null);
   const [hauntConfigs, setHauntConfigs] = useState<Record<string, HauntConfig>>({});
-  const [uploadingBackground, setUploadingBackground] = useState(false);
+
 
   useEffect(() => {
     const fetchGlobalAnalytics = async () => {
@@ -114,25 +114,7 @@ export default function UberAdmin() {
     fetchGlobalAnalytics();
   }, [timeRange]);
 
-  const handleBackgroundUpload = async (hauntId: string, file: File) => {
-    if (!file) return;
 
-    setUploadingBackground(true);
-    try {
-      // For now, we'll use a URL input instead of file upload
-      // This will be more reliable in deployed environments
-      const imageUrl = prompt('Please enter the URL of your background image:');
-      if (imageUrl) {
-        await updateHauntTheme(hauntId, {
-          background: imageUrl
-        });
-      }
-    } catch (error) {
-      console.error('Failed to set background:', error);
-    } finally {
-      setUploadingBackground(false);
-    }
-  };
 
   const updateHauntTheme = async (hauntId: string, themeUpdates: Partial<{ background: string; progressBar: string }>) => {
     try {
@@ -457,37 +439,21 @@ export default function UberAdmin() {
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-6">
-                      {/* Background Image Upload */}
+                      {/* Background Image URL */}
                       <div className="space-y-3">
-                        <Label className="text-white font-medium">Background Image</Label>
-                        <div className="flex items-center gap-4">
-                          <Input
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => {
-                              const file = e.target.files?.[0];
-                              if (file) {
-                                handleBackgroundUpload(selectedHaunt, file);
-                              }
-                            }}
-                            className="bg-slate-700 border-slate-600 text-white"
-                            disabled={uploadingBackground}
-                          />
-                          <Button 
-                            variant="outline" 
-                            size="sm"
-                            disabled={uploadingBackground}
-                            className="border-slate-600 text-gray-300"
-                          >
-                            <Upload className="w-4 h-4 mr-2" />
-                            {uploadingBackground ? "Uploading..." : "Upload"}
-                          </Button>
+                        <Label className="text-white font-medium">Background Image URL</Label>
+                        <Input
+                          type="text"
+                          placeholder="Enter image URL (e.g., https://example.com/image.jpg)"
+                          value={hauntConfigs[selectedHaunt]?.theme?.background || ''}
+                          onChange={(e) => {
+                            updateHauntTheme(selectedHaunt, { background: e.target.value });
+                          }}
+                          className="bg-slate-700 border-slate-600 text-white"
+                        />
+                        <div className="text-xs text-gray-400">
+                          Enter a direct URL to an image file. The image will be used as the background for this haunt.
                         </div>
-                        {hauntConfigs[selectedHaunt]?.theme?.background && (
-                          <div className="text-sm text-gray-400">
-                            Current: {hauntConfigs[selectedHaunt]?.theme?.background}
-                          </div>
-                        )}
                       </div>
 
                       {/* Progress Bar Theme */}
