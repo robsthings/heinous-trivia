@@ -3,11 +3,7 @@ import { getFirestore } from 'firebase-admin/firestore';
 
 // Check if Firebase is properly configured
 const isFirebaseConfigured = () => {
-  return !!(
-    process.env.VITE_FIREBASE_PROJECT_ID && 
-    process.env.FIREBASE_PRIVATE_KEY && 
-    process.env.FIREBASE_CLIENT_EMAIL
-  );
+  return !!(process.env.FIREBASE_SERVICE_ACCOUNT_JSON);
 };
 
 // Initialize Firebase Admin SDK only if properly configured
@@ -17,25 +13,12 @@ let firestore;
 if (isFirebaseConfigured()) {
   try {
     if (getApps().length === 0) {
-      let credential;
-      
-      // Use individual environment variables (original working setup)
-      let privateKey = process.env.FIREBASE_PRIVATE_KEY;
-      if (privateKey) {
-        privateKey = privateKey.replace(/^["']|["']$/g, '');
-        privateKey = privateKey.replace(/\\n/g, '\n');
-        privateKey = privateKey.trim();
-      }
-      
-      credential = cert({
-        projectId: process.env.VITE_FIREBASE_PROJECT_ID,
-        privateKey: privateKey,
-        clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-      });
+      const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_JSON!);
+      const credential = cert(serviceAccount);
 
       firebaseApp = initializeApp({
         credential: credential,
-        databaseURL: `https://${process.env.VITE_FIREBASE_PROJECT_ID}-default-rtdb.firebaseio.com/`
+        databaseURL: `https://${serviceAccount.project_id}-default-rtdb.firebaseio.com/`
       });
     } else {
       firebaseApp = getApps()[0];
