@@ -428,23 +428,27 @@ export default function UberAdmin() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2">
-                    {Object.entries(hauntConfigs).map(([hauntId, config]) => (
-                      <Button
-                        key={hauntId}
-                        variant={selectedHaunt === hauntId ? "default" : "outline"}
-                        className={`w-full justify-start ${
-                          selectedHaunt === hauntId 
-                            ? "bg-purple-600 hover:bg-purple-700" 
-                            : "border-slate-600 text-gray-300 hover:bg-slate-700"
-                        }`}
-                        onClick={() => setSelectedHaunt(hauntId)}
-                      >
-                        <div className="flex flex-col items-start">
-                          <span className="font-medium">{config.name}</span>
-                          <span className="text-xs opacity-70">{hauntId}</span>
-                        </div>
-                      </Button>
-                    ))}
+                    {Object.entries(hauntConfigs).length === 0 ? (
+                      <div className="text-gray-400 text-sm">Loading haunts...</div>
+                    ) : (
+                      Object.entries(hauntConfigs).map(([hauntId, config]) => (
+                        <Button
+                          key={hauntId}
+                          variant={selectedHaunt === hauntId ? "default" : "outline"}
+                          className={`w-full justify-start ${
+                            selectedHaunt === hauntId 
+                              ? "bg-purple-600 hover:bg-purple-700" 
+                              : "border-slate-600 text-gray-300 hover:bg-slate-700"
+                          }`}
+                          onClick={() => setSelectedHaunt(hauntId)}
+                        >
+                          <div className="flex flex-col items-start">
+                            <span className="font-medium">{config.name}</span>
+                            <span className="text-xs opacity-70">{hauntId}</span>
+                          </div>
+                        </Button>
+                      ))
+                    )}
                   </div>
                 </CardContent>
               </Card>
