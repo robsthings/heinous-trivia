@@ -26,34 +26,51 @@ export class ConfigLoader {
     try {
       let allQuestions: TriviaQuestion[] = [];
 
-      // Load trivia packs with "all" access type
+      // Load from haunts collection where trivia data is actually stored
       try {
-        const packsQuery = collection(firestore, 'trivia-packs');
-        const packsSnapshot = await getDocs(packsQuery);
+        const hauntDoc = doc(firestore, 'haunts', haunt);
+        const hauntSnap = await getDoc(hauntDoc);
         
-        packsSnapshot.docs.forEach(doc => {
-          const pack = doc.data();
-          if (pack.accessType === 'all' && pack.questions) {
-            allQuestions.push(...pack.questions);
-          }
-        });
-      } catch (error) {
-        console.log('No trivia packs found');
-      }
-
-      // Load haunt-specific custom trivia
-      try {
-        const customTriviaRef = doc(firestore, 'trivia-custom', haunt);
-        const customTriviaSnap = await getDoc(customTriviaRef);
-        
-        if (customTriviaSnap.exists()) {
-          const customData = customTriviaSnap.data();
-          if (customData && customData.questions) {
-            allQuestions.push(...customData.questions);
+        if (hauntSnap.exists()) {
+          const hauntData = hauntSnap.data();
+          if (hauntData && hauntData.questions) {
+            allQuestions.push(...hauntData.questions);
           }
         }
       } catch (error) {
-        console.log('No custom trivia found for haunt');
+        console.log('No haunt-specific trivia found');
+      }
+
+      // If no haunt-specific questions, try to load from general collections
+      if (allQuestions.length === 0) {
+        try {
+          const packsQuery = collection(firestore, 'trivia-packs');
+          const packsSnapshot = await getDocs(packsQuery);
+          
+          packsSnapshot.docs.forEach(doc => {
+            const pack = doc.data();
+            if (pack.accessType === 'all' && pack.questions) {
+              allQuestions.push(...pack.questions);
+            }
+          });
+        } catch (error) {
+          console.log('No trivia packs found');
+        }
+
+        // Also try the custom trivia collection
+        try {
+          const customTriviaRef = doc(firestore, 'trivia-custom', haunt);
+          const customTriviaSnap = await getDoc(customTriviaRef);
+          
+          if (customTriviaSnap.exists()) {
+            const customData = customTriviaSnap.data();
+            if (customData && customData.questions) {
+              allQuestions.push(...customData.questions);
+            }
+          }
+        } catch (error) {
+          console.log('No custom trivia found for haunt');
+        }
       }
 
       return this.shuffleArray(allQuestions);
