@@ -9,8 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 
-import { firestore } from "@/lib/firebase";
-import { doc, getDoc } from "firebase/firestore";
+
 import { ConfigLoader } from "@/lib/configLoader";
 import { Eye, EyeOff, Clock } from "lucide-react";
 import type { TriviaQuestion } from "@shared/schema";
@@ -72,27 +71,23 @@ export default function HostPanel() {
       
       setIsLoading(true);
       try {
-        // Verify haunt exists and user has access
-        const hauntRef = doc(firestore, 'haunts', hauntId);
-        const hauntSnap = await getDoc(hauntRef);
-        
-        if (!hauntSnap.exists()) {
+        // Check authentication with server API
+        const savedCode = localStorage.getItem(`heinous-admin-${hauntId}`);
+        if (!savedCode) {
           toast({
-            title: "Haunt Not Found",
-            description: `Haunt '${hauntId}' does not exist`,
+            title: "Access Denied",
+            description: "You must authenticate to access this host panel",
             variant: "destructive"
           });
           return;
         }
         
-        const hauntData = hauntSnap.data();
-        
-        // Check authentication - ensure user has access to this haunt
-        const savedCode = localStorage.getItem(`heinous-admin-${hauntId}`);
-        if (!savedCode || savedCode !== hauntData.authCode) {
+        const authResponse = await fetch(`/api/haunt/${hauntId}/auth-check?authCode=${encodeURIComponent(savedCode)}`);
+        if (!authResponse.ok) {
+          const error = await authResponse.json();
           toast({
-            title: "Access Denied",
-            description: "You must authenticate to access this host panel",
+            title: authResponse.status === 404 ? "Haunt Not Found" : "Access Denied",
+            description: error.error || "Authentication failed",
             variant: "destructive"
           });
           return;

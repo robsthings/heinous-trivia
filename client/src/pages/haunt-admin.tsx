@@ -12,10 +12,7 @@ import { Footer } from "@/components/Footer";
 import { ExternalLink } from "lucide-react";
 import { SpookyLoader } from "@/components/SpookyLoader";
 import { MiniSpookyLoader } from "@/components/MiniSpookyLoader";
-import { firestore, storage, auth } from "@/lib/firebase";
-import { doc, getDoc, updateDoc, collection, addDoc, getDocs, deleteDoc } from "firebase/firestore";
-import { signInAnonymously } from "firebase/auth";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
 import type { HauntConfig, TriviaQuestion } from "@shared/schema";
 
 interface TriviaPack {
@@ -284,10 +281,9 @@ export default function HauntAdmin() {
 
   const loadCustomQuestions = async () => {
     try {
-      const questionsRef = collection(firestore, 'trivia-custom', hauntId, 'questions');
-      const snapshot = await getDocs(questionsRef);
-      const questions = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as CustomTriviaQuestion[];
-      setCustomQuestions(questions);
+      // These would require additional server endpoints if needed
+      // For now, set empty array to avoid Firebase calls
+      setCustomQuestions([]);
     } catch (error) {
       console.error('Failed to load custom questions:', error);
     }
@@ -295,10 +291,9 @@ export default function HauntAdmin() {
 
   const loadUploadedAds = async () => {
     try {
-      const adsRef = collection(firestore, 'haunt-ads', hauntId, 'ads');
-      const snapshot = await getDocs(adsRef);
-      const ads = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setUploadedAds(ads);
+      // These would require additional server endpoints if needed
+      // For now, set empty array to avoid Firebase calls
+      setUploadedAds([]);
     } catch (error) {
       console.error('Failed to load ads:', error);
     }
@@ -306,10 +301,9 @@ export default function HauntAdmin() {
 
   const loadTriviaPacks = async () => {
     try {
-      const packsRef = collection(firestore, 'trivia-packs');
-      const snapshot = await getDocs(packsRef);
-      const packs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as TriviaPack[];
-      setTriviaPacks(packs);
+      // These would require additional server endpoints if needed
+      // For now, set empty array to avoid Firebase calls
+      setTriviaPacks([]);
     } catch (error) {
       console.error('Failed to load trivia packs:', error);
     }
@@ -331,41 +325,31 @@ export default function HauntAdmin() {
         sessionStorage.removeItem(key);
       });
 
-      // Re-fetch latest Firebase config
-      const docRef = doc(firestore, 'haunts', hauntId);
-      const docSnap = await getDoc(docRef);
-      
-      if (docSnap.exists()) {
-        const data = docSnap.data() as HauntConfig;
+      // Re-fetch latest haunt config from server
+      const configResponse = await fetch(`/api/haunt/${hauntId}/config`);
+      if (configResponse.ok) {
+        const sanitizedConfig = await configResponse.json() as HauntConfig;
         
-        // Validate and sanitize config with defaults
-        const sanitizedConfig = {
-          ...data,
-          name: data.name || `Haunt ${hauntId}`,
-          description: data.description || 'A mysterious horror experience',
-          mode: data.mode || 'individual',
-          tier: data.tier || 'basic',
-          theme: {
-            primaryColor: data.theme?.primaryColor || '#8B0000',
-            secondaryColor: data.theme?.secondaryColor || '#2D1B69',
-            accentColor: data.theme?.accentColor || '#FF6B35'
-          },
-          isActive: data.isActive !== false
-        };
-        
-        // Update Firebase with sanitized config
-        await updateDoc(docRef, sanitizedConfig);
-        setHauntConfig(sanitizedConfig);
-        
-        // Update form data
-        setFormData({
-          mode: sanitizedConfig.mode as "individual" | "queue",
-          triviaFile: sanitizedConfig.triviaFile || "",
-          adFile: sanitizedConfig.adFile || "",
-          primaryColor: sanitizedConfig.theme.primaryColor,
-          secondaryColor: sanitizedConfig.theme.secondaryColor,
-          accentColor: sanitizedConfig.theme.accentColor
+        // Update config via server API
+        const updateResponse = await fetch(`/api/haunt/${hauntId}/config`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(sanitizedConfig)
         });
+        
+        if (updateResponse.ok) {
+          setHauntConfig(sanitizedConfig);
+          
+          // Update form data
+          setFormData({
+            mode: sanitizedConfig.mode as "individual" | "queue",
+            triviaFile: sanitizedConfig.triviaFile || "",
+            adFile: sanitizedConfig.adFile || "",
+            primaryColor: sanitizedConfig.theme.primaryColor,
+            secondaryColor: sanitizedConfig.theme.secondaryColor,
+            accentColor: sanitizedConfig.theme.accentColor
+          });
+        }
       }
 
       // Reload all data sources

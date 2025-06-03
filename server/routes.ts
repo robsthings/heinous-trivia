@@ -347,6 +347,98 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Check haunt authentication
+  app.get("/api/haunt/:hauntId/auth-check", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      const { authCode } = req.query;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      const hauntRef = firestore.collection('haunts').doc(hauntId);
+      const hauntSnap = await hauntRef.get();
+      
+      if (!hauntSnap.exists()) {
+        return res.status(404).json({ error: "Haunt not found" });
+      }
+      
+      const hauntData = hauntSnap.data();
+      if (!authCode || authCode !== hauntData.authCode) {
+        return res.status(403).json({ error: "Invalid authentication code" });
+      }
+      
+      res.json({ success: true, hauntExists: true });
+    } catch (error) {
+      console.error("Error checking haunt auth:", error);
+      res.status(500).json({ error: "Failed to verify authentication" });
+    }
+  });
+
+  // Get haunt configuration
+  app.get("/api/haunt/:hauntId/config", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      const hauntRef = firestore.collection('haunts').doc(hauntId);
+      const hauntSnap = await hauntRef.get();
+      
+      if (!hauntSnap.exists()) {
+        return res.status(404).json({ error: "Haunt not found" });
+      }
+      
+      const data = hauntSnap.data();
+      
+      // Sanitize config with defaults
+      const sanitizedConfig = {
+        ...data,
+        name: data.name || `Haunt ${hauntId}`,
+        description: data.description || 'A mysterious horror experience',
+        mode: data.mode || 'individual',
+        tier: data.tier || 'basic',
+        theme: {
+          primaryColor: data.theme?.primaryColor || '#8B0000',
+          secondaryColor: data.theme?.secondaryColor || '#2D1B69',
+          accentColor: data.theme?.accentColor || '#FF6B35'
+        },
+        isActive: data.isActive !== false
+      };
+      
+      res.json(sanitizedConfig);
+    } catch (error) {
+      console.error("Error getting haunt config:", error);
+      res.status(500).json({ error: "Failed to get haunt configuration" });
+    }
+  });
+
+  // Update haunt configuration
+  app.put("/api/haunt/:hauntId/config", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      const config = req.body;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      // Validate the config data
+      const validatedConfig = hauntConfigSchema.parse(config);
+      
+      const hauntRef = firestore.collection('haunts').doc(hauntId);
+      await hauntRef.set(validatedConfig, { merge: true });
+      
+      res.json({ success: true, config: validatedConfig });
+    } catch (error) {
+      console.error("Error updating haunt config:", error);
+      res.status(500).json({ error: "Failed to update haunt configuration" });
+    }
+  });
+
   // Save individual game score to leaderboard
   app.post("/api/leaderboard", async (req, res) => {
     try {
