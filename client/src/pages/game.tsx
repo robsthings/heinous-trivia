@@ -271,26 +271,26 @@ export default function Game() {
   const handleNextQuestion = () => {
     console.log('handleNextQuestion called, current selectedAnswer:', gameState.selectedAnswer);
     
-    // Force immediate state reset to ensure clean transition
-    setGameState(prev => ({
-      ...prev,
-      selectedAnswer: null,
-      showFeedback: false,
-      isCorrect: false
-    }));
-    
-    // Then apply the next question logic
-    setTimeout(() => {
-      setGameState(prev => {
-        const newState = GameManager.nextQuestion(prev);
-        console.log('New state after nextQuestion:', {
-          currentQuestionIndex: newState.currentQuestionIndex,
-          selectedAnswer: newState.selectedAnswer,
-          showFeedback: newState.showFeedback
-        });
-        return newState;
+    // Apply next question logic with explicit state reset
+    setGameState(prev => {
+      const newState = GameManager.nextQuestion(prev);
+      
+      // Force all interactive states to reset
+      const resetState = {
+        ...newState,
+        selectedAnswer: null,
+        showFeedback: false,
+        isCorrect: false
+      };
+      
+      console.log('New state after nextQuestion:', {
+        currentQuestionIndex: resetState.currentQuestionIndex,
+        selectedAnswer: resetState.selectedAnswer,
+        showFeedback: resetState.showFeedback
       });
-    }, 50); // Small delay to ensure state update is processed
+      
+      return resetState;
+    });
   };
 
   const handleCloseAd = () => {
