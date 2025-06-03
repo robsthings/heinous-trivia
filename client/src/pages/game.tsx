@@ -170,8 +170,17 @@ export default function Game() {
         if (response.ok) {
           const roundData = await response.json();
           
+          // Debug logging to track state changes
+          console.log('🔵 Player polling update:', {
+            questionIndex: roundData?.questionIndex,
+            status: roundData?.status,
+            hasQuestion: !!roundData?.question,
+            timestamp: new Date().toLocaleTimeString()
+          });
+          
           // Reset group answer when question changes
           if (activeRound && roundData && activeRound.questionIndex !== roundData.questionIndex) {
+            console.log('🔄 Question changed, resetting group answer');
             setGroupAnswer(null);
           }
           
