@@ -361,6 +361,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const hauntSnap = await hauntRef.get();
       
       if (!hauntSnap.exists) {
+        // Create default configuration for headquarters haunt if it doesn't exist
+        if (hauntId === 'headquarters') {
+          const defaultConfig = {
+            id: 'headquarters',
+            name: 'Heinous HQ',
+            description: 'Dr. Heinous\' main headquarters for horror trivia',
+            mode: 'queue',
+            tier: 'premium',
+            triviaFile: 'default-questions.json',
+            adFile: 'default-ads.json',
+            theme: {
+              primaryColor: '#8B0000',
+              secondaryColor: '#2D1B69',
+              accentColor: '#FF6B35'
+            },
+            isActive: true,
+            isPublished: true,
+            authCode: '3jfC9VrcAwpeyfp'
+          };
+          
+          await hauntRef.set(defaultConfig);
+          
+          return res.json({ 
+            success: true,
+            hostName: 'Heinous HQ',
+            active: false
+          });
+        }
+        
         return res.status(404).json({ success: false, error: "Haunt not found" });
       }
       
