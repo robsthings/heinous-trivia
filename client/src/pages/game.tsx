@@ -178,9 +178,11 @@ export default function Game() {
             timestamp: new Date().toLocaleTimeString()
           });
           
-          // Reset group answer when question changes
-          if (activeRound && roundData && activeRound.questionIndex !== roundData.questionIndex) {
-            console.log('🔄 Question changed, resetting group answer from', groupAnswer, 'to null');
+          // Check if question actually changed before resetting
+          const questionChanged = activeRound && roundData && activeRound.questionIndex !== roundData.questionIndex;
+          
+          if (questionChanged) {
+            console.log('🔄 Question changed from', activeRound.questionIndex, 'to', roundData.questionIndex, 'resetting group answer');
             setGroupAnswer(null);
           }
           
@@ -194,12 +196,6 @@ export default function Game() {
           }
           
           setActiveRound(roundData);
-          
-          // Force groupAnswer reset if this is a new question
-          if (roundData && (!activeRound || activeRound.questionIndex !== roundData.questionIndex)) {
-            console.log('🔄 Forcing groupAnswer reset for new question');
-            setGroupAnswer(null);
-          }
         }
       } catch (error) {
         console.error('Error polling for round updates:', error);
