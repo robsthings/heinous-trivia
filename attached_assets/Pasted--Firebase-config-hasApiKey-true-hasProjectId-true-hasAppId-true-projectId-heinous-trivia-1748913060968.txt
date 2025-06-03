@@ -1,0 +1,136 @@
+🔧 Firebase config: {hasApiKey: true, hasProjectId: true, hasAppId: true, projectId: 'heinous-trivia'}
+index-BqENMJa3.js:3631 🔥 Firebase app initialized
+index-BqENMJa3.js:437 [2025-06-03T01:09:07.969Z]  @firebase/firestore: Firestore (11.8.0): Uncaught Error in snapshot listener: FirebaseError: [code=permission-denied]: Missing or insufficient permissions.
+sK @ index-BqENMJa3.js:437
+error @ index-BqENMJa3.js:437
+No @ index-BqENMJa3.js:669
+error @ index-BqENMJa3.js:2001
+onError @ index-BqENMJa3.js:1956
+OY @ index-BqENMJa3.js:1956
+__ @ index-BqENMJa3.js:1971
+(anonymous) @ index-BqENMJa3.js:1971
+Promise.then
+BY @ index-BqENMJa3.js:1971
+(anonymous) @ index-BqENMJa3.js:1893
+bY @ index-BqENMJa3.js:1893
+onNext @ index-BqENMJa3.js:1862
+(anonymous) @ index-BqENMJa3.js:1862
+(anonymous) @ index-BqENMJa3.js:1862
+(anonymous) @ index-BqENMJa3.js:2106
+(anonymous) @ index-BqENMJa3.js:2106
+Promise.then
+rc @ index-BqENMJa3.js:2106
+enqueue @ index-BqENMJa3.js:2106
+enqueueAndForget @ index-BqENMJa3.js:2106
+(anonymous) @ index-BqENMJa3.js:1862
+(anonymous) @ index-BqENMJa3.js:1862
+c_ @ index-BqENMJa3.js:1802
+(anonymous) @ index-BqENMJa3.js:1817
+(anonymous) @ index-BqENMJa3.js:1817
+op @ index-BqENMJa3.js:616
+Un @ index-BqENMJa3.js:616
+Sl.ta @ index-BqENMJa3.js:624
+tx @ index-BqENMJa3.js:621
+qo.Y @ index-BqENMJa3.js:620
+qo.ca @ index-BqENMJa3.js:620
+op @ index-BqENMJa3.js:616
+Un @ index-BqENMJa3.js:616
+NP @ index-BqENMJa3.js:623
+t.bb @ index-BqENMJa3.js:623
+t.Ea @ index-BqENMJa3.js:623
+id @ index-BqENMJa3.js:622
+t.Pa @ index-BqENMJa3.js:621
+Promise.then
+AP @ index-BqENMJa3.js:621
+t.Sa @ index-BqENMJa3.js:621
+Promise.then
+t.send @ index-BqENMJa3.js:621
+t.ea @ index-BqENMJa3.js:623
+dP @ index-BqENMJa3.js:620
+LP @ index-BqENMJa3.js:624
+t.Fa @ index-BqENMJa3.js:624
+W @ index-BqENMJa3.js:616
+Promise.then
+H @ index-BqENMJa3.js:616
+$P @ index-BqENMJa3.js:624
+tx @ index-BqENMJa3.js:621
+qo.Y @ index-BqENMJa3.js:620
+qo.ca @ index-BqENMJa3.js:620
+op @ index-BqENMJa3.js:616
+Un @ index-BqENMJa3.js:616
+NP @ index-BqENMJa3.js:623
+t.bb @ index-BqENMJa3.js:623
+t.Ea @ index-BqENMJa3.js:623
+id @ index-BqENMJa3.js:622
+t.Pa @ index-BqENMJa3.js:621
+Promise.then
+AP @ index-BqENMJa3.js:621
+t.Sa @ index-BqENMJa3.js:621
+Promise.then
+t.send @ index-BqENMJa3.js:621
+t.ea @ index-BqENMJa3.js:623
+dP @ index-BqENMJa3.js:620
+Z0 @ index-BqENMJa3.js:620
+t.Ga @ index-BqENMJa3.js:624
+W @ index-BqENMJa3.js:616
+Promise.then
+H @ index-BqENMJa3.js:616
+vp @ index-BqENMJa3.js:624
+t.connect @ index-BqENMJa3.js:624
+mr.m @ index-BqENMJa3.js:624
+Zo @ index-BqENMJa3.js:1817
+send @ index-BqENMJa3.js:1802
+L_ @ index-BqENMJa3.js:1862
+H_ @ index-BqENMJa3.js:1862
+eT @ index-BqENMJa3.js:1893
+(anonymous) @ index-BqENMJa3.js:1893
+yY @ index-BqENMJa3.js:1893
+(anonymous) @ index-BqENMJa3.js:1862
+(anonymous) @ index-BqENMJa3.js:1862
+(anonymous) @ index-BqENMJa3.js:2106
+(anonymous) @ index-BqENMJa3.js:2106
+Promise.then
+rc @ index-BqENMJa3.js:2106
+enqueue @ index-BqENMJa3.js:2106
+enqueueAndForget @ index-BqENMJa3.js:2106
+(anonymous) @ index-BqENMJa3.js:1862
+(anonymous) @ index-BqENMJa3.js:1862
+a_ @ index-BqENMJa3.js:1802
+(anonymous) @ index-BqENMJa3.js:1817
+setTimeout
+T_ @ index-BqENMJa3.js:1817
+G_ @ index-BqENMJa3.js:1862
+K_ @ index-BqENMJa3.js:1862
+(anonymous) @ index-BqENMJa3.js:1862
+Promise.then
+auth @ index-BqENMJa3.js:1862
+start @ index-BqENMJa3.js:1862
+tT @ index-BqENMJa3.js:1893
+X4 @ index-BqENMJa3.js:1893
+i3 @ index-BqENMJa3.js:1971
+await in i3
+DY @ index-BqENMJa3.js:1971
+oT @ index-BqENMJa3.js:1956
+(anonymous) @ index-BqENMJa3.js:2016
+(anonymous) @ index-BqENMJa3.js:2016
+await in (anonymous)
+(anonymous) @ index-BqENMJa3.js:2106
+(anonymous) @ index-BqENMJa3.js:2106
+Promise.then
+rc @ index-BqENMJa3.js:2106
+enqueue @ index-BqENMJa3.js:2106
+enqueueAndForget @ index-BqENMJa3.js:2106
+ZY @ index-BqENMJa3.js:2016
+js @ index-BqENMJa3.js:2287
+(anonymous) @ index-BqENMJa3.js:3699
+(anonymous) @ index-BqENMJa3.js:3699
+ey @ index-BqENMJa3.js:40
+cc @ index-BqENMJa3.js:40
+JC @ index-BqENMJa3.js:40
+Zs @ index-BqENMJa3.js:38
+Pz @ index-BqENMJa3.js:40
+ga @ index-BqENMJa3.js:40
+LD @ index-BqENMJa3.js:40
+_ @ index-BqENMJa3.js:25
+k @ index-BqENMJa3.js:25Understand this error
+index-BqENMJa3.js:3631 No custom trivia found for haunt

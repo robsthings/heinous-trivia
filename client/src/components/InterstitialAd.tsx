@@ -1,21 +1,18 @@
 import React from "react";
 import type { GameState } from "@/lib/gameState";
-import { firestore } from "@/lib/firebase";
-import { doc, updateDoc, increment, setDoc, getDoc } from "firebase/firestore";
 
 // Consolidated ad tracking utility
 async function trackAdMetric(hauntId: string, adIndex: number, metric: 'views' | 'clicks') {
   try {
-    const metricsRef = doc(firestore, 'ad-metrics', hauntId, 'ads', `ad${adIndex}`);
-    const docSnap = await getDoc(metricsRef);
+    const response = await fetch(`/api/ad-metrics/${hauntId}/${adIndex}/${metric}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
     
-    if (docSnap.exists()) {
-      await updateDoc(metricsRef, { [metric]: increment(1) });
-    } else {
-      await setDoc(metricsRef, {
-        views: metric === 'views' ? 1 : 0,
-        clicks: metric === 'clicks' ? 1 : 0
-      });
+    if (!response.ok) {
+      throw new Error('Failed to track ad metric');
     }
   } catch (error) {
     console.error(`❌ Failed to track ad ${metric}:`, error);

@@ -212,6 +212,57 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Host panel - get active round
+  app.get("/api/host/:hauntId/round", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      const roundRef = firestore.collection('activeRound').doc(hauntId);
+      const roundDoc = await roundRef.get();
+      
+      if (roundDoc.exists) {
+        res.json(roundDoc.data());
+      } else {
+        res.json(null);
+      }
+    } catch (error) {
+      console.error("Error getting round:", error);
+      res.status(500).json({ error: "Failed to get round" });
+    }
+  });
+
+  // Track ad metrics
+  app.post("/api/ad-metrics/:hauntId/:adIndex/:metric", async (req, res) => {
+    try {
+      const { hauntId, adIndex, metric } = req.params;
+      
+      if (!firestore || !['views', 'clicks'].includes(metric)) {
+        throw new Error('Invalid request');
+      }
+      
+      const metricsRef = firestore.collection('ad-metrics').doc(hauntId).collection('ads').doc(`ad${adIndex}`);
+      const doc = await metricsRef.get();
+      
+      if (doc.exists) {
+        await metricsRef.update({ [metric]: (doc.data()[metric] || 0) + 1 });
+      } else {
+        await metricsRef.set({
+          views: metric === 'views' ? 1 : 0,
+          clicks: metric === 'clicks' ? 1 : 0
+        });
+      }
+      
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error tracking ad metric:", error);
+      res.status(500).json({ error: "Failed to track ad metric" });
+    }
+  });
+
   // Get all haunts
   app.get("/api/haunts", async (req, res) => {
     try {

@@ -96,20 +96,29 @@ export default function HostPanel() {
     loadQuestions();
   }, [hauntId, toast]);
 
-  // Listen for active round updates
+  // Poll for active round updates
   useEffect(() => {
     if (!hauntId) return;
 
-    const roundRef = doc(firestore, 'activeRound', hauntId);
-    const unsubscribe = onSnapshot(roundRef, (doc) => {
-      if (doc.exists()) {
-        setActiveRound(doc.data() as ActiveRound);
-      } else {
-        setActiveRound(null);
+    const pollForUpdates = async () => {
+      try {
+        const response = await fetch(`/api/host/${hauntId}/round`);
+        if (response.ok) {
+          const roundData = await response.json();
+          setActiveRound(roundData);
+        }
+      } catch (error) {
+        console.error('Error polling for round updates:', error);
       }
-    });
+    };
 
-    return () => unsubscribe();
+    // Initial load
+    pollForUpdates();
+
+    // Poll every 2 seconds for updates
+    const interval = setInterval(pollForUpdates, 2000);
+
+    return () => clearInterval(interval);
   }, [hauntId]);
 
   // Countdown timer effect
