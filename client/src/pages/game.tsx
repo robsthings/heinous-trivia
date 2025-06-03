@@ -194,6 +194,12 @@ export default function Game() {
           }
           
           setActiveRound(roundData);
+          
+          // Force groupAnswer reset if this is a new question
+          if (roundData && (!activeRound || activeRound.questionIndex !== roundData.questionIndex)) {
+            console.log('🔄 Forcing groupAnswer reset for new question');
+            setGroupAnswer(null);
+          }
         }
       } catch (error) {
         console.error('Error polling for round updates:', error);
