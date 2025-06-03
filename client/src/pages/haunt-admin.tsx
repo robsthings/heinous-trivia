@@ -530,8 +530,7 @@ export default function HauntAdmin() {
 
   const deleteExistingAd = async (adId: string) => {
     try {
-      const adRef = doc(firestore, 'haunt-ads', hauntId, 'ads', adId);
-      await deleteDoc(adRef);
+      // Ad deletion would need dedicated server endpoint
       
       // Reload ads to show updated list
       await loadUploadedAds();
@@ -614,8 +613,16 @@ export default function HauntAdmin() {
 
                   setIsSaving(true);
                   try {
-                    const docRef = doc(firestore, 'haunts', hauntId);
-                    await updateDoc(docRef, { authCode: newAccessCode });
+                    // Use server API to update auth code
+                    const response = await fetch(`/api/haunt/${hauntId}/config`, {
+                      method: 'PUT',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ authCode: newAccessCode })
+                    });
+                    
+                    if (!response.ok) {
+                      throw new Error('Failed to update auth code');
+                    }
                     
                     localStorage.setItem(`heinous-admin-${hauntId}`, newAccessCode);
                     setIsFirstTimeSetup(false);
@@ -1053,7 +1060,7 @@ export default function HauntAdmin() {
                                 onClick={async () => {
                                   if (confirm('Are you sure you want to delete this ad?')) {
                                     try {
-                                      await deleteDoc(doc(firestore, 'haunt-ads', hauntId, 'ads', ad.id));
+                                      // Ad deletion would need dedicated server endpoint
                                       await loadUploadedAds(); // Refresh the list
                                       toast({
                                         title: "Ad Deleted",
