@@ -538,7 +538,7 @@ export default function Game() {
                               ? "secondary"
                               : "outline"
                           }
-                          className={`p-4 text-left h-auto ${
+                          className={`p-4 text-left h-auto w-full whitespace-normal break-words ${
                             activeRound.status === "reveal" && index === activeRound.question.correctAnswer
                               ? "bg-green-600 hover:bg-green-700 border-green-500"
                               : groupAnswer === index

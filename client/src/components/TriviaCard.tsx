@@ -38,7 +38,7 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
   const answerLabels = ['A', 'B', 'C', 'D'];
 
   const getButtonClass = (index: number) => {
-    let baseClass = "w-full p-3 sm:p-4 rounded-lg text-left font-medium text-white hover:scale-[1.02] transition-all duration-200 border-2 touch-manipulation";
+    let baseClass = "w-full p-3 sm:p-4 rounded-lg text-left font-medium text-white hover:scale-[1.02] transition-all duration-200 border-2 touch-manipulation whitespace-normal break-words";
     
     if (gameState.showFeedback && gameState.selectedAnswer !== null) {
       if (index === currentQuestion.correctAnswer) {
