@@ -173,8 +173,11 @@ export default function Game() {
         if (response.ok) {
           const roundData = await response.json();
           
-          // Reset group answer when question changes
-          if (activeRound && roundData && activeRound.questionIndex !== roundData.questionIndex) {
+          // Reset group answer when question changes OR when status becomes "live"
+          if (activeRound && roundData && (
+            activeRound.questionIndex !== roundData.questionIndex || 
+            (roundData.status === "live" && activeRound.status !== "live")
+          )) {
             setGroupAnswer(null);
           }
           

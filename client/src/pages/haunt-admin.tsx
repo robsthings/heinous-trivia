@@ -205,15 +205,9 @@ export default function HauntAdmin() {
 
       setIsLoading(true);
       try {
-        // Authenticate before loading data
-        if (!auth.currentUser) {
-          await signInAnonymously(auth);
-        }
+        const response = await fetch(`/api/haunt-config/${hauntId}`);
         
-        const docRef = doc(firestore, 'haunts', hauntId);
-        const docSnap = await getDoc(docRef);
-        
-        if (!docSnap.exists()) {
+        if (!response.ok) {
           toast({
             title: "Haunt Not Found",
             description: "This haunt doesn't exist.",
@@ -223,7 +217,7 @@ export default function HauntAdmin() {
           return;
         }
 
-        const data = docSnap.data() as HauntConfig;
+        const data = await response.json() as HauntConfig;
         
         // Check if this is first-time setup
         if (!data.authCode) {
