@@ -40,6 +40,23 @@ export default function HostPanel() {
   const [countdown, setCountdown] = useState(0);
   const [allPlayers, setAllPlayers] = useState<Record<string, { score: number; lastSeen: number }>>({});
   const [countdownDuration, setCountdownDuration] = useState(3);
+  const [leaderboard, setLeaderboard] = useState<any[]>([]);
+  const [leaderboardLoading, setLeaderboardLoading] = useState(false);
+
+  // Load persistent leaderboard
+  const loadLeaderboard = async () => {
+    setLeaderboardLoading(true);
+    try {
+      const response = await fetch(`/api/leaderboard/${hauntId}`);
+      if (response.ok) {
+        const data = await response.json();
+        setLeaderboard(data);
+      }
+    } catch (error) {
+      console.error('Failed to load leaderboard:', error);
+    }
+    setLeaderboardLoading(false);
+  };
 
   // Load questions on mount
   useEffect(() => {
@@ -84,6 +101,9 @@ export default function HostPanel() {
         const loadedQuestions = await ConfigLoader.loadTriviaQuestions(hauntId);
         // Take first 10 questions for the round
         setQuestions(loadedQuestions.slice(0, 10));
+        
+        // Load leaderboard data
+        await loadLeaderboard();
       } catch (error) {
         console.error('Failed to load questions:', error);
         toast({
@@ -636,6 +656,79 @@ export default function HostPanel() {
                   </CardContent>
                 </Card>
               )}
+
+              {/* Persistent Leaderboard */}
+              <Card className="bg-gray-900/50 border-gray-700">
+                <CardHeader>
+                  <CardTitle className="text-red-400 flex items-center justify-between">
+                    🏆 Persistent Leaderboard
+                    <Button
+                      onClick={loadLeaderboard}
+                      variant="ghost"
+                      size="sm"
+                      disabled={leaderboardLoading}
+                      className="text-blue-400 hover:text-blue-300"
+                    >
+                      {leaderboardLoading ? "Loading..." : "Refresh"}
+                    </Button>
+                  </CardTitle>
+                  <p className="text-gray-400 text-sm">All-time scores for this haunt (individual + group players)</p>
+                </CardHeader>
+                <CardContent>
+                  {leaderboardLoading ? (
+                    <div className="text-center text-gray-400 py-6">
+                      <div className="animate-spin w-6 h-6 border-2 border-blue-400 border-t-transparent rounded-full mx-auto mb-2"></div>
+                      <p>Loading leaderboard...</p>
+                    </div>
+                  ) : leaderboard.length === 0 ? (
+                    <div className="text-center text-gray-400 py-6">
+                      <p>No scores recorded yet.</p>
+                      <p className="text-sm mt-2">Scores will appear here after players complete games.</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-2 max-h-96 overflow-y-auto">
+                      {leaderboard.slice(0, 20).map((entry, index) => (
+                        <div 
+                          key={`${entry.playerName}-${entry.score}-${index}`}
+                          className="flex items-center justify-between bg-gray-800/50 p-3 rounded border border-gray-600"
+                        >
+                          <div className="flex items-center space-x-3">
+                            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
+                              index === 0 ? 'bg-yellow-600 text-yellow-100' :
+                              index === 1 ? 'bg-gray-400 text-gray-900' :
+                              index === 2 ? 'bg-orange-600 text-orange-100' :
+                              'bg-gray-700 text-gray-300'
+                            }`}>
+                              {index + 1}
+                            </div>
+                            <div>
+                              <div className="text-white font-medium">
+                                {entry.playerName}
+                                {entry.gameType && (
+                                  <span className={`ml-2 text-xs px-2 py-1 rounded ${
+                                    entry.gameType === 'group' ? 'bg-purple-900/50 text-purple-300' : 'bg-blue-900/50 text-blue-300'
+                                  }`}>
+                                    {entry.gameType}
+                                  </span>
+                                )}
+                              </div>
+                              <div className="text-gray-400 text-xs">
+                                {entry.questionsAnswered} questions • {entry.correctAnswers} correct
+                              </div>
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <div className="text-white font-bold">{entry.score}</div>
+                            <div className="text-gray-400 text-xs">
+                              {entry.date ? new Date(entry.date).toLocaleDateString() : 'Recent'}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
 
             </div>
           </CardContent>
