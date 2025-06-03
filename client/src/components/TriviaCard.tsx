@@ -11,6 +11,14 @@ interface TriviaCardProps {
 export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: TriviaCardProps) {
   const currentQuestion = gameState.questions[gameState.currentQuestionIndex];
   
+  // Debug logging to track state changes
+  console.log('TriviaCard render:', {
+    questionIndex: gameState.currentQuestionIndex,
+    selectedAnswer: gameState.selectedAnswer,
+    showFeedback: gameState.showFeedback,
+    questionText: currentQuestion?.text?.substring(0, 50) + '...'
+  });
+  
   // Get theme colors from haunt config
   const primaryColor = gameState.hauntConfig?.theme?.primaryColor || '#8B0000';
   const secondaryColor = gameState.hauntConfig?.theme?.secondaryColor || '#2D1B69';
