@@ -273,11 +273,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         throw new Error('Firebase not configured');
       }
       
-      // Update round with player answer
+      // Update round with player answer and name
       const roundRef = firestore.collection('activeRound').doc(hauntId);
       await roundRef.update({
         [`currentAnswers.${playerId}`]: answerIndex,
-        [`playerScores.${playerId}`]: firestore.FieldValue.increment(isCorrect ? 100 : 0)
+        [`playerScores.${playerId}`]: firestore.FieldValue.increment(isCorrect ? 100 : 0),
+        [`playerNames.${playerId}`]: playerName
       });
       
       // Also save to leaderboards collection for persistent tracking
@@ -309,6 +310,51 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error submitting group answer:", error);
       res.status(500).json({ error: "Failed to submit answer" });
+    }
+  });
+
+  // Get leaderboard for moderation
+  app.get("/api/leaderboard/:hauntId", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      const leaderboardRef = firestore.collection('leaderboards').doc(hauntId).collection('players');
+      const snapshot = await leaderboardRef.orderBy('score', 'desc').limit(50).get();
+      
+      const players = snapshot.docs.map(doc => doc.data());
+      
+      res.json(players);
+    } catch (error) {
+      console.error("Error getting leaderboard:", error);
+      res.status(500).json({ error: "Failed to get leaderboard" });
+    }
+  });
+
+  // Moderate player (hide from public leaderboards permanently)
+  app.post("/api/moderate/:hauntId/:playerId", async (req, res) => {
+    try {
+      const { hauntId, playerId } = req.params;
+      const { hidden } = req.body;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      // Update player's hidden status in leaderboard
+      const leaderboardRef = firestore.collection('leaderboards').doc(hauntId).collection('players').doc(playerId);
+      await leaderboardRef.update({
+        hidden: hidden,
+        moderatedAt: new Date()
+      });
+      
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error moderating player:", error);
+      res.status(500).json({ error: "Failed to moderate player" });
     }
   });
 

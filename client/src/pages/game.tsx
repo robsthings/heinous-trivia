@@ -27,6 +27,10 @@ interface ActiveRound {
   startTime: number;
   currentAnswers: Record<string, string>;
   totalQuestions: number;
+  hiddenPlayers?: Record<string, boolean>;
+  playerScores?: Record<string, number>;
+  playerNames?: Record<string, string>;
+  countdownDuration?: number;
 }
 
 export default function Game() {

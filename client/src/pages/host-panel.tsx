@@ -24,6 +24,7 @@ interface ActiveRound {
   totalQuestions: number;
   hiddenPlayers?: Record<string, boolean>;
   playerScores?: Record<string, number>;
+  playerNames?: Record<string, string>;
   countdownDuration?: number;
 }
 
@@ -577,12 +578,16 @@ export default function HostPanel() {
                         {Object.keys(activeRound.currentAnswers).map((playerId) => {
                           const isHidden = activeRound.hiddenPlayers?.[playerId] || false;
                           const playerScore = activeRound.playerScores?.[playerId] || 0;
+                          const playerName = activeRound.playerNames?.[playerId] || playerId;
                           
                           return (
                             <div key={playerId} className="flex items-center justify-between bg-gray-800/50 p-3 rounded border border-gray-600">
                               <div className="flex items-center space-x-3">
                                 <div className="text-white font-medium">
-                                  {playerId}
+                                  {playerName}
+                                </div>
+                                <div className="text-gray-400 text-xs">
+                                  ID: {playerId}
                                 </div>
                                 <div className="text-gray-400 text-sm">
                                   Score: {playerScore}
