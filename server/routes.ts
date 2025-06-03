@@ -275,11 +275,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Update round with player answer and name
       const roundRef = firestore.collection('activeRound').doc(hauntId);
-      await roundRef.update({
-        [`currentAnswers.${playerId}`]: answerIndex,
-        [`playerScores.${playerId}`]: FieldValue.increment(isCorrect ? 100 : 0),
-        [`playerNames.${playerId}`]: playerName
-      });
+      const roundDoc = await roundRef.get();
+      
+      if (roundDoc.exists) {
+        await roundRef.update({
+          [`currentAnswers.${playerId}`]: answerIndex,
+          [`playerScores.${playerId}`]: FieldValue.increment(isCorrect ? 100 : 0),
+          [`playerNames.${playerId}`]: playerName
+        });
+      } else {
+        // Initialize round document if it doesn't exist
+        await roundRef.set({
+          currentAnswers: { [playerId]: answerIndex },
+          playerScores: { [playerId]: isCorrect ? 100 : 0 },
+          playerNames: { [playerId]: playerName }
+        }, { merge: true });
+      }
       
       // Also save to leaderboards collection for persistent tracking
       const leaderboardRef = firestore.collection('leaderboards').doc(hauntId).collection('players').doc(playerId);

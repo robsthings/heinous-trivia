@@ -311,7 +311,9 @@ export default function HostPanel() {
           question: questions[nextIndex],
           status: "waiting",
           currentAnswers: {},
-          startTime: Date.now()
+          startTime: Date.now(),
+          playerScores: activeRound.playerScores || {},
+          playerNames: activeRound.playerNames || {}
         })
       });
 
