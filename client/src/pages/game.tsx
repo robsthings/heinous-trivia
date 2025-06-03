@@ -157,6 +157,31 @@ export default function Game() {
     initializeGame();
   }, [gameState.currentHaunt]);
 
+  // Listen for active round updates in group mode
+  useEffect(() => {
+    if (!isGroupMode || !gameState.currentHaunt) return;
+
+    const pollForRoundUpdates = async () => {
+      try {
+        const response = await fetch(`/api/host/${gameState.currentHaunt}/round`);
+        if (response.ok) {
+          const roundData = await response.json();
+          setActiveRound(roundData);
+        }
+      } catch (error) {
+        console.error('Error polling for round updates:', error);
+      }
+    };
+
+    // Initial load
+    pollForRoundUpdates();
+
+    // Poll every 2 seconds for updates
+    const interval = setInterval(pollForRoundUpdates, 2000);
+
+    return () => clearInterval(interval);
+  }, [isGroupMode, gameState.currentHaunt]);
+
   const savePlayerInfo = (name: string) => {
     const newPlayerId = playerId || `player_${Math.random().toString(36).substr(2, 9)}`;
     const haunt = gameState.currentHaunt;
