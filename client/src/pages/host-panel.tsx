@@ -26,6 +26,7 @@ interface ActiveRound {
   playerScores?: Record<string, number>;
   playerNames?: Record<string, string>;
   countdownDuration?: number;
+  questionResetId?: number;
 }
 
 export default function HostPanel() {
@@ -312,6 +313,7 @@ export default function HostPanel() {
           status: "waiting",
           currentAnswers: {},
           startTime: Date.now(),
+          questionResetId: Date.now() + Math.random(), // Unique reset marker
           playerScores: activeRound.playerScores || {},
           playerNames: activeRound.playerNames || {}
         })

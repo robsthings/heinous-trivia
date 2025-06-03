@@ -32,6 +32,7 @@ interface ActiveRound {
   playerScores?: Record<string, number>;
   playerNames?: Record<string, string>;
   countdownDuration?: number;
+  questionResetId?: number;
 }
 
 export default function Game() {
@@ -53,6 +54,7 @@ export default function Game() {
   const [showNamePrompt, setShowNamePrompt] = useState(false);
   const [tempName, setTempName] = useState("");
   const [groupAnswer, setGroupAnswer] = useState<number | null>(null);
+  const [lastResetId, setLastResetId] = useState<number | null>(null);
   const [countdown, setCountdown] = useState(0);
   const { toast } = useToast();
 
@@ -173,29 +175,19 @@ export default function Game() {
         if (response.ok) {
           const roundData = await response.json();
           
-          // Only reset groupAnswer when host explicitly advances to next question
-          // This prevents race conditions where player selections get wiped during polling
-          if (activeRound && roundData) {
-            // Reset only when host clicks "Next Question" - indicated by:
-            // 1. questionIndex increases AND status becomes "waiting" (host advancing)
-            // 2. OR when currentAnswers object is reset (indicates new question setup)
-            const isHostAdvancing = (
-              activeRound.questionIndex < roundData.questionIndex && 
-              roundData.status === "waiting"
-            ) || (
-              Object.keys(activeRound.currentAnswers || {}).length > 0 && 
-              Object.keys(roundData.currentAnswers || {}).length === 0 &&
-              activeRound.questionIndex !== roundData.questionIndex
-            );
-            
-            if (isHostAdvancing) {
-              setGroupAnswer(null);
-            }
+          // Use unique reset marker for predictable one-time resets
+          // Only reset when host sets a new questionResetId (when advancing questions)
+          if (roundData && roundData.questionResetId && roundData.questionResetId !== lastResetId) {
+            setGroupAnswer(null);
+            setLastResetId(roundData.questionResetId);
           }
           
           // Reset on initial round data load
           if (!activeRound && roundData) {
             setGroupAnswer(null);
+            if (roundData.questionResetId) {
+              setLastResetId(roundData.questionResetId);
+            }
           }
           
           setActiveRound(roundData);
