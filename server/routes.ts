@@ -446,42 +446,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get active round for a haunt
-  app.get("/api/active-round/:hauntId", async (req, res) => {
-    console.log(`[ACTIVE ROUND ROUTE] Route handler called for: ${req.params.hauntId}`);
-    
-    try {
-      const { hauntId } = req.params;
-      
-      console.log(`[ACTIVE ROUND] Getting active round for haunt: ${hauntId}`);
-      
-      if (!firestore) {
-        console.error('[ACTIVE ROUND] Firebase not configured');
-        return res.status(500).json({ error: 'Firebase not configured' });
-      }
-      
-      const activeRoundRef = firestore.collection('activeRound').doc(hauntId);
-      const activeRoundSnap = await activeRoundRef.get();
-      
-      if (!activeRoundSnap.exists) {
-        console.log(`[ACTIVE ROUND] No active round found for haunt: ${hauntId}`);
-        return res.status(404).json({ error: "No active round found" });
-      }
-      
-      const roundData = activeRoundSnap.data();
-      console.log(`[ACTIVE ROUND] Found active round for haunt ${hauntId}:`, {
-        questionIndex: roundData?.questionIndex,
-        status: roundData?.status,
-        totalQuestions: roundData?.totalQuestions,
-        playerCount: Object.keys(roundData?.currentAnswers || {}).length
-      });
-      
-      res.json(roundData);
-    } catch (error) {
-      console.error(`[ACTIVE ROUND] Error getting active round for haunt ${req.params.hauntId}:`, error);
-      res.status(500).json({ error: "Failed to get active round" });
-    }
-  });
+
 
   // Save individual game score to leaderboard
   app.post("/api/leaderboard", async (req, res) => {
