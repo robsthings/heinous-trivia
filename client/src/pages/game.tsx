@@ -54,8 +54,7 @@ export default function Game() {
   const [showNamePrompt, setShowNamePrompt] = useState(false);
   const [tempName, setTempName] = useState("");
   const [groupAnswer, setGroupAnswer] = useState<number | null>(null);
-  const [lastResetId, setLastResetId] = useState<number | null>(null);
-  const [previousQuestionIndex, setPreviousQuestionIndex] = useState<number | null>(null);
+  const [lastSeenQuestionIndex, setLastSeenQuestionIndex] = useState<number | null>(null);
   const [countdown, setCountdown] = useState(0);
   const { toast } = useToast();
 
@@ -176,22 +175,7 @@ export default function Game() {
         if (response.ok) {
           const roundData = await response.json();
           
-          // Only reset when host actively advances to next question
-          // Don't reset on initial load (when previousQuestionIndex is null)
-          if (roundData) {
-            const isNewQuestion = roundData.questionIndex !== previousQuestionIndex;
-            const isHostAdvance = roundData.status === "waiting" && isNewQuestion && previousQuestionIndex !== null;
-            
-            if (isHostAdvance) {
-              setGroupAnswer(null);
-            }
-            
-            // Update tracking
-            setPreviousQuestionIndex(roundData.questionIndex);
-            if (roundData.questionResetId) {
-              setLastResetId(roundData.questionResetId);
-            }
-          }
+          // Just update activeRound data, reset logic handled by useEffect
           
           setActiveRound(roundData);
         }
@@ -226,6 +210,19 @@ export default function Game() {
       return () => clearTimeout(timer);
     }
   }, [isGroupMode, activeRound, activeRound?.status, activeRound?.startTime]);
+
+  // Reset groupAnswer only when host advances questions
+  useEffect(() => {
+    if (!activeRound) return;
+    
+    const hasAdvanced = lastSeenQuestionIndex !== null && activeRound.questionIndex !== lastSeenQuestionIndex;
+
+    if (hasAdvanced && activeRound.status === "waiting") {
+      setGroupAnswer(null); // Only clear answer when host explicitly advances
+    }
+
+    setLastSeenQuestionIndex(activeRound.questionIndex);
+  }, [activeRound?.questionIndex, activeRound?.status]);
 
   const handleGroupAnswer = async (answerIndex: number) => {
     if (!activeRound || !playerId || !playerName) return;
