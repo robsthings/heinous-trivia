@@ -313,6 +313,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Save individual game score to leaderboard
+  app.post("/api/leaderboard", async (req, res) => {
+    try {
+      const { name, score, haunt, questionsAnswered, correctAnswers } = req.body;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      // Generate a unique player ID for individual games
+      const playerId = `individual_${Math.random().toString(36).substr(2, 9)}`;
+      
+      // Save to leaderboards collection
+      const leaderboardRef = firestore.collection('leaderboards').doc(haunt).collection('players').doc(playerId);
+      await leaderboardRef.set({
+        playerName: name,
+        playerId,
+        score,
+        questionsAnswered,
+        correctAnswers,
+        hauntId: haunt,
+        gameType: 'individual',
+        createdAt: new Date(),
+        lastPlayed: new Date()
+      });
+      
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error saving leaderboard entry:", error);
+      res.status(500).json({ error: "Failed to save score" });
+    }
+  });
+
   // Get leaderboard for moderation
   app.get("/api/leaderboard/:hauntId", async (req, res) => {
     try {
