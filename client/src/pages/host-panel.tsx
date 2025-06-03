@@ -8,8 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { firestore } from "@/lib/firebase";
-import { doc, setDoc, updateDoc, onSnapshot, getDoc } from "firebase/firestore";
+
 import { ConfigLoader } from "@/lib/configLoader";
 import { Eye, EyeOff, Clock } from "lucide-react";
 import type { TriviaQuestion } from "@shared/schema";
@@ -187,20 +186,38 @@ export default function HostPanel() {
       // Start custom countdown
       setCountdown(countdownDuration);
       
-      // Update status to countdown
-      const roundRef = doc(firestore, 'activeRound', hauntId);
-      await updateDoc(roundRef, {
-        status: "countdown",
-        startTime: Date.now(),
-        countdownDuration: countdownDuration
+      // Update status to countdown via server API
+      const response = await fetch(`/api/host/${hauntId}/round`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          status: "countdown",
+          startTime: Date.now(),
+          countdownDuration: countdownDuration
+        })
       });
+
+      if (!response.ok) {
+        throw new Error('Failed to update round status');
+      }
 
       // After countdown, set to live
       setTimeout(async () => {
-        await updateDoc(roundRef, {
-          status: "live"
+        const liveResponse = await fetch(`/api/host/${hauntId}/round`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            status: "live"
+          })
         });
-        setCountdown(0);
+        
+        if (liveResponse.ok) {
+          setCountdown(0);
+        }
       }, countdownDuration * 1000);
 
       toast({
@@ -221,10 +238,19 @@ export default function HostPanel() {
     if (!activeRound) return;
 
     try {
-      const roundRef = doc(firestore, 'activeRound', hauntId);
-      await updateDoc(roundRef, {
-        status: "reveal"
+      const response = await fetch(`/api/host/${hauntId}/round`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          status: "reveal"
+        })
       });
+
+      if (!response.ok) {
+        throw new Error('Failed to reveal answer');
+      }
 
       toast({
         title: "Answer Revealed",
@@ -248,16 +274,23 @@ export default function HostPanel() {
     if (nextIndex >= questions.length) {
       // End of round
       try {
-        const roundRef = doc(firestore, 'activeRound', hauntId);
-        await updateDoc(roundRef, {
-          status: "waiting",
-          questionIndex: -1 // Indicates round is complete
+        const response = await fetch(`/api/host/${hauntId}/round`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            status: "waiting",
+            questionIndex: -1 // Indicates round is complete
+          })
         });
 
-        toast({
-          title: "Round Complete",
-          description: "All questions have been answered!",
-        });
+        if (response.ok) {
+          toast({
+            title: "Round Complete",
+            description: "All questions have been answered!",
+          });
+        }
       } catch (error) {
         console.error('Failed to end round:', error);
       }
@@ -265,14 +298,23 @@ export default function HostPanel() {
     }
 
     try {
-      const roundRef = doc(firestore, 'activeRound', hauntId);
-      await updateDoc(roundRef, {
-        questionIndex: nextIndex,
-        question: questions[nextIndex],
-        status: "waiting",
-        currentAnswers: {},
-        startTime: Date.now()
+      const response = await fetch(`/api/host/${hauntId}/round`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          questionIndex: nextIndex,
+          question: questions[nextIndex],
+          status: "waiting",
+          currentAnswers: {},
+          startTime: Date.now()
+        })
       });
+
+      if (!response.ok) {
+        throw new Error('Failed to advance question');
+      }
 
       toast({
         title: "Next Question",
@@ -295,10 +337,19 @@ export default function HostPanel() {
       const currentHidden = activeRound.hiddenPlayers || {};
       const newHiddenStatus = !currentHidden[playerName];
       
-      const roundRef = doc(firestore, 'activeRound', hauntId);
-      await updateDoc(roundRef, {
-        [`hiddenPlayers.${playerName}`]: newHiddenStatus
+      const response = await fetch(`/api/host/${hauntId}/round`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          [`hiddenPlayers.${playerName}`]: newHiddenStatus
+        })
       });
+
+      if (!response.ok) {
+        throw new Error('Failed to update player visibility');
+      }
 
       toast({
         title: newHiddenStatus ? "Player Hidden" : "Player Shown",
