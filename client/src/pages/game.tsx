@@ -570,6 +570,7 @@ export default function Game() {
           )
         ) : (
           <TriviaCard
+            key={`question-${gameState.currentQuestionIndex}`}
             gameState={gameState}
             onSelectAnswer={handleSelectAnswer}
             onNextQuestion={handleNextQuestion}
