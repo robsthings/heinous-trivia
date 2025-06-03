@@ -190,23 +190,23 @@ export default function Game() {
     // Initial load
     pollForRoundUpdates();
 
-    // Poll every 2 seconds for updates
-    const interval = setInterval(pollForRoundUpdates, 2000);
+    // Poll every 5 seconds for updates (reduced frequency)
+    const interval = setInterval(pollForRoundUpdates, 5000);
 
     return () => clearInterval(interval);
   }, [isGroupMode, gameState.currentHaunt]);
 
-  // Reset group answer when host signals a reset (track previous state)
-  const [prevResetFlag, setPrevResetFlag] = useState<boolean>(false);
+  // Simple approach: reset group answer when question index changes
+  const [lastQuestionIndex, setLastQuestionIndex] = useState<number | null>(null);
   
   useEffect(() => {
-    if (isGroupMode && activeRound?.resetPlayerAnswers && !prevResetFlag) {
-      setGroupAnswer(null);
-      setPrevResetFlag(true);
-    } else if (!activeRound?.resetPlayerAnswers && prevResetFlag) {
-      setPrevResetFlag(false);
+    if (isGroupMode && activeRound && activeRound.questionIndex !== lastQuestionIndex) {
+      if (lastQuestionIndex !== null) { // Don't reset on first load
+        setGroupAnswer(null);
+      }
+      setLastQuestionIndex(activeRound.questionIndex);
     }
-  }, [activeRound?.resetPlayerAnswers, isGroupMode, prevResetFlag]);
+  }, [activeRound?.questionIndex, isGroupMode, lastQuestionIndex]);
 
   // Handle countdown in group mode
   useEffect(() => {
