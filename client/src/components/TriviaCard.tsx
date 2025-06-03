@@ -112,6 +112,7 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
             key={index}
             className={getButtonClass(index)}
             onClick={() => {
+              console.log(`🔴 Button ${index} clicked! Current selectedAnswer:`, gameState.selectedAnswer);
               // Answer bounds check
               if (index < 0 || index >= currentQuestion.answers?.length) {
                 console.warn("Invalid answer selected");
