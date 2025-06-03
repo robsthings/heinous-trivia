@@ -278,10 +278,9 @@ export default function HauntAdmin() {
 
   const loadHauntConfig = async () => {
     try {
-      const docRef = doc(firestore, 'haunts', hauntId);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        const data = docSnap.data() as HauntConfig;
+      const response = await fetch(`/api/haunt-config/${hauntId}`);
+      if (response.ok) {
+        const data = await response.json();
         setHauntConfig(data);
       }
     } catch (error) {
@@ -461,8 +460,18 @@ export default function HauntAdmin() {
         }
       };
 
-      const docRef = doc(firestore, 'haunts', hauntId);
-      await updateDoc(docRef, updatedConfig);
+      // Use server API instead of direct Firestore
+      const response = await fetch(`/api/haunt-config/${hauntId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedConfig)
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to save configuration');
+      }
       
       setHauntConfig(updatedConfig);
       
