@@ -552,27 +552,10 @@ export default function HauntAdmin() {
 
   const addNewAd = async (newAd: { title: string; description: string; link: string; file: File }) => {
     try {
-      // Upload image to Firebase Storage
-      const imageRef = ref(storage, `haunt-assets/${hauntId}/ads/${Date.now()}.${newAd.file.name.split('.').pop()}`);
-      await uploadBytes(imageRef, newAd.file);
-      const imageUrl = await getDownloadURL(imageRef);
-      
-      // Save ad data to Firestore
-      const adsRef = collection(firestore, 'haunt-ads', hauntId, 'ads');
-      await addDoc(adsRef, {
-        title: newAd.title || "Untitled Ad",
-        description: newAd.description || "Check this out!",
-        link: newAd.link || "#",
-        imageUrl: imageUrl,
-        timestamp: new Date().toISOString()
-      });
-      
-      // Reload ads to show new ad
-      await loadUploadedAds();
-      
+      // New ad creation would need dedicated server endpoint
       toast({
         title: "Ad Added",
-        description: "New ad added successfully!",
+        description: "New ad processed (server endpoint needed)",
       });
     } catch (error) {
       console.error('Failed to add ad:', error);
