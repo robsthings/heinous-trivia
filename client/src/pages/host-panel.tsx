@@ -9,6 +9,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 
+import { firestore } from "@/lib/firebase";
+import { doc, getDoc } from "firebase/firestore";
 import { ConfigLoader } from "@/lib/configLoader";
 import { Eye, EyeOff, Clock } from "lucide-react";
 import type { TriviaQuestion } from "@shared/schema";
