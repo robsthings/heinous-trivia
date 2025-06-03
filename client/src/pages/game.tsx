@@ -55,6 +55,7 @@ export default function Game() {
   const [tempName, setTempName] = useState("");
   const [groupAnswer, setGroupAnswer] = useState<number | null>(null);
   const [lastResetId, setLastResetId] = useState<number | null>(null);
+  const [previousQuestionIndex, setPreviousQuestionIndex] = useState<number | null>(null);
   const [countdown, setCountdown] = useState(0);
   const { toast } = useToast();
 
@@ -175,16 +176,18 @@ export default function Game() {
         if (response.ok) {
           const roundData = await response.json();
           
-          // Use unique reset marker for predictable one-time resets
-          // Only reset when host sets a new questionResetId (when advancing questions)
-          if (roundData && roundData.questionResetId && roundData.questionResetId !== lastResetId) {
-            setGroupAnswer(null);
-            setLastResetId(roundData.questionResetId);
-          }
-          
-          // Reset on initial round data load
-          if (!activeRound && roundData) {
-            setGroupAnswer(null);
+          // Only reset when host actively advances to next question
+          // Don't reset on initial load (when previousQuestionIndex is null)
+          if (roundData) {
+            const isNewQuestion = roundData.questionIndex !== previousQuestionIndex;
+            const isHostAdvance = roundData.status === "waiting" && isNewQuestion && previousQuestionIndex !== null;
+            
+            if (isHostAdvance) {
+              setGroupAnswer(null);
+            }
+            
+            // Update tracking
+            setPreviousQuestionIndex(roundData.questionIndex);
             if (roundData.questionResetId) {
               setLastResetId(roundData.questionResetId);
             }
