@@ -23,7 +23,7 @@ import type { LeaderboardEntry, TriviaQuestion } from "@shared/schema";
 interface ActiveRound {
   questionIndex: number;
   question: TriviaQuestion;
-  status: "countdown" | "live" | "reveal" | "waiting";
+  status: "countdown" | "live" | "reveal" | "waiting" | "final_leaderboard";
   startTime: number;
   currentAnswers: Record<string, string>;
   totalQuestions: number;
@@ -32,6 +32,8 @@ interface ActiveRound {
   playerNames?: Record<string, string>;
   countdownDuration?: number;
   questionResetId?: number;
+  finalScores?: Record<string, number>;
+  endTime?: number;
 }
 
 export default function Game() {

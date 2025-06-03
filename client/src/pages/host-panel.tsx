@@ -17,7 +17,7 @@ import type { TriviaQuestion } from "@shared/schema";
 interface ActiveRound {
   questionIndex: number;
   question: TriviaQuestion;
-  status: "countdown" | "live" | "reveal" | "waiting";
+  status: "countdown" | "live" | "reveal" | "waiting" | "final_leaderboard";
   startTime: number;
   currentAnswers: Record<string, string>;
   totalQuestions: number;
@@ -26,6 +26,8 @@ interface ActiveRound {
   playerNames?: Record<string, string>;
   countdownDuration?: number;
   questionResetId?: number;
+  finalScores?: Record<string, number>;
+  endTime?: number;
 }
 
 export default function HostPanel() {
@@ -597,12 +599,13 @@ export default function HostPanel() {
                     <p className="text-gray-400 text-sm">Control player name visibility on public leaderboards</p>
                   </CardHeader>
                   <CardContent>
-                    {Object.keys(activeRound.currentAnswers).length > 0 ? (
+                    {Object.keys(activeRound.playerScores || {}).length > 0 ? (
                       <div className="space-y-3">
-                        {Object.keys(activeRound.currentAnswers).map((playerId) => {
+                        {Object.keys(activeRound.playerScores || {}).map((playerId) => {
                           const isHidden = activeRound.hiddenPlayers?.[playerId] || false;
                           const playerScore = activeRound.playerScores?.[playerId] || 0;
                           const playerName = activeRound.playerNames?.[playerId] || playerId;
+                          const hasAnsweredCurrent = activeRound.currentAnswers[playerId] !== undefined;
                           
                           return (
                             <div key={playerId} className="flex items-center justify-between bg-gray-800/50 p-3 rounded border border-gray-600">
