@@ -10,10 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
-import { firestore, auth, storage } from "@/lib/firebase";
-import { doc, setDoc, collection, addDoc, getDocs, updateDoc, deleteDoc } from "firebase/firestore";
-import { signInAnonymously } from "firebase/auth";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+
 import { ExternalLink, Settings, GamepadIcon, Crown, Zap, Gem, Copy } from "lucide-react";
 import type { HauntConfig, TriviaQuestion } from "@shared/schema";
 

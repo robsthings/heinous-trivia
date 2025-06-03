@@ -11,8 +11,7 @@ import { ConfigLoader, getHauntFromURL } from "@/lib/configLoader";
 import { GameManager, type GameState } from "@/lib/gameState";
 import { AnalyticsTracker } from "@/lib/analytics";
 import { updateMetaThemeColor } from "@/lib/manifestGenerator";
-import { firestore } from "@/lib/firebase";
-import { doc, onSnapshot, updateDoc } from "firebase/firestore";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
