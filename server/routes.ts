@@ -273,24 +273,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
         throw new Error('Firebase not configured');
       }
       
-      // Update round with player answer and name
+      // Update round with player answer and name using merge to avoid errors
       const roundRef = firestore.collection('activeRound').doc(hauntId);
       const roundDoc = await roundRef.get();
       
-      if (roundDoc.exists) {
-        await roundRef.update({
-          [`currentAnswers.${playerId}`]: answerIndex,
-          [`playerScores.${playerId}`]: FieldValue.increment(isCorrect ? 100 : 0),
-          [`playerNames.${playerId}`]: playerName
-        });
-      } else {
-        // Initialize round document if it doesn't exist
-        await roundRef.set({
-          currentAnswers: { [playerId]: answerIndex },
-          playerScores: { [playerId]: isCorrect ? 100 : 0 },
-          playerNames: { [playerId]: playerName }
-        }, { merge: true });
-      }
+      // Get current scores to properly increment
+      const currentData = roundDoc.exists ? roundDoc.data() : {};
+      const currentScore = currentData?.playerScores?.[playerId] || 0;
+      const newScore = currentScore + (isCorrect ? 100 : 0);
+      
+      // Always use set with merge to safely handle missing documents/fields
+      await roundRef.set({
+        [`currentAnswers.${playerId}`]: answerIndex,
+        [`playerScores.${playerId}`]: newScore,
+        [`playerNames.${playerId}`]: playerName
+      }, { merge: true });
       
       // Also save to leaderboards collection for persistent tracking
       const leaderboardRef = firestore.collection('leaderboards').doc(hauntId).collection('players').doc(playerId);
