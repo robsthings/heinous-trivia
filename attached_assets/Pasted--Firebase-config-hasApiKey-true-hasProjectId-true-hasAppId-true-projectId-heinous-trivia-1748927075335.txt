@@ -1,0 +1,137 @@
+🔧 Firebase config: {hasApiKey: true, hasProjectId: true, hasAppId: true, projectId: 'heinous-trivia'}
+index-rBxVCocr.js:3616 🔥 Firebase app initialized
+index-rBxVCocr.js:3616 Leaderboard component render - isVisible: false entries: 0 hauntId: headquarters
+2index-rBxVCocr.js:3616 Leaderboard component render - isVisible: false entries: 0 hauntId: headquarters
+heinoustrivia.com/:1 Banner not shown: beforeinstallpromptevent.preventDefault() called. The page must call beforeinstallpromptevent.prompt() to show the banner.
+index-rBxVCocr.js:437 [2025-06-03T05:03:17.738Z]  @firebase/firestore: Firestore (11.8.0): Uncaught Error in snapshot listener: FirebaseError: [code=permission-denied]: Missing or insufficient permissions.
+oK @ index-rBxVCocr.js:437
+error @ index-rBxVCocr.js:437
+Io @ index-rBxVCocr.js:669
+error @ index-rBxVCocr.js:1986
+onError @ index-rBxVCocr.js:1941
+NY @ index-rBxVCocr.js:1941
+b_ @ index-rBxVCocr.js:1956
+(anonymous) @ index-rBxVCocr.js:1956
+Promise.then
+UY @ index-rBxVCocr.js:1956
+(anonymous) @ index-rBxVCocr.js:1878
+xY @ index-rBxVCocr.js:1878
+onNext @ index-rBxVCocr.js:1847
+(anonymous) @ index-rBxVCocr.js:1847
+(anonymous) @ index-rBxVCocr.js:1847
+(anonymous) @ index-rBxVCocr.js:2091
+(anonymous) @ index-rBxVCocr.js:2091
+Promise.then
+rc @ index-rBxVCocr.js:2091
+enqueue @ index-rBxVCocr.js:2091
+enqueueAndForget @ index-rBxVCocr.js:2091
+(anonymous) @ index-rBxVCocr.js:1847
+(anonymous) @ index-rBxVCocr.js:1847
+c_ @ index-rBxVCocr.js:1787
+(anonymous) @ index-rBxVCocr.js:1802
+(anonymous) @ index-rBxVCocr.js:1802
+ip @ index-rBxVCocr.js:616
+Fn @ index-rBxVCocr.js:616
+Sl.ta @ index-rBxVCocr.js:624
+Z0 @ index-rBxVCocr.js:621
+Ho.Y @ index-rBxVCocr.js:620
+Ho.ca @ index-rBxVCocr.js:620
+ip @ index-rBxVCocr.js:616
+Fn @ index-rBxVCocr.js:616
+CP @ index-rBxVCocr.js:623
+t.bb @ index-rBxVCocr.js:623
+t.Ea @ index-rBxVCocr.js:623
+rd @ index-rBxVCocr.js:622
+t.Pa @ index-rBxVCocr.js:621
+Promise.then
+SP @ index-rBxVCocr.js:621
+t.Sa @ index-rBxVCocr.js:621
+Promise.then
+t.send @ index-rBxVCocr.js:621
+t.ea @ index-rBxVCocr.js:623
+cP @ index-rBxVCocr.js:620
+DP @ index-rBxVCocr.js:624
+t.Fa @ index-rBxVCocr.js:624
+H @ index-rBxVCocr.js:616
+Promise.then
+W @ index-rBxVCocr.js:616
+MP @ index-rBxVCocr.js:624
+Z0 @ index-rBxVCocr.js:621
+Ho.Y @ index-rBxVCocr.js:620
+Ho.ca @ index-rBxVCocr.js:620
+ip @ index-rBxVCocr.js:616
+Fn @ index-rBxVCocr.js:616
+CP @ index-rBxVCocr.js:623
+t.bb @ index-rBxVCocr.js:623
+t.Ea @ index-rBxVCocr.js:623
+rd @ index-rBxVCocr.js:622
+t.Pa @ index-rBxVCocr.js:621
+Promise.then
+SP @ index-rBxVCocr.js:621
+t.Sa @ index-rBxVCocr.js:621
+Promise.then
+t.send @ index-rBxVCocr.js:621
+t.ea @ index-rBxVCocr.js:623
+cP @ index-rBxVCocr.js:620
+Y0 @ index-rBxVCocr.js:620
+t.Ga @ index-rBxVCocr.js:624
+H @ index-rBxVCocr.js:616
+Promise.then
+W @ index-rBxVCocr.js:616
+gp @ index-rBxVCocr.js:624
+t.connect @ index-rBxVCocr.js:624
+hr.m @ index-rBxVCocr.js:624
+Zo @ index-rBxVCocr.js:1802
+send @ index-rBxVCocr.js:1787
+L_ @ index-rBxVCocr.js:1847
+H_ @ index-rBxVCocr.js:1847
+YS @ index-rBxVCocr.js:1878
+(anonymous) @ index-rBxVCocr.js:1878
+yY @ index-rBxVCocr.js:1878
+(anonymous) @ index-rBxVCocr.js:1847
+(anonymous) @ index-rBxVCocr.js:1847
+(anonymous) @ index-rBxVCocr.js:2091
+(anonymous) @ index-rBxVCocr.js:2091
+Promise.then
+rc @ index-rBxVCocr.js:2091
+enqueue @ index-rBxVCocr.js:2091
+enqueueAndForget @ index-rBxVCocr.js:2091
+(anonymous) @ index-rBxVCocr.js:1847
+(anonymous) @ index-rBxVCocr.js:1847
+a_ @ index-rBxVCocr.js:1787
+(anonymous) @ index-rBxVCocr.js:1802
+setTimeout
+T_ @ index-rBxVCocr.js:1802
+G_ @ index-rBxVCocr.js:1847
+K_ @ index-rBxVCocr.js:1847
+(anonymous) @ index-rBxVCocr.js:1847
+Promise.then
+auth @ index-rBxVCocr.js:1847
+start @ index-rBxVCocr.js:1847
+JS @ index-rBxVCocr.js:1878
+K4 @ index-rBxVCocr.js:1878
+n3 @ index-rBxVCocr.js:1956
+await in n3
+MY @ index-rBxVCocr.js:1956
+nT @ index-rBxVCocr.js:1941
+(anonymous) @ index-rBxVCocr.js:2272
+await in (anonymous)
+(anonymous) @ index-rBxVCocr.js:2091
+(anonymous) @ index-rBxVCocr.js:2091
+Promise.then
+rc @ index-rBxVCocr.js:2091
+enqueue @ index-rBxVCocr.js:2091
+enqueueAndForget @ index-rBxVCocr.js:2091
+(anonymous) @ index-rBxVCocr.js:2272
+hJ @ index-rBxVCocr.js:2272
+(anonymous) @ index-rBxVCocr.js:3616
+Zy @ index-rBxVCocr.js:40
+cc @ index-rBxVCocr.js:40
+(anonymous) @ index-rBxVCocr.js:40
+_ @ index-rBxVCocr.js:25
+k @ index-rBxVCocr.js:25Understand this error
+12index-rBxVCocr.js:3616 Leaderboard component render - isVisible: false entries: 0 hauntId: headquarters
+index-rBxVCocr.js:3616 Leaderboard component render - isVisible: false entries: 0 hauntId: headquarters
+20index-rBxVCocr.js:3616 Leaderboard component render - isVisible: false entries: 0 hauntId: headquarters
+index-rBxVCocr.js:3616 Leaderboard component render - isVisible: false entries: 0 hauntId: headquarters
+20index-rBxVCocr.js:3616 Leaderboard component render - isVisible: false entries: 0 hauntId: headquarters
