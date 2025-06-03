@@ -30,6 +30,7 @@ interface ActiveRound {
   playerScores?: Record<string, number>;
   playerNames?: Record<string, string>;
   countdownDuration?: number;
+  resetPlayerAnswers?: boolean;
 }
 
 export default function Game() {
@@ -195,16 +196,12 @@ export default function Game() {
     return () => clearInterval(interval);
   }, [isGroupMode, gameState.currentHaunt]);
 
-  // Reset group answer only when transitioning to a new live question
+  // Reset group answer when host signals a reset
   useEffect(() => {
-    if (isGroupMode && activeRound?.status === 'live' && groupAnswer !== null) {
-      // Only reset if this is a fresh question start, not during polling
-      const timesSinceStart = Date.now() - (activeRound.startTime || 0);
-      if (timesSinceStart < 5000) { // Within 5 seconds of question start
-        setGroupAnswer(null);
-      }
+    if (isGroupMode && activeRound?.resetPlayerAnswers) {
+      setGroupAnswer(null);
     }
-  }, [activeRound?.questionIndex, activeRound?.status, isGroupMode]);
+  }, [activeRound?.resetPlayerAnswers, isGroupMode]);
 
   // Handle countdown in group mode
   useEffect(() => {
