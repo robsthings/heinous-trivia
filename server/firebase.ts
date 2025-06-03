@@ -1,5 +1,5 @@
 import { initializeApp, cert, getApps } from 'firebase-admin/app';
-import { getFirestore } from 'firebase-admin/firestore';
+import { getFirestore, FieldValue } from 'firebase-admin/firestore';
 
 // Check if Firebase is properly configured
 const isFirebaseConfigured = () => {
@@ -34,7 +34,7 @@ if (isFirebaseConfigured()) {
   firestore = null;
 }
 
-export { firestore };
+export { firestore, FieldValue };
 
 // Collection references
 export const COLLECTIONS = {
