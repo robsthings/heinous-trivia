@@ -26,7 +26,6 @@ interface ActiveRound {
   playerScores?: Record<string, number>;
   playerNames?: Record<string, string>;
   countdownDuration?: number;
-  resetPlayerAnswers?: boolean;
 }
 
 export default function HostPanel() {
@@ -215,8 +214,7 @@ export default function HostPanel() {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            status: "live",
-            resetPlayerAnswers: false
+            status: "live"
           })
         });
         
@@ -313,8 +311,7 @@ export default function HostPanel() {
           question: questions[nextIndex],
           status: "waiting",
           currentAnswers: {},
-          startTime: Date.now(),
-          resetPlayerAnswers: true
+          startTime: Date.now()
         })
       });
 

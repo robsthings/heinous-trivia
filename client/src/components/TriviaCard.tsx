@@ -11,14 +11,6 @@ interface TriviaCardProps {
 export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: TriviaCardProps) {
   const currentQuestion = gameState.questions[gameState.currentQuestionIndex];
   
-  // Debug logging to track state changes
-  console.log('TriviaCard render:', {
-    questionIndex: gameState.currentQuestionIndex,
-    selectedAnswer: gameState.selectedAnswer,
-    showFeedback: gameState.showFeedback,
-    questionText: currentQuestion?.text?.substring(0, 50) + '...'
-  });
-  
   // Get theme colors from haunt config
   const primaryColor = gameState.hauntConfig?.theme?.primaryColor || '#8B0000';
   const secondaryColor = gameState.hauntConfig?.theme?.secondaryColor || '#2D1B69';
@@ -46,7 +38,7 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
   const answerLabels = ['A', 'B', 'C', 'D'];
 
   const getButtonClass = (index: number) => {
-    let baseClass = "w-full p-3 sm:p-4 rounded-lg text-left font-medium text-white hover:scale-[1.02] transition-all duration-200 border-2 touch-manipulation whitespace-normal break-words";
+    let baseClass = "w-full p-3 sm:p-4 rounded-lg text-left font-medium text-white hover:scale-[1.02] transition-all duration-200 border-2 touch-manipulation";
     
     if (gameState.showFeedback && gameState.selectedAnswer !== null) {
       if (index === currentQuestion.correctAnswer) {
@@ -92,10 +84,6 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
         <h2 className="font-creepster text-lg sm:text-xl md:text-2xl text-white mb-3 sm:mb-4 leading-tight">
           {currentQuestion.text}
         </h2>
-        {/* Debug info - Updated at 2:46 AM */}
-        <div className="text-xs text-red-400 mb-2 bg-black p-1 rounded">
-          DEBUG v2: Q{gameState.currentQuestionIndex} | Selected: {gameState.selectedAnswer} | Feedback: {gameState.showFeedback ? 'Y' : 'N'} | Time: {Date.now()}
-        </div>
         
         <div className="flex items-center flex-wrap gap-2 sm:gap-3 mb-3 sm:mb-4">
           <span 
@@ -116,7 +104,6 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
             key={index}
             className={getButtonClass(index)}
             onClick={() => {
-              console.log(`🔴 Button ${index} clicked! Current selectedAnswer:`, gameState.selectedAnswer);
               // Answer bounds check
               if (index < 0 || index >= currentQuestion.answers?.length) {
                 console.warn("Invalid answer selected");

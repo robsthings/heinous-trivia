@@ -11,7 +11,8 @@ import { ConfigLoader, getHauntFromURL } from "@/lib/configLoader";
 import { GameManager, type GameState } from "@/lib/gameState";
 import { AnalyticsTracker } from "@/lib/analytics";
 import { updateMetaThemeColor } from "@/lib/manifestGenerator";
-// Removed Firebase imports - using server API endpoints instead
+import { firestore } from "@/lib/firebase";
+import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -30,7 +31,6 @@ interface ActiveRound {
   playerScores?: Record<string, number>;
   playerNames?: Record<string, string>;
   countdownDuration?: number;
-  resetPlayerAnswers?: boolean;
 }
 
 export default function Game() {
@@ -171,13 +171,9 @@ export default function Game() {
         if (response.ok) {
           const roundData = await response.json();
           
-          // Update player score in group mode
-          if (roundData?.playerScores && playerId) {
-            const currentScore = roundData.playerScores[playerId] || 0;
-            setGameState(prev => ({
-              ...prev,
-              score: currentScore
-            }));
+          // Reset group answer when question changes
+          if (activeRound && roundData && activeRound.questionIndex !== roundData.questionIndex) {
+            setGroupAnswer(null);
           }
           
           setActiveRound(roundData);
@@ -190,25 +186,11 @@ export default function Game() {
     // Initial load
     pollForRoundUpdates();
 
-    // Poll every 5 seconds for updates (reduced frequency)
-    const interval = setInterval(pollForRoundUpdates, 5000);
+    // Poll every 2 seconds for updates
+    const interval = setInterval(pollForRoundUpdates, 2000);
 
     return () => clearInterval(interval);
   }, [isGroupMode, gameState.currentHaunt]);
-
-  // Reset answer when question changes or when host advances
-  useEffect(() => {
-    if (isGroupMode && activeRound) {
-      // Create a unique key for each question to force reset
-      const questionKey = `${activeRound.questionIndex}-${activeRound.question?.text}`;
-      const storedKey = sessionStorage.getItem('currentQuestionKey');
-      
-      if (storedKey !== questionKey) {
-        setGroupAnswer(null);
-        sessionStorage.setItem('currentQuestionKey', questionKey);
-      }
-    }
-  }, [activeRound?.questionIndex, activeRound?.question?.text, isGroupMode]);
 
   // Handle countdown in group mode
   useEffect(() => {
@@ -279,28 +261,7 @@ export default function Game() {
   };
 
   const handleNextQuestion = () => {
-    console.log('handleNextQuestion called, current selectedAnswer:', gameState.selectedAnswer);
-    
-    // Apply next question logic with explicit state reset
-    setGameState(prev => {
-      const newState = GameManager.nextQuestion(prev);
-      
-      // Force all interactive states to reset
-      const resetState = {
-        ...newState,
-        selectedAnswer: null,
-        showFeedback: false,
-        isCorrect: false
-      };
-      
-      console.log('New state after nextQuestion:', {
-        currentQuestionIndex: resetState.currentQuestionIndex,
-        selectedAnswer: resetState.selectedAnswer,
-        showFeedback: resetState.showFeedback
-      });
-      
-      return resetState;
-    });
+    setGameState(prev => GameManager.nextQuestion(prev));
   };
 
   const handleCloseAd = () => {
@@ -363,29 +324,11 @@ export default function Game() {
       showEndScreen: false,
     }));
     
-    // In group mode, combine current round scores with saved leaderboard
-    if (isGroupMode && activeRound?.playerScores && activeRound?.playerNames) {
-      const currentRoundEntries = Object.keys(activeRound.playerScores).map(playerId => ({
-        name: activeRound.playerNames[playerId] || playerId,
-        score: activeRound.playerScores[playerId] || 0,
-        date: new Date().toISOString(),
-        haunt: gameState.currentHaunt,
-        questionsAnswered: activeRound.questionIndex + 1,
-        correctAnswers: Math.floor((activeRound.playerScores[playerId] || 0) / 100)
-      }));
-      
-      // Sort by score descending
-      currentRoundEntries.sort((a, b) => b.score - a.score);
-      
-      setLeaderboard(currentRoundEntries);
-      setLeaderboardLoading(false);
-    } else {
-      // Fetch saved leaderboard data for individual mode
-      const leaderboardData = await GameManager.getLeaderboard(gameState.currentHaunt);
-      console.log('Fresh leaderboard data:', leaderboardData);
-      setLeaderboard(leaderboardData);
-      setLeaderboardLoading(false);
-    }
+    // Fetch fresh data
+    const leaderboardData = await GameManager.getLeaderboard(gameState.currentHaunt);
+    console.log('Fresh leaderboard data:', leaderboardData);
+    setLeaderboard(leaderboardData);
+    setLeaderboardLoading(false);
   };
 
   const handleCloseLeaderboard = () => {
@@ -538,7 +481,7 @@ export default function Game() {
                     <div className="grid gap-3">
                       {activeRound.question.answers.map((answer, index) => (
                         <Button
-                          key={`${activeRound.questionIndex}-${index}`}
+                          key={index}
                           onClick={() => handleGroupAnswer(index)}
                           disabled={activeRound.status === "reveal" || groupAnswer !== null}
                           variant={
@@ -548,7 +491,7 @@ export default function Game() {
                               ? "secondary"
                               : "outline"
                           }
-                          className={`p-4 text-left h-auto w-full whitespace-normal break-words ${
+                          className={`p-4 text-left h-auto ${
                             activeRound.status === "reveal" && index === activeRound.question.correctAnswer
                               ? "bg-green-600 hover:bg-green-700 border-green-500"
                               : groupAnswer === index
@@ -580,7 +523,6 @@ export default function Game() {
           )
         ) : (
           <TriviaCard
-            key={`question-${gameState.currentQuestionIndex}`}
             gameState={gameState}
             onSelectAnswer={handleSelectAnswer}
             onNextQuestion={handleNextQuestion}

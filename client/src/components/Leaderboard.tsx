@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { firestore } from "@/lib/firebase";
+import { doc, onSnapshot } from "firebase/firestore";
 import type { LeaderboardEntry } from "@shared/schema";
 
 interface LeaderboardProps {
@@ -16,28 +18,19 @@ export function Leaderboard({ isVisible, leaderboard, onClose, hauntId, currentP
   // Debug logging to track leaderboard updates
   console.log('Leaderboard component render - isVisible:', isVisible, 'entries:', leaderboard.length, 'hauntId:', hauntId);
 
-  // Poll for hidden player changes from the host panel
+  // Listen for hidden player changes from the host panel
   useEffect(() => {
     if (!hauntId) return;
 
-    const pollForHiddenPlayers = async () => {
-      try {
-        const response = await fetch(`/api/host/${hauntId}/round`);
-        if (response.ok) {
-          const roundData = await response.json();
-          if (roundData?.hiddenPlayers) {
-            setHiddenPlayers(roundData.hiddenPlayers);
-          }
-        }
-      } catch (error) {
-        console.error('Error polling for hidden players:', error);
+    const roundRef = doc(firestore, 'activeRound', hauntId);
+    const unsubscribe = onSnapshot(roundRef, (doc) => {
+      if (doc.exists()) {
+        const data = doc.data();
+        setHiddenPlayers(data.hiddenPlayers || {});
       }
-    };
+    });
 
-    pollForHiddenPlayers();
-    const interval = setInterval(pollForHiddenPlayers, 3000);
-
-    return () => clearInterval(interval);
+    return () => unsubscribe();
   }, [hauntId]);
 
   const getDisplayName = (playerName: string) => {
