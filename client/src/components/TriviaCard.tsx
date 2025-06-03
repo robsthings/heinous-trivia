@@ -92,9 +92,9 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
         <h2 className="font-creepster text-lg sm:text-xl md:text-2xl text-white mb-3 sm:mb-4 leading-tight">
           {currentQuestion.text}
         </h2>
-        {/* Debug info */}
-        <div className="text-xs text-red-400 mb-2">
-          DEBUG: Q{gameState.currentQuestionIndex} | Selected: {gameState.selectedAnswer} | Feedback: {gameState.showFeedback ? 'Y' : 'N'}
+        {/* Debug info - Updated at 2:46 AM */}
+        <div className="text-xs text-red-400 mb-2 bg-black p-1 rounded">
+          DEBUG v2: Q{gameState.currentQuestionIndex} | Selected: {gameState.selectedAnswer} | Feedback: {gameState.showFeedback ? 'Y' : 'N'} | Time: {Date.now()}
         </div>
         
         <div className="flex items-center flex-wrap gap-2 sm:gap-3 mb-3 sm:mb-4">
