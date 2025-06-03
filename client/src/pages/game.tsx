@@ -173,23 +173,27 @@ export default function Game() {
         if (response.ok) {
           const roundData = await response.json();
           
-          // Reset group answer in multiple scenarios to ensure buttons work
+          // Only reset groupAnswer when host explicitly advances to next question
+          // This prevents race conditions where player selections get wiped during polling
           if (activeRound && roundData) {
-            // Reset when question index changes (new question)
-            if (activeRound.questionIndex !== roundData.questionIndex) {
-              setGroupAnswer(null);
-            }
-            // Reset when status becomes "live" (question becomes answerable)
-            else if (roundData.status === "live" && activeRound.status !== "live") {
-              setGroupAnswer(null);
-            }
-            // Reset when transitioning to waiting (new question setup)
-            else if (roundData.status === "waiting" && activeRound.status !== "waiting") {
+            // Reset only when host clicks "Next Question" - indicated by:
+            // 1. questionIndex increases AND status becomes "waiting" (host advancing)
+            // 2. OR when currentAnswers object is reset (indicates new question setup)
+            const isHostAdvancing = (
+              activeRound.questionIndex < roundData.questionIndex && 
+              roundData.status === "waiting"
+            ) || (
+              Object.keys(activeRound.currentAnswers || {}).length > 0 && 
+              Object.keys(roundData.currentAnswers || {}).length === 0 &&
+              activeRound.questionIndex !== roundData.questionIndex
+            );
+            
+            if (isHostAdvancing) {
               setGroupAnswer(null);
             }
           }
           
-          // Also reset if this is the first time we're getting round data
+          // Reset on initial round data load
           if (!activeRound && roundData) {
             setGroupAnswer(null);
           }
