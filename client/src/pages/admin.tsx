@@ -79,6 +79,8 @@ export default function Admin() {
         adFile: formData.adFile || "default-ads.json",
         tier: formData.tier as "basic" | "pro" | "premium",
         mode: formData.mode as "individual" | "queue",
+        isActive: true,
+        isPublished: true,
         theme: {
           primaryColor: formData.primaryColor,
           secondaryColor: formData.secondaryColor,
@@ -311,7 +313,7 @@ export default function Admin() {
                             size="sm" 
                             variant="ghost"
                             className="h-6 w-6 p-0 text-yellow-400 hover:bg-yellow-600 hover:text-white"
-                            onClick={() => copyToClipboard(haunt.authCode, "Access Code")}
+                            onClick={() => copyToClipboard(haunt.authCode || "", "Access Code")}
                           >
                             <Copy className="h-3 w-3" />
                           </Button>

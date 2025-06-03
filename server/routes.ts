@@ -475,6 +475,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get all haunts for admin dashboard
+  app.get("/api/haunts", async (req, res) => {
+    try {
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      const hauntsRef = firestore.collection('haunts');
+      const snapshot = await hauntsRef.get();
+      const haunts: any[] = [];
+      
+      snapshot.forEach((doc) => {
+        haunts.push({ ...doc.data(), id: doc.id });
+      });
+      
+      res.json(haunts.sort((a, b) => a.name.localeCompare(b.name)));
+    } catch (error) {
+      console.error("Error getting all haunts:", error);
+      res.status(500).json({ error: "Failed to load haunts" });
+    }
+  });
+
 
 
   // Save individual game score to leaderboard
