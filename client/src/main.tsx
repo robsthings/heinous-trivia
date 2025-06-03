@@ -25,16 +25,12 @@ if (STORED_VERSION !== CACHE_VERSION.toString()) {
   }
 }
 
-// Register service worker for PWA functionality
+// Temporarily disable service worker to force cache clear
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register(`/service-worker.js?v=${CACHE_VERSION}`)
-      .then((registration) => {
-        // Service worker registered successfully
-      })
-      .catch((registrationError) => {
-        // Service worker registration failed
-      });
+  navigator.serviceWorker.getRegistrations().then(function(registrations) {
+    for(let registration of registrations) {
+      registration.unregister();
+    }
   });
 }
 

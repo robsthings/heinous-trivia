@@ -1,4 +1,4 @@
-const CACHE_NAME = 'heinous-cache-v4';
+const CACHE_NAME = 'heinous-cache-v' + Date.now();
 
 self.addEventListener('install', event => {
   self.skipWaiting();
@@ -36,9 +36,17 @@ self.addEventListener('fetch', event => {
     return;
   }
 
+  // Force network-first for development to bypass cache
   event.respondWith(
-    fetch(event.request).catch(() =>
-      caches.match(event.request)
-    )
+    fetch(event.request)
+      .then(response => {
+        // Clone the response to put it in cache
+        const responseClone = response.clone();
+        caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, responseClone);
+        });
+        return response;
+      })
+      .catch(() => caches.match(event.request))
   );
 });

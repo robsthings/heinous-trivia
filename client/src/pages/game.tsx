@@ -196,17 +196,19 @@ export default function Game() {
     return () => clearInterval(interval);
   }, [isGroupMode, gameState.currentHaunt]);
 
-  // Simple approach: reset group answer when question index changes
-  const [lastQuestionIndex, setLastQuestionIndex] = useState<number | null>(null);
-  
+  // Reset answer when question changes or when host advances
   useEffect(() => {
-    if (isGroupMode && activeRound && activeRound.questionIndex !== lastQuestionIndex) {
-      if (lastQuestionIndex !== null) { // Don't reset on first load
+    if (isGroupMode && activeRound) {
+      // Create a unique key for each question to force reset
+      const questionKey = `${activeRound.questionIndex}-${activeRound.question?.text}`;
+      const storedKey = sessionStorage.getItem('currentQuestionKey');
+      
+      if (storedKey !== questionKey) {
         setGroupAnswer(null);
+        sessionStorage.setItem('currentQuestionKey', questionKey);
       }
-      setLastQuestionIndex(activeRound.questionIndex);
     }
-  }, [activeRound?.questionIndex, isGroupMode, lastQuestionIndex]);
+  }, [activeRound?.questionIndex, activeRound?.question?.text, isGroupMode]);
 
   // Handle countdown in group mode
   useEffect(() => {
