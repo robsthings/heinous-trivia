@@ -166,6 +166,12 @@ export default function Game() {
         const response = await fetch(`/api/host/${gameState.currentHaunt}/round`);
         if (response.ok) {
           const roundData = await response.json();
+          
+          // Reset group answer when question changes
+          if (activeRound && roundData && activeRound.questionIndex !== roundData.questionIndex) {
+            setGroupAnswer(null);
+          }
+          
           setActiveRound(roundData);
         }
       } catch (error) {
@@ -199,6 +205,32 @@ export default function Game() {
       return () => clearTimeout(timer);
     }
   }, [isGroupMode, activeRound, activeRound?.status, activeRound?.startTime]);
+
+  const handleGroupAnswer = async (answerIndex: number) => {
+    if (!activeRound || !playerId || !playerName) return;
+    
+    setGroupAnswer(answerIndex);
+    
+    const isCorrect = answerIndex === activeRound.question.correctAnswer;
+    
+    try {
+      await fetch(`/api/group/${gameState.currentHaunt}/answer`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          playerId,
+          playerName,
+          questionIndex: activeRound.questionIndex,
+          answerIndex,
+          isCorrect
+        })
+      });
+    } catch (error) {
+      console.error('Failed to submit group answer:', error);
+    }
+  };
 
   const savePlayerInfo = (name: string) => {
     const newPlayerId = playerId || `player_${Math.random().toString(36).substr(2, 9)}`;
@@ -446,7 +478,7 @@ export default function Game() {
                       {activeRound.question.answers.map((answer, index) => (
                         <Button
                           key={index}
-                          onClick={() => setGroupAnswer(index)}
+                          onClick={() => handleGroupAnswer(index)}
                           disabled={activeRound.status === "reveal" || groupAnswer !== null}
                           variant={
                             activeRound.status === "reveal" && index === activeRound.question.correctAnswer

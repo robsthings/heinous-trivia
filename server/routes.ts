@@ -263,6 +263,55 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Submit group game answer
+  app.post("/api/group/:hauntId/answer", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      const { playerId, playerName, questionIndex, answerIndex, isCorrect } = req.body;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      // Update round with player answer
+      const roundRef = firestore.collection('activeRound').doc(hauntId);
+      await roundRef.update({
+        [`currentAnswers.${playerId}`]: answerIndex,
+        [`playerScores.${playerId}`]: firestore.FieldValue.increment(isCorrect ? 100 : 0)
+      });
+      
+      // Also save to leaderboards collection for persistent tracking
+      const leaderboardRef = firestore.collection('leaderboards').doc(hauntId).collection('players').doc(playerId);
+      const playerDoc = await leaderboardRef.get();
+      
+      if (playerDoc.exists) {
+        const currentData = playerDoc.data();
+        await leaderboardRef.update({
+          score: currentData.score + (isCorrect ? 100 : 0),
+          questionsAnswered: currentData.questionsAnswered + 1,
+          correctAnswers: currentData.correctAnswers + (isCorrect ? 1 : 0),
+          lastPlayed: new Date()
+        });
+      } else {
+        await leaderboardRef.set({
+          playerName,
+          playerId,
+          score: isCorrect ? 100 : 0,
+          questionsAnswered: 1,
+          correctAnswers: isCorrect ? 1 : 0,
+          hauntId,
+          createdAt: new Date(),
+          lastPlayed: new Date()
+        });
+      }
+      
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error submitting group answer:", error);
+      res.status(500).json({ error: "Failed to submit answer" });
+    }
+  });
+
   // Get all haunts
   app.get("/api/haunts", async (req, res) => {
     try {
