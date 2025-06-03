@@ -170,19 +170,8 @@ export default function Game() {
         if (response.ok) {
           const roundData = await response.json();
           
-          // Debug logging to track state changes
-          console.log('🔵 Player polling update:', {
-            questionIndex: roundData?.questionIndex,
-            status: roundData?.status,
-            hasQuestion: !!roundData?.question,
-            timestamp: new Date().toLocaleTimeString()
-          });
-          
-          // Check if question actually changed before resetting
-          const questionChanged = activeRound && roundData && activeRound.questionIndex !== roundData.questionIndex;
-          
-          if (questionChanged) {
-            console.log('🔄 Question changed from', activeRound.questionIndex, 'to', roundData.questionIndex, 'resetting group answer');
+          // Reset group answer when question changes
+          if (activeRound && roundData && activeRound.questionIndex !== roundData.questionIndex) {
             setGroupAnswer(null);
           }
           
@@ -210,6 +199,13 @@ export default function Game() {
 
     return () => clearInterval(interval);
   }, [isGroupMode, gameState.currentHaunt]);
+
+  // Reset group answer when question changes
+  useEffect(() => {
+    if (isGroupMode && activeRound) {
+      setGroupAnswer(null);
+    }
+  }, [activeRound?.questionIndex, isGroupMode]);
 
   // Handle countdown in group mode
   useEffect(() => {
