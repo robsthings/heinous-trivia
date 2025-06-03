@@ -176,9 +176,22 @@ export default function Game() {
         if (response.ok) {
           const roundData = await response.json();
           
-          // Just update activeRound data, reset logic handled by useEffect
-          
+          // Update active round and sync player score from server
           setActiveRound(roundData);
+          
+          // Update local score from server data if available
+          if (roundData && roundData.playerScores && playerId && roundData.playerScores[playerId]) {
+            const serverScore = roundData.playerScores[playerId];
+            console.log(`[CLIENT SCORING] Syncing score from server: ${groupScore} -> ${serverScore} for player ${playerId}`);
+            setGroupScore(serverScore);
+          } else {
+            console.log(`[CLIENT SCORING] No server score found for player ${playerId}`, {
+              hasRoundData: !!roundData,
+              hasPlayerScores: !!roundData?.playerScores,
+              hasPlayerId: !!playerId,
+              playerScoreExists: !!(roundData?.playerScores?.[playerId])
+            });
+          }
         }
       } catch (error) {
         console.error('Error polling for round updates:', error);
@@ -192,7 +205,7 @@ export default function Game() {
     const interval = setInterval(pollForRoundUpdates, 2000);
 
     return () => clearInterval(interval);
-  }, [isGroupMode, gameState.currentHaunt]);
+  }, [isGroupMode, gameState.currentHaunt, playerId]);
 
   // Handle countdown in group mode
   useEffect(() => {
@@ -248,9 +261,13 @@ export default function Game() {
       });
 
       if (response.ok) {
+        console.log(`[CLIENT SCORING] Answer submitted successfully, isCorrect: ${isCorrect}`);
+        
         // Update local score for header display
         if (isCorrect) {
-          setGroupScore(prev => prev + 100);
+          const newScore = groupScore + 100;
+          setGroupScore(newScore);
+          console.log(`[CLIENT SCORING] Updated local score: ${groupScore} -> ${newScore}`);
         }
         
         toast({
