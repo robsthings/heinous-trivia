@@ -1,0 +1,176 @@
+🔧 Firebase config: {hasApiKey: true, hasProjectId: true, hasAppId: true, projectId: 'heinous-trivia'}
+index-CXclb4n2.js:3601 🔥 Firebase app initialized
+index-CXclb4n2.js:3601 No custom trivia found for haunt
+index-CXclb4n2.js:624 
+            
+            
+           POST https://firestore.googleapis.com/google.firestore.v1.Firestore/Listen/channel?VER=8&database=projects%2Fheinous-trivia%2Fdatabases%2F(default)&gsessionid=4FcdVLtwOPZ7D8xGFjcvOhmcT9JB2wyftjVid6HFa2I&SID=Z12wxw5oCfdyynrAGq5M1A&RID=168&TYPE=terminate&zx=l2qnhiw5easf 400 (Bad Request)
+tx @ index-CXclb4n2.js:624
+hr.close @ index-CXclb4n2.js:624
+(anonymous) @ index-CXclb4n2.js:1802
+(anonymous) @ index-CXclb4n2.js:1802
+ip @ index-CXclb4n2.js:616
+Vn @ index-CXclb4n2.js:616
+Sl.ta @ index-CXclb4n2.js:624
+Y0 @ index-CXclb4n2.js:621
+Ho.Y @ index-CXclb4n2.js:620
+Ho.ca @ index-CXclb4n2.js:620
+ip @ index-CXclb4n2.js:616
+Vn @ index-CXclb4n2.js:616
+_P @ index-CXclb4n2.js:623
+t.bb @ index-CXclb4n2.js:623
+t.Ea @ index-CXclb4n2.js:623
+id @ index-CXclb4n2.js:622
+t.Pa @ index-CXclb4n2.js:621
+Promise.then
+vP @ index-CXclb4n2.js:621
+t.Pa @ index-CXclb4n2.js:621
+Promise.then
+vP @ index-CXclb4n2.js:621
+t.Pa @ index-CXclb4n2.js:621
+Promise.then
+vP @ index-CXclb4n2.js:621
+t.Sa @ index-CXclb4n2.js:621
+Promise.then
+t.send @ index-CXclb4n2.js:621
+t.ea @ index-CXclb4n2.js:623
+rP @ index-CXclb4n2.js:620
+IP @ index-CXclb4n2.js:624
+t.Fa @ index-CXclb4n2.js:624
+U @ index-CXclb4n2.js:616
+Promise.then
+G @ index-CXclb4n2.js:616
+NP @ index-CXclb4n2.js:624
+OP @ index-CXclb4n2.js:624
+Ho.Y @ index-CXclb4n2.js:620
+Ho.ca @ index-CXclb4n2.js:620
+ip @ index-CXclb4n2.js:616
+Vn @ index-CXclb4n2.js:616
+_P @ index-CXclb4n2.js:623
+t.bb @ index-CXclb4n2.js:623
+t.Ea @ index-CXclb4n2.js:623
+id @ index-CXclb4n2.js:622
+rd @ index-CXclb4n2.js:621
+t.Pa @ index-CXclb4n2.js:621
+Promise.then
+vP @ index-CXclb4n2.js:621
+t.Pa @ index-CXclb4n2.js:621
+Promise.then
+vP @ index-CXclb4n2.js:621
+t.Pa @ index-CXclb4n2.js:621
+Promise.then
+vP @ index-CXclb4n2.js:621
+t.Pa @ index-CXclb4n2.js:621
+Promise.then
+vP @ index-CXclb4n2.js:621
+t.Pa @ index-CXclb4n2.js:621
+Promise.then
+vP @ index-CXclb4n2.js:621
+t.Pa @ index-CXclb4n2.js:621
+Promise.then
+vP @ index-CXclb4n2.js:621
+t.Pa @ index-CXclb4n2.js:621
+Promise.then
+vP @ index-CXclb4n2.js:621
+t.Pa @ index-CXclb4n2.js:621
+Promise.then
+vP @ index-CXclb4n2.js:621
+t.Pa @ index-CXclb4n2.js:621
+Promise.then
+vP @ index-CXclb4n2.js:621
+t.Pa @ index-CXclb4n2.js:621
+Promise.then
+vP @ index-CXclb4n2.js:621
+t.Pa @ index-CXclb4n2.js:621
+Promise.then
+vP @ index-CXclb4n2.js:621
+t.Pa @ index-CXclb4n2.js:621
+Promise.then
+vP @ index-CXclb4n2.js:621
+t.Pa @ index-CXclb4n2.js:621
+Promise.then
+vP @ index-CXclb4n2.js:621
+t.Pa @ index-CXclb4n2.js:621
+Promise.then
+vP @ index-CXclb4n2.js:621
+t.Pa @ index-CXclb4n2.js:621
+Promise.then
+vP @ index-CXclb4n2.js:621
+t.Pa @ index-CXclb4n2.js:621
+Promise.then
+vP @ index-CXclb4n2.js:621
+t.Pa @ index-CXclb4n2.js:621
+Promise.then
+vP @ index-CXclb4n2.js:621
+t.Pa @ index-CXclb4n2.js:621
+Promise.then
+vP @ index-CXclb4n2.js:621
+t.Pa @ index-CXclb4n2.js:621
+Promise.then
+vP @ index-CXclb4n2.js:621
+t.Sa @ index-CXclb4n2.js:621
+Promise.then
+t.send @ index-CXclb4n2.js:621
+t.ea @ index-CXclb4n2.js:623
+rP @ index-CXclb4n2.js:620
+IP @ index-CXclb4n2.js:624
+t.Fa @ index-CXclb4n2.js:624
+U @ index-CXclb4n2.js:616
+Promise.then
+G @ index-CXclb4n2.js:616
+NP @ index-CXclb4n2.js:624
+Y0 @ index-CXclb4n2.js:621
+Ho.Y @ index-CXclb4n2.js:620
+Ho.ca @ index-CXclb4n2.js:620
+ip @ index-CXclb4n2.js:616
+Vn @ index-CXclb4n2.js:616
+_P @ index-CXclb4n2.js:623
+t.bb @ index-CXclb4n2.js:623
+t.Ea @ index-CXclb4n2.js:623
+id @ index-CXclb4n2.js:622
+t.Pa @ index-CXclb4n2.js:621
+Promise.then
+vP @ index-CXclb4n2.js:621
+t.Sa @ index-CXclb4n2.js:621
+Promise.then
+t.send @ index-CXclb4n2.js:621
+t.ea @ index-CXclb4n2.js:623
+rP @ index-CXclb4n2.js:620
+Q0 @ index-CXclb4n2.js:620
+t.Ga @ index-CXclb4n2.js:624
+U @ index-CXclb4n2.js:616
+Promise.then
+G @ index-CXclb4n2.js:616
+gp @ index-CXclb4n2.js:624
+t.connect @ index-CXclb4n2.js:624
+hr.m @ index-CXclb4n2.js:624
+Zo @ index-CXclb4n2.js:1802
+send @ index-CXclb4n2.js:1787
+L_ @ index-CXclb4n2.js:1847
+H_ @ index-CXclb4n2.js:1847
+YS @ index-CXclb4n2.js:1878
+(anonymous) @ index-CXclb4n2.js:1878
+pY @ index-CXclb4n2.js:1878
+(anonymous) @ index-CXclb4n2.js:1847
+(anonymous) @ index-CXclb4n2.js:1847
+(anonymous) @ index-CXclb4n2.js:2091
+(anonymous) @ index-CXclb4n2.js:2091
+Promise.then
+rc @ index-CXclb4n2.js:2091
+enqueue @ index-CXclb4n2.js:2091
+enqueueAndForget @ index-CXclb4n2.js:2091
+(anonymous) @ index-CXclb4n2.js:1847
+(anonymous) @ index-CXclb4n2.js:1847
+a_ @ index-CXclb4n2.js:1787
+(anonymous) @ index-CXclb4n2.js:1802
+setTimeout
+T_ @ index-CXclb4n2.js:1802
+G_ @ index-CXclb4n2.js:1847
+K_ @ index-CXclb4n2.js:1847
+(anonymous) @ index-CXclb4n2.js:1847
+Promise.then
+auth @ index-CXclb4n2.js:1847
+start @ index-CXclb4n2.js:1847
+JS @ index-CXclb4n2.js:1878
+U4 @ index-CXclb4n2.js:1878
+J4 @ index-CXclb4n2.js:1956Understand this error
