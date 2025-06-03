@@ -170,11 +170,6 @@ export default function Game() {
         if (response.ok) {
           const roundData = await response.json();
           
-          // Reset group answer when question changes
-          if (activeRound && roundData && activeRound.questionIndex !== roundData.questionIndex) {
-            setGroupAnswer(null);
-          }
-          
           // Update player score in group mode
           if (roundData?.playerScores && playerId) {
             const currentScore = roundData.playerScores[playerId] || 0;
@@ -200,12 +195,16 @@ export default function Game() {
     return () => clearInterval(interval);
   }, [isGroupMode, gameState.currentHaunt]);
 
-  // Reset group answer when question changes
+  // Reset group answer only when transitioning to a new live question
   useEffect(() => {
-    if (isGroupMode && activeRound) {
-      setGroupAnswer(null);
+    if (isGroupMode && activeRound?.status === 'live' && groupAnswer !== null) {
+      // Only reset if this is a fresh question start, not during polling
+      const timesSinceStart = Date.now() - (activeRound.startTime || 0);
+      if (timesSinceStart < 5000) { // Within 5 seconds of question start
+        setGroupAnswer(null);
+      }
     }
-  }, [activeRound?.questionIndex, isGroupMode]);
+  }, [activeRound?.questionIndex, activeRound?.status, isGroupMode]);
 
   // Handle countdown in group mode
   useEffect(() => {
