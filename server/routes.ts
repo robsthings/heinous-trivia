@@ -395,7 +395,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const hauntRef = firestore.collection('haunts').doc(hauntId);
       const hauntSnap = await hauntRef.get();
       
-      if (!hauntSnap.exists()) {
+      if (!hauntSnap.exists) {
         return res.status(404).json({ error: "Haunt not found" });
       }
       
