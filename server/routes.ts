@@ -212,6 +212,50 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Host panel - end round and show final leaderboard
+  app.post("/api/host/:hauntId/end-round", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      const { finalScores, playerNames } = req.body;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      // Save final scores to persistent leaderboard
+      const leaderboardPromises = Object.entries(finalScores || {}).map(async ([playerId, score]) => {
+        const playerName = playerNames?.[playerId] || `Player ${playerId}`;
+        
+        const leaderboardData = {
+          playerId,
+          playerName,
+          score: Number(score),
+          timestamp: Date.now(),
+          hauntId
+        };
+        
+        const leaderboardRef = firestore.collection('leaderboards').doc(hauntId).collection('entries');
+        await leaderboardRef.add(leaderboardData);
+      });
+      
+      await Promise.all(leaderboardPromises);
+      
+      // Set round status to show final leaderboard
+      const roundRef = firestore.collection('activeRound').doc(hauntId);
+      await roundRef.update({
+        status: "final_leaderboard",
+        finalScores,
+        playerNames,
+        endTime: Date.now()
+      });
+      
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error ending round:", error);
+      res.status(500).json({ error: "Failed to end round" });
+    }
+  });
+
   // Host panel - get active round
   app.get("/api/host/:hauntId/round", async (req, res) => {
     try {

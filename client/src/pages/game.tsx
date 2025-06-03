@@ -574,6 +574,61 @@ export default function Game() {
                     Waiting for host to start the next question...
                   </div>
                 )}
+                
+                {activeRound.status === "final_leaderboard" && (
+                  <div className="space-y-4">
+                    <div className="text-center">
+                      <h3 className="text-2xl font-bold text-yellow-400 mb-4">🏆 Final Leaderboard 🏆</h3>
+                      <p className="text-gray-300 mb-6">Great job everyone! Here are the final scores:</p>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      {Object.entries(activeRound.finalScores || {})
+                        .map(([playerId, score]) => ({
+                          playerId,
+                          playerName: activeRound.playerNames?.[playerId] || `Player ${playerId}`,
+                          score: Number(score)
+                        }))
+                        .sort((a, b) => b.score - a.score)
+                        .map((player, index) => (
+                          <div 
+                            key={player.playerId}
+                            className={`flex justify-between items-center p-3 rounded-lg ${
+                              index === 0 ? 'bg-yellow-600/20 border border-yellow-500' :
+                              index === 1 ? 'bg-gray-600/20 border border-gray-400' :
+                              index === 2 ? 'bg-orange-600/20 border border-orange-500' :
+                              'bg-gray-800/50'
+                            }`}
+                          >
+                            <div className="flex items-center gap-3">
+                              <span className={`text-lg font-bold ${
+                                index === 0 ? 'text-yellow-400' :
+                                index === 1 ? 'text-gray-300' :
+                                index === 2 ? 'text-orange-400' :
+                                'text-gray-400'
+                              }`}>
+                                #{index + 1}
+                              </span>
+                              <span className="text-white font-medium">{player.playerName}</span>
+                              {player.playerId === playerId && (
+                                <span className="text-blue-400 text-sm">(You)</span>
+                              )}
+                            </div>
+                            <span className="text-white font-bold">{player.score} pts</span>
+                          </div>
+                        ))}
+                    </div>
+                    
+                    <div className="text-center mt-6">
+                      <Button
+                        onClick={() => window.location.reload()}
+                        className="bg-green-600 hover:bg-green-700 text-white px-6 py-2"
+                      >
+                        Play Another Round
+                      </Button>
+                    </div>
+                  </div>
+                )}
               </CardContent>
             </Card>
           )

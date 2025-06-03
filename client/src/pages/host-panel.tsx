@@ -293,25 +293,26 @@ export default function HostPanel() {
     if (!activeRound) return;
 
     const nextIndex = activeRound.questionIndex + 1;
+    const QUESTIONS_PER_ROUND = 10;
     
-    if (nextIndex >= questions.length) {
-      // End of round
+    if (nextIndex >= QUESTIONS_PER_ROUND || nextIndex >= questions.length) {
+      // End of round - show final leaderboard
       try {
-        const response = await fetch(`/api/host/${hauntId}/round`, {
-          method: 'PUT',
+        const response = await fetch(`/api/host/${hauntId}/end-round`, {
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            status: "waiting",
-            questionIndex: -1 // Indicates round is complete
+            finalScores: activeRound.playerScores || {},
+            playerNames: activeRound.playerNames || {}
           })
         });
 
         if (response.ok) {
           toast({
             title: "Round Complete",
-            description: "All questions have been answered!",
+            description: "Final leaderboard shown to all players!",
           });
         }
       } catch (error) {
