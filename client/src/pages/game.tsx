@@ -173,16 +173,24 @@ export default function Game() {
         if (response.ok) {
           const roundData = await response.json();
           
-          // Reset group answer when question changes OR when status becomes "live"
-          if (activeRound && roundData && (
-            activeRound.questionIndex !== roundData.questionIndex || 
-            (roundData.status === "live" && activeRound.status !== "live")
-          )) {
-            setGroupAnswer(null);
+          // Reset group answer in multiple scenarios to ensure buttons work
+          if (activeRound && roundData) {
+            // Reset when question index changes (new question)
+            if (activeRound.questionIndex !== roundData.questionIndex) {
+              setGroupAnswer(null);
+            }
+            // Reset when status becomes "live" (question becomes answerable)
+            else if (roundData.status === "live" && activeRound.status !== "live") {
+              setGroupAnswer(null);
+            }
+            // Reset when transitioning to waiting (new question setup)
+            else if (roundData.status === "waiting" && activeRound.status !== "waiting") {
+              setGroupAnswer(null);
+            }
           }
           
-          // Also reset when transitioning to waiting (new question setup)
-          if (activeRound && roundData && roundData.status === "waiting" && activeRound.status !== "waiting") {
+          // Also reset if this is the first time we're getting round data
+          if (!activeRound && roundData) {
             setGroupAnswer(null);
           }
           
