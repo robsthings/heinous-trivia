@@ -269,7 +269,16 @@ export default function Game() {
   };
 
   const handleNextQuestion = () => {
-    setGameState(prev => GameManager.nextQuestion(prev));
+    console.log('handleNextQuestion called, current selectedAnswer:', gameState.selectedAnswer);
+    setGameState(prev => {
+      const newState = GameManager.nextQuestion(prev);
+      console.log('New state after nextQuestion:', {
+        currentQuestionIndex: newState.currentQuestionIndex,
+        selectedAnswer: newState.selectedAnswer,
+        showFeedback: newState.showFeedback
+      });
+      return newState;
+    });
   };
 
   const handleCloseAd = () => {
