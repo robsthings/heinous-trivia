@@ -2,9 +2,11 @@ import type { GameState } from "@/lib/gameState";
 
 interface GameHeaderProps {
   gameState: GameState;
+  isGroupMode?: boolean;
+  groupScore?: number;
 }
 
-export function GameHeader({ gameState }: GameHeaderProps) {
+export function GameHeader({ gameState, isGroupMode = false, groupScore = 0 }: GameHeaderProps) {
   const { hauntConfig, score, currentQuestionIndex, questionsAnswered, correctAnswers } = gameState;
   
   // Get theme colors from haunt config
@@ -49,7 +51,7 @@ export function GameHeader({ gameState }: GameHeaderProps) {
             className="text-xl sm:text-2xl font-bold"
             style={{ color: accentColor }}
           >
-            {score}
+            {isGroupMode ? groupScore : score}
           </div>
           <div className="text-xs sm:text-sm text-gray-300">Score</div>
         </div>

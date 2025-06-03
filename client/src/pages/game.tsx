@@ -56,6 +56,7 @@ export default function Game() {
   const [groupAnswer, setGroupAnswer] = useState<number | null>(null);
   const [lastSeenQuestionIndex, setLastSeenQuestionIndex] = useState<number | null>(null);
   const [countdown, setCountdown] = useState(0);
+  const [groupScore, setGroupScore] = useState(0);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -247,6 +248,11 @@ export default function Game() {
       });
 
       if (response.ok) {
+        // Update local score for header display
+        if (isCorrect) {
+          setGroupScore(prev => prev + 100);
+        }
+        
         toast({
           title: "Answer Submitted!",
           description: `Your answer has been recorded. ${isCorrect ? 'Correct!' : 'Wait for the reveal...'}`,
@@ -462,7 +468,11 @@ export default function Game() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black">
-      <GameHeader gameState={gameState} />
+      <GameHeader 
+        gameState={gameState} 
+        isGroupMode={isGroupMode}
+        groupScore={groupScore}
+      />
       
       <main className="px-3 sm:px-4 pb-20">
         {isGroupMode ? (
