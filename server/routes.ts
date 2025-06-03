@@ -360,34 +360,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const hauntRef = firestore.collection('haunts').doc(hauntId);
       const hauntSnap = await hauntRef.get();
       
-      if (!hauntSnap.exists()) {
-        return res.status(404).json({ error: "Haunt not found" });
+      if (!hauntSnap.exists) {
+        return res.status(404).json({ success: false, error: "Haunt not found" });
       }
       
       const hauntData = hauntSnap.data();
-      if (!authCode || authCode !== hauntData.authCode) {
-        return res.status(403).json({ error: "Invalid authentication code" });
+      
+      // If authCode is provided, validate it
+      if (authCode && authCode !== hauntData.authCode) {
+        return res.status(403).json({ success: false, error: "Invalid authentication code" });
       }
       
-      // Check for active game by looking for active round
-      let hasActiveGame = false;
-      try {
-        const activeRoundRef = firestore.collection('activeRound').doc(hauntId);
-        const activeRoundSnap = await activeRoundRef.get();
-        hasActiveGame = activeRoundSnap.exists();
-      } catch (error) {
-        console.error('Error checking active game:', error);
-      }
-      
+      // Return haunt information
       res.json({ 
-        success: true, 
-        hauntExists: true,
-        hostName: hauntData.name || `Haunt ${hauntId}`,
-        active: hasActiveGame
+        success: true,
+        hostName: hauntData.hostName || hauntData.name || `Haunt ${hauntId}`,
+        active: hauntData.hasActiveGame || false
       });
     } catch (error) {
       console.error("Error checking haunt auth:", error);
-      res.status(500).json({ error: "Failed to verify authentication" });
+      res.status(500).json({ success: false, error: "Failed to verify authentication" });
     }
   });
 
