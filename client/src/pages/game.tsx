@@ -180,7 +180,7 @@ export default function Game() {
           
           // Reset group answer when question changes
           if (activeRound && roundData && activeRound.questionIndex !== roundData.questionIndex) {
-            console.log('🔄 Question changed, resetting group answer');
+            console.log('🔄 Question changed, resetting group answer from', groupAnswer, 'to null');
             setGroupAnswer(null);
           }
           
@@ -537,7 +537,7 @@ export default function Game() {
                     <div className="grid gap-3">
                       {activeRound.question.answers.map((answer, index) => (
                         <Button
-                          key={index}
+                          key={`${activeRound.questionIndex}-${index}`}
                           onClick={() => handleGroupAnswer(index)}
                           disabled={activeRound.status === "reveal" || groupAnswer !== null}
                           variant={
