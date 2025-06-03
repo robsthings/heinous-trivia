@@ -176,6 +176,15 @@ export default function Game() {
             setGroupAnswer(null);
           }
           
+          // Update player score in group mode
+          if (roundData?.playerScores && playerId) {
+            const currentScore = roundData.playerScores[playerId] || 0;
+            setGameState(prev => ({
+              ...prev,
+              score: currentScore
+            }));
+          }
+          
           setActiveRound(roundData);
         }
       } catch (error) {
@@ -324,11 +333,29 @@ export default function Game() {
       showEndScreen: false,
     }));
     
-    // Fetch fresh data
-    const leaderboardData = await GameManager.getLeaderboard(gameState.currentHaunt);
-    console.log('Fresh leaderboard data:', leaderboardData);
-    setLeaderboard(leaderboardData);
-    setLeaderboardLoading(false);
+    // In group mode, combine current round scores with saved leaderboard
+    if (isGroupMode && activeRound?.playerScores && activeRound?.playerNames) {
+      const currentRoundEntries = Object.keys(activeRound.playerScores).map(playerId => ({
+        name: activeRound.playerNames[playerId] || playerId,
+        score: activeRound.playerScores[playerId] || 0,
+        date: new Date().toISOString(),
+        haunt: gameState.currentHaunt,
+        questionsAnswered: activeRound.questionIndex + 1,
+        correctAnswers: Math.floor((activeRound.playerScores[playerId] || 0) / 100)
+      }));
+      
+      // Sort by score descending
+      currentRoundEntries.sort((a, b) => b.score - a.score);
+      
+      setLeaderboard(currentRoundEntries);
+      setLeaderboardLoading(false);
+    } else {
+      // Fetch saved leaderboard data for individual mode
+      const leaderboardData = await GameManager.getLeaderboard(gameState.currentHaunt);
+      console.log('Fresh leaderboard data:', leaderboardData);
+      setLeaderboard(leaderboardData);
+      setLeaderboardLoading(false);
+    }
   };
 
   const handleCloseLeaderboard = () => {
