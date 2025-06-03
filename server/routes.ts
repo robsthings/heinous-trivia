@@ -269,6 +269,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { hauntId } = req.params;
       const { playerId, playerName, questionIndex, answerIndex, isCorrect } = req.body;
       
+      console.log(`[GROUP SCORING] Player ${playerId} (${playerName}) answered question ${questionIndex}:`, {
+        answerIndex,
+        isCorrect,
+        hauntId
+      });
+      
       if (!firestore) {
         throw new Error('Firebase not configured');
       }
@@ -281,6 +287,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const currentData = roundDoc.exists ? roundDoc.data() : {};
       const currentScore = currentData?.playerScores?.[playerId] || 0;
       const newScore = currentScore + (isCorrect ? 100 : 0);
+      
+      console.log(`[GROUP SCORING] Score update: ${currentScore} -> ${newScore} (added ${isCorrect ? 100 : 0})`);
       
       // Always use set with merge to safely handle missing documents/fields
       await roundRef.set({
@@ -295,25 +303,43 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       if (playerDoc.exists) {
         const currentData = playerDoc.data();
+        const updatedScore = currentData.score + (isCorrect ? 100 : 0);
+        const updatedQuestions = currentData.questionsAnswered + 1;
+        const updatedCorrect = currentData.correctAnswers + (isCorrect ? 1 : 0);
+        
+        console.log(`[GROUP LEADERBOARD] Updating existing player:`, {
+          oldScore: currentData.score,
+          newScore: updatedScore,
+          questionsAnswered: updatedQuestions,
+          correctAnswers: updatedCorrect
+        });
+        
         await leaderboardRef.update({
-          score: currentData.score + (isCorrect ? 100 : 0),
-          questionsAnswered: currentData.questionsAnswered + 1,
-          correctAnswers: currentData.correctAnswers + (isCorrect ? 1 : 0),
-          lastPlayed: new Date()
+          score: updatedScore,
+          questionsAnswered: updatedQuestions,
+          correctAnswers: updatedCorrect,
+          lastPlayed: new Date(),
+          gameType: 'group'
         });
       } else {
-        await leaderboardRef.set({
+        const initialData = {
           playerName,
           playerId,
           score: isCorrect ? 100 : 0,
           questionsAnswered: 1,
           correctAnswers: isCorrect ? 1 : 0,
           hauntId,
+          gameType: 'group',
           createdAt: new Date(),
           lastPlayed: new Date()
-        });
+        };
+        
+        console.log(`[GROUP LEADERBOARD] Creating new player entry:`, initialData);
+        
+        await leaderboardRef.set(initialData);
       }
       
+      console.log(`[GROUP SCORING] Successfully saved answer for ${playerName} in haunt ${hauntId}`);
       res.json({ success: true });
     } catch (error) {
       console.error("Error submitting group answer:", error);
@@ -326,6 +352,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { name, score, haunt, questionsAnswered, correctAnswers } = req.body;
       
+      console.log(`[INDIVIDUAL SCORING] Saving score for ${name} in haunt ${haunt}:`, {
+        score,
+        questionsAnswered,
+        correctAnswers
+      });
+      
       if (!firestore) {
         throw new Error('Firebase not configured');
       }
@@ -333,9 +365,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Generate a unique player ID for individual games
       const playerId = `individual_${Math.random().toString(36).substr(2, 9)}`;
       
-      // Save to leaderboards collection
-      const leaderboardRef = firestore.collection('leaderboards').doc(haunt).collection('players').doc(playerId);
-      await leaderboardRef.set({
+      const leaderboardData = {
         playerName: name,
         playerId,
         score,
@@ -345,8 +375,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
         gameType: 'individual',
         createdAt: new Date(),
         lastPlayed: new Date()
-      });
+      };
       
+      console.log(`[INDIVIDUAL LEADERBOARD] Writing to /leaderboards/${haunt}/players/${playerId}:`, leaderboardData);
+      
+      // Save to leaderboards collection
+      const leaderboardRef = firestore.collection('leaderboards').doc(haunt).collection('players').doc(playerId);
+      await leaderboardRef.set(leaderboardData);
+      
+      console.log(`[INDIVIDUAL SCORING] Successfully saved score for ${name}`);
       res.json({ success: true });
     } catch (error) {
       console.error("Error saving leaderboard entry:", error);
@@ -359,19 +396,69 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { hauntId } = req.params;
       
+      console.log(`[LEADERBOARD FETCH] Getting leaderboard for haunt: ${hauntId}`);
+      
       if (!firestore) {
         throw new Error('Firebase not configured');
       }
       
       const leaderboardRef = firestore.collection('leaderboards').doc(hauntId).collection('players');
-      const snapshot = await leaderboardRef.orderBy('score', 'desc').limit(50).get();
+      const snapshot = await leaderboardRef
+        .where('hidden', '!=', true)  // Exclude hidden players
+        .orderBy('hidden')  // Required for != query
+        .orderBy('score', 'desc')
+        .limit(50)
+        .get();
       
-      const players = snapshot.docs.map(doc => doc.data());
+      console.log(`[LEADERBOARD FETCH] Found ${snapshot.docs.length} player records`);
       
+      const players = snapshot.docs.map(doc => {
+        const data = doc.data();
+        console.log(`[LEADERBOARD FETCH] Player data:`, {
+          playerName: data.playerName,
+          score: data.score,
+          gameType: data.gameType
+        });
+        
+        // Transform to frontend format
+        return {
+          name: data.playerName,
+          score: data.score,
+          date: data.lastPlayed?.toDate?.()?.toISOString() || data.createdAt?.toDate?.()?.toISOString() || new Date().toISOString(),
+          haunt: data.hauntId,
+          questionsAnswered: data.questionsAnswered,
+          correctAnswers: data.correctAnswers
+        };
+      });
+      
+      console.log(`[LEADERBOARD FETCH] Returning ${players.length} transformed entries`);
       res.json(players);
     } catch (error) {
       console.error("Error getting leaderboard:", error);
-      res.status(500).json({ error: "Failed to get leaderboard" });
+      
+      // Fallback query without hidden filter if the field doesn't exist
+      try {
+        console.log(`[LEADERBOARD FETCH] Fallback query without hidden filter`);
+        const leaderboardRef = firestore.collection('leaderboards').doc(req.params.hauntId).collection('players');
+        const snapshot = await leaderboardRef.orderBy('score', 'desc').limit(50).get();
+        
+        const players = snapshot.docs.map(doc => {
+          const data = doc.data();
+          return {
+            name: data.playerName,
+            score: data.score,
+            date: data.lastPlayed?.toDate?.()?.toISOString() || data.createdAt?.toDate?.()?.toISOString() || new Date().toISOString(),
+            haunt: data.hauntId,
+            questionsAnswered: data.questionsAnswered,
+            correctAnswers: data.correctAnswers
+          };
+        });
+        
+        res.json(players);
+      } catch (fallbackError) {
+        console.error("Fallback leaderboard query also failed:", fallbackError);
+        res.status(500).json({ error: "Failed to get leaderboard" });
+      }
     }
   });
 
