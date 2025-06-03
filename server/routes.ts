@@ -399,6 +399,115 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get haunt config
+  app.get("/api/haunt-config/:hauntId", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      const config = await FirebaseService.getHauntConfig(hauntId);
+      
+      if (config) {
+        res.json(config);
+      } else {
+        res.status(404).json({ error: "Haunt config not found" });
+      }
+    } catch (error) {
+      console.error("Failed to get haunt config:", error);
+      res.status(500).json({ error: "Failed to get haunt config" });
+    }
+  });
+
+  // Get trivia questions for a haunt
+  app.get("/api/trivia-questions/:hauntId", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      let allQuestions: any[] = [];
+
+      // Load from haunts collection where trivia data is actually stored
+      try {
+        const hauntDoc = await firestore.collection('haunts').doc(hauntId).get();
+        
+        if (hauntDoc.exists) {
+          const hauntData = hauntDoc.data();
+          if (hauntData && hauntData.questions) {
+            allQuestions.push(...hauntData.questions);
+          }
+        }
+      } catch (error) {
+        console.log('No haunt-specific trivia found');
+      }
+
+      // If no haunt-specific questions, try to load from general collections
+      if (allQuestions.length === 0) {
+        try {
+          const packsSnapshot = await firestore.collection('trivia-packs').get();
+          
+          packsSnapshot.docs.forEach(doc => {
+            const pack = doc.data();
+            if (pack.accessType === 'all' && pack.questions) {
+              allQuestions.push(...pack.questions);
+            }
+          });
+        } catch (error) {
+          console.log('No trivia packs found');
+        }
+
+        // Also try the custom trivia collection
+        try {
+          const customTriviaSnap = await firestore.collection('trivia-custom').doc(hauntId).get();
+          
+          if (customTriviaSnap.exists) {
+            const customData = customTriviaSnap.data();
+            if (customData && customData.questions) {
+              allQuestions.push(...customData.questions);
+            }
+          }
+        } catch (error) {
+          console.log('No custom trivia found for haunt');
+        }
+      }
+
+      res.json(allQuestions);
+    } catch (error) {
+      console.error("Failed to get trivia questions:", error);
+      res.status(500).json({ error: "Failed to get trivia questions" });
+    }
+  });
+
+  // Get ads for a haunt
+  app.get("/api/ads/:hauntId", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      const adsSnapshot = await firestore.collection('haunt-ads').doc(hauntId).collection('ads').get();
+      
+      const allAds: any[] = [];
+      adsSnapshot.docs.forEach(doc => {
+        const ad = doc.data();
+        if (ad) {
+          allAds.push(ad);
+        }
+      });
+
+      if (allAds.length === 0) {
+        console.warn(`No ads found for haunt: ${hauntId}`);
+      }
+
+      res.json(allAds);
+    } catch (error) {
+      console.error("Failed to get ads:", error);
+      res.status(500).json({ error: "Failed to get ads" });
+    }
+  });
+
   // Get all haunts
   app.get("/api/haunts", async (req, res) => {
     try {
