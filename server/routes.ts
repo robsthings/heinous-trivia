@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import express from "express";
 import { createServer, type Server } from "http";
-import { FirebaseService } from "./firebase";
+import { FirebaseService, firestore } from "./firebase";
 import { hauntConfigSchema, leaderboardEntrySchema } from "@shared/schema";
 import path from "path";
 import multer from "multer";
@@ -169,6 +169,46 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error saving haunt config:", error);
       res.status(500).json({ error: "Failed to save configuration" });
+    }
+  });
+
+  // Host panel - start new round
+  app.post("/api/host/:hauntId/start-round", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      const roundData = req.body;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      const roundRef = firestore.collection('activeRound').doc(hauntId);
+      await roundRef.set(roundData);
+      
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error starting round:", error);
+      res.status(500).json({ error: "Failed to start round" });
+    }
+  });
+
+  // Host panel - update round
+  app.put("/api/host/:hauntId/round", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      const updates = req.body;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      const roundRef = firestore.collection('activeRound').doc(hauntId);
+      await roundRef.update(updates);
+      
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error updating round:", error);
+      res.status(500).json({ error: "Failed to update round" });
     }
   });
 

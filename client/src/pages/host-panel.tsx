@@ -143,8 +143,17 @@ export default function HostPanel() {
         totalQuestions: questions.length
       };
 
-      const roundRef = doc(firestore, 'activeRound', hauntId);
-      await setDoc(roundRef, roundData);
+      const response = await fetch(`/api/host/${hauntId}/start-round`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(roundData)
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to start round');
+      }
 
       toast({
         title: "Round Started",
