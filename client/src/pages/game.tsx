@@ -171,9 +171,12 @@ export default function Game() {
         if (response.ok) {
           const roundData = await response.json();
           
-          // Reset group answer when question changes
-          if (activeRound && roundData && activeRound.questionIndex !== roundData.questionIndex) {
-            setGroupAnswer(null);
+          // Reset group answer when question changes or status changes to live
+          if (activeRound && roundData) {
+            if (activeRound.questionIndex !== roundData.questionIndex || 
+                (roundData.status === "live" && activeRound.status !== "live")) {
+              setGroupAnswer(null);
+            }
           }
           
           setActiveRound(roundData);
@@ -483,7 +486,7 @@ export default function Game() {
                         <Button
                           key={index}
                           onClick={() => handleGroupAnswer(index)}
-                          disabled={activeRound.status === "reveal" || groupAnswer !== null}
+                          disabled={activeRound.status === "reveal" || (groupAnswer !== null && activeRound.status === "live")}
                           variant={
                             activeRound.status === "reveal" && index === activeRound.question.correctAnswer
                               ? "default"
