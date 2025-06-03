@@ -18,6 +18,7 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { User, Users } from "lucide-react";
 import { Link } from "wouter";
+import { useToast } from "@/hooks/use-toast";
 import type { LeaderboardEntry, TriviaQuestion } from "@shared/schema";
 
 interface ActiveRound {
@@ -53,6 +54,7 @@ export default function Game() {
   const [tempName, setTempName] = useState("");
   const [groupAnswer, setGroupAnswer] = useState<number | null>(null);
   const [countdown, setCountdown] = useState(0);
+  const { toast } = useToast();
 
   useEffect(() => {
     const initializeGame = async () => {
@@ -221,7 +223,7 @@ export default function Game() {
     const isCorrect = answerIndex === activeRound.question.correctAnswer;
     
     try {
-      await fetch(`/api/group/${gameState.currentHaunt}/answer`, {
+      const response = await fetch(`/api/group/${gameState.currentHaunt}/answer`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -234,8 +236,24 @@ export default function Game() {
           isCorrect
         })
       });
+
+      if (response.ok) {
+        toast({
+          title: "Answer Submitted!",
+          description: `Your answer has been recorded. ${isCorrect ? 'Correct!' : 'Wait for the reveal...'}`,
+          duration: 3000,
+        });
+      } else {
+        throw new Error('Failed to submit answer');
+      }
     } catch (error) {
       console.error('Failed to submit group answer:', error);
+      toast({
+        title: "Submission Failed",
+        description: "Could not submit your answer. Please try again.",
+        variant: "destructive",
+        duration: 5000,
+      });
     }
   };
 
