@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import express from "express";
 import { createServer, type Server } from "http";
-import { FirebaseService, firestore } from "./firebase";
+import { FirebaseService, firestore, FieldValue } from "./firebase";
 import { hauntConfigSchema, leaderboardEntrySchema } from "@shared/schema";
 import path from "path";
 import multer from "multer";
@@ -277,7 +277,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const roundRef = firestore.collection('activeRound').doc(hauntId);
       await roundRef.update({
         [`currentAnswers.${playerId}`]: answerIndex,
-        [`playerScores.${playerId}`]: firestore.FieldValue.increment(isCorrect ? 100 : 0),
+        [`playerScores.${playerId}`]: FieldValue.increment(isCorrect ? 100 : 0),
         [`playerNames.${playerId}`]: playerName
       });
       
