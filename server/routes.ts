@@ -369,7 +369,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(403).json({ error: "Invalid authentication code" });
       }
       
-      res.json({ success: true, hauntExists: true });
+      // Check for active game by looking for active round
+      let hasActiveGame = false;
+      try {
+        const activeRoundRef = firestore.collection('activeRound').doc(hauntId);
+        const activeRoundSnap = await activeRoundRef.get();
+        hasActiveGame = activeRoundSnap.exists();
+      } catch (error) {
+        console.error('Error checking active game:', error);
+      }
+      
+      res.json({ 
+        success: true, 
+        hauntExists: true,
+        hostName: hauntData.name || `Haunt ${hauntId}`,
+        active: hasActiveGame
+      });
     } catch (error) {
       console.error("Error checking haunt auth:", error);
       res.status(500).json({ error: "Failed to verify authentication" });

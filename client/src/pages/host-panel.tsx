@@ -41,6 +41,8 @@ export default function HostPanel() {
   const [countdownDuration, setCountdownDuration] = useState(3);
   const [leaderboard, setLeaderboard] = useState<any[]>([]);
   const [leaderboardLoading, setLeaderboardLoading] = useState(false);
+  const [hostName, setHostName] = useState<string>("");
+  const [hasActiveGame, setHasActiveGame] = useState<boolean>(false);
 
   // Load persistent leaderboard
   const loadLeaderboard = async () => {
@@ -92,6 +94,11 @@ export default function HostPanel() {
           });
           return;
         }
+        
+        // Update host information from server response
+        const authData = await authResponse.json();
+        setHostName(authData.hostName || `Haunt ${hauntId}`);
+        setHasActiveGame(authData.active || false);
         
         const loadedQuestions = await ConfigLoader.loadTriviaQuestions(hauntId);
         // Take first 10 questions for the round
@@ -406,10 +413,10 @@ export default function HostPanel() {
         <Card className="bg-black/80 border-red-600 text-white">
           <CardHeader>
             <CardTitle className="text-3xl font-bold text-center text-red-500">
-              🎮 Host Panel - {hauntId}
+              🎮 Host Panel - {hostName || hauntId}
             </CardTitle>
             <p className="text-center text-gray-300">
-              Control your group trivia game
+              Control your group trivia game {hasActiveGame && <span className="text-green-400">(Active Game Running)</span>}
             </p>
           </CardHeader>
           <CardContent>
