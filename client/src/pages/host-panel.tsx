@@ -75,16 +75,13 @@ export default function HostPanel() {
       try {
         // Check authentication with server API
         const savedCode = localStorage.getItem(`heinous-admin-${hauntId}`);
-        if (!savedCode) {
-          toast({
-            title: "Access Denied",
-            description: "You must authenticate to access this host panel",
-            variant: "destructive"
-          });
-          return;
-        }
         
-        const authResponse = await fetch(`/api/haunt/${hauntId}/auth-check?authCode=${encodeURIComponent(savedCode)}`);
+        // Try authentication with saved code if available, otherwise try without auth code
+        const authUrl = savedCode 
+          ? `/api/haunt/${hauntId}/auth-check?authCode=${encodeURIComponent(savedCode)}`
+          : `/api/haunt/${hauntId}/auth-check`;
+        
+        const authResponse = await fetch(authUrl);
         if (!authResponse.ok) {
           const error = await authResponse.json();
           toast({
