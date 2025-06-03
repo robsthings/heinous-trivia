@@ -196,12 +196,17 @@ export default function Game() {
     return () => clearInterval(interval);
   }, [isGroupMode, gameState.currentHaunt]);
 
-  // Reset group answer when host signals a reset
+  // Reset group answer when host signals a reset (track previous state)
+  const [prevResetFlag, setPrevResetFlag] = useState<boolean>(false);
+  
   useEffect(() => {
-    if (isGroupMode && activeRound?.resetPlayerAnswers) {
+    if (isGroupMode && activeRound?.resetPlayerAnswers && !prevResetFlag) {
       setGroupAnswer(null);
+      setPrevResetFlag(true);
+    } else if (!activeRound?.resetPlayerAnswers && prevResetFlag) {
+      setPrevResetFlag(false);
     }
-  }, [activeRound?.resetPlayerAnswers, isGroupMode]);
+  }, [activeRound?.resetPlayerAnswers, isGroupMode, prevResetFlag]);
 
   // Handle countdown in group mode
   useEffect(() => {
