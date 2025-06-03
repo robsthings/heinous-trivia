@@ -25,17 +25,20 @@ if (isFirebaseConfigured()) {
       firebaseApp = getApps()[0];
     }
     firestore = getFirestore(firebaseApp);
+    exportedFieldValue = FieldValue;
     console.log('Firebase Admin SDK initialized successfully');
   } catch (error) {
     console.error('Firebase initialization failed:', error);
     firestore = null;
+    exportedFieldValue = null;
   }
 } else {
   console.log('Firebase credentials not configured, running without Firebase integration');
   firestore = null;
+  exportedFieldValue = null;
 }
 
-export { firestore, FieldValue };
+export { firestore, exportedFieldValue as FieldValue };
 
 // Collection references
 export const COLLECTIONS = {
