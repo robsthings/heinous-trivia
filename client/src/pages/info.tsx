@@ -1,6 +1,33 @@
 import { Link } from "wouter";
+import { useEffect } from "react";
 
 export default function Info() {
+  // Load Facebook SDK and initialize Messenger Chat Widget
+  useEffect(() => {
+    // Load Facebook SDK
+    const loadFacebookSDK = () => {
+      if (window.FB) {
+        return; // Already loaded
+      }
+
+      window.fbAsyncInit = function() {
+        window.FB.init({
+          xfbml: true,
+          version: 'v19.0'
+        });
+      };
+
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    };
+
+    loadFacebookSDK();
+  }, []);
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Hero Section */}
@@ -254,6 +281,13 @@ export default function Info() {
           </div>
         </div>
       </footer>
+
+      {/* Facebook Messenger Chat Widget */}
+      <div 
+        className="fb-customerchat"
+        attribution="biz_inbox"
+        page_id="181728020123621"
+      ></div>
     </div>
   );
 }
