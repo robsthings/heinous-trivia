@@ -24,9 +24,7 @@ export default function Admin() {
     triviaFile: "",
     adFile: "",
     tier: "basic",
-    mode: "individual",
-    primaryColor: "#8B0000",
-    secondaryColor: "#000000",
+
     authCode: ""
   });
 
@@ -78,13 +76,13 @@ export default function Admin() {
         triviaFile: formData.triviaFile || "default-questions.json",
         adFile: formData.adFile || "default-ads.json",
         tier: formData.tier as "basic" | "pro" | "premium",
-        mode: formData.mode as "individual" | "queue",
+        mode: "individual", // Default mode, Haunt Admin can change this
         isActive: true,
         isPublished: true,
         theme: {
-          primaryColor: formData.primaryColor,
-          secondaryColor: formData.secondaryColor,
-          accentColor: formData.primaryColor
+          primaryColor: "#8B0000", // Default color, Haunt Admin controls this
+          secondaryColor: "#000000", // Default color, Haunt Admin controls this
+          accentColor: "#8B0000"
         },
         authCode: formData.authCode || Math.random().toString(36).substring(2, 15)
       };
@@ -115,9 +113,6 @@ export default function Admin() {
           triviaFile: "",
           adFile: "",
           tier: "basic",
-          mode: "individual",
-          primaryColor: "#8B0000",
-          secondaryColor: "#000000",
           authCode: ""
         });
       } else {
@@ -242,7 +237,7 @@ export default function Admin() {
                             variant="outline" 
                             className="border-blue-500 text-blue-400"
                           >
-                            {haunt.mode === "queue" ? "GROUP MODE" : "INDIVIDUAL"}
+                            {haunt.triviaFile || "default-questions.json"}
                           </Badge>
                         </div>
                       </div>
@@ -416,39 +411,13 @@ export default function Admin() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="mode" className="text-green-300">Game Mode</Label>
-                    <Select value={formData.mode} onValueChange={(value) => handleInputChange('mode', value)}>
-                      <SelectTrigger className="bg-gray-800 border-green-600 text-white">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent className="bg-gray-800 border-green-600">
-                        <SelectItem value="individual">Individual Play</SelectItem>
-                        <SelectItem value="queue">Group/Queue Mode</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="primaryColor" className="text-green-300">Primary Color</Label>
+                    <Label htmlFor="triviaFile" className="text-green-300">Trivia Pack</Label>
                     <Input
-                      id="primaryColor"
-                      type="color"
-                      value={formData.primaryColor}
-                      onChange={(e) => handleInputChange('primaryColor', e.target.value)}
-                      className="bg-gray-800 border-green-600 h-10"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="secondaryColor" className="text-green-300">Secondary Color</Label>
-                    <Input
-                      id="secondaryColor"
-                      type="color"
-                      value={formData.secondaryColor}
-                      onChange={(e) => handleInputChange('secondaryColor', e.target.value)}
-                      className="bg-gray-800 border-green-600 h-10"
+                      id="triviaFile"
+                      value={formData.triviaFile}
+                      onChange={(e) => handleInputChange('triviaFile', e.target.value)}
+                      placeholder="e.g., horror-classics.json"
+                      className="bg-gray-800 border-green-600 text-white"
                     />
                   </div>
                 </div>
