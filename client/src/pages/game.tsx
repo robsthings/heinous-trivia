@@ -587,13 +587,6 @@ export default function Game() {
                     
                     <div className="space-y-2">
                       {(() => {
-                        console.log('[FINAL LEADERBOARD] activeRound data:', {
-                          finalScores: activeRound.finalScores,
-                          playerScores: activeRound.playerScores,
-                          playerNames: activeRound.playerNames
-                        });
-                        
-                        // Use finalScores if available, otherwise fall back to playerScores
                         const scores = activeRound.finalScores || activeRound.playerScores || {};
                         const players = Object.entries(scores)
                           .map(([playerId, score]) => ({
@@ -602,8 +595,6 @@ export default function Game() {
                             score: Number(score)
                           }))
                           .sort((a, b) => b.score - a.score);
-                          
-                        console.log('[FINAL LEADERBOARD] Processed players:', players);
                         
                         if (players.length === 0) {
                           return (
@@ -640,7 +631,8 @@ export default function Game() {
                             </div>
                             <span className="text-white font-bold">{player.score} pts</span>
                           </div>
-                        ))}
+                        ));
+                      })()}
                     </div>
                     
                     <div className="text-center mt-6">
