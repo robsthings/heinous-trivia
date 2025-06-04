@@ -12,37 +12,35 @@ declare global {
 export default function Info() {
   // Load Facebook SDK and initialize Messenger Chat Widget
   useEffect(() => {
-    // Load Facebook SDK
     const loadFacebookSDK = () => {
-      if (window.FB) {
-        console.log('Facebook SDK already loaded');
-        return; // Already loaded
+      // Check if we're in production environment
+      const isProduction = window.location.hostname !== 'localhost' && 
+                           !window.location.hostname.includes('127.0.0.1') &&
+                           !window.location.hostname.includes('replit.dev');
+      
+      if (!isProduction) {
+        console.log('Facebook Messenger Chat Widget will be active in production');
+        return;
       }
 
-      console.log('Loading Facebook SDK...');
+      if (window.FB) {
+        return;
+      }
 
       window.fbAsyncInit = function() {
-        console.log('Initializing Facebook SDK...');
         window.FB.init({
           xfbml: true,
           version: 'v19.0'
         });
-        console.log('Facebook SDK initialized');
       };
 
       (function(d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {
-          console.log('Facebook SDK script already exists');
-          return;
-        }
-        js = d.createElement(s) as HTMLScriptElement; 
+        if (d.getElementById(id)) return;
+        js = d.createElement(s) as HTMLScriptElement;
         js.id = id;
         js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
-        js.onload = () => console.log('Facebook SDK script loaded');
-        js.onerror = () => console.error('Failed to load Facebook SDK script');
         fjs.parentNode?.insertBefore(js, fjs);
-        console.log('Facebook SDK script added to DOM');
       }(document, 'script', 'facebook-jssdk'));
     };
 

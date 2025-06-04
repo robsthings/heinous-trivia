@@ -269,8 +269,18 @@ export default function HauntAdmin() {
   useEffect(() => {
     if (hauntConfig && (hauntConfig.tier === "pro" || hauntConfig.tier === "premium")) {
       const loadFacebookSDK = () => {
+        // Check if we're in production environment
+        const isProduction = window.location.hostname !== 'localhost' && 
+                             !window.location.hostname.includes('127.0.0.1') &&
+                             !window.location.hostname.includes('replit.dev');
+        
+        if (!isProduction) {
+          console.log('Facebook Messenger Chat Widget will be active in production (Pro/Premium only)');
+          return;
+        }
+
         if (window.FB) {
-          return; // Already loaded
+          return;
         }
 
         window.fbAsyncInit = function() {
@@ -283,7 +293,7 @@ export default function HauntAdmin() {
         (function(d, s, id) {
           var js, fjs = d.getElementsByTagName(s)[0];
           if (d.getElementById(id)) return;
-          js = d.createElement(s) as HTMLScriptElement; 
+          js = d.createElement(s) as HTMLScriptElement;
           js.id = id;
           js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
           fjs.parentNode?.insertBefore(js, fjs);
