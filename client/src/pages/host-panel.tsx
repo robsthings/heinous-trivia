@@ -129,7 +129,47 @@ export default function HostPanel() {
       try {
         const response = await fetch(`/api/host/${hauntId}/round`);
         if (response.ok) {
-          const roundData = await response.json();
+          const flatData = await response.json();
+          
+          // Transform flattened data back to nested structure
+          const roundData: ActiveRound = {
+            questionIndex: flatData.questionIndex || 0,
+            question: flatData.question || null,
+            status: flatData.status || 'waiting',
+            startTime: flatData.startTime || Date.now(),
+            totalQuestions: flatData.totalQuestions || 10,
+            currentAnswers: {},
+            playerScores: {},
+            playerNames: {},
+            hiddenPlayers: flatData.hiddenPlayers || {},
+            pendingPoints: {},
+            countdownDuration: flatData.countdownDuration,
+            questionResetId: flatData.questionResetId,
+            finalScores: flatData.finalScores,
+            endTime: flatData.endTime
+          };
+
+          // Parse flattened properties
+          Object.keys(flatData).forEach(key => {
+            if (key.startsWith('currentAnswers.')) {
+              const playerId = key.replace('currentAnswers.', '');
+              roundData.currentAnswers[playerId] = flatData[key];
+            } else if (key.startsWith('playerScores.')) {
+              const playerId = key.replace('playerScores.', '');
+              roundData.playerScores[playerId] = flatData[key];
+            } else if (key.startsWith('playerNames.')) {
+              const playerId = key.replace('playerNames.', '');
+              roundData.playerNames[playerId] = flatData[key];
+            } else if (key.startsWith('pendingPoints.')) {
+              const playerId = key.replace('pendingPoints.', '');
+              roundData.pendingPoints[playerId] = flatData[key];
+            } else if (key.startsWith('finalScores.')) {
+              const playerId = key.replace('finalScores.', '');
+              roundData.finalScores = roundData.finalScores || {};
+              roundData.finalScores[playerId] = flatData[key];
+            }
+          });
+
           setActiveRound(roundData);
         }
       } catch (error) {
