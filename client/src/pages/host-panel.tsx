@@ -28,6 +28,7 @@ interface ActiveRound {
   questionResetId?: number;
   finalScores?: Record<string, number>;
   endTime?: number;
+  pendingPoints?: Record<string, number>;
 }
 
 export default function HostPanel() {
