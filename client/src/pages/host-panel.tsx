@@ -33,7 +33,12 @@ interface ActiveRound {
 
 export default function HostPanel() {
   const [, params] = useRoute("/host-panel/:hauntId");
-  const hauntId = params?.hauntId || "";
+  
+  // Check for haunt ID in both path params and query params
+  const urlParams = new URLSearchParams(window.location.search);
+  const queryHauntId = urlParams.get('haunt');
+  const hauntId = params?.hauntId || queryHauntId || "";
+  
   const { toast } = useToast();
   
   const [questions, setQuestions] = useState<TriviaQuestion[]>([]);

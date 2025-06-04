@@ -36,7 +36,12 @@ interface CustomTriviaQuestion {
 export default function HauntAdmin() {
   const [, params] = useRoute("/haunt-admin/:hauntId");
   const [, setLocation] = useLocation();
-  const hauntId = params?.hauntId || "";
+  
+  // Check for haunt ID in both path params and query params
+  const urlParams = new URLSearchParams(window.location.search);
+  const queryHauntId = urlParams.get('haunt');
+  const hauntId = params?.hauntId || queryHauntId || "";
+  
   const { toast } = useToast();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isFirstTimeSetup, setIsFirstTimeSetup] = useState(false);

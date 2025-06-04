@@ -647,6 +647,71 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get trivia questions for a haunt
+  app.get("/api/trivia-questions/:hauntId", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      
+      const db = FirebaseService.getFirestore();
+      let allQuestions: any[] = [];
+
+      // Load from haunts collection where trivia data is actually stored
+      try {
+        const hauntDoc = await db.collection('haunts').doc(hauntId).get();
+        
+        if (hauntDoc.exists) {
+          const hauntData = hauntDoc.data();
+          if (hauntData && hauntData.questions) {
+            allQuestions.push(...hauntData.questions);
+          }
+        }
+      } catch (error) {
+        console.log('No haunt-specific trivia found');
+      }
+
+      // If no haunt-specific questions, try to load from general collections
+      if (allQuestions.length === 0) {
+        try {
+          const packsSnapshot = await db.collection('trivia-packs').get();
+          
+          packsSnapshot.docs.forEach((doc: any) => {
+            const pack = doc.data();
+            if (pack.accessType === 'all' && pack.questions) {
+              allQuestions.push(...pack.questions);
+            }
+          });
+        } catch (error) {
+          console.log('No trivia packs found');
+        }
+      }
+
+      // If still no questions, provide a basic fallback
+      if (allQuestions.length === 0) {
+        allQuestions = [
+          {
+            question: "What horror movie features a killer doll named Chucky?",
+            choices: ["Child's Play", "Annabelle", "Dead Silence", "The Conjuring"],
+            correct: "Child's Play",
+            explanation: "Child's Play (1988) introduced the world to Chucky, the murderous Good Guy doll possessed by the soul of serial killer Charles Lee Ray."
+          },
+          {
+            question: "In which year was the original 'Halloween' movie released?",
+            choices: ["1976", "1978", "1980", "1982"],
+            correct: "1978",
+            explanation: "John Carpenter's Halloween was released in 1978, establishing many of the slasher film conventions we know today."
+          }
+        ];
+      }
+
+      // Shuffle and limit questions
+      const shuffled = allQuestions.sort(() => 0.5 - Math.random());
+      res.json(shuffled.slice(0, 20));
+    } catch (error) {
+      console.error("Failed to get trivia questions:", error);
+      res.status(500).json({ error: "Failed to get trivia questions" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
