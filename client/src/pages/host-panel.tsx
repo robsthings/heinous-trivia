@@ -17,7 +17,7 @@ import type { TriviaQuestion } from "@shared/schema";
 interface ActiveRound {
   questionIndex: number;
   question: TriviaQuestion;
-  status: "countdown" | "live" | "reveal" | "waiting" | "final_leaderboard";
+  status: "countdown" | "live" | "reveal" | "waiting";
   startTime: number;
   currentAnswers: Record<string, string>;
   totalQuestions: number;
@@ -26,19 +26,11 @@ interface ActiveRound {
   playerNames?: Record<string, string>;
   countdownDuration?: number;
   questionResetId?: number;
-  finalScores?: Record<string, number>;
-  endTime?: number;
-  pendingPoints?: Record<string, number>;
 }
 
 export default function HostPanel() {
   const [, params] = useRoute("/host-panel/:hauntId");
-  
-  // Check for haunt ID in both path params and query params
-  const urlParams = new URLSearchParams(window.location.search);
-  const queryHauntId = urlParams.get('haunt');
-  const hauntId = params?.hauntId || queryHauntId || "";
-  
+  const hauntId = params?.hauntId || "";
   const { toast } = useToast();
   
   const [questions, setQuestions] = useState<TriviaQuestion[]>([]);
@@ -83,13 +75,16 @@ export default function HostPanel() {
       try {
         // Check authentication with server API
         const savedCode = localStorage.getItem(`heinous-admin-${hauntId}`);
+        if (!savedCode) {
+          toast({
+            title: "Access Denied",
+            description: "You must authenticate to access this host panel",
+            variant: "destructive"
+          });
+          return;
+        }
         
-        // Try authentication with saved code if available, otherwise try without auth code
-        const authUrl = savedCode 
-          ? `/api/haunt/${hauntId}/auth-check?authCode=${encodeURIComponent(savedCode)}`
-          : `/api/haunt/${hauntId}/auth-check`;
-        
-        const authResponse = await fetch(authUrl);
+        const authResponse = await fetch(`/api/haunt/${hauntId}/auth-check?authCode=${encodeURIComponent(savedCode)}`);
         if (!authResponse.ok) {
           const error = await authResponse.json();
           toast({
@@ -134,51 +129,7 @@ export default function HostPanel() {
       try {
         const response = await fetch(`/api/host/${hauntId}/round`);
         if (response.ok) {
-          const flatData = await response.json();
-          
-          // Transform flattened data back to nested structure
-          const roundData: ActiveRound = {
-            questionIndex: flatData.questionIndex || 0,
-            question: flatData.question || null,
-            status: flatData.status || 'waiting',
-            startTime: flatData.startTime || Date.now(),
-            totalQuestions: flatData.totalQuestions || 10,
-            currentAnswers: {},
-            playerScores: {},
-            playerNames: {},
-            hiddenPlayers: flatData.hiddenPlayers || {},
-            pendingPoints: {}, // CLEANED: Ensured proper initialization
-            countdownDuration: flatData.countdownDuration,
-            questionResetId: flatData.questionResetId,
-            finalScores: flatData.finalScores,
-            endTime: flatData.endTime
-          };
-
-          // Parse flattened properties - CLEANED: Proper type safety
-          Object.keys(flatData).forEach(key => {
-            if (key.startsWith('currentAnswers.')) {
-              const playerId = key.replace('currentAnswers.', '');
-              if (!roundData.currentAnswers) roundData.currentAnswers = {};
-              roundData.currentAnswers[playerId] = flatData[key];
-            } else if (key.startsWith('playerScores.')) {
-              const playerId = key.replace('playerScores.', '');
-              if (!roundData.playerScores) roundData.playerScores = {};
-              roundData.playerScores[playerId] = flatData[key];
-            } else if (key.startsWith('playerNames.')) {
-              const playerId = key.replace('playerNames.', '');
-              if (!roundData.playerNames) roundData.playerNames = {};
-              roundData.playerNames[playerId] = flatData[key];
-            } else if (key.startsWith('pendingPoints.')) {
-              const playerId = key.replace('pendingPoints.', '');
-              if (!roundData.pendingPoints) roundData.pendingPoints = {};
-              roundData.pendingPoints[playerId] = flatData[key];
-            } else if (key.startsWith('finalScores.')) {
-              const playerId = key.replace('finalScores.', '');
-              if (!roundData.finalScores) roundData.finalScores = {};
-              roundData.finalScores[playerId] = flatData[key];
-            }
-          });
-
+          const roundData = await response.json();
           setActiveRound(roundData);
         }
       } catch (error) {
@@ -345,26 +296,25 @@ export default function HostPanel() {
     if (!activeRound) return;
 
     const nextIndex = activeRound.questionIndex + 1;
-    const QUESTIONS_PER_ROUND = 10;
     
-    if (nextIndex >= QUESTIONS_PER_ROUND || nextIndex >= questions.length) {
-      // End of round - show final leaderboard
+    if (nextIndex >= questions.length) {
+      // End of round
       try {
-        const response = await fetch(`/api/host/${hauntId}/end-round`, {
-          method: 'POST',
+        const response = await fetch(`/api/host/${hauntId}/round`, {
+          method: 'PUT',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            finalScores: activeRound.playerScores || {},
-            playerNames: activeRound.playerNames || {}
+            status: "waiting",
+            questionIndex: -1 // Indicates round is complete
           })
         });
 
         if (response.ok) {
           toast({
             title: "Round Complete",
-            description: "Final leaderboard shown to all players!",
+            description: "All questions have been answered!",
           });
         }
       } catch (error) {
@@ -496,7 +446,7 @@ export default function HostPanel() {
                         <div className="text-center">
                           <p className="text-gray-400 text-sm">Players</p>
                           <p className="font-bold text-lg text-white">
-                            {Object.keys(activeRound.currentAnswers || {}).length}
+                            {Object.keys(activeRound.currentAnswers).length}
                           </p>
                         </div>
                         <div className="text-center">
@@ -649,13 +599,12 @@ export default function HostPanel() {
                     <p className="text-gray-400 text-sm">Control player name visibility on public leaderboards</p>
                   </CardHeader>
                   <CardContent>
-                    {Object.keys(activeRound.playerScores || {}).length > 0 ? (
+                    {Object.keys(activeRound.currentAnswers).length > 0 ? (
                       <div className="space-y-3">
-                        {Object.keys(activeRound.playerScores || {}).map((playerId) => {
-                          const playerName = activeRound.playerNames?.[playerId] || playerId;
-                          const isHidden = activeRound.hiddenPlayers?.[playerName] || false;
+                        {Object.keys(activeRound.currentAnswers).map((playerId) => {
+                          const isHidden = activeRound.hiddenPlayers?.[playerId] || false;
                           const playerScore = activeRound.playerScores?.[playerId] || 0;
-                          const hasAnsweredCurrent = (activeRound.currentAnswers || {})[playerId] !== undefined;
+                          const playerName = activeRound.playerNames?.[playerId] || playerId;
                           
                           return (
                             <div key={playerId} className="flex items-center justify-between bg-gray-800/50 p-3 rounded border border-gray-600">
@@ -677,7 +626,7 @@ export default function HostPanel() {
                               </div>
                               
                               <Button
-                                onClick={() => togglePlayerVisibility(playerName)}
+                                onClick={() => togglePlayerVisibility(playerId)}
                                 variant="ghost"
                                 size="sm"
                                 className={`h-8 w-8 p-0 ${
@@ -740,55 +689,44 @@ export default function HostPanel() {
                     </div>
                   ) : (
                     <div className="space-y-2 max-h-96 overflow-y-auto">
-                      {leaderboard.slice(0, 20).map((entry, index) => {
-                        // Check if this player is hidden via the active round's hiddenPlayers
-                        const isPlayerHidden = activeRound?.hiddenPlayers?.[entry.playerName] || false;
-                        const displayName = isPlayerHidden ? "#####" : entry.playerName;
-                        
-                        return (
-                          <div 
-                            key={`${entry.playerName}-${entry.score}-${index}`}
-                            className="flex items-center justify-between bg-gray-800/50 p-3 rounded border border-gray-600"
-                          >
-                            <div className="flex items-center space-x-3">
-                              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
-                                index === 0 ? 'bg-yellow-600 text-yellow-100' :
-                                index === 1 ? 'bg-gray-400 text-gray-900' :
-                                index === 2 ? 'bg-orange-600 text-orange-100' :
-                                'bg-gray-700 text-gray-300'
-                              }`}>
-                                {index + 1}
-                              </div>
-                              <div>
-                                <div className="text-white font-medium">
-                                  {displayName}
-                                  {isPlayerHidden && (
-                                    <span className="ml-2 text-xs px-2 py-1 rounded bg-yellow-900/50 text-yellow-300">
-                                      HIDDEN
-                                    </span>
-                                  )}
-                                  {entry.gameType && (
-                                    <span className={`ml-2 text-xs px-2 py-1 rounded ${
-                                      entry.gameType === 'group' ? 'bg-purple-900/50 text-purple-300' : 'bg-blue-900/50 text-blue-300'
-                                    }`}>
-                                      {entry.gameType}
-                                    </span>
-                                  )}
-                                </div>
-                                <div className="text-gray-400 text-xs">
-                                  {entry.questionsAnswered} questions • {entry.correctAnswers} correct
-                                </div>
-                              </div>
+                      {leaderboard.slice(0, 20).map((entry, index) => (
+                        <div 
+                          key={`${entry.playerName}-${entry.score}-${index}`}
+                          className="flex items-center justify-between bg-gray-800/50 p-3 rounded border border-gray-600"
+                        >
+                          <div className="flex items-center space-x-3">
+                            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
+                              index === 0 ? 'bg-yellow-600 text-yellow-100' :
+                              index === 1 ? 'bg-gray-400 text-gray-900' :
+                              index === 2 ? 'bg-orange-600 text-orange-100' :
+                              'bg-gray-700 text-gray-300'
+                            }`}>
+                              {index + 1}
                             </div>
-                            <div className="text-right">
-                              <div className="text-white font-bold">{entry.score}</div>
+                            <div>
+                              <div className="text-white font-medium">
+                                {entry.playerName}
+                                {entry.gameType && (
+                                  <span className={`ml-2 text-xs px-2 py-1 rounded ${
+                                    entry.gameType === 'group' ? 'bg-purple-900/50 text-purple-300' : 'bg-blue-900/50 text-blue-300'
+                                  }`}>
+                                    {entry.gameType}
+                                  </span>
+                                )}
+                              </div>
                               <div className="text-gray-400 text-xs">
-                                {entry.date ? new Date(entry.date).toLocaleDateString() : 'Recent'}
+                                {entry.questionsAnswered} questions • {entry.correctAnswers} correct
                               </div>
                             </div>
                           </div>
-                        );
-                      })}
+                          <div className="text-right">
+                            <div className="text-white font-bold">{entry.score}</div>
+                            <div className="text-gray-400 text-xs">
+                              {entry.date ? new Date(entry.date).toLocaleDateString() : 'Recent'}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   )}
                 </CardContent>

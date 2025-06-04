@@ -11,11 +11,19 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
-// CLEANED: Removed Firebase debug logging
+console.log('🔧 Firebase config:', {
+  hasApiKey: !!firebaseConfig.apiKey,
+  hasProjectId: !!firebaseConfig.projectId,
+  hasAppId: !!firebaseConfig.appId,
+  projectId: firebaseConfig.projectId
+});
 
 const app = initializeApp(firebaseConfig);
 export const firestore = getFirestore(app);
 export const auth = getAuth(app);
 export const storage = getStorage(app);
+
+// Log Firebase initialization
+console.log('🔥 Firebase app initialized');
 
 export default app;

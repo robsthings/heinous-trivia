@@ -23,7 +23,7 @@ import type { LeaderboardEntry, TriviaQuestion } from "@shared/schema";
 interface ActiveRound {
   questionIndex: number;
   question: TriviaQuestion;
-  status: "countdown" | "live" | "reveal" | "waiting" | "final_leaderboard";
+  status: "countdown" | "live" | "reveal" | "waiting";
   startTime: number;
   currentAnswers: Record<string, string>;
   totalQuestions: number;
@@ -32,9 +32,6 @@ interface ActiveRound {
   playerNames?: Record<string, string>;
   countdownDuration?: number;
   questionResetId?: number;
-  finalScores?: Record<string, number>;
-  endTime?: number;
-  pendingPoints?: Record<string, number>;
 }
 
 export default function Game() {
@@ -575,80 +572,6 @@ export default function Game() {
                 {activeRound.status === "waiting" && (
                   <div className="text-center text-yellow-400">
                     Waiting for host to start the next question...
-                  </div>
-                )}
-                
-                {activeRound.status === "final_leaderboard" && (
-                  <div className="space-y-4">
-                    <div className="text-center">
-                      <h3 className="text-2xl font-bold text-yellow-400 mb-4">🏆 Final Leaderboard 🏆</h3>
-                      <p className="text-gray-300 mb-6">Great job everyone! Here are the final scores:</p>
-                    </div>
-                    
-                    <div className="space-y-2">
-                      {(() => {
-                        const scores = activeRound.finalScores || activeRound.playerScores || {};
-                        const players = Object.entries(scores)
-                          .map(([playerId, score]) => ({
-                            playerId,
-                            playerName: activeRound.playerNames?.[playerId] || `Player ${playerId}`,
-                            score: Number(score)
-                          }))
-                          .sort((a, b) => b.score - a.score);
-                        
-                        if (players.length === 0) {
-                          return (
-                            <div className="text-center text-gray-400 py-6">
-                              <p>No scores available yet.</p>
-                              <p className="text-sm mt-2">Scores will appear after the host reveals answers.</p>
-                            </div>
-                          );
-                        }
-                        
-                        return players.map((player, index) => {
-                          // Check if this player is hidden by the host
-                          const isPlayerHidden = activeRound?.hiddenPlayers?.[player.playerName] || false;
-                          const displayName = (isPlayerHidden && player.playerId !== playerId) ? "#####" : player.playerName;
-                          
-                          return (
-                            <div 
-                              key={player.playerId}
-                              className={`flex justify-between items-center p-3 rounded-lg ${
-                                index === 0 ? 'bg-yellow-600/20 border border-yellow-500' :
-                                index === 1 ? 'bg-gray-600/20 border border-gray-400' :
-                                index === 2 ? 'bg-orange-600/20 border border-orange-500' :
-                                'bg-gray-800/50'
-                              }`}
-                            >
-                              <div className="flex items-center gap-3">
-                                <span className={`text-lg font-bold ${
-                                  index === 0 ? 'text-yellow-400' :
-                                  index === 1 ? 'text-gray-300' :
-                                  index === 2 ? 'text-orange-400' :
-                                  'text-gray-400'
-                                }`}>
-                                  #{index + 1}
-                                </span>
-                                <span className="text-white font-medium">{displayName}</span>
-                                {player.playerId === playerId && (
-                                  <span className="text-blue-400 text-sm">(You)</span>
-                                )}
-                              </div>
-                              <span className="text-white font-bold">{player.score} pts</span>
-                            </div>
-                          );
-                        });
-                      })()}
-                    </div>
-                    
-                    <div className="text-center mt-6">
-                      <Button
-                        onClick={() => window.location.reload()}
-                        className="bg-green-600 hover:bg-green-700 text-white px-6 py-2"
-                      >
-                        Play Another Round
-                      </Button>
-                    </div>
                   </div>
                 )}
               </CardContent>

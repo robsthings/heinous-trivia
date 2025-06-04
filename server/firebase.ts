@@ -51,12 +51,6 @@ export const COLLECTIONS = {
 
 // Helper functions for Firestore operations
 export class FirebaseService {
-  static getFirestore() {
-    if (!firestore) {
-      throw new Error('Firebase not configured');
-    }
-    return firestore;
-  }
   static async saveHauntConfig(hauntId: string, config: any) {
     if (!firestore) {
       throw new Error('Firebase not configured');

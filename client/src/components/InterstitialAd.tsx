@@ -51,7 +51,8 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
   const hasValidLink = currentAd.link && currentAd.link !== '#' && currentAd.link.startsWith('http');
   
   // Debug the link validation - UPDATED v2
-  // CLEANED: Removed debug console logs
+  console.log('UPDATED - Ad link:', currentAd.link);
+  console.log('UPDATED - Has valid link:', hasValidLink);
 
   return (
     <div className="fixed inset-0 bg-black z-50 overflow-hidden">

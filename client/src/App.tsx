@@ -37,17 +37,7 @@ function Router() {
       <Route path="/admin" component={Admin} />
       <Route path="/haunt-auth/:hauntId" component={HauntAuth} />
       <Route path="/haunt-admin/:hauntId" component={HauntAdmin} />
-      <Route path="/haunt-admin" component={(params) => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const haunt = urlParams.get('haunt');
-        return haunt ? <HauntAdmin /> : <NotFound />;
-      }} />
       <Route path="/host-panel/:hauntId" component={HostPanel} />
-      <Route path="/host" component={(params) => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const haunt = urlParams.get('haunt');
-        return haunt ? <HostPanel /> : <NotFound />;
-      }} />
       <Route path="/analytics/:hauntId" component={Analytics} />
       <Route path="/uber-admin" component={UberAdmin} />
       <Route path="/privacy" component={Privacy} />

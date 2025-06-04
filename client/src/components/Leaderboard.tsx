@@ -13,7 +13,8 @@ interface LeaderboardProps {
 export function Leaderboard({ isVisible, leaderboard, onClose, hauntId, currentPlayer, isLoading = false }: LeaderboardProps) {
   const [hiddenPlayers, setHiddenPlayers] = useState<Record<string, boolean>>({});
   
-  // CLEANED: Removed debug logging
+  // Debug logging to track leaderboard updates
+  console.log('Leaderboard component render - isVisible:', isVisible, 'entries:', leaderboard.length, 'hauntId:', hauntId);
 
   // Poll for hidden player changes from server instead of direct Firestore
   useEffect(() => {
@@ -44,9 +45,10 @@ export function Leaderboard({ isVisible, leaderboard, onClose, hauntId, currentP
       return playerName;
     }
     
-    // Hide other players' names if they're marked as hidden - show ##### instead
+    // Hide other players' names if they're marked as hidden
     if (hiddenPlayers[playerName]) {
-      return "#####";
+      const playerId = Math.abs(playerName.split('').reduce((a, b) => a + b.charCodeAt(0), 0)) % 9999;
+      return `Player ${String(playerId).padStart(4, '0')}`;
     }
     
     return playerName;
