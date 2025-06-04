@@ -203,6 +203,62 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       const roundRef = firestore.collection('activeRound').doc(hauntId);
+      
+      // If status is changing to "reveal", award pending points
+      if (updates.status === "reveal") {
+        const roundDoc = await roundRef.get();
+        if (roundDoc.exists) {
+          const roundData = roundDoc.data();
+          const pendingPoints = roundData.pendingPoints || {};
+          const currentScores = roundData.playerScores || {};
+          const playerNames = roundData.playerNames || {};
+          
+          // Award pending points to player scores
+          const updatedScores = { ...currentScores };
+          Object.entries(pendingPoints).forEach(([playerId, points]) => {
+            updatedScores[playerId] = (updatedScores[playerId] || 0) + Number(points);
+          });
+          
+          console.log(`[REVEAL SCORING] Awarding points:`, pendingPoints);
+          
+          // Update scores and clear pending points
+          updates.playerScores = updatedScores;
+          updates.pendingPoints = {}; // Clear pending points after awarding
+          
+          // Update persistent leaderboard for each player who got points
+          const leaderboardPromises = Object.entries(pendingPoints).map(async ([playerId, points]) => {
+            if (Number(points) > 0) {
+              const leaderboardRef = firestore.collection('leaderboards').doc(hauntId).collection('players').doc(playerId);
+              const playerDoc = await leaderboardRef.get();
+              
+              if (playerDoc.exists) {
+                const currentData = playerDoc.data();
+                await leaderboardRef.update({
+                  score: currentData.score + Number(points),
+                  questionsAnswered: currentData.questionsAnswered + 1,
+                  correctAnswers: currentData.correctAnswers + 1,
+                  lastPlayed: new Date()
+                });
+              }
+            } else {
+              // Player got it wrong, just increment questions answered
+              const leaderboardRef = firestore.collection('leaderboards').doc(hauntId).collection('players').doc(playerId);
+              const playerDoc = await leaderboardRef.get();
+              
+              if (playerDoc.exists) {
+                const currentData = playerDoc.data();
+                await leaderboardRef.update({
+                  questionsAnswered: currentData.questionsAnswered + 1,
+                  lastPlayed: new Date()
+                });
+              }
+            }
+          });
+          
+          await Promise.all(leaderboardPromises);
+        }
+      }
+      
       await roundRef.update(updates);
       
       res.json({ success: true });
@@ -327,59 +383,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const roundRef = firestore.collection('activeRound').doc(hauntId);
       const roundDoc = await roundRef.get();
       
-      // Get current scores to properly increment
+      // Store answer and player info, but don't award points yet - wait for reveal
       const currentData = roundDoc.exists ? roundDoc.data() : {};
       const currentScore = currentData?.playerScores?.[playerId] || 0;
-      const newScore = currentScore + (isCorrect ? 100 : 0);
       
-      console.log(`[GROUP SCORING] Score update: ${currentScore} -> ${newScore} (added ${isCorrect ? 100 : 0})`);
+      console.log(`[GROUP ANSWER] Player ${playerId} submitted answer ${answerIndex}, correct: ${isCorrect}, current score: ${currentScore}`);
       
-      // Always use set with merge to safely handle missing documents/fields
+      // Store the answer and player info, but keep current score unchanged until reveal
       await roundRef.set({
         [`currentAnswers.${playerId}`]: answerIndex,
-        [`playerScores.${playerId}`]: newScore,
-        [`playerNames.${playerId}`]: playerName
+        [`playerScores.${playerId}`]: currentScore, // Keep existing score
+        [`playerNames.${playerId}`]: playerName,
+        [`pendingPoints.${playerId}`]: isCorrect ? 100 : 0 // Store potential points for reveal
       }, { merge: true });
       
       // Also save to leaderboards collection for persistent tracking
       const leaderboardRef = firestore.collection('leaderboards').doc(hauntId).collection('players').doc(playerId);
       const playerDoc = await leaderboardRef.get();
       
-      if (playerDoc.exists) {
-        const currentData = playerDoc.data();
-        const updatedScore = currentData.score + (isCorrect ? 100 : 0);
-        const updatedQuestions = currentData.questionsAnswered + 1;
-        const updatedCorrect = currentData.correctAnswers + (isCorrect ? 1 : 0);
-        
-        console.log(`[GROUP LEADERBOARD] Updating existing player:`, {
-          oldScore: currentData.score,
-          newScore: updatedScore,
-          questionsAnswered: updatedQuestions,
-          correctAnswers: updatedCorrect
-        });
-        
-        await leaderboardRef.update({
-          score: updatedScore,
-          questionsAnswered: updatedQuestions,
-          correctAnswers: updatedCorrect,
-          lastPlayed: new Date(),
-          gameType: 'group'
-        });
-      } else {
+      // Don't update persistent leaderboard until host reveals answer
+      // Just ensure player exists in the collection without scoring yet
+      if (!playerDoc.exists) {
         const initialData = {
           playerName,
           playerId,
-          score: isCorrect ? 100 : 0,
-          questionsAnswered: 1,
-          correctAnswers: isCorrect ? 1 : 0,
+          score: 0, // Start with 0, points awarded on reveal
+          questionsAnswered: 0, // Track separately from answers submitted
+          correctAnswers: 0,
           hauntId,
           gameType: 'group',
           createdAt: new Date(),
           lastPlayed: new Date()
         };
         
-        console.log(`[GROUP LEADERBOARD] Creating new player entry:`, initialData);
-        
+        console.log(`[GROUP LEADERBOARD] Creating new player (no scoring yet):`, initialData);
         await leaderboardRef.set(initialData);
       }
       
