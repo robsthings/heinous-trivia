@@ -142,30 +142,34 @@ export default function HostPanel() {
             playerScores: {},
             playerNames: {},
             hiddenPlayers: flatData.hiddenPlayers || {},
-            pendingPoints: {},
+            pendingPoints: {}, // CLEANED: Ensured proper initialization
             countdownDuration: flatData.countdownDuration,
             questionResetId: flatData.questionResetId,
             finalScores: flatData.finalScores,
             endTime: flatData.endTime
           };
 
-          // Parse flattened properties
+          // Parse flattened properties - CLEANED: Proper type safety
           Object.keys(flatData).forEach(key => {
             if (key.startsWith('currentAnswers.')) {
               const playerId = key.replace('currentAnswers.', '');
+              if (!roundData.currentAnswers) roundData.currentAnswers = {};
               roundData.currentAnswers[playerId] = flatData[key];
             } else if (key.startsWith('playerScores.')) {
               const playerId = key.replace('playerScores.', '');
+              if (!roundData.playerScores) roundData.playerScores = {};
               roundData.playerScores[playerId] = flatData[key];
             } else if (key.startsWith('playerNames.')) {
               const playerId = key.replace('playerNames.', '');
+              if (!roundData.playerNames) roundData.playerNames = {};
               roundData.playerNames[playerId] = flatData[key];
             } else if (key.startsWith('pendingPoints.')) {
               const playerId = key.replace('pendingPoints.', '');
+              if (!roundData.pendingPoints) roundData.pendingPoints = {};
               roundData.pendingPoints[playerId] = flatData[key];
             } else if (key.startsWith('finalScores.')) {
               const playerId = key.replace('finalScores.', '');
-              roundData.finalScores = roundData.finalScores || {};
+              if (!roundData.finalScores) roundData.finalScores = {};
               roundData.finalScores[playerId] = flatData[key];
             }
           });

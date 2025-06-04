@@ -9,13 +9,13 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 import { ExternalLink, Settings, GamepadIcon, Crown, Zap, Gem, Copy } from "lucide-react";
-import type { HauntConfig, TriviaQuestion } from "@shared/schema";
+import type { HauntConfig } from "@shared/schema"; // CLEANED: Removed unused TriviaQuestion import
 
 export default function Admin() {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [allHaunts, setAllHaunts] = useState<HauntConfig[]>([]);
-  const [editingHaunt, setEditingHaunt] = useState<HauntConfig | null>(null);
+  // CLEANED: Removed unused editingHaunt state
   const [formData, setFormData] = useState({
     id: "",
     name: "",
