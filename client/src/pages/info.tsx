@@ -178,6 +178,8 @@ export default function Info() {
           </p>
           <a
             href="mailto:ResirWrecked@yahoo.com?subject=Heinous Trivia Inquiry"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-block bg-red-600 hover:bg-red-700 text-white font-bold text-xl px-12 py-4 rounded-lg shadow-2xl transform hover:scale-105 transition-all duration-200"
           >
             Book Your Free Demo Now
