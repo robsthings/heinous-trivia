@@ -45,10 +45,9 @@ export function Leaderboard({ isVisible, leaderboard, onClose, hauntId, currentP
       return playerName;
     }
     
-    // Hide other players' names if they're marked as hidden
+    // Hide other players' names if they're marked as hidden - show ##### instead
     if (hiddenPlayers[playerName]) {
-      const playerId = Math.abs(playerName.split('').reduce((a, b) => a + b.charCodeAt(0), 0)) % 9999;
-      return `Player ${String(playerId).padStart(4, '0')}`;
+      return "#####";
     }
     
     return playerName;

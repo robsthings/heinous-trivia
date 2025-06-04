@@ -691,44 +691,55 @@ export default function HostPanel() {
                     </div>
                   ) : (
                     <div className="space-y-2 max-h-96 overflow-y-auto">
-                      {leaderboard.slice(0, 20).map((entry, index) => (
-                        <div 
-                          key={`${entry.playerName}-${entry.score}-${index}`}
-                          className="flex items-center justify-between bg-gray-800/50 p-3 rounded border border-gray-600"
-                        >
-                          <div className="flex items-center space-x-3">
-                            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
-                              index === 0 ? 'bg-yellow-600 text-yellow-100' :
-                              index === 1 ? 'bg-gray-400 text-gray-900' :
-                              index === 2 ? 'bg-orange-600 text-orange-100' :
-                              'bg-gray-700 text-gray-300'
-                            }`}>
-                              {index + 1}
-                            </div>
-                            <div>
-                              <div className="text-white font-medium">
-                                {entry.playerName}
-                                {entry.gameType && (
-                                  <span className={`ml-2 text-xs px-2 py-1 rounded ${
-                                    entry.gameType === 'group' ? 'bg-purple-900/50 text-purple-300' : 'bg-blue-900/50 text-blue-300'
-                                  }`}>
-                                    {entry.gameType}
-                                  </span>
-                                )}
+                      {leaderboard.slice(0, 20).map((entry, index) => {
+                        // Check if this player is hidden via the active round's hiddenPlayers
+                        const isPlayerHidden = activeRound?.hiddenPlayers?.[entry.playerName] || false;
+                        const displayName = isPlayerHidden ? "#####" : entry.playerName;
+                        
+                        return (
+                          <div 
+                            key={`${entry.playerName}-${entry.score}-${index}`}
+                            className="flex items-center justify-between bg-gray-800/50 p-3 rounded border border-gray-600"
+                          >
+                            <div className="flex items-center space-x-3">
+                              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
+                                index === 0 ? 'bg-yellow-600 text-yellow-100' :
+                                index === 1 ? 'bg-gray-400 text-gray-900' :
+                                index === 2 ? 'bg-orange-600 text-orange-100' :
+                                'bg-gray-700 text-gray-300'
+                              }`}>
+                                {index + 1}
                               </div>
+                              <div>
+                                <div className="text-white font-medium">
+                                  {displayName}
+                                  {isPlayerHidden && (
+                                    <span className="ml-2 text-xs px-2 py-1 rounded bg-yellow-900/50 text-yellow-300">
+                                      HIDDEN
+                                    </span>
+                                  )}
+                                  {entry.gameType && (
+                                    <span className={`ml-2 text-xs px-2 py-1 rounded ${
+                                      entry.gameType === 'group' ? 'bg-purple-900/50 text-purple-300' : 'bg-blue-900/50 text-blue-300'
+                                    }`}>
+                                      {entry.gameType}
+                                    </span>
+                                  )}
+                                </div>
+                                <div className="text-gray-400 text-xs">
+                                  {entry.questionsAnswered} questions • {entry.correctAnswers} correct
+                                </div>
+                              </div>
+                            </div>
+                            <div className="text-right">
+                              <div className="text-white font-bold">{entry.score}</div>
                               <div className="text-gray-400 text-xs">
-                                {entry.questionsAnswered} questions • {entry.correctAnswers} correct
+                                {entry.date ? new Date(entry.date).toLocaleDateString() : 'Recent'}
                               </div>
                             </div>
                           </div>
-                          <div className="text-right">
-                            <div className="text-white font-bold">{entry.score}</div>
-                            <div className="text-gray-400 text-xs">
-                              {entry.date ? new Date(entry.date).toLocaleDateString() : 'Recent'}
-                            </div>
-                          </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   )}
                 </CardContent>

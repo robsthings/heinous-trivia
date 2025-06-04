@@ -605,33 +605,39 @@ export default function Game() {
                           );
                         }
                         
-                        return players.map((player, index) => (
-                          <div 
-                            key={player.playerId}
-                            className={`flex justify-between items-center p-3 rounded-lg ${
-                              index === 0 ? 'bg-yellow-600/20 border border-yellow-500' :
-                              index === 1 ? 'bg-gray-600/20 border border-gray-400' :
-                              index === 2 ? 'bg-orange-600/20 border border-orange-500' :
-                              'bg-gray-800/50'
-                            }`}
-                          >
-                            <div className="flex items-center gap-3">
-                              <span className={`text-lg font-bold ${
-                                index === 0 ? 'text-yellow-400' :
-                                index === 1 ? 'text-gray-300' :
-                                index === 2 ? 'text-orange-400' :
-                                'text-gray-400'
-                              }`}>
-                                #{index + 1}
-                              </span>
-                              <span className="text-white font-medium">{player.playerName}</span>
-                              {player.playerId === playerId && (
-                                <span className="text-blue-400 text-sm">(You)</span>
-                              )}
+                        return players.map((player, index) => {
+                          // Check if this player is hidden by the host
+                          const isPlayerHidden = activeRound?.hiddenPlayers?.[player.playerName] || false;
+                          const displayName = (isPlayerHidden && player.playerId !== playerId) ? "#####" : player.playerName;
+                          
+                          return (
+                            <div 
+                              key={player.playerId}
+                              className={`flex justify-between items-center p-3 rounded-lg ${
+                                index === 0 ? 'bg-yellow-600/20 border border-yellow-500' :
+                                index === 1 ? 'bg-gray-600/20 border border-gray-400' :
+                                index === 2 ? 'bg-orange-600/20 border border-orange-500' :
+                                'bg-gray-800/50'
+                              }`}
+                            >
+                              <div className="flex items-center gap-3">
+                                <span className={`text-lg font-bold ${
+                                  index === 0 ? 'text-yellow-400' :
+                                  index === 1 ? 'text-gray-300' :
+                                  index === 2 ? 'text-orange-400' :
+                                  'text-gray-400'
+                                }`}>
+                                  #{index + 1}
+                                </span>
+                                <span className="text-white font-medium">{displayName}</span>
+                                {player.playerId === playerId && (
+                                  <span className="text-blue-400 text-sm">(You)</span>
+                                )}
+                              </div>
+                              <span className="text-white font-bold">{player.score} pts</span>
                             </div>
-                            <span className="text-white font-bold">{player.score} pts</span>
-                          </div>
-                        ));
+                          );
+                        });
                       })()}
                     </div>
                     
