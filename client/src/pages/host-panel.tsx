@@ -447,7 +447,7 @@ export default function HostPanel() {
                         <div className="text-center">
                           <p className="text-gray-400 text-sm">Players</p>
                           <p className="font-bold text-lg text-white">
-                            {Object.keys(activeRound.currentAnswers).length}
+                            {Object.keys(activeRound.currentAnswers || {}).length}
                           </p>
                         </div>
                         <div className="text-center">
@@ -603,10 +603,10 @@ export default function HostPanel() {
                     {Object.keys(activeRound.playerScores || {}).length > 0 ? (
                       <div className="space-y-3">
                         {Object.keys(activeRound.playerScores || {}).map((playerId) => {
-                          const isHidden = activeRound.hiddenPlayers?.[playerId] || false;
-                          const playerScore = activeRound.playerScores?.[playerId] || 0;
                           const playerName = activeRound.playerNames?.[playerId] || playerId;
-                          const hasAnsweredCurrent = activeRound.currentAnswers[playerId] !== undefined;
+                          const isHidden = activeRound.hiddenPlayers?.[playerName] || false;
+                          const playerScore = activeRound.playerScores?.[playerId] || 0;
+                          const hasAnsweredCurrent = (activeRound.currentAnswers || {})[playerId] !== undefined;
                           
                           return (
                             <div key={playerId} className="flex items-center justify-between bg-gray-800/50 p-3 rounded border border-gray-600">
@@ -628,7 +628,7 @@ export default function HostPanel() {
                               </div>
                               
                               <Button
-                                onClick={() => togglePlayerVisibility(playerId)}
+                                onClick={() => togglePlayerVisibility(playerName)}
                                 variant="ghost"
                                 size="sm"
                                 className={`h-8 w-8 p-0 ${
