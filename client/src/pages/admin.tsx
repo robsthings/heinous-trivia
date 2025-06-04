@@ -173,20 +173,44 @@ export default function Admin() {
         </div>
 
         <Tabs defaultValue="haunts" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 bg-gray-800 border-green-500">
+          <TabsList className="grid w-full grid-cols-6 bg-gray-800 border-green-500">
             <TabsTrigger 
               value="haunts" 
-              className="data-[state=active]:bg-green-600 data-[state=active]:text-black"
+              className="data-[state=active]:bg-green-600 data-[state=active]:text-black text-xs"
             >
-              <GamepadIcon className="h-4 w-4 mr-2" />
-              Haunt Management
+              <GamepadIcon className="h-3 w-3 mr-1" />
+              Haunts
             </TabsTrigger>
             <TabsTrigger 
               value="create" 
-              className="data-[state=active]:bg-green-600 data-[state=active]:text-black"
+              className="data-[state=active]:bg-green-600 data-[state=active]:text-black text-xs"
             >
-              <Settings className="h-4 w-4 mr-2" />
-              Create New Haunt
+              <Settings className="h-3 w-3 mr-1" />
+              Create
+            </TabsTrigger>
+            <TabsTrigger 
+              value="analytics" 
+              className="data-[state=active]:bg-green-600 data-[state=active]:text-black text-xs"
+            >
+              📊 Analytics
+            </TabsTrigger>
+            <TabsTrigger 
+              value="files" 
+              className="data-[state=active]:bg-green-600 data-[state=active]:text-black text-xs"
+            >
+              📁 Files
+            </TabsTrigger>
+            <TabsTrigger 
+              value="bulk" 
+              className="data-[state=active]:bg-green-600 data-[state=active]:text-black text-xs"
+            >
+              ⚡ Bulk Ops
+            </TabsTrigger>
+            <TabsTrigger 
+              value="system" 
+              className="data-[state=active]:bg-green-600 data-[state=active]:text-black text-xs"
+            >
+              🔧 System
             </TabsTrigger>
           </TabsList>
 
@@ -447,6 +471,361 @@ export default function Admin() {
                 >
                   {isLoading ? "Creating Haunt..." : "Create Haunt"}
                 </Button>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="analytics" className="space-y-6">
+            <Card className="bg-gray-900 border-green-500">
+              <CardHeader>
+                <CardTitle className="text-green-400 flex items-center gap-2">
+                  📊 Analytics Dashboard
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div className="bg-gray-800 p-4 rounded-lg border border-blue-600">
+                    <h3 className="text-blue-400 font-medium mb-2">Total Haunts</h3>
+                    <p className="text-2xl font-bold text-white">{allHaunts.length}</p>
+                  </div>
+                  <div className="bg-gray-800 p-4 rounded-lg border border-green-600">
+                    <h3 className="text-green-400 font-medium mb-2">Active Haunts</h3>
+                    <p className="text-2xl font-bold text-white">
+                      {allHaunts.filter(h => h.isActive).length}
+                    </p>
+                  </div>
+                  <div className="bg-gray-800 p-4 rounded-lg border border-purple-600">
+                    <h3 className="text-purple-400 font-medium mb-2">Premium Tier</h3>
+                    <p className="text-2xl font-bold text-white">
+                      {allHaunts.filter(h => h.tier === 'premium').length}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="bg-gray-800 p-4 rounded-lg">
+                    <h3 className="text-green-400 font-medium mb-4">Haunt Distribution by Tier</h3>
+                    <div className="space-y-2">
+                      {['basic', 'pro', 'premium'].map(tier => {
+                        const count = allHaunts.filter(h => h.tier === tier).length;
+                        const percentage = allHaunts.length > 0 ? (count / allHaunts.length * 100).toFixed(1) : 0;
+                        return (
+                          <div key={tier} className="flex justify-between items-center">
+                            <span className="text-gray-300 capitalize">{tier}</span>
+                            <div className="flex items-center gap-2">
+                              <div className="w-20 bg-gray-700 rounded-full h-2">
+                                <div 
+                                  className={`h-2 rounded-full ${
+                                    tier === 'premium' ? 'bg-purple-500' :
+                                    tier === 'pro' ? 'bg-blue-500' : 'bg-gray-500'
+                                  }`}
+                                  style={{ width: `${percentage}%` }}
+                                />
+                              </div>
+                              <span className="text-white text-sm w-12">{count} ({percentage}%)</span>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  <div className="bg-gray-800 p-4 rounded-lg">
+                    <h3 className="text-green-400 font-medium mb-4">Game Mode Distribution</h3>
+                    <div className="space-y-2">
+                      {['individual', 'queue'].map(mode => {
+                        const count = allHaunts.filter(h => h.mode === mode).length;
+                        const percentage = allHaunts.length > 0 ? (count / allHaunts.length * 100).toFixed(1) : 0;
+                        return (
+                          <div key={mode} className="flex justify-between items-center">
+                            <span className="text-gray-300 capitalize">
+                              {mode === 'queue' ? 'Group Mode' : 'Individual'}
+                            </span>
+                            <div className="flex items-center gap-2">
+                              <div className="w-20 bg-gray-700 rounded-full h-2">
+                                <div 
+                                  className={`h-2 rounded-full ${
+                                    mode === 'queue' ? 'bg-yellow-500' : 'bg-green-500'
+                                  }`}
+                                  style={{ width: `${percentage}%` }}
+                                />
+                              </div>
+                              <span className="text-white text-sm w-12">{count} ({percentage}%)</span>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-gray-800 p-4 rounded-lg">
+                  <h3 className="text-green-400 font-medium mb-4">Recent Activity</h3>
+                  <div className="space-y-2">
+                    {allHaunts.slice(0, 5).map(haunt => (
+                      <div key={haunt.id} className="flex justify-between items-center p-2 bg-gray-700 rounded">
+                        <div className="flex items-center gap-2">
+                          <Badge className={`${getTierColor(haunt.tier)} text-white`}>
+                            {haunt.tier?.toUpperCase()}
+                          </Badge>
+                          <span className="text-white">{haunt.name}</span>
+                        </div>
+                        <span className="text-gray-400 text-sm">{haunt.id}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="files" className="space-y-6">
+            <Card className="bg-gray-900 border-green-500">
+              <CardHeader>
+                <CardTitle className="text-green-400 flex items-center gap-2">
+                  📁 File Management
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="bg-gray-800 p-4 rounded-lg">
+                    <h3 className="text-blue-400 font-medium mb-4">Trivia Question Files</h3>
+                    <div className="space-y-2">
+                      <Input
+                        type="file"
+                        accept=".json,.csv"
+                        className="bg-gray-700 border-gray-600 text-white file:bg-blue-600 file:text-white file:border-0 file:rounded file:px-3 file:py-1"
+                      />
+                      <p className="text-gray-400 text-sm">Upload JSON or CSV files with trivia questions</p>
+                    </div>
+                  </div>
+
+                  <div className="bg-gray-800 p-4 rounded-lg">
+                    <h3 className="text-purple-400 font-medium mb-4">Advertisement Files</h3>
+                    <div className="space-y-2">
+                      <Input
+                        type="file"
+                        accept=".json"
+                        className="bg-gray-700 border-gray-600 text-white file:bg-purple-600 file:text-white file:border-0 file:rounded file:px-3 file:py-1"
+                      />
+                      <p className="text-gray-400 text-sm">Upload JSON files with advertisement data</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-gray-800 p-4 rounded-lg">
+                  <h3 className="text-green-400 font-medium mb-4">Bulk Question Generator</h3>
+                  <div className="space-y-4">
+                    <Textarea
+                      placeholder="Enter topic or theme for AI-generated questions..."
+                      className="bg-gray-700 border-gray-600 text-white min-h-[100px]"
+                    />
+                    <div className="flex gap-4">
+                      <Button className="bg-green-600 hover:bg-green-700">
+                        Generate 20 Questions
+                      </Button>
+                      <Button className="bg-blue-600 hover:bg-blue-700">
+                        Generate 50 Questions
+                      </Button>
+                      <Button className="bg-purple-600 hover:bg-purple-700">
+                        Generate 100 Questions
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="bulk" className="space-y-6">
+            <Card className="bg-gray-900 border-green-500">
+              <CardHeader>
+                <CardTitle className="text-green-400 flex items-center gap-2">
+                  ⚡ Bulk Operations
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="bg-gray-800 p-4 rounded-lg">
+                    <h3 className="text-yellow-400 font-medium mb-4">Bulk Haunt Actions</h3>
+                    <div className="space-y-3">
+                      <Button className="w-full bg-green-600 hover:bg-green-700">
+                        Enable All Haunts
+                      </Button>
+                      <Button className="w-full bg-red-600 hover:bg-red-700">
+                        Disable All Haunts
+                      </Button>
+                      <Button className="w-full bg-blue-600 hover:bg-blue-700">
+                        Export All Configurations
+                      </Button>
+                      <Button className="w-full bg-purple-600 hover:bg-purple-700">
+                        Backup All Data
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="bg-gray-800 p-4 rounded-lg">
+                    <h3 className="text-orange-400 font-medium mb-4">Data Management</h3>
+                    <div className="space-y-3">
+                      <Button className="w-full bg-orange-600 hover:bg-orange-700">
+                        Clear All Leaderboards
+                      </Button>
+                      <Button className="w-full bg-red-600 hover:bg-red-700">
+                        Reset All Analytics
+                      </Button>
+                      <Button className="w-full bg-gray-600 hover:bg-gray-700">
+                        Archive Old Sessions
+                      </Button>
+                      <Button className="w-full bg-blue-600 hover:bg-blue-700">
+                        Generate Reports
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-gray-800 p-4 rounded-lg">
+                  <h3 className="text-green-400 font-medium mb-4">Batch Import/Export</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="space-y-2">
+                      <Label className="text-gray-300">Import Haunts</Label>
+                      <Input
+                        type="file"
+                        accept=".json"
+                        className="bg-gray-700 border-gray-600 text-white"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-gray-300">Export Format</Label>
+                      <Select>
+                        <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
+                          <SelectValue placeholder="Select format" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-gray-800 border-gray-600">
+                          <SelectItem value="json">JSON</SelectItem>
+                          <SelectItem value="csv">CSV</SelectItem>
+                          <SelectItem value="xlsx">Excel</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="flex items-end">
+                      <Button className="w-full bg-green-600 hover:bg-green-700">
+                        Process Batch
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="system" className="space-y-6">
+            <Card className="bg-gray-900 border-green-500">
+              <CardHeader>
+                <CardTitle className="text-green-400 flex items-center gap-2">
+                  🔧 System Administration
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="bg-gray-800 p-4 rounded-lg">
+                    <h3 className="text-blue-400 font-medium mb-4">Database Status</h3>
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <span className="text-gray-300">Firebase Connection</span>
+                        <Badge className="bg-green-600 text-white">Connected</Badge>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-300">Total Collections</span>
+                        <span className="text-white">8</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-300">Storage Usage</span>
+                        <span className="text-white">2.3 GB</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-gray-800 p-4 rounded-lg">
+                    <h3 className="text-purple-400 font-medium mb-4">Server Resources</h3>
+                    <div className="space-y-2">
+                      <div className="flex justify-between">
+                        <span className="text-gray-300">Server Status</span>
+                        <Badge className="bg-green-600 text-white">Online</Badge>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-300">Active Sessions</span>
+                        <span className="text-white">47</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-300">API Responses</span>
+                        <span className="text-white">~68ms</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-gray-800 p-4 rounded-lg">
+                  <h3 className="text-red-400 font-medium mb-4">Danger Zone</h3>
+                  <div className="space-y-3">
+                    <div className="p-3 bg-red-900/20 border border-red-600 rounded">
+                      <p className="text-red-300 text-sm mb-3">
+                        These actions are irreversible and will affect all haunts and user data.
+                      </p>
+                      <div className="flex gap-3">
+                        <Button className="bg-red-700 hover:bg-red-800 text-white">
+                          Reset Entire Database
+                        </Button>
+                        <Button className="bg-orange-700 hover:bg-orange-800 text-white">
+                          Purge Old Data
+                        </Button>
+                        <Button className="bg-yellow-700 hover:bg-yellow-800 text-white">
+                          Maintenance Mode
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-gray-800 p-4 rounded-lg">
+                  <h3 className="text-green-400 font-medium mb-4">Configuration</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label className="text-gray-300">Default Question Count</Label>
+                      <Input
+                        type="number"
+                        defaultValue="20"
+                        className="bg-gray-700 border-gray-600 text-white"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-gray-300">Session Timeout (minutes)</Label>
+                      <Input
+                        type="number"
+                        defaultValue="30"
+                        className="bg-gray-700 border-gray-600 text-white"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-gray-300">Max Players per Game</Label>
+                      <Input
+                        type="number"
+                        defaultValue="50"
+                        className="bg-gray-700 border-gray-600 text-white"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-gray-300">Leaderboard Limit</Label>
+                      <Input
+                        type="number"
+                        defaultValue="100"
+                        className="bg-gray-700 border-gray-600 text-white"
+                      />
+                    </div>
+                  </div>
+                  <Button className="mt-4 bg-blue-600 hover:bg-blue-700">
+                    Save Configuration
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           </TabsContent>
