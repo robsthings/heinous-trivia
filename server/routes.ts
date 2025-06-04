@@ -5,6 +5,7 @@ import { FirebaseService, firestore, FieldValue } from "./firebase";
 import { hauntConfigSchema, leaderboardEntrySchema } from "@shared/schema";
 import path from "path";
 import multer from "multer";
+import bcrypt from "bcrypt";
 
 // Configure multer for memory storage (for Firebase upload)
 const upload = multer({
@@ -443,6 +444,50 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error updating haunt config:", error);
       res.status(500).json({ error: "Failed to update haunt configuration" });
+    }
+  });
+
+  // Reset haunt password (Uber Admin only)
+  app.post("/api/admin/reset-password", async (req, res) => {
+    try {
+      const { hauntId, newPassword } = req.body;
+      
+      if (!hauntId || !newPassword) {
+        return res.status(400).json({ error: "Missing hauntId or newPassword" });
+      }
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      console.log(`[ADMIN] Resetting password for haunt: ${hauntId}`);
+      
+      // Check if Uber Admin is authenticated (basic check)
+      const authHeader = req.headers.authorization;
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({ error: "Unauthorized - Missing authentication" });
+      }
+      
+      // Hash the new password with bcrypt
+      const saltRounds = 12;
+      const passwordHash = await bcrypt.hash(newPassword, saltRounds);
+      
+      // Update the haunt document with new password hash
+      const hauntRef = firestore.collection('haunts').doc(hauntId);
+      await hauntRef.update({
+        passwordHash: passwordHash,
+        passwordUpdatedAt: FieldValue.serverTimestamp()
+      });
+      
+      console.log(`[ADMIN] Password reset successful for haunt: ${hauntId}`);
+      
+      res.json({ 
+        success: true, 
+        message: `Password reset successfully for ${hauntId}` 
+      });
+    } catch (error) {
+      console.error(`[ADMIN] Error resetting password for haunt ${req.body?.hauntId}:`, error);
+      res.status(500).json({ error: "Failed to reset password" });
     }
   });
 

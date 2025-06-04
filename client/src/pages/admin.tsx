@@ -849,6 +849,18 @@ export default function Admin() {
                                       <Copy className="h-3 w-3" />
                                     </Button>
                                   </div>
+
+                                  {/* Reset Password */}
+                                  <div className="flex items-center gap-2">
+                                    <Button 
+                                      size="sm" 
+                                      variant="outline"
+                                      className="h-8 text-xs border-orange-600 text-orange-400 hover:bg-orange-600 hover:text-white flex-1"
+                                      onClick={() => handleResetPassword(haunt.id, haunt.name)}
+                                    >
+                                      🔑 Reset Password
+                                    </Button>
+                                  </div>
                                 </div>
                               </div>
 
