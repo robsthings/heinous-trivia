@@ -427,6 +427,110 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Admin endpoints for Uber Admin dashboard
+  
+  // Get all haunts for admin
+  app.get("/api/admin/haunts", async (req, res) => {
+    try {
+      const haunts = await FirebaseService.getAllHaunts();
+      res.json(haunts);
+    } catch (error) {
+      console.error("Failed to get haunts for admin:", error);
+      res.status(500).json({ error: "Failed to get haunts" });
+    }
+  });
+
+  // Create new haunt via admin
+  app.post("/api/admin/haunts", async (req, res) => {
+    try {
+      const hauntData = req.body;
+      await FirebaseService.saveHauntConfig(hauntData.id, hauntData);
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Failed to create haunt:", error);
+      res.status(500).json({ error: "Failed to create haunt" });
+    }
+  });
+
+  // Get trivia packs for admin
+  app.get("/api/admin/trivia-packs", async (req, res) => {
+    try {
+      const db = FirebaseService.getFirestore();
+      const packsRef = db.collection('trivia-packs');
+      const snapshot = await packsRef.get();
+      
+      const packs: any[] = [];
+      snapshot.forEach((doc) => {
+        const data = doc.data();
+        packs.push({
+          id: doc.id,
+          name: data.name || 'Unnamed Pack',
+          description: data.description || '',
+          questions: data.questions || [],
+          accessType: data.accessType || 'all',
+          allowedTiers: data.allowedTiers || [],
+          allowedHaunts: data.allowedHaunts || []
+        });
+      });
+      
+      res.json(packs.sort((a, b) => a.name.localeCompare(b.name)));
+    } catch (error) {
+      console.error("Failed to get trivia packs:", error);
+      res.status(500).json({ error: "Failed to get trivia packs" });
+    }
+  });
+
+  // Create trivia pack via admin
+  app.post("/api/admin/trivia-packs", async (req, res) => {
+    try {
+      const packData = req.body;
+      
+      const db = FirebaseService.getFirestore();
+      const packsRef = db.collection('trivia-packs');
+      
+      await packsRef.add({
+        name: packData.name,
+        description: packData.description || '',
+        questions: packData.questions || [],
+        accessType: packData.accessType || 'all',
+        allowedTiers: packData.allowedTiers || [],
+        allowedHaunts: packData.allowedHaunts || [],
+        createdAt: new Date().toISOString()
+      });
+      
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Failed to create trivia pack:", error);
+      res.status(500).json({ error: "Failed to create trivia pack" });
+    }
+  });
+
+  // Get default ads for admin
+  app.get("/api/admin/default-ads", async (req, res) => {
+    try {
+      const db = FirebaseService.getFirestore();
+      const adsRef = db.collection('default-ads');
+      const snapshot = await adsRef.get();
+      
+      const ads: any[] = [];
+      snapshot.forEach((doc) => {
+        const data = doc.data();
+        ads.push({
+          id: doc.id,
+          title: data.title || 'Default Ad',
+          description: data.description || '',
+          link: data.link || '#',
+          imageUrl: data.imageUrl || ''
+        });
+      });
+      
+      res.json(ads);
+    } catch (error) {
+      console.error("Failed to get default ads:", error);
+      res.status(500).json({ error: "Failed to get default ads" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
