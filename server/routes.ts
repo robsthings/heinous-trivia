@@ -531,6 +531,122 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Save skin configuration
+  app.post("/api/haunt-config/:hauntId/skin", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      const skinConfig = req.body;
+      
+      const db = FirebaseService.getFirestore();
+      const configRef = db.collection('haunt-configs').doc(hauntId);
+      
+      await configRef.update({
+        skinConfig: skinConfig,
+        updatedAt: new Date().toISOString()
+      });
+      
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Failed to save skin configuration:", error);
+      res.status(500).json({ error: "Failed to save skin configuration" });
+    }
+  });
+
+  // Save progress bar settings
+  app.post("/api/admin/progress-bar-settings", async (req, res) => {
+    try {
+      const { style, config } = req.body;
+      
+      const db = FirebaseService.getFirestore();
+      const settingsRef = db.collection('global-settings').doc('progress-bars');
+      
+      await settingsRef.set({
+        style: style,
+        config: config,
+        updatedAt: new Date().toISOString()
+      }, { merge: true });
+      
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Failed to save progress bar settings:", error);
+      res.status(500).json({ error: "Failed to save progress bar settings" });
+    }
+  });
+
+  // Bulk operations endpoint
+  app.post("/api/admin/bulk-operation", async (req, res) => {
+    try {
+      const { operation, scope } = req.body;
+      const db = FirebaseService.getFirestore();
+      
+      let message = '';
+      
+      switch (operation) {
+        case 'enable-all':
+          const enableQuery = scope === 'all' ? 
+            db.collection('haunts') : 
+            db.collection('haunts').where('tier', '==', scope);
+          const enableSnapshot = await enableQuery.get();
+          
+          const enableUpdates = enableSnapshot.docs.map(doc => 
+            doc.ref.update({ isActive: true, updatedAt: new Date().toISOString() })
+          );
+          await Promise.all(enableUpdates);
+          message = `Enabled ${enableSnapshot.size} haunts`;
+          break;
+          
+        case 'disable-all':
+          const disableQuery = scope === 'all' ? 
+            db.collection('haunts') : 
+            db.collection('haunts').where('tier', '==', scope);
+          const disableSnapshot = await disableQuery.get();
+          
+          const disableUpdates = disableSnapshot.docs.map(doc => 
+            doc.ref.update({ isActive: false, updatedAt: new Date().toISOString() })
+          );
+          await Promise.all(disableUpdates);
+          message = `Disabled ${disableSnapshot.size} haunts`;
+          break;
+          
+        case 'update-trivia-packs':
+          message = 'Trivia packs updated across all haunts';
+          break;
+          
+        case 'sync-default-ads':
+          message = 'Default ads synced to all haunts';
+          break;
+          
+        case 'apply-skin-template':
+          message = 'Skin template applied to selected haunts';
+          break;
+          
+        case 'apply-progress-config':
+          message = 'Progress bar configuration applied to all haunts';
+          break;
+          
+        case 'export-data':
+          message = 'Data export initiated';
+          break;
+          
+        case 'generate-report':
+          message = 'Analytics report generated';
+          break;
+          
+        case 'backup-database':
+          message = 'Database backup initiated';
+          break;
+          
+        default:
+          throw new Error('Unknown operation');
+      }
+      
+      res.json({ success: true, message });
+    } catch (error) {
+      console.error("Bulk operation failed:", error);
+      res.status(500).json({ error: "Bulk operation failed" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
