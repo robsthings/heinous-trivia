@@ -629,6 +629,62 @@ export default function Admin() {
     }
   };
 
+  const handleResetPassword = async (hauntId: string, hauntName: string) => {
+    const newPassword = prompt(`Enter new password for "${hauntName}":`);
+    
+    if (!newPassword) {
+      return; // User cancelled
+    }
+
+    if (newPassword.length < 6) {
+      toast({
+        title: "Invalid Password",
+        description: "Password must be at least 6 characters long",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      
+      // Make API call to reset password
+      const response = await fetch('/api/admin/reset-password', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${auth.currentUser?.uid || 'uber-admin'}`
+        },
+        body: JSON.stringify({
+          hauntId,
+          newPassword
+        })
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to reset password');
+      }
+
+      const result = await response.json();
+      
+      toast({
+        title: "Password Reset Successful",
+        description: `Password for "${hauntName}" has been updated successfully`,
+      });
+
+    } catch (error) {
+      console.error('Password reset failed:', error);
+      toast({
+        title: "Password Reset Failed",
+        description: error instanceof Error ? error.message : "Failed to reset password",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   // Show authentication status prominently
   const [authStatus, setAuthStatus] = useState('checking');
   
