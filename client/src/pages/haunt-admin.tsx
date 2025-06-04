@@ -269,15 +269,17 @@ export default function HauntAdmin() {
   useEffect(() => {
     if (hauntConfig && (hauntConfig.tier === "pro" || hauntConfig.tier === "premium")) {
       const loadFacebookSDK = () => {
-        // Check if we're in production environment
-        const isProduction = window.location.hostname !== 'localhost' && 
-                             !window.location.hostname.includes('127.0.0.1') &&
-                             !window.location.hostname.includes('replit.dev');
+        // Only exclude localhost and dev environments
+        const isDevelopment = window.location.hostname === 'localhost' || 
+                             window.location.hostname.includes('127.0.0.1') ||
+                             window.location.hostname.includes('replit.dev');
         
-        if (!isProduction) {
-          console.log('Facebook Messenger Chat Widget will be active in production (Pro/Premium only)');
+        if (isDevelopment) {
+          console.log('Facebook Messenger Chat Widget disabled in development (Pro/Premium only)');
           return;
         }
+        
+        console.log('Loading Facebook Messenger Chat Widget for Pro/Premium haunt on domain:', window.location.hostname);
 
         if (window.FB) {
           return;
