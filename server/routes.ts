@@ -253,6 +253,180 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Update haunt subscription/settings
+  app.patch("/api/haunt/:hauntId/subscription", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      const updates = req.body;
+      
+      const db = FirebaseService.getFirestore();
+      const hauntRef = db.collection('haunts').doc(hauntId);
+      await hauntRef.update(updates);
+      
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Failed to update haunt subscription:", error);
+      res.status(500).json({ error: "Failed to update haunt subscription" });
+    }
+  });
+
+  // Delete haunt
+  app.delete("/api/haunt/:hauntId", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      
+      const db = FirebaseService.getFirestore();
+      const hauntRef = db.collection('haunts').doc(hauntId);
+      await hauntRef.delete();
+      
+      // Also delete related data
+      try {
+        const questionsRef = db.collection('trivia-custom').doc(hauntId).collection('questions');
+        const questionsSnapshot = await questionsRef.get();
+        const deletePromises = questionsSnapshot.docs.map(doc => doc.ref.delete());
+        await Promise.all(deletePromises);
+      } catch (error) {
+        console.warn('No custom questions to delete');
+      }
+
+      try {
+        const adsRef = db.collection('haunt-ads').doc(hauntId).collection('ads');
+        const adsSnapshot = await adsRef.get();
+        const deletePromises = adsSnapshot.docs.map(doc => doc.ref.delete());
+        await Promise.all(deletePromises);
+      } catch (error) {
+        console.warn('No ads to delete');
+      }
+      
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Failed to delete haunt:", error);
+      res.status(500).json({ error: "Failed to delete haunt" });
+    }
+  });
+
+  // Reset haunt access code
+  app.patch("/api/haunt/:hauntId/reset-access-code", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      
+      const db = FirebaseService.getFirestore();
+      const hauntRef = db.collection('haunts').doc(hauntId);
+      await hauntRef.update({
+        authCode: null,
+        authCodeResetAt: new Date().toISOString(),
+        authCodeResetBy: 'uber-admin'
+      });
+      
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Failed to reset access code:", error);
+      res.status(500).json({ error: "Failed to reset access code" });
+    }
+  });
+
+  // Get trivia packs
+  app.get("/api/trivia-packs", async (req, res) => {
+    try {
+      const db = FirebaseService.getFirestore();
+      const packsRef = db.collection('trivia-packs');
+      const snapshot = await packsRef.get();
+      
+      const packs: any[] = [];
+      snapshot.forEach((doc) => {
+        const data = doc.data();
+        packs.push({
+          id: doc.id,
+          name: data.name || 'Unnamed Pack',
+          description: data.description || '',
+          questions: data.questions || [],
+          accessType: data.accessType || 'all',
+          allowedTiers: data.allowedTiers || [],
+          allowedHaunts: data.allowedHaunts || []
+        });
+      });
+      
+      res.json(packs.sort((a, b) => a.name.localeCompare(b.name)));
+    } catch (error) {
+      console.error("Failed to get trivia packs:", error);
+      res.status(500).json({ error: "Failed to get trivia packs" });
+    }
+  });
+
+  // Create trivia pack
+  app.post("/api/trivia-packs", async (req, res) => {
+    try {
+      const packData = req.body;
+      
+      const db = FirebaseService.getFirestore();
+      const packsRef = db.collection('trivia-packs');
+      
+      let docRef;
+      if (packData.name === "starter-pack") {
+        docRef = packsRef.doc('starter-pack');
+        await docRef.set(packData);
+      } else {
+        docRef = await packsRef.add(packData);
+      }
+      
+      res.json({ success: true, id: docRef.id });
+    } catch (error) {
+      console.error("Failed to create trivia pack:", error);
+      res.status(500).json({ error: "Failed to create trivia pack" });
+    }
+  });
+
+  // Get default ads
+  app.get("/api/default-ads", async (req, res) => {
+    try {
+      const db = FirebaseService.getFirestore();
+      const adsRef = db.collection('default-ads');
+      const snapshot = await adsRef.get();
+      
+      const ads: any[] = [];
+      snapshot.forEach((doc) => {
+        ads.push({ id: doc.id, ...doc.data() });
+      });
+      
+      res.json(ads);
+    } catch (error) {
+      console.error("Failed to get default ads:", error);
+      res.status(500).json({ error: "Failed to get default ads" });
+    }
+  });
+
+  // Save default ads
+  app.post("/api/default-ads", async (req, res) => {
+    try {
+      const adsData = req.body;
+      
+      const db = FirebaseService.getFirestore();
+      const adsRef = db.collection('default-ads');
+      
+      // Clear existing default ads
+      const existingAds = await adsRef.get();
+      for (const adDoc of existingAds.docs) {
+        await adDoc.ref.delete();
+      }
+      
+      // Save new default ads
+      for (const ad of adsData) {
+        await adsRef.add({
+          title: ad.title || "Default Ad",
+          description: ad.description || "Discover more!",
+          link: ad.link || "#",
+          imageUrl: ad.imageUrl,
+          timestamp: new Date().toISOString()
+        });
+      }
+      
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Failed to save default ads:", error);
+      res.status(500).json({ error: "Failed to save default ads" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
