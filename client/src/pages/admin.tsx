@@ -566,6 +566,65 @@ export default function Admin() {
                               </Button>
                             </div>
                           )}
+                          
+                          {/* Haunt Access Links */}
+                          <div className="mt-3 pt-3 border-t border-gray-700">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
+                              <div className="flex items-center gap-2">
+                                <Button
+                                  size="sm"
+                                  className="bg-blue-600 hover:bg-blue-700 text-white text-xs px-2 py-1 h-7"
+                                  onClick={() => window.open(`/?haunt=${haunt.id}`, '_blank')}
+                                >
+                                  Game
+                                </Button>
+                                <Button
+                                  size="sm"
+                                  variant="ghost"
+                                  className="h-6 w-6 p-0 text-blue-400 hover:bg-blue-600 hover:text-white"
+                                  onClick={() => copyToClipboard(`${window.location.origin}/?haunt=${haunt.id}`, "Game Link")}
+                                >
+                                  <Copy className="h-3 w-3" />
+                                </Button>
+                              </div>
+                              
+                              <div className="flex items-center gap-2">
+                                <Button
+                                  size="sm"
+                                  className="bg-green-600 hover:bg-green-700 text-white text-xs px-2 py-1 h-7"
+                                  onClick={() => window.open(`/haunt-admin?haunt=${haunt.id}`, '_blank')}
+                                >
+                                  Haunt Admin
+                                </Button>
+                                <Button
+                                  size="sm"
+                                  variant="ghost"
+                                  className="h-6 w-6 p-0 text-green-400 hover:bg-green-600 hover:text-white"
+                                  onClick={() => copyToClipboard(`${window.location.origin}/haunt-admin?haunt=${haunt.id}`, "Haunt Admin Link")}
+                                >
+                                  <Copy className="h-3 w-3" />
+                                </Button>
+                              </div>
+                              
+                              <div className="flex items-center gap-2">
+                                <Button
+                                  size="sm"
+                                  className="bg-purple-600 hover:bg-purple-700 text-white text-xs px-2 py-1 h-7"
+                                  onClick={() => window.open(`/host?haunt=${haunt.id}`, '_blank')}
+                                >
+                                  Host Panel
+                                </Button>
+                                <Button
+                                  size="sm"
+                                  variant="ghost"
+                                  className="h-6 w-6 p-0 text-purple-400 hover:bg-purple-600 hover:text-white"
+                                  onClick={() => copyToClipboard(`${window.location.origin}/host?haunt=${haunt.id}`, "Host Panel Link")}
+                                >
+                                  <Copy className="h-3 w-3" />
+                                </Button>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       ))}
 
