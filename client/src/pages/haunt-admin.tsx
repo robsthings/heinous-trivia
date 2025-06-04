@@ -1,5 +1,13 @@
 import { useState, useEffect } from "react";
 import { useRoute, useLocation, Link } from "wouter";
+
+// Facebook SDK type declarations
+declare global {
+  interface Window {
+    FB: any;
+    fbAsyncInit: () => void;
+  }
+}
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -275,9 +283,10 @@ export default function HauntAdmin() {
         (function(d, s, id) {
           var js, fjs = d.getElementsByTagName(s)[0];
           if (d.getElementById(id)) return;
-          js = d.createElement(s); js.id = id;
+          js = d.createElement(s) as HTMLScriptElement; 
+          js.id = id;
           js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
-          fjs.parentNode.insertBefore(js, fjs);
+          fjs.parentNode?.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
       };
 
@@ -1493,10 +1502,8 @@ export default function HauntAdmin() {
       {hauntConfig && (hauntConfig.tier === "pro" || hauntConfig.tier === "premium") && (
         <div 
           className="fb-customerchat"
-          {...{
-            attribution: "biz_inbox",
-            page_id: "181728020123621"
-          }}
+          data-attribution="biz_inbox"
+          data-page-id="181728020123621"
         ></div>
       )}
       </div>
