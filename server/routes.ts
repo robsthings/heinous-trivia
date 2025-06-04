@@ -659,8 +659,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const leaderboardRef = firestore.collection('leaderboards').doc(hauntId).collection('players');
       const snapshot = await leaderboardRef
-        .where('hidden', '!=', true)  // Exclude hidden players
-        .orderBy('hidden')  // Required for != query
         .orderBy('score', 'desc')
         .limit(50)
         .get();
