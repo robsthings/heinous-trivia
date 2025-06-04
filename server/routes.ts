@@ -209,9 +209,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const roundDoc = await roundRef.get();
         if (roundDoc.exists) {
           const roundData = roundDoc.data();
-          const pendingPoints = roundData.pendingPoints || {};
-          const currentScores = roundData.playerScores || {};
-          const playerNames = roundData.playerNames || {};
+          
+          // Extract pending points and current scores from dot notation
+          const pendingPoints = {};
+          const currentScores = {};
+          const playerNames = {};
+          
+          Object.keys(roundData).forEach(key => {
+            if (key.startsWith('pendingPoints.')) {
+              const playerId = key.replace('pendingPoints.', '');
+              pendingPoints[playerId] = roundData[key];
+            } else if (key.startsWith('playerScores.')) {
+              const playerId = key.replace('playerScores.', '');
+              currentScores[playerId] = roundData[key];
+            } else if (key.startsWith('playerNames.')) {
+              const playerId = key.replace('playerNames.', '');
+              playerNames[playerId] = roundData[key];
+            }
+          });
+          
+          console.log(`[REVEAL SCORING] Extracted data:`, { pendingPoints, currentScores, playerNames });
           
           // Award pending points to player scores
           const updatedScores = { ...currentScores };
@@ -219,11 +236,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
             updatedScores[playerId] = (updatedScores[playerId] || 0) + Number(points);
           });
           
-          console.log(`[REVEAL SCORING] Awarding points:`, pendingPoints);
+          console.log(`[REVEAL SCORING] Awarding points from:`, pendingPoints, 'to scores:', updatedScores);
           
-          // Update scores and clear pending points
-          updates.playerScores = updatedScores;
-          updates.pendingPoints = {}; // Clear pending points after awarding
+          // Update scores using dot notation and clear pending points
+          Object.entries(updatedScores).forEach(([playerId, score]) => {
+            updates[`playerScores.${playerId}`] = score;
+          });
+          
+          Object.keys(pendingPoints).forEach(playerId => {
+            updates[`pendingPoints.${playerId}`] = 0; // Clear pending points after awarding
+          });
           
           // Update persistent leaderboard for each player who got points
           const leaderboardPromises = Object.entries(pendingPoints).map(async ([playerId, points]) => {
