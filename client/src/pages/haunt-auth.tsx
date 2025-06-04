@@ -5,7 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-
+import { firestore } from "@/lib/firebase";
+import { doc, getDoc } from "firebase/firestore";
 
 export default function HauntAuth() {
   const [, setLocation] = useLocation();
@@ -28,27 +29,37 @@ export default function HauntAuth() {
 
     setIsLoading(true);
     try {
-      // Check if haunt exists and verify access code via server API
-      const response = await fetch(`/api/haunt/${hauntId}/auth-check?authCode=${encodeURIComponent(accessCode)}`);
-      
-      if (!response.ok) {
-        const error = await response.json();
+      // Check if haunt exists and verify access code
+      const hauntRef = doc(firestore, 'haunts', hauntId);
+      const hauntSnap = await getDoc(hauntRef);
+
+      if (!hauntSnap.exists()) {
         toast({
-          title: response.status === 404 ? "Haunt Not Found" : "Access Denied",
-          description: error.error || "Authentication failed",
+          title: "Haunt Not Found",
+          description: "The specified haunt does not exist",
           variant: "destructive"
         });
         return;
       }
 
-      const authData = await response.json();
+      const hauntData = hauntSnap.data();
+      
+      // Check if access code matches
+      if (hauntData.authCode !== accessCode) {
+        toast({
+          title: "Access Denied",
+          description: "Invalid access code for this haunt",
+          variant: "destructive"
+        });
+        return;
+      }
 
       // Store authentication in localStorage
       localStorage.setItem(`heinous-admin-${hauntId}`, accessCode);
 
       toast({
         title: "Access Granted",
-        description: `Welcome to ${authData.hostName || hauntId} admin dashboard!`,
+        description: `Welcome to ${hauntData.name} admin dashboard!`,
       });
 
       // Redirect to haunt admin dashboard
