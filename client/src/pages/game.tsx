@@ -586,14 +586,35 @@ export default function Game() {
                     </div>
                     
                     <div className="space-y-2">
-                      {Object.entries(activeRound.finalScores || {})
-                        .map(([playerId, score]) => ({
-                          playerId,
-                          playerName: activeRound.playerNames?.[playerId] || `Player ${playerId}`,
-                          score: Number(score)
-                        }))
-                        .sort((a, b) => b.score - a.score)
-                        .map((player, index) => (
+                      {(() => {
+                        console.log('[FINAL LEADERBOARD] activeRound data:', {
+                          finalScores: activeRound.finalScores,
+                          playerScores: activeRound.playerScores,
+                          playerNames: activeRound.playerNames
+                        });
+                        
+                        // Use finalScores if available, otherwise fall back to playerScores
+                        const scores = activeRound.finalScores || activeRound.playerScores || {};
+                        const players = Object.entries(scores)
+                          .map(([playerId, score]) => ({
+                            playerId,
+                            playerName: activeRound.playerNames?.[playerId] || `Player ${playerId}`,
+                            score: Number(score)
+                          }))
+                          .sort((a, b) => b.score - a.score);
+                          
+                        console.log('[FINAL LEADERBOARD] Processed players:', players);
+                        
+                        if (players.length === 0) {
+                          return (
+                            <div className="text-center text-gray-400 py-6">
+                              <p>No scores available yet.</p>
+                              <p className="text-sm mt-2">Scores will appear after the host reveals answers.</p>
+                            </div>
+                          );
+                        }
+                        
+                        return players.map((player, index) => (
                           <div 
                             key={player.playerId}
                             className={`flex justify-between items-center p-3 rounded-lg ${
