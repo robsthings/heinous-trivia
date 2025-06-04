@@ -15,23 +15,34 @@ export default function Info() {
     // Load Facebook SDK
     const loadFacebookSDK = () => {
       if (window.FB) {
+        console.log('Facebook SDK already loaded');
         return; // Already loaded
       }
 
+      console.log('Loading Facebook SDK...');
+
       window.fbAsyncInit = function() {
+        console.log('Initializing Facebook SDK...');
         window.FB.init({
           xfbml: true,
           version: 'v19.0'
         });
+        console.log('Facebook SDK initialized');
       };
 
       (function(d, s, id) {
         var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
+        if (d.getElementById(id)) {
+          console.log('Facebook SDK script already exists');
+          return;
+        }
         js = d.createElement(s) as HTMLScriptElement; 
         js.id = id;
         js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+        js.onload = () => console.log('Facebook SDK script loaded');
+        js.onerror = () => console.error('Failed to load Facebook SDK script');
         fjs.parentNode?.insertBefore(js, fjs);
+        console.log('Facebook SDK script added to DOM');
       }(document, 'script', 'facebook-jssdk'));
     };
 
