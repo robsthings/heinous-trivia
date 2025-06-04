@@ -178,11 +178,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { hauntId } = req.params;
       const roundData = req.body;
       
-      if (!firestore) {
-        throw new Error('Firebase not configured');
-      }
-      
-      const roundRef = firestore.collection('activeRound').doc(hauntId);
+      const db = FirebaseService.getFirestore();
+      const roundRef = db.collection('activeRound').doc(hauntId);
       await roundRef.set(roundData);
       
       res.json({ success: true });
@@ -198,11 +195,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { hauntId } = req.params;
       const updates = req.body;
       
-      if (!firestore) {
-        throw new Error('Firebase not configured');
-      }
-      
-      const roundRef = firestore.collection('activeRound').doc(hauntId);
+      const db = FirebaseService.getFirestore();
+      const roundRef = db.collection('activeRound').doc(hauntId);
       
       // If status is changing to "reveal", award pending points
       if (updates.status === "reveal") {
@@ -248,9 +242,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
           });
           
           // Update persistent leaderboard for each player who got points
+          const db2 = FirebaseService.getFirestore();
           const leaderboardPromises = Object.entries(pendingPoints).map(async ([playerId, points]) => {
             if (Number(points) > 0) {
-              const leaderboardRef = firestore.collection('leaderboards').doc(hauntId).collection('players').doc(playerId);
+              const leaderboardRef = db2.collection('leaderboards').doc(hauntId).collection('players').doc(playerId);
               const playerDoc = await leaderboardRef.get();
               
               if (playerDoc.exists) {
@@ -264,7 +259,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
               }
             } else {
               // Player got it wrong, just increment questions answered
-              const leaderboardRef = firestore.collection('leaderboards').doc(hauntId).collection('players').doc(playerId);
+              const leaderboardRef = db2.collection('leaderboards').doc(hauntId).collection('players').doc(playerId);
               const playerDoc = await leaderboardRef.get();
               
               if (playerDoc.exists) {
@@ -296,8 +291,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { hauntId } = req.params;
       const { finalScores, playerNames } = req.body;
       
-      if (!firestore) {
-        throw new Error('Firebase not configured');
+      const db = FirebaseService.getFirestore();
+        // Firebase check handled by getFirestore()
       }
       
       // Save final scores to persistent leaderboard
@@ -339,8 +334,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { hauntId } = req.params;
       
-      if (!firestore) {
-        throw new Error('Firebase not configured');
+      const db = FirebaseService.getFirestore();
+        // Firebase check handled by getFirestore()
       }
       
       const roundRef = firestore.collection('activeRound').doc(hauntId);
@@ -397,8 +392,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         hauntId
       });
       
-      if (!firestore) {
-        throw new Error('Firebase not configured');
+      const db = FirebaseService.getFirestore();
+        // Firebase check handled by getFirestore()
       }
       
       // Update round with player answer and name using merge to avoid errors
@@ -456,8 +451,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { hauntId } = req.params;
       const { authCode } = req.query;
       
-      if (!firestore) {
-        throw new Error('Firebase not configured');
+      const db = FirebaseService.getFirestore();
+        // Firebase check handled by getFirestore()
       }
       
       const hauntRef = firestore.collection('haunts').doc(hauntId);
@@ -520,8 +515,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { hauntId } = req.params;
       
-      if (!firestore) {
-        throw new Error('Firebase not configured');
+      const db = FirebaseService.getFirestore();
+        // Firebase check handled by getFirestore()
       }
       
       const hauntRef = firestore.collection('haunts').doc(hauntId);
@@ -561,8 +556,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { hauntId } = req.params;
       const config = req.body;
       
-      if (!firestore) {
-        throw new Error('Firebase not configured');
+      const db = FirebaseService.getFirestore();
+        // Firebase check handled by getFirestore()
       }
       
       // Validate the config data
@@ -593,8 +588,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         correctAnswers
       });
       
-      if (!firestore) {
-        throw new Error('Firebase not configured');
+      const db = FirebaseService.getFirestore();
+        // Firebase check handled by getFirestore()
       }
       
       // Generate a unique player ID for individual games
@@ -633,8 +628,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       console.log(`[LEADERBOARD FETCH] Getting leaderboard for haunt: ${hauntId}`);
       
-      if (!firestore) {
-        throw new Error('Firebase not configured');
+      const db = FirebaseService.getFirestore();
+        // Firebase check handled by getFirestore()
       }
       
       const leaderboardRef = firestore.collection('leaderboards').doc(hauntId).collection('players');
@@ -701,8 +696,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { hauntId, playerId } = req.params;
       const { hidden } = req.body;
       
-      if (!firestore) {
-        throw new Error('Firebase not configured');
+      const db = FirebaseService.getFirestore();
+        // Firebase check handled by getFirestore()
       }
       
       // Update player's hidden status in leaderboard
@@ -741,8 +736,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { hauntId } = req.params;
       
-      if (!firestore) {
-        throw new Error('Firebase not configured');
+      const db = FirebaseService.getFirestore();
+        // Firebase check handled by getFirestore()
       }
       
       let allQuestions: any[] = [];
@@ -803,8 +798,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { hauntId } = req.params;
       
-      if (!firestore) {
-        throw new Error('Firebase not configured');
+      const db = FirebaseService.getFirestore();
+        // Firebase check handled by getFirestore()
       }
       
       const adsSnapshot = await firestore.collection('haunt-ads').doc(hauntId).collection('ads').get();
