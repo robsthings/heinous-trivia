@@ -613,22 +613,93 @@ export default function Admin() {
                   </div>
                 </div>
 
-                <div className="bg-gray-800 p-4 rounded-lg">
-                  <h3 className="text-green-400 font-medium mb-4">Bulk Question Generator</h3>
-                  <div className="space-y-4">
-                    <Textarea
-                      placeholder="Enter topic or theme for AI-generated questions..."
-                      className="bg-gray-700 border-gray-600 text-white min-h-[100px]"
-                    />
-                    <div className="flex gap-4">
-                      <Button className="bg-green-600 hover:bg-green-700">
-                        Generate 20 Questions
+                {/* RESTORED: Uber Admin Trivia Pack Manager */}
+                <div className="bg-gray-800 p-4 rounded-lg border border-blue-600">
+                  <h3 className="text-blue-400 font-medium mb-4 flex items-center gap-2">
+                    📚 Global Trivia Pack Management
+                  </h3>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div className="space-y-3">
+                      <div>
+                        <Label className="text-gray-300 text-sm">Pack Name</Label>
+                        <Input
+                          placeholder="e.g., Horror Classics 2024"
+                          className="bg-gray-700 border-gray-600 text-white mt-1"
+                        />
+                      </div>
+                      <div>
+                        <Label className="text-gray-300 text-sm">Access Level</Label>
+                        <Select>
+                          <SelectTrigger className="bg-gray-700 border-gray-600 text-white mt-1">
+                            <SelectValue placeholder="Select access level" />
+                          </SelectTrigger>
+                          <SelectContent className="bg-gray-800 border-gray-600">
+                            <SelectItem value="all">All Haunts (Public)</SelectItem>
+                            <SelectItem value="premium">Premium Tier Only</SelectItem>
+                            <SelectItem value="pro">Pro Tier & Above</SelectItem>
+                            <SelectItem value="select">Selected Haunts Only</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div>
+                        <Label className="text-gray-300 text-sm">Question File (JSON/CSV)</Label>
+                        <Input
+                          type="file"
+                          accept=".json,.csv"
+                          className="bg-gray-700 border-gray-600 text-white file:bg-blue-600 file:text-white file:border-0 file:rounded file:px-2 file:py-1 mt-1"
+                        />
+                      </div>
+                    </div>
+                    <div className="space-y-3">
+                      <div>
+                        <Label className="text-gray-300 text-sm">Description</Label>
+                        <Textarea
+                          placeholder="Describe the question pack content..."
+                          className="bg-gray-700 border-gray-600 text-white mt-1"
+                          rows={4}
+                        />
+                      </div>
+                      <Button className="w-full bg-blue-600 hover:bg-blue-700">
+                        Upload Global Pack
                       </Button>
-                      <Button className="bg-blue-600 hover:bg-blue-700">
-                        Generate 50 Questions
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-gray-800 p-4 rounded-lg border border-purple-600">
+                  <h3 className="text-purple-400 font-medium mb-4 flex items-center gap-2">
+                    ⚡ Bulk Haunt Operations
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <Label className="text-gray-300 text-sm">Target Scope</Label>
+                      <Select>
+                        <SelectTrigger className="bg-gray-700 border-gray-600 text-white mt-1">
+                          <SelectValue placeholder="Select target scope" />
+                        </SelectTrigger>
+                        <SelectContent className="bg-gray-800 border-gray-600">
+                          <SelectItem value="all">All Haunts ({allHaunts.length})</SelectItem>
+                          <SelectItem value="tier-premium">Premium Tier ({allHaunts.filter(h => h.tier === 'premium').length})</SelectItem>
+                          <SelectItem value="tier-pro">Pro Tier ({allHaunts.filter(h => h.tier === 'pro').length})</SelectItem>
+                          <SelectItem value="tier-basic">Basic Tier ({allHaunts.filter(h => h.tier === 'basic').length})</SelectItem>
+                          <SelectItem value="active">Active Only ({allHaunts.filter(h => h.isActive).length})</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-2">
+                      <Button className="w-full bg-green-600 hover:bg-green-700 text-sm">
+                        Sync Question Packs
                       </Button>
-                      <Button className="bg-purple-600 hover:bg-purple-700">
-                        Generate 100 Questions
+                      <Button className="w-full bg-orange-600 hover:bg-orange-700 text-sm">
+                        Export Leaderboards
+                      </Button>
+                    </div>
+                    <div className="space-y-2">
+                      <Button className="w-full bg-blue-600 hover:bg-blue-700 text-sm">
+                        Generate Reports
+                      </Button>
+                      <Button className="w-full bg-red-600 hover:bg-red-700 text-sm">
+                        Clear Analytics
                       </Button>
                     </div>
                   </div>
@@ -764,22 +835,67 @@ export default function Admin() {
                   </div>
                 </div>
 
-                <div className="bg-gray-800 p-4 rounded-lg">
-                  <h3 className="text-red-400 font-medium mb-4">Danger Zone</h3>
+                {/* RESTORED: Uber Admin System Controls */}
+                <div className="bg-gray-800 p-4 rounded-lg border border-yellow-600">
+                  <h3 className="text-yellow-400 font-medium mb-4 flex items-center gap-2">
+                    🛡️ Uber Admin System Controls
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="space-y-2">
+                      <h4 className="text-green-400 text-sm font-medium">Global Operations</h4>
+                      <Button className="w-full bg-green-600 hover:bg-green-700 text-sm">
+                        Sync All Firebase Data
+                      </Button>
+                      <Button className="w-full bg-blue-600 hover:bg-blue-700 text-sm">
+                        Rebuild Question Cache
+                      </Button>
+                      <Button className="w-full bg-purple-600 hover:bg-purple-700 text-sm">
+                        Update Global Configs
+                      </Button>
+                    </div>
+                    <div className="space-y-2">
+                      <h4 className="text-orange-400 text-sm font-medium">Monitoring & Reports</h4>
+                      <Button className="w-full bg-orange-600 hover:bg-orange-700 text-sm">
+                        Generate System Report
+                      </Button>
+                      <Button className="w-full bg-cyan-600 hover:bg-cyan-700 text-sm">
+                        Export All Analytics
+                      </Button>
+                      <Button className="w-full bg-pink-600 hover:bg-pink-700 text-sm">
+                        Performance Metrics
+                      </Button>
+                    </div>
+                    <div className="space-y-2">
+                      <h4 className="text-red-400 text-sm font-medium">Emergency Controls</h4>
+                      <Button className="w-full bg-yellow-600 hover:bg-yellow-700 text-sm">
+                        Maintenance Mode
+                      </Button>
+                      <Button className="w-full bg-orange-600 hover:bg-orange-700 text-sm">
+                        Archive Old Sessions
+                      </Button>
+                      <Button className="w-full bg-red-600 hover:bg-red-700 text-sm">
+                        Emergency Shutdown
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-gray-800 p-4 rounded-lg border border-red-600">
+                  <h3 className="text-red-400 font-medium mb-4">Database Danger Zone</h3>
                   <div className="space-y-3">
                     <div className="p-3 bg-red-900/20 border border-red-600 rounded">
                       <p className="text-red-300 text-sm mb-3">
                         These actions are irreversible and will affect all haunts and user data.
                       </p>
-                      <div className="flex gap-3">
-                        <Button className="bg-red-700 hover:bg-red-800 text-white">
-                          Reset Entire Database
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <Button className="bg-red-700 hover:bg-red-800 text-white text-sm">
+                          Reset All Leaderboards
                         </Button>
-                        <Button className="bg-orange-700 hover:bg-orange-800 text-white">
-                          Purge Old Data
+                        <Button className="bg-red-700 hover:bg-red-800 text-white text-sm">
+                          Purge Analytics Data
                         </Button>
-                        <Button className="bg-yellow-700 hover:bg-yellow-800 text-white">
-                          Maintenance Mode
+                        <Button className="bg-red-800 hover:bg-red-900 text-white text-sm">
+                          Factory Reset Database
                         </Button>
                       </div>
                     </div>
