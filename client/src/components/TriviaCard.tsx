@@ -71,7 +71,7 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
     <div className="glass-card rounded-xl p-4 sm:p-6 mt-4 animate-fade-in relative">
       {/* Haunt Logo Watermark */}
       {gameState.hauntConfig?.logoPath && (
-        <div className="absolute bottom-4 right-4 opacity-20 w-12 h-12 z-10 pointer-events-none">
+        <div className="absolute bottom-4 right-4 opacity-20 w-24 h-24 z-10 pointer-events-none">
           <img 
             src={gameState.hauntConfig.logoPath} 
             alt="Haunt Logo"
