@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { useRoute, useLocation, Link } from "wouter";
 
-// Facebook SDK type declarations
+// Tawk.to type declarations
 declare global {
   interface Window {
-    FB: any;
-    fbAsyncInit: () => void;
+    Tawk_API: any;
+    Tawk_LoadStart: Date;
   }
 }
 import { Button } from "@/components/ui/button";
@@ -265,44 +265,44 @@ export default function HauntAdmin() {
     }
   }, [hauntId, setLocation, toast]);
 
-  // Load Facebook SDK for Messenger Chat Widget (Pro/Premium tiers only)
+  // Load Tawk.to chat widget (Pro/Premium tiers only)
   useEffect(() => {
     if (hauntConfig && (hauntConfig.tier === "pro" || hauntConfig.tier === "premium")) {
-      const loadFacebookSDK = () => {
-        // Only exclude localhost and dev environments
+      const loadTawkTo = () => {
+        // Only exclude localhost in development
         const isDevelopment = window.location.hostname === 'localhost' || 
-                             window.location.hostname.includes('127.0.0.1') ||
-                             window.location.hostname.includes('replit.dev');
+                             window.location.hostname.includes('127.0.0.1');
         
         if (isDevelopment) {
-          console.log('Facebook Messenger Chat Widget disabled in development (Pro/Premium only)');
+          console.log('Tawk.to chat widget disabled in development (Pro/Premium only)');
           return;
         }
         
-        console.log('Loading Facebook Messenger Chat Widget for Pro/Premium haunt on domain:', window.location.hostname);
+        console.log('Loading Tawk.to chat widget for Pro/Premium haunt on domain:', window.location.hostname);
 
-        if (window.FB) {
-          return;
-        }
-
-        window.fbAsyncInit = function() {
-          window.FB.init({
-            xfbml: true,
-            version: 'v19.0'
-          });
-        };
-
-        (function(d, s, id) {
-          var js, fjs = d.getElementsByTagName(s)[0];
-          if (d.getElementById(id)) return;
-          js = d.createElement(s) as HTMLScriptElement;
-          js.id = id;
-          js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
-          fjs.parentNode?.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
+        // Initialize Tawk.to
+        window.Tawk_API = window.Tawk_API || {};
+        window.Tawk_LoadStart = new Date();
+        
+        (function() {
+          const s1 = document.createElement("script");
+          const s0 = document.getElementsByTagName("script")[0];
+          s1.async = true;
+          s1.src = 'https://embed.tawk.to/YOUR_TAWK_TO_ID/1hqr8nqhr';
+          s1.charset = 'UTF-8';
+          s1.setAttribute('crossorigin', '*');
+          s0.parentNode?.insertBefore(s1, s0);
+          
+          s1.onload = () => {
+            console.log('Tawk.to chat widget loaded successfully');
+          };
+          s1.onerror = () => {
+            console.error('Failed to load Tawk.to chat widget');
+          };
+        })();
       };
 
-      loadFacebookSDK();
+      loadTawkTo();
     }
   }, [hauntConfig]);
 
@@ -1510,14 +1510,7 @@ export default function HauntAdmin() {
       
       <Footer />
 
-      {/* Facebook Messenger Chat Widget - Pro/Premium tiers only */}
-      {hauntConfig && (hauntConfig.tier === "pro" || hauntConfig.tier === "premium") && (
-        <div 
-          className="fb-customerchat"
-          data-attribution="biz_inbox"
-          data-page-id="181728020123621"
-        ></div>
-      )}
+
       </div>
     </div>
   );

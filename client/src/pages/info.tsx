@@ -1,71 +1,52 @@
 import { Link } from "wouter";
 import { useEffect } from "react";
 
-// Facebook SDK type declarations
+// Tawk.to type declarations
 declare global {
   interface Window {
-    FB: any;
-    fbAsyncInit: () => void;
+    Tawk_API: any;
+    Tawk_LoadStart: Date;
   }
 }
 
 export default function Info() {
-  // Load Facebook SDK and initialize Messenger Chat Widget
+  // Load Tawk.to chat widget
   useEffect(() => {
-    const loadFacebookSDK = () => {
-      // Only exclude localhost and dev environments
+    const loadTawkTo = () => {
+      // Only exclude localhost in development
       const isDevelopment = window.location.hostname === 'localhost' || 
-                           window.location.hostname.includes('127.0.0.1') ||
-                           window.location.hostname.includes('replit.dev');
+                           window.location.hostname.includes('127.0.0.1');
       
       if (isDevelopment) {
-        console.log('Facebook Messenger Chat Widget disabled in development');
+        console.log('Tawk.to chat widget disabled in development');
         return;
       }
       
-      console.log('Loading Facebook Messenger Chat Widget for production domain:', window.location.hostname);
+      console.log('Loading Tawk.to chat widget for domain:', window.location.hostname);
 
-      if (window.FB) {
-        return;
-      }
-
-      window.fbAsyncInit = function() {
-        try {
-          window.FB.init({
-            xfbml: true,
-            version: 'v19.0'
-          });
-          console.log('Facebook SDK initialized successfully');
-          
-          // Parse the chat widget after SDK is ready
-          setTimeout(() => {
-            if (window.FB && window.FB.XFBML) {
-              window.FB.XFBML.parse();
-              console.log('Facebook chat widget parsed');
-            }
-          }, 1000);
-        } catch (error) {
-          console.error('Facebook SDK initialization failed:', error);
-        }
-      };
-
-      (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s) as HTMLScriptElement;
-        js.id = id;
-        js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
-        js.onload = () => {
-          console.log('Facebook SDK script loaded successfully');
+      // Initialize Tawk.to
+      window.Tawk_API = window.Tawk_API || {};
+      window.Tawk_LoadStart = new Date();
+      
+      (function() {
+        const s1 = document.createElement("script");
+        const s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/YOUR_TAWK_TO_ID/1hqr8nqhr';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+        s0.parentNode?.insertBefore(s1, s0);
+        
+        s1.onload = () => {
+          console.log('Tawk.to chat widget loaded successfully');
         };
-        js.onerror = (error) => {
-          console.error('Failed to load Facebook SDK script:', error);
+        s1.onerror = () => {
+          console.error('Failed to load Tawk.to chat widget');
         };
-        fjs.parentNode?.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
+      })();
     };
 
-    loadFacebookSDK();
+    loadTawkTo();
   }, []);
   return (
     <div className="min-h-screen bg-black text-white">
@@ -321,30 +302,7 @@ export default function Info() {
         </div>
       </footer>
 
-      {/* Facebook Messenger Chat Widget */}
-      <div 
-        className="fb-customerchat"
-        data-attribution="biz_inbox"
-        data-page-id="181728020123621"
-        data-theme-color="#8B0000"
-        data-logged-in-greeting="Hi! How can we help you with Heinous Trivia?"
-        data-logged-out-greeting="Hi! How can we help you with Heinous Trivia?"
-      ></div>
-      
-      {/* Fallback contact button if Facebook widget doesn't load */}
-      <div id="fb-messenger-fallback" style={{ display: 'none' }}>
-        <a 
-          href="https://m.me/181728020123621" 
-          target="_blank" 
-          rel="noopener noreferrer"
-          className="fixed bottom-4 right-4 bg-blue-600 hover:bg-blue-700 text-white p-3 rounded-full shadow-lg z-50 transition-colors"
-          title="Chat with us on Messenger"
-        >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12,2A10,10 0 0,0 2,12C2,16.42 4.87,20.17 8.84,21.5C9.34,21.58 9.6,21.27 9.6,21C9.6,20.77 9.59,20.14 9.58,19.31C6.73,19.91 6.14,17.97 6.14,17.97C5.68,16.81 5.03,16.5 5.03,16.5C4.12,15.88 5.1,15.9 5.1,15.9C6.1,15.97 6.63,16.93 6.63,16.93C7.5,18.45 8.97,18 9.54,17.76C9.63,17.11 9.89,16.67 10.17,16.42C7.95,16.17 5.62,15.31 5.62,11.5C5.62,10.39 6,9.5 6.65,8.79C6.55,8.54 6.2,7.5 6.75,6.15C6.75,6.15 7.59,5.88 9.58,7.17C10.39,6.95 11.2,6.84 12,6.84C12.8,6.84 13.61,6.95 14.42,7.17C16.41,5.88 17.25,6.15 17.25,6.15C17.8,7.5 17.45,8.54 17.35,8.79C18,9.5 18.38,10.39 18.38,11.5C18.38,15.32 16.04,16.16 13.81,16.41C14.17,16.72 14.5,17.33 14.5,18.26C14.5,19.6 14.49,20.68 14.49,21C14.49,21.27 14.74,21.59 15.25,21.5C19.23,20.16 22,16.42 22,12A10,10 0 0,0 12,2Z" />
-          </svg>
-        </a>
-      </div>
+
     </div>
   );
 }
