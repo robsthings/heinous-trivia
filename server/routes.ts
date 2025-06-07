@@ -527,9 +527,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       console.log(`[INDIVIDUAL LEADERBOARD] Writing to /leaderboards/${haunt}/players/${playerId}:`, leaderboardData);
       
-      // Save to leaderboards collection
-      const leaderboardRef = firestore.collection('leaderboards').doc(haunt).collection('players').doc(playerId);
-      await leaderboardRef.set(leaderboardData);
+      // Save to leaderboards collection using FirebaseService
+      await FirebaseService.saveLeaderboardEntry(haunt, {
+        name: name,
+        score: score,
+        haunt: haunt,
+        questionsAnswered: questionsAnswered,
+        correctAnswers: correctAnswers
+      });
       
       console.log(`[INDIVIDUAL SCORING] Successfully saved score for ${name}`);
       res.json({ success: true });
@@ -544,7 +549,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const hauntId = req.query.haunt as string || 'general';
       console.log('Fetching leaderboard for haunt:', hauntId);
-      const leaderboard = await FirebaseService.getLeaderboard(hauntId);
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      // Check both collection structures for compatibility
+      const entriesRef = firestore.collection('leaderboards').doc(hauntId).collection('entries');
+      const playersRef = firestore.collection('leaderboards').doc(hauntId).collection('players');
+      
+      // Try entries collection first (FirebaseService format)
+      let snapshot = await entriesRef.orderBy('score', 'desc').limit(20).get();
+      
+      // If no entries found, try players collection (legacy format)
+      if (snapshot.empty) {
+        snapshot = await playersRef.orderBy('score', 'desc').limit(20).get();
+      }
+      
+      const leaderboard = snapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
+          name: data.name || data.playerName,
+          score: data.score,
+          haunt: data.haunt || data.hauntId,
+          questionsAnswered: data.questionsAnswered,
+          correctAnswers: data.correctAnswers,
+          date: data.timestamp?.toDate?.()?.toISOString() || data.createdAt?.toDate?.()?.toISOString() || new Date().toISOString()
+        };
+      });
+      
+      console.log(`Found ${leaderboard.length} leaderboard entries for ${hauntId}`);
       res.json(leaderboard);
     } catch (error) {
       console.error("Error fetching leaderboard:", error);
