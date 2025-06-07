@@ -65,7 +65,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   });
 
-  // Save leaderboard entry
+
+
+  // Save leaderboard entry (haunt-specific)
   app.post("/api/leaderboard/:hauntId", async (req, res) => {
     try {
       const { hauntId } = req.params;
@@ -79,7 +81,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get leaderboard
+  // Get leaderboard (haunt-specific)
   app.get("/api/leaderboard/:hauntId", async (req, res) => {
     try {
       const { hauntId } = req.params;
@@ -534,6 +536,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error saving leaderboard entry:", error);
       res.status(500).json({ error: "Failed to save score" });
+    }
+  });
+
+  // Get leaderboard (general)
+  app.get("/api/leaderboard", async (req, res) => {
+    try {
+      const hauntId = req.query.haunt as string || 'general';
+      console.log('Fetching leaderboard for haunt:', hauntId);
+      const leaderboard = await FirebaseService.getLeaderboard(hauntId);
+      res.json(leaderboard);
+    } catch (error) {
+      console.error("Error fetching leaderboard:", error);
+      res.status(500).json({ error: "Failed to fetch leaderboard" });
     }
   });
 
