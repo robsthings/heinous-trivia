@@ -30,6 +30,9 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
   const [adImageLoaded, setAdImageLoaded] = useState(false);
   const [logoError, setLogoError] = useState(false);
   const [showFallback, setShowFallback] = useState(false);
+  
+  // Track current ad index to ensure transition shows for each new ad
+  const [lastAdIndex, setLastAdIndex] = useState(-1);
 
   // Safe data extraction with fallbacks
   const isValidAd = gameState.showAd && gameState.ads.length > 0;
@@ -53,9 +56,24 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
     }
   }, [currentAd?.image, currentAd?.imageUrl]);
 
-  // Handle transition timing - only when showing valid ad
+  // Reset transition state when ad index changes (new ad appears)
   useEffect(() => {
     if (!isValidAd) return;
+    
+    const currentAdIndex = gameState.currentAdIndex % gameState.ads.length;
+    
+    // If this is a new ad (different index), reset transition
+    if (currentAdIndex !== lastAdIndex) {
+      setShowTransition(true);
+      setLogoError(false);
+      setShowFallback(false);
+      setLastAdIndex(currentAdIndex);
+    }
+  }, [gameState.currentAdIndex, gameState.ads.length, isValidAd, lastAdIndex]);
+
+  // Handle transition timing - only when showing valid ad
+  useEffect(() => {
+    if (!isValidAd || !showTransition) return;
     
     // Show fallback pumpkin after 500ms if logo hasn't loaded
     const fallbackTimer = setTimeout(() => {
@@ -73,7 +91,7 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
       clearTimeout(fallbackTimer);
       clearTimeout(transitionTimer);
     };
-  }, [isValidAd, logoError, logoSrc]);
+  }, [isValidAd, showTransition, logoError, logoSrc]);
   
   // Track ad view when component mounts - only for valid ads
   useEffect(() => {
