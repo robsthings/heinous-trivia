@@ -71,53 +71,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   });
 
-  // Upload branding assets via base64 (Uber Admin only)
-  app.post("/api/branding/upload", async (req, res) => {
-    try {
-      const { fileName, fileType, fileData, uploadType } = req.body;
-      
-      if (!fileName || !fileType || !fileData || !uploadType) {
-        return res.status(400).json({ error: "Missing required fields" });
-      }
 
-      if (!['skin', 'progressBar'].includes(uploadType)) {
-        return res.status(400).json({ error: "Invalid upload type. Must be 'skin' or 'progressBar'" });
-      }
-
-      const timestamp = Date.now();
-      const filename = `branding-${uploadType}-${timestamp}-${fileName}`;
-      
-      // Convert base64 to buffer
-      const buffer = Buffer.from(fileData, 'base64');
-      
-      // Generate a data URL for immediate use (fallback approach)
-      const dataUrl = `data:${fileType};base64,${fileData}`;
-      
-      // Save metadata to Firestore
-      const assetId = `${uploadType}-${timestamp}`;
-      const brandingData = {
-        name: fileName.replace(/\.[^/.]+$/, ""),
-        type: uploadType,
-        url: dataUrl, // Using data URL as fallback
-        filename: filename,
-        uploadedAt: new Date().toISOString(),
-        uploadedBy: 'uber-admin'
-      };
-
-      await FirebaseService.saveBrandingAsset(assetId, brandingData);
-
-      res.json({ 
-        success: true, 
-        url: dataUrl,
-        id: assetId,
-        message: `${uploadType === 'skin' ? 'Background skin' : 'Progress bar animation'} uploaded successfully`
-      });
-      
-    } catch (error) {
-      console.error("Error uploading branding asset:", error);
-      res.status(500).json({ error: "Failed to upload branding asset" });
-    }
-  });
 
   // Update haunt branding (Uber Admin only)
   app.patch("/api/haunt/:hauntId/branding", async (req, res) => {

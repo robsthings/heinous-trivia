@@ -645,45 +645,24 @@ export default function Admin() {
     try {
       setIsLoading(true);
       
-      // Use server-based upload with base64 encoding for reliability
-      const base64Data = await new Promise<string>((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => {
-          const result = reader.result as string;
-          // Remove data URL prefix
-          const base64 = result.split(',')[1];
-          resolve(base64);
-        };
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-      });
-
-      const response = await fetch('/api/branding/upload', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${auth.currentUser?.uid || 'uber-admin'}`
-        },
-        body: JSON.stringify({
-          fileName: file.name,
-          fileType: file.type,
-          fileData: base64Data,
-          uploadType: type
-        })
-      });
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Upload failed');
-      }
-
-      const result = await response.json();
+      // Upload directly to Firebase Storage
+      const { ref, uploadBytes, getDownloadURL } = await import('firebase/storage');
+      const { storage } = await import('@/lib/firebase');
       
-      // Add to local state
+      const timestamp = Date.now();
+      const filename = `${type}-${timestamp}.${file.name.split('.').pop()}`;
+      const storagePath = `branding/${type}s/${filename}`;
+      const storageRef = ref(storage, storagePath);
+      
+      // Upload file to Firebase Storage
+      await uploadBytes(storageRef, file);
+      const downloadURL = await getDownloadURL(storageRef);
+      
+      // Add to local state for immediate UI update
       const assetData = {
-        id: result.id,
+        id: `${type}-${timestamp}`,
         name: file.name.replace(/\.[^/.]+$/, ""),
-        url: result.url
+        url: downloadURL
       };
 
       if (type === 'skin') {
@@ -697,12 +676,12 @@ export default function Admin() {
         description: `${type === 'skin' ? 'Background skin' : 'Progress bar'} uploaded successfully`,
       });
 
-      return result.url;
+      return downloadURL;
     } catch (error) {
       console.error('Upload failed:', error);
       toast({
         title: "Upload Failed",
-        description: error instanceof Error ? error.message : "Failed to upload asset",
+        description: error instanceof Error ? error.message : "Failed to upload asset. Please check Firebase Storage configuration.",
         variant: "destructive"
       });
       return null;
@@ -745,8 +724,8 @@ export default function Admin() {
       const hauntName = allHaunts.find(h => h.id === hauntId)?.name || hauntId;
       
       toast({
-        title: "Branding Updated",
-        description: `Custom branding applied to ${hauntName}`,
+        title: `Custom branding uploaded for ${hauntName}`,
+        description: `${skinUrl ? 'Background skin' : ''}${skinUrl && progressBarUrl ? ' and ' : ''}${progressBarUrl ? 'progress bar animation' : ''} applied successfully`,
       });
 
     } catch (error) {
