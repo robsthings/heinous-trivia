@@ -31,6 +31,8 @@ export const hauntConfigs = pgTable("haunt_configs", {
   isPublished: boolean("is_published").notNull().default(true),
   authCode: text("auth_code"),
   themeData: text("theme_data").notNull(),
+  skinUrl: text("skin_url"), // Pro/Premium only: custom background image
+  progressBarTheme: text("progress_bar_theme"), // Pro/Premium only: progress bar color theme
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
@@ -167,7 +169,7 @@ export const hauntConfigSchema = z.object({
   }),
   // CUSTOM SKIN & PROGRESS BAR LOGIC
   skinUrl: z.string().optional(), // Pro/Premium only: custom background image
-  progressBarUrl: z.string().optional(), // Pro/Premium only: custom progress bar image/animation
+  progressBarTheme: z.string().optional(), // Pro/Premium only: progress bar color theme
 });
 
 export const adDataSchema = z.object({

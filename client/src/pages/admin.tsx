@@ -2284,8 +2284,8 @@ export default function Admin() {
                                 </div>
                                 <div>
                                   <span className="text-gray-300">Progress Bar: </span>
-                                  <span className={selectedHaunt.progressBarUrl ? "text-green-400" : "text-gray-400"}>
-                                    {selectedHaunt.progressBarUrl ? "Custom assigned" : "Default animation"}
+                                  <span className={selectedHaunt.progressBarTheme ? "text-green-400" : "text-gray-400"}>
+                                    {selectedHaunt.progressBarTheme ? `Theme: ${selectedHaunt.progressBarTheme}` : "Default colors"}
                                   </span>
                                 </div>
                               </div>
