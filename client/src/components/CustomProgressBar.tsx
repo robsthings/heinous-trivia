@@ -11,14 +11,10 @@ export function CustomProgressBar({ progress, hauntConfig, className = "" }: Cus
   // Check if haunt is eligible for custom progress bar (Pro/Premium only)
   const isPremiumTier = hauntConfig?.tier === 'pro' || hauntConfig?.tier === 'premium';
   const hasCustomTheme = isPremiumTier && hauntConfig?.progressBarTheme;
+  
 
-  // Debug logging
-  console.log('Progress bar debug:', {
-    tier: hauntConfig?.tier,
-    isPremiumTier,
-    progressBarTheme: hauntConfig?.progressBarTheme,
-    hasCustomTheme
-  });
+
+
 
   // Define progress bar color themes
   const getProgressBarColors = (theme: string) => {
@@ -35,6 +31,7 @@ export function CustomProgressBar({ progress, hauntConfig, className = "" }: Cus
     return themes[theme as keyof typeof themes] || themes.crimson;
   };
 
+  // Apply custom theme for Pro/Premium haunts with progressBarTheme
   if (hasCustomTheme && hauntConfig.progressBarTheme) {
     const themeColors = getProgressBarColors(hauntConfig.progressBarTheme);
     

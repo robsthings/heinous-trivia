@@ -737,8 +737,20 @@ export default function Admin() {
       
       toast({
         title: `Custom branding applied for ${hauntName}`,
-        description: `${skinUrl ? 'Background skin' : ''}${skinUrl && progressBarTheme ? ' and ' : ''}${progressBarTheme ? `progress bar theme (${progressBarTheme})` : ''} applied successfully`,
+        description: `${skinUrl ? 'Background skin' : ''}${skinUrl && progressBarTheme ? ' and ' : ''}${progressBarTheme ? `progress bar theme (${progressBarTheme})` : ''} applied successfully. Game pages will refresh automatically.`,
       });
+
+      // Force refresh any open game windows to apply new branding immediately
+      if (typeof window !== 'undefined') {
+        setTimeout(() => {
+          // Post message to refresh game windows
+          window.postMessage({
+            type: 'BRANDING_UPDATED',
+            hauntId,
+            updates: { skinUrl, progressBarTheme }
+          }, window.location.origin);
+        }, 1000);
+      }
 
     } catch (error) {
       console.error('Failed to assign branding:', error);

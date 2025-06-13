@@ -65,6 +65,19 @@ export default function Game() {
   // Apply custom background skin for Pro/Premium haunts
   useCustomSkin(gameState.hauntConfig);
 
+  // Listen for branding updates from admin panel
+  useEffect(() => {
+    const handleBrandingUpdate = (event: MessageEvent) => {
+      if (event.data.type === 'BRANDING_UPDATED' && event.data.hauntId === gameState.currentHaunt) {
+        // Reload the page to apply new branding
+        window.location.reload();
+      }
+    };
+
+    window.addEventListener('message', handleBrandingUpdate);
+    return () => window.removeEventListener('message', handleBrandingUpdate);
+  }, [gameState.currentHaunt]);
+
   useEffect(() => {
     const initializeGame = async () => {
       try {
