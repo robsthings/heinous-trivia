@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { GameState } from "@/lib/gameState";
+import type { LeaderboardEntry } from "@shared/schema";
 
 interface GameEndScreenProps {
   gameState: GameState;
