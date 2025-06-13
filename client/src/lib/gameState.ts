@@ -50,13 +50,13 @@ export class GameManager {
     // Answer bounds check
     const currentQuestion = state.questions[state.currentQuestionIndex];
     if (answerIndex < 0 || answerIndex >= currentQuestion?.answers?.length) {
-      console.warn("Invalid answer selected");
+      // Invalid answer selected
       return state;
     }
     
     // Prevent crash from undefined question
     if (!currentQuestion || typeof currentQuestion.correctAnswer !== 'number') {
-      console.error('Invalid question data, skipping answer selection');
+      // Invalid question data, skipping answer selection
       return state;
     }
     
@@ -159,7 +159,7 @@ export class GameManager {
   }
 
   static async saveScore(playerName: string, state: GameState): Promise<void> {
-    console.log('Saving score for:', playerName, 'Score:', state.score, 'Haunt:', state.currentHaunt);
+
     const entry = {
       name: playerName,
       score: state.score,
@@ -181,7 +181,6 @@ export class GameManager {
         throw new Error('Failed to save score');
       }
     } catch (error) {
-      console.error('Failed to save score:', error);
       // Fallback to localStorage if API fails
       const localLeaderboard = this.getLocalLeaderboard();
       const localEntry: LeaderboardEntry = {

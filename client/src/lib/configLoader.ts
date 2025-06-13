@@ -9,7 +9,6 @@ export class ConfigLoader {
       }
       return null;
     } catch (error) {
-      console.error('Failed to load haunt config:', error);
       return null;
     }
   }
@@ -23,7 +22,6 @@ export class ConfigLoader {
       }
       return [];
     } catch (error) {
-      console.error('Failed to load trivia questions:', error);
       return [];
     }
   }
@@ -37,7 +35,6 @@ export class ConfigLoader {
       }
       return [];
     } catch (error) {
-      console.error('Failed to load ad data:', error);
       return [];
     }
   }
