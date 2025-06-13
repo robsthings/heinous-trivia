@@ -148,9 +148,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
         message: `${type === 'skin' ? 'Background skin' : 'Progress bar'} uploaded successfully`
       });
 
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error uploading branding asset:", error);
-      res.status(500).json({ error: "Failed to upload branding asset" });
+      
+      // Provide specific error messages to help with Firebase Storage setup
+      if (error.message?.includes('bucket does not exist')) {
+        res.status(500).json({ 
+          error: "Firebase Storage bucket not found", 
+          message: "Please create the bucket 'heinous-trivia.appspot.com' in your Firebase console under Storage.",
+          instructions: "Go to Firebase Console > Storage > Get Started > Create bucket"
+        });
+      } else if (error.message?.includes('not configured')) {
+        res.status(500).json({ 
+          error: "Firebase Storage not configured", 
+          message: "Please provide Firebase credentials in environment variables."
+        });
+      } else {
+        res.status(500).json({ 
+          error: "Failed to upload branding asset",
+          message: error.message || "Unknown error occurred"
+        });
+      }
     }
   });
 

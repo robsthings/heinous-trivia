@@ -238,11 +238,32 @@ export class FirebaseService {
 
   static async uploadFile(buffer: Buffer, filename: string, path: string = '') {
     if (!storage) {
-      throw new Error('Firebase Storage not configured');
+      throw new Error('Firebase Storage not configured - please provide Firebase credentials');
     }
     
     try {
       const bucket = storage.bucket();
+      
+      // Check if bucket exists and create if it doesn't
+      try {
+        await bucket.getMetadata();
+      } catch (bucketError: any) {
+        if (bucketError.code === 404) {
+          console.log('Creating Firebase Storage bucket...');
+          try {
+            await bucket.create({
+              location: 'us-central1',
+              storageClass: 'STANDARD'
+            });
+            console.log('Firebase Storage bucket created successfully');
+          } catch (createError: any) {
+            throw new Error(`Failed to create Firebase Storage bucket: ${createError.message}. Please create the bucket "heinous-trivia.appspot.com" manually in your Firebase console.`);
+          }
+        } else {
+          throw bucketError;
+        }
+      }
+      
       const file = bucket.file(`${path}${filename}`);
       
       await file.save(buffer, {
@@ -265,9 +286,18 @@ export class FirebaseService {
         filename,
         path: path + filename
       };
-    } catch (error) {
+    } catch (error: any) {
       console.error('Firebase Storage upload error:', error);
-      throw new Error('Failed to upload file to Firebase Storage');
+      
+      // Provide specific error messages for common issues
+      if (error.message?.includes('bucket does not exist')) {
+        throw new Error('Firebase Storage bucket not found. Please create the bucket in your Firebase console.');
+      }
+      if (error.code === 403) {
+        throw new Error('Firebase Storage access denied. Please check your Firebase credentials and bucket permissions.');
+      }
+      
+      throw new Error(`Firebase Storage upload failed: ${error.message}`);
     }
   }
 
