@@ -64,7 +64,7 @@ export function CustomProgressBar({ progress, hauntConfig, className = "" }: Cus
   // Apply custom theme for Pro/Premium haunts with progressBarTheme
   if (hasCustomTheme && hauntConfig.progressBarTheme) {
     const themeData = getProgressBarColors(hauntConfig.progressBarTheme);
-    console.log('🎨 NEW INLINE STYLES - Applying theme:', hauntConfig.progressBarTheme, themeData);
+    console.log('🎨 Applying custom theme:', hauntConfig.progressBarTheme);
     
     return (
       <div 

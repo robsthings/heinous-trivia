@@ -638,14 +638,40 @@ export default function Admin() {
     }
   };
 
-  // Custom Branding Functions
+  // Custom Branding Functions - Fortified Asset Upload
   const uploadBrandingAsset = async (file: File, type: 'skin' | 'progressBar') => {
     if (!file) return null;
+
+    // Client-side validation before upload
+    const maxSize = 10 * 1024 * 1024; // 10MB
+    if (file.size > maxSize) {
+      toast({
+        title: "File Too Large",
+        description: "File size must be less than 10MB. Please compress your image.",
+        variant: "destructive"
+      });
+      return null;
+    }
+
+    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+    if (!allowedTypes.includes(file.type)) {
+      toast({
+        title: "Invalid File Type",
+        description: "Only JPG, PNG, GIF, and WebP images are allowed.",
+        variant: "destructive"
+      });
+      return null;
+    }
 
     try {
       setIsLoading(true);
       
-      // Upload via server-side endpoint to bypass CORS issues
+      toast({
+        title: "Uploading Asset",
+        description: `Uploading ${type === 'skin' ? 'background skin' : 'progress bar asset'}...`,
+      });
+      
+      // Upload via server-side endpoint with enhanced error handling
       const formData = new FormData();
       formData.append('file', file);
       formData.append('type', type);
@@ -659,16 +685,38 @@ export default function Admin() {
       });
       
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || 'Upload failed');
+        const errorData = await response.json().catch(() => ({ 
+          error: "Upload failed", 
+          message: "Unknown server error" 
+        }));
+        
+        // Handle specific Firebase Storage error types
+        switch (errorData.code) {
+          case 'BUCKET_NOT_FOUND':
+            throw new Error("Firebase Storage bucket not found. Please create the bucket in your Firebase console.");
+          case 'FIREBASE_NOT_CONFIGURED':
+            throw new Error("Firebase credentials are missing. Please check your environment configuration.");
+          case 'ACCESS_DENIED':
+            throw new Error("Access denied to Firebase Storage. Please check your service account permissions.");
+          case 'CORS_ERROR':
+            throw new Error("CORS configuration error. Please configure Firebase Storage CORS settings.");
+          default:
+            throw new Error(errorData.message || errorData.error || 'Upload failed');
+        }
       }
       
       const result = await response.json();
       
+      if (!result.success || !result.url) {
+        throw new Error("Invalid response from server - upload may have failed");
+      }
+      
+      console.log(`Asset uploaded successfully: ${result.url}`);
+      
       // Add to local state for immediate UI update
       const assetData = {
-        id: result.id,
-        name: result.name,
+        id: result.id || `${type}-${Date.now()}`,
+        name: result.name || file.name.replace(/\.[^/.]+$/, ""),
         url: result.url
       };
 
@@ -680,15 +728,27 @@ export default function Admin() {
 
       toast({
         title: "Upload Successful",
-        description: `${type === 'skin' ? 'Background skin' : 'Progress bar'} uploaded successfully`,
+        description: `${type === 'skin' ? 'Background skin' : 'Progress bar asset'} uploaded and ready for use`,
       });
+
+      // Reload branding assets to ensure sync
+      setTimeout(() => {
+        loadBrandingAssets();
+      }, 1000);
 
       return result.url;
     } catch (error) {
-      console.error('Upload failed:', error);
+      console.error('Asset upload failed:', error);
+      
+      let errorMessage = "Failed to upload asset. Please try again.";
+      
+      if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+      
       toast({
         title: "Upload Failed",
-        description: error instanceof Error ? error.message : "Failed to upload asset. Please try again.",
+        description: errorMessage,
         variant: "destructive"
       });
       return null;

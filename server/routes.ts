@@ -105,70 +105,145 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Upload branding assets to Firebase Storage (Uber Admin only)
   app.post("/api/branding/upload", upload.single('file'), async (req, res) => {
-    console.log('Upload endpoint hit:', req.method, req.url);
-    console.log('File received:', req.file ? 'Yes' : 'No');
-    console.log('Body:', req.body);
+    console.log('🔧 Branding upload endpoint hit:', req.method, req.url);
+    console.log('📁 File received:', req.file ? `Yes (${req.file.originalname}, ${req.file.size} bytes)` : 'No');
+    console.log('📋 Request body:', req.body);
     
     try {
+      // Validate file presence
       if (!req.file) {
-        return res.status(400).json({ error: "No file uploaded" });
+        return res.status(400).json({ 
+          error: "No file uploaded",
+          message: "Please select a file to upload"
+        });
+      }
+
+      // Validate file size (10MB limit)
+      const maxSize = 10 * 1024 * 1024; // 10MB
+      if (req.file.size > maxSize) {
+        return res.status(400).json({ 
+          error: "File too large",
+          message: "File size must be less than 10MB"
+        });
+      }
+
+      // Validate file type
+      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+      if (!allowedTypes.includes(req.file.mimetype)) {
+        return res.status(400).json({ 
+          error: "Invalid file type",
+          message: "Only JPG, PNG, GIF, and WebP images are allowed"
+        });
       }
 
       const { type } = req.body; // 'skin' or 'progressBar'
       if (!type || !['skin', 'progressBar'].includes(type)) {
-        return res.status(400).json({ error: "Invalid type. Must be 'skin' or 'progressBar'" });
+        return res.status(400).json({ 
+          error: "Invalid type",
+          message: "Type must be 'skin' or 'progressBar'"
+        });
       }
 
       const timestamp = Date.now();
       const fileExtension = path.extname(req.file.originalname);
       const filename = `${type}-${timestamp}${fileExtension}`;
-      const storagePath = `branding/${type}s/`;
+      
+      // Ensure proper storage path for skins
+      const storagePath = type === 'skin' ? 'branding/skins/' : 'branding/progressBars/';
+      
+      console.log(`📤 Uploading ${type} to Firebase Storage: ${storagePath}${filename}`);
 
-      // Upload to Firebase Storage
+      // Upload to Firebase Storage with enhanced error handling
       const uploadResult = await FirebaseService.uploadFile(
         req.file.buffer,
         filename,
         storagePath
       );
 
-      // Save asset metadata
+      console.log(`✅ Firebase upload successful: ${uploadResult.downloadURL}`);
+
+      // Verify URL is properly formatted for use in CSS background-image
+      const verifiedUrl = uploadResult.downloadURL.includes('alt=media') 
+        ? uploadResult.downloadURL 
+        : `${uploadResult.downloadURL}${uploadResult.downloadURL.includes('?') ? '&' : '?'}alt=media`;
+      
+      console.log(`🔗 Verified asset URL: ${verifiedUrl}`);
+
+      // Save asset metadata with enhanced information
       const assetData = {
         id: `${type}-${timestamp}`,
         name: req.file.originalname.replace(/\.[^/.]+$/, ""),
-        url: uploadResult.downloadURL,
+        url: verifiedUrl,
+        originalUrl: uploadResult.downloadURL,
         type: type,
+        filename: filename,
+        originalName: req.file.originalname,
+        size: req.file.size,
+        mimeType: req.file.mimetype,
+        storagePath: storagePath + filename,
         createdAt: new Date().toISOString()
       };
 
+      console.log(`💾 Saving asset metadata to Firestore...`);
       await FirebaseService.saveBrandingAsset(assetData.id, assetData);
+      
+      console.log(`🎉 Asset upload completed successfully: ${assetData.id}`);
 
       res.json({
         success: true,
+        id: assetData.id,
+        name: assetData.name,
+        url: verifiedUrl,
         asset: assetData,
         message: `${type === 'skin' ? 'Background skin' : 'Progress bar'} uploaded successfully`
       });
 
     } catch (error: any) {
-      console.error("Error uploading branding asset:", error);
+      console.error("❌ Error uploading branding asset:", error);
       
-      // Provide specific error messages to help with Firebase Storage setup
-      if (error.message?.includes('bucket does not exist')) {
-        res.status(500).json({ 
+      // Enhanced error handling with specific Firebase issues
+      if (error.message?.includes('bucket does not exist') || error.message?.includes('bucket not found')) {
+        return res.status(500).json({ 
           error: "Firebase Storage bucket not found", 
-          message: "Please create the bucket 'heinous-trivia.appspot.com' in your Firebase console under Storage.",
-          instructions: "Go to Firebase Console > Storage > Get Started > Create bucket"
-        });
-      } else if (error.message?.includes('not configured')) {
-        res.status(500).json({ 
-          error: "Firebase Storage not configured", 
-          message: "Please provide Firebase credentials in environment variables."
-        });
-      } else {
-        res.status(500).json({ 
-          error: "Failed to upload branding asset",
-          message: error.message || "Unknown error occurred"
+          message: "Please create the Firebase Storage bucket in your Firebase console.",
+          instructions: "Go to Firebase Console > Storage > Get Started > Create bucket",
+          code: "BUCKET_NOT_FOUND"
         });
       }
+      
+      if (error.message?.includes('not configured') || error.message?.includes('Firebase Storage not configured')) {
+        return res.status(500).json({ 
+          error: "Firebase Storage not configured", 
+          message: "Firebase credentials are missing or invalid.",
+          instructions: "Please ensure FIREBASE_SERVICE_ACCOUNT_JSON is properly set in environment variables.",
+          code: "FIREBASE_NOT_CONFIGURED"
+        });
+      }
+      
+      if (error.code === 403 || error.message?.includes('access denied') || error.message?.includes('permission')) {
+        return res.status(500).json({ 
+          error: "Firebase Storage access denied", 
+          message: "Insufficient permissions to upload to Firebase Storage.",
+          instructions: "Check your Firebase service account permissions and Storage Rules.",
+          code: "ACCESS_DENIED"
+        });
+      }
+      
+      if (error.message?.includes('CORS')) {
+        return res.status(500).json({ 
+          error: "CORS configuration error", 
+          message: "Firebase Storage CORS policy needs to be configured.",
+          instructions: "Please configure CORS for your Firebase Storage bucket.",
+          code: "CORS_ERROR"
+        });
+      }
+
+      // Generic error fallback
+      res.status(500).json({ 
+        error: "Failed to upload branding asset",
+        message: error.message || "An unexpected error occurred during upload.",
+        code: "UPLOAD_ERROR"
+      });
     }
   });
 

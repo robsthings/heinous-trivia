@@ -241,51 +241,122 @@ export class FirebaseService {
       throw new Error('Firebase Storage not configured - please provide Firebase credentials');
     }
     
+    console.log(`🔥 Firebase Storage upload starting: ${path}${filename}`);
+    
     try {
       const bucket = storage.bucket();
       
-      // Verify bucket exists
+      // Verify bucket exists and is accessible
       try {
-        await bucket.getMetadata();
+        const [metadata] = await bucket.getMetadata();
+        console.log(`📦 Bucket verified: ${metadata.name}`);
       } catch (bucketError: any) {
+        console.error('❌ Bucket verification failed:', bucketError);
         if (bucketError.code === 404) {
           throw new Error('Firebase Storage bucket not found. Please ensure the bucket exists in your Firebase console.');
+        }
+        if (bucketError.code === 403) {
+          throw new Error('Firebase Storage access denied. Check your service account permissions.');
         }
         throw bucketError;
       }
       
       const file = bucket.file(`${path}${filename}`);
       
+      // Enhanced content type detection
+      const getContentType = (filename: string): string => {
+        const ext = filename.toLowerCase().split('.').pop();
+        switch (ext) {
+          case 'gif': return 'image/gif';
+          case 'png': return 'image/png';
+          case 'jpg':
+          case 'jpeg': return 'image/jpeg';
+          case 'webp': return 'image/webp';
+          case 'svg': return 'image/svg+xml';
+          default: return 'application/octet-stream';
+        }
+      };
+      
+      const contentType = getContentType(filename);
+      console.log(`📄 Content type: ${contentType}`);
+      
+      // Upload with enhanced metadata and CORS headers
       await file.save(buffer, {
         metadata: {
-          contentType: filename.endsWith('.gif') ? 'image/gif' : 
-                     filename.endsWith('.png') ? 'image/png' :
-                     filename.endsWith('.jpg') || filename.endsWith('.jpeg') ? 'image/jpeg' : 
-                     'application/octet-stream'
+          contentType,
+          cacheControl: 'public, max-age=31536000', // 1 year cache
+          metadata: {
+            uploadedAt: new Date().toISOString(),
+            originalName: filename,
+            uploadSource: 'uber-admin'
+          }
         },
-        public: true
+        public: true,
+        resumable: false // For better reliability with smaller files
       });
       
-      // Make file publicly readable
-      await file.makePublic();
+      console.log(`✅ File uploaded successfully`);
       
-      // Use the correct Firebase Storage URL format
-      const downloadURL = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(path + filename)}?alt=media`;
+      // Make file publicly readable with explicit permissions
+      try {
+        await file.makePublic();
+        console.log(`🌐 File made public`);
+      } catch (publicError: any) {
+        console.warn('⚠️ Could not make file public, may already be public:', publicError.message);
+        // Continue - file might already be public or have correct permissions
+      }
+      
+      // Generate multiple URL formats for maximum compatibility
+      const bucketName = bucket.name;
+      const encodedPath = encodeURIComponent(path + filename);
+      
+      // Primary URL with alt=media for direct access
+      const downloadURL = `https://firebasestorage.googleapis.com/v0/b/${bucketName}/o/${encodedPath}?alt=media`;
+      
+      // Verify URL accessibility
+      console.log(`🔗 Generated URL: ${downloadURL}`);
+      
+      // Test URL accessibility (optional - can be removed for performance)
+      try {
+        const testResponse = await fetch(downloadURL, { method: 'HEAD' });
+        if (testResponse.ok) {
+          console.log(`✅ URL verified accessible`);
+        } else {
+          console.warn(`⚠️ URL test returned ${testResponse.status}`);
+        }
+      } catch (testError) {
+        console.warn('⚠️ URL verification failed (may still work):', testError);
+      }
       
       return {
         downloadURL,
         filename,
-        path: path + filename
+        path: path + filename,
+        bucketName,
+        contentType
       };
     } catch (error: any) {
-      console.error('Firebase Storage upload error:', error);
+      console.error('❌ Firebase Storage upload error:', error);
       
-      // Provide specific error messages for common issues
-      if (error.message?.includes('bucket does not exist')) {
+      // Enhanced error handling with specific Firebase issues
+      if (error.message?.includes('bucket does not exist') || error.message?.includes('bucket not found')) {
         throw new Error('Firebase Storage bucket not found. Please create the bucket in your Firebase console.');
       }
-      if (error.code === 403) {
+      
+      if (error.code === 403 || error.message?.includes('access denied') || error.message?.includes('permission')) {
         throw new Error('Firebase Storage access denied. Please check your Firebase credentials and bucket permissions.');
+      }
+      
+      if (error.code === 'storage/unauthorized') {
+        throw new Error('Firebase Storage unauthorized. Please verify your service account has Storage Admin role.');
+      }
+      
+      if (error.message?.includes('CORS')) {
+        throw new Error('CORS configuration error. Please configure CORS for your Firebase Storage bucket.');
+      }
+      
+      if (error.code === 'ENOTFOUND' || error.message?.includes('network')) {
+        throw new Error('Network error connecting to Firebase Storage. Please check your internet connection.');
       }
       
       throw new Error(`Firebase Storage upload failed: ${error.message}`);
