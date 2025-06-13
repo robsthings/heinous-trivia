@@ -182,19 +182,13 @@ export default function Game() {
           // Update local score from server data if available
           if (roundData && roundData.playerScores && playerId && roundData.playerScores[playerId]) {
             const serverScore = roundData.playerScores[playerId];
-            console.log(`[CLIENT SCORING] Syncing score from server: ${groupScore} -> ${serverScore} for player ${playerId}`);
             setGroupScore(serverScore);
           } else {
-            console.log(`[CLIENT SCORING] No server score found for player ${playerId}`, {
-              hasRoundData: !!roundData,
-              hasPlayerScores: !!roundData?.playerScores,
-              hasPlayerId: !!playerId,
-              playerScoreExists: !!(roundData?.playerScores?.[playerId])
-            });
+            // No server score found for player
           }
         }
       } catch (error) {
-        console.error('Error polling for round updates:', error);
+        // Error polling for round updates - silent handling
       }
     };
 
@@ -261,13 +255,10 @@ export default function Game() {
       });
 
       if (response.ok) {
-        console.log(`[CLIENT SCORING] Answer submitted successfully, isCorrect: ${isCorrect}`);
-        
         // Update local score for header display
         if (isCorrect) {
           const newScore = groupScore + 100;
           setGroupScore(newScore);
-          console.log(`[CLIENT SCORING] Updated local score: ${groupScore} -> ${newScore}`);
         }
         
         toast({
@@ -279,7 +270,6 @@ export default function Game() {
         throw new Error('Failed to submit answer');
       }
     } catch (error) {
-      console.error('Failed to submit group answer:', error);
       toast({
         title: "Submission Failed",
         description: "Could not submit your answer. Please try again.",
@@ -307,7 +297,6 @@ export default function Game() {
     // Answer bounds check
     const currentQuestion = gameState.questions[gameState.currentQuestionIndex];
     if (answerIndex < 0 || answerIndex >= currentQuestion?.answers?.length) {
-      console.warn("Invalid answer selected");
       return;
     }
     setGameState(prev => GameManager.selectAnswer(prev, answerIndex));
@@ -327,33 +316,22 @@ export default function Game() {
 
   const handleSaveScore = async (inputPlayerName?: string) => {
     const nameToUse = inputPlayerName || playerName;
-    console.log('Saving score for:', nameToUse, 'Score:', gameState.score, 'Haunt:', gameState.currentHaunt);
     await GameManager.saveScore(nameToUse, gameState);
-    console.log('Score saved, clearing cached leaderboard...');
     
     // Clear cached leaderboard data to force fresh fetch
     setLeaderboard([]);
   };
 
   const handlePlayAgain = async () => {
-    console.log('🔄 Play Again clicked - reloading questions and ads...');
-    
     // Reload fresh questions and ads for each new game
     const allQuestions = await ConfigLoader.loadTriviaQuestions(gameState.currentHaunt);
     const freshAds = await ConfigLoader.loadAdData(gameState.currentHaunt);
-    
-    console.log(`✅ Reloaded ${allQuestions.length} total questions for new game`);
     
     const validQuestions = allQuestions.filter(q => 
       q.text && q.answers && q.answers.length >= 2
     );
     
-    if (validQuestions.length < allQuestions.length) {
-      console.warn(`⚠️ Filtered out ${allQuestions.length - validQuestions.length} invalid questions`);
-    }
-    
     const shuffledQuestions = GameManager.shuffleQuestions(validQuestions);
-    console.log(`🎲 Shuffled questions for fresh gameplay experience`);
     
     setGameState(prev => ({
       ...GameManager.playAgain(prev),
