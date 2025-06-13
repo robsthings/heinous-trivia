@@ -1,0 +1,45 @@
+=== CustomProgressBar DEBUG ===
+index-CDTaAEO_.js:228 hasConfig: false
+index-CDTaAEO_.js:228 hauntId: undefined
+index-CDTaAEO_.js:228 tier: undefined
+index-CDTaAEO_.js:228 progressBarTheme: undefined
+index-CDTaAEO_.js:228 isPremiumTier: false
+index-CDTaAEO_.js:228 hasCustomTheme: false
+index-CDTaAEO_.js:228 progress: 0
+index-CDTaAEO_.js:228 ================================
+index-CDTaAEO_.js:3743 Loading Tawk.to chat widget for Pro/Premium haunt on domain: heinoustrivia.com
+embed.tawk.to/6841ac9da46165190e586891/1hqr8nqhr:1 
+            
+            
+           Failed to load resource: the server responded with a status of 404 ()Understand this error
+index-CDTaAEO_.js:3743 Failed to load Tawk.to chat widget
+H.onerror @ index-CDTaAEO_.js:3743Understand this error
+index-CDTaAEO_.js:3743 Loading Tawk.to chat widget for Pro/Premium haunt on domain: heinoustrivia.com
+embed.tawk.to/6841ac9da46165190e586891/1hqr8nqhr:1 
+            
+            
+           Failed to load resource: the server responded with a status of 404 ()Understand this error
+index-CDTaAEO_.js:3743 Failed to load Tawk.to chat widget
+H.onerror @ index-CDTaAEO_.js:3743Understand this error
+index-CDTaAEO_.js:228 === CustomProgressBar DEBUG ===
+index-CDTaAEO_.js:228 hasConfig: false
+index-CDTaAEO_.js:228 hauntId: undefined
+index-CDTaAEO_.js:228 tier: undefined
+index-CDTaAEO_.js:228 progressBarTheme: undefined
+index-CDTaAEO_.js:228 isPremiumTier: false
+index-CDTaAEO_.js:228 hasCustomTheme: false
+index-CDTaAEO_.js:228 progress: 0
+index-CDTaAEO_.js:228 ================================
+index-CDTaAEO_.js:3743 Loading Tawk.to chat widget for Pro/Premium haunt on domain: heinoustrivia.com
+embed.tawk.to/6841ac9da46165190e586891/1hqr8nqhr:1 
+            
+            
+           Failed to load resource: the server responded with a status of 404 ()Understand this error
+index-CDTaAEO_.js:3743 Failed to load Tawk.to chat widget
+H.onerror @ index-CDTaAEO_.js:3743Understand this error
+index-CDTaAEO_.js:3743 Loading Tawk.to chat widget for Pro/Premium haunt on domain: heinoustrivia.com
+embed.tawk.to/6841ac9da46165190e586891/1hqr8nqhr:1 
+            
+            
+           Failed to load resource: the server responded with a status of 404 ()Understand this error
+index-CDTaAEO_.js:3743 Failed to load Tawk.to chat widget

@@ -1,23 +1,6 @@
 import React, { useState, useEffect } from "react";
 import type { GameState } from "@/lib/gameState";
-
-// Consolidated ad tracking utility
-async function trackAdMetric(hauntId: string, adIndex: number, metric: 'views' | 'clicks') {
-  try {
-    const response = await fetch(`/api/ad-metrics/${hauntId}/${adIndex}/${metric}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-    
-    if (!response.ok) {
-      throw new Error('Failed to track ad metric');
-    }
-  } catch (error) {
-    console.error(`❌ Failed to track ad ${metric}:`, error);
-  }
-}
+import { AnalyticsTracker } from "@/lib/analytics";
 
 interface InterstitialAdProps {
   gameState: GameState;
@@ -83,9 +66,9 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
   
   // Track ad view when component mounts - only for valid ads
   useEffect(() => {
-    if (!isValidAd || !currentAd) return;
+    if (!isValidAd || !currentAd || !gameState.currentHaunt) return;
     
-    trackAdMetric(gameState.currentHaunt, adIndex, 'views');
+    AnalyticsTracker.trackAdView(gameState.currentHaunt, adIndex);
   }, [gameState.currentHaunt, adIndex, isValidAd]);
 
   // Early return after all hooks have been called
@@ -95,7 +78,7 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
 
   const handleVisitAd = () => {
     if (currentAd.link && currentAd.link !== '#' && currentAd.link.startsWith('http')) {
-      trackAdMetric(gameState.currentHaunt, adIndex, 'clicks');
+      AnalyticsTracker.trackAdClick(gameState.currentHaunt, adIndex);
       onVisitAd(currentAd.link);
     }
   };

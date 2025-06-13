@@ -327,6 +327,11 @@ export default function Game() {
     setPlayerName(name);
     setShowNamePrompt(false);
     setTempName("");
+
+    // Start analytics session when player info is saved
+    if (haunt) {
+      AnalyticsTracker.startSession(haunt, isGroupMode ? 'group' : 'individual');
+    }
   };
 
   const handleSelectAnswer = (answerIndex: number) => {
@@ -335,6 +340,18 @@ export default function Game() {
     if (answerIndex < 0 || answerIndex >= currentQuestion?.answers?.length) {
       return;
     }
+    
+    // Track question performance analytics
+    const isCorrect = answerIndex === currentQuestion.correctAnswer;
+    if (gameState.currentHaunt && currentQuestion) {
+      AnalyticsTracker.trackQuestionAnswer(
+        gameState.currentHaunt,
+        currentQuestion.text,
+        currentQuestion.pack || 'Default',
+        isCorrect
+      );
+    }
+    
     setGameState(prev => GameManager.selectAnswer(prev, answerIndex));
   };
 
