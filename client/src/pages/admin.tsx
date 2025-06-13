@@ -645,24 +645,31 @@ export default function Admin() {
     try {
       setIsLoading(true);
       
-      // Upload directly to Firebase Storage
-      const { ref, uploadBytes, getDownloadURL } = await import('firebase/storage');
-      const { storage } = await import('@/lib/firebase');
+      // Upload via server-side endpoint to bypass CORS issues
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('type', type);
       
-      const timestamp = Date.now();
-      const filename = `${type}-${timestamp}.${file.name.split('.').pop()}`;
-      const storagePath = `branding/${type}s/${filename}`;
-      const storageRef = ref(storage, storagePath);
+      const response = await fetch('/api/branding/upload', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${auth.currentUser?.uid || 'uber-admin'}`
+        },
+        body: formData
+      });
       
-      // Upload file to Firebase Storage
-      await uploadBytes(storageRef, file);
-      const downloadURL = await getDownloadURL(storageRef);
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || 'Upload failed');
+      }
+      
+      const result = await response.json();
       
       // Add to local state for immediate UI update
       const assetData = {
-        id: `${type}-${timestamp}`,
-        name: file.name.replace(/\.[^/.]+$/, ""),
-        url: downloadURL
+        id: result.id,
+        name: result.name,
+        url: result.url
       };
 
       if (type === 'skin') {
@@ -676,12 +683,12 @@ export default function Admin() {
         description: `${type === 'skin' ? 'Background skin' : 'Progress bar'} uploaded successfully`,
       });
 
-      return downloadURL;
+      return result.url;
     } catch (error) {
       console.error('Upload failed:', error);
       toast({
         title: "Upload Failed",
-        description: error instanceof Error ? error.message : "Failed to upload asset. Please check Firebase Storage configuration.",
+        description: error instanceof Error ? error.message : "Failed to upload asset. Please try again.",
         variant: "destructive"
       });
       return null;

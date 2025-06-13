@@ -22,7 +22,7 @@ if (isFirebaseConfigured()) {
       firebaseApp = initializeApp({
         credential: credential,
         databaseURL: `https://${serviceAccount.project_id}-default-rtdb.firebaseio.com/`,
-        storageBucket: `${serviceAccount.project_id}.appspot.com`
+        storageBucket: `${serviceAccount.project_id}.firebasestorage.app`
       });
     } else {
       firebaseApp = getApps()[0];
