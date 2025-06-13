@@ -22,7 +22,7 @@ if (isFirebaseConfigured()) {
       firebaseApp = initializeApp({
         credential: credential,
         databaseURL: `https://${serviceAccount.project_id}-default-rtdb.firebaseio.com/`,
-        storageBucket: `${serviceAccount.project_id}.firebasestorage.app`
+        storageBucket: `${serviceAccount.project_id}.appspot.com`
       });
     } else {
       firebaseApp = getApps()[0];
@@ -269,7 +269,8 @@ export class FirebaseService {
       // Make file publicly readable
       await file.makePublic();
       
-      const downloadURL = `https://storage.googleapis.com/${bucket.name}/${path}${filename}`;
+      // Use the correct Firebase Storage URL format
+      const downloadURL = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodeURIComponent(path + filename)}?alt=media`;
       
       return {
         downloadURL,
