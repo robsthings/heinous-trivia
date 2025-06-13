@@ -762,6 +762,28 @@ export default function Admin() {
     return allHaunts.filter(haunt => haunt.tier === 'pro' || haunt.tier === 'premium');
   };
 
+  const loadBrandingAssets = async () => {
+    try {
+      const response = await fetch('/api/branding/assets', {
+        headers: {
+          'Authorization': `Bearer ${auth.currentUser?.uid || 'uber-admin'}`
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to load branding assets');
+      }
+
+      const assets = await response.json();
+      setCustomSkins(assets.skins);
+      setCustomProgressBars(assets.progressBars);
+      
+    } catch (error) {
+      console.error('Failed to load branding assets:', error);
+      // Don't show error toast as this is not critical for page load
+    }
+  };
+
   const handleResetPassword = async (hauntId: string, hauntName: string) => {
     const newPassword = prompt(`Enter new password for "${hauntName}":`);
     

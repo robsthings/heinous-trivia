@@ -71,7 +71,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   });
 
-  // Upload branding assets (Uber Admin only)
+  // Upload branding assets (Uber Admin only) - Using existing Firebase service
   app.post("/api/upload/branding", upload.single('file'), async (req, res) => {
     try {
       if (!req.file) {
@@ -88,25 +88,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const timestamp = Date.now();
       const filename = `branding-${uploadType}-${timestamp}-${file.originalname}`;
       
-      // Save to Firebase Storage
-      const storageRef = ref(storage, `branding/${uploadType}s/${filename}`);
-      await uploadBytes(storageRef, file.buffer);
-      const downloadURL = await getDownloadURL(storageRef);
+      // Use existing FirebaseService approach
+      const uploadResult = await FirebaseService.uploadFile(file.buffer, filename, `branding/${uploadType}s/`);
       
-      // Save metadata to Firestore
-      const brandingRef = doc(firestore, 'branding-assets', `${uploadType}-${timestamp}`);
-      await setDoc(brandingRef, {
+      // Save metadata to Firestore using FirebaseService
+      const brandingData = {
         name: file.originalname.replace(/\.[^/.]+$/, ""),
         type: uploadType,
-        url: downloadURL,
+        url: uploadResult.downloadURL,
         filename: filename,
-        uploadedAt: FieldValue.serverTimestamp(),
+        uploadedAt: new Date().toISOString(),
         uploadedBy: 'uber-admin'
-      });
+      };
+
+      await FirebaseService.saveBrandingAsset(`${uploadType}-${timestamp}`, brandingData);
 
       res.json({ 
         success: true, 
-        imageUrl: downloadURL,
+        imageUrl: uploadResult.downloadURL,
         id: `${uploadType}-${timestamp}`,
         message: `${uploadType === 'skin' ? 'Background skin' : 'Progress bar animation'} uploaded successfully`
       });
