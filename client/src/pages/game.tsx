@@ -38,7 +38,7 @@ interface ActiveRound {
   questionResetId?: number;
 }
 
-export default function Game() {
+function Game() {
   const [gameState, setGameState] = useState<GameState>(() => 
     GameManager.createInitialState(getHauntFromURL())
   );
@@ -347,7 +347,7 @@ export default function Game() {
       AnalyticsTracker.trackQuestionAnswer(
         gameState.currentHaunt,
         currentQuestion.text,
-        currentQuestion.pack || 'Default',
+        currentQuestion.category || 'Default',
         isCorrect
       );
     }
@@ -369,6 +369,14 @@ export default function Game() {
 
   const handleSaveScore = async (inputPlayerName?: string) => {
     const nameToUse = inputPlayerName || playerName;
+    
+    // Complete the analytics session before saving score
+    await AnalyticsTracker.completeSession(
+      gameState.questionsAnswered,
+      gameState.correctAnswers,
+      gameState.score
+    );
+    
     await GameManager.saveScore(nameToUse, gameState);
     
     // Clear cached leaderboard data to force fresh fetch
@@ -644,3 +652,5 @@ export default function Game() {
     </div>
   );
 }
+
+export default Game;
