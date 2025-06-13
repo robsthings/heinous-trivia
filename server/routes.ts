@@ -183,6 +183,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Delete branding asset (Uber Admin only)
+  app.delete("/api/branding/assets/:assetId", async (req, res) => {
+    try {
+      const { assetId } = req.params;
+      await FirebaseService.deleteBrandingAsset(assetId);
+      res.json({ success: true, message: "Asset deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting branding asset:", error);
+      res.status(500).json({ error: "Failed to delete branding asset" });
+    }
+  });
+
 
 
   // Save branding metadata (Uber Admin only)

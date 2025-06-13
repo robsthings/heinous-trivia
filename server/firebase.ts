@@ -327,4 +327,45 @@ export class FirebaseService {
       return { skins: [], progressBars: [] };
     }
   }
+
+  static async deleteBrandingAsset(assetId: string) {
+    if (!firestore) {
+      throw new Error('Firebase not configured');
+    }
+
+    try {
+      // Get the asset to determine file path for storage deletion
+      const assetDoc = await firestore.collection('branding-assets').doc(assetId).get();
+      
+      if (!assetDoc.exists) {
+        throw new Error('Asset not found');
+      }
+
+      const assetData = assetDoc.data();
+      
+      // Delete from Firebase Storage if URL exists
+      if (assetData.url && storage) {
+        try {
+          // Extract file path from URL for Firebase Storage
+          const urlParts = assetData.url.split('/');
+          const fileName = urlParts[urlParts.length - 1].split('?')[0];
+          const assetType = assetData.type === 'skin' ? 'skins' : 'progressBars';
+          const filePath = `branding/${assetType}/${fileName}`;
+          
+          const bucket = storage.bucket();
+          await bucket.file(filePath).delete();
+        } catch (storageError) {
+          console.warn('Could not delete file from storage:', storageError);
+        }
+      }
+
+      // Delete from Firestore
+      await firestore.collection('branding-assets').doc(assetId).delete();
+      
+      return { success: true };
+    } catch (error) {
+      console.error('Error deleting branding asset:', error);
+      throw error;
+    }
+  }
 }
