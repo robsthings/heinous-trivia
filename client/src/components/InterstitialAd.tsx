@@ -121,8 +121,8 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
   }
 
   return (
-    <div className="fixed inset-0 bg-black z-50 overflow-hidden">
-      <div className="w-full h-full bg-gradient-to-br from-red-900 via-black to-purple-900">
+    <div className="fixed inset-0 bg-black/50 z-50 overflow-hidden backdrop-blur-sm">
+      <div className="w-full h-full">
         {/* Mobile-First Responsive Layout */}
         <div className="h-full flex flex-col justify-between p-4 max-w-md mx-auto lg:max-w-4xl">
           

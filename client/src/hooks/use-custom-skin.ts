@@ -49,11 +49,23 @@ export function useCustomSkin(hauntConfig: HauntConfig | null | undefined) {
           backdrop-filter: blur(5px);
         }
         
-        /* Modal overlays */
+        /* Modal overlays and ads */
         .modal-overlay,
         .dialog-overlay,
         .leaderboard-modal {
           background-color: rgba(0, 0, 0, 0.6) !important;
+        }
+        
+        /* Ad component specific styles */
+        .fixed.inset-0.z-50 {
+          background-color: rgba(0, 0, 0, 0.4) !important;
+        }
+        
+        /* Ad card backgrounds */
+        .bg-gradient-to-br {
+          background: rgba(139, 69, 19, 0.8) !important;
+          backdrop-filter: blur(10px);
+          border: 2px solid rgba(255, 165, 0, 0.6);
         }
         
         /* Enhanced text readability */
