@@ -1,5 +1,6 @@
 import { initializeApp, cert, getApps } from 'firebase-admin/app';
 import { getFirestore, FieldValue } from 'firebase-admin/firestore';
+import { getStorage } from 'firebase-admin/storage';
 
 // Check if Firebase is properly configured
 const isFirebaseConfigured = () => {
@@ -9,6 +10,7 @@ const isFirebaseConfigured = () => {
 // Initialize Firebase Admin SDK only if properly configured
 let firebaseApp;
 let firestore;
+let storage;
 let exportedFieldValue;
 
 if (isFirebaseConfigured()) {
@@ -19,22 +21,26 @@ if (isFirebaseConfigured()) {
 
       firebaseApp = initializeApp({
         credential: credential,
-        databaseURL: `https://${serviceAccount.project_id}-default-rtdb.firebaseio.com/`
+        databaseURL: `https://${serviceAccount.project_id}-default-rtdb.firebaseio.com/`,
+        storageBucket: `${serviceAccount.project_id}.appspot.com`
       });
     } else {
       firebaseApp = getApps()[0];
     }
     firestore = getFirestore(firebaseApp);
+    storage = getStorage(firebaseApp);
     exportedFieldValue = FieldValue;
     // Firebase Admin SDK initialized successfully
   } catch (error) {
     // Firebase initialization failed - running without Firebase integration
     firestore = null;
+    storage = null;
     exportedFieldValue = null;
   }
 } else {
   // Firebase credentials not configured, running without Firebase integration
   firestore = null;
+  storage = null;
   exportedFieldValue = null;
 }
 
@@ -231,19 +237,38 @@ export class FirebaseService {
   }
 
   static async uploadFile(buffer: Buffer, filename: string, path: string = '') {
-    if (!firestore) {
-      throw new Error('Firebase not configured');
+    if (!storage) {
+      throw new Error('Firebase Storage not configured');
     }
     
-    // For now, return a mock URL since Firebase Storage admin SDK setup is complex
-    // In production, this would upload to Firebase Storage
-    const downloadURL = `https://storage.googleapis.com/heinous-trivia/${path}${filename}`;
-    
-    return {
-      downloadURL,
-      filename,
-      path: path + filename
-    };
+    try {
+      const bucket = storage.bucket();
+      const file = bucket.file(`${path}${filename}`);
+      
+      await file.save(buffer, {
+        metadata: {
+          contentType: filename.endsWith('.gif') ? 'image/gif' : 
+                     filename.endsWith('.png') ? 'image/png' :
+                     filename.endsWith('.jpg') || filename.endsWith('.jpeg') ? 'image/jpeg' : 
+                     'application/octet-stream'
+        },
+        public: true
+      });
+      
+      // Make file publicly readable
+      await file.makePublic();
+      
+      const downloadURL = `https://storage.googleapis.com/${bucket.name}/${path}${filename}`;
+      
+      return {
+        downloadURL,
+        filename,
+        path: path + filename
+      };
+    } catch (error) {
+      console.error('Firebase Storage upload error:', error);
+      throw new Error('Failed to upload file to Firebase Storage');
+    }
   }
 
   static async saveBrandingAsset(assetId: string, assetData: any) {
