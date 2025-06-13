@@ -563,6 +563,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           secondaryColor: data.theme?.secondaryColor || '#2D1B69',
           accentColor: data.theme?.accentColor || '#FF6B35'
         },
+        skinUrl: data.skinUrl || undefined,
+        progressBarTheme: data.progressBarTheme || undefined,
         isActive: data.isActive !== false
       };
       

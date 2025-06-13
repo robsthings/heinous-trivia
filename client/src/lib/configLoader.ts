@@ -3,7 +3,9 @@ import type { HauntConfig, TriviaQuestion, AdData } from "@shared/schema";
 export class ConfigLoader {
   static async loadHauntConfig(haunt: string): Promise<HauntConfig | null> {
     try {
-      const response = await fetch(`/api/haunt-config/${haunt}`);
+      // Add cache-busting to ensure fresh config after branding updates
+      const cacheBuster = Date.now();
+      const response = await fetch(`/api/haunt-config/${haunt}?t=${cacheBuster}`);
       if (response.ok) {
         return await response.json();
       }
