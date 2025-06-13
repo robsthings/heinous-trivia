@@ -784,6 +784,10 @@ export default function Admin() {
     }
   };
 
+  useEffect(() => {
+    loadBrandingAssets();
+  }, []);
+
   const handleResetPassword = async (hauntId: string, hauntName: string) => {
     const newPassword = prompt(`Enter new password for "${hauntName}":`);
     

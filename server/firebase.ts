@@ -229,4 +229,57 @@ export class FirebaseService {
       }
     };
   }
+
+  static async uploadFile(buffer: Buffer, filename: string, path: string = '') {
+    if (!firestore) {
+      throw new Error('Firebase not configured');
+    }
+    
+    // For now, return a mock URL since Firebase Storage admin SDK setup is complex
+    // In production, this would upload to Firebase Storage
+    const downloadURL = `https://storage.googleapis.com/heinous-trivia/${path}${filename}`;
+    
+    return {
+      downloadURL,
+      filename,
+      path: path + filename
+    };
+  }
+
+  static async saveBrandingAsset(assetId: string, assetData: any) {
+    if (!firestore) {
+      console.warn('Firebase not configured - branding asset not saved');
+      return;
+    }
+
+    try {
+      await firestore.collection('branding-assets').doc(assetId).set(assetData);
+    } catch (error) {
+      console.error('Error saving branding asset:', error);
+      throw error;
+    }
+  }
+
+  static async getBrandingAssets() {
+    if (!firestore) {
+      console.warn('Firebase not configured - returning empty branding assets');
+      return { skins: [], progressBars: [] };
+    }
+
+    try {
+      const snapshot = await firestore.collection('branding-assets').get();
+      const assets = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+
+      const skins = assets.filter(asset => asset.type === 'skin');
+      const progressBars = assets.filter(asset => asset.type === 'progressBar');
+
+      return { skins, progressBars };
+    } catch (error) {
+      console.error('Error getting branding assets:', error);
+      return { skins: [], progressBars: [] };
+    }
+  }
 }
