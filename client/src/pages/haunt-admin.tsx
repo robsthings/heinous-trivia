@@ -61,8 +61,6 @@ export default function HauntAdmin() {
     accentColor: "#FF6B35"
   });
   const [logoFile, setLogoFile] = useState<File | null>(null);
-  const [skinFile, setSkinFile] = useState<File | null>(null);
-  const [progressBarFile, setProgressBarFile] = useState<File | null>(null);
   const [adFiles, setAdFiles] = useState<Array<{
     file: File | null;
     link: string;
@@ -434,8 +432,6 @@ export default function HauntAdmin() {
     setIsSaving(true);
     try {
       let logoPath = hauntConfig.logoPath;
-      let skinUrl = hauntConfig.skinUrl;
-      let progressBarUrl = hauntConfig.progressBarUrl;
 
       // Upload logo if a new file was selected
       if (logoFile) {
@@ -468,76 +464,12 @@ export default function HauntAdmin() {
         }
       }
 
-      // Upload custom skin if a new file was selected (Pro/Premium only)
-      if (skinFile && (hauntConfig.tier === 'pro' || hauntConfig.tier === 'premium')) {
-        try {
-          const formData = new FormData();
-          formData.append('background', skinFile);
-          formData.append('hauntId', hauntId);
-          formData.append('type', 'skin');
-          
-          const uploadResponse = await fetch('/api/upload-background', {
-            method: 'POST',
-            body: formData
-          });
-          
-          if (uploadResponse.ok) {
-            const result = await uploadResponse.json();
-            skinUrl = result.imageUrl;
-            console.log('Custom skin uploaded via server API:', skinUrl);
-          } else {
-            throw new Error('Skin upload failed');
-          }
-        } catch (uploadError) {
-          console.error('Skin upload failed:', uploadError);
-          toast({
-            title: "Skin Upload Failed",
-            description: "Failed to upload custom skin. Please try again.",
-            variant: "destructive"
-          });
-          return;
-        }
-      }
-
-      // Upload progress bar if a new file was selected (Pro/Premium only)
-      if (progressBarFile && (hauntConfig.tier === 'pro' || hauntConfig.tier === 'premium')) {
-        try {
-          const formData = new FormData();
-          formData.append('background', progressBarFile);
-          formData.append('hauntId', hauntId);
-          formData.append('type', 'progressbar');
-          
-          const uploadResponse = await fetch('/api/upload-background', {
-            method: 'POST',
-            body: formData
-          });
-          
-          if (uploadResponse.ok) {
-            const result = await uploadResponse.json();
-            progressBarUrl = result.imageUrl;
-            console.log('Progress bar uploaded via server API:', progressBarUrl);
-          } else {
-            throw new Error('Progress bar upload failed');
-          }
-        } catch (uploadError) {
-          console.error('Progress bar upload failed:', uploadError);
-          toast({
-            title: "Progress Bar Upload Failed",
-            description: "Failed to upload progress bar. Please try again.",
-            variant: "destructive"
-          });
-          return;
-        }
-      }
-
       const updatedConfig = {
         ...hauntConfig,
         mode: formData.mode as "individual" | "queue",
         triviaFile: formData.triviaFile,
         adFile: formData.adFile,
         logoPath: logoPath,
-        skinUrl: skinUrl,
-        progressBarUrl: progressBarUrl,
         theme: {
           primaryColor: formData.primaryColor,
           secondaryColor: formData.secondaryColor,
@@ -570,15 +502,9 @@ export default function HauntAdmin() {
         await saveAds();
       }
       
-      // Clear all uploaded files after successful upload
+      // Clear the logo file after successful upload
       if (logoFile) {
         setLogoFile(null);
-      }
-      if (skinFile) {
-        setSkinFile(null);
-      }
-      if (progressBarFile) {
-        setProgressBarFile(null);
       }
       
       toast({
@@ -958,76 +884,7 @@ export default function HauntAdmin() {
               </CardContent>
             </Card>
 
-            {/* Custom Branding Section - Pro/Premium Only */}
-            {(hauntConfig.tier === 'pro' || hauntConfig.tier === 'premium') && (
-              <Card className="bg-black/60 border-gray-600 shadow-lg">
-                <CardHeader className="pb-4">
-                  <CardTitle className="text-xl font-semibold text-white flex items-center gap-2" style={{ color: hauntConfig.theme?.primaryColor || '#dc2626' }}>
-                    🎨 Custom Branding
-                  </CardTitle>
-                  <p className="text-gray-400 text-sm mt-2">
-                    Customize your haunt's visual experience with custom background skins and animated progress bars.
-                  </p>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div>
-                    <Label htmlFor="skinUpload" className="text-white text-sm font-medium mb-2 block">Background Skin Upload</Label>
-                    <p className="text-gray-400 text-xs mb-2">Recommended: 1920x1080 JPG/PNG, or animated GIF</p>
-                    <Input
-                      id="skinUpload"
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) => {
-                        const file = e.target.files?.[0] || null;
-                        setSkinFile(file);
-                      }}
-                      className="bg-gray-800 border-gray-600 text-white file:bg-red-600 file:text-white file:border-0 file:rounded-md file:px-3 file:py-2 file:mr-3 file:cursor-pointer"
-                    />
-                    {skinFile && (
-                      <p className="text-green-400 text-xs mt-2 flex items-center gap-1">
-                        ✅ Selected: {skinFile.name}
-                      </p>
-                    )}
-                    {hauntConfig.skinUrl && (
-                      <p className="text-blue-400 text-xs mt-2">
-                        Current skin: Active
-                      </p>
-                    )}
-                  </div>
 
-                  <div>
-                    <Label htmlFor="progressBarUpload" className="text-white text-sm font-medium mb-2 block">Progress Bar Animation Upload</Label>
-                    <p className="text-gray-400 text-xs mb-2">Recommended: Animated GIF or SVG, 400x20 pixels</p>
-                    <Input
-                      id="progressBarUpload"
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) => {
-                        const file = e.target.files?.[0] || null;
-                        setProgressBarFile(file);
-                      }}
-                      className="bg-gray-800 border-gray-600 text-white file:bg-red-600 file:text-white file:border-0 file:rounded-md file:px-3 file:py-2 file:mr-3 file:cursor-pointer"
-                    />
-                    {progressBarFile && (
-                      <p className="text-green-400 text-xs mt-2 flex items-center gap-1">
-                        ✅ Selected: {progressBarFile.name}
-                      </p>
-                    )}
-                    {hauntConfig.progressBarUrl && (
-                      <p className="text-blue-400 text-xs mt-2">
-                        Current progress bar: Active
-                      </p>
-                    )}
-                  </div>
-
-                  <div className="bg-gray-800/50 p-3 rounded-lg">
-                    <p className="text-yellow-400 text-xs">
-                      💡 <strong>Pro Tip:</strong> Custom branding helps create a unique experience for your visitors and reinforces your haunt's brand identity throughout the game.
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
 
           </div>
 
