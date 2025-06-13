@@ -21,37 +21,41 @@ export function GameEndScreen({
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
   const [isLoadingLeaderboard, setIsLoadingLeaderboard] = useState(true);
   const [playerRank, setPlayerRank] = useState<number | null>(null);
+  const [scoreSaved, setScoreSaved] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+
+  // Fetch leaderboard data
+  const fetchLeaderboard = async () => {
+    if (!gameState.showEndScreen || !gameState.currentHaunt) return;
+    
+    try {
+      setIsLoadingLeaderboard(true);
+      const response = await fetch(`/api/leaderboard?haunt=${gameState.currentHaunt}`);
+      
+      if (response.ok) {
+        const data: LeaderboardEntry[] = await response.json();
+        setLeaderboard(data);
+        
+        // Calculate player's rank if they have a saved name and score
+        const currentPlayerName = savedPlayerName || playerName.trim();
+        if (currentPlayerName) {
+          const playerPosition = data.findIndex(entry => 
+            entry.name === currentPlayerName && entry.score === gameState.score
+          );
+          if (playerPosition !== -1) {
+            setPlayerRank(playerPosition + 1);
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Failed to fetch leaderboard:', error);
+    } finally {
+      setIsLoadingLeaderboard(false);
+    }
+  };
 
   // Fetch leaderboard data when component mounts
   useEffect(() => {
-    const fetchLeaderboard = async () => {
-      if (!gameState.showEndScreen || !gameState.currentHaunt) return;
-      
-      try {
-        setIsLoadingLeaderboard(true);
-        const response = await fetch(`/api/leaderboard?haunt=${gameState.currentHaunt}`);
-        
-        if (response.ok) {
-          const data: LeaderboardEntry[] = await response.json();
-          setLeaderboard(data);
-          
-          // Calculate player's rank if they have a saved name and score
-          if (savedPlayerName) {
-            const playerPosition = data.findIndex(entry => 
-              entry.name === savedPlayerName && entry.score === gameState.score
-            );
-            if (playerPosition !== -1) {
-              setPlayerRank(playerPosition + 1);
-            }
-          }
-        }
-      } catch (error) {
-        console.error('Failed to fetch leaderboard:', error);
-      } finally {
-        setIsLoadingLeaderboard(false);
-      }
-    };
-
     fetchLeaderboard();
   }, [gameState.showEndScreen, gameState.currentHaunt, savedPlayerName, gameState.score]);
 
@@ -60,23 +64,35 @@ export function GameEndScreen({
   }
 
   const handleSaveAndViewLeaderboard = async () => {
-    // Save score if we have a name
-    if (savedPlayerName) {
-      await onSaveScore();
-    } else if (playerName.trim()) {
-      await onSaveScore(playerName.trim());
+    if (scoreSaved) return; // Prevent duplicate saves
+    
+    setIsSaving(true);
+    try {
+      // Save score if we have a name
+      if (savedPlayerName) {
+        await onSaveScore();
+      } else if (playerName.trim()) {
+        await onSaveScore(playerName.trim());
+      }
+      
+      setScoreSaved(true);
+      
+      // Refresh leaderboard after saving
+      await fetchLeaderboard();
+    } catch (error) {
+      console.error('Failed to save score:', error);
+    } finally {
+      setIsSaving(false);
     }
-    // Always show leaderboard after attempting to save
-    onViewLeaderboard();
   };
 
-  const handlePlayAgain = () => {
-    if (savedPlayerName) {
-      // Automatically save with the persistent player name
-      onSaveScore();
-    } else if (playerName.trim()) {
-      // Fallback to manual input if no saved name
-      onSaveScore(playerName.trim());
+  const handlePlayAgain = async () => {
+    if (!scoreSaved) {
+      if (savedPlayerName) {
+        await onSaveScore();
+      } else if (playerName.trim()) {
+        await onSaveScore(playerName.trim());
+      }
     }
     onPlayAgain();
   };
@@ -119,23 +135,28 @@ export function GameEndScreen({
               <div className="text-gray-400 text-xs text-center">Loading leaderboard...</div>
             ) : leaderboard.length > 0 ? (
               <div className="space-y-2">
-                {leaderboard.slice(0, 5).map((entry, index) => (
-                  <div 
-                    key={`${entry.name}-${entry.score}-${index}`}
-                    className={`flex justify-between items-center text-xs ${
-                      savedPlayerName && entry.name === savedPlayerName && entry.score === gameState.score
-                        ? 'bg-orange-900/30 rounded px-2 py-1 border-l-2 border-orange-500'
-                        : ''
-                    }`}
-                  >
-                    <span className="text-white">
-                      #{index + 1} {entry.name}
-                    </span>
-                    <span className="text-orange-400 font-bold">
-                      {entry.score}
-                    </span>
-                  </div>
-                ))}
+                {leaderboard.slice(0, 5).map((entry, index) => {
+                  const currentPlayerName = savedPlayerName || playerName.trim();
+                  const isCurrentPlayer = currentPlayerName && entry.name === currentPlayerName && entry.score === gameState.score;
+                  
+                  return (
+                    <div 
+                      key={`${entry.name}-${entry.score}-${index}`}
+                      className={`flex justify-between items-center text-xs ${
+                        isCurrentPlayer
+                          ? 'bg-orange-900/30 rounded px-2 py-1 border-l-2 border-orange-500'
+                          : ''
+                      }`}
+                    >
+                      <span className="text-white">
+                        #{index + 1} {entry.name}
+                      </span>
+                      <span className="text-orange-400 font-bold">
+                        {entry.score}
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
             ) : (
               <div className="text-gray-400 text-xs text-center">No scores yet</div>
@@ -162,24 +183,54 @@ export function GameEndScreen({
           )}
 
           <div className="space-y-2 sm:space-y-3">
-            <button
-              className="horror-button w-full py-3 sm:py-4 rounded-lg font-medium text-white text-sm sm:text-base touch-manipulation"
-              onClick={handleSaveAndViewLeaderboard}
-            >
-              Save Score & View Leaderboard
-            </button>
+            {!scoreSaved && !savedPlayerName && (
+              <button
+                className={`horror-button w-full py-3 sm:py-4 rounded-lg font-medium text-white text-sm sm:text-base touch-manipulation ${
+                  isSaving || !playerName.trim() ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
+                onClick={handleSaveAndViewLeaderboard}
+                disabled={isSaving || !playerName.trim()}
+              >
+                {isSaving ? 'Saving...' : 'Save Score & View Leaderboard'}
+              </button>
+            )}
+            
+            {!scoreSaved && savedPlayerName && (
+              <button
+                className={`horror-button w-full py-3 sm:py-4 rounded-lg font-medium text-white text-sm sm:text-base touch-manipulation ${
+                  isSaving ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
+                onClick={handleSaveAndViewLeaderboard}
+                disabled={isSaving}
+              >
+                {isSaving ? 'Saving...' : 'Save Score & View Leaderboard'}
+              </button>
+            )}
+
+            {scoreSaved && (
+              <button
+                className="horror-button w-full py-3 sm:py-4 rounded-lg font-medium text-white text-sm sm:text-base touch-manipulation"
+                onClick={onViewLeaderboard}
+              >
+                View Full Leaderboard
+              </button>
+            )}
+            
             <button
               className="w-full py-3 sm:py-4 rounded-lg font-medium text-gray-300 border border-gray-600 hover:bg-gray-800 transition-colors text-sm sm:text-base touch-manipulation"
               onClick={handlePlayAgain}
             >
               Play Again
             </button>
-            <button
-              className="w-full py-3 sm:py-4 rounded-lg font-medium text-gray-300 border border-gray-600 hover:bg-gray-800 transition-colors text-sm sm:text-base touch-manipulation"
-              onClick={onViewLeaderboard}
-            >
-              View Leaderboard Only
-            </button>
+            
+            {!scoreSaved && (
+              <button
+                className="w-full py-3 sm:py-4 rounded-lg font-medium text-gray-300 border border-gray-600 hover:bg-gray-800 transition-colors text-sm sm:text-base touch-manipulation"
+                onClick={onViewLeaderboard}
+              >
+                View Leaderboard Only
+              </button>
+            )}
           </div>
         </div>
       </div>
