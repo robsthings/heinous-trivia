@@ -110,7 +110,7 @@ export default function Game() {
         }
         
         if (validQuestions.length < questions.length) {
-          console.warn(`Filtered out ${questions.length - validQuestions.length} malformed questions`);
+          // Filtered out malformed questions for production stability
         }
 
         // Load ad data
@@ -157,7 +157,7 @@ export default function Game() {
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Failed to initialize game';
         setError(errorMessage);
-        console.error('Game initialization error:', err);
+        // Game initialization failed - handled by error state
       } finally {
         setIsLoading(false);
       }
