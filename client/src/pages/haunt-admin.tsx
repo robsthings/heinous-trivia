@@ -536,6 +536,8 @@ export default function HauntAdmin() {
         triviaFile: formData.triviaFile,
         adFile: formData.adFile,
         logoPath: logoPath,
+        skinUrl: skinUrl,
+        progressBarUrl: progressBarUrl,
         theme: {
           primaryColor: formData.primaryColor,
           secondaryColor: formData.secondaryColor,
@@ -568,9 +570,15 @@ export default function HauntAdmin() {
         await saveAds();
       }
       
-      // Clear the logo file after successful upload
+      // Clear all uploaded files after successful upload
       if (logoFile) {
         setLogoFile(null);
+      }
+      if (skinFile) {
+        setSkinFile(null);
+      }
+      if (progressBarFile) {
+        setProgressBarFile(null);
       }
       
       toast({

@@ -41,17 +41,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
 
         const hauntId = req.body.hauntId;
+        const uploadType = req.body.type || 'logo';
+        
         if (!hauntId) {
           return res.status(400).json({ error: "Haunt ID is required" });
         }
 
+        // Determine filename based on upload type
+        let filename = `bg${path.extname(req.file.originalname)}`;
+        if (uploadType === 'skin') {
+          filename = `skin${path.extname(req.file.originalname)}`;
+        } else if (uploadType === 'progressbar') {
+          filename = `progressbar${path.extname(req.file.originalname)}`;
+        }
+
         // File uploaded successfully
-        const relativePath = `/haunt-assets/${hauntId}/bg${path.extname(req.file.originalname)}`;
+        const relativePath = `/haunt-assets/${hauntId}/${filename}`;
         
         res.json({ 
           success: true, 
+          imageUrl: relativePath,
           path: relativePath,
-          message: "Background uploaded successfully"
+          message: `${uploadType} uploaded successfully`
         });
       } catch (error) {
         console.error("Error uploading background:", error);
