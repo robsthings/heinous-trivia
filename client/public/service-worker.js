@@ -46,11 +46,11 @@ self.addEventListener('fetch', event => {
   event.respondWith(
     fetch(event.request)
       .then(response => {
-        // Only cache successful responses
-        if (response.ok) {
+        // For failed responses, don't use service worker caching
+        if (!response.ok) {
           return response;
         }
-        // For failed responses, don't cache and still return the response
+        // Only cache successful responses
         return response;
       })
       .catch(() =>
