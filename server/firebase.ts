@@ -22,7 +22,7 @@ if (isFirebaseConfigured()) {
       firebaseApp = initializeApp({
         credential: credential,
         databaseURL: `https://${serviceAccount.project_id}-default-rtdb.firebaseio.com/`,
-        storageBucket: `${serviceAccount.project_id}.appspot.com`
+        storageBucket: `${serviceAccount.project_id}.firebasestorage.app`
       });
     } else {
       firebaseApp = getApps()[0];
@@ -244,24 +244,14 @@ export class FirebaseService {
     try {
       const bucket = storage.bucket();
       
-      // Check if bucket exists and create if it doesn't
+      // Verify bucket exists
       try {
         await bucket.getMetadata();
       } catch (bucketError: any) {
         if (bucketError.code === 404) {
-          console.log('Creating Firebase Storage bucket...');
-          try {
-            await bucket.create({
-              location: 'us-central1',
-              storageClass: 'STANDARD'
-            });
-            console.log('Firebase Storage bucket created successfully');
-          } catch (createError: any) {
-            throw new Error(`Failed to create Firebase Storage bucket: ${createError.message}. Please create the bucket "heinous-trivia.appspot.com" manually in your Firebase console.`);
-          }
-        } else {
-          throw bucketError;
+          throw new Error('Firebase Storage bucket not found. Please ensure the bucket exists in your Firebase console.');
         }
+        throw bucketError;
       }
       
       const file = bucket.file(`${path}${filename}`);
