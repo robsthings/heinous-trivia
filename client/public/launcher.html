@@ -4,9 +4,53 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Launching...</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+      color: white;
+      text-align: center;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-top: 4px solid #ff6b35;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .message {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    .error {
+      color: #ff6b6b;
+      font-weight: bold;
+    }
+    .subtitle {
+      font-size: 14px;
+      opacity: 0.8;
+      max-width: 400px;
+    }
+  </style>
   <script src="./launcher.js" defer></script>
 </head>
 <body>
-  <p>Launching your trivia game...</p>
+  <div class="spinner" id="spinner"></div>
+  <div class="message" id="message">Launching your game...</div>
+  <div class="subtitle" id="subtitle">Please wait while we prepare your trivia experience</div>
 </body>
 </html>
