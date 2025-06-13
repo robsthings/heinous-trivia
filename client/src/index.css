@@ -75,6 +75,17 @@
   animation: logo-transition 1.8s ease-in-out forwards;
 }
 
+/* DeSpookify Mode - Font accessibility toggle for question text */
+/* Default: Spooky fonts (Creepster) */
+.font-creepster {
+  font-family: 'Creepster', cursive;
+}
+
+/* When DeSpookify Mode is enabled: Clear sans-serif fonts */
+.despookify-mode .font-creepster {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+}
+
 .dark {
   --background: 240 10% 3.9%;
   --foreground: 0 0% 98%;
