@@ -16,6 +16,7 @@ import Terms from "@/pages/terms";
 import UploadGuidelines from "@/pages/upload-guidelines";
 import Info from "@/pages/info";
 import NotFound from "@/pages/not-found";
+import { TestProgressPage } from "@/pages/test-progress";
 
 function Router() {
   return (
@@ -44,6 +45,7 @@ function Router() {
       <Route path="/terms" component={Terms} />
       <Route path="/upload-guidelines" component={UploadGuidelines} />
       <Route path="/info" component={Info} />
+      <Route path="/test-progress" component={TestProgressPage} />
       <Route component={NotFound} />
     </Switch>
   );
