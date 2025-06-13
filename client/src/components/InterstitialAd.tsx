@@ -29,6 +29,7 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
   const [showTransition, setShowTransition] = useState(true);
   const [adImageLoaded, setAdImageLoaded] = useState(false);
   const [logoError, setLogoError] = useState(false);
+  const [showFallback, setShowFallback] = useState(false);
 
   // Safe data extraction with fallbacks
   const isValidAd = gameState.showAd && gameState.ads.length > 0;
@@ -56,12 +57,23 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
   useEffect(() => {
     if (!isValidAd) return;
     
-    const timer = setTimeout(() => {
+    // Show fallback pumpkin after 500ms if logo hasn't loaded
+    const fallbackTimer = setTimeout(() => {
+      if (logoError || !logoSrc) {
+        setShowFallback(true);
+      }
+    }, 500);
+    
+    // End transition after 1.8s (matching animation duration)
+    const transitionTimer = setTimeout(() => {
       setShowTransition(false);
-    }, 450); // 450ms transition duration
+    }, 1800);
 
-    return () => clearTimeout(timer);
-  }, [isValidAd]);
+    return () => {
+      clearTimeout(fallbackTimer);
+      clearTimeout(transitionTimer);
+    };
+  }, [isValidAd, logoError, logoSrc]);
   
   // Track ad view when component mounts - only for valid ads
   useEffect(() => {
@@ -94,18 +106,19 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
     return (
       <div className="fixed inset-0 bg-black z-50 overflow-hidden flex items-center justify-center">
         <div className="relative">
-          {logoSrc && !logoError ? (
+          {logoSrc && !logoError && !showFallback ? (
             <img
               src={logoSrc}
               alt="Haunt Logo"
               className="w-32 h-32 object-contain animate-logo-transition"
               onError={() => setLogoError(true)}
+              onLoad={() => setShowFallback(false)}
             />
-          ) : (
+          ) : showFallback || logoError || !logoSrc ? (
             <div className="w-32 h-32 flex items-center justify-center text-6xl animate-logo-transition text-orange-500">
               🎃
             </div>
-          )}
+          ) : null}
         </div>
       </div>
     );
