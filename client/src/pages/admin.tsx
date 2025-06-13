@@ -697,7 +697,7 @@ export default function Admin() {
     }
   };
 
-  const assignBrandingToHaunt = async (hauntId: string, skinUrl?: string, progressBarUrl?: string) => {
+  const assignBrandingToHaunt = async (hauntId: string, skinUrl?: string, progressBarTheme?: string) => {
     if (!hauntId) return;
 
     try {
@@ -705,7 +705,7 @@ export default function Admin() {
 
       const updates: any = {};
       if (skinUrl !== undefined && skinUrl !== '') updates.skinUrl = skinUrl;
-      if (progressBarUrl !== undefined && progressBarUrl !== '') updates.progressBarUrl = progressBarUrl;
+      if (progressBarTheme !== undefined && progressBarTheme !== '') updates.progressBarTheme = progressBarTheme;
       
       // Ensure at least one field is being updated
       if (Object.keys(updates).length === 0) {
@@ -736,8 +736,8 @@ export default function Admin() {
       const hauntName = allHaunts.find(h => h.id === hauntId)?.name || hauntId;
       
       toast({
-        title: `Custom branding uploaded for ${hauntName}`,
-        description: `${skinUrl ? 'Background skin' : ''}${skinUrl && progressBarUrl ? ' and ' : ''}${progressBarUrl ? 'progress bar animation' : ''} applied successfully`,
+        title: `Custom branding applied for ${hauntName}`,
+        description: `${skinUrl ? 'Background skin' : ''}${skinUrl && progressBarTheme ? ' and ' : ''}${progressBarTheme ? `progress bar theme (${progressBarTheme})` : ''} applied successfully`,
       });
 
     } catch (error) {
