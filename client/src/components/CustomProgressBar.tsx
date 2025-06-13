@@ -13,15 +13,15 @@ export function CustomProgressBar({ progress, hauntConfig, className = "" }: Cus
   const hasCustomTheme = isPremiumTier && hauntConfig?.progressBarTheme;
 
   // Debug logging to see what's being received
-  console.log('CustomProgressBar always logs:', {
-    hasConfig: !!hauntConfig,
-    hauntId: hauntConfig?.id,
-    tier: hauntConfig?.tier,
-    progressBarTheme: hauntConfig?.progressBarTheme,
-    isPremiumTier,
-    hasCustomTheme,
-    progress: progress
-  });
+  console.log('=== CustomProgressBar DEBUG ===');
+  console.log('hasConfig:', !!hauntConfig);
+  console.log('hauntId:', hauntConfig?.id);
+  console.log('tier:', hauntConfig?.tier);
+  console.log('progressBarTheme:', hauntConfig?.progressBarTheme);
+  console.log('isPremiumTier:', isPremiumTier);
+  console.log('hasCustomTheme:', hasCustomTheme);
+  console.log('progress:', progress);
+  console.log('================================');
   
   // Force toxic theme rendering for testing
   if (hauntConfig?.progressBarTheme === 'toxic' && isPremiumTier) {
