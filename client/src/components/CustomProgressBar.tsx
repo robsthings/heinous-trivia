@@ -19,8 +19,14 @@ export function CustomProgressBar({ progress, hauntConfig, className = "" }: Cus
       tier: hauntConfig.tier,
       progressBarTheme: hauntConfig.progressBarTheme,
       isPremiumTier,
-      hasCustomTheme
+      hasCustomTheme,
+      progress: progress
     });
+  }
+  
+  // Force toxic theme rendering for testing
+  if (hauntConfig?.progressBarTheme === 'toxic' && isPremiumTier) {
+    console.log('Rendering TOXIC GREEN progress bar!');
   }
   
 
