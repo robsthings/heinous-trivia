@@ -112,28 +112,13 @@ export function SpookyLoader({
           {spookyMessages[currentMessage]}{dots}
         </h2>
 
-        {/* Animated loading bar */}
-        <div className="w-full bg-gray-800 rounded-full h-3 mb-4 overflow-hidden">
-          <div className="h-full bg-gradient-to-r from-red-600 via-orange-500 to-red-600 rounded-full animate-pulse transition-all duration-300 relative">
-            <div 
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-30 animate-ping"
-              style={{ 
-                width: showProgress ? `${Math.min(progress, 100)}%` : '60%',
-                transition: 'width 0.3s ease-out'
-              }}
-            />
-            <div 
-              className="h-full bg-gradient-to-r from-red-600 to-orange-500 transition-all duration-500"
-              style={{ width: showProgress ? `${Math.min(progress, 100)}%` : '60%' }}
-            />
-          </div>
-        </div>
-
-        {showProgress && (
-          <p className="text-gray-300 text-sm">
-            {Math.min(Math.round(progress), 100)}% Complete
-          </p>
-        )}
+        {/* CUSTOM SKIN & PROGRESS BAR LOGIC */}
+        {/* Custom or default progress bar based on haunt tier */}
+        <CustomProgressBar
+          progress={showProgress ? progress : 60}
+          hauntConfig={hauntConfig}
+          className="mb-4"
+        />
 
         {/* Flickering candles */}
         <div className="flex justify-center gap-4 mt-4">

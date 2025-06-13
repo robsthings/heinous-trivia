@@ -3,7 +3,7 @@ import type { HauntConfig } from "@shared/schema";
 
 // CUSTOM SKIN & PROGRESS BAR LOGIC
 // Hook to apply custom background skins for Pro/Premium haunts
-export function useCustomSkin(hauntConfig: HauntConfig | null) {
+export function useCustomSkin(hauntConfig: HauntConfig | null | undefined) {
   useEffect(() => {
     if (!hauntConfig) return;
 

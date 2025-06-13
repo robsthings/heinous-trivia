@@ -3,7 +3,7 @@ import type { HauntConfig } from "@shared/schema";
 // CUSTOM SKIN & PROGRESS BAR LOGIC
 interface CustomProgressBarProps {
   progress: number; // 0-100
-  hauntConfig: HauntConfig | null;
+  hauntConfig: HauntConfig | null | undefined;
   className?: string;
 }
 
