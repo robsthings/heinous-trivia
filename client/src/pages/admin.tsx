@@ -14,7 +14,8 @@ import { firestore, auth, storage } from "@/lib/firebase";
 import { doc, setDoc, collection, addDoc, getDocs, updateDoc, deleteDoc } from "firebase/firestore";
 import { signInAnonymously } from "firebase/auth";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { ExternalLink, Settings, GamepadIcon, Crown, Zap, Gem, Copy, Upload, Palette } from "lucide-react";
+import { ExternalLink, Settings, GamepadIcon, Crown, Zap, Gem, Copy, Upload, Palette, TrendingUp, Users, Target, MousePointer, Calendar, BarChart3 } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 import type { HauntConfig, TriviaQuestion } from "@shared/schema";
 
 interface TriviaPack {
@@ -74,6 +75,10 @@ export default function Admin() {
     title: string;
     description: string;
   }>>([]);
+
+  // Analytics state
+  const [selectedAnalyticsHaunt, setSelectedAnalyticsHaunt] = useState("");
+  const [analyticsTimeRange, setAnalyticsTimeRange] = useState<"7d" | "30d" | "90d">("30d");
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
@@ -1040,7 +1045,7 @@ export default function Admin() {
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="management" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-6 bg-gray-800">
+              <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-7 bg-gray-800">
                 <TabsTrigger value="management" className="text-white data-[state=active]:bg-red-600 text-xs md:text-sm">
                   Management
                 </TabsTrigger>
@@ -1058,6 +1063,9 @@ export default function Admin() {
                 </TabsTrigger>
                 <TabsTrigger value="branding" className="text-white data-[state=active]:bg-red-600 text-xs md:text-sm">
                   🎨 Branding
+                </TabsTrigger>
+                <TabsTrigger value="analytics" className="text-white data-[state=active]:bg-red-600 text-xs md:text-sm">
+                  📊 Analytics
                 </TabsTrigger>
               </TabsList>
 

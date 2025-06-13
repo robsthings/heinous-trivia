@@ -770,6 +770,276 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Analytics endpoint for individual haunts with real Firebase data
+  app.get("/api/analytics/:hauntId", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      const { timeRange = "30d" } = req.query;
+      
+      console.log(`🔍 Fetching analytics for haunt: ${hauntId}, timeRange: ${timeRange}`);
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+
+      // Calculate date range
+      const now = new Date();
+      const daysBack = timeRange === "7d" ? 7 : timeRange === "30d" ? 30 : 90;
+      const startDate = new Date(now.getTime() - (daysBack * 24 * 60 * 60 * 1000));
+      
+      console.log(`📅 Date range: ${startDate.toISOString()} to ${now.toISOString()}`);
+
+      // Fetch leaderboard entries for this haunt within date range
+      const leaderboardQuery = firestore.collection('leaderboards').doc(hauntId).collection('entries')
+        .where('timestamp', '>=', startDate)
+        .where('timestamp', '<=', now);
+      
+      let leaderboardSnapshot = await leaderboardQuery.get();
+      
+      // Fallback to players collection if entries is empty
+      if (leaderboardSnapshot.empty) {
+        const playersQuery = firestore.collection('leaderboards').doc(hauntId).collection('players')
+          .where('createdAt', '>=', startDate)
+          .where('createdAt', '<=', now);
+        leaderboardSnapshot = await playersQuery.get();
+      }
+      
+      console.log(`🏆 Found ${leaderboardSnapshot.size} leaderboard entries`);
+
+      // Fetch game session data from analytics tracking
+      let gameSessionsSnapshot;
+      try {
+        const gameSessionsQuery = firestore.collection('game-sessions')
+          .where('hauntId', '==', hauntId)
+          .where('timestamp', '>=', startDate)
+          .where('timestamp', '<=', now);
+        gameSessionsSnapshot = await gameSessionsQuery.get();
+        console.log(`🎮 Found ${gameSessionsSnapshot.size} game sessions`);
+      } catch (error) {
+        console.log('No game-sessions collection found, using leaderboard data');
+        gameSessionsSnapshot = { docs: [] };
+      }
+
+      // Fetch ad interactions
+      let adInteractionsSnapshot;
+      try {
+        const adInteractionsQuery = firestore.collection('ad-interactions')
+          .where('hauntId', '==', hauntId)
+          .where('timestamp', '>=', startDate)
+          .where('timestamp', '<=', now);
+        adInteractionsSnapshot = await adInteractionsQuery.get();
+        console.log(`📺 Found ${adInteractionsSnapshot.size} ad interactions`);
+      } catch (error) {
+        console.log('No ad-interactions collection found');
+        adInteractionsSnapshot = { docs: [] };
+      }
+
+      // Fetch question performance data
+      let questionPerformanceSnapshot;
+      try {
+        const questionPerformanceQuery = firestore.collection('question-performance')
+          .where('hauntId', '==', hauntId)
+          .where('timestamp', '>=', startDate)
+          .where('timestamp', '<=', now);
+        questionPerformanceSnapshot = await questionPerformanceQuery.get();
+        console.log(`❓ Found ${questionPerformanceSnapshot.size} question performance records`);
+      } catch (error) {
+        console.log('No question-performance collection found');
+        questionPerformanceSnapshot = { docs: [] };
+      }
+
+      // Process leaderboard entries
+      const leaderboardEntries = leaderboardSnapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          playerId: data.playerId || data.id,
+          playerName: data.name || data.playerName,
+          score: data.score || 0,
+          questionsAnswered: data.questionsAnswered || 0,
+          correctAnswers: data.correctAnswers || 0,
+          timestamp: data.timestamp || data.createdAt || data.lastPlayed,
+          gameType: data.gameType || 'individual'
+        };
+      });
+
+      // Process game sessions
+      const gameSessions = gameSessionsSnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+
+      // Process ad interactions
+      const adInteractions = adInteractionsSnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+
+      // Process question performance
+      const questionPerformance = questionPerformanceSnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+
+      // Calculate metrics from real data
+      const allEntries = [...leaderboardEntries, ...gameSessions];
+      const totalGames = allEntries.length;
+      
+      const uniquePlayerIds = new Set();
+      let totalScore = 0;
+      let maxScore = 0;
+      let groupSessions = 0;
+      let totalGroupSize = 0;
+      let completedGames = 0;
+      const playerSessions = new Map();
+
+      // Process all game entries
+      allEntries.forEach(entry => {
+        if (entry.playerId) {
+          uniquePlayerIds.add(entry.playerId);
+          
+          // Track sessions per player for return rate
+          if (!playerSessions.has(entry.playerId)) {
+            playerSessions.set(entry.playerId, []);
+          }
+          playerSessions.get(entry.playerId).push(entry);
+        }
+
+        const score = entry.score || entry.finalScore || 0;
+        totalScore += score;
+        maxScore = Math.max(maxScore, score);
+
+        if (entry.gameType === 'group' && entry.groupSize) {
+          groupSessions++;
+          totalGroupSize += entry.groupSize;
+        }
+
+        if (entry.questionsAnswered > 0 || entry.completedAt) {
+          completedGames++;
+        }
+      });
+
+      const uniquePlayers = uniquePlayerIds.size;
+
+      // Calculate return player rate
+      let returnPlayers = 0;
+      playerSessions.forEach(sessions => {
+        if (sessions.length > 1) {
+          returnPlayers++;
+        }
+      });
+      const returnPlayerRate = uniquePlayers > 0 ? (returnPlayers / uniquePlayers) * 100 : 0;
+
+      // Calculate average score
+      const averageScore = totalGames > 0 ? totalScore / totalGames : 0;
+
+      // Calculate average group size
+      const averageGroupSize = groupSessions > 0 ? totalGroupSize / groupSessions : 1;
+
+      // Calculate ad click-through rate
+      const adViews = adInteractions.filter(interaction => interaction.type === 'view').length;
+      const adClicks = adInteractions.filter(interaction => interaction.type === 'click').length;
+      const adClickThrough = adViews > 0 ? (adClicks / adViews) * 100 : 0;
+
+      // Calculate participation rate
+      const participationRate = totalGames > 0 ? (completedGames / totalGames) * 100 : 100;
+
+      // Process question performance for best questions
+      const questionStats = new Map();
+      questionPerformance.forEach(record => {
+        const key = record.questionText || record.questionId || 'Unknown Question';
+        if (!questionStats.has(key)) {
+          questionStats.set(key, {
+            question: key,
+            correct: 0,
+            total: 0,
+            pack: record.pack || 'Default'
+          });
+        }
+        const stat = questionStats.get(key);
+        stat.total++;
+        if (record.correct) {
+          stat.correct++;
+        }
+      });
+
+      // If no question performance data, derive from leaderboard entries
+      if (questionStats.size === 0 && leaderboardEntries.length > 0) {
+        leaderboardEntries.forEach(entry => {
+          if (entry.questionsAnswered > 0) {
+            const correctRate = entry.correctAnswers / entry.questionsAnswered;
+            questionStats.set(`Game Session ${entry.id.slice(-4)}`, {
+              question: `${entry.questionsAnswered} questions answered`,
+              correct: entry.correctAnswers,
+              total: entry.questionsAnswered,
+              pack: 'Game Data'
+            });
+          }
+        });
+      }
+
+      const bestQuestions = Array.from(questionStats.values())
+        .map(stat => ({
+          question: stat.question,
+          correctRate: stat.total > 0 ? Math.round((stat.correct / stat.total) * 100) : 0,
+          pack: stat.pack
+        }))
+        .sort((a, b) => b.correctRate - a.correctRate)
+        .slice(0, 5);
+
+      // Generate time series data
+      const dailyData = [];
+      for (let i = Math.min(daysBack - 1, 6); i >= 0; i--) {
+        const date = new Date(now.getTime() - (i * 24 * 60 * 60 * 1000));
+        const dateStr = date.toISOString().split('T')[0];
+        
+        const dayEntries = allEntries.filter(entry => {
+          const entryDate = entry.timestamp?.toDate?.() || new Date(entry.timestamp || entry.createdAt);
+          return entryDate.toISOString().split('T')[0] === dateStr;
+        });
+
+        const dayPlayers = new Set(dayEntries.map(entry => entry.playerId).filter(Boolean)).size;
+
+        dailyData.push({
+          date: dateStr,
+          games: dayEntries.length,
+          players: dayPlayers
+        });
+      }
+
+      const analyticsData = {
+        totalGames,
+        uniquePlayers,
+        returnPlayerRate: Math.round(returnPlayerRate),
+        adClickThrough: Math.round(adClickThrough),
+        bestQuestions,
+        competitiveMetrics: {
+          averageScore: Math.round(averageScore),
+          topScore: maxScore,
+          participationRate: Math.round(participationRate)
+        },
+        averageGroupSize: Math.round(averageGroupSize * 10) / 10,
+        timeRangeData: {
+          daily: dailyData,
+          weekly: []
+        }
+      };
+
+      console.log(`📊 Analytics calculated for ${hauntId}:`, {
+        totalGames,
+        uniquePlayers,
+        returnPlayerRate: Math.round(returnPlayerRate),
+        adClickThrough: Math.round(adClickThrough),
+        averageScore: Math.round(averageScore)
+      });
+
+      res.json(analyticsData);
+    } catch (error) {
+      console.error("❌ Failed to get analytics data:", error);
+      res.status(500).json({ error: "Failed to get analytics data" });
+    }
+  });
+
   // Get leaderboard (general)
   app.get("/api/leaderboard", async (req, res) => {
     try {
