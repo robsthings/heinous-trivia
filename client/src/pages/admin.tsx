@@ -2145,132 +2145,48 @@ export default function Admin() {
                         </div>
                       </div>
 
-                      {/* Progress Bar Animations Section */}
+                      {/* Progress Bar Color Themes Section */}
                       <div className="space-y-4">
-                        <h3 className="text-lg font-semibold text-white">Progress Bar Animations</h3>
-                        <div className="space-y-3">
-                          <div className="p-4 bg-gray-800 rounded-lg">
-                            <Label className="text-white text-sm font-medium mb-2 block">Upload New Progress Bar</Label>
-                            <p className="text-gray-400 text-xs mb-3">Recommended: Animated GIF or SVG, 400x20 pixels</p>
-                            <Input
-                              type="file"
-                              accept="image/*"
-                              onChange={(e) => {
-                                const file = e.target.files?.[0] || null;
-                                setBrandingFiles(prev => ({ ...prev, progressBar: file }));
-                              }}
-                              className="bg-gray-700 border-gray-600 text-white file:bg-red-600 file:text-white file:border-0 file:rounded-md file:px-3 file:py-2 file:mr-3 file:cursor-pointer"
-                            />
-                            <Button 
-                              className="mt-3 bg-red-600 hover:bg-red-700"
-                              onClick={async () => {
-                                if (brandingFiles.progressBar) {
-                                  await uploadBrandingAsset(brandingFiles.progressBar, 'progressBar');
-                                  setBrandingFiles(prev => ({ ...prev, progressBar: null }));
-                                  // Reset file input - target the progress bar file input specifically
-                                  const fileInputs = document.querySelectorAll('input[type="file"]') as NodeListOf<HTMLInputElement>;
-                                  if (fileInputs[1]) fileInputs[1].value = '';
-                                }
-                              }}
-                              disabled={!brandingFiles.progressBar || isLoading}
-                            >
-                              <Upload className="w-4 h-4 mr-2" />
-                              {isLoading ? "Uploading..." : "Upload Animation"}
-                            </Button>
-                          </div>
-                          
-                          <div className="p-4 bg-gray-800 rounded-lg">
-                            <h4 className="text-white font-medium mb-3">Available Animations</h4>
-                            <div className="space-y-2">
-                              <div className="flex items-center justify-between p-3 bg-gray-700 rounded">
+                        <h3 className="text-lg font-semibold text-white">Progress Bar Color Themes</h3>
+                        <div className="p-4 bg-gray-800 rounded-lg">
+                          <h4 className="text-white font-medium mb-3">Available Color Themes</h4>
+                          <p className="text-gray-400 text-xs mb-4">Select glowing color themes that complement your custom backgrounds</p>
+                          <div className="grid grid-cols-1 gap-3">
+                            {[
+                              { id: 'crimson', name: 'Crimson Glow', colors: 'from-red-600 to-red-400', shadow: 'shadow-red-500/50' },
+                              { id: 'blood', name: 'Blood Red', colors: 'from-red-800 to-red-600', shadow: 'shadow-red-600/50' },
+                              { id: 'electric', name: 'Electric Blue', colors: 'from-blue-500 to-cyan-400', shadow: 'shadow-blue-500/50' },
+                              { id: 'toxic', name: 'Toxic Green', colors: 'from-green-500 to-lime-400', shadow: 'shadow-green-500/50' },
+                              { id: 'purple', name: 'Mystic Purple', colors: 'from-purple-600 to-purple-400', shadow: 'shadow-purple-500/50' },
+                              { id: 'orange', name: 'Inferno Orange', colors: 'from-orange-600 to-orange-400', shadow: 'shadow-orange-500/50' },
+                              { id: 'pink', name: 'Neon Pink', colors: 'from-pink-500 to-rose-400', shadow: 'shadow-pink-500/50' },
+                              { id: 'gold', name: 'Golden Glow', colors: 'from-yellow-500 to-amber-400', shadow: 'shadow-yellow-500/50' }
+                            ].map((theme) => (
+                              <div key={theme.id} className="flex items-center justify-between p-3 bg-gray-700 rounded">
                                 <div className="flex items-center gap-3">
-                                  <span className="text-white">Default Progress Bar</span>
-                                  <div className="w-16 h-2 bg-gradient-to-r from-red-600 to-red-400 rounded"></div>
+                                  <span className="text-white text-sm">{theme.name}</span>
+                                  <div className={`w-20 h-3 bg-gradient-to-r ${theme.colors} rounded-full ${theme.shadow} shadow-lg animate-pulse`}></div>
                                 </div>
-                                <Badge variant="secondary">Built-in</Badge>
+                                <Button 
+                                  size="sm" 
+                                  variant="outline"
+                                  onClick={() => {
+                                    if (selectedHauntForBranding) {
+                                      assignBrandingToHaunt(selectedHauntForBranding, undefined, theme.id);
+                                    } else {
+                                      toast({
+                                        title: "Select Haunt",
+                                        description: "Please select a haunt first in the assignment section below",
+                                        variant: "destructive"
+                                      });
+                                    }
+                                  }}
+                                  disabled={isLoading}
+                                >
+                                  Assign
+                                </Button>
                               </div>
-                              {customProgressBars.map((progressBar) => (
-                                <div key={progressBar.id} className="flex items-center justify-between p-3 bg-gray-700 rounded">
-                                  <div className="flex items-center gap-3">
-                                    <span className="text-white">{progressBar.name}</span>
-                                    <a 
-                                      href={progressBar.url} 
-                                      target="_blank" 
-                                      rel="noopener noreferrer"
-                                      className="text-blue-400 hover:text-blue-300 text-xs"
-                                    >
-                                      Preview
-                                    </a>
-                                  </div>
-                                  <div className="flex gap-2">
-                                    <Button 
-                                      size="sm" 
-                                      variant="outline"
-                                      onClick={() => {
-                                        if (selectedHauntForBranding) {
-                                          assignBrandingToHaunt(selectedHauntForBranding, undefined, progressBar.url);
-                                        } else {
-                                          toast({
-                                            title: "Select Haunt",
-                                            description: "Please select a haunt first in the assignment section below",
-                                            variant: "destructive"
-                                          });
-                                        }
-                                      }}
-                                      disabled={isLoading}
-                                    >
-                                      Assign
-                                    </Button>
-                                    <Button 
-                                      size="sm" 
-                                      variant="destructive"
-                                      onClick={async () => {
-                                        const confirmed = window.confirm(`Delete "${progressBar.name}" permanently? This action cannot be undone.`);
-                                        if (!confirmed) return;
-                                        
-                                        try {
-                                          setIsLoading(true);
-                                          const response = await fetch(`/api/branding/assets/${progressBar.id}`, {
-                                            method: 'DELETE',
-                                            headers: {
-                                              'Authorization': `Bearer ${auth.currentUser?.uid || 'uber-admin'}`
-                                            }
-                                          });
-                                          
-                                          if (!response.ok) {
-                                            throw new Error('Failed to delete asset');
-                                          }
-                                          
-                                          toast({
-                                            title: "Asset Deleted",
-                                            description: `"${progressBar.name}" has been deleted successfully`
-                                          });
-                                          
-                                          loadBrandingAssets(); // Refresh the list
-                                        } catch (error) {
-                                          console.error('Failed to delete asset:', error);
-                                          toast({
-                                            title: "Delete Failed",
-                                            description: "Failed to delete the asset. Please try again.",
-                                            variant: "destructive"
-                                          });
-                                        } finally {
-                                          setIsLoading(false);
-                                        }
-                                      }}
-                                      disabled={isLoading}
-                                    >
-                                      Delete
-                                    </Button>
-                                  </div>
-                                </div>
-                              ))}
-                              {customProgressBars.length === 0 && (
-                                <p className="text-gray-400 text-sm text-center py-4">
-                                  No custom progress bar animations uploaded yet
-                                </p>
-                              )}
-                            </div>
+                            ))}
                           </div>
                         </div>
                       </div>
