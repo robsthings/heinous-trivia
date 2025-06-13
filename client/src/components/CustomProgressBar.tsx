@@ -34,37 +34,47 @@ export function CustomProgressBar({ progress, hauntConfig, className = "" }: Cus
 
 
 
-  // Define progress bar color themes
+  // Define progress bar color themes with hard-coded CSS classes for reliability
   const getProgressBarColors = (theme: string) => {
     const themes = {
-      'crimson': { colors: 'from-red-600 to-red-400', shadow: 'shadow-red-500/50' },
-      'blood': { colors: 'from-red-800 to-red-600', shadow: 'shadow-red-600/50' },
-      'electric': { colors: 'from-blue-500 to-cyan-400', shadow: 'shadow-blue-500/50' },
-      'toxic': { colors: 'from-green-500 to-lime-400', shadow: 'shadow-green-500/50' },
-      'purple': { colors: 'from-purple-600 to-purple-400', shadow: 'shadow-purple-500/50' },
-      'orange': { colors: 'from-orange-600 to-orange-400', shadow: 'shadow-orange-500/50' },
-      'pink': { colors: 'from-pink-500 to-rose-400', shadow: 'shadow-pink-500/50' },
-      'gold': { colors: 'from-yellow-500 to-amber-400', shadow: 'shadow-yellow-500/50' }
+      'crimson': { 
+        className: 'h-full bg-gradient-to-r from-red-600 to-red-400 transition-all duration-300 ease-out rounded-full shadow-red-500/50 shadow-lg animate-pulse' 
+      },
+      'blood': { 
+        className: 'h-full bg-gradient-to-r from-red-800 to-red-600 transition-all duration-300 ease-out rounded-full shadow-red-600/50 shadow-lg animate-pulse' 
+      },
+      'electric': { 
+        className: 'h-full bg-gradient-to-r from-blue-500 to-cyan-400 transition-all duration-300 ease-out rounded-full shadow-blue-500/50 shadow-lg animate-pulse' 
+      },
+      'toxic': { 
+        className: 'h-full bg-gradient-to-r from-green-500 to-lime-400 transition-all duration-300 ease-out rounded-full shadow-green-500/50 shadow-lg animate-pulse' 
+      },
+      'purple': { 
+        className: 'h-full bg-gradient-to-r from-purple-600 to-purple-400 transition-all duration-300 ease-out rounded-full shadow-purple-500/50 shadow-lg animate-pulse' 
+      },
+      'orange': { 
+        className: 'h-full bg-gradient-to-r from-orange-600 to-orange-400 transition-all duration-300 ease-out rounded-full shadow-orange-500/50 shadow-lg animate-pulse' 
+      },
+      'pink': { 
+        className: 'h-full bg-gradient-to-r from-pink-500 to-rose-400 transition-all duration-300 ease-out rounded-full shadow-pink-500/50 shadow-lg animate-pulse' 
+      },
+      'gold': { 
+        className: 'h-full bg-gradient-to-r from-yellow-500 to-amber-400 transition-all duration-300 ease-out rounded-full shadow-yellow-500/50 shadow-lg animate-pulse' 
+      }
     };
     return themes[theme as keyof typeof themes] || themes.crimson;
   };
 
   // Apply custom theme for Pro/Premium haunts with progressBarTheme
   if (hasCustomTheme && hauntConfig.progressBarTheme) {
-    const themeColors = getProgressBarColors(hauntConfig.progressBarTheme);
-    console.log('🎨 Applying theme colors:', themeColors);
-    
-    // Force toxic green for testing
-    const forceGreen = hauntConfig.progressBarTheme === 'toxic';
+    const themeData = getProgressBarColors(hauntConfig.progressBarTheme);
+    console.log('🎨 Applying theme:', hauntConfig.progressBarTheme, themeData);
     
     return (
       <div className={`relative w-full h-4 bg-gray-800 rounded-full overflow-hidden ${className}`}>
         {/* Custom themed progress bar */}
         <div 
-          className={forceGreen 
-            ? "h-full bg-gradient-to-r from-green-500 to-lime-400 transition-all duration-300 ease-out rounded-full shadow-green-500/50 shadow-lg animate-pulse"
-            : `h-full bg-gradient-to-r ${themeColors.colors} transition-all duration-300 ease-out rounded-full ${themeColors.shadow} shadow-lg animate-pulse`
-          }
+          className={themeData.className}
           style={{ width: `${Math.max(0, Math.min(100, progress))}%` }}
         >
           {/* Glowing overlay effect */}
