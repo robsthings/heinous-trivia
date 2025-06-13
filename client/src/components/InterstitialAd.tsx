@@ -28,40 +28,52 @@ interface InterstitialAdProps {
 export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAdProps) {
   const [showTransition, setShowTransition] = useState(true);
   const [adImageLoaded, setAdImageLoaded] = useState(false);
-  
-  if (!gameState.showAd || gameState.ads.length === 0) {
-    return null;
-  }
+  const [logoError, setLogoError] = useState(false);
 
-  const currentAd = gameState.ads[gameState.currentAdIndex % gameState.ads.length];
-  const adIndex = gameState.currentAdIndex % gameState.ads.length;
-  const hauntLogoPath = `/haunts/${gameState.currentHaunt}/logo`;
+  // Safe data extraction with fallbacks
+  const isValidAd = gameState.showAd && gameState.ads.length > 0;
+  const currentAd = isValidAd ? gameState.ads[gameState.currentAdIndex % gameState.ads.length] : null;
+  const adIndex = isValidAd ? gameState.currentAdIndex % gameState.ads.length : 0;
+  const hauntLogoPath = gameState.currentHaunt ? `/haunts/${gameState.currentHaunt}/logo` : '';
+  const logoSrc = gameState.hauntConfig?.logoPath || hauntLogoPath;
 
-  // Preload the ad image
+  // Preload the ad image - only when valid ad exists
   useEffect(() => {
+    if (!currentAd) return;
+    
     const imageSrc = currentAd.image || currentAd.imageUrl;
     if (imageSrc) {
       const img = new Image();
       img.onload = () => setAdImageLoaded(true);
+      img.onerror = () => setAdImageLoaded(true); // Still proceed even if image fails
       img.src = imageSrc as string;
     } else {
       setAdImageLoaded(true); // No image to load
     }
-  }, [currentAd.image, currentAd.imageUrl]);
+  }, [currentAd?.image, currentAd?.imageUrl]);
 
-  // Handle transition timing
+  // Handle transition timing - only when showing valid ad
   useEffect(() => {
+    if (!isValidAd) return;
+    
     const timer = setTimeout(() => {
       setShowTransition(false);
     }, 450); // 450ms transition duration
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [isValidAd]);
   
-  // Track ad view when component mounts
+  // Track ad view when component mounts - only for valid ads
   useEffect(() => {
+    if (!isValidAd || !currentAd) return;
+    
     trackAdMetric(gameState.currentHaunt, adIndex, 'views');
-  }, [gameState.currentHaunt, adIndex]);
+  }, [gameState.currentHaunt, adIndex, isValidAd]);
+
+  // Early return after all hooks have been called
+  if (!isValidAd || !currentAd) {
+    return null;
+  }
 
   const handleVisitAd = () => {
     if (currentAd.link && currentAd.link !== '#' && currentAd.link.startsWith('http')) {
@@ -77,27 +89,24 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
   console.log('UPDATED - Ad link:', currentAd.link);
   console.log('UPDATED - Has valid link:', hasValidLink);
 
-  // Transition Component
+  // Transition Component with safe logo handling
   if (showTransition) {
     return (
       <div className="fixed inset-0 bg-black z-50 overflow-hidden flex items-center justify-center">
         <div className="relative">
-          <img
-            src={gameState.hauntConfig?.logoPath || hauntLogoPath}
-            alt="Haunt Logo"
-            className="w-32 h-32 object-contain animate-logo-transition"
-            onError={(e) => {
-              // Fallback to text if logo fails to load
-              const target = e.target as HTMLImageElement;
-              target.style.display = 'none';
-              const fallback = document.createElement('div');
-              fallback.className = 'w-32 h-32 flex items-center justify-center text-4xl animate-logo-transition';
-              fallback.textContent = '🎃';
-              target.parentNode?.appendChild(fallback);
-            }}
-          />
+          {logoSrc && !logoError ? (
+            <img
+              src={logoSrc}
+              alt="Haunt Logo"
+              className="w-32 h-32 object-contain animate-logo-transition"
+              onError={() => setLogoError(true)}
+            />
+          ) : (
+            <div className="w-32 h-32 flex items-center justify-center text-6xl animate-logo-transition text-orange-500">
+              🎃
+            </div>
+          )}
         </div>
-
       </div>
     );
   }
