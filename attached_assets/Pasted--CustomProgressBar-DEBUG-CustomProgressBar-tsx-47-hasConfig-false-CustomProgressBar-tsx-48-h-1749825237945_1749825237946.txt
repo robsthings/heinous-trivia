@@ -1,0 +1,60 @@
+=== CustomProgressBar DEBUG ===
+CustomProgressBar.tsx:47 hasConfig: false
+CustomProgressBar.tsx:48 hauntId: undefined
+CustomProgressBar.tsx:49 tier: undefined
+CustomProgressBar.tsx:50 progressBarTheme: undefined
+CustomProgressBar.tsx:51 isPremiumTier: false
+CustomProgressBar.tsx:52 hasCustomTheme: false
+CustomProgressBar.tsx:53 progress: 0
+CustomProgressBar.tsx:54 ================================
+CustomProgressBar.tsx:46 === CustomProgressBar DEBUG ===
+CustomProgressBar.tsx:47 hasConfig: true
+CustomProgressBar.tsx:48 hauntId: headquarters
+CustomProgressBar.tsx:49 tier: premium
+CustomProgressBar.tsx:50 progressBarTheme: toxic
+CustomProgressBar.tsx:51 isPremiumTier: true
+CustomProgressBar.tsx:52 hasCustomTheme: toxic
+CustomProgressBar.tsx:53 progress: 0
+CustomProgressBar.tsx:54 ================================
+CustomProgressBar.tsx:59 🎨 Applying theme: toxic Object
+CustomProgressBar.tsx:46 === CustomProgressBar DEBUG ===
+CustomProgressBar.tsx:47 hasConfig: true
+CustomProgressBar.tsx:48 hauntId: headquarters
+CustomProgressBar.tsx:49 tier: premium
+CustomProgressBar.tsx:50 progressBarTheme: toxic
+CustomProgressBar.tsx:51 isPremiumTier: true
+CustomProgressBar.tsx:52 hasCustomTheme: toxic
+CustomProgressBar.tsx:53 progress: 10.081687469564049
+CustomProgressBar.tsx:54 ================================
+CustomProgressBar.tsx:59 🎨 Applying theme: toxic Object
+CustomProgressBar.tsx:46 === CustomProgressBar DEBUG ===
+CustomProgressBar.tsx:47 hasConfig: true
+CustomProgressBar.tsx:48 hauntId: headquarters
+CustomProgressBar.tsx:49 tier: premium
+CustomProgressBar.tsx:50 progressBarTheme: toxic
+CustomProgressBar.tsx:51 isPremiumTier: true
+CustomProgressBar.tsx:52 hasCustomTheme: toxic
+CustomProgressBar.tsx:53 progress: 22.111035841681968
+CustomProgressBar.tsx:54 ================================
+CustomProgressBar.tsx:59 🎨 Applying theme: toxic Object
+CustomProgressBar.tsx:46 === CustomProgressBar DEBUG ===
+CustomProgressBar.tsx:47 hasConfig: true
+CustomProgressBar.tsx:48 hauntId: headquarters
+CustomProgressBar.tsx:49 tier: premium
+CustomProgressBar.tsx:50 progressBarTheme: toxic
+CustomProgressBar.tsx:51 isPremiumTier: true
+CustomProgressBar.tsx:52 hasCustomTheme: toxic
+CustomProgressBar.tsx:53 progress: 22.111035841681968
+CustomProgressBar.tsx:54 ================================
+CustomProgressBar.tsx:59 🎨 Applying theme: toxic Object
+CustomProgressBar.tsx:46 === CustomProgressBar DEBUG ===
+CustomProgressBar.tsx:47 hasConfig: true
+CustomProgressBar.tsx:48 hauntId: headquarters
+CustomProgressBar.tsx:49 tier: premium
+CustomProgressBar.tsx:50 progressBarTheme: toxic
+CustomProgressBar.tsx:51 isPremiumTier: true
+CustomProgressBar.tsx:52 hasCustomTheme: toxic
+CustomProgressBar.tsx:53 progress: 23.871380512486695
+CustomProgressBar.tsx:54 ================================
+CustomProgressBar.tsx:59 🎨 Applying theme: toxic Object
+e7e1ab62-01cc-4aba-97d3-1a8f1e8fdf98-00-27ck2q6bfkqpp.worf.replit.dev/:1 Banner not shown: beforeinstallpromptevent.preventDefault() called. The page must call beforeinstallpromptevent.prompt() to show the banner.

@@ -7,32 +7,40 @@ interface CustomProgressBarProps {
 }
 
 export function CustomProgressBar({ progress, hauntConfig, className = "" }: CustomProgressBarProps) {
-  // Define progress bar color themes with hard-coded CSS classes for reliability
+  // Define progress bar color themes with inline styles for guaranteed rendering
   const getProgressBarColors = (theme: string) => {
     const themes = {
       'crimson': { 
-        className: 'h-full bg-gradient-to-r from-red-600 to-red-400 transition-all duration-300 ease-out rounded-full shadow-red-500/50 shadow-lg animate-pulse' 
+        background: 'linear-gradient(to right, #dc2626, #f87171)',
+        boxShadow: '0 0 20px rgba(239, 68, 68, 0.5)'
       },
       'blood': { 
-        className: 'h-full bg-gradient-to-r from-red-800 to-red-600 transition-all duration-300 ease-out rounded-full shadow-red-600/50 shadow-lg animate-pulse' 
+        background: 'linear-gradient(to right, #991b1b, #dc2626)',
+        boxShadow: '0 0 20px rgba(220, 38, 38, 0.5)'
       },
       'electric': { 
-        className: 'h-full bg-gradient-to-r from-blue-500 to-cyan-400 transition-all duration-300 ease-out rounded-full shadow-blue-500/50 shadow-lg animate-pulse' 
+        background: 'linear-gradient(to right, #3b82f6, #22d3ee)',
+        boxShadow: '0 0 20px rgba(59, 130, 246, 0.5)'
       },
       'toxic': { 
-        className: 'h-full bg-gradient-to-r from-green-500 to-lime-400 transition-all duration-300 ease-out rounded-full shadow-green-500/50 shadow-lg animate-pulse' 
+        background: 'linear-gradient(to right, #10b981, #84cc16)',
+        boxShadow: '0 0 20px rgba(16, 185, 129, 0.5)'
       },
       'purple': { 
-        className: 'h-full bg-gradient-to-r from-purple-600 to-purple-400 transition-all duration-300 ease-out rounded-full shadow-purple-500/50 shadow-lg animate-pulse' 
+        background: 'linear-gradient(to right, #9333ea, #a855f7)',
+        boxShadow: '0 0 20px rgba(147, 51, 234, 0.5)'
       },
       'orange': { 
-        className: 'h-full bg-gradient-to-r from-orange-600 to-orange-400 transition-all duration-300 ease-out rounded-full shadow-orange-500/50 shadow-lg animate-pulse' 
+        background: 'linear-gradient(to right, #ea580c, #fb923c)',
+        boxShadow: '0 0 20px rgba(234, 88, 12, 0.5)'
       },
       'pink': { 
-        className: 'h-full bg-gradient-to-r from-pink-500 to-rose-400 transition-all duration-300 ease-out rounded-full shadow-pink-500/50 shadow-lg animate-pulse' 
+        background: 'linear-gradient(to right, #ec4899, #fb7185)',
+        boxShadow: '0 0 20px rgba(236, 72, 153, 0.5)'
       },
       'gold': { 
-        className: 'h-full bg-gradient-to-r from-yellow-500 to-amber-400 transition-all duration-300 ease-out rounded-full shadow-yellow-500/50 shadow-lg animate-pulse' 
+        background: 'linear-gradient(to right, #eab308, #f59e0b)',
+        boxShadow: '0 0 20px rgba(234, 179, 8, 0.5)'
       }
     };
     return themes[theme as keyof typeof themes] || themes.crimson;
@@ -56,17 +64,28 @@ export function CustomProgressBar({ progress, hauntConfig, className = "" }: Cus
   // Apply custom theme for Pro/Premium haunts with progressBarTheme
   if (hasCustomTheme && hauntConfig.progressBarTheme) {
     const themeData = getProgressBarColors(hauntConfig.progressBarTheme);
-    console.log('🎨 Applying theme:', hauntConfig.progressBarTheme, themeData);
+    console.log('🎨 NEW INLINE STYLES - Applying theme:', hauntConfig.progressBarTheme, themeData);
     
     return (
       <div className={`relative w-full h-4 bg-gray-800 rounded-full overflow-hidden ${className}`}>
         {/* Custom themed progress bar */}
         <div 
-          className={themeData.className}
-          style={{ width: `${Math.max(0, Math.min(100, progress))}%` }}
+          className="h-full transition-all duration-300 ease-out rounded-full"
+          style={{ 
+            width: `${Math.max(0, Math.min(100, progress))}%`,
+            background: themeData.background,
+            boxShadow: themeData.boxShadow,
+            animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+          }}
         >
           {/* Glowing overlay effect */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse" />
+          <div 
+            className="absolute inset-0 rounded-full opacity-30"
+            style={{
+              background: 'linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent)',
+              animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+            }}
+          />
         </div>
         
         {/* Progress text overlay with enhanced readability */}
