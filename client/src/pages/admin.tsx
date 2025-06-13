@@ -14,7 +14,7 @@ import { firestore, auth, storage } from "@/lib/firebase";
 import { doc, setDoc, collection, addDoc, getDocs, updateDoc, deleteDoc } from "firebase/firestore";
 import { signInAnonymously } from "firebase/auth";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { ExternalLink, Settings, GamepadIcon, Crown, Zap, Gem, Copy } from "lucide-react";
+import { ExternalLink, Settings, GamepadIcon, Crown, Zap, Gem, Copy, Upload, Palette } from "lucide-react";
 import type { HauntConfig, TriviaQuestion } from "@shared/schema";
 
 interface TriviaPack {
@@ -43,6 +43,15 @@ export default function Admin() {
     primaryColor: "#8B0000",
     secondaryColor: "#2D1B69",
     accentColor: "#FF6B35"
+  });
+
+  // Custom Branding state
+  const [customSkins, setCustomSkins] = useState<Array<{id: string, name: string, url: string}>>([]);
+  const [customProgressBars, setCustomProgressBars] = useState<Array<{id: string, name: string, url: string}>>([]);
+  const [selectedHauntForBranding, setSelectedHauntForBranding] = useState("");
+  const [brandingFiles, setBrandingFiles] = useState({
+    skin: null as File | null,
+    progressBar: null as File | null
   });
 
   // Trivia Pack state
@@ -627,6 +636,130 @@ export default function Admin() {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  // Custom Branding Functions
+  const uploadBrandingAsset = async (file: File, type: 'skin' | 'progressBar') => {
+    if (!file) return null;
+
+    try {
+      setIsLoading(true);
+      
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('uploadType', type);
+      
+      const response = await fetch('/api/upload/branding', {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Authorization': `Bearer ${auth.currentUser?.uid || 'uber-admin'}`
+        }
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Upload failed');
+      }
+
+      const result = await response.json();
+      
+      // Add to local state
+      const assetData = {
+        id: `${type}-${Date.now()}`,
+        name: file.name.replace(/\.[^/.]+$/, ""), // Remove extension
+        url: result.imageUrl
+      };
+
+      if (type === 'skin') {
+        setCustomSkins(prev => [...prev, assetData]);
+      } else {
+        setCustomProgressBars(prev => [...prev, assetData]);
+      }
+
+      toast({
+        title: "Upload Successful",
+        description: `${type === 'skin' ? 'Background skin' : 'Progress bar'} uploaded successfully`,
+      });
+
+      return result.imageUrl;
+    } catch (error) {
+      console.error('Upload failed:', error);
+      toast({
+        title: "Upload Failed",
+        description: error instanceof Error ? error.message : "Failed to upload asset",
+        variant: "destructive"
+      });
+      return null;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const assignBrandingToHaunt = async (hauntId: string, skinUrl?: string, progressBarUrl?: string) => {
+    if (!hauntId) return;
+
+    try {
+      setIsLoading(true);
+
+      const updates: any = {};
+      if (skinUrl !== undefined) updates.skinUrl = skinUrl;
+      if (progressBarUrl !== undefined) updates.progressBarUrl = progressBarUrl;
+
+      const response = await fetch(`/api/haunt/${hauntId}/branding`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${auth.currentUser?.uid || 'uber-admin'}`
+        },
+        body: JSON.stringify(updates)
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to update branding');
+      }
+
+      // Update local haunt data
+      setAllHaunts(prev => prev.map(haunt => 
+        haunt.id === hauntId 
+          ? { ...haunt, ...updates }
+          : haunt
+      ));
+
+      const hauntName = allHaunts.find(h => h.id === hauntId)?.name || hauntId;
+      
+      toast({
+        title: "Branding Updated",
+        description: `Custom branding applied to ${hauntName}`,
+      });
+
+    } catch (error) {
+      console.error('Failed to assign branding:', error);
+      toast({
+        title: "Assignment Failed",
+        description: error instanceof Error ? error.message : "Failed to assign branding",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const removeBrandingFromHaunt = async (hauntId: string) => {
+    if (!hauntId) return;
+
+    const confirmed = window.confirm(
+      "Remove all custom branding from this haunt? This will revert to default themes."
+    );
+    
+    if (!confirmed) return;
+
+    await assignBrandingToHaunt(hauntId, "", "");
+  };
+
+  const getProPremiumHaunts = () => {
+    return allHaunts.filter(haunt => haunt.tier === 'pro' || haunt.tier === 'premium');
   };
 
   const handleResetPassword = async (hauntId: string, hauntName: string) => {
@@ -1863,10 +1996,27 @@ export default function Admin() {
                             <Input
                               type="file"
                               accept="image/*"
+                              onChange={(e) => {
+                                const file = e.target.files?.[0] || null;
+                                setBrandingFiles(prev => ({ ...prev, skin: file }));
+                              }}
                               className="bg-gray-700 border-gray-600 text-white file:bg-red-600 file:text-white file:border-0 file:rounded-md file:px-3 file:py-2 file:mr-3 file:cursor-pointer"
                             />
-                            <Button className="mt-3 bg-red-600 hover:bg-red-700">
-                              📤 Upload Skin
+                            <Button 
+                              className="mt-3 bg-red-600 hover:bg-red-700"
+                              onClick={async () => {
+                                if (brandingFiles.skin) {
+                                  await uploadBrandingAsset(brandingFiles.skin, 'skin');
+                                  setBrandingFiles(prev => ({ ...prev, skin: null }));
+                                  // Reset file input
+                                  const fileInput = document.querySelector('input[type="file"]') as HTMLInputElement;
+                                  if (fileInput) fileInput.value = '';
+                                }
+                              }}
+                              disabled={!brandingFiles.skin || isLoading}
+                            >
+                              <Upload className="w-4 h-4 mr-2" />
+                              {isLoading ? "Uploading..." : "Upload Skin"}
                             </Button>
                           </div>
                           
@@ -1877,14 +2027,44 @@ export default function Admin() {
                                 <span className="text-white">Default Horror Theme</span>
                                 <Badge variant="secondary">Built-in</Badge>
                               </div>
-                              <div className="flex items-center justify-between p-3 bg-gray-700 rounded">
-                                <span className="text-white">Haunted Forest</span>
-                                <Button size="sm" variant="outline">Assign to Haunt</Button>
-                              </div>
-                              <div className="flex items-center justify-between p-3 bg-gray-700 rounded">
-                                <span className="text-white">Gothic Cathedral</span>
-                                <Button size="sm" variant="outline">Assign to Haunt</Button>
-                              </div>
+                              {customSkins.map((skin) => (
+                                <div key={skin.id} className="flex items-center justify-between p-3 bg-gray-700 rounded">
+                                  <div className="flex items-center gap-3">
+                                    <span className="text-white">{skin.name}</span>
+                                    <a 
+                                      href={skin.url} 
+                                      target="_blank" 
+                                      rel="noopener noreferrer"
+                                      className="text-blue-400 hover:text-blue-300 text-xs"
+                                    >
+                                      Preview
+                                    </a>
+                                  </div>
+                                  <Button 
+                                    size="sm" 
+                                    variant="outline"
+                                    onClick={() => {
+                                      if (selectedHauntForBranding) {
+                                        assignBrandingToHaunt(selectedHauntForBranding, skin.url);
+                                      } else {
+                                        toast({
+                                          title: "Select Haunt",
+                                          description: "Please select a haunt first in the assignment section below",
+                                          variant: "destructive"
+                                        });
+                                      }
+                                    }}
+                                    disabled={isLoading}
+                                  >
+                                    Assign to Haunt
+                                  </Button>
+                                </div>
+                              ))}
+                              {customSkins.length === 0 && (
+                                <p className="text-gray-400 text-sm text-center py-4">
+                                  No custom skins uploaded yet
+                                </p>
+                              )}
                             </div>
                           </div>
                         </div>
@@ -1900,10 +2080,27 @@ export default function Admin() {
                             <Input
                               type="file"
                               accept="image/*"
+                              onChange={(e) => {
+                                const file = e.target.files?.[0] || null;
+                                setBrandingFiles(prev => ({ ...prev, progressBar: file }));
+                              }}
                               className="bg-gray-700 border-gray-600 text-white file:bg-red-600 file:text-white file:border-0 file:rounded-md file:px-3 file:py-2 file:mr-3 file:cursor-pointer"
                             />
-                            <Button className="mt-3 bg-red-600 hover:bg-red-700">
-                              📤 Upload Animation
+                            <Button 
+                              className="mt-3 bg-red-600 hover:bg-red-700"
+                              onClick={async () => {
+                                if (brandingFiles.progressBar) {
+                                  await uploadBrandingAsset(brandingFiles.progressBar, 'progressBar');
+                                  setBrandingFiles(prev => ({ ...prev, progressBar: null }));
+                                  // Reset file input - target the progress bar file input specifically
+                                  const fileInputs = document.querySelectorAll('input[type="file"]') as NodeListOf<HTMLInputElement>;
+                                  if (fileInputs[1]) fileInputs[1].value = '';
+                                }
+                              }}
+                              disabled={!brandingFiles.progressBar || isLoading}
+                            >
+                              <Upload className="w-4 h-4 mr-2" />
+                              {isLoading ? "Uploading..." : "Upload Animation"}
                             </Button>
                           </div>
                           
@@ -1912,25 +2109,49 @@ export default function Admin() {
                             <div className="space-y-2">
                               <div className="flex items-center justify-between p-3 bg-gray-700 rounded">
                                 <div className="flex items-center gap-3">
-                                  <span className="text-white">Pulsing Blood</span>
-                                  <div className="w-16 h-2 bg-gradient-to-r from-red-600 to-red-400 rounded animate-pulse"></div>
+                                  <span className="text-white">Default Progress Bar</span>
+                                  <div className="w-16 h-2 bg-gradient-to-r from-red-600 to-red-400 rounded"></div>
                                 </div>
-                                <Button size="sm" variant="outline">Assign</Button>
+                                <Badge variant="secondary">Built-in</Badge>
                               </div>
-                              <div className="flex items-center justify-between p-3 bg-gray-700 rounded">
-                                <div className="flex items-center gap-3">
-                                  <span className="text-white">Flickering Flames</span>
-                                  <div className="w-16 h-2 bg-gradient-to-r from-orange-600 to-yellow-400 rounded animate-pulse"></div>
+                              {customProgressBars.map((progressBar) => (
+                                <div key={progressBar.id} className="flex items-center justify-between p-3 bg-gray-700 rounded">
+                                  <div className="flex items-center gap-3">
+                                    <span className="text-white">{progressBar.name}</span>
+                                    <a 
+                                      href={progressBar.url} 
+                                      target="_blank" 
+                                      rel="noopener noreferrer"
+                                      className="text-blue-400 hover:text-blue-300 text-xs"
+                                    >
+                                      Preview
+                                    </a>
+                                  </div>
+                                  <Button 
+                                    size="sm" 
+                                    variant="outline"
+                                    onClick={() => {
+                                      if (selectedHauntForBranding) {
+                                        assignBrandingToHaunt(selectedHauntForBranding, undefined, progressBar.url);
+                                      } else {
+                                        toast({
+                                          title: "Select Haunt",
+                                          description: "Please select a haunt first in the assignment section below",
+                                          variant: "destructive"
+                                        });
+                                      }
+                                    }}
+                                    disabled={isLoading}
+                                  >
+                                    Assign
+                                  </Button>
                                 </div>
-                                <Button size="sm" variant="outline">Assign</Button>
-                              </div>
-                              <div className="flex items-center justify-between p-3 bg-gray-700 rounded">
-                                <div className="flex items-center gap-3">
-                                  <span className="text-white">Ghostly Mist</span>
-                                  <div className="w-16 h-2 bg-gradient-to-r from-gray-400 to-white rounded animate-pulse"></div>
-                                </div>
-                                <Button size="sm" variant="outline">Assign</Button>
-                              </div>
+                              ))}
+                              {customProgressBars.length === 0 && (
+                                <p className="text-gray-400 text-sm text-center py-4">
+                                  No custom progress bar animations uploaded yet
+                                </p>
+                              )}
                             </div>
                           </div>
                         </div>
@@ -1943,29 +2164,101 @@ export default function Admin() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                           <Label className="text-white text-sm font-medium mb-2 block">Select Haunt</Label>
-                          <Select>
+                          <Select value={selectedHauntForBranding} onValueChange={setSelectedHauntForBranding}>
                             <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
                               <SelectValue placeholder="Choose a Pro/Premium haunt" />
                             </SelectTrigger>
                             <SelectContent className="bg-gray-700 border-gray-600">
-                              <SelectItem value="nightmare-manor" className="text-white">Nightmare Manor (Premium)</SelectItem>
-                              <SelectItem value="terror-woods" className="text-white">Terror Woods (Pro)</SelectItem>
-                              <SelectItem value="haunted-asylum" className="text-white">Haunted Asylum (Premium)</SelectItem>
+                              {getProPremiumHaunts().map((haunt) => (
+                                <SelectItem key={haunt.id} value={haunt.id} className="text-white">
+                                  {haunt.name} ({haunt.tier.charAt(0).toUpperCase() + haunt.tier.slice(1)})
+                                </SelectItem>
+                              ))}
+                              {getProPremiumHaunts().length === 0 && (
+                                <SelectItem value="none" disabled className="text-gray-400">
+                                  No Pro/Premium haunts available
+                                </SelectItem>
+                              )}
                             </SelectContent>
                           </Select>
                         </div>
                         <div>
                           <Label className="text-white text-sm font-medium mb-2 block">Action</Label>
                           <div className="flex gap-2">
-                            <Button className="bg-green-600 hover:bg-green-700">
+                            <Button 
+                              className="bg-green-600 hover:bg-green-700"
+                              onClick={() => {
+                                if (!selectedHauntForBranding) {
+                                  toast({
+                                    title: "Select Haunt",
+                                    description: "Please select a haunt first",
+                                    variant: "destructive"
+                                  });
+                                  return;
+                                }
+                                
+                                // This will assign both current custom skin and progress bar if available
+                                const selectedSkin = customSkins.length > 0 ? customSkins[0].url : "";
+                                const selectedProgressBar = customProgressBars.length > 0 ? customProgressBars[0].url : "";
+                                
+                                if (!selectedSkin && !selectedProgressBar) {
+                                  toast({
+                                    title: "No Assets",
+                                    description: "Upload custom skins or progress bars first",
+                                    variant: "destructive"
+                                  });
+                                  return;
+                                }
+                                
+                                assignBrandingToHaunt(selectedHauntForBranding, selectedSkin, selectedProgressBar);
+                              }}
+                              disabled={!selectedHauntForBranding || isLoading}
+                            >
                               Apply Custom Branding
                             </Button>
-                            <Button variant="outline" className="border-red-500 text-red-400 hover:bg-red-500 hover:text-white">
+                            <Button 
+                              variant="outline" 
+                              className="border-red-500 text-red-400 hover:bg-red-500 hover:text-white"
+                              onClick={() => {
+                                if (selectedHauntForBranding) {
+                                  removeBrandingFromHaunt(selectedHauntForBranding);
+                                }
+                              }}
+                              disabled={!selectedHauntForBranding || isLoading}
+                            >
                               Remove Branding
                             </Button>
                           </div>
                         </div>
                       </div>
+
+                      {/* Current Branding Status */}
+                      {selectedHauntForBranding && (
+                        <div className="mt-4 p-4 bg-gray-700 rounded border">
+                          <h4 className="text-white font-medium mb-2">Current Branding Status</h4>
+                          {(() => {
+                            const selectedHaunt = allHaunts.find(h => h.id === selectedHauntForBranding);
+                            if (!selectedHaunt) return null;
+                            
+                            return (
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                                <div>
+                                  <span className="text-gray-300">Background Skin: </span>
+                                  <span className={selectedHaunt.skinUrl ? "text-green-400" : "text-gray-400"}>
+                                    {selectedHaunt.skinUrl ? "Custom assigned" : "Default theme"}
+                                  </span>
+                                </div>
+                                <div>
+                                  <span className="text-gray-300">Progress Bar: </span>
+                                  <span className={selectedHaunt.progressBarUrl ? "text-green-400" : "text-gray-400"}>
+                                    {selectedHaunt.progressBarUrl ? "Custom assigned" : "Default animation"}
+                                  </span>
+                                </div>
+                              </div>
+                            );
+                          })()}
+                        </div>
+                      )}
                       
                       <div className="mt-4 p-4 bg-red-900/20 border border-red-600 rounded">
                         <p className="text-red-300 text-sm">

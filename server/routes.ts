@@ -71,7 +71,132 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   });
 
+  // Upload branding assets (Uber Admin only)
+  app.post("/api/upload/branding", upload.single('file'), async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ error: "No file uploaded" });
+      }
 
+      const { uploadType } = req.body; // 'skin' or 'progressBar'
+      
+      if (!uploadType || !['skin', 'progressBar'].includes(uploadType)) {
+        return res.status(400).json({ error: "Invalid upload type. Must be 'skin' or 'progressBar'" });
+      }
+
+      const file = req.file;
+      const timestamp = Date.now();
+      const filename = `branding-${uploadType}-${timestamp}-${file.originalname}`;
+      
+      // Save to Firebase Storage
+      const storageRef = ref(storage, `branding/${uploadType}s/${filename}`);
+      await uploadBytes(storageRef, file.buffer);
+      const downloadURL = await getDownloadURL(storageRef);
+      
+      // Save metadata to Firestore
+      const brandingRef = doc(firestore, 'branding-assets', `${uploadType}-${timestamp}`);
+      await setDoc(brandingRef, {
+        name: file.originalname.replace(/\.[^/.]+$/, ""),
+        type: uploadType,
+        url: downloadURL,
+        filename: filename,
+        uploadedAt: FieldValue.serverTimestamp(),
+        uploadedBy: 'uber-admin'
+      });
+
+      res.json({ 
+        success: true, 
+        imageUrl: downloadURL,
+        id: `${uploadType}-${timestamp}`,
+        message: `${uploadType === 'skin' ? 'Background skin' : 'Progress bar animation'} uploaded successfully`
+      });
+      
+    } catch (error) {
+      console.error("Error uploading branding asset:", error);
+      res.status(500).json({ error: "Failed to upload branding asset" });
+    }
+  });
+
+  // Update haunt branding (Uber Admin only)
+  app.patch("/api/haunt/:hauntId/branding", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      const { skinUrl, progressBarUrl } = req.body;
+      
+      // Validate that at least one branding field is provided
+      if (skinUrl === undefined && progressBarUrl === undefined) {
+        return res.status(400).json({ error: "At least one branding field (skinUrl or progressBarUrl) must be provided" });
+      }
+
+      const hauntRef = doc(firestore, 'haunts', hauntId);
+      
+      // Check if haunt exists
+      const hauntSnap = await getDoc(hauntRef);
+      if (!hauntSnap.exists()) {
+        return res.status(404).json({ error: "Haunt not found" });
+      }
+
+      const hauntData = hauntSnap.data();
+      
+      // Verify haunt is Pro or Premium tier
+      if (hauntData.tier !== 'pro' && hauntData.tier !== 'premium') {
+        return res.status(403).json({ error: "Custom branding is only available for Pro and Premium tier haunts" });
+      }
+
+      // Prepare update data
+      const updates: any = {};
+      if (skinUrl !== undefined) updates.skinUrl = skinUrl;
+      if (progressBarUrl !== undefined) updates.progressBarUrl = progressBarUrl;
+      
+      // Update haunt document
+      await updateDoc(hauntRef, updates);
+
+      res.json({ 
+        success: true, 
+        message: "Haunt branding updated successfully",
+        updates
+      });
+      
+    } catch (error) {
+      console.error("Error updating haunt branding:", error);
+      res.status(500).json({ error: "Failed to update haunt branding" });
+    }
+  });
+
+  // Get branding assets (Uber Admin only)
+  app.get("/api/branding/assets", async (req, res) => {
+    try {
+      const brandingRef = collection(firestore, 'branding-assets');
+      const brandingSnapshot = await getDocs(brandingRef);
+      
+      const assets = {
+        skins: [] as any[],
+        progressBars: [] as any[]
+      };
+      
+      brandingSnapshot.forEach((doc) => {
+        const data = doc.data();
+        const asset = {
+          id: doc.id,
+          name: data.name,
+          url: data.url,
+          uploadedAt: data.uploadedAt
+        };
+        
+        if (data.type === 'skin') {
+          assets.skins.push(asset);
+        } else if (data.type === 'progressBar') {
+          assets.progressBars.push(asset);
+        }
+      });
+      
+      res.json(assets);
+      
+    } catch (error) {
+      console.error("Error fetching branding assets:", error);
+      res.status(500).json({ error: "Failed to fetch branding assets" });
+    }
+  });
 
   // Save leaderboard entry (haunt-specific)
   app.post("/api/leaderboard/:hauntId", async (req, res) => {
