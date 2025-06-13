@@ -28,8 +28,6 @@ interface InterstitialAdProps {
 export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAdProps) {
   const [showTransition, setShowTransition] = useState(true);
   const [adImageLoaded, setAdImageLoaded] = useState(false);
-  const [logoError, setLogoError] = useState(false);
-  const [showFallback, setShowFallback] = useState(false);
   
   // Track current ad index to ensure transition shows for each new ad
   const [lastAdIndex, setLastAdIndex] = useState(-1);
@@ -65,8 +63,6 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
     // If this is a new ad (different index), reset transition
     if (currentAdIndex !== lastAdIndex) {
       setShowTransition(true);
-      setLogoError(false);
-      setShowFallback(false);
       setLastAdIndex(currentAdIndex);
     }
   }, [gameState.currentAdIndex, gameState.ads.length, isValidAd, lastAdIndex]);
@@ -75,23 +71,15 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
   useEffect(() => {
     if (!isValidAd || !showTransition) return;
     
-    // Show fallback pumpkin after 500ms if logo hasn't loaded
-    const fallbackTimer = setTimeout(() => {
-      if (logoError || !logoSrc) {
-        setShowFallback(true);
-      }
-    }, 500);
-    
     // End transition after 1.8s (matching animation duration)
     const transitionTimer = setTimeout(() => {
       setShowTransition(false);
     }, 1800);
 
     return () => {
-      clearTimeout(fallbackTimer);
       clearTimeout(transitionTimer);
     };
-  }, [isValidAd, showTransition, logoError, logoSrc]);
+  }, [isValidAd, showTransition]);
   
   // Track ad view when component mounts - only for valid ads
   useEffect(() => {
@@ -119,23 +107,17 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
   console.log('UPDATED - Ad link:', currentAd.link);
   console.log('UPDATED - Has valid link:', hasValidLink);
 
-  // Transition Component with safe logo handling
+  // Transition Component with logo
   if (showTransition) {
     return (
       <div className="fixed inset-0 bg-black z-50 overflow-hidden flex items-center justify-center">
         <div className="relative">
-          {logoSrc && !logoError && !showFallback ? (
+          {logoSrc ? (
             <img
               src={logoSrc}
               alt="Haunt Logo"
               className="w-32 h-32 object-contain animate-logo-transition"
-              onError={() => setLogoError(true)}
-              onLoad={() => setShowFallback(false)}
             />
-          ) : showFallback || logoError || !logoSrc ? (
-            <div className="w-32 h-32 flex items-center justify-center text-6xl animate-logo-transition text-orange-500">
-              🎃
-            </div>
           ) : null}
         </div>
       </div>
