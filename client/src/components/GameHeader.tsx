@@ -1,9 +1,36 @@
 import type { GameState } from "@/lib/gameState";
+import type { HauntConfig } from "@shared/schema";
 
 interface GameHeaderProps {
   gameState: GameState;
   isGroupMode?: boolean;
   groupScore?: number;
+}
+
+// Function to get progress bar gradient based on haunt config
+function getProgressBarGradient(hauntConfig: HauntConfig | null | undefined): string {
+  // Check if haunt is eligible for custom progress bar themes (Pro/Premium only)
+  const isPremiumTier = hauntConfig?.tier === 'pro' || hauntConfig?.tier === 'premium';
+  const hasCustomTheme = isPremiumTier && hauntConfig?.progressBarTheme;
+
+  if (hasCustomTheme && hauntConfig.progressBarTheme) {
+    const themes = {
+      'crimson': 'linear-gradient(to right, #dc2626, #f87171)',
+      'blood': 'linear-gradient(to right, #991b1b, #dc2626)',
+      'electric': 'linear-gradient(to right, #3b82f6, #22d3ee)',
+      'toxic': 'linear-gradient(to right, #10b981, #84cc16)',
+      'purple': 'linear-gradient(to right, #9333ea, #a855f7)',
+      'orange': 'linear-gradient(to right, #ea580c, #fb923c)',
+      'pink': 'linear-gradient(to right, #ec4899, #fb7185)',
+      'gold': 'linear-gradient(to right, #eab308, #f59e0b)'
+    };
+    return themes[hauntConfig.progressBarTheme as keyof typeof themes] || themes.crimson;
+  }
+
+  // Default gradient for Basic tier or haunts without custom theme
+  const primaryColor = hauntConfig?.theme?.primaryColor || '#8B0000';
+  const accentColor = hauntConfig?.theme?.accentColor || '#FF6B35';
+  return `linear-gradient(to right, ${primaryColor}, ${accentColor})`;
 }
 
 export function GameHeader({ gameState, isGroupMode = false, groupScore = 0 }: GameHeaderProps) {
@@ -69,7 +96,7 @@ export function GameHeader({ gameState, isGroupMode = false, groupScore = 0 }: G
             className="h-2 rounded-full transition-all duration-300"
             style={{ 
               width: `${progress}%`,
-              background: `linear-gradient(to right, ${primaryColor}, ${accentColor})`
+              background: getProgressBarGradient(gameState.hauntConfig)
             }}
           />
         </div>
