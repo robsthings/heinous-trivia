@@ -1,0 +1,32 @@
+admin.tsx:342 Failed to load default ads: FirebaseError: Missing or insufficient permissions.
+
+react_jsx-dev-runtime.js?v=c4dba545:64 Warning: Each child in a list should have a unique "key" prop.
+
+Check the render method of `Admin`. See https://reactjs.org/link/warning-keys for more information.
+    at div
+    at Admin (https://e7e1ab62-01cc-4aba-97d3-1a8f1e8fdf98-00-27ck2q6bfkqpp.worf.replit.dev/src/pages/admin.tsx:37:21)
+    at Route (https://e7e1ab62-01cc-4aba-97d3-1a8f1e8fdf98-00-27ck2q6bfkqpp.worf.replit.d…/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=c4dba545:323:16)
+    at Switch (https://e7e1ab62-01cc-4aba-97d3-1a8f1e8fdf98-00-27ck2q6bfkqpp.worf.replit.d…/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=c4dba545:379:17)
+    at Router
+    at Provider (https://e7e1ab62-01cc-4aba-97d3-1a8f1e8fdf98-00-27ck2q6bfkqpp.worf.replit.d…unner/workspace/node_modules/.vite/deps/chunk-6JCLIPLF.js?v=c4dba545:32:15)
+    at TooltipProvider (https://e7e1ab62-01cc-4aba-97d3-1a8f1e8fdf98-00-27ck2q6bfkqpp.worf.replit.d…rkspace/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=c4dba545:57:5)
+    at QueryClientProvider (https://e7e1ab62-01cc-4aba-97d3-1a8f1e8fdf98-00-27ck2q6bfkqpp.worf.replit.d…rkspace/node_modules/.vite/deps/@tanstack_react-query.js?v=c4dba545:2805:3)
+    at App
+api/haunt/headquarters/branding:1 
+ Failed to load resource: the server responded with a status of 400 (Bad Request)
+admin.tsx:739 Failed to assign branding: Error: At least one branding field (skinUrl or progressBarUrl) must be provided
+    at assignBrandingToHaunt (admin.tsx:721:15)
+api/haunt/headquarters/branding:1 
+ Failed to load resource: the server responded with a status of 400 (Bad Request)
+admin.tsx:739 Failed to assign branding: Error: At least one branding field (skinUrl or progressBarUrl) must be provided
+    at assignBrandingToHaunt (admin.tsx:721:15)
+api/haunt/headquarters/branding:1 
+ Failed to load resource: the server responded with a status of 400 (Bad Request)
+admin.tsx:739 Failed to assign branding: Error: At least one branding field (skinUrl or progressBarUrl) must be provided
+    at assignBrandingToHaunt (admin.tsx:721:15)
+api/branding/assets/undefined:1 
+ Failed to load resource: the server responded with a status of 500 (Internal Server Error)
+admin.tsx:2116 Failed to delete asset: Error: Failed to delete asset
+    at onClick (admin.tsx:2106:51)
+﻿
+

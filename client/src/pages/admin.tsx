@@ -704,8 +704,13 @@ export default function Admin() {
       setIsLoading(true);
 
       const updates: any = {};
-      if (skinUrl !== undefined) updates.skinUrl = skinUrl;
-      if (progressBarUrl !== undefined) updates.progressBarUrl = progressBarUrl;
+      if (skinUrl !== undefined && skinUrl !== '') updates.skinUrl = skinUrl;
+      if (progressBarUrl !== undefined && progressBarUrl !== '') updates.progressBarUrl = progressBarUrl;
+      
+      // Ensure at least one field is being updated
+      if (Object.keys(updates).length === 0) {
+        throw new Error('At least one branding field must be provided');
+      }
 
       const response = await fetch(`/api/haunt/${hauntId}/branding`, {
         method: 'PATCH',
