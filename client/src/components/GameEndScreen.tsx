@@ -18,6 +18,42 @@ export function GameEndScreen({
   playerName: savedPlayerName
 }: GameEndScreenProps) {
   const [playerName, setPlayerName] = useState("");
+  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
+  const [isLoadingLeaderboard, setIsLoadingLeaderboard] = useState(true);
+  const [playerRank, setPlayerRank] = useState<number | null>(null);
+
+  // Fetch leaderboard data when component mounts
+  useEffect(() => {
+    const fetchLeaderboard = async () => {
+      if (!gameState.showEndScreen || !gameState.currentHaunt) return;
+      
+      try {
+        setIsLoadingLeaderboard(true);
+        const response = await fetch(`/api/leaderboard?haunt=${gameState.currentHaunt}`);
+        
+        if (response.ok) {
+          const data: LeaderboardEntry[] = await response.json();
+          setLeaderboard(data);
+          
+          // Calculate player's rank if they have a saved name and score
+          if (savedPlayerName) {
+            const playerPosition = data.findIndex(entry => 
+              entry.name === savedPlayerName && entry.score === gameState.score
+            );
+            if (playerPosition !== -1) {
+              setPlayerRank(playerPosition + 1);
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Failed to fetch leaderboard:', error);
+      } finally {
+        setIsLoadingLeaderboard(false);
+      }
+    };
+
+    fetchLeaderboard();
+  }, [gameState.showEndScreen, gameState.currentHaunt, savedPlayerName, gameState.score]);
 
   if (!gameState.showEndScreen) {
     return null;
@@ -69,6 +105,41 @@ export function GameEndScreen({
               <span>{gameState.correctAnswers}</span> of{" "}
               <span>{gameState.questionsAnswered}</span> correct
             </div>
+            {playerRank && (
+              <div className="text-orange-400 text-sm font-bold mt-2">
+                Rank #{playerRank}
+              </div>
+            )}
+          </div>
+
+          {/* Leaderboard Summary */}
+          <div className="bg-gray-800 rounded-lg p-4 mb-4 sm:mb-6">
+            <h3 className="text-orange-400 font-bold text-sm mb-3">Top Players</h3>
+            {isLoadingLeaderboard ? (
+              <div className="text-gray-400 text-xs text-center">Loading leaderboard...</div>
+            ) : leaderboard.length > 0 ? (
+              <div className="space-y-2">
+                {leaderboard.slice(0, 5).map((entry, index) => (
+                  <div 
+                    key={`${entry.name}-${entry.score}-${index}`}
+                    className={`flex justify-between items-center text-xs ${
+                      savedPlayerName && entry.name === savedPlayerName && entry.score === gameState.score
+                        ? 'bg-orange-900/30 rounded px-2 py-1 border-l-2 border-orange-500'
+                        : ''
+                    }`}
+                  >
+                    <span className="text-white">
+                      #{index + 1} {entry.name}
+                    </span>
+                    <span className="text-orange-400 font-bold">
+                      {entry.score}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-gray-400 text-xs text-center">No scores yet</div>
+            )}
           </div>
 
           {savedPlayerName ? (
