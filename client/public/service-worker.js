@@ -36,9 +36,25 @@ self.addEventListener('fetch', event => {
     return;
   }
 
+  // Skip Firebase Storage URLs to prevent CORS caching issues
+  if (event.request.url.includes('firebasestorage.googleapis.com') ||
+      event.request.url.includes('storage.googleapis.com')) {
+    event.respondWith(fetch(event.request));
+    return;
+  }
+
   event.respondWith(
-    fetch(event.request).catch(() =>
-      caches.match(event.request)
-    )
+    fetch(event.request)
+      .then(response => {
+        // Only cache successful responses
+        if (response.ok) {
+          return response;
+        }
+        // For failed responses, don't cache and still return the response
+        return response;
+      })
+      .catch(() =>
+        caches.match(event.request)
+      )
   );
 });
