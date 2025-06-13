@@ -645,30 +645,49 @@ export default function Admin() {
     try {
       setIsLoading(true);
       
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('uploadType', type);
+      // Upload directly to Firebase Storage
+      const { ref, uploadBytes, getDownloadURL } = await import('firebase/storage');
+      const { storage } = await import('@/lib/firebase');
       
-      const response = await fetch('/api/upload/branding', {
+      const timestamp = Date.now();
+      const filename = `branding-${type}-${timestamp}-${file.name}`;
+      const storageRef = ref(storage, `branding/${type}s/${filename}`);
+      
+      // Upload file to Firebase Storage
+      await uploadBytes(storageRef, file);
+      const downloadURL = await getDownloadURL(storageRef);
+      
+      // Save metadata to Firestore via API
+      const brandingData = {
+        name: file.name.replace(/\.[^/.]+$/, ""),
+        type: type,
+        url: downloadURL,
+        filename: filename,
+        uploadedAt: new Date().toISOString(),
+        uploadedBy: 'uber-admin'
+      };
+
+      const response = await fetch('/api/branding/metadata', {
         method: 'POST',
-        body: formData,
         headers: {
+          'Content-Type': 'application/json',
           'Authorization': `Bearer ${auth.currentUser?.uid || 'uber-admin'}`
-        }
+        },
+        body: JSON.stringify({ 
+          assetId: `${type}-${timestamp}`,
+          assetData: brandingData 
+        })
       });
 
       if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Upload failed');
+        console.warn('Failed to save asset metadata, but file uploaded successfully');
       }
-
-      const result = await response.json();
       
       // Add to local state
       const assetData = {
-        id: `${type}-${Date.now()}`,
-        name: file.name.replace(/\.[^/.]+$/, ""), // Remove extension
-        url: result.imageUrl
+        id: `${type}-${timestamp}`,
+        name: file.name.replace(/\.[^/.]+$/, ""),
+        url: downloadURL
       };
 
       if (type === 'skin') {
@@ -682,7 +701,7 @@ export default function Admin() {
         description: `${type === 'skin' ? 'Background skin' : 'Progress bar'} uploaded successfully`,
       });
 
-      return result.imageUrl;
+      return downloadURL;
     } catch (error) {
       console.error('Upload failed:', error);
       toast({

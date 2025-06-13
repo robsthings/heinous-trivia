@@ -197,6 +197,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Save branding metadata (Uber Admin only)
+  app.post("/api/branding/metadata", async (req, res) => {
+    try {
+      const { assetId, assetData } = req.body;
+      
+      if (!assetId || !assetData) {
+        return res.status(400).json({ error: "Missing assetId or assetData" });
+      }
+
+      await FirebaseService.saveBrandingAsset(assetId, assetData);
+      res.json({ success: true, message: "Asset metadata saved successfully" });
+    } catch (error) {
+      console.error("Error saving branding metadata:", error);
+      res.status(500).json({ error: "Failed to save branding metadata" });
+    }
+  });
+
   // Save leaderboard entry (haunt-specific)
   app.post("/api/leaderboard/:hauntId", async (req, res) => {
     try {
