@@ -209,7 +209,7 @@ export default function UberAdmin() {
         {/* Main Tabs */}
         <Tabs defaultValue="analytics" className="w-full">
           <div className="flex justify-center mb-6">
-            <TabsList className="grid w-full max-w-2xl grid-cols-3 bg-slate-800 border-slate-700">
+            <TabsList className="grid w-full max-w-2xl grid-cols-2 bg-slate-800 border-slate-700">
               <TabsTrigger value="analytics" className="text-white data-[state=active]:bg-purple-600">
                 <TrendingUp className="w-4 h-4 mr-2" />
                 Analytics Dashboard
@@ -218,10 +218,7 @@ export default function UberAdmin() {
                 <Settings className="w-4 h-4 mr-2" />
                 Haunt Management
               </TabsTrigger>
-              <TabsTrigger value="branding" className="text-white data-[state=active]:bg-purple-600">
-                <Palette className="w-4 h-4 mr-2" />
-                Custom Branding
-              </TabsTrigger>
+
             </TabsList>
           </div>
 
@@ -514,151 +511,7 @@ export default function UberAdmin() {
             </div>
           </TabsContent>
 
-          {/* Custom Branding Tab - Uber Admin Controlled */}
-          <TabsContent value="branding" className="mt-6">
-            <div className="max-w-6xl mx-auto">
-              <Card className="bg-slate-800 border-slate-700 mb-6">
-                <CardHeader>
-                  <CardTitle className="text-white flex items-center gap-2">
-                    <Palette className="w-5 h-5" />
-                    Custom Branding Management
-                  </CardTitle>
-                  <p className="text-gray-400">
-                    Centrally manage custom background skins and progress bar animations for Pro and Premium haunts. 
-                    Upload and assign custom branding assets that will be applied automatically during gameplay.
-                  </p>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    
-                    {/* Background Skins Section */}
-                    <div className="space-y-4">
-                      <h3 className="text-lg font-semibold text-white">Background Skins</h3>
-                      <div className="space-y-3">
-                        <div className="p-4 bg-slate-700 rounded-lg">
-                          <Label className="text-white text-sm font-medium mb-2 block">Upload New Background Skin</Label>
-                          <p className="text-gray-400 text-xs mb-3">Recommended: 1920x1080 JPG/PNG, or animated GIF</p>
-                          <Input
-                            type="file"
-                            accept="image/*"
-                            className="bg-slate-600 border-slate-500 text-white file:bg-purple-600 file:text-white file:border-0 file:rounded-md file:px-3 file:py-2 file:mr-3 file:cursor-pointer"
-                          />
-                          <Button className="mt-3 bg-purple-600 hover:bg-purple-700">
-                            <Upload className="w-4 h-4 mr-2" />
-                            Upload Skin
-                          </Button>
-                        </div>
-                        
-                        <div className="p-4 bg-slate-700 rounded-lg">
-                          <h4 className="text-white font-medium mb-3">Available Skins</h4>
-                          <div className="space-y-2">
-                            <div className="flex items-center justify-between p-3 bg-slate-600 rounded">
-                              <span className="text-white">Default Horror Theme</span>
-                              <Badge variant="secondary">Built-in</Badge>
-                            </div>
-                            <div className="flex items-center justify-between p-3 bg-slate-600 rounded">
-                              <span className="text-white">Haunted Forest</span>
-                              <Button size="sm" variant="outline">Assign to Haunt</Button>
-                            </div>
-                            <div className="flex items-center justify-between p-3 bg-slate-600 rounded">
-                              <span className="text-white">Gothic Cathedral</span>
-                              <Button size="sm" variant="outline">Assign to Haunt</Button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
 
-                    {/* Progress Bar Animations Section */}
-                    <div className="space-y-4">
-                      <h3 className="text-lg font-semibold text-white">Progress Bar Animations</h3>
-                      <div className="space-y-3">
-                        <div className="p-4 bg-slate-700 rounded-lg">
-                          <Label className="text-white text-sm font-medium mb-2 block">Upload New Progress Bar</Label>
-                          <p className="text-gray-400 text-xs mb-3">Recommended: Animated GIF or SVG, 400x20 pixels</p>
-                          <Input
-                            type="file"
-                            accept="image/*"
-                            className="bg-slate-600 border-slate-500 text-white file:bg-purple-600 file:text-white file:border-0 file:rounded-md file:px-3 file:py-2 file:mr-3 file:cursor-pointer"
-                          />
-                          <Button className="mt-3 bg-purple-600 hover:bg-purple-700">
-                            <Upload className="w-4 h-4 mr-2" />
-                            Upload Animation
-                          </Button>
-                        </div>
-                        
-                        <div className="p-4 bg-slate-700 rounded-lg">
-                          <h4 className="text-white font-medium mb-3">Available Animations</h4>
-                          <div className="space-y-2">
-                            <div className="flex items-center justify-between p-3 bg-slate-600 rounded">
-                              <div className="flex items-center gap-3">
-                                <span className="text-white">Pulsing Blood</span>
-                                <div className="w-16 h-2 bg-gradient-to-r from-red-600 to-red-400 rounded animate-pulse"></div>
-                              </div>
-                              <Button size="sm" variant="outline">Assign</Button>
-                            </div>
-                            <div className="flex items-center justify-between p-3 bg-slate-600 rounded">
-                              <div className="flex items-center gap-3">
-                                <span className="text-white">Flickering Flames</span>
-                                <div className="w-16 h-2 bg-gradient-to-r from-orange-600 to-yellow-400 rounded animate-pulse"></div>
-                              </div>
-                              <Button size="sm" variant="outline">Assign</Button>
-                            </div>
-                            <div className="flex items-center justify-between p-3 bg-slate-600 rounded">
-                              <div className="flex items-center gap-3">
-                                <span className="text-white">Ghostly Mist</span>
-                                <div className="w-16 h-2 bg-gradient-to-r from-gray-400 to-white rounded animate-pulse"></div>
-                              </div>
-                              <Button size="sm" variant="outline">Assign</Button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Haunt Assignment Section */}
-                  <div className="mt-8 p-6 bg-slate-700 rounded-lg">
-                    <h3 className="text-lg font-semibold text-white mb-4">Haunt Assignment</h3>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <Label className="text-white text-sm font-medium mb-2 block">Select Haunt</Label>
-                        <Select>
-                          <SelectTrigger className="bg-slate-600 border-slate-500 text-white">
-                            <SelectValue placeholder="Choose a Pro/Premium haunt" />
-                          </SelectTrigger>
-                          <SelectContent className="bg-slate-600 border-slate-500">
-                            <SelectItem value="nightmare-manor" className="text-white">Nightmare Manor (Premium)</SelectItem>
-                            <SelectItem value="terror-woods" className="text-white">Terror Woods (Pro)</SelectItem>
-                            <SelectItem value="haunted-asylum" className="text-white">Haunted Asylum (Premium)</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div>
-                        <Label className="text-white text-sm font-medium mb-2 block">Action</Label>
-                        <div className="flex gap-2">
-                          <Button className="bg-green-600 hover:bg-green-700">
-                            Apply Custom Branding
-                          </Button>
-                          <Button variant="outline" className="border-red-500 text-red-400 hover:bg-red-500 hover:text-white">
-                            Remove Branding
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="mt-4 p-4 bg-slate-800 rounded border border-purple-500">
-                      <p className="text-purple-300 text-sm">
-                        <strong>Note:</strong> Custom branding is exclusive to Pro and Premium tier haunts. 
-                        Background skins and progress bar animations will automatically apply during gameplay 
-                        for enhanced visitor experience and brand reinforcement.
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </TabsContent>
         </Tabs>
       </div>
     </div>

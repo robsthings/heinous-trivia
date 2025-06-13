@@ -786,7 +786,7 @@ export default function Admin() {
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="management" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-5 bg-gray-800">
+              <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-6 bg-gray-800">
                 <TabsTrigger value="management" className="text-white data-[state=active]:bg-red-600 text-xs md:text-sm">
                   Management
                 </TabsTrigger>
@@ -801,6 +801,9 @@ export default function Admin() {
                 </TabsTrigger>
                 <TabsTrigger value="default-ads" className="text-white data-[state=active]:bg-red-600 text-xs md:text-sm">
                   📢 Default Ads
+                </TabsTrigger>
+                <TabsTrigger value="branding" className="text-white data-[state=active]:bg-red-600 text-xs md:text-sm">
+                  🎨 Branding
                 </TabsTrigger>
               </TabsList>
 
@@ -1830,6 +1833,147 @@ export default function Admin() {
                         <li>• These ads will appear in all games where the haunt owner hasn't added custom ads</li>
                         <li>• You can upload multiple default ads that will rotate randomly</li>
                       </ul>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              {/* Custom Branding Tab - Uber Admin Only */}
+              <TabsContent value="branding" className="space-y-6">
+                <Card className="bg-gray-900/50 border-gray-700">
+                  <CardHeader>
+                    <CardTitle className="text-red-400 flex items-center gap-2">
+                      🎨 Custom Branding Management
+                    </CardTitle>
+                    <p className="text-gray-400 text-sm">
+                      Centrally manage custom background skins and progress bar animations for Pro and Premium haunts. 
+                      Upload and assign custom branding assets that will be applied automatically during gameplay.
+                    </p>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                      
+                      {/* Background Skins Section */}
+                      <div className="space-y-4">
+                        <h3 className="text-lg font-semibold text-white">Background Skins</h3>
+                        <div className="space-y-3">
+                          <div className="p-4 bg-gray-800 rounded-lg">
+                            <Label className="text-white text-sm font-medium mb-2 block">Upload New Background Skin</Label>
+                            <p className="text-gray-400 text-xs mb-3">Recommended: 1920x1080 JPG/PNG, or animated GIF</p>
+                            <Input
+                              type="file"
+                              accept="image/*"
+                              className="bg-gray-700 border-gray-600 text-white file:bg-red-600 file:text-white file:border-0 file:rounded-md file:px-3 file:py-2 file:mr-3 file:cursor-pointer"
+                            />
+                            <Button className="mt-3 bg-red-600 hover:bg-red-700">
+                              📤 Upload Skin
+                            </Button>
+                          </div>
+                          
+                          <div className="p-4 bg-gray-800 rounded-lg">
+                            <h4 className="text-white font-medium mb-3">Available Skins</h4>
+                            <div className="space-y-2">
+                              <div className="flex items-center justify-between p-3 bg-gray-700 rounded">
+                                <span className="text-white">Default Horror Theme</span>
+                                <Badge variant="secondary">Built-in</Badge>
+                              </div>
+                              <div className="flex items-center justify-between p-3 bg-gray-700 rounded">
+                                <span className="text-white">Haunted Forest</span>
+                                <Button size="sm" variant="outline">Assign to Haunt</Button>
+                              </div>
+                              <div className="flex items-center justify-between p-3 bg-gray-700 rounded">
+                                <span className="text-white">Gothic Cathedral</span>
+                                <Button size="sm" variant="outline">Assign to Haunt</Button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Progress Bar Animations Section */}
+                      <div className="space-y-4">
+                        <h3 className="text-lg font-semibold text-white">Progress Bar Animations</h3>
+                        <div className="space-y-3">
+                          <div className="p-4 bg-gray-800 rounded-lg">
+                            <Label className="text-white text-sm font-medium mb-2 block">Upload New Progress Bar</Label>
+                            <p className="text-gray-400 text-xs mb-3">Recommended: Animated GIF or SVG, 400x20 pixels</p>
+                            <Input
+                              type="file"
+                              accept="image/*"
+                              className="bg-gray-700 border-gray-600 text-white file:bg-red-600 file:text-white file:border-0 file:rounded-md file:px-3 file:py-2 file:mr-3 file:cursor-pointer"
+                            />
+                            <Button className="mt-3 bg-red-600 hover:bg-red-700">
+                              📤 Upload Animation
+                            </Button>
+                          </div>
+                          
+                          <div className="p-4 bg-gray-800 rounded-lg">
+                            <h4 className="text-white font-medium mb-3">Available Animations</h4>
+                            <div className="space-y-2">
+                              <div className="flex items-center justify-between p-3 bg-gray-700 rounded">
+                                <div className="flex items-center gap-3">
+                                  <span className="text-white">Pulsing Blood</span>
+                                  <div className="w-16 h-2 bg-gradient-to-r from-red-600 to-red-400 rounded animate-pulse"></div>
+                                </div>
+                                <Button size="sm" variant="outline">Assign</Button>
+                              </div>
+                              <div className="flex items-center justify-between p-3 bg-gray-700 rounded">
+                                <div className="flex items-center gap-3">
+                                  <span className="text-white">Flickering Flames</span>
+                                  <div className="w-16 h-2 bg-gradient-to-r from-orange-600 to-yellow-400 rounded animate-pulse"></div>
+                                </div>
+                                <Button size="sm" variant="outline">Assign</Button>
+                              </div>
+                              <div className="flex items-center justify-between p-3 bg-gray-700 rounded">
+                                <div className="flex items-center gap-3">
+                                  <span className="text-white">Ghostly Mist</span>
+                                  <div className="w-16 h-2 bg-gradient-to-r from-gray-400 to-white rounded animate-pulse"></div>
+                                </div>
+                                <Button size="sm" variant="outline">Assign</Button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Haunt Assignment Section */}
+                    <div className="p-6 bg-gray-800 rounded-lg">
+                      <h3 className="text-lg font-semibold text-white mb-4">Haunt Assignment</h3>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <Label className="text-white text-sm font-medium mb-2 block">Select Haunt</Label>
+                          <Select>
+                            <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
+                              <SelectValue placeholder="Choose a Pro/Premium haunt" />
+                            </SelectTrigger>
+                            <SelectContent className="bg-gray-700 border-gray-600">
+                              <SelectItem value="nightmare-manor" className="text-white">Nightmare Manor (Premium)</SelectItem>
+                              <SelectItem value="terror-woods" className="text-white">Terror Woods (Pro)</SelectItem>
+                              <SelectItem value="haunted-asylum" className="text-white">Haunted Asylum (Premium)</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div>
+                          <Label className="text-white text-sm font-medium mb-2 block">Action</Label>
+                          <div className="flex gap-2">
+                            <Button className="bg-green-600 hover:bg-green-700">
+                              Apply Custom Branding
+                            </Button>
+                            <Button variant="outline" className="border-red-500 text-red-400 hover:bg-red-500 hover:text-white">
+                              Remove Branding
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div className="mt-4 p-4 bg-red-900/20 border border-red-600 rounded">
+                        <p className="text-red-300 text-sm">
+                          <strong>🔒 UBER ADMIN ONLY:</strong> Custom branding is exclusive to Pro and Premium tier haunts. 
+                          Background skins and progress bar animations will automatically apply during gameplay 
+                          for enhanced visitor experience and brand reinforcement.
+                        </p>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
