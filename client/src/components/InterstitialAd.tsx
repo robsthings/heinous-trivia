@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import type { GameState } from "@/lib/gameState";
 
 // Consolidated ad tracking utility
@@ -26,17 +26,40 @@ interface InterstitialAdProps {
 }
 
 export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAdProps) {
+  const [showTransition, setShowTransition] = useState(true);
+  const [adImageLoaded, setAdImageLoaded] = useState(false);
+  
   if (!gameState.showAd || gameState.ads.length === 0) {
     return null;
   }
 
   const currentAd = gameState.ads[gameState.currentAdIndex % gameState.ads.length];
   const adIndex = gameState.currentAdIndex % gameState.ads.length;
-  
+  const hauntLogoPath = `/haunts/${gameState.currentHaunt}/logo`;
 
+  // Preload the ad image
+  useEffect(() => {
+    const imageSrc = currentAd.image || currentAd.imageUrl;
+    if (imageSrc) {
+      const img = new Image();
+      img.onload = () => setAdImageLoaded(true);
+      img.src = imageSrc as string;
+    } else {
+      setAdImageLoaded(true); // No image to load
+    }
+  }, [currentAd.image, currentAd.imageUrl]);
+
+  // Handle transition timing
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowTransition(false);
+    }, 450); // 450ms transition duration
+
+    return () => clearTimeout(timer);
+  }, []);
   
   // Track ad view when component mounts
-  React.useEffect(() => {
+  useEffect(() => {
     trackAdMetric(gameState.currentHaunt, adIndex, 'views');
   }, [gameState.currentHaunt, adIndex]);
 
@@ -53,6 +76,31 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
   // Debug the link validation - UPDATED v2
   console.log('UPDATED - Ad link:', currentAd.link);
   console.log('UPDATED - Has valid link:', hasValidLink);
+
+  // Transition Component
+  if (showTransition) {
+    return (
+      <div className="fixed inset-0 bg-black z-50 overflow-hidden flex items-center justify-center">
+        <div className="relative">
+          <img
+            src={gameState.hauntConfig?.logoPath || hauntLogoPath}
+            alt="Haunt Logo"
+            className="w-32 h-32 object-contain animate-logo-transition"
+            onError={(e) => {
+              // Fallback to text if logo fails to load
+              const target = e.target as HTMLImageElement;
+              target.style.display = 'none';
+              const fallback = document.createElement('div');
+              fallback.className = 'w-32 h-32 flex items-center justify-center text-4xl animate-logo-transition';
+              fallback.textContent = '🎃';
+              target.parentNode?.appendChild(fallback);
+            }}
+          />
+        </div>
+
+      </div>
+    );
+  }
 
   return (
     <div className="fixed inset-0 bg-black z-50 overflow-hidden">

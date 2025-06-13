@@ -43,6 +43,26 @@
   --crimson: 348 83% 47%; /* #DC143C */
 }
 
+/* Logo transition animation for ads */
+@keyframes logo-transition {
+  0% {
+    transform: scale(0.5) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5) rotate(180deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.animate-logo-transition {
+  animation: logo-transition 450ms ease-in-out forwards;
+}
+
 .dark {
   --background: 240 10% 3.9%;
   --foreground: 0 0% 98%;
