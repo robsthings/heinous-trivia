@@ -67,7 +67,14 @@ export function CustomProgressBar({ progress, hauntConfig, className = "" }: Cus
     console.log('🎨 NEW INLINE STYLES - Applying theme:', hauntConfig.progressBarTheme, themeData);
     
     return (
-      <div className={`relative w-full h-4 bg-gray-800 rounded-full overflow-hidden ${className}`}>
+      <div 
+        className={`relative w-full h-4 rounded-full overflow-hidden ${className}`}
+        style={{
+          backgroundColor: '#1f2937',
+          border: '2px solid #10b981',
+          boxShadow: '0 0 10px rgba(16, 185, 129, 0.5)'
+        }}
+      >
         {/* Custom themed progress bar */}
         <div 
           className="h-full transition-all duration-300 ease-out rounded-full"
