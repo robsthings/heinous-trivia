@@ -197,17 +197,13 @@ export class GameManager {
   static async getLeaderboard(haunt?: string): Promise<LeaderboardEntry[]> {
     try {
       const url = haunt ? `/api/leaderboard/${haunt}` : '/api/leaderboard';
-      console.log('Fetching leaderboard from:', url);
       const response = await fetch(url);
       
       if (!response.ok) {
-        console.error('Leaderboard fetch failed with status:', response.status);
         throw new Error('Failed to fetch leaderboard');
       }
       
       const dbEntries = await response.json();
-      console.log('Raw leaderboard data from API:', dbEntries);
-      console.log('Data type:', typeof dbEntries, 'Length:', Array.isArray(dbEntries) ? dbEntries.length : 'not array');
       
       // Transform database entries to match frontend format
       const transformed = dbEntries.map((entry: any) => ({
@@ -218,10 +214,8 @@ export class GameManager {
         questionsAnswered: entry.questionsAnswered,
         correctAnswers: entry.correctAnswers,
       }));
-      console.log('Transformed leaderboard data:', transformed);
       return transformed;
     } catch (error) {
-      console.error('Failed to fetch leaderboard from database:', error);
       // Fallback to localStorage
       return this.getLocalLeaderboard();
     }
