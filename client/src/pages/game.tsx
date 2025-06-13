@@ -9,6 +9,7 @@ import { SpookyLoader } from "@/components/SpookyLoader";
 import { MiniSpookyLoader } from "@/components/MiniSpookyLoader";
 import { ConfigLoader, getHauntFromURL } from "@/lib/configLoader";
 import { GameManager, type GameState } from "@/lib/gameState";
+import type { HauntConfig } from "@shared/schema";
 import { AnalyticsTracker } from "@/lib/analytics";
 import { updateMetaThemeColor } from "@/lib/manifestGenerator";
 import { firestore } from "@/lib/firebase";
@@ -59,6 +60,7 @@ export default function Game() {
   const [lastSeenQuestionIndex, setLastSeenQuestionIndex] = useState<number | null>(null);
   const [countdown, setCountdown] = useState(0);
   const [groupScore, setGroupScore] = useState(0);
+  const [loadedHauntConfig, setLoadedHauntConfig] = useState<HauntConfig | null>(null);
   const { toast } = useToast();
 
   // CUSTOM SKIN & PROGRESS BAR LOGIC
@@ -112,6 +114,9 @@ export default function Game() {
           setIsLoading(false);
           return;
         }
+
+        // Set the loaded config immediately for SpookyLoader to use
+        setLoadedHauntConfig(hauntConfig);
 
         // Load trivia questions (includes fallback to starter pack)
         const questions = await ConfigLoader.loadTriviaQuestions(haunt);
@@ -401,7 +406,7 @@ export default function Game() {
   };
 
   if (isLoading) {
-    return <SpookyLoader message="Loading your horror trivia experience" showProgress={true} hauntConfig={gameState.hauntConfig || undefined} />;
+    return <SpookyLoader message="Loading your horror trivia experience" showProgress={true} hauntConfig={loadedHauntConfig || undefined} />;
   }
 
   if (error) {
