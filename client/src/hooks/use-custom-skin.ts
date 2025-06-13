@@ -11,21 +11,25 @@ export function useCustomSkin(hauntConfig: HauntConfig | null | undefined) {
     const isPremiumTier = hauntConfig.tier === 'pro' || hauntConfig.tier === 'premium';
     
     if (isPremiumTier && hauntConfig.skinUrl) {
+      console.log('Applying custom skin:', hauntConfig.skinUrl);
       // Apply custom background skin to main game container
       const gameContainer = document.querySelector('.game-container') as HTMLElement;
       if (gameContainer) {
-        gameContainer.style.backgroundImage = `url(${hauntConfig.skinUrl})`;
-        gameContainer.style.backgroundSize = 'cover';
-        gameContainer.style.backgroundPosition = 'center';
-        gameContainer.style.backgroundRepeat = 'no-repeat';
-        gameContainer.style.backgroundAttachment = 'fixed';
+        console.log('Found game container, applying styles');
+        gameContainer.style.setProperty('background-image', `url(${hauntConfig.skinUrl})`, 'important');
+        gameContainer.style.setProperty('background-size', 'cover', 'important');
+        gameContainer.style.setProperty('background-position', 'center', 'important');
+        gameContainer.style.setProperty('background-repeat', 'no-repeat', 'important');
+        gameContainer.style.setProperty('background-attachment', 'fixed', 'important');
+        console.log('Applied styles:', gameContainer.style.backgroundImage);
       } else {
+        console.log('Game container not found, applying to body');
         // Fallback to body if container not found
-        document.body.style.backgroundImage = `url(${hauntConfig.skinUrl})`;
-        document.body.style.backgroundSize = 'cover';
-        document.body.style.backgroundPosition = 'center';
-        document.body.style.backgroundRepeat = 'no-repeat';
-        document.body.style.backgroundAttachment = 'fixed';
+        document.body.style.setProperty('background-image', `url(${hauntConfig.skinUrl})`, 'important');
+        document.body.style.setProperty('background-size', 'cover', 'important');
+        document.body.style.setProperty('background-position', 'center', 'important');
+        document.body.style.setProperty('background-repeat', 'no-repeat', 'important');
+        document.body.style.setProperty('background-attachment', 'fixed', 'important');
       }
     } else {
       // Remove custom skin and use default background
