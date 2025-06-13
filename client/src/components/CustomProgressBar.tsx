@@ -1,6 +1,5 @@
 import type { HauntConfig } from "@shared/schema";
 
-// CUSTOM SKIN & PROGRESS BAR LOGIC
 interface CustomProgressBarProps {
   progress: number; // 0-100
   hauntConfig: HauntConfig | null | undefined;
@@ -8,32 +7,6 @@ interface CustomProgressBarProps {
 }
 
 export function CustomProgressBar({ progress, hauntConfig, className = "" }: CustomProgressBarProps) {
-  // Check if haunt is eligible for custom progress bar (Pro/Premium only)
-  const isPremiumTier = hauntConfig?.tier === 'pro' || hauntConfig?.tier === 'premium';
-  const hasCustomTheme = isPremiumTier && hauntConfig?.progressBarTheme;
-
-  // Debug logging to see what's being received
-  console.log('=== CustomProgressBar DEBUG ===');
-  console.log('hasConfig:', !!hauntConfig);
-  console.log('hauntId:', hauntConfig?.id);
-  console.log('tier:', hauntConfig?.tier);
-  console.log('progressBarTheme:', hauntConfig?.progressBarTheme);
-  console.log('isPremiumTier:', isPremiumTier);
-  console.log('hasCustomTheme:', hasCustomTheme);
-  console.log('progress:', progress);
-  console.log('================================');
-  
-  // Force toxic theme rendering for testing
-  if (hauntConfig?.progressBarTheme === 'toxic' && isPremiumTier) {
-    console.log('🟢 TOXIC GREEN progress bar should render!');
-    const themeColors = getProgressBarColors('toxic');
-    console.log('🎨 Theme colors:', themeColors);
-  }
-  
-
-
-
-
   // Define progress bar color themes with hard-coded CSS classes for reliability
   const getProgressBarColors = (theme: string) => {
     const themes = {
@@ -64,6 +37,21 @@ export function CustomProgressBar({ progress, hauntConfig, className = "" }: Cus
     };
     return themes[theme as keyof typeof themes] || themes.crimson;
   };
+
+  // Check if haunt is eligible for custom progress bar (Pro/Premium only)
+  const isPremiumTier = hauntConfig?.tier === 'pro' || hauntConfig?.tier === 'premium';
+  const hasCustomTheme = isPremiumTier && hauntConfig?.progressBarTheme;
+
+  // Debug logging to see what's being received
+  console.log('=== CustomProgressBar DEBUG ===');
+  console.log('hasConfig:', !!hauntConfig);
+  console.log('hauntId:', hauntConfig?.id);
+  console.log('tier:', hauntConfig?.tier);
+  console.log('progressBarTheme:', hauntConfig?.progressBarTheme);
+  console.log('isPremiumTier:', isPremiumTier);
+  console.log('hasCustomTheme:', hasCustomTheme);
+  console.log('progress:', progress);
+  console.log('================================');
 
   // Apply custom theme for Pro/Premium haunts with progressBarTheme
   if (hasCustomTheme && hauntConfig.progressBarTheme) {
