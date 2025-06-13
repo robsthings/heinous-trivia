@@ -71,42 +71,45 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   });
 
-  // Upload branding assets (Uber Admin only) - Using existing Firebase service
-  app.post("/api/upload/branding", upload.single('file'), async (req, res) => {
+  // Upload branding assets via base64 (Uber Admin only)
+  app.post("/api/branding/upload", async (req, res) => {
     try {
-      if (!req.file) {
-        return res.status(400).json({ error: "No file uploaded" });
+      const { fileName, fileType, fileData, uploadType } = req.body;
+      
+      if (!fileName || !fileType || !fileData || !uploadType) {
+        return res.status(400).json({ error: "Missing required fields" });
       }
 
-      const { uploadType } = req.body; // 'skin' or 'progressBar'
-      
-      if (!uploadType || !['skin', 'progressBar'].includes(uploadType)) {
+      if (!['skin', 'progressBar'].includes(uploadType)) {
         return res.status(400).json({ error: "Invalid upload type. Must be 'skin' or 'progressBar'" });
       }
 
-      const file = req.file;
       const timestamp = Date.now();
-      const filename = `branding-${uploadType}-${timestamp}-${file.originalname}`;
+      const filename = `branding-${uploadType}-${timestamp}-${fileName}`;
       
-      // Use existing FirebaseService approach
-      const uploadResult = await FirebaseService.uploadFile(file.buffer, filename, `branding/${uploadType}s/`);
+      // Convert base64 to buffer
+      const buffer = Buffer.from(fileData, 'base64');
       
-      // Save metadata to Firestore using FirebaseService
+      // Generate a data URL for immediate use (fallback approach)
+      const dataUrl = `data:${fileType};base64,${fileData}`;
+      
+      // Save metadata to Firestore
+      const assetId = `${uploadType}-${timestamp}`;
       const brandingData = {
-        name: file.originalname.replace(/\.[^/.]+$/, ""),
+        name: fileName.replace(/\.[^/.]+$/, ""),
         type: uploadType,
-        url: uploadResult.downloadURL,
+        url: dataUrl, // Using data URL as fallback
         filename: filename,
         uploadedAt: new Date().toISOString(),
         uploadedBy: 'uber-admin'
       };
 
-      await FirebaseService.saveBrandingAsset(`${uploadType}-${timestamp}`, brandingData);
+      await FirebaseService.saveBrandingAsset(assetId, brandingData);
 
       res.json({ 
         success: true, 
-        imageUrl: uploadResult.downloadURL,
-        id: `${uploadType}-${timestamp}`,
+        url: dataUrl,
+        id: assetId,
         message: `${uploadType === 'skin' ? 'Background skin' : 'Progress bar animation'} uploaded successfully`
       });
       

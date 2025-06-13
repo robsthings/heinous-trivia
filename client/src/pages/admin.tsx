@@ -645,49 +645,45 @@ export default function Admin() {
     try {
       setIsLoading(true);
       
-      // Upload directly to Firebase Storage
-      const { ref, uploadBytes, getDownloadURL } = await import('firebase/storage');
-      const { storage } = await import('@/lib/firebase');
-      
-      const timestamp = Date.now();
-      const filename = `branding-${type}-${timestamp}-${file.name}`;
-      const storageRef = ref(storage, `branding/${type}s/${filename}`);
-      
-      // Upload file to Firebase Storage
-      await uploadBytes(storageRef, file);
-      const downloadURL = await getDownloadURL(storageRef);
-      
-      // Save metadata to Firestore via API
-      const brandingData = {
-        name: file.name.replace(/\.[^/.]+$/, ""),
-        type: type,
-        url: downloadURL,
-        filename: filename,
-        uploadedAt: new Date().toISOString(),
-        uploadedBy: 'uber-admin'
-      };
+      // Use server-based upload with base64 encoding for reliability
+      const base64Data = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const result = reader.result as string;
+          // Remove data URL prefix
+          const base64 = result.split(',')[1];
+          resolve(base64);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
 
-      const response = await fetch('/api/branding/metadata', {
+      const response = await fetch('/api/branding/upload', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${auth.currentUser?.uid || 'uber-admin'}`
         },
-        body: JSON.stringify({ 
-          assetId: `${type}-${timestamp}`,
-          assetData: brandingData 
+        body: JSON.stringify({
+          fileName: file.name,
+          fileType: file.type,
+          fileData: base64Data,
+          uploadType: type
         })
       });
 
       if (!response.ok) {
-        console.warn('Failed to save asset metadata, but file uploaded successfully');
+        const error = await response.json();
+        throw new Error(error.error || 'Upload failed');
       }
+
+      const result = await response.json();
       
       // Add to local state
       const assetData = {
-        id: `${type}-${timestamp}`,
+        id: result.id,
         name: file.name.replace(/\.[^/.]+$/, ""),
-        url: downloadURL
+        url: result.url
       };
 
       if (type === 'skin') {
@@ -701,7 +697,7 @@ export default function Admin() {
         description: `${type === 'skin' ? 'Background skin' : 'Progress bar'} uploaded successfully`,
       });
 
-      return downloadURL;
+      return result.url;
     } catch (error) {
       console.error('Upload failed:', error);
       toast({
