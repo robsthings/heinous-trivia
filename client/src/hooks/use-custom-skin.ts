@@ -11,9 +11,7 @@ export function useCustomSkin(hauntConfig: HauntConfig | null | undefined) {
     const isPremiumTier = hauntConfig.tier === 'pro' || hauntConfig.tier === 'premium';
     
     if (isPremiumTier && hauntConfig.skinUrl) {
-      console.log('Applying custom skin:', hauntConfig.skinUrl);
-      
-      // Apply background directly without service worker interference
+      // Apply custom background skin
       document.body.style.setProperty('background-image', `url("${hauntConfig.skinUrl}")`, 'important');
       document.body.style.setProperty('background-size', 'cover', 'important');
       document.body.style.setProperty('background-position', 'center', 'important');
