@@ -28,6 +28,269 @@ interface TriviaPack {
   allowedHaunts?: string[];
 }
 
+// Analytics Tab Component
+function AnalyticsTab({ 
+  allHaunts, 
+  selectedAnalyticsHaunt, 
+  setSelectedAnalyticsHaunt, 
+  analyticsTimeRange, 
+  setAnalyticsTimeRange 
+}: {
+  allHaunts: any[];
+  selectedAnalyticsHaunt: string;
+  setSelectedAnalyticsHaunt: (value: string) => void;
+  analyticsTimeRange: "7d" | "30d" | "90d";
+  setAnalyticsTimeRange: (value: "7d" | "30d" | "90d") => void;
+}) {
+  // Fetch analytics data for selected haunt
+  const { data: analyticsData, isLoading: analyticsLoading } = useQuery({
+    queryKey: ['analytics', selectedAnalyticsHaunt, analyticsTimeRange],
+    queryFn: async () => {
+      if (!selectedAnalyticsHaunt) return null;
+      
+      const response = await fetch(`/api/analytics/${selectedAnalyticsHaunt}?timeRange=${analyticsTimeRange}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch analytics data');
+      }
+      return response.json();
+    },
+    enabled: !!selectedAnalyticsHaunt
+  });
+
+  const selectedHaunt = allHaunts.find(h => h.id === selectedAnalyticsHaunt);
+  const isPaidTier = selectedHaunt?.tier === 'pro' || selectedHaunt?.tier === 'premium';
+
+  return (
+    <Card className="bg-gray-900/50 border-gray-700">
+      <CardHeader>
+        <CardTitle className="text-red-400 flex items-center gap-2">
+          <BarChart3 className="w-5 h-5" />
+          Analytics Dashboard
+          <Badge variant="outline" className="text-purple-300 border-purple-300">
+            Pro/Premium Feature
+          </Badge>
+        </CardTitle>
+        <p className="text-gray-400">Track performance and player engagement for your haunts</p>
+      </CardHeader>
+      <CardContent>
+        {/* Haunt Selection */}
+        <div className="mb-6">
+          <Label className="text-white text-sm font-medium mb-2 block">Select Haunt for Analytics</Label>
+          <Select value={selectedAnalyticsHaunt} onValueChange={setSelectedAnalyticsHaunt}>
+            <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
+              <SelectValue placeholder="Choose a Pro/Premium haunt" />
+            </SelectTrigger>
+            <SelectContent className="bg-gray-700 border-gray-600">
+              {allHaunts
+                .filter(haunt => haunt.tier === 'pro' || haunt.tier === 'premium')
+                .map((haunt) => (
+                  <SelectItem key={haunt.id} value={haunt.id} className="text-white">
+                    <div className="flex items-center gap-2">
+                      <span>{haunt.name}</span>
+                      <Badge className={`${haunt.tier === 'premium' ? 'bg-purple-600' : 'bg-blue-600'} text-white`}>
+                        {haunt.tier?.toUpperCase()}
+                      </Badge>
+                    </div>
+                  </SelectItem>
+                ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        {!selectedAnalyticsHaunt && (
+          <div className="text-center py-8">
+            <BarChart3 className="w-12 h-12 text-gray-500 mx-auto mb-4" />
+            <p className="text-gray-400">Select a Pro or Premium haunt to view analytics</p>
+          </div>
+        )}
+
+        {selectedAnalyticsHaunt && !isPaidTier && (
+          <div className="text-center py-8">
+            <Crown className="w-12 h-12 text-yellow-500 mx-auto mb-4" />
+            <p className="text-gray-400 mb-2">Analytics are only available for Pro and Premium haunts</p>
+            <p className="text-sm text-gray-500">Upgrade your haunt subscription to access detailed performance metrics</p>
+          </div>
+        )}
+
+        {selectedAnalyticsHaunt && isPaidTier && (
+          <>
+            {/* Time Range Selector */}
+            <div className="flex justify-center mb-6">
+              <Tabs value={analyticsTimeRange} onValueChange={(value) => setAnalyticsTimeRange(value as "7d" | "30d" | "90d")} className="w-auto">
+                <TabsList className="grid w-full grid-cols-3 bg-gray-800 border-gray-700">
+                  <TabsTrigger value="7d" className="text-white data-[state=active]:bg-red-600">Last 7 Days</TabsTrigger>
+                  <TabsTrigger value="30d" className="text-white data-[state=active]:bg-red-600">Last 30 Days</TabsTrigger>
+                  <TabsTrigger value="90d" className="text-white data-[state=active]:bg-red-600">Last 90 Days</TabsTrigger>
+                </TabsList>
+              </Tabs>
+            </div>
+
+            {analyticsLoading && (
+              <div className="text-center py-8">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-500 mx-auto mb-4"></div>
+                <p className="text-gray-400">Loading analytics data...</p>
+              </div>
+            )}
+
+            {analyticsData && (
+              <div className="space-y-6">
+                {/* Key Metrics Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <Card className="bg-gray-800/50 border-gray-600">
+                    <CardContent className="p-4">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 bg-blue-600/20 rounded-lg">
+                          <GamepadIcon className="w-5 h-5 text-blue-400" />
+                        </div>
+                        <div>
+                          <p className="text-gray-400 text-sm">Total Games</p>
+                          <p className="text-white text-2xl font-bold">{analyticsData.totalGames || 0}</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-gray-800/50 border-gray-600">
+                    <CardContent className="p-4">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 bg-green-600/20 rounded-lg">
+                          <Users className="w-5 h-5 text-green-400" />
+                        </div>
+                        <div>
+                          <p className="text-gray-400 text-sm">Unique Players</p>
+                          <p className="text-white text-2xl font-bold">{analyticsData.uniquePlayers || 0}</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-gray-800/50 border-gray-600">
+                    <CardContent className="p-4">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 bg-purple-600/20 rounded-lg">
+                          <Target className="w-5 h-5 text-purple-400" />
+                        </div>
+                        <div>
+                          <p className="text-gray-400 text-sm">Return Rate</p>
+                          <p className="text-white text-2xl font-bold">{analyticsData.returnPlayerRate || 0}%</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-gray-800/50 border-gray-600">
+                    <CardContent className="p-4">
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 bg-yellow-600/20 rounded-lg">
+                          <MousePointer className="w-5 h-5 text-yellow-400" />
+                        </div>
+                        <div>
+                          <p className="text-gray-400 text-sm">Ad Click Rate</p>
+                          <p className="text-white text-2xl font-bold">{analyticsData.adClickThrough || 0}%</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Additional Metrics */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <Card className="bg-gray-800/50 border-gray-600">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-white text-sm">Performance Metrics</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                      <div className="flex justify-between">
+                        <span className="text-gray-400 text-sm">Average Score</span>
+                        <span className="text-white font-semibold">{analyticsData.competitiveMetrics?.averageScore || 0}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400 text-sm">Top Score</span>
+                        <span className="text-white font-semibold">{analyticsData.competitiveMetrics?.topScore || 0}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400 text-sm">Completion Rate</span>
+                        <span className="text-white font-semibold">{analyticsData.competitiveMetrics?.participationRate || 0}%</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-gray-400 text-sm">Avg Group Size</span>
+                        <span className="text-white font-semibold">{analyticsData.averageGroupSize || 1}</span>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-gray-800/50 border-gray-600 md:col-span-2">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-white text-sm">Best Performing Questions</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      {analyticsData.bestQuestions && analyticsData.bestQuestions.length > 0 ? (
+                        <div className="space-y-2">
+                          {analyticsData.bestQuestions.slice(0, 3).map((question: any, index: number) => (
+                            <div key={index} className="flex justify-between items-center p-2 bg-gray-700/50 rounded">
+                              <div className="flex-1">
+                                <p className="text-white text-sm truncate">{question.question}</p>
+                                <p className="text-gray-400 text-xs">{question.pack}</p>
+                              </div>
+                              <Badge variant="outline" className="text-green-400 border-green-400">
+                                {question.correctRate}% correct
+                              </Badge>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <p className="text-gray-400 text-sm">No question performance data available yet</p>
+                      )}
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Daily Activity Chart */}
+                {analyticsData.timeRangeData?.daily && analyticsData.timeRangeData.daily.length > 0 && (
+                  <Card className="bg-gray-800/50 border-gray-600">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-white text-sm flex items-center gap-2">
+                        <Calendar className="w-4 h-4" />
+                        Daily Activity
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
+                        {analyticsData.timeRangeData.daily.map((day: any) => (
+                          <div key={day.date} className="flex items-center justify-between">
+                            <span className="text-gray-400 text-sm">{new Date(day.date).toLocaleDateString()}</span>
+                            <div className="flex items-center gap-4">
+                              <span className="text-white text-sm">{day.games} games</span>
+                              <span className="text-gray-400 text-sm">{day.players} players</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
+
+                {/* No Data State */}
+                {analyticsData.totalGames === 0 && (
+                  <Card className="bg-gray-800/50 border-gray-600">
+                    <CardContent className="text-center py-8">
+                      <TrendingUp className="w-12 h-12 text-gray-500 mx-auto mb-4" />
+                      <p className="text-gray-400 mb-2">No gameplay data found for this time period</p>
+                      <p className="text-sm text-gray-500">
+                        Data will appear here once players start using your haunt's trivia game
+                      </p>
+                    </CardContent>
+                  </Card>
+                )}
+              </div>
+            )}
+          </>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
 export default function Admin() {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
@@ -2401,6 +2664,17 @@ export default function Admin() {
                     </div>
                   </CardContent>
                 </Card>
+              </TabsContent>
+
+              {/* Analytics Dashboard Tab */}
+              <TabsContent value="analytics" className="space-y-6">
+                <AnalyticsTab 
+                  allHaunts={allHaunts}
+                  selectedAnalyticsHaunt={selectedAnalyticsHaunt}
+                  setSelectedAnalyticsHaunt={setSelectedAnalyticsHaunt}
+                  analyticsTimeRange={analyticsTimeRange}
+                  setAnalyticsTimeRange={setAnalyticsTimeRange}
+                />
               </TabsContent>
             </Tabs>
           </CardContent>
