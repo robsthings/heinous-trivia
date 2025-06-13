@@ -103,6 +103,57 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Upload branding assets to Firebase Storage (Uber Admin only)
+  app.post("/api/branding/upload", upload.single('file'), async (req, res) => {
+    console.log('Upload endpoint hit:', req.method, req.url);
+    console.log('File received:', req.file ? 'Yes' : 'No');
+    console.log('Body:', req.body);
+    
+    try {
+      if (!req.file) {
+        return res.status(400).json({ error: "No file uploaded" });
+      }
+
+      const { type } = req.body; // 'skin' or 'progressBar'
+      if (!type || !['skin', 'progressBar'].includes(type)) {
+        return res.status(400).json({ error: "Invalid type. Must be 'skin' or 'progressBar'" });
+      }
+
+      const timestamp = Date.now();
+      const fileExtension = path.extname(req.file.originalname);
+      const filename = `${type}-${timestamp}${fileExtension}`;
+      const storagePath = `branding/${type}s/`;
+
+      // Upload to Firebase Storage
+      const uploadResult = await FirebaseService.uploadFile(
+        req.file.buffer,
+        filename,
+        storagePath
+      );
+
+      // Save asset metadata
+      const assetData = {
+        id: `${type}-${timestamp}`,
+        name: req.file.originalname.replace(/\.[^/.]+$/, ""),
+        url: uploadResult.downloadURL,
+        type: type,
+        createdAt: new Date().toISOString()
+      };
+
+      await FirebaseService.saveBrandingAsset(assetData.id, assetData);
+
+      res.json({
+        success: true,
+        asset: assetData,
+        message: `${type === 'skin' ? 'Background skin' : 'Progress bar'} uploaded successfully`
+      });
+
+    } catch (error) {
+      console.error("Error uploading branding asset:", error);
+      res.status(500).json({ error: "Failed to upload branding asset" });
+    }
+  });
+
   // Get branding assets (Uber Admin only)
   app.get("/api/branding/assets", async (req, res) => {
     try {
