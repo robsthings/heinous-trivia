@@ -2060,24 +2060,67 @@ export default function Admin() {
                                       Preview
                                     </a>
                                   </div>
-                                  <Button 
-                                    size="sm" 
-                                    variant="outline"
-                                    onClick={() => {
-                                      if (selectedHauntForBranding) {
-                                        assignBrandingToHaunt(selectedHauntForBranding, skin.url);
-                                      } else {
-                                        toast({
-                                          title: "Select Haunt",
-                                          description: "Please select a haunt first in the assignment section below",
-                                          variant: "destructive"
-                                        });
-                                      }
-                                    }}
-                                    disabled={isLoading}
-                                  >
-                                    Assign to Haunt
-                                  </Button>
+                                  <div className="flex gap-2">
+                                    <Button 
+                                      size="sm" 
+                                      variant="outline"
+                                      onClick={() => {
+                                        if (selectedHauntForBranding) {
+                                          assignBrandingToHaunt(selectedHauntForBranding, skin.url);
+                                        } else {
+                                          toast({
+                                            title: "Select Haunt",
+                                            description: "Please select a haunt first in the assignment section below",
+                                            variant: "destructive"
+                                          });
+                                        }
+                                      }}
+                                      disabled={isLoading}
+                                    >
+                                      Assign to Haunt
+                                    </Button>
+                                    <Button 
+                                      size="sm" 
+                                      variant="destructive"
+                                      onClick={async () => {
+                                        const confirmed = window.confirm(`Delete "${skin.name}" permanently? This action cannot be undone.`);
+                                        if (!confirmed) return;
+                                        
+                                        try {
+                                          setIsLoading(true);
+                                          const response = await fetch(`/api/branding/assets/${skin.id}`, {
+                                            method: 'DELETE',
+                                            headers: {
+                                              'Authorization': `Bearer ${auth.currentUser?.uid || 'uber-admin'}`
+                                            }
+                                          });
+                                          
+                                          if (!response.ok) {
+                                            throw new Error('Failed to delete asset');
+                                          }
+                                          
+                                          toast({
+                                            title: "Asset Deleted",
+                                            description: `"${skin.name}" has been deleted successfully`
+                                          });
+                                          
+                                          loadBrandingAssets(); // Refresh the list
+                                        } catch (error) {
+                                          console.error('Failed to delete asset:', error);
+                                          toast({
+                                            title: "Delete Failed",
+                                            description: "Failed to delete the asset. Please try again.",
+                                            variant: "destructive"
+                                          });
+                                        } finally {
+                                          setIsLoading(false);
+                                        }
+                                      }}
+                                      disabled={isLoading}
+                                    >
+                                      Delete
+                                    </Button>
+                                  </div>
                                 </div>
                               ))}
                               {customSkins.length === 0 && (
@@ -2147,24 +2190,67 @@ export default function Admin() {
                                       Preview
                                     </a>
                                   </div>
-                                  <Button 
-                                    size="sm" 
-                                    variant="outline"
-                                    onClick={() => {
-                                      if (selectedHauntForBranding) {
-                                        assignBrandingToHaunt(selectedHauntForBranding, undefined, progressBar.url);
-                                      } else {
-                                        toast({
-                                          title: "Select Haunt",
-                                          description: "Please select a haunt first in the assignment section below",
-                                          variant: "destructive"
-                                        });
-                                      }
-                                    }}
-                                    disabled={isLoading}
-                                  >
-                                    Assign
-                                  </Button>
+                                  <div className="flex gap-2">
+                                    <Button 
+                                      size="sm" 
+                                      variant="outline"
+                                      onClick={() => {
+                                        if (selectedHauntForBranding) {
+                                          assignBrandingToHaunt(selectedHauntForBranding, undefined, progressBar.url);
+                                        } else {
+                                          toast({
+                                            title: "Select Haunt",
+                                            description: "Please select a haunt first in the assignment section below",
+                                            variant: "destructive"
+                                          });
+                                        }
+                                      }}
+                                      disabled={isLoading}
+                                    >
+                                      Assign
+                                    </Button>
+                                    <Button 
+                                      size="sm" 
+                                      variant="destructive"
+                                      onClick={async () => {
+                                        const confirmed = window.confirm(`Delete "${progressBar.name}" permanently? This action cannot be undone.`);
+                                        if (!confirmed) return;
+                                        
+                                        try {
+                                          setIsLoading(true);
+                                          const response = await fetch(`/api/branding/assets/${progressBar.id}`, {
+                                            method: 'DELETE',
+                                            headers: {
+                                              'Authorization': `Bearer ${auth.currentUser?.uid || 'uber-admin'}`
+                                            }
+                                          });
+                                          
+                                          if (!response.ok) {
+                                            throw new Error('Failed to delete asset');
+                                          }
+                                          
+                                          toast({
+                                            title: "Asset Deleted",
+                                            description: `"${progressBar.name}" has been deleted successfully`
+                                          });
+                                          
+                                          loadBrandingAssets(); // Refresh the list
+                                        } catch (error) {
+                                          console.error('Failed to delete asset:', error);
+                                          toast({
+                                            title: "Delete Failed",
+                                            description: "Failed to delete the asset. Please try again.",
+                                            variant: "destructive"
+                                          });
+                                        } finally {
+                                          setIsLoading(false);
+                                        }
+                                      }}
+                                      disabled={isLoading}
+                                    >
+                                      Delete
+                                    </Button>
+                                  </div>
                                 </div>
                               ))}
                               {customProgressBars.length === 0 && (
