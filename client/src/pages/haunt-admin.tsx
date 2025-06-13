@@ -837,6 +837,56 @@ export default function HauntAdmin() {
                     </p>
                   )}
                 </div>
+
+                {/* Custom Branding Preview (Read-Only) */}
+                {(hauntConfig.tier === 'pro' || hauntConfig.tier === 'premium') && (
+                  <div className="mt-6 p-4 bg-purple-900/20 border border-purple-500 rounded-lg">
+                    <h4 className="text-purple-300 font-medium mb-3 flex items-center gap-2">
+                      🎨 Premium Custom Branding Preview
+                    </h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <Label className="text-purple-200 text-sm mb-2 block">Custom Background Skin</Label>
+                        {hauntConfig.skinUrl ? (
+                          <div className="text-green-400 text-sm flex items-center gap-2">
+                            ✅ Active: Custom background assigned
+                            <a 
+                              href={hauntConfig.skinUrl} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="text-blue-400 hover:text-blue-300 underline"
+                            >
+                              Preview
+                            </a>
+                          </div>
+                        ) : (
+                          <div className="text-gray-400 text-sm">Default horror theme active</div>
+                        )}
+                      </div>
+                      <div>
+                        <Label className="text-purple-200 text-sm mb-2 block">Custom Progress Bar</Label>
+                        {hauntConfig.progressBarUrl ? (
+                          <div className="text-green-400 text-sm flex items-center gap-2">
+                            ✅ Active: Custom animation assigned
+                            <a 
+                              href={hauntConfig.progressBarUrl} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="text-blue-400 hover:text-blue-300 underline"
+                            >
+                              Preview
+                            </a>
+                          </div>
+                        ) : (
+                          <div className="text-gray-400 text-sm">Default progress bar active</div>
+                        )}
+                      </div>
+                    </div>
+                    <p className="text-purple-300 text-xs mt-3">
+                      🔒 Custom branding is managed by Uber Admin. Contact support to request changes or custom designs for your haunt.
+                    </p>
+                  </div>
+                )}
               </CardContent>
             </Card>
 
