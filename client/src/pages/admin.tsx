@@ -764,10 +764,11 @@ export default function Admin() {
       setIsLoading(true);
 
       const updates: any = {};
-      if (skinUrl !== undefined && skinUrl !== '') updates.skinUrl = skinUrl;
-      if (progressBarTheme !== undefined && progressBarTheme !== '') updates.progressBarTheme = progressBarTheme;
+      // Allow empty strings for removal
+      if (skinUrl !== undefined) updates.skinUrl = skinUrl;
+      if (progressBarTheme !== undefined) updates.progressBarTheme = progressBarTheme;
       
-      // Ensure at least one field is being updated
+      // Ensure at least one field is being updated (including empty strings for removal)
       if (Object.keys(updates).length === 0) {
         throw new Error('At least one branding field must be provided');
       }
@@ -795,10 +796,26 @@ export default function Admin() {
 
       const hauntName = allHaunts.find(h => h.id === hauntId)?.name || hauntId;
       
-      toast({
-        title: `Custom branding applied for ${hauntName}`,
-        description: `${skinUrl ? 'Background skin' : ''}${skinUrl && progressBarTheme ? ' and ' : ''}${progressBarTheme ? `progress bar theme (${progressBarTheme})` : ''} applied successfully. Game pages will refresh automatically.`,
-      });
+      // Determine if this is removal or application
+      const isRemoval = (skinUrl === "" && progressBarTheme === "") || 
+                       (skinUrl === "" && progressBarTheme === undefined) ||
+                       (skinUrl === undefined && progressBarTheme === "");
+      
+      if (isRemoval) {
+        toast({
+          title: `Branding removed for ${hauntName}`,
+          description: `Custom branding has been removed. The haunt will now use default game themes.`,
+        });
+      } else {
+        const appliedItems = [];
+        if (skinUrl && skinUrl !== "") appliedItems.push('Background skin');
+        if (progressBarTheme && progressBarTheme !== "") appliedItems.push(`Progress bar theme (${progressBarTheme})`);
+        
+        toast({
+          title: `Custom branding applied for ${hauntName}`,
+          description: `${appliedItems.join(' and ')} applied successfully. Game pages will refresh automatically.`,
+        });
+      }
 
       // Force refresh any open game windows to apply new branding immediately
       if (typeof window !== 'undefined') {
