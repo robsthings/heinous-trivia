@@ -1,0 +1,49 @@
+=== CustomProgressBar DEBUG ===
+CustomProgressBar.tsx:17 hasConfig: false
+CustomProgressBar.tsx:18 hauntId: undefined
+CustomProgressBar.tsx:19 tier: undefined
+CustomProgressBar.tsx:20 progressBarTheme: undefined
+CustomProgressBar.tsx:21 isPremiumTier: false
+CustomProgressBar.tsx:22 hasCustomTheme: false
+CustomProgressBar.tsx:23 progress: 0
+CustomProgressBar.tsx:24 ================================
+CustomProgressBar.tsx:16 === CustomProgressBar DEBUG ===
+CustomProgressBar.tsx:17 hasConfig: true
+CustomProgressBar.tsx:18 hauntId: headquarters
+CustomProgressBar.tsx:19 tier: premium
+CustomProgressBar.tsx:20 progressBarTheme: toxic
+CustomProgressBar.tsx:21 isPremiumTier: true
+CustomProgressBar.tsx:22 hasCustomTheme: toxic
+CustomProgressBar.tsx:23 progress: 0
+CustomProgressBar.tsx:24 ================================
+CustomProgressBar.tsx:28 🟢 TOXIC GREEN progress bar should render!
+CustomProgressBar.tsx:16 === CustomProgressBar DEBUG ===
+CustomProgressBar.tsx:17 hasConfig: true
+CustomProgressBar.tsx:18 hauntId: headquarters
+CustomProgressBar.tsx:19 tier: premium
+CustomProgressBar.tsx:20 progressBarTheme: toxic
+CustomProgressBar.tsx:21 isPremiumTier: true
+CustomProgressBar.tsx:22 hasCustomTheme: toxic
+CustomProgressBar.tsx:23 progress: 10.51680502921753
+CustomProgressBar.tsx:24 ================================
+CustomProgressBar.tsx:28 🟢 TOXIC GREEN progress bar should render!
+CustomProgressBar.tsx:16 === CustomProgressBar DEBUG ===
+CustomProgressBar.tsx:17 hasConfig: true
+CustomProgressBar.tsx:18 hauntId: headquarters
+CustomProgressBar.tsx:19 tier: premium
+CustomProgressBar.tsx:20 progressBarTheme: toxic
+CustomProgressBar.tsx:21 isPremiumTier: true
+CustomProgressBar.tsx:22 hasCustomTheme: toxic
+CustomProgressBar.tsx:23 progress: 16.228702792137987
+CustomProgressBar.tsx:24 ================================
+CustomProgressBar.tsx:28 🟢 TOXIC GREEN progress bar should render!
+CustomProgressBar.tsx:16 === CustomProgressBar DEBUG ===
+CustomProgressBar.tsx:17 hasConfig: true
+CustomProgressBar.tsx:18 hauntId: headquarters
+CustomProgressBar.tsx:19 tier: premium
+CustomProgressBar.tsx:20 progressBarTheme: toxic
+CustomProgressBar.tsx:21 isPremiumTier: true
+CustomProgressBar.tsx:22 hasCustomTheme: toxic
+CustomProgressBar.tsx:23 progress: 16.228702792137987
+CustomProgressBar.tsx:24 ================================
+CustomProgressBar.tsx:28 🟢 TOXIC GREEN progress bar should render!

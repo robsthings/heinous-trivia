@@ -26,6 +26,8 @@ export function CustomProgressBar({ progress, hauntConfig, className = "" }: Cus
   // Force toxic theme rendering for testing
   if (hauntConfig?.progressBarTheme === 'toxic' && isPremiumTier) {
     console.log('🟢 TOXIC GREEN progress bar should render!');
+    const themeColors = getProgressBarColors('toxic');
+    console.log('🎨 Theme colors:', themeColors);
   }
   
 
@@ -50,12 +52,19 @@ export function CustomProgressBar({ progress, hauntConfig, className = "" }: Cus
   // Apply custom theme for Pro/Premium haunts with progressBarTheme
   if (hasCustomTheme && hauntConfig.progressBarTheme) {
     const themeColors = getProgressBarColors(hauntConfig.progressBarTheme);
+    console.log('🎨 Applying theme colors:', themeColors);
+    
+    // Force toxic green for testing
+    const forceGreen = hauntConfig.progressBarTheme === 'toxic';
     
     return (
       <div className={`relative w-full h-4 bg-gray-800 rounded-full overflow-hidden ${className}`}>
         {/* Custom themed progress bar */}
         <div 
-          className={`h-full bg-gradient-to-r ${themeColors.colors} transition-all duration-300 ease-out rounded-full ${themeColors.shadow} shadow-lg animate-pulse`}
+          className={forceGreen 
+            ? "h-full bg-gradient-to-r from-green-500 to-lime-400 transition-all duration-300 ease-out rounded-full shadow-green-500/50 shadow-lg animate-pulse"
+            : `h-full bg-gradient-to-r ${themeColors.colors} transition-all duration-300 ease-out rounded-full ${themeColors.shadow} shadow-lg animate-pulse`
+          }
           style={{ width: `${Math.max(0, Math.min(100, progress))}%` }}
         >
           {/* Glowing overlay effect */}
