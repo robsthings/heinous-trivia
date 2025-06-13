@@ -67,10 +67,22 @@ export default function Game() {
 
   // Listen for branding updates from admin panel
   useEffect(() => {
-    const handleBrandingUpdate = (event: MessageEvent) => {
+    const handleBrandingUpdate = async (event: MessageEvent) => {
       if (event.data.type === 'BRANDING_UPDATED' && event.data.hauntId === gameState.currentHaunt) {
-        // Force hard reload to apply new branding immediately
-        window.location.href = window.location.href;
+        console.log('Branding update received, reloading configuration...');
+        
+        // Reload the configuration immediately
+        try {
+          const updatedConfig = await ConfigLoader.loadHauntConfig(gameState.currentHaunt);
+          if (updatedConfig) {
+            console.log('Updated config loaded:', updatedConfig);
+            setGameState(prev => ({ ...prev, hauntConfig: updatedConfig || undefined }));
+          }
+        } catch (error) {
+          console.error('Failed to reload config:', error);
+          // Fallback to hard reload if config update fails
+          window.location.href = window.location.href;
+        }
       }
     };
 
@@ -389,7 +401,7 @@ export default function Game() {
   };
 
   if (isLoading) {
-    return <SpookyLoader message="Loading your horror trivia experience" showProgress={true} hauntConfig={gameState.hauntConfig} />;
+    return <SpookyLoader message="Loading your horror trivia experience" showProgress={true} hauntConfig={gameState.hauntConfig || undefined} />;
   }
 
   if (error) {
