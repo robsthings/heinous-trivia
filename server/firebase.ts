@@ -26,14 +26,14 @@ if (isFirebaseConfigured()) {
     }
     firestore = getFirestore(firebaseApp);
     exportedFieldValue = FieldValue;
-    console.log('Firebase Admin SDK initialized successfully');
+    // Firebase Admin SDK initialized successfully
   } catch (error) {
-    console.error('Firebase initialization failed:', error);
+    // Firebase initialization failed - running without Firebase integration
     firestore = null;
     exportedFieldValue = null;
   }
 } else {
-  console.log('Firebase credentials not configured, running without Firebase integration');
+  // Firebase credentials not configured, running without Firebase integration
   firestore = null;
   exportedFieldValue = null;
 }

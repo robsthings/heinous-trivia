@@ -106,7 +106,6 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
             onClick={() => {
               // Answer bounds check
               if (index < 0 || index >= currentQuestion.answers?.length) {
-                console.warn("Invalid answer selected");
                 return;
               }
               onSelectAnswer(index);

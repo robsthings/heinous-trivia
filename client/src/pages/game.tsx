@@ -357,7 +357,6 @@ export default function Game() {
     
     // Fetch fresh data
     const leaderboardData = await GameManager.getLeaderboard(gameState.currentHaunt);
-    console.log('Fresh leaderboard data:', leaderboardData);
     setLeaderboard(leaderboardData);
     setLeaderboardLoading(false);
   };

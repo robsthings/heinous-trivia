@@ -30,27 +30,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Upload background image for haunt
   app.post("/api/upload-background", (req, res) => {
-    console.log("📁 Upload endpoint hit");
-    
     upload.single('background')(req, res, async (err) => {
       try {
         if (err) {
-          console.error("Multer error:", err);
           return res.status(400).json({ error: err.message });
         }
 
         if (!req.file) {
-          console.log("❌ No file uploaded");
           return res.status(400).json({ error: "No file uploaded" });
         }
 
         const hauntId = req.body.hauntId;
         if (!hauntId) {
-          console.log("❌ No haunt ID provided");
           return res.status(400).json({ error: "Haunt ID is required" });
         }
 
-        console.log("✅ File uploaded:", req.file.filename, "for haunt:", hauntId);
+        // File uploaded successfully
         const relativePath = `/haunt-assets/${hauntId}/bg${path.extname(req.file.originalname)}`;
         
         res.json({ 

@@ -32,7 +32,6 @@ export class AnalyticsTracker {
       this.currentSessionId = data.id;
       return data.id;
     } catch (error) {
-      console.warn("Failed to start analytics session:", error);
       return null;
     }
   }
