@@ -467,7 +467,7 @@ export default function Game() {
   }
 
   return (
-    <div className={`min-h-screen ${gameState.hauntConfig?.tier === 'premium' && gameState.hauntConfig?.skinUrl ? '' : 'bg-gradient-to-br from-gray-900 via-purple-900 to-black'}`}>
+    <div className={`game-container min-h-screen ${gameState.hauntConfig?.tier === 'premium' && gameState.hauntConfig?.skinUrl ? '' : 'bg-gradient-to-br from-gray-900 via-purple-900 to-black'}`}>
       <GameHeader 
         gameState={gameState} 
         isGroupMode={isGroupMode}

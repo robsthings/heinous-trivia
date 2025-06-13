@@ -19,16 +19,35 @@ export function useCustomSkin(hauntConfig: HauntConfig | null | undefined) {
     
     if (isPremiumTier && hauntConfig.skinUrl) {
       console.log('Applying custom background skin:', hauntConfig.skinUrl);
-      // Apply custom background skin
-      document.body.style.backgroundImage = `url(${hauntConfig.skinUrl})`;
-      document.body.style.backgroundSize = 'cover';
-      document.body.style.backgroundPosition = 'center';
-      document.body.style.backgroundRepeat = 'no-repeat';
-      document.body.style.backgroundAttachment = 'fixed';
-      console.log('Background styles applied');
+      // Apply custom background skin to main game container
+      const gameContainer = document.querySelector('.game-container') as HTMLElement;
+      if (gameContainer) {
+        gameContainer.style.backgroundImage = `url(${hauntConfig.skinUrl})`;
+        gameContainer.style.backgroundSize = 'cover';
+        gameContainer.style.backgroundPosition = 'center';
+        gameContainer.style.backgroundRepeat = 'no-repeat';
+        gameContainer.style.backgroundAttachment = 'fixed';
+        console.log('Background styles applied to game container');
+      } else {
+        console.log('Game container not found, applying to body');
+        // Fallback to body if container not found
+        document.body.style.backgroundImage = `url(${hauntConfig.skinUrl})`;
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.backgroundPosition = 'center';
+        document.body.style.backgroundRepeat = 'no-repeat';
+        document.body.style.backgroundAttachment = 'fixed';
+      }
     } else {
       console.log('Not applying custom skin - either not premium tier or no skinUrl');
       // Remove custom skin and use default background
+      const gameContainer = document.querySelector('.game-container') as HTMLElement;
+      if (gameContainer) {
+        gameContainer.style.backgroundImage = '';
+        gameContainer.style.backgroundSize = '';
+        gameContainer.style.backgroundPosition = '';
+        gameContainer.style.backgroundRepeat = '';
+        gameContainer.style.backgroundAttachment = '';
+      }
       document.body.style.backgroundImage = '';
       document.body.style.backgroundSize = '';
       document.body.style.backgroundPosition = '';
