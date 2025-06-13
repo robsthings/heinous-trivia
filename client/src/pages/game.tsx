@@ -69,8 +69,8 @@ export default function Game() {
   useEffect(() => {
     const handleBrandingUpdate = (event: MessageEvent) => {
       if (event.data.type === 'BRANDING_UPDATED' && event.data.hauntId === gameState.currentHaunt) {
-        // Reload the page to apply new branding
-        window.location.reload();
+        // Force hard reload to apply new branding immediately
+        window.location.href = window.location.href;
       }
     };
 

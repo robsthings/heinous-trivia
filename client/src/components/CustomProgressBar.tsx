@@ -11,6 +11,17 @@ export function CustomProgressBar({ progress, hauntConfig, className = "" }: Cus
   // Check if haunt is eligible for custom progress bar (Pro/Premium only)
   const isPremiumTier = hauntConfig?.tier === 'pro' || hauntConfig?.tier === 'premium';
   const hasCustomTheme = isPremiumTier && hauntConfig?.progressBarTheme;
+
+  // Debug logging to see what's being received
+  if (hauntConfig) {
+    console.log('CustomProgressBar debug:', {
+      hauntId: hauntConfig.id,
+      tier: hauntConfig.tier,
+      progressBarTheme: hauntConfig.progressBarTheme,
+      isPremiumTier,
+      hasCustomTheme
+    });
+  }
   
 
 
