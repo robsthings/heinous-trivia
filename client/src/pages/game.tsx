@@ -20,6 +20,8 @@ import { User, Users } from "lucide-react";
 import { Link } from "wouter";
 import { useToast } from "@/hooks/use-toast";
 import type { LeaderboardEntry, TriviaQuestion } from "@shared/schema";
+// CUSTOM SKIN & PROGRESS BAR LOGIC
+import { useCustomSkin } from "@/hooks/use-custom-skin";
 
 interface ActiveRound {
   questionIndex: number;
@@ -58,6 +60,10 @@ export default function Game() {
   const [countdown, setCountdown] = useState(0);
   const [groupScore, setGroupScore] = useState(0);
   const { toast } = useToast();
+
+  // CUSTOM SKIN & PROGRESS BAR LOGIC
+  // Apply custom background skin for Pro/Premium haunts
+  useCustomSkin(gameState.hauntConfig);
 
   useEffect(() => {
     const initializeGame = async () => {

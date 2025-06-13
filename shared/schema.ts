@@ -165,6 +165,9 @@ export const hauntConfigSchema = z.object({
     secondaryColor: z.string(),
     accentColor: z.string(),
   }),
+  // CUSTOM SKIN & PROGRESS BAR LOGIC
+  skinUrl: z.string().optional(), // Pro/Premium only: custom background image
+  progressBarUrl: z.string().optional(), // Pro/Premium only: custom progress bar image/animation
 });
 
 export const adDataSchema = z.object({

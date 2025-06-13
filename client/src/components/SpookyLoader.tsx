@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
+// CUSTOM SKIN & PROGRESS BAR LOGIC
+import { CustomProgressBar } from "./CustomProgressBar";
+import type { HauntConfig } from "@shared/schema";
 
 interface SpookyLoaderProps {
   message?: string;
   showProgress?: boolean;
-  hauntConfig?: any;
+  hauntConfig?: HauntConfig;
 }
 
 export function SpookyLoader({ 
