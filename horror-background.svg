@@ -1,0 +1,113 @@
+<svg width="1920" height="1080" viewBox="0 0 1920 1080" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="moonGlow" cx="0.8" cy="0.2" r="0.3">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.8"/>
+      <stop offset="50%" stop-color="#cccccc" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#888888" stop-opacity="0.1"/>
+    </radialGradient>
+    
+    <linearGradient id="skyGradient" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1a0a1a"/>
+      <stop offset="30%" stop-color="#2d1b2d"/>
+      <stop offset="60%" stop-color="#3a2a3a"/>
+      <stop offset="100%" stop-color="#1a0a1a"/>
+    </linearGradient>
+    
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Night Sky Background -->
+  <rect width="1920" height="1080" fill="url(#skyGradient)"/>
+  
+  <!-- Stars -->
+  <circle cx="200" cy="150" r="1.5" fill="#ffffff" opacity="0.8"/>
+  <circle cx="450" cy="100" r="1" fill="#ffffff" opacity="0.6"/>
+  <circle cx="800" cy="200" r="1.5" fill="#ffffff" opacity="0.9"/>
+  <circle cx="1200" cy="120" r="1" fill="#ffffff" opacity="0.7"/>
+  <circle cx="1500" cy="180" r="1.5" fill="#ffffff" opacity="0.8"/>
+  <circle cx="300" cy="250" r="0.8" fill="#ffffff" opacity="0.5"/>
+  <circle cx="1000" cy="80" r="1.2" fill="#ffffff" opacity="0.7"/>
+  <circle cx="1600" cy="300" r="1" fill="#ffffff" opacity="0.6"/>
+  
+  <!-- Moon -->
+  <circle cx="1536" cy="216" r="80" fill="url(#moonGlow)" filter="url(#glow)"/>
+  <circle cx="1536" cy="216" r="75" fill="#f5f5dc" opacity="0.9"/>
+  
+  <!-- Haunted Mansion Silhouette -->
+  <g fill="#0a0a0a" opacity="0.9">
+    <!-- Main Building -->
+    <rect x="600" y="600" width="400" height="300"/>
+    
+    <!-- Tower -->
+    <rect x="750" y="400" width="100" height="200"/>
+    <polygon points="750,400 800,350 850,400"/>
+    
+    <!-- Left Wing -->
+    <rect x="450" y="650" width="150" height="250"/>
+    <polygon points="450,650 525,600 600,650"/>
+    
+    <!-- Right Wing -->
+    <rect x="1000" y="650" width="200" height="250"/>
+    <polygon points="1000,650 1100,580 1200,650"/>
+    
+    <!-- Spire -->
+    <rect x="785" y="300" width="30" height="50"/>
+    <polygon points="785,300 800,280 815,300"/>
+    
+    <!-- Windows with dim light -->
+    <rect x="630" y="630" width="15" height="20" fill="#ffaa00" opacity="0.3"/>
+    <rect x="680" y="650" width="12" height="18" fill="#ffaa00" opacity="0.4"/>
+    <rect x="930" y="670" width="15" height="20" fill="#ffaa00" opacity="0.2"/>
+    <rect x="780" y="450" width="10" height="15" fill="#ffaa00" opacity="0.5"/>
+  </g>
+  
+  <!-- Dead Trees -->
+  <g fill="#1a1a1a" opacity="0.8">
+    <!-- Left Tree -->
+    <rect x="200" y="700" width="15" height="150"/>
+    <path d="M 170 750 Q 200 730 220 760"/>
+    <path d="M 190 780 Q 210 760 240 790"/>
+    <path d="M 180 820 Q 200 800 225 830"/>
+    
+    <!-- Right Tree -->
+    <rect x="1400" y="650" width="20" height="200"/>
+    <path d="M 1380 700 Q 1410 680 1440 710"/>
+    <path d="M 1390 740 Q 1420 720 1450 750"/>
+    <path d="M 1385 780 Q 1415 760 1445 790"/>
+    <path d="M 1390 820 Q 1420 800 1450 830"/>
+  </g>
+  
+  <!-- Mist/Fog -->
+  <ellipse cx="960" cy="900" rx="800" ry="50" fill="#cccccc" opacity="0.1"/>
+  <ellipse cx="400" cy="950" rx="600" ry="40" fill="#dddddd" opacity="0.08"/>
+  <ellipse cx="1400" cy="920" rx="500" ry="35" fill="#cccccc" opacity="0.12"/>
+  
+  <!-- Bats -->
+  <g fill="#000000" opacity="0.6">
+    <path d="M 300 300 Q 295 298 290 300 Q 295 302 300 300 M 310 302 Q 305 300 300 302 Q 305 304 310 302" transform="scale(0.8)"/>
+    <path d="M 1100 250 Q 1095 248 1090 250 Q 1095 252 1100 250 M 1110 252 Q 1105 250 1100 252 Q 1105 254 1110 252" transform="scale(0.9)"/>
+    <path d="M 700 180 Q 695 178 690 180 Q 695 182 700 180 M 710 182 Q 705 180 700 182 Q 705 184 710 182" transform="scale(0.7)"/>
+  </g>
+  
+  <!-- Graveyard Elements -->
+  <g fill="#2a2a2a" opacity="0.7">
+    <!-- Tombstones -->
+    <rect x="1300" y="800" width="30" height="50" rx="15"/>
+    <rect x="1350" y="820" width="25" height="40" rx="12"/>
+    <rect x="1250" y="790" width="35" height="60" rx="17"/>
+    
+    <!-- Cross -->
+    <rect x="1380" y="780" width="8" height="40"/>
+    <rect x="1370" y="790" width="28" height="8"/>
+  </g>
+  
+  <!-- Eerie Glow -->
+  <circle cx="960" cy="540" r="300" fill="#4a0e4e" opacity="0.03"/>
+  
+</svg>
