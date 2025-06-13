@@ -79,21 +79,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { hauntId } = req.params;
       const { skinUrl, progressBarTheme } = req.body;
       
-      // Validate that at least one branding field is provided
+      // Validate that at least one branding field is provided (including empty strings for removal)
       if (skinUrl === undefined && progressBarTheme === undefined) {
-        return res.status(400).json({ error: "At least one branding field (skinUrl or progressBarTheme) must be provided" });
+        return res.status(400).json({ error: "At least one branding field must be provided" });
       }
 
-      // Use FirebaseService to update haunt branding
+      // Use FirebaseService to update haunt branding (allow empty strings for removal)
       const updates: any = {};
-      if (skinUrl !== undefined) updates.skinUrl = skinUrl;
-      if (progressBarTheme !== undefined) updates.progressBarTheme = progressBarTheme;
+      if (skinUrl !== undefined) updates.skinUrl = skinUrl; // Allow empty string
+      if (progressBarTheme !== undefined) updates.progressBarTheme = progressBarTheme; // Allow empty string
       
+      console.log(`Updating branding for ${hauntId}:`, updates);
       await FirebaseService.saveHauntConfig(hauntId, updates);
 
+      const action = (skinUrl === "" || progressBarTheme === "") ? "removed" : "updated";
       res.json({ 
         success: true, 
-        message: "Haunt branding updated successfully",
+        message: `Haunt branding ${action} successfully`,
         updates
       });
       
