@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRoute } from "wouter";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { CalendarIcon, UsersIcon, TrendingUpIcon, TargetIcon, MousePointerClickIcon, GroupIcon, BarChart3Icon, PieChartIcon, ActivityIcon, AwardIcon } from "lucide-react";
+import { CalendarIcon, UsersIcon, TrendingUpIcon, TargetIcon, MousePointerClickIcon, GroupIcon, BarChart3Icon, PieChartIcon, ActivityIcon, AwardIcon, RefreshCwIcon } from "lucide-react";
 
 interface AnalyticsData {
   totalGames: number;
@@ -36,6 +37,12 @@ export default function Analytics() {
   const [, params] = useRoute("/analytics/:hauntId");
   const [timeRange, setTimeRange] = useState<"7d" | "30d" | "90d">("30d");
   const hauntId = params?.hauntId || "headquarters";
+  const queryClient = useQueryClient();
+
+  const refreshData = () => {
+    queryClient.invalidateQueries({ queryKey: ["analytics", hauntId] });
+    queryClient.invalidateQueries({ queryKey: ["ads", hauntId] });
+  };
 
   const { data: analyticsData, isLoading, error } = useQuery<AnalyticsData>({
     queryKey: ["analytics", hauntId, timeRange],
@@ -179,6 +186,15 @@ export default function Analytics() {
                 <Badge variant="outline" className="bg-purple-500/20 text-purple-300 border-purple-500/30 px-3 py-1">
                   Pro Feature
                 </Badge>
+                <Button 
+                  onClick={refreshData}
+                  variant="outline" 
+                  size="sm"
+                  className="bg-emerald-500/20 border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/30"
+                >
+                  <RefreshCwIcon className="w-4 h-4 mr-2" />
+                  Refresh
+                </Button>
               </div>
             </div>
             
