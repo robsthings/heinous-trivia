@@ -1032,23 +1032,27 @@ export default function HauntAdmin() {
                               )}
                               
                               {/* Hover Controls */}
-                              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                                <Button
-                                  onClick={() => setEditingAd(ad)}
-                                  size="sm"
-                                  className="bg-blue-600 hover:bg-blue-700 text-white"
+                              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-3 z-10">
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setEditingAd(ad);
+                                  }}
+                                  className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-md text-sm font-medium shadow-lg transition-colors"
                                   title="Edit this ad"
                                 >
-                                  🖊
-                                </Button>
-                                <Button
-                                  onClick={() => deleteExistingAd(ad.id)}
-                                  size="sm"
-                                  className="bg-red-600 hover:bg-red-700 text-white"
+                                  Edit
+                                </button>
+                                <button
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    deleteExistingAd(ad.id);
+                                  }}
+                                  className="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-md text-sm font-medium shadow-lg transition-colors"
                                   title="Delete this ad"
                                 >
-                                  🗑
-                                </Button>
+                                  Delete
+                                </button>
                               </div>
                               
                               {/* Ad Info Overlay */}
