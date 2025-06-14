@@ -160,8 +160,8 @@ export default function Analytics() {
     <TooltipProvider>
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800">
         <div className="max-w-7xl mx-auto px-6 py-8 space-y-8">
-        {/* Header Section */}
-        <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 shadow-2xl">
+          {/* Header Section */}
+          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 shadow-2xl">
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
             <div className="space-y-3">
               <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
@@ -534,7 +534,15 @@ export default function Analytics() {
                             Math.round(adPerformanceData.reduce((sum, ad) => sum + ad.ctr, 0) / adPerformanceData.length) 
                             : 0}%
                         </div>
-                        <div className="text-gray-300 text-sm">Average CTR</div>
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <div className="text-gray-300 text-sm cursor-help">Average CTR</div>
+                          </TooltipTrigger>
+                          <TooltipContent className="max-w-xs">
+                            <p className="font-semibold mb-1">Mathematical Average</p>
+                            <p>Sum of all individual ad CTRs divided by number of ads. Each ad contributes equally regardless of traffic volume.</p>
+                          </TooltipContent>
+                        </Tooltip>
                       </div>
                     </div>
                   </div>
