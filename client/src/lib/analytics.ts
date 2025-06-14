@@ -26,12 +26,15 @@ export class AnalyticsTracker {
         finalScore: 0,
       };
 
+      console.log("🎮 Starting analytics session:", sessionData);
       const response = await apiRequest("/api/analytics/session", "POST", sessionData);
       const data = await response.json() as { id: number };
 
       this.currentSessionId = data.id;
+      console.log("✅ Analytics session started with ID:", data.id);
       return data.id;
     } catch (error) {
+      console.error("❌ Failed to start analytics session:", error);
       return null;
     }
   }
@@ -63,9 +66,11 @@ export class AnalyticsTracker {
         adId: adId || `ad-${adIndex}`, // Use unique ID when available
         action: "view",
       };
+      console.log("📺 Tracking ad view:", data);
       await apiRequest("/api/analytics/ad-interaction", "POST", data);
+      console.log("✅ Ad view tracked successfully");
     } catch (error) {
-      console.warn("Failed to track ad view:", error);
+      console.error("❌ Failed to track ad view:", error);
     }
   }
 
@@ -78,9 +83,11 @@ export class AnalyticsTracker {
         adId: adId || `ad-${adIndex}`, // Use unique ID when available
         action: "click",
       };
+      console.log("🖱️ Tracking ad click:", data);
       await apiRequest("/api/analytics/ad-interaction", "POST", data);
+      console.log("✅ Ad click tracked successfully");
     } catch (error) {
-      console.warn("Failed to track ad click:", error);
+      console.error("❌ Failed to track ad click:", error);
     }
   }
 
