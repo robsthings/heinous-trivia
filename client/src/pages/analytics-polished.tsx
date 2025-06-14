@@ -55,6 +55,9 @@ export default function AnalyticsPolished() {
   const [, params] = useRoute("/analytics/:hauntId");
   const [timeRange, setTimeRange] = useState<"7d" | "30d" | "90d">("30d");
   const hauntId = params?.hauntId || "headquarters";
+  
+  // Debug: Log component rendering
+  console.log('Analytics component rendering, hauntId:', hauntId, 'timeRange:', timeRange);
 
   const { data: analyticsData, isLoading, error } = useQuery<AnalyticsData>({
     queryKey: ["analytics", hauntId, timeRange],
