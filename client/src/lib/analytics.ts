@@ -54,12 +54,13 @@ export class AnalyticsTracker {
   }
 
   // Track ad interactions
-  static async trackAdView(hauntId: string, adIndex: number): Promise<void> {
+  static async trackAdView(hauntId: string, adIndex: number, adId?: string): Promise<void> {
     try {
       const data = {
         sessionId: this.currentSessionId,
         haunt: hauntId,
         adIndex,
+        adId: adId || `ad-${adIndex}`, // Use unique ID when available
         action: "view",
       };
       await apiRequest("/api/analytics/ad-interaction", "POST", data);
@@ -68,12 +69,13 @@ export class AnalyticsTracker {
     }
   }
 
-  static async trackAdClick(hauntId: string, adIndex: number): Promise<void> {
+  static async trackAdClick(hauntId: string, adIndex: number, adId?: string): Promise<void> {
     try {
       const data = {
         sessionId: this.currentSessionId,
         haunt: hauntId,
         adIndex,
+        adId: adId || `ad-${adIndex}`, // Use unique ID when available
         action: "click",
       };
       await apiRequest("/api/analytics/ad-interaction", "POST", data);

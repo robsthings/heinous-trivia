@@ -68,8 +68,8 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
   useEffect(() => {
     if (!isValidAd || !currentAd || !gameState.currentHaunt) return;
     
-    AnalyticsTracker.trackAdView(gameState.currentHaunt, adIndex);
-  }, [gameState.currentHaunt, adIndex, isValidAd]);
+    AnalyticsTracker.trackAdView(gameState.currentHaunt, adIndex, currentAd.id);
+  }, [gameState.currentHaunt, adIndex, isValidAd, currentAd]);
 
   // Early return after all hooks have been called
   if (!isValidAd || !currentAd) {
@@ -86,7 +86,7 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
     
     if (currentAd.link && currentAd.link !== '#' && currentAd.link.startsWith('http')) {
       console.log('Tracking ad click for analytics');
-      AnalyticsTracker.trackAdClick(gameState.currentHaunt, adIndex);
+      AnalyticsTracker.trackAdClick(gameState.currentHaunt, adIndex, currentAd.id);
       onVisitAd(currentAd.link);
     } else {
       console.log('Ad click not tracked - invalid link:', currentAd.link);

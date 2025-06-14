@@ -1039,18 +1039,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Track ad interactions for analytics
   app.post("/api/analytics/ad-interaction", async (req, res) => {
     try {
-      const { sessionId, haunt, adIndex, action } = req.body;
+      const { sessionId, haunt, adIndex, adId, action } = req.body;
       
       if (!firestore) {
         throw new Error('Firebase not configured');
       }
 
-      console.log(`📺 Tracking ad ${action} for haunt: ${haunt}, ad: ${adIndex}, session: ${sessionId}`);
+      console.log(`📺 Tracking ad ${action} for haunt: ${haunt}, ad: ${adId || adIndex}, session: ${sessionId}`);
 
       const interactionData = {
         sessionId,
         hauntId: haunt,
         adIndex: parseInt(adIndex),
+        adId: adId || `ad-${adIndex}`, // Store unique ad ID
         type: action, // 'view' or 'click'
         timestamp: new Date(),
         playerId: req.sessionID || 'anonymous',

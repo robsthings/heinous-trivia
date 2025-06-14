@@ -68,29 +68,39 @@ export default function Analytics() {
   });
 
   const { data: adPerformanceData, isLoading: adMetricsLoading } = useQuery<AdPerformance[]>({
-    queryKey: ["adPerformance", hauntId, timeRange, adsData],
+    queryKey: ["adPerformance", hauntId, timeRange, adsData, analyticsData],
     queryFn: async () => {
-      if (!adsData || adsData.length === 0) return [];
+      if (!adsData || adsData.length === 0 || !analyticsData) return [];
       
-      // Use the real ad interaction data from the analytics API
-      // We know from the analytics API that there's 1 view and 2 clicks for ad index 0
-      const adPerformance: AdPerformance[] = adsData.map((ad, index) => {
-        let views = 0;
-        let clicks = 0;
-        
-        // Ad index 0 has the real interaction data from the analytics logs
-        if (index === 0) {
-          views = 1; // From the analytics: "1 views, 2 clicks, 200% CTR"
-          clicks = 2;
+      // Fetch detailed ad interactions from the analytics API
+      const response = await fetch(`/api/analytics/ad-interactions/${hauntId}?timeRange=${timeRange}`);
+      let adInteractions = [];
+      
+      if (response.ok) {
+        adInteractions = await response.json();
+      }
+      
+      // Group interactions by ad ID
+      const interactionMap = new Map();
+      adInteractions.forEach(interaction => {
+        const adId = interaction.adId || `ad-${interaction.adIndex}`;
+        if (!interactionMap.has(adId)) {
+          interactionMap.set(adId, { views: 0, clicks: 0 });
         }
-        // Other ads currently have no tracked interactions
-        
-        const ctr = views > 0 ? Math.round((clicks / views) * 100) : 0;
+        const stats = interactionMap.get(adId);
+        if (interaction.type === 'view') stats.views++;
+        if (interaction.type === 'click') stats.clicks++;
+      });
+      
+      // Map ads to their performance data
+      const adPerformance: AdPerformance[] = adsData.map((ad) => {
+        const stats = interactionMap.get(ad.id) || { views: 0, clicks: 0 };
+        const ctr = stats.views > 0 ? Math.round((stats.clicks / stats.views) * 100) : 0;
         
         return {
           ...ad,
-          views,
-          clicks,
+          views: stats.views,
+          clicks: stats.clicks,
           ctr
         };
       });
@@ -98,7 +108,7 @@ export default function Analytics() {
       // Sort by CTR (highest first)
       return adPerformance.sort((a, b) => b.ctr - a.ctr);
     },
-    enabled: !!hauntId && !!adsData,
+    enabled: !!hauntId && !!adsData && !!analyticsData,
   });
 
   if (error) {
