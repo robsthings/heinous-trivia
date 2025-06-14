@@ -611,11 +611,13 @@ function Game() {
             </Card>
           )
         ) : (
-          <TriviaCard
-            gameState={gameState}
-            onSelectAnswer={handleSelectAnswer}
-            onNextQuestion={handleNextQuestion}
-          />
+          !gameState.showAd && (
+            <TriviaCard
+              gameState={gameState}
+              onSelectAnswer={handleSelectAnswer}
+              onNextQuestion={handleNextQuestion}
+            />
+          )
         )}
       </main>
 
