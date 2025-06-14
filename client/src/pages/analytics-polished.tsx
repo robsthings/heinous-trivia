@@ -14,41 +14,6 @@ interface AnalyticsData {
   returnPlayerRate: number;
   adClickThrough: number;
   averageScore: number;
-  competitiveMetrics: {
-    topScore: number;
-    averageScore: number;
-    participationRate: number;
-  };
-  engagementMetrics?: {
-    totalPlayers: number;
-    returningPlayers: number;
-    returnRate: number;
-    averageSessionTime: number;
-    completionRate: number;
-    peakDay: string;
-    dailyAverage: number;
-    playerSessions: Array<{
-      playerName: string;
-      sessions: number;
-      totalScore: number;
-      lastPlayed: any;
-    }>;
-  };
-  questionAnalytics: Array<{
-    question: string;
-    correctRate: number;
-    rank: string;
-  }>;
-  dailyStats: Array<{
-    date: string;
-    games: number;
-    players: number;
-  }>;
-  leaderboard: Array<{
-    date: string;
-    playerName: string;
-    score: number;
-  }>;
 }
 
 export default function AnalyticsPolished() {
