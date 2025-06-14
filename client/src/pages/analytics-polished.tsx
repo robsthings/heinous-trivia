@@ -59,11 +59,15 @@ export default function AnalyticsPolished() {
   const { data: analyticsData, isLoading, error } = useQuery<AnalyticsData>({
     queryKey: ["analytics", hauntId, timeRange],
     queryFn: async () => {
+      console.log(`🔍 Fetching analytics for ${hauntId} with timeRange ${timeRange}`);
       const response = await fetch(`/api/analytics/${hauntId}?timeRange=${timeRange}`);
       if (!response.ok) {
         throw new Error('Failed to fetch analytics data');
       }
-      return response.json();
+      const data = await response.json();
+      console.log('📊 Frontend received analytics data:', data);
+      console.log('📊 Ad engagement value:', data.adClickThrough);
+      return data;
     },
     enabled: !!hauntId,
   });
@@ -364,8 +368,6 @@ export default function AnalyticsPolished() {
                         <span className="text-gray-300">Ad Engagement</span>
                       </div>
                       <span className="text-white font-medium">{analyticsData?.adClickThrough || 0}%</span>
-                      {/* Debug: Log the actual data */}
-                      {console.log('📊 Frontend ad engagement data:', analyticsData?.adClickThrough)}
                     </div>
                   </div>
                 </CardContent>
