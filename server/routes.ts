@@ -770,6 +770,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Track ad interactions for analytics
+  app.post("/api/analytics/ad-interaction", async (req, res) => {
+    try {
+      const { sessionId, haunt, adIndex, action } = req.body;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+
+      console.log(`📺 Tracking ad ${action} for haunt: ${haunt}, ad: ${adIndex}, session: ${sessionId}`);
+
+      const interactionData = {
+        sessionId,
+        hauntId: haunt,
+        adIndex: parseInt(adIndex),
+        type: action, // 'view' or 'click'
+        timestamp: new Date(),
+        playerId: req.sessionID || 'anonymous'
+      };
+
+      await firestore.collection('ad-interactions').add(interactionData);
+      
+      res.json({ success: true });
+    } catch (error) {
+      console.error("❌ Failed to track ad interaction:", error);
+      res.status(500).json({ error: "Failed to track ad interaction" });
+    }
+  });
+
   // Analytics endpoint for individual haunts with real Firebase data
   app.get("/api/analytics/:hauntId", async (req, res) => {
     try {
