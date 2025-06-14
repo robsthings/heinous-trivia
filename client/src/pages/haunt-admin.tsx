@@ -340,9 +340,11 @@ export default function HauntAdmin() {
 
   const loadUploadedAds = async () => {
     try {
-      // These would require additional server endpoints if needed
-      // For now, set empty array to avoid Firebase calls
-      setUploadedAds([]);
+      const response = await fetch(`/api/ads/${hauntId}`);
+      if (response.ok) {
+        const ads = await response.json();
+        setUploadedAds(ads);
+      }
     } catch (error) {
       console.error('Failed to load ads:', error);
     }
@@ -962,233 +964,83 @@ export default function HauntAdmin() {
                 </div>
               </CardHeader>
               <CardContent>
-                {/* Current Ads Section */}
-                {uploadedAds.length > 0 && (
-                  <div className="space-y-4 mb-6">
-                    <h3 className="text-white font-medium">Current Ads</h3>
-                    {uploadedAds.map((ad) => (
-                      <div key={ad.id} className="border border-gray-600 rounded-lg p-4 bg-gray-800/30">
-                        <div className="flex justify-between items-start mb-3">
-                          <div className="flex-1">
-                            <h4 className="text-white font-medium">{ad.title}</h4>
-                            <p className="text-gray-400 text-sm">{ad.description}</p>
-                            {ad.link && ad.link !== "#" && (
-                              <a href={ad.link} target="_blank" rel="noopener noreferrer" 
-                                 className="text-blue-400 text-sm hover:underline flex items-center gap-1 mt-1">
-                                <ExternalLink className="w-3 h-3" />
-                                {ad.link}
-                              </a>
-                            )}
-                          </div>
-                          <div className="flex gap-2">
-                            <Button
-                              onClick={() => setEditingAd(ad)}
-                              variant="outline"
-                              size="sm"
-                              className="border-blue-600 text-blue-400 hover:bg-blue-600 hover:text-white"
-                            >
-                              Edit
-                            </Button>
-                            <Button
-                              onClick={() => deleteExistingAd(ad.id)}
-                              variant="outline"
-                              size="sm"
-                              className="border-red-600 text-red-400 hover:bg-red-600 hover:text-white"
-                            >
-                              Delete
-                            </Button>
-                          </div>
-                        </div>
-                        {ad.imageUrl && (
-                          <img 
-                            src={ad.imageUrl} 
-                            alt={ad.title}
-                            className="w-full max-w-xs h-24 object-cover rounded border border-gray-600"
-                          />
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                {/* Add New Ad Button */}
-                {uploadedAds.length < getAdLimit(hauntConfig.tier) && (
-                  <div className="mb-4">
-                    <Button
-                      onClick={() => setShowNewAdForm(true)}
-                      variant="outline"
-                      className="border-green-600 text-green-400 hover:bg-green-600 hover:text-white"
-                    >
-                      + Add New Ad
-                    </Button>
-                  </div>
-                )}
-
-                {/* Legacy Bulk Upload Section */}
-                <div className="space-y-4">
-                  <h3 className="text-white font-medium border-t border-gray-600 pt-4">Bulk Upload (replaces all ads)</h3>
-                  {adFiles.map((ad, index) => (
-                    <div key={ad.id} className="border border-gray-600 rounded-lg p-4 bg-gray-800/30">
-                      <div className="flex justify-between items-center mb-3">
-                        <h4 className="text-white font-medium">Ad #{index + 1}</h4>
-                        {adFiles.length > 1 && (
-                          <Button
-                            onClick={() => setAdFiles(prev => prev.filter((_, i) => i !== index))}
-                            variant="outline"
-                            size="sm"
-                            className="border-red-600 text-red-500 hover:bg-red-600 hover:text-white text-xs"
-                          >
-                            🗑️ Remove
-                          </Button>
-                        )}
-                      </div>
-                      <div className="space-y-3">
-                        <div className="grid grid-cols-1 gap-3">
-                          <div>
-                            <Label className="text-white text-sm">Ad Title *</Label>
-                            <Input
-                              type="text"
-                              value={ad.title}
-                              onChange={(e) => {
-                                const updated = [...adFiles];
-                                updated[index].title = e.target.value;
-                                setAdFiles(updated);
-                              }}
-                              placeholder="e.g., Midnight Ghost Tours"
-                              className="bg-gray-800 border-gray-600 text-white h-10"
-                            />
-                          </div>
-                          <div>
-                            <Label className="text-white text-sm">Link (Optional)</Label>
-                            <Input
-                              type="url"
-                              value={ad.link}
-                              onChange={(e) => {
-                                const updated = [...adFiles];
-                                updated[index].link = e.target.value;
-                                setAdFiles(updated);
-                              }}
-                              placeholder="https://your-website.com"
-                              className="bg-gray-800 border-gray-600 text-white h-10"
-                            />
-                          </div>
-                        </div>
-                        <div>
-                          <Label className="text-white text-sm">Description</Label>
-                          <Textarea
-                            value={ad.description}
-                            onChange={(e) => {
-                              const updated = [...adFiles];
-                              updated[index].description = e.target.value;
-                              setAdFiles(updated);
-                            }}
-                            placeholder="Brief description of your ad..."
-                            className="bg-gray-800 border-gray-600 text-white min-h-[60px]"
-                          />
-                        </div>
-                        <div>
-                          <Label className="text-white text-sm">Image Upload *</Label>
-                          <Input
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => {
-                              const updated = [...adFiles];
-                              updated[index].file = e.target.files?.[0] || null;
-                              setAdFiles(updated);
-                            }}
-                            className="bg-gray-800 border-gray-600 text-white file:bg-red-600 file:text-white file:border-0 file:rounded-md file:px-3 file:py-1 file:mr-3 file:cursor-pointer"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                  
-                  {adFiles.length < getAdLimit(hauntConfig.tier) && (
-                    <Button
-                      onClick={() => setAdFiles(prev => [...prev, { 
-                        file: null, 
-                        link: "", 
-                        id: `ad${prev.length + 1}`,
-                        title: "",
-                        description: ""
-                      }])}
-                      variant="outline"
-                      className="w-full border-red-600 text-red-500 hover:bg-red-600 hover:text-white"
-                    >
-                      ➕ Add Another Ad
-                    </Button>
-                  )}
-
-                  {/* Current Uploaded Ads */}
-                  {uploadedAds.length > 0 && (
-                    <div className="mt-8 pt-6 border-t border-gray-600">
-                      <h3 className="text-white font-medium mb-4 flex items-center gap-2">
-                        📋 Current Ads ({uploadedAds.length})
-                      </h3>
-                      <div className="space-y-3">
-                        {uploadedAds.map((ad) => (
-                          <div key={ad.id} className="bg-gray-800/50 p-4 rounded-lg border border-gray-600">
-                            <div className="flex items-start justify-between gap-4">
-                              <div className="flex-1">
-                                <div className="flex items-start gap-3">
-                                  {ad.imageUrl && (
-                                    <img 
-                                      src={ad.imageUrl} 
-                                      alt={ad.title}
-                                      className="w-16 h-12 object-cover rounded border border-gray-500"
-                                    />
-                                  )}
-                                  <div className="flex-1">
-                                    <h4 className="text-white font-medium">{ad.title || 'Untitled Ad'}</h4>
-                                    {ad.description && (
-                                      <p className="text-gray-400 text-sm mt-1">{ad.description}</p>
-                                    )}
-                                    {ad.link && (
-                                      <a 
-                                        href={ad.link} 
-                                        target="_blank" 
-                                        rel="noopener noreferrer"
-                                        className="text-blue-400 hover:text-blue-300 text-xs mt-1 inline-flex items-center gap-1"
-                                      >
-                                        <ExternalLink className="w-3 h-3" />
-                                        {ad.link}
-                                      </a>
-                                    )}
-                                  </div>
+                {/* Ad Grid Management */}
+                <div className="space-y-6">
+                  {/* Ad Grid Display */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {Array.from({ length: getAdLimit(hauntConfig.tier) }, (_, index) => {
+                      const ad = uploadedAds[index];
+                      return (
+                        <div key={index} className="relative group">
+                          {ad ? (
+                            // Existing Ad Thumbnail
+                            <div className="relative aspect-[2/1] bg-gray-800 border-2 border-gray-600 rounded-lg overflow-hidden hover:border-gray-500 transition-colors">
+                              {ad.imageUrl && (
+                                <img 
+                                  src={ad.imageUrl} 
+                                  alt={ad.title}
+                                  className="w-full h-full object-cover"
+                                />
+                              )}
+                              {!ad.imageUrl && (
+                                <div className="w-full h-full flex items-center justify-center bg-gray-800">
+                                  <span className="text-gray-500 text-sm">No Image</span>
                                 </div>
+                              )}
+                              
+                              {/* Hover Controls */}
+                              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                                <Button
+                                  onClick={() => setEditingAd(ad)}
+                                  size="sm"
+                                  className="bg-blue-600 hover:bg-blue-700 text-white"
+                                  title="Edit this ad"
+                                >
+                                  🖊
+                                </Button>
+                                <Button
+                                  onClick={() => deleteExistingAd(ad.id)}
+                                  size="sm"
+                                  className="bg-red-600 hover:bg-red-700 text-white"
+                                  title="Delete this ad"
+                                >
+                                  🗑
+                                </Button>
                               </div>
-                              <Button
-                                onClick={async () => {
-                                  if (confirm('Are you sure you want to delete this ad?')) {
-                                    try {
-                                      // Ad deletion would need dedicated server endpoint
-                                      await loadUploadedAds(); // Refresh the list
-                                      toast({
-                                        title: "Ad Deleted",
-                                        description: "The ad has been successfully removed.",
-                                      });
-                                    } catch (error) {
-                                      console.error('Failed to delete ad:', error);
-                                      toast({
-                                        title: "Delete Failed",
-                                        description: "Unable to delete the ad. Please try again.",
-                                        variant: "destructive"
-                                      });
-                                    }
-                                  }
-                                }}
-                                variant="outline"
-                                size="sm"
-                                className="border-red-600 text-red-500 hover:bg-red-600 hover:text-white"
-                              >
-                                🗑️ Delete
-                              </Button>
+                              
+                              {/* Ad Info Overlay */}
+                              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+                                <h4 className="text-white font-medium text-sm truncate">{ad.title}</h4>
+                                {ad.description && (
+                                  <p className="text-gray-300 text-xs truncate mt-1">{ad.description}</p>
+                                )}
+                              </div>
                             </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
+                          ) : (
+                            // Empty Ad Slot
+                            <div 
+                              onClick={() => setShowNewAdForm(true)}
+                              className="aspect-[2/1] bg-gray-800/50 border-2 border-dashed border-gray-600 rounded-lg flex flex-col items-center justify-center hover:border-gray-500 hover:bg-gray-800/70 transition-colors cursor-pointer group"
+                            >
+                              <div className="text-4xl text-gray-500 group-hover:text-gray-400 mb-2">+</div>
+                              <span className="text-gray-500 group-hover:text-gray-400 text-sm font-medium">Add Ad</span>
+                              <span className="text-gray-600 text-xs mt-1">Slot {index + 1}</span>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* Summary Info */}
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-gray-400">
+                      {uploadedAds.length} of {getAdLimit(hauntConfig.tier)} ad slots used
+                    </span>
+                    <span className="text-gray-500">
+                      {getAdLimit(hauntConfig.tier) - uploadedAds.length} slots remaining
+                    </span>
+                  </div>
                 </div>
               </CardContent>
             </Card>

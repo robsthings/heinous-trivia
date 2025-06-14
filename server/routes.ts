@@ -291,6 +291,196 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Individual Ad Management API endpoints
+  
+  // Get ads for a haunt
+  app.get("/api/ads/:hauntId", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      const adsRef = firestore.collection('haunt-ads').doc(hauntId).collection('ads');
+      const adsSnapshot = await adsRef.orderBy('createdAt', 'asc').get();
+      
+      const ads = adsSnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      
+      res.json(ads);
+    } catch (error) {
+      console.error("Error fetching ads:", error);
+      res.status(500).json({ error: "Failed to fetch ads" });
+    }
+  });
+
+  // Add new ad
+  app.post("/api/ads/:hauntId", upload.single('image'), async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      const { title, description, link } = req.body;
+      
+      if (!req.file) {
+        return res.status(400).json({ error: "No image file uploaded" });
+      }
+      
+      if (!title || !title.trim()) {
+        return res.status(400).json({ error: "Ad title is required" });
+      }
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      // Check ad limit based on haunt tier
+      const hauntConfig = await FirebaseService.getHauntConfig(hauntId);
+      const adLimit = hauntConfig?.tier === 'premium' ? 10 : hauntConfig?.tier === 'pro' ? 5 : 3;
+      
+      const adsRef = firestore.collection('haunt-ads').doc(hauntId).collection('ads');
+      const existingAds = await adsRef.get();
+      
+      if (existingAds.size >= adLimit) {
+        return res.status(400).json({ 
+          error: `Ad limit reached. Your ${hauntConfig?.tier || 'basic'} tier allows up to ${adLimit} ads` 
+        });
+      }
+      
+      // Upload image to Firebase Storage
+      const timestamp = Date.now();
+      const fileExtension = path.extname(req.file.originalname);
+      const filename = `ad-${timestamp}${fileExtension}`;
+      const storagePath = `haunt-assets/${hauntId}/ads/`;
+      
+      const uploadResult = await FirebaseService.uploadFile(
+        req.file.buffer,
+        filename,
+        storagePath
+      );
+      
+      // Save ad data to Firestore
+      const adData = {
+        title: title.trim(),
+        description: description?.trim() || "",
+        link: link?.trim() || "#",
+        imageUrl: uploadResult.downloadURL,
+        filename: filename,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+      
+      const adRef = await adsRef.add(adData);
+      
+      res.json({
+        success: true,
+        id: adRef.id,
+        ...adData,
+        message: "Ad added successfully"
+      });
+    } catch (error) {
+      console.error("Error adding ad:", error);
+      res.status(500).json({ error: "Failed to add ad" });
+    }
+  });
+
+  // Update existing ad
+  app.put("/api/ads/:hauntId/:adId", upload.single('image'), async (req, res) => {
+    try {
+      const { hauntId, adId } = req.params;
+      const { title, description, link } = req.body;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      const adRef = firestore.collection('haunt-ads').doc(hauntId).collection('ads').doc(adId);
+      const adDoc = await adRef.get();
+      
+      if (!adDoc.exists) {
+        return res.status(404).json({ error: "Ad not found" });
+      }
+      
+      const updateData: any = {
+        updatedAt: new Date()
+      };
+      
+      // Update text fields if provided
+      if (title && title.trim()) {
+        updateData.title = title.trim();
+      }
+      
+      if (description !== undefined) {
+        updateData.description = description.trim();
+      }
+      
+      if (link !== undefined) {
+        updateData.link = link.trim() || "#";
+      }
+      
+      // If new image is uploaded, replace the old one
+      if (req.file) {
+        const timestamp = Date.now();
+        const fileExtension = path.extname(req.file.originalname);
+        const filename = `ad-${timestamp}${fileExtension}`;
+        const storagePath = `haunt-assets/${hauntId}/ads/`;
+        
+        const uploadResult = await FirebaseService.uploadFile(
+          req.file.buffer,
+          filename,
+          storagePath
+        );
+        
+        updateData.imageUrl = uploadResult.downloadURL;
+        updateData.filename = filename;
+      }
+      
+      await adRef.update(updateData);
+      
+      const updatedAd = await adRef.get();
+      
+      res.json({
+        success: true,
+        id: adId,
+        ...updatedAd.data(),
+        message: "Ad updated successfully"
+      });
+    } catch (error) {
+      console.error("Error updating ad:", error);
+      res.status(500).json({ error: "Failed to update ad" });
+    }
+  });
+
+  // Delete ad
+  app.delete("/api/ads/:hauntId/:adId", async (req, res) => {
+    try {
+      const { hauntId, adId } = req.params;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      const adRef = firestore.collection('haunt-ads').doc(hauntId).collection('ads').doc(adId);
+      const adDoc = await adRef.get();
+      
+      if (!adDoc.exists) {
+        return res.status(404).json({ error: "Ad not found" });
+      }
+      
+      // Delete the ad document
+      await adRef.delete();
+      
+      res.json({
+        success: true,
+        message: "Ad deleted successfully"
+      });
+    } catch (error) {
+      console.error("Error deleting ad:", error);
+      res.status(500).json({ error: "Failed to delete ad" });
+    }
+  });
+
   // Save leaderboard entry (haunt-specific)
   app.post("/api/leaderboard/:hauntId", async (req, res) => {
     try {
