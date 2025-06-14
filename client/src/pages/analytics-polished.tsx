@@ -260,48 +260,135 @@ export default function AnalyticsPolished() {
           </TabsContent>
 
           <TabsContent value="engagement" className="space-y-6">
-            <Card className="bg-slate-800/50 border-gray-700">
-              <CardHeader>
-                <CardTitle className="text-white">Player Engagement</CardTitle>
-                <CardDescription className="text-gray-400">Engagement and retention metrics</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-3">
-                      <Users className="h-5 w-5 text-blue-400" />
-                      <div>
-                        <p className="text-white font-medium">Total Players</p>
-                        <p className="text-gray-400 text-sm">{analyticsData?.uniquePlayers || 0} unique players</p>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Player Engagement Overview */}
+              <Card className="bg-slate-800/50 border-gray-700">
+                <CardHeader>
+                  <CardTitle className="text-white">Player Engagement</CardTitle>
+                  <CardDescription className="text-gray-400">Core engagement metrics that matter to your haunt</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-6">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="bg-slate-700/50 p-4 rounded-lg text-center">
+                        <Users className="h-6 w-6 text-blue-400 mx-auto mb-2" />
+                        <p className="text-2xl font-bold text-white">{analyticsData?.engagementMetrics?.totalPlayers || analyticsData?.uniquePlayers || 0}</p>
+                        <p className="text-gray-400 text-sm">Total Players</p>
+                      </div>
+                      <div className="bg-slate-700/50 p-4 rounded-lg text-center">
+                        <TrendingUp className="h-6 w-6 text-green-400 mx-auto mb-2" />
+                        <p className="text-2xl font-bold text-white">{analyticsData?.engagementMetrics?.returningPlayers || 0}</p>
+                        <p className="text-gray-400 text-sm">Return Players</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <Clock className="h-5 w-5 text-green-400" />
-                      <div>
-                        <p className="text-white font-medium">Return Rate</p>
-                        <p className="text-gray-400 text-sm">{analyticsData?.returnPlayerRate || 0}% return players</p>
+                    
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-300">Return Rate</span>
+                        <span className="text-white font-medium">{analyticsData?.engagementMetrics?.returnRate || analyticsData?.returnPlayerRate || 0}%</span>
+                      </div>
+                      <div className="w-full bg-slate-600 rounded-full h-2">
+                        <div 
+                          className="bg-green-400 h-2 rounded-full transition-all duration-500" 
+                          style={{ width: `${Math.min(analyticsData?.engagementMetrics?.returnRate || analyticsData?.returnPlayerRate || 0, 100)}%` }}
+                        ></div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-3">
+                      <div className="flex justify-between items-center">
+                        <span className="text-gray-300">Completion Rate</span>
+                        <span className="text-white font-medium">{analyticsData?.engagementMetrics?.completionRate || analyticsData?.competitiveMetrics?.participationRate || 0}%</span>
+                      </div>
+                      <div className="w-full bg-slate-600 rounded-full h-2">
+                        <div 
+                          className="bg-purple-400 h-2 rounded-full transition-all duration-500" 
+                          style={{ width: `${Math.min(analyticsData?.engagementMetrics?.completionRate || analyticsData?.competitiveMetrics?.participationRate || 0, 100)}%` }}
+                        ></div>
                       </div>
                     </div>
                   </div>
+                </CardContent>
+              </Card>
+
+              {/* Activity Insights */}
+              <Card className="bg-slate-800/50 border-gray-700">
+                <CardHeader>
+                  <CardTitle className="text-white">Activity Insights</CardTitle>
+                  <CardDescription className="text-gray-400">When and how players engage with your haunt</CardDescription>
+                </CardHeader>
+                <CardContent>
                   <div className="space-y-4">
-                    <div className="flex items-center gap-3">
-                      <Eye className="h-5 w-5 text-purple-400" />
-                      <div>
-                        <p className="text-white font-medium">Ad Views</p>
-                        <p className="text-gray-400 text-sm">Analytics tracking active</p>
+                    <div className="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <Clock className="h-5 w-5 text-blue-400" />
+                        <span className="text-gray-300">Avg. Session Time</span>
                       </div>
+                      <span className="text-white font-medium">{analyticsData?.engagementMetrics?.averageSessionTime || 5} min</span>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <MousePointer className="h-5 w-5 text-yellow-400" />
-                      <div>
-                        <p className="text-white font-medium">Click-through Rate</p>
-                        <p className="text-gray-400 text-sm">{analyticsData?.adClickThrough || 0}% ad engagement</p>
+                    
+                    <div className="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <Calendar className="h-5 w-5 text-green-400" />
+                        <span className="text-gray-300">Daily Average</span>
                       </div>
+                      <span className="text-white font-medium">{analyticsData?.engagementMetrics?.dailyAverage || Math.round((analyticsData?.totalGames || 0) / 7)} games</span>
+                    </div>
+                    
+                    <div className="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <TrendingUp className="h-5 w-5 text-purple-400" />
+                        <span className="text-gray-300">Peak Activity</span>
+                      </div>
+                      <span className="text-white font-medium">{analyticsData?.engagementMetrics?.peakDay || 'Recent'}</span>
+                    </div>
+                    
+                    <div className="flex items-center justify-between p-3 bg-slate-700/50 rounded-lg">
+                      <div className="flex items-center gap-3">
+                        <MousePointer className="h-5 w-5 text-yellow-400" />
+                        <span className="text-gray-300">Ad Engagement</span>
+                      </div>
+                      <span className="text-white font-medium">{analyticsData?.adClickThrough || 0}%</span>
                     </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Most Active Players */}
+            {analyticsData?.engagementMetrics?.playerSessions && analyticsData.engagementMetrics.playerSessions.length > 0 && (
+              <Card className="bg-slate-800/50 border-gray-700">
+                <CardHeader>
+                  <CardTitle className="text-white">Most Active Players</CardTitle>
+                  <CardDescription className="text-gray-400">Your most engaged visitors</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    {analyticsData.engagementMetrics.playerSessions.slice(0, 5).map((player, index) => (
+                      <div key={index} className="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
+                            index === 0 ? 'bg-yellow-500 text-black' : 
+                            index === 1 ? 'bg-gray-400 text-black' : 
+                            index === 2 ? 'bg-amber-600 text-white' : 'bg-slate-600 text-white'
+                          }`}>
+                            {index + 1}
+                          </div>
+                          <div>
+                            <p className="text-white font-medium">{player.playerName}</p>
+                            <p className="text-gray-400 text-sm">{player.sessions} sessions</p>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-white font-medium">{player.totalScore}</p>
+                          <p className="text-gray-400 text-sm">total score</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
           </TabsContent>
         </Tabs>
 

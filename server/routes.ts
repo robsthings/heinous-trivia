@@ -886,23 +886,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const totalGames = allEntries.length;
       
       const uniquePlayerIds = new Set();
+      const playerNames = new Set();
       let totalScore = 0;
       let maxScore = 0;
       let groupSessions = 0;
       let totalGroupSize = 0;
       let completedGames = 0;
       const playerSessions = new Map();
+      const dailyActivity = new Map();
 
       // Process all game entries
       allEntries.forEach(entry => {
+        // Track unique players by both ID and name
         if (entry.playerId) {
           uniquePlayerIds.add(entry.playerId);
+        }
+        if (entry.playerName && entry.playerName !== 'Anonymous') {
+          playerNames.add(entry.playerName);
           
           // Track sessions per player for return rate
-          if (!playerSessions.has(entry.playerId)) {
-            playerSessions.set(entry.playerId, []);
+          if (!playerSessions.has(entry.playerName)) {
+            playerSessions.set(entry.playerName, []);
           }
-          playerSessions.get(entry.playerId).push(entry);
+          playerSessions.get(entry.playerName).push(entry);
         }
 
         const score = entry.score || entry.finalScore || 0;
@@ -914,12 +920,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
           totalGroupSize += entry.groupSize;
         }
 
-        if (entry.questionsAnswered > 0 || entry.completedAt) {
+        if (entry.questionsAnswered > 0 || entry.completedAt || score > 0) {
           completedGames++;
+        }
+
+        // Track daily activity
+        if (entry.timestamp) {
+          const date = new Date(entry.timestamp.toDate ? entry.timestamp.toDate() : entry.timestamp);
+          const dayKey = date.toISOString().split('T')[0];
+          if (!dailyActivity.has(dayKey)) {
+            dailyActivity.set(dayKey, { games: 0, players: new Set() });
+          }
+          dailyActivity.get(dayKey).games++;
+          if (entry.playerName) {
+            dailyActivity.get(dayKey).players.add(entry.playerName);
+          }
         }
       });
 
-      const uniquePlayers = uniquePlayerIds.size;
+      // Use named players as primary count, fallback to IDs
+      const uniquePlayers = Math.max(playerNames.size, uniquePlayerIds.size);
 
       // Calculate return player rate
       let returnPlayers = 0;
@@ -1007,22 +1027,56 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
+      // Calculate engagement insights
+      const sessionDuration = allEntries.reduce((sum, entry) => {
+        return sum + (entry.questionsAnswered || 10) * 30; // Estimate 30 seconds per question
+      }, 0) / (totalGames || 1);
+
+      const peakPlayTimes = dailyData.reduce((peak, day) => {
+        return day.games > peak.games ? day : peak;
+      }, { date: 'N/A', games: 0 });
+
+      const engagementMetrics = {
+        totalPlayers: uniquePlayers,
+        returningPlayers: returnPlayers,
+        returnRate: Math.round(returnPlayerRate),
+        averageSessionTime: Math.round(sessionDuration / 60), // Convert to minutes
+        completionRate: Math.round(participationRate),
+        peakDay: peakPlayTimes.date,
+        dailyAverage: Math.round(totalGames / Math.max(dailyData.length, 1)),
+        playerSessions: Array.from(playerSessions.entries()).map(([name, sessions]) => ({
+          playerName: name,
+          sessions: sessions.length,
+          totalScore: sessions.reduce((sum, s) => sum + (s.score || 0), 0),
+          lastPlayed: sessions[sessions.length - 1]?.timestamp
+        })).slice(0, 10) // Top 10 most active players
+      };
+
       const analyticsData = {
         totalGames,
         uniquePlayers,
         returnPlayerRate: Math.round(returnPlayerRate),
         adClickThrough: Math.round(adClickThrough),
+        averageScore: Math.round(averageScore),
         bestQuestions,
         competitiveMetrics: {
           averageScore: Math.round(averageScore),
           topScore: maxScore,
           participationRate: Math.round(participationRate)
         },
+        engagementMetrics,
         averageGroupSize: Math.round(averageGroupSize * 10) / 10,
         timeRangeData: {
           daily: dailyData,
           weekly: []
-        }
+        },
+        questionAnalytics: bestQuestions,
+        dailyStats: dailyData,
+        leaderboard: leaderboardEntries.slice(0, 10).map(entry => ({
+          date: entry.timestamp?.toDate?.()?.toISOString() || new Date().toISOString(),
+          playerName: entry.playerName || 'Anonymous',
+          score: entry.score || 0
+        }))
       };
 
       console.log(`📊 Analytics calculated for ${hauntId}:`, {
