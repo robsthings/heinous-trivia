@@ -85,7 +85,7 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
     });
     
     if (currentAd.link && currentAd.link !== '#' && currentAd.link.startsWith('http')) {
-      console.log('Tracking ad click for analytics');
+      console.log('Tracking ad click for analytics - ID:', currentAd.id, 'Index:', adIndex);
       AnalyticsTracker.trackAdClick(gameState.currentHaunt, adIndex, currentAd.id);
       onVisitAd(currentAd.link);
     } else {
