@@ -41,7 +41,7 @@ function Router() {
       <Route path="/haunt-auth/:hauntId" component={HauntAuth} />
       <Route path="/haunt-admin/:hauntId" component={HauntAdmin} />
       <Route path="/host-panel/:hauntId" component={HostPanel} />
-      <Route path="/analytics/:hauntId" component={AnalyticsSimple} />
+      <Route path="/analytics/:hauntId" component={Analytics} />
       <Route path="/analytics-test/:hauntId" component={AnalyticsTest} />
       <Route path="/uber-admin" component={UberAdmin} />
       <Route path="/privacy" component={Privacy} />

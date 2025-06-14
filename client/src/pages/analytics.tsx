@@ -11,21 +11,7 @@ interface AnalyticsData {
   uniquePlayers: number;
   returnPlayerRate: number;
   adClickThrough: number;
-  bestQuestions: Array<{
-    question: string;
-    correctRate: number;
-    pack: string;
-  }>;
-  competitiveMetrics: {
-    averageScore: number;
-    topScore: number;
-    participationRate: number;
-  };
-  averageGroupSize: number;
-  timeRangeData: {
-    daily: Array<{ date: string; games: number; players: number; }>;
-    weekly: Array<{ week: string; games: number; players: number; }>;
-  };
+  averageScore: number;
 }
 
 export default function Analytics() {
@@ -85,7 +71,7 @@ export default function Analytics() {
   // Debug logging to verify data
   console.log('Analytics Data:', analyticsData);
   console.log('Total Games:', analyticsData?.totalGames);
-  console.log('Competitive Metrics:', analyticsData?.competitiveMetrics);
+  console.log('Ad Click Through:', analyticsData?.adClickThrough);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
@@ -157,22 +143,11 @@ export default function Analytics() {
 
           <Card className="bg-slate-800 border-slate-700">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-gray-300">Average Group Size</CardTitle>
-              <GroupIcon className="h-4 w-4 text-orange-400" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-white">{analyticsData?.averageGroupSize || 0}</div>
-              <p className="text-xs text-gray-400">Players per group session</p>
-            </CardContent>
-          </Card>
-
-          <Card className="bg-slate-800 border-slate-700">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-gray-300">Competitive Score</CardTitle>
+              <CardTitle className="text-sm font-medium text-gray-300">Average Score</CardTitle>
               <TargetIcon className="h-4 w-4 text-red-400" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-white">{analyticsData?.competitiveMetrics?.averageScore || 0}</div>
+              <div className="text-2xl font-bold text-white">{analyticsData?.averageScore || 0}</div>
               <p className="text-xs text-gray-400">Average score across all games</p>
             </CardContent>
           </Card>
