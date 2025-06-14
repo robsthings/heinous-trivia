@@ -35,7 +35,17 @@ export default function Analytics() {
 
   const { data: analyticsData, isLoading } = useQuery<AnalyticsData>({
     queryKey: ["/api/analytics", hauntId, timeRange],
+    queryFn: async () => {
+      const cacheBuster = Date.now();
+      const response = await fetch(`/api/analytics/${hauntId}?timeRange=${timeRange}&t=${cacheBuster}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch analytics data');
+      }
+      return response.json();
+    },
     enabled: !!hauntId,
+    staleTime: 0,
+    gcTime: 0
   });
 
   if (isLoading) {
