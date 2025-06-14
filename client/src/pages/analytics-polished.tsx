@@ -56,10 +56,7 @@ export default function AnalyticsPolished() {
   const [timeRange, setTimeRange] = useState<"7d" | "30d" | "90d">("30d");
   const hauntId = params?.hauntId || "headquarters";
   
-  // Debug: Log component rendering
-  console.log('Analytics component rendering, hauntId:', hauntId, 'timeRange:', timeRange);
-
-  const { data: analyticsData, isLoading, error } = useQuery<AnalyticsData>({
+  const { data: analyticsData, isLoading, error } = useQuery({
     queryKey: ["analytics", hauntId, timeRange],
     queryFn: async () => {
       console.log(`🔍 Fetching analytics for ${hauntId} with timeRange ${timeRange}`);
@@ -70,13 +67,16 @@ export default function AnalyticsPolished() {
       const data = await response.json();
       console.log('📊 Frontend received analytics data:', data);
       console.log('📊 Ad engagement value:', data.adClickThrough);
-      return data;
+      return data as AnalyticsData;
     },
     enabled: !!hauntId,
-    refetchInterval: 5000, // Refetch every 5 seconds to see updates
-    staleTime: 0, // Always consider data stale
-    cacheTime: 0, // Don't cache results
+    refetchInterval: 5000,
+    staleTime: 0,
   });
+
+  // Debug: Log component rendering
+  console.log('Analytics component rendering, hauntId:', hauntId, 'timeRange:', timeRange);
+  console.log('Current analyticsData:', analyticsData);
 
   if (isLoading) {
     return (
