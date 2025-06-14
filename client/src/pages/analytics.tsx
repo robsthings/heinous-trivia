@@ -74,23 +74,35 @@ export default function Analytics() {
     queryFn: async () => {
       if (!adsData || adsData.length === 0 || !analyticsData) return [];
       
-      // Use the total interaction counts from the main analytics API for now
-      // Since existing interactions are position-based, assign them to the first ad until new tracking kicks in
-      const totalViews = analyticsData.adViews || 1;
-      const totalClicks = analyticsData.adClicks || 2;
+      // Fetch detailed ad interactions from the analytics API
+      const response = await fetch(`/api/analytics/ad-interactions/${hauntId}?timeRange=${timeRange}`);
+      let adInteractions = [];
       
-      // Map ads to their performance data
-      const adPerformance: AdPerformance[] = adsData.map((ad, index) => {
-        // For now, attribute all existing interactions to the first ad
-        // New interactions will be properly tracked by unique ID
-        const views = index === 0 ? totalViews : 0;
-        const clicks = index === 0 ? totalClicks : 0;
-        const ctr = views > 0 ? Math.round((clicks / views) * 100) : 0;
+      if (response.ok) {
+        adInteractions = await response.json();
+      }
+      
+      // Group interactions by unique ad ID for accurate tracking
+      const interactionMap = new Map();
+      adInteractions.forEach((interaction: any) => {
+        const adId = interaction.adId || `ad-${interaction.adIndex}`;
+        if (!interactionMap.has(adId)) {
+          interactionMap.set(adId, { views: 0, clicks: 0 });
+        }
+        const stats = interactionMap.get(adId);
+        if (interaction.type === 'view') stats.views++;
+        if (interaction.type === 'click') stats.clicks++;
+      });
+      
+      // Map ads to their actual performance data by unique ID
+      const adPerformance: AdPerformance[] = adsData.map((ad) => {
+        const stats = interactionMap.get(ad.id) || { views: 0, clicks: 0 };
+        const ctr = stats.views > 0 ? Math.round((stats.clicks / stats.views) * 100) : 0;
         
         return {
           ...ad,
-          views,
-          clicks,
+          views: stats.views,
+          clicks: stats.clicks,
           ctr
         };
       });
