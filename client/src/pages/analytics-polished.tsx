@@ -19,6 +19,21 @@ interface AnalyticsData {
     averageScore: number;
     participationRate: number;
   };
+  engagementMetrics?: {
+    totalPlayers: number;
+    returningPlayers: number;
+    returnRate: number;
+    averageSessionTime: number;
+    completionRate: number;
+    peakDay: string;
+    dailyAverage: number;
+    playerSessions: Array<{
+      playerName: string;
+      sessions: number;
+      totalScore: number;
+      lastPlayed: any;
+    }>;
+  };
   questionAnalytics: Array<{
     question: string;
     correctRate: number;
