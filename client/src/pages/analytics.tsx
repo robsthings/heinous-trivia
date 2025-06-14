@@ -61,6 +61,11 @@ export default function Analytics() {
     );
   }
 
+  // Debug logging to verify data
+  console.log('Analytics Data:', analyticsData);
+  console.log('Total Games:', analyticsData?.totalGames);
+  console.log('Competitive Metrics:', analyticsData?.competitiveMetrics);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
       <div className="max-w-7xl mx-auto">
