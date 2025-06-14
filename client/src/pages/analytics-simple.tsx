@@ -66,8 +66,9 @@ export default function AnalyticsSimple() {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
       <div className="max-w-7xl mx-auto">
         <div className="text-center text-white mb-8">
-          <h1 className="text-3xl font-bold mb-4">Analytics Dashboard</h1>
+          <h1 className="text-3xl font-bold mb-4 bg-green-600 p-4 rounded">SIMPLIFIED Analytics Dashboard</h1>
           <p className="text-gray-300">Haunt: {hauntId}</p>
+          <p className="text-yellow-400 font-bold">New Component - Ad Engagement Fixed</p>
         </div>
 
         {/* Key Metrics Grid */}
@@ -133,8 +134,8 @@ export default function AnalyticsSimple() {
                     <MousePointer className="h-5 w-5 text-yellow-400" />
                     <span className="text-gray-300">Ad Click-Through Rate</span>
                   </div>
-                  <span className="text-white font-medium text-2xl">
-                    {analyticsData?.adClickThrough !== undefined ? `${analyticsData.adClickThrough}%` : 'TEST: 200%'}
+                  <span className="text-white font-bold text-4xl bg-yellow-400 text-black px-4 py-2 rounded">
+                    {analyticsData?.adClickThrough !== undefined ? `${analyticsData.adClickThrough}%` : 'LOADING...'}
                   </span>
                 </div>
               </div>
