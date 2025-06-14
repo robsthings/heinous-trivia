@@ -91,28 +91,7 @@ export class AnalyticsTracker {
     }
   }
 
-  // Track question performance
-  static async trackQuestionAnswer(
-    hauntId: string,
-    questionText: string,
-    questionPack: string,
-    wasCorrect: boolean,
-    timeToAnswer?: number
-  ): Promise<void> {
-    try {
-      const data = {
-        sessionId: this.currentSessionId,
-        haunt: hauntId,
-        questionText,
-        questionPack,
-        wasCorrect,
-        timeToAnswer: timeToAnswer || null,
-      };
-      await apiRequest("POST", "/api/analytics/question-performance", data);
-    } catch (error) {
-      console.warn("Failed to track question performance:", error);
-    }
-  }
+  // Question performance tracking removed - not business critical
 
   // Reset session (for new games)
   static resetSession(): void {

@@ -344,16 +344,7 @@ function Game() {
       return;
     }
     
-    // Track question performance analytics
-    const isCorrect = answerIndex === currentQuestion.correctAnswer;
-    if (gameState.currentHaunt && currentQuestion) {
-      AnalyticsTracker.trackQuestionAnswer(
-        gameState.currentHaunt,
-        currentQuestion.text,
-        currentQuestion.category || 'Default',
-        isCorrect
-      );
-    }
+    // Question performance tracking removed - focusing on ad analytics
     
     setGameState(prev => GameManager.selectAnswer(prev, answerIndex));
   };
