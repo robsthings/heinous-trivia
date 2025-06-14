@@ -48,13 +48,17 @@ function AnalyticsTab({
     queryFn: async () => {
       if (!selectedAnalyticsHaunt) return null;
       
-      const response = await fetch(`/api/analytics/${selectedAnalyticsHaunt}?timeRange=${analyticsTimeRange}`);
+      // Add cache-busting timestamp to ensure fresh data
+      const cacheBuster = Date.now();
+      const response = await fetch(`/api/analytics/${selectedAnalyticsHaunt}?timeRange=${analyticsTimeRange}&t=${cacheBuster}`);
       if (!response.ok) {
         throw new Error('Failed to fetch analytics data');
       }
       return response.json();
     },
-    enabled: !!selectedAnalyticsHaunt
+    enabled: !!selectedAnalyticsHaunt,
+    staleTime: 0, // Always refetch
+    cacheTime: 0  // Don't cache results
   });
 
   const selectedHaunt = allHaunts.find(h => h.id === selectedAnalyticsHaunt);
