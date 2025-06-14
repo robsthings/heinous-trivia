@@ -40,8 +40,10 @@ export default function Analytics() {
   const queryClient = useQueryClient();
 
   const refreshData = () => {
-    queryClient.invalidateQueries({ queryKey: ["analytics", hauntId] });
+    console.log('Refreshing analytics data...');
+    queryClient.invalidateQueries({ queryKey: ["analytics", hauntId, timeRange] });
     queryClient.invalidateQueries({ queryKey: ["ads", hauntId] });
+    console.log('Analytics queries invalidated');
   };
 
   const { data: analyticsData, isLoading, error } = useQuery<AnalyticsData>({
