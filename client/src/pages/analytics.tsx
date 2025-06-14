@@ -5,6 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { CalendarIcon, UsersIcon, TrendingUpIcon, TargetIcon, MousePointerClickIcon, GroupIcon, BarChart3Icon, PieChartIcon, ActivityIcon, AwardIcon } from "lucide-react";
 
 interface AnalyticsData {
@@ -156,8 +157,9 @@ export default function Analytics() {
   console.log('Ad Click Through:', analyticsData?.adClickThrough);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800">
-      <div className="max-w-7xl mx-auto px-6 py-8 space-y-8">
+    <TooltipProvider>
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800">
+        <div className="max-w-7xl mx-auto px-6 py-8 space-y-8">
         {/* Header Section */}
         <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 shadow-2xl">
           <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
@@ -246,7 +248,15 @@ export default function Analytics() {
           {/* Ad Engagement - Highlighted */}
           <Card className="bg-gradient-to-br from-purple-500/20 to-pink-500/10 border-purple-500/30 backdrop-blur-sm ring-2 ring-purple-500/50">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
-              <CardTitle className="text-sm font-medium text-purple-200">Ad Engagement</CardTitle>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <CardTitle className="text-sm font-medium text-purple-200 cursor-help">Ad Engagement</CardTitle>
+                </TooltipTrigger>
+                <TooltipContent className="max-w-xs">
+                  <p className="font-semibold mb-1">Overall Click-Through Rate</p>
+                  <p>Total clicks divided by total views across ALL ads. Weighted by actual traffic volume, so popular ads have more influence on this metric.</p>
+                </TooltipContent>
+              </Tooltip>
               <div className="bg-purple-500/30 p-2 rounded-lg">
                 <MousePointerClickIcon className="h-5 w-5 text-purple-400" />
               </div>
@@ -540,7 +550,8 @@ export default function Analytics() {
             Analytics Dashboard • Pro/Premium Feature
           </p>
         </div>
+        </div>
       </div>
-    </div>
+    </TooltipProvider>
   );
 }
