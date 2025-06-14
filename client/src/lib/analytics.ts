@@ -27,7 +27,7 @@ export class AnalyticsTracker {
       };
 
       console.log("🎮 Starting analytics session:", sessionData);
-      const response = await apiRequest("/api/analytics/session", "POST", sessionData);
+      const response = await apiRequest("POST", "/api/analytics/session", sessionData);
       const data = await response.json() as { id: number };
 
       this.currentSessionId = data.id;
@@ -50,7 +50,7 @@ export class AnalyticsTracker {
         finalScore,
         completedAt: new Date().toISOString(),
       };
-      await apiRequest(`/api/analytics/session/${this.currentSessionId}`, "PUT", updateData);
+      await apiRequest("PUT", `/api/analytics/session/${this.currentSessionId}`, updateData);
     } catch (error) {
       console.warn("Failed to complete analytics session:", error);
     }
@@ -67,7 +67,7 @@ export class AnalyticsTracker {
         action: "view",
       };
       console.log("📺 Tracking ad view:", data);
-      await apiRequest("/api/analytics/ad-interaction", "POST", data);
+      await apiRequest("POST", "/api/analytics/ad-interaction", data);
       console.log("✅ Ad view tracked successfully");
     } catch (error) {
       console.error("❌ Failed to track ad view:", error);
@@ -84,7 +84,7 @@ export class AnalyticsTracker {
         action: "click",
       };
       console.log("🖱️ Tracking ad click:", data);
-      await apiRequest("/api/analytics/ad-interaction", "POST", data);
+      await apiRequest("POST", "/api/analytics/ad-interaction", data);
       console.log("✅ Ad click tracked successfully");
     } catch (error) {
       console.error("❌ Failed to track ad click:", error);
@@ -108,7 +108,7 @@ export class AnalyticsTracker {
         wasCorrect,
         timeToAnswer: timeToAnswer || null,
       };
-      await apiRequest("/api/analytics/question-performance", "POST", data);
+      await apiRequest("POST", "/api/analytics/question-performance", data);
     } catch (error) {
       console.warn("Failed to track question performance:", error);
     }

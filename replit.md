@@ -87,6 +87,8 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 - Authenticated write access for admin uploads
 
 ## Changelog
+- June 14, 2025: Fixed critical analytics tracking system bug - corrected apiRequest parameter order (method, url, data) that was preventing all ad interactions from being recorded during gameplay
+- June 14, 2025: Updated ad tracking from position-based to unique ID-based analytics to handle randomized ad serving correctly  
 - June 14, 2025: Completed individual ad management system with grid-based interface supporting hover controls for edit/delete operations on each ad - migrated existing headquarters ads from legacy Firebase collection structure to new individual management API endpoints
 - June 14, 2025: Added Ad Performance Metrics section to analytics dashboard with professional table layout displaying ad thumbnails, views, clicks, CTR, and performance badges - integrates real interaction data from existing analytics system
 - June 14, 2025: Enhanced analytics dashboard with professional design including gradient backgrounds, progress indicators, and comprehensive metric visualization
