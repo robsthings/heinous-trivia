@@ -296,17 +296,7 @@ export default function Analytics() {
           </Card>
         </div>
 
-        {/* Debug Panel (for development) */}
-        <Card className="bg-slate-800/50 border-slate-700/50">
-          <CardHeader>
-            <CardTitle className="text-lg font-semibold text-gray-300">Analytics Raw Data</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <pre className="text-xs text-green-400 bg-slate-900/50 p-4 rounded-lg overflow-auto">
-              {JSON.stringify(analyticsData, null, 2)}
-            </pre>
-          </CardContent>
-        </Card>
+
 
         {/* Footer */}
         <div className="text-center py-6">
