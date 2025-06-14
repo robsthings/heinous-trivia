@@ -564,10 +564,27 @@ export default function HauntAdmin() {
 
   const updateExistingAd = async (adId: string, updates: any) => {
     try {
-      // Ad update would need dedicated server endpoint
+      const formData = new FormData();
+      
+      if (updates.title) formData.append('title', updates.title);
+      if (updates.description) formData.append('description', updates.description);
+      if (updates.link) formData.append('link', updates.link);
+      if (updates.file) formData.append('image', updates.file);
+      
+      const response = await fetch(`/api/ads/${hauntId}/${adId}`, {
+        method: 'PUT',
+        body: formData
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to update ad');
+      }
+      
+      await loadUploadedAds();
+      
       toast({
         title: "Ad Updated",
-        description: "Ad update processed (server endpoint needed)",
+        description: "Ad updated successfully!",
       });
     } catch (error) {
       console.error('Failed to update ad:', error);
@@ -581,9 +598,18 @@ export default function HauntAdmin() {
 
   const deleteExistingAd = async (adId: string) => {
     try {
-      // Ad deletion would need dedicated server endpoint
+      if (!confirm('Are you sure you want to delete this ad?')) {
+        return;
+      }
       
-      // Reload ads to show updated list
+      const response = await fetch(`/api/ads/${hauntId}/${adId}`, {
+        method: 'DELETE'
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to delete ad');
+      }
+      
       await loadUploadedAds();
       
       toast({
@@ -602,16 +628,33 @@ export default function HauntAdmin() {
 
   const addNewAd = async (newAd: { title: string; description: string; link: string; file: File }) => {
     try {
-      // New ad creation would need dedicated server endpoint
+      const formData = new FormData();
+      formData.append('title', newAd.title);
+      formData.append('description', newAd.description);
+      formData.append('link', newAd.link);
+      formData.append('image', newAd.file);
+      
+      const response = await fetch(`/api/ads/${hauntId}`, {
+        method: 'POST',
+        body: formData
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to add ad');
+      }
+      
+      await loadUploadedAds();
+      
       toast({
         title: "Ad Added",
-        description: "New ad processed (server endpoint needed)",
+        description: "Ad added successfully!",
       });
     } catch (error) {
       console.error('Failed to add ad:', error);
       toast({
         title: "Error",
-        description: "Failed to add ad",
+        description: error.message || "Failed to add ad",
         variant: "destructive"
       });
     }
@@ -1411,9 +1454,86 @@ export default function HauntAdmin() {
           </Card>
         </div>
       )}
+
+      {/* Edit Ad Modal */}
+      {editingAd && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+          <Card className="bg-gray-900 border-gray-600 w-full max-w-md">
+            <CardHeader>
+              <CardTitle className="text-white">Edit Ad</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div>
+                <Label className="text-white text-sm font-medium mb-2 block">Title</Label>
+                <Input
+                  value={editingAd.title || ''}
+                  onChange={(e) => setEditingAd({...editingAd, title: e.target.value})}
+                  placeholder="Ad title"
+                  className="bg-gray-800 border-gray-600 text-white"
+                />
+              </div>
+              <div>
+                <Label className="text-white text-sm font-medium mb-2 block">Description</Label>
+                <Textarea
+                  value={editingAd.description || ''}
+                  onChange={(e) => setEditingAd({...editingAd, description: e.target.value})}
+                  placeholder="Ad description"
+                  className="bg-gray-800 border-gray-600 text-white"
+                />
+              </div>
+              <div>
+                <Label className="text-white text-sm font-medium mb-2 block">Link (optional)</Label>
+                <Input
+                  value={editingAd.link || ''}
+                  onChange={(e) => setEditingAd({...editingAd, link: e.target.value})}
+                  placeholder="https://example.com"
+                  className="bg-gray-800 border-gray-600 text-white"
+                />
+              </div>
+              <div>
+                <Label className="text-white text-sm font-medium mb-2 block">Replace Image (optional)</Label>
+                <Input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => setEditingAd({...editingAd, newFile: e.target.files?.[0] || null})}
+                  className="bg-gray-800 border-gray-600 text-white file:bg-blue-600 file:text-white file:border-0 file:rounded-md file:px-3 file:py-2 file:mr-3 file:cursor-pointer"
+                />
+                <p className="text-gray-400 text-xs mt-1">Leave empty to keep current image</p>
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  onClick={async () => {
+                    const updates: any = {
+                      title: editingAd.title,
+                      description: editingAd.description,
+                      link: editingAd.link
+                    };
+                    
+                    if (editingAd.newFile) {
+                      updates.file = editingAd.newFile;
+                    }
+                    
+                    await updateExistingAd(editingAd.id, updates);
+                    setEditingAd(null);
+                  }}
+                  className="bg-blue-600 hover:bg-blue-700 text-white"
+                >
+                  Update Ad
+                </Button>
+                <Button
+                  onClick={() => setEditingAd(null)}
+                  variant="outline"
+                  className="border-gray-600 text-gray-400"
+                >
+                  Cancel
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
       
       <Footer />
-
 
       </div>
     </div>
