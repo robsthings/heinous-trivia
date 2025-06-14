@@ -130,28 +130,12 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
           {/* Main Content - Centered and Responsive */}
           <div className="flex-1 flex flex-col justify-center items-center space-y-4 min-h-0">
             
-            {/* Ad Image - Full display */}
+            {/* Ad Image - Direct display */}
             <div className="w-full px-4">
-              <div className="w-full bg-gradient-to-br from-purple-900 to-red-900 rounded-lg shadow-2xl border-2 border-red-600 p-8 text-center max-h-[50vh] sm:max-h-[60vh] flex flex-col justify-center">
-                <div className="text-6xl mb-4">🎃</div>
-                <h4 className="font-nosifer text-xl text-orange-400 mb-3">
-                  {currentAd.title}
-                </h4>
-                <p className="text-gray-300 text-sm leading-relaxed">
-                  {currentAd.description}
-                </p>
-              </div>
               <img
                 src={currentAd.image || currentAd.imageUrl}
                 alt={currentAd.title}
-                className="hidden w-full max-h-[70vh] h-auto object-contain rounded-lg shadow-2xl border-2 border-red-600"
-                onLoad={(e) => {
-                  // Show the image and hide the fallback if it loads successfully
-                  const target = e.target as HTMLImageElement;
-                  const fallback = target.previousElementSibling as HTMLElement;
-                  target.classList.remove('hidden');
-                  fallback.style.display = 'none';
-                }}
+                className="w-full max-h-[70vh] h-auto object-contain rounded-lg shadow-2xl border-2 border-red-600"
                 onError={(e) => {
                   // Create a better fallback image with haunt branding
                   const canvas = document.createElement('canvas');
