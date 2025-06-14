@@ -787,7 +787,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         adIndex: parseInt(adIndex),
         type: action, // 'view' or 'click'
         timestamp: new Date(),
-        playerId: req.sessionID || 'anonymous'
+        playerId: req.sessionID || 'anonymous',
+        createdAt: new Date()
       };
 
       await firestore.collection('ad-interactions').add(interactionData);
@@ -852,14 +853,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Fetch ad interactions
       let adInteractionsSnapshot;
       try {
+        console.log(`🔍 Querying ad-interactions for hauntId: ${hauntId}`);
         const adInteractionsQuery = firestore.collection('ad-interactions')
-          .where('hauntId', '==', hauntId)
-          .where('timestamp', '>=', startDate)
-          .where('timestamp', '<=', now);
+          .where('hauntId', '==', hauntId);
         adInteractionsSnapshot = await adInteractionsQuery.get();
-        console.log(`📺 Found ${adInteractionsSnapshot.size} ad interactions`);
+        console.log(`📺 Found ${adInteractionsSnapshot.size} ad interactions total`);
+        
+        // Filter by date range in code since Firestore timestamp queries can be tricky
+        const filteredDocs = adInteractionsSnapshot.docs.filter(doc => {
+          const data = doc.data();
+          const timestamp = data.timestamp?.toDate ? data.timestamp.toDate() : new Date(data.timestamp);
+          return timestamp >= startDate && timestamp <= now;
+        });
+        
+        adInteractionsSnapshot = { docs: filteredDocs };
+        console.log(`📺 Found ${filteredDocs.length} ad interactions in date range`);
       } catch (error) {
-        console.log('No ad-interactions collection found');
+        console.log('Error fetching ad-interactions:', error.message);
         adInteractionsSnapshot = { docs: [] };
       }
 
