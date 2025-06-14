@@ -73,6 +73,9 @@ export default function AnalyticsPolished() {
       return data;
     },
     enabled: !!hauntId,
+    refetchInterval: 5000, // Refetch every 5 seconds to see updates
+    staleTime: 0, // Always consider data stale
+    cacheTime: 0, // Don't cache results
   });
 
   if (isLoading) {
