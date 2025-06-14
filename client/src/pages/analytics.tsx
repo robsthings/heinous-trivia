@@ -153,70 +153,20 @@ export default function Analytics() {
           </Card>
         </div>
 
-        {/* Detailed Analytics */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Best Performing Questions */}
-          <Card className="bg-slate-800 border-slate-700">
-            <CardHeader>
-              <CardTitle className="text-white">Top Performing Questions</CardTitle>
-              <CardDescription className="text-gray-400">
-                Questions with highest correct answer rates
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {analyticsData?.bestQuestions?.map((question, index) => (
-                  <div key={index} className="flex items-start justify-between p-3 bg-slate-700 rounded-lg">
-                    <div className="flex-1">
-                      <p className="text-sm text-white font-medium line-clamp-2">{question.question}</p>
-                      <Badge variant="outline" className="mt-1 text-xs">
-                        {question.pack.charAt(0).toUpperCase() + question.pack.slice(1)} Pack
-                      </Badge>
-                    </div>
-                    <div className="text-right ml-4">
-                      <div className="text-lg font-bold text-green-400">{question.correctRate}%</div>
-                      <div className="text-xs text-gray-400">Correct Rate</div>
-                    </div>
-                  </div>
-                )) || (
-                  <p className="text-gray-400 text-center py-4">No question data available</p>
-                )}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Competitive Engagement */}
-          <Card className="bg-slate-800 border-slate-700">
-            <CardHeader>
-              <CardTitle className="text-white">Competitive Engagement</CardTitle>
-              <CardDescription className="text-gray-400">
-                Player performance and engagement metrics
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="flex justify-between items-center p-3 bg-slate-700 rounded-lg">
-                  <span className="text-white">Average Score</span>
-                  <span className="text-xl font-bold text-purple-400">
-                    {analyticsData?.competitiveMetrics?.averageScore || 0}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center p-3 bg-slate-700 rounded-lg">
-                  <span className="text-white">Highest Score</span>
-                  <span className="text-xl font-bold text-yellow-400">
-                    {analyticsData?.competitiveMetrics?.topScore || 0}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center p-3 bg-slate-700 rounded-lg">
-                  <span className="text-white">Participation Rate</span>
-                  <span className="text-xl font-bold text-green-400">
-                    {analyticsData?.competitiveMetrics?.participationRate || 0}%
-                  </span>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+        {/* Raw API Data Display */}
+        <Card className="bg-slate-800 border-slate-700">
+          <CardHeader>
+            <CardTitle className="text-white">Analytics Data (Debug View)</CardTitle>
+            <CardDescription className="text-gray-400">
+              Verifying the 200% ad engagement is properly received from API
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <pre className="text-green-400 text-sm overflow-x-auto bg-slate-900 p-4 rounded">
+              {JSON.stringify(analyticsData, null, 2)}
+            </pre>
+          </CardContent>
+        </Card>
 
         {/* Pro/Premium Feature Notice */}
         <div className="mt-8 text-center">
