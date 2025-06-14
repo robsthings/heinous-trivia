@@ -32,7 +32,7 @@ export default function Info() {
         const s1 = document.createElement("script");
         const s0 = document.getElementsByTagName("script")[0];
         s1.async = true;
-        s1.src = 'https://embed.tawk.to/6841ac9da46165190e586891/1hqr8nqhr';
+        s1.src = 'https://embed.tawk.to/6841ac9da46165190e586891/1it08ki7i';
         s1.charset = 'UTF-8';
         s1.setAttribute('crossorigin', '*');
         s0.parentNode?.insertBefore(s1, s0);
