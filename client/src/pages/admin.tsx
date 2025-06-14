@@ -58,7 +58,7 @@ function AnalyticsTab({
     },
     enabled: !!selectedAnalyticsHaunt,
     staleTime: 0, // Always refetch
-    cacheTime: 0  // Don't cache results
+    gcTime: 0     // Don't cache results
   });
 
   const selectedHaunt = allHaunts.find(h => h.id === selectedAnalyticsHaunt);

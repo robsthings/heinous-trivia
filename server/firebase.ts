@@ -50,9 +50,9 @@ export { firestore, exportedFieldValue as FieldValue };
 export const COLLECTIONS = {
   HAUNTS: 'haunts',
   LEADERBOARDS: 'leaderboards',
-  GAME_SESSIONS: 'game_sessions',
-  AD_INTERACTIONS: 'ad_interactions',
-  QUESTION_PERFORMANCE: 'question_performance'
+  GAME_SESSIONS: 'game-sessions',
+  AD_INTERACTIONS: 'ad-interactions',
+  QUESTION_PERFORMANCE: 'question-performance'
 } as const;
 
 // Helper functions for Firestore operations
