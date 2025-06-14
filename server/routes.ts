@@ -1422,6 +1422,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         uniquePlayers,
         returnPlayerRate: Math.round(returnPlayerRate),
         adClickThrough: Math.round(adClickThrough),
+        adViews,
+        adClicks,
         averageScore: Math.round(averageScore),
         bestQuestions,
         competitiveMetrics: {

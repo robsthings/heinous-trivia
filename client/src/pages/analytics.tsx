@@ -12,6 +12,8 @@ interface AnalyticsData {
   uniquePlayers: number;
   returnPlayerRate: number;
   adClickThrough: number;
+  adViews: number;
+  adClicks: number;
   averageScore: number;
 }
 
