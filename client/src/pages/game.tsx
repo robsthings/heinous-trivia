@@ -189,6 +189,9 @@ function Game() {
         // Initialize player if needed
         if (!playerId || !playerName) {
           setShowNamePrompt(true);
+        } else {
+          // If player info already exists, start analytics session immediately
+          AnalyticsTracker.startSession(haunt, hauntConfig?.mode === "queue" ? 'group' : 'individual');
         }
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Failed to initialize game';
