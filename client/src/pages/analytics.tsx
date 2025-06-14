@@ -55,13 +55,16 @@ export default function Analytics() {
   const { data: adsData, isLoading: adsLoading } = useQuery<AdData[]>({
     queryKey: ["ads", hauntId],
     queryFn: async () => {
-      const response = await fetch(`/api/ads/${hauntId}`);
+      const cacheBuster = Date.now();
+      const response = await fetch(`/api/ads/${hauntId}?t=${cacheBuster}`);
       if (!response.ok) {
         throw new Error('Failed to fetch ads data');
       }
       return response.json();
     },
     enabled: !!hauntId,
+    staleTime: 0,
+    gcTime: 0
   });
 
   const { data: adPerformanceData, isLoading: adMetricsLoading } = useQuery<AdPerformance[]>({
