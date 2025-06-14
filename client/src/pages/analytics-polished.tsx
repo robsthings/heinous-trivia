@@ -364,6 +364,8 @@ export default function AnalyticsPolished() {
                         <span className="text-gray-300">Ad Engagement</span>
                       </div>
                       <span className="text-white font-medium">{analyticsData?.adClickThrough || 0}%</span>
+                      {/* Debug: Log the actual data */}
+                      {console.log('📊 Frontend ad engagement data:', analyticsData?.adClickThrough)}
                     </div>
                   </div>
                 </CardContent>
