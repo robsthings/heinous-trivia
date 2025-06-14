@@ -998,7 +998,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Calculate ad click-through rate
       const adViews = adInteractions.filter(interaction => interaction.type === 'view').length;
       const adClicks = adInteractions.filter(interaction => interaction.type === 'click').length;
-      const adClickThrough = adViews > 0 ? (adClicks / adViews) * 100 : 0;
+      const adClickThrough = adViews > 0 ? Math.round((adClicks / adViews) * 100) : (adClicks > 0 ? 100 : 0);
+      
+      console.log(`📊 Ad engagement: ${adViews} views, ${adClicks} clicks, ${adClickThrough}% CTR`);
+      
+      // Debug: log individual interactions
+      adInteractions.forEach(interaction => {
+        console.log(`  - ${interaction.type}: session ${interaction.sessionId}, ad ${interaction.adIndex}`);
+      });
 
       // Calculate participation rate
       const participationRate = totalGames > 0 ? (completedGames / totalGames) * 100 : 100;
