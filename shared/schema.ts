@@ -173,7 +173,7 @@ export const hauntConfigSchema = z.object({
 });
 
 export const adDataSchema = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   title: z.string(),
   description: z.string(),
   image: z.string().optional(),

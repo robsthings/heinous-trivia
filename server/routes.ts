@@ -1067,6 +1067,45 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get detailed ad interactions for analytics
+  app.get("/api/analytics/ad-interactions/:hauntId", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      const { timeRange = "30d" } = req.query;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      // Calculate date range
+      const now = new Date();
+      const daysBack = timeRange === '7d' ? 7 : timeRange === '90d' ? 90 : 30;
+      const startDate = new Date(now.getTime() - (daysBack * 24 * 60 * 60 * 1000));
+      
+      console.log(`🔍 Fetching ad interactions for ${hauntId}, range: ${timeRange}`);
+      
+      // Fetch ad interactions
+      const adInteractionsQuery = firestore.collection('ad-interactions')
+        .where('hauntId', '==', hauntId);
+      const adInteractionsSnapshot = await adInteractionsQuery.get();
+      
+      // Filter by date range and return all interaction data
+      const interactions = adInteractionsSnapshot.docs
+        .map(doc => doc.data())
+        .filter(data => {
+          const timestamp = data.timestamp?.toDate ? data.timestamp.toDate() : new Date(data.timestamp);
+          return timestamp >= startDate && timestamp <= now;
+        });
+      
+      console.log(`📺 Found ${interactions.length} ad interactions for ${hauntId} in ${timeRange} range`);
+      
+      res.json(interactions);
+    } catch (error) {
+      console.error("Error fetching ad interactions:", error);
+      res.status(500).json({ error: "Failed to fetch ad interactions" });
+    }
+  });
+
   // Analytics endpoint for individual haunts with real Firebase data
   app.get("/api/analytics/:hauntId", async (req, res) => {
     try {
@@ -1269,9 +1308,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       console.log(`📊 Ad engagement: ${adViews} views, ${adClicks} clicks, ${adClickThrough}% CTR`);
       
-      // Debug: log individual interactions
+      // Group interactions by unique ad ID for proper tracking
+      const adPerformanceMap = new Map();
       adInteractions.forEach(interaction => {
-        console.log(`  - ${interaction.type}: session ${interaction.sessionId}, ad ${interaction.adIndex}`);
+        const adId = interaction.adId || `ad-${interaction.adIndex}`;
+        if (!adPerformanceMap.has(adId)) {
+          adPerformanceMap.set(adId, { views: 0, clicks: 0 });
+        }
+        const stats = adPerformanceMap.get(adId);
+        if (interaction.type === 'view') stats.views++;
+        if (interaction.type === 'click') stats.clicks++;
+      });
+      
+      // Debug: log per-ad performance
+      adPerformanceMap.forEach((stats, adId) => {
+        const ctr = stats.views > 0 ? Math.round((stats.clicks / stats.views) * 100) : 0;
+        console.log(`  - Ad ${adId}: ${stats.views} views, ${stats.clicks} clicks, ${ctr}% CTR`);
       });
 
       // Calculate participation rate
