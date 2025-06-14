@@ -33,20 +33,28 @@ export default function Analytics() {
   const [timeRange, setTimeRange] = useState<"7d" | "30d" | "90d">("30d");
   const hauntId = params?.hauntId || "headquarters";
 
-  const { data: analyticsData, isLoading } = useQuery<AnalyticsData>({
-    queryKey: ["/api/analytics", hauntId, timeRange],
+  const { data: analyticsData, isLoading, error } = useQuery<AnalyticsData>({
+    queryKey: ["analytics", hauntId, timeRange],
     queryFn: async () => {
+      console.log(`Fetching analytics for haunt: ${hauntId}, timeRange: ${timeRange}`);
       const cacheBuster = Date.now();
       const response = await fetch(`/api/analytics/${hauntId}?timeRange=${timeRange}&t=${cacheBuster}`);
       if (!response.ok) {
         throw new Error('Failed to fetch analytics data');
       }
-      return response.json();
+      const data = await response.json();
+      console.log('Analytics API Response:', data);
+      return data;
     },
     enabled: !!hauntId,
     staleTime: 0,
     gcTime: 0
   });
+
+  // Add error logging
+  if (error) {
+    console.error('Analytics Query Error:', error);
+  }
 
   if (isLoading) {
     return (
@@ -55,6 +63,19 @@ export default function Analytics() {
           <div className="text-center text-white">
             <h1 className="text-3xl font-bold mb-4">Analytics Dashboard</h1>
             <p>Loading analytics data...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center text-white">
+            <h1 className="text-3xl font-bold mb-4">Analytics Dashboard</h1>
+            <p className="text-red-400">Error loading analytics data: {error.message}</p>
           </div>
         </div>
       </div>
