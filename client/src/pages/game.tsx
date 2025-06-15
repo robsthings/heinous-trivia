@@ -12,19 +12,14 @@ import { GameManager, type GameState } from "@/lib/gameState";
 import type { HauntConfig } from "@shared/schema";
 import { AnalyticsTracker } from "@/lib/analytics";
 import { updateMetaThemeColor } from "@/lib/manifestGenerator";
-import { firestore } from "@/lib/firebase";
-import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { User } from "lucide-react";
 import { Link } from "wouter";
 import { useToast } from "@/hooks/use-toast";
-import type { LeaderboardEntry, TriviaQuestion } from "@shared/schema";
-// CUSTOM SKIN & PROGRESS BAR LOGIC
+import type { LeaderboardEntry } from "@shared/schema";
 import { useCustomSkin } from "@/hooks/use-custom-skin";
-
-
 
 function Game() {
   const [gameState, setGameState] = useState<GameState>(() => 
@@ -34,25 +29,14 @@ function Game() {
   const [error, setError] = useState<string | null>(null);
   const [leaderboard, setLeaderboard] = useState<any[]>([]);
   const [leaderboardLoading, setLeaderboardLoading] = useState(false);
-  const [activeRound, setActiveRound] = useState<ActiveRound | null>(null);
-  const [isGroupMode, setIsGroupMode] = useState(false);
-  const [playerId, setPlayerId] = useState<string>(() => 
-    localStorage.getItem(`heinous-player-${getHauntFromURL()}`) || ""
-  );
   const [playerName, setPlayerName] = useState<string>(() => 
     localStorage.getItem(`heinous-player-name-${getHauntFromURL()}`) || ""
   );
   const [showNamePrompt, setShowNamePrompt] = useState(false);
   const [tempName, setTempName] = useState("");
-  const [groupAnswer, setGroupAnswer] = useState<number | null>(null);
-  const [lastSeenQuestionIndex, setLastSeenQuestionIndex] = useState<number | null>(null);
-  const [countdown, setCountdown] = useState(0);
-  const [groupScore, setGroupScore] = useState(0);
   const [loadedHauntConfig, setLoadedHauntConfig] = useState<HauntConfig | null>(null);
   const { toast } = useToast();
 
-  // CUSTOM SKIN & PROGRESS BAR LOGIC
-  // Apply custom background skin for Pro/Premium haunts
   useCustomSkin(gameState.hauntConfig);
 
   // Listen for branding updates from admin panel
@@ -61,7 +45,6 @@ function Game() {
       if (event.data.type === 'BRANDING_UPDATED' && event.data.hauntId === gameState.currentHaunt) {
         console.log('Branding update received, reloading configuration...');
         
-        // Reload the configuration immediately
         try {
           const updatedConfig = await ConfigLoader.loadHauntConfig(gameState.currentHaunt);
           if (updatedConfig) {
@@ -70,7 +53,6 @@ function Game() {
           }
         } catch (error) {
           console.error('Failed to reload config:', error);
-          // Fallback to hard reload if config update fails
           window.location.href = window.location.href;
         }
       }
@@ -87,102 +69,35 @@ function Game() {
         setError(null);
 
         const haunt = gameState.currentHaunt;
-        
-        // Validate haunt parameter is provided
         if (!haunt) {
-          setError("No haunt specified. Please access the game with a valid haunt parameter (?haunt=yourhaunt)");
-          setIsLoading(false);
+          setError('No haunt specified in URL');
           return;
         }
 
-        // Load haunt configuration from Firebase
-        const hauntConfig = await ConfigLoader.loadHauntConfig(haunt);
-        if (!hauntConfig) {
-          setError(`Haunt '${haunt}' not found. Please check that this haunt exists and is properly configured.`);
-          setIsLoading(false);
-          return;
-        }
+        const [gameConfig, hauntConfig] = await Promise.all([
+          GameManager.initializeGameState(haunt),
+          ConfigLoader.loadHauntConfig(haunt)
+        ]);
 
-        // Set the loaded config immediately for SpookyLoader to use
+        setGameState(prev => ({ 
+          ...prev, 
+          ...gameConfig,
+          hauntConfig: hauntConfig || undefined
+        }));
         setLoadedHauntConfig(hauntConfig);
 
-        // Load trivia questions (includes fallback to starter pack)
-        const questions = await ConfigLoader.loadTriviaQuestions(haunt);
-        
-        // Validate questions array and format
-        if (!Array.isArray(questions) || questions.length === 0) {
-          setError("No trivia questions found! Please ensure the starter pack is properly configured.");
-          setIsLoading(false);
-          return;
-        }
-        
-        // Validate question format to prevent crashes
-        const validQuestions = questions.filter(q => 
-          q && 
-          q.text && 
-          Array.isArray(q.answers) && 
-          q.answers.length > 0 && 
-          typeof q.correctAnswer === 'number' && 
-          q.correctAnswer >= 0 && 
-          q.correctAnswer < q.answers.length
-        );
-        
-        if (validQuestions.length === 0) {
-          setError("No valid trivia questions found! All questions have formatting issues.");
-          setIsLoading(false);
-          return;
-        }
-        
-        if (validQuestions.length < questions.length) {
-          // Filtered out malformed questions for production stability
-        }
-
-        // Load ad data
-        const ads = await ConfigLoader.loadAdData(haunt);
-
-        // Shuffle questions for variety
-        const shuffledQuestions = GameManager.shuffleQuestions(validQuestions);
-
-        setGameState(prev => ({
-          ...prev,
-          hauntConfig,
-          questions: shuffledQuestions,
-          ads,
-        }));
-
-        // Store the haunt ID for launcher persistence
-        localStorage.setItem("lastHauntId", haunt);
-
-        // Inject dynamic manifest for haunt-specific PWA
-        const existingManifest = document.querySelector('link[rel="manifest"]');
-        if (existingManifest) {
-          existingManifest.remove();
-        }
-        
-        const manifestLink = document.createElement('link');
-        manifestLink.rel = 'manifest';
-        manifestLink.href = `/api/manifest/${haunt}`;
-        document.head.appendChild(manifestLink);
-
-        // Update theme color
         if (hauntConfig?.theme?.primaryColor) {
           updateMetaThemeColor(hauntConfig.theme.primaryColor);
         }
 
-        // Group mode disabled - all users default to individual play mode
-        setIsGroupMode(false);
-
-        // Initialize player if needed
-        if (!playerId || !playerName) {
+        if (!playerName) {
           setShowNamePrompt(true);
         } else {
-          // If player info already exists, start analytics session immediately
           AnalyticsTracker.startSession(haunt, 'individual');
         }
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Failed to initialize game';
         setError(errorMessage);
-        // Game initialization failed - handled by error state
       } finally {
         setIsLoading(false);
       }
@@ -191,215 +106,176 @@ function Game() {
     initializeGame();
   }, [gameState.currentHaunt]);
 
-  // Group mode polling disabled - all users use individual play mode
-
-  // Group mode countdown and answer tracking disabled - individual play only
-
-  // Group answer handling disabled - individual play mode only
-
   const savePlayerInfo = (name: string) => {
-    const newPlayerId = playerId || `player_${Math.random().toString(36).substr(2, 9)}`;
     const haunt = gameState.currentHaunt;
     
-    // Save to localStorage for persistence
-    localStorage.setItem(`heinous-player-${haunt}`, newPlayerId);
     localStorage.setItem(`heinous-player-name-${haunt}`, name);
     
-    setPlayerId(newPlayerId);
     setPlayerName(name);
     setShowNamePrompt(false);
     setTempName("");
 
-    // Start analytics session when player info is saved
-    if (haunt) {
-      AnalyticsTracker.startSession(haunt, 'individual');
-    }
+    AnalyticsTracker.startSession(haunt, 'individual');
   };
 
   const handleSelectAnswer = (answerIndex: number) => {
-    // Answer bounds check
-    const currentQuestion = gameState.questions[gameState.currentQuestionIndex];
-    if (answerIndex < 0 || answerIndex >= currentQuestion?.answers?.length) {
-      return;
-    }
-    
-    // Question performance tracking removed - focusing on ad analytics
-    
-    setGameState(prev => GameManager.selectAnswer(prev, answerIndex));
+    GameManager.selectAnswer(gameState, setGameState, answerIndex);
   };
 
   const handleNextQuestion = () => {
-    setGameState(prev => GameManager.nextQuestion(prev));
+    const newState = GameManager.nextQuestion(gameState);
+    setGameState(newState);
   };
 
   const handleCloseAd = () => {
-    setGameState(prev => GameManager.closeAd(prev));
+    setGameState(prev => ({ ...prev, showAd: false }));
   };
 
   const handleVisitAd = (link: string) => {
+    const currentQuestion = gameState.currentQuestionIndex;
+    const adIndex = gameState.currentAdIndex || 0;
+    
+    AnalyticsTracker.trackAdInteraction(gameState.currentHaunt, {
+      adIndex,
+      questionIndex: currentQuestion,
+      type: 'click',
+      timestamp: Date.now(),
+      link
+    });
+
     window.open(link, '_blank');
   };
 
-  const handleSaveScore = async (inputPlayerName?: string) => {
-    const nameToUse = inputPlayerName || playerName;
+  const handleSaveScore = (playerNameOverride?: string) => {
+    const nameToUse = playerNameOverride || playerName;
     
-    // Complete the analytics session before saving score
-    await AnalyticsTracker.completeSession(
-      gameState.questionsAnswered,
-      gameState.correctAnswers,
-      gameState.score
-    );
+    if (nameToUse && gameState.score > 0) {
+      GameManager.saveScore(gameState, nameToUse);
+    }
     
-    await GameManager.saveScore(nameToUse, gameState);
-    
-    // Clear cached leaderboard data to force fresh fetch
-    setLeaderboard([]);
+    setGameState(prev => ({ ...prev, gamePhase: 'completed' }));
   };
 
-  const handlePlayAgain = async () => {
-    // Reload fresh questions and ads for each new game
-    const allQuestions = await ConfigLoader.loadTriviaQuestions(gameState.currentHaunt);
-    const freshAds = await ConfigLoader.loadAdData(gameState.currentHaunt);
-    
-    const validQuestions = allQuestions.filter(q => 
-      q.text && q.answers && q.answers.length >= 2
-    );
-    
-    const shuffledQuestions = GameManager.shuffleQuestions(validQuestions);
-    
-    setGameState(prev => ({
-      ...GameManager.playAgain(prev),
-      questions: shuffledQuestions,
-      ads: freshAds,
-      currentAdIndex: 0, // Reset ad counter for fresh rotation
-    }));
+  const handlePlayAgain = () => {
+    window.location.reload();
   };
 
   const handleViewLeaderboard = async () => {
-    console.log('Opening leaderboard, fetching fresh data for haunt:', gameState.currentHaunt);
-    
-    // Clear existing leaderboard and show loading state
-    setLeaderboard([]);
     setLeaderboardLoading(true);
-    
-    // Show leaderboard in loading state
-    setGameState(prev => ({
-      ...prev,
-      showLeaderboard: true,
-      showEndScreen: false,
-    }));
-    
-    // Fetch fresh data
-    const leaderboardData = await GameManager.getLeaderboard(gameState.currentHaunt);
-    setLeaderboard(leaderboardData);
-    setLeaderboardLoading(false);
-  };
-
-  const handleCloseLeaderboard = () => {
-    setGameState(prev => ({
-      ...prev,
-      showLeaderboard: false,
-      showEndScreen: prev.gameComplete, // Show end screen if game is complete
-    }));
+    try {
+      const response = await fetch(`/api/leaderboard?hauntId=${gameState.currentHaunt}&limit=10`);
+      if (response.ok) {
+        const data = await response.json();
+        setLeaderboard(data);
+      }
+    } catch (error) {
+      console.error('Failed to load leaderboard:', error);
+    } finally {
+      setLeaderboardLoading(false);
+    }
   };
 
   if (isLoading) {
-    return <SpookyLoader message="Loading your horror trivia experience" showProgress={true} hauntConfig={loadedHauntConfig || undefined} />;
-  }
-
-  if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-purple-900 to-black p-3 sm:p-4">
-        <div className="glass-card rounded-xl p-4 sm:p-6 md:p-8 text-center max-w-sm sm:max-w-md w-full">
-          <h2 className="font-creepster text-xl sm:text-2xl text-red-500 mb-3 sm:mb-4">
-            The Spirits Are Restless
-          </h2>
-          <p className="text-gray-300 mb-4 sm:mb-6 text-sm sm:text-base">{error}</p>
-          <button
-            onClick={() => window.location.reload()}
-            className="horror-button px-4 sm:px-6 py-3 rounded-lg font-medium text-white text-sm sm:text-base w-full sm:w-auto"
-          >
-            Try Again
-          </button>
-        </div>
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black flex items-center justify-center">
+        <SpookyLoader 
+          message="Loading your trivia experience..." 
+          showProgress={true}
+          hauntConfig={loadedHauntConfig}
+        />
       </div>
     );
   }
 
-  // Nickname Prompt Component
-  const NicknamePrompt = () => (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <Card className="bg-black/90 border-red-600 text-white max-w-md w-full">
-        <CardHeader>
-          <CardTitle className="text-center text-red-500 flex items-center justify-center gap-2">
-            {isGroupMode ? <Users className="h-6 w-6" /> : <User className="h-6 w-6" />}
-            {isGroupMode ? "Join Group Game" : "Create Your Player Profile"}
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="text-center text-gray-300 text-sm">
-            {isGroupMode 
-              ? "Choose a name that other players will see during the group trivia session."
-              : "Choose a nickname for the leaderboard. Your name will be saved for future games."
-            }
-          </div>
-          
-          <div className="space-y-2">
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black flex items-center justify-center px-4">
+        <Card className="bg-gray-900/50 border-gray-700 text-white max-w-md w-full">
+          <CardHeader>
+            <CardTitle className="text-center text-red-400">Error</CardTitle>
+          </CardHeader>
+          <CardContent className="text-center space-y-4">
+            <p className="text-gray-300">{error}</p>
+            <Link href="/">
+              <Button variant="outline" className="bg-gray-800 border-gray-600 text-white hover:bg-gray-700">
+                Return Home
+              </Button>
+            </Link>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  if (showNamePrompt) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black flex items-center justify-center px-4">
+        <Card className="bg-gray-900/50 border-gray-700 text-white max-w-md w-full">
+          <CardHeader>
+            <CardTitle className="text-center text-red-400 flex items-center justify-center gap-2">
+              <User className="h-6 w-6" />
+              Enter Your Name
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
             <Input
               type="text"
-              placeholder={isGroupMode ? "Your group name..." : "Your nickname..."}
+              placeholder="Your display name"
               value={tempName}
               onChange={(e) => setTempName(e.target.value)}
-              className="bg-gray-800 border-gray-600 text-white"
-              maxLength={20}
-              autoFocus
-              onKeyDown={(e) => {
+              className="bg-gray-800 border-gray-600 text-white placeholder-gray-400"
+              onKeyPress={(e) => {
                 if (e.key === 'Enter' && tempName.trim()) {
-                  e.preventDefault();
                   savePlayerInfo(tempName.trim());
                 }
               }}
             />
-            <div className="text-xs text-gray-400 text-right">
-              {tempName.length}/20 characters
-            </div>
-          </div>
+            <Button 
+              onClick={() => tempName.trim() && savePlayerInfo(tempName.trim())}
+              disabled={!tempName.trim()}
+              className="w-full bg-red-600 hover:bg-red-700"
+            >
+              Start Playing
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
-          <Button 
-            type="button"
-            onClick={() => savePlayerInfo(tempName.trim())}
-            disabled={!tempName.trim()}
-            className="w-full bg-red-600 hover:bg-red-700 disabled:bg-gray-600 disabled:cursor-not-allowed"
-          >
-            {isGroupMode ? "Join Game" : "Start Playing"}
-          </Button>
-          
-          <div className="text-xs text-gray-400 text-center mt-3 leading-relaxed">
-            By playing, you agree to our{" "}
-            <Link href="/privacy" className="text-red-400 hover:text-red-300 underline">
-              Privacy Policy
-            </Link>
-            {" "}and{" "}
-            <Link href="/terms" className="text-red-400 hover:text-red-300 underline">
-              Terms of Use
-            </Link>
-            .
-          </div>
-        </CardContent>
-      </Card>
-    </div>
-  );
+  if (gameState.gamePhase === 'completed') {
+    return (
+      <div className={`game-container min-h-screen ${gameState.hauntConfig?.tier === 'premium' && gameState.hauntConfig?.skinUrl ? '' : 'bg-gradient-to-br from-gray-900 via-purple-900 to-black'}`}>
+        <GameHeader gameState={gameState} />
+        
+        <main className="px-3 sm:px-4 pb-20">
+          <GameEndScreen
+            gameState={gameState}
+            onSaveScore={handleSaveScore}
+            onPlayAgain={handlePlayAgain}
+            onViewLeaderboard={handleViewLeaderboard}
+            playerName={playerName}
+          />
+        </main>
 
-  if (showNamePrompt) {
-    return <NicknamePrompt />;
+        <Leaderboard
+          isVisible={leaderboard.length > 0}
+          leaderboard={leaderboard}
+          onClose={() => setLeaderboard([])}
+          hauntId={gameState.currentHaunt}
+          currentPlayer={playerName}
+          isLoading={leaderboardLoading}
+        />
+
+        <Footer showInstallButton={true} />
+      </div>
+    );
   }
 
   return (
     <div className={`game-container min-h-screen ${gameState.hauntConfig?.tier === 'premium' && gameState.hauntConfig?.skinUrl ? '' : 'bg-gradient-to-br from-gray-900 via-purple-900 to-black'}`}>
       <GameHeader 
-        gameState={gameState} 
-        isGroupMode={false}
-        groupScore={0}
+        gameState={gameState}
       />
       
       <main className="px-3 sm:px-4 pb-20">
@@ -418,23 +294,6 @@ function Game() {
         onVisitAd={handleVisitAd}
       />
 
-      <GameEndScreen
-        gameState={gameState}
-        onSaveScore={handleSaveScore}
-        onPlayAgain={handlePlayAgain}
-        onViewLeaderboard={handleViewLeaderboard}
-        playerName={playerName}
-      />
-
-      <Leaderboard
-        isVisible={gameState.showLeaderboard}
-        leaderboard={leaderboard}
-        onClose={handleCloseLeaderboard}
-        hauntId={gameState.currentHaunt}
-        currentPlayer={playerId}
-        isLoading={leaderboardLoading}
-      />
-      
       <Footer showInstallButton={true} />
     </div>
   );

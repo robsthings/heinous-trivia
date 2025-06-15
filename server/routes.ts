@@ -842,39 +842,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   // GROUP_MODE_END
 
-  // GROUP_MODE_START - Host panel round management
-  // Host panel - start new round
-  app.post("/api/host/:hauntId/start-round", async (req, res) => {
-    try {
-      const { hauntId } = req.params;
-      const roundData = req.body;
-      
-      if (!firestore) {
-        throw new Error('Firebase not configured');
-      }
-      
-            // GUARD: Group mode disabled - prevent activeRound operations
-      console.log(`[GROUP MODE DISABLED] Blocked activeRound operation for haunt: ${req.params.hauntId}`);
-      res.status(403).json({ 
-        error: "Group mode functionality is disabled", 
-        message: "Individual play mode is now enforced across all haunts" 
-      });
-      return;
-      
 
-      
-      const roundRef = firestore.collection('activeRound').doc(hauntId);
-
-      
-      await roundRef.set(roundData);
-      
-      res.json({ success: true });
-    } catch (error) {
-      console.error("Error starting round:", error);
-      res.status(500).json({ error: "Failed to start round" });
-    }
-  });
-  // GROUP_MODE_END
 
   // GROUP_MODE_START - Host panel round updates
   // Host panel - update round
