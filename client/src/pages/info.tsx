@@ -157,6 +157,7 @@ export default function Info() {
                 <li>✓ 3 branded ads maximum</li>
                 <li>✓ Basic question packs</li>
                 <li>✓ Individual Player Mode</li>
+                <li>✓ 3 Random Sidequests</li>
                 <li>✓ Mobile-responsive design</li>
                 <li>✓ Player leaderboards</li>
                 <li>✓ Email support</li>
@@ -177,6 +178,7 @@ export default function Info() {
                 <li>✓ Advanced question packs</li>
                 <li>✓ Custom branding & colors</li>
                 <li>✓ Individual Player Mode</li>
+                <li>✓ 5 Random Sidequests</li>
                 <li>✓ Analytics dashboard</li>
                 <li>✓ Priority support</li>
               </ul>
@@ -193,6 +195,7 @@ export default function Info() {
                 <li>✓ Elite question packs</li>
                 <li>✓ Custom branding & colors</li>
                 <li>✓ Individual Player Mode</li>
+                <li>✓ 10 Random Sidequests</li>
                 <li>✓ Analytics dashboard</li>
                 <li>✓ One additional Basic game</li>
                 <li>✓ Near white-label experience</li>
