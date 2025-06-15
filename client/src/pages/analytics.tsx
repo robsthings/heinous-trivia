@@ -21,6 +21,7 @@ interface AnalyticsData {
 }
 
 interface AdData {
+  id: string;
   title: string;
   description: string;
   link: string;
@@ -81,9 +82,13 @@ export default function Analytics() {
   });
 
   const { data: adPerformanceData, isLoading: adMetricsLoading } = useQuery<AdPerformance[]>({
-    queryKey: ["adPerformance", hauntId, timeRange, adsData, analyticsData],
+    queryKey: ["adPerformance", hauntId, timeRange, adsData?.length],
     queryFn: async () => {
-      if (!adsData || adsData.length === 0 || !analyticsData) return [];
+      console.log('Ad Performance Query - adsData:', adsData?.length, 'ads found');
+      if (!adsData || adsData.length === 0) {
+        console.log('Ad Performance Query - No ads data available');
+        return [];
+      }
       
       // Fetch detailed ad interactions from the analytics API
       const response = await fetch(`/api/analytics/ad-interactions/${hauntId}?timeRange=${timeRange}`);
@@ -91,6 +96,7 @@ export default function Analytics() {
       
       if (response.ok) {
         adInteractions = await response.json();
+        console.log('Ad Performance Query - interactions:', adInteractions.length);
       }
       
       // Group interactions by unique ad ID for accurate tracking
@@ -118,10 +124,11 @@ export default function Analytics() {
         };
       });
       
-      // Sort by CTR (highest first)
-      return adPerformance.sort((a, b) => b.ctr - a.ctr);
+      console.log('Ad Performance Query - final result:', adPerformance.length, 'ad performance entries');
+      // Sort by title alphabetically for consistent display
+      return adPerformance.sort((a, b) => a.title.localeCompare(b.title));
     },
-    enabled: !!hauntId && !!adsData && !!analyticsData,
+    enabled: !!hauntId && !!adsData && adsData.length > 0,
   });
 
   if (error) {
@@ -163,8 +170,9 @@ export default function Analytics() {
   }
 
   console.log('Analytics Data:', analyticsData);
-  console.log('Total Games:', analyticsData?.totalGames);
-  console.log('Ad Click Through:', analyticsData?.adClickThrough);
+  console.log('Ads Data:', adsData?.length, 'ads loaded');
+  console.log('Ad Performance Data:', adPerformanceData?.length, 'ad performance entries');
+  console.log('Ad Metrics Loading:', adMetricsLoading);
 
   return (
     <TooltipProvider>
