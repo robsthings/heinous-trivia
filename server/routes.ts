@@ -1605,10 +1605,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Get haunt configuration to determine question sources
       const config = await FirebaseService.getHauntConfig(hauntId);
       
-      if (!config) {
-        return res.status(404).json({ error: "Haunt not found" });
-      }
-
       let questions = [];
 
       // Load custom questions from haunt's Firebase collection
@@ -1625,8 +1621,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       }
 
-      // Load questions from assigned packs
-      if (config.assignedPacks && Array.isArray(config.assignedPacks)) {
+      // Load questions from assigned packs (if config exists)
+      if (config && config.assignedPacks && Array.isArray(config.assignedPacks)) {
         for (const packId of config.assignedPacks) {
           try {
             if (firestore) {
@@ -1647,7 +1643,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       }
 
-      // Load questions from global packs
+      // Always load questions from global packs as fallback
       if (firestore) {
         const globalPacksRef = firestore.collection('globalQuestionPacks');
         const globalPacksSnapshot = await globalPacksRef.get();
@@ -1659,6 +1655,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
             console.log(`Loaded ${packData.questions.length} questions from global pack ${doc.id}`);
           }
         });
+      }
+
+      // Fallback to starter pack if no questions found
+      if (questions.length === 0) {
+        // Default starter questions as final fallback
+        questions = [
+          {
+            id: "default-1",
+            text: "What is the most common fear phobia?",
+            category: "psychology", 
+            difficulty: 1,
+            answers: ["Heights", "Spiders", "Public Speaking", "Death"],
+            correctAnswer: 2
+          }
+        ];
       }
 
       console.log(`Returning ${questions.length} total questions for ${hauntId}`);
