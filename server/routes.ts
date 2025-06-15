@@ -885,7 +885,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
         throw new Error('Firebase not configured');
       }
       
+            // GUARD: Group mode disabled - prevent activeRound operations
+      console.log(`[GROUP MODE DISABLED] Blocked activeRound operation for haunt: ${req.params.hauntId}`);
+      res.status(403).json({ 
+        error: "Group mode functionality is disabled", 
+        message: "Individual play mode is now enforced across all haunts" 
+      });
+      return;
+      
+
+      
       const roundRef = firestore.collection('activeRound').doc(hauntId);
+
+      
       await roundRef.set(roundData);
       
       res.json({ success: true });
@@ -905,7 +917,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
         throw new Error('Firebase not configured');
       }
       
+            // GUARD: Group mode disabled - prevent activeRound operations
+      console.log(`[GROUP MODE DISABLED] Blocked activeRound operation for haunt: ${req.params.hauntId}`);
+      res.status(403).json({ 
+        error: "Group mode functionality is disabled", 
+        message: "Individual play mode is now enforced across all haunts" 
+      });
+      return;
+      
+
+      
       const roundRef = firestore.collection('activeRound').doc(hauntId);
+
+      
       await roundRef.update(updates);
       
       res.json({ success: true });
@@ -924,7 +948,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
         throw new Error('Firebase not configured');
       }
       
+            // GUARD: Group mode disabled - prevent activeRound operations
+      console.log(`[GROUP MODE DISABLED] Blocked activeRound operation for haunt: ${req.params.hauntId}`);
+      res.status(403).json({ 
+        error: "Group mode functionality is disabled", 
+        message: "Individual play mode is now enforced across all haunts" 
+      });
+      return;
+      
+
+      
       const roundRef = firestore.collection('activeRound').doc(hauntId);
+
+      
       const roundDoc = await roundRef.get();
       
       if (roundDoc.exists) {
@@ -1008,7 +1044,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
         throw new Error('Firebase not configured');
       }
       
+            // GUARD: Group mode disabled - prevent activeRound operations
+      console.log(`[GROUP MODE DISABLED] Blocked activeRound operation for haunt: ${req.params.hauntId}`);
+      res.status(403).json({ 
+        error: "Group mode functionality is disabled", 
+        message: "Individual play mode is now enforced across all haunts" 
+      });
+      return;
+      
+
+      
       const roundRef = firestore.collection('activeRound').doc(hauntId);
+
+      
       const roundDoc = await roundRef.get();
       
       if (!roundDoc.exists) {
@@ -1185,7 +1233,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
         throw new Error('Firebase not configured');
       }
       
+            // GUARD: Group mode disabled - prevent activeRound operations
+      console.log(`[GROUP MODE DISABLED] Blocked activeRound operation for haunt: ${req.params.hauntId}`);
+      res.status(403).json({ 
+        error: "Group mode functionality is disabled", 
+        message: "Individual play mode is now enforced across all haunts" 
+      });
+      return;
+      
+
+      
       const roundRef = firestore.collection('activeRound').doc(hauntId);
+
+      
       await roundRef.set(roundData);
       
       res.json({ success: true });
@@ -1205,7 +1265,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
         throw new Error('Firebase not configured');
       }
       
+            // GUARD: Group mode disabled - prevent activeRound operations
+      console.log(`[GROUP MODE DISABLED] Blocked activeRound operation for haunt: ${req.params.hauntId}`);
+      res.status(403).json({ 
+        error: "Group mode functionality is disabled", 
+        message: "Individual play mode is now enforced across all haunts" 
+      });
+      return;
+      
+
+      
       const roundRef = firestore.collection('activeRound').doc(hauntId);
+
+      
       await roundRef.update(updates);
       
       res.json({ success: true });
@@ -1224,7 +1296,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
         throw new Error('Firebase not configured');
       }
       
+            // GUARD: Group mode disabled - prevent activeRound operations
+      console.log(`[GROUP MODE DISABLED] Blocked activeRound operation for haunt: ${req.params.hauntId}`);
+      res.status(403).json({ 
+        error: "Group mode functionality is disabled", 
+        message: "Individual play mode is now enforced across all haunts" 
+      });
+      return;
+      
+
+      
       const roundRef = firestore.collection('activeRound').doc(hauntId);
+
+      
       const roundDoc = await roundRef.get();
       
       if (roundDoc.exists) {
