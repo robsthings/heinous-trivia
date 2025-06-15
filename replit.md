@@ -87,6 +87,8 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 - Authenticated write access for admin uploads
 
 ## Changelog
+- June 15, 2025: Completed Individual Mode question loading audit - removed hardcoded fallback questions, fixed Firebase collection loading order, added proper server-side randomization with 205+ questions available from trivia-packs collections ensuring every 20-question session has unique randomized order
+- June 15, 2025: Removed redundant client-side question shuffling since server now provides pre-randomized questions for each session
 - June 15, 2025: Fixed analytics session and leaderboard endpoints returning HTML instead of JSON by adding explicit Content-Type headers and cache-busting - resolves "Unexpected token '<'" errors and enables proper 20-question individual gameplay
 - June 15, 2025: Added missing `/api/analytics/session` and `/api/analytics/ad-interaction` endpoints preventing analytics tracking failures that were stopping games at 10 questions instead of running full 20-question sessions  
 - June 15, 2025: Added missing `/api/leaderboard` query parameter endpoint for GameEndScreen leaderboard display functionality
