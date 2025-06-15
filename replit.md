@@ -87,6 +87,9 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 - Authenticated write access for admin uploads
 
 ## Changelog
+- June 15, 2025: Fixed analytics session and leaderboard endpoints returning HTML instead of JSON by adding explicit Content-Type headers and cache-busting - resolves "Unexpected token '<'" errors and enables proper 20-question individual gameplay
+- June 15, 2025: Added missing `/api/analytics/session` and `/api/analytics/ad-interaction` endpoints preventing analytics tracking failures that were stopping games at 10 questions instead of running full 20-question sessions  
+- June 15, 2025: Added missing `/api/leaderboard` query parameter endpoint for GameEndScreen leaderboard display functionality
 - June 15, 2025: Labeled all group mode logic with // GROUP_MODE_START and // GROUP_MODE_END comment blocks enabling future search and removal if full purge needed later
 - June 15, 2025: Added guard clauses in all activeRound-related Firebase functions to return early or throw harmless errors preventing legacy frontends from accidentally triggering group mode writes
 - June 15, 2025: Fixed redeploy issue where headquarters haunt configuration was stuck in "queue" mode instead of "individual" by updating stored Firebase configuration

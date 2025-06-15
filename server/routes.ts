@@ -1134,6 +1134,60 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   // GROUP_MODE_END
 
+  // Get leaderboard (query parameter version for GameEndScreen)
+  app.get("/api/leaderboard", async (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Cache-Control', 'no-cache');
+    
+    try {
+      const hauntId = req.query.haunt as string;
+      
+      if (!hauntId) {
+        return res.status(400).json({ error: "haunt parameter is required" });
+      }
+      
+      console.log(`[LEADERBOARD FETCH] Getting leaderboard for haunt: ${hauntId}`);
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      const leaderboardRef = firestore.collection('leaderboards').doc(hauntId).collection('players');
+      const snapshot = await leaderboardRef
+        .where('hidden', '!=', true)  // Exclude hidden players
+        .orderBy('hidden')  // Required for != query
+        .orderBy('score', 'desc')
+        .limit(50)
+        .get();
+      
+      console.log(`[LEADERBOARD FETCH] Found ${snapshot.docs.length} player records`);
+      
+      const players = snapshot.docs.map(doc => {
+        const data = doc.data();
+        console.log(`[LEADERBOARD FETCH] Player data:`, {
+          playerName: data.playerName,
+          score: data.score,
+          gameType: data.gameType
+        });
+        
+        // Transform to frontend format
+        return {
+          name: data.playerName,
+          score: data.score,
+          date: data.lastPlayed?.toDate?.()?.toISOString() || data.createdAt?.toDate?.()?.toISOString() || new Date().toISOString(),
+          haunt: data.hauntId,
+          questionsAnswered: data.questionsAnswered,
+          correctAnswers: data.correctAnswers
+        };
+      });
+      
+      res.json(players);
+    } catch (error) {
+      console.error("Error getting leaderboard:", error);
+      res.status(500).json({ error: "Failed to get leaderboard" });
+    }
+  });
+
   // Save individual leaderboard entry
   app.post("/api/leaderboard", async (req, res) => {
     try {
@@ -1149,6 +1203,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Get leaderboard (haunt-specific)
   app.get("/api/leaderboard/:hauntId", async (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Cache-Control', 'no-cache');
+    
     try {
       const { hauntId } = req.params;
       
@@ -1430,6 +1487,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Analytics session endpoints
   app.post("/api/analytics/session", async (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Cache-Control', 'no-cache');
+    
     try {
       const sessionData = req.body;
       
@@ -1452,6 +1512,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   app.put("/api/analytics/session/:sessionId", async (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Cache-Control', 'no-cache');
+    
     try {
       const { sessionId } = req.params;
       const updateData = req.body;
@@ -1475,6 +1538,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   app.post("/api/analytics/ad-interaction", async (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Cache-Control', 'no-cache');
+    
     try {
       const interactionData = req.body;
       
