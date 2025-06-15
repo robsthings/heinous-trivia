@@ -43,10 +43,14 @@ function Game() {
     const hasSeenIntro = localStorage.getItem('hasSeenHeinousIntro');
     const currentHaunt = getHauntFromURL();
     
+    console.log('Game component - checking localStorage:', { hasSeenIntro, currentHaunt });
+    
     if (!hasSeenIntro && currentHaunt) {
       console.log('First-time user detected, redirecting to welcome screen');
       setLocation(`/welcome/${currentHaunt}`);
       return;
+    } else {
+      console.log('Returning user or no haunt - proceeding to game');
     }
   }, [setLocation]);
 
