@@ -158,6 +158,11 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 
 Preferred communication style: Simple, everyday language.
 
+**Critical Development Standards:**
+- Always reference FIELD_NAMES_REFERENCE.md before creating any API endpoints or database queries
+- Field name consistency is mandatory - prevent mismatches between frontend/backend
+- Use standardized field names: 'haunt' for queries, 'action' for ad interactions, etc.
+
 ## Upcoming Features
 
 - Mini games to replace removed group mode functionality (planned for June 16, 2025)
