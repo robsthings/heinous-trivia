@@ -217,6 +217,18 @@
   .animate-slide-up {
     animation: slide-up 0.3s ease-out;
   }
+  
+  .animate-lightning-flash {
+    animation: lightning-flash 2s infinite;
+  }
+  
+  .animate-glitch-lines {
+    animation: glitch-lines 1.5s infinite;
+  }
+  
+  .animate-sprite-glitch-in {
+    animation: sprite-glitch-in 2s ease-out forwards;
+  }
 }
 
 @keyframes pulse-glow {
@@ -262,25 +274,125 @@
 
 @keyframes lightning-flash {
   0%, 90%, 100% { 
-    opacity: 0; 
+    opacity: 0;
+    background: radial-gradient(ellipse at center, rgba(30, 144, 255, 0) 0%, rgba(30, 144, 255, 0) 100%);
   }
-  5%, 85% { 
-    opacity: 1; 
+  2% { 
+    opacity: 0.8;
+    background: radial-gradient(ellipse at center, rgba(30, 144, 255, 0.4) 0%, rgba(30, 144, 255, 0.1) 60%, transparent 100%);
+  }
+  4% { 
+    opacity: 0.3;
+    background: radial-gradient(ellipse at center, rgba(30, 144, 255, 0.2) 0%, rgba(30, 144, 255, 0.05) 60%, transparent 100%);
+  }
+  6% { 
+    opacity: 1;
+    background: radial-gradient(ellipse at center, rgba(30, 144, 255, 0.6) 0%, rgba(30, 144, 255, 0.2) 60%, transparent 100%);
+  }
+  8% { 
+    opacity: 0.1;
+    background: radial-gradient(ellipse at center, rgba(30, 144, 255, 0.1) 0%, rgba(30, 144, 255, 0.02) 60%, transparent 100%);
   }
 }
 
 @keyframes glitch-lines {
-  0% { transform: translateX(0); }
-  10% { transform: translateX(-2px); }
-  20% { transform: translateX(2px); }
-  30% { transform: translateX(-1px); }
-  40% { transform: translateX(1px); }
-  50% { transform: translateX(0); }
-  60% { transform: translateX(-1px); }
-  70% { transform: translateX(1px); }
-  80% { transform: translateX(-2px); }
-  90% { transform: translateX(2px); }
-  100% { transform: translateX(0); }
+  0% { 
+    transform: translateX(0) skewX(0deg);
+    opacity: 0.7;
+  }
+  10% { 
+    transform: translateX(-3px) skewX(-2deg);
+    opacity: 0.9;
+  }
+  15% { 
+    transform: translateX(2px) skewX(1deg);
+    opacity: 0.5;
+  }
+  25% { 
+    transform: translateX(-1px) skewX(-1deg);
+    opacity: 0.8;
+  }
+  35% { 
+    transform: translateX(4px) skewX(2deg);
+    opacity: 0.6;
+  }
+  50% { 
+    transform: translateX(0) skewX(0deg);
+    opacity: 0.7;
+  }
+  65% { 
+    transform: translateX(-2px) skewX(-3deg);
+    opacity: 0.9;
+  }
+  75% { 
+    transform: translateX(3px) skewX(1deg);
+    opacity: 0.4;
+  }
+  85% { 
+    transform: translateX(-4px) skewX(-2deg);
+    opacity: 0.8;
+  }
+  95% { 
+    transform: translateX(2px) skewX(2deg);
+    opacity: 0.6;
+  }
+  100% { 
+    transform: translateX(0) skewX(0deg);
+    opacity: 0.7;
+  }
+}
+
+@keyframes sprite-glitch-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) rotate(-2deg);
+    filter: brightness(0.5) contrast(1.5);
+  }
+  10% {
+    opacity: 0.3;
+    transform: scale(1.1) rotate(1deg);
+    filter: brightness(1.8) contrast(2) hue-rotate(30deg);
+  }
+  15% {
+    opacity: 0;
+    transform: scale(0.9) rotate(-1deg);
+    filter: brightness(0.3) contrast(3);
+  }
+  25% {
+    opacity: 0.7;
+    transform: scale(1.05) rotate(0.5deg);
+    filter: brightness(1.3) contrast(1.8) hue-rotate(-15deg);
+  }
+  30% {
+    opacity: 0.1;
+    transform: scale(0.95) rotate(-0.5deg);
+    filter: brightness(0.7) contrast(2.5);
+  }
+  40% {
+    opacity: 0.9;
+    transform: scale(1.02) rotate(0deg);
+    filter: brightness(1.1) contrast(1.3) hue-rotate(10deg);
+  }
+  50% {
+    opacity: 0.2;
+    transform: scale(0.98) rotate(0.3deg);
+    filter: brightness(0.4) contrast(2);
+  }
+  70% {
+    opacity: 0.8;
+    transform: scale(1.01) rotate(-0.1deg);
+    filter: brightness(1.05) contrast(1.1);
+  }
+  85% {
+    opacity: 0.4;
+    transform: scale(0.99) rotate(0deg);
+    filter: brightness(0.8) contrast(1.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+    filter: brightness(1) contrast(1) hue-rotate(0deg);
+  }
 }
 
 /* Haunt Theme Customization */

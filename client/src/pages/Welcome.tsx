@@ -66,22 +66,21 @@ export function Welcome() {
           {/* Lightning effect */}
           <div 
             className={`absolute inset-0 transition-opacity duration-300 ${
-              showGlitchEffect ? 'opacity-30' : 'opacity-0'
+              showGlitchEffect ? 'opacity-30 animate-lightning-flash' : 'opacity-0'
             }`}
             style={{
               background: `
                 radial-gradient(ellipse at 20% 50%, rgba(139, 0, 0, 0.3) 0%, transparent 50%),
                 radial-gradient(ellipse at 80% 30%, rgba(75, 0, 130, 0.3) 0%, transparent 50%),
                 radial-gradient(ellipse at 40% 80%, rgba(255, 107, 53, 0.2) 0%, transparent 50%)
-              `,
-              animation: showGlitchEffect ? 'lightning-flash 2s infinite' : 'none'
+              `
             }}
           />
           
           {/* Glitch overlay */}
           <div 
             className={`absolute inset-0 mix-blend-multiply transition-opacity duration-500 ${
-              showGlitchEffect ? 'opacity-20' : 'opacity-0'
+              showGlitchEffect ? 'opacity-20 animate-glitch-lines' : 'opacity-0'
             }`}
             style={{
               background: `
@@ -92,8 +91,7 @@ export function Welcome() {
                   rgba(139, 0, 0, 0.1) 2px,
                   rgba(139, 0, 0, 0.1) 4px
                 )
-              `,
-              animation: showGlitchEffect ? 'glitch-lines 1.5s infinite' : 'none'
+              `
             }}
           />
         </>
@@ -103,19 +101,18 @@ export function Welcome() {
       <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-4">
         
         {/* Character Sprite */}
-        <div className={`mb-8 transition-all duration-1000 ${
-          isAnimating ? 'scale-50 opacity-0 rotate-12' : 'scale-100 opacity-100 rotate-0'
-        }`}>
+        <div className="mb-8">
           {characterSprite ? (
             <img
               src={characterSprite}
               alt="Dr. Heinous"
               className={`w-48 h-48 lg:w-64 lg:h-64 object-contain drop-shadow-2xl ${
-                isFirstTime && showGlitchEffect ? 'animate-pulse' : ''
+                isFirstTime ? 'animate-sprite-glitch-in' : 
+                isAnimating ? 'scale-50 opacity-0 rotate-12' : 'scale-100 opacity-100 rotate-0 transition-all duration-1000'
               }`}
               style={{
                 filter: isFirstTime && showGlitchEffect ? 
-                  'drop-shadow(0 0 20px rgba(139, 0, 0, 0.7)) hue-rotate(15deg)' : 
+                  'drop-shadow(0 0 20px rgba(139, 0, 0, 0.7))' : 
                   'drop-shadow(0 0 15px rgba(255, 107, 53, 0.5))'
               }}
             />
