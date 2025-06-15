@@ -125,12 +125,20 @@ export function Welcome() {
             <img
               src={isFirstTime ? heinousSprites.talking : heinousSprites.charming}
               alt="Dr. Heinous"
-              className={`w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-64 lg:h-64 xl:w-72 xl:h-72 object-contain drop-shadow-2xl animate-sprite-glitch-in max-w-full`}
+              className={`w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-64 lg:h-64 xl:w-72 xl:h-72 object-contain drop-shadow-2xl max-w-full ${
+                isFirstTime ? 'animate-sprite-slide-bounce-in' : 'animate-sprite-glitch-in'
+              }`}
               style={{
                 filter: isFirstTime && showGlitchEffect ? 
                   'drop-shadow(0 0 20px rgba(139, 0, 0, 0.7))' : 
                   'drop-shadow(0 0 15px rgba(255, 107, 53, 0.5))',
                 animationDelay: isFirstTime ? '0.5s' : '0.2s'
+              }}
+              onAnimationEnd={(e) => {
+                // Add idle twitch animation after slide-bounce-in completes
+                if (isFirstTime && e.animationName === 'sprite-slide-bounce-in') {
+                  e.currentTarget.classList.add('animate-sprite-idle-twitch');
+                }
               }}
             />
           ) : (

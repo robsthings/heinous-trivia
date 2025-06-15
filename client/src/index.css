@@ -229,6 +229,14 @@
   .animate-sprite-glitch-in {
     animation: sprite-glitch-in 2s ease-out forwards;
   }
+  
+  .animate-sprite-slide-bounce-in {
+    animation: sprite-slide-bounce-in 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+  }
+  
+  .animate-sprite-idle-twitch {
+    animation: sprite-idle-twitch 4s ease-in-out infinite;
+  }
 }
 
 @keyframes pulse-glow {
@@ -339,6 +347,66 @@
   100% { 
     transform: translateX(0) skewX(0deg);
     opacity: 0.7;
+  }
+}
+
+@keyframes sprite-slide-bounce-in {
+  0% {
+    opacity: 0;
+    transform: translateX(-100vw) scale(0.8);
+  }
+  60% {
+    opacity: 1;
+    transform: translateX(10px) scale(1.1);
+  }
+  80% {
+    transform: translateX(-5px) scale(0.95);
+  }
+  90% {
+    transform: translateX(2px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+/* Mobile-responsive sprite positioning */
+@media (max-width: 640px) {
+  @keyframes sprite-slide-bounce-in {
+    0% {
+      opacity: 0;
+      transform: translateX(-120vw) scale(0.7);
+    }
+    60% {
+      opacity: 1;
+      transform: translateX(8px) scale(1.05);
+    }
+    80% {
+      transform: translateX(-3px) scale(0.95);
+    }
+    90% {
+      transform: translateX(1px) scale(1.01);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+    }
+  }
+}
+
+@keyframes sprite-idle-twitch {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    transform: scale(1.02) rotate(0.5deg);
+  }
+  50% {
+    transform: scale(0.98) rotate(-0.3deg);
+  }
+  75% {
+    transform: scale(1.01) rotate(0.2deg);
   }
 }
 
