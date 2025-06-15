@@ -1221,6 +1221,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Analytics endpoint
   app.get("/api/analytics/:hauntId", async (req, res) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Cache-Control', 'no-cache');
+    
     try {
       const { hauntId } = req.params;
       const { timeRange = "30d" } = req.query;
