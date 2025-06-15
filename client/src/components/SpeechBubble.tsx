@@ -19,11 +19,11 @@ export function SpeechBubble({ messages, isVisible, className = "" }: SpeechBubb
     const currentMessage = messages[currentMessageIndex];
     
     if (!isDeleting && !isTyping) {
-      // Start typing after a brief pause
+      // Start typing after sprite entrance animation completes
       const startTyping = setTimeout(() => {
         setIsTyping(true);
         setShowCursor(true);
-      }, 500);
+      }, 1800); // Delay to coordinate with sprite slide-bounce-in animation
       return () => clearTimeout(startTyping);
     }
 
