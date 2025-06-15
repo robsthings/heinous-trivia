@@ -617,205 +617,158 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const { hauntId } = req.params;
       
-      // Get haunt configuration to determine question sources (optional)
-      const config = await FirebaseService.getHauntConfig(hauntId);
-
+      if (!firestore) {
+        return res.status(500).json({ error: "Firebase not configured" });
+      }
+      
+      console.log(`Loading questions for haunt: ${hauntId}`);
+      
       let questions = [];
 
-      console.log(`DEBUG: Firestore connection status for ${hauntId}:`, !!firestore);
-      console.log(`DEBUG: Firebase service account configured:`, !!process.env.FIREBASE_SERVICE_ACCOUNT_JSON);
-      
-      if (!firestore) {
-        console.log(`DEBUG: Firestore is null - Firebase not initialized properly`);
-      }
-      
-      if (firestore) {
-        try {
-          console.log(`DEBUG: Starting question load process for ${hauntId}`);
-          // Load all available question packs for this haunt
-          
-          // 1. Load custom questions (haunt-specific)
-          const customQuestionsRef = firestore.collection('haunt-questions').doc(hauntId).collection('questions');
-          const customSnapshot = await customQuestionsRef.get();
-          
-          if (!customSnapshot.empty) {
-            const customQuestions = customSnapshot.docs.map(doc => ({
-              id: doc.id,
-              ...doc.data()
-            }));
-            questions = [...questions, ...customQuestions];
-            console.log(`Loaded ${customQuestions.length} custom questions for ${hauntId}`);
-          }
+      try {
+        // 1. Load custom questions (haunt-specific)
+        const customQuestionsRef = firestore.collection('haunt-questions').doc(hauntId).collection('questions');
+        const customSnapshot = await customQuestionsRef.get();
+        
+        if (!customSnapshot.empty) {
+          const customQuestions = customSnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+          }));
+          questions = [...questions, ...customQuestions];
+          console.log(`Loaded ${customQuestions.length} custom questions for ${hauntId}`);
+        }
 
-          // 2. Load assigned trivia packs (if any)
-          if (config && config.triviaPacks && config.triviaPacks.length > 0) {
-            for (const packId of config.triviaPacks) {
-              try {
-                const packRef = firestore.collection('trivia-packs').doc(packId);
-                const packDoc = await packRef.get();
-                
-                if (packDoc.exists) {
-                  const packData = packDoc.data();
-                  if (packData.questions && Array.isArray(packData.questions)) {
-                    questions = [...questions, ...packData.questions];
-                    console.log(`Loaded ${packData.questions.length} questions from pack ${packId}`);
-                  }
-                }
-              } catch (error) {
-                console.warn(`Could not load trivia pack ${packId}:`, error);
-              }
-            }
-          }
-
-          // 3. Load global question packs available to all haunts
-          console.log(`DEBUG: Attempting to load from globalQuestionPacks collection`);
-          const globalPacksRef = firestore.collection('globalQuestionPacks');
-          const globalSnapshot = await globalPacksRef.get();
-          
-          console.log(`DEBUG: Found ${globalSnapshot.docs.length} documents in globalQuestionPacks`);
-          
-          // Also check alternative collection names
-          console.log(`DEBUG: Checking trivia-packs collection`);
-          const triviaPacksRef = firestore.collection('trivia-packs');
-          const triviaSnapshot = await triviaPacksRef.get();
-          console.log(`DEBUG: Found ${triviaSnapshot.docs.length} documents in trivia-packs`);
-          
-          console.log(`DEBUG: Checking questionPacks collection`);
-          const questionPacksRef = firestore.collection('questionPacks');
-          const questionSnapshot = await questionPacksRef.get();
-          console.log(`DEBUG: Found ${questionSnapshot.docs.length} documents in questionPacks`);
-          
-          globalSnapshot.docs.forEach(doc => {
+        // 2. Load from trivia-packs collection (existing packs with question arrays)
+        const triviaPacksRef = firestore.collection('trivia-packs');
+        const packsSnapshot = await triviaPacksRef.get();
+        
+        if (!packsSnapshot.empty) {
+          packsSnapshot.docs.forEach(doc => {
             const packData = doc.data();
-            console.log(`DEBUG: Pack ${doc.id} data structure:`, Object.keys(packData));
+            console.log(`Checking pack ${doc.id}, data structure:`, Object.keys(packData));
             if (packData.questions && Array.isArray(packData.questions)) {
               questions = [...questions, ...packData.questions];
-              console.log(`Loaded ${packData.questions.length} questions from global pack ${doc.id}`);
-            } else {
-              console.log(`DEBUG: Pack ${doc.id} missing questions array`);
+              console.log(`Loaded ${packData.questions.length} questions from pack ${doc.id}`);
             }
           });
-
-        } catch (error) {
-          console.warn(`Error loading question packs for ${hauntId}:`, error);
         }
+
+        // 3. Load from horror-basics collection (default question pool)
+        const horrorBasicsRef = firestore.collection('horror-basics');
+        const horrorSnapshot = await horrorBasicsRef.get();
+        
+        if (!horrorSnapshot.empty) {
+          horrorSnapshot.docs.forEach(doc => {
+            const questionData = doc.data();
+            questions.push({
+              id: doc.id,
+              ...questionData
+            });
+          });
+          console.log(`Loaded ${horrorSnapshot.docs.length} questions from horror-basics collection`);
+        }
+
+        // 4. Load from trivia-questions collection (general question pool)
+        const triviaQuestionsRef = firestore.collection('trivia-questions');
+        const triviaSnapshot = await triviaQuestionsRef.get();
+        
+        if (!triviaSnapshot.empty) {
+          triviaSnapshot.docs.forEach(doc => {
+            const questionData = doc.data();
+            questions.push({
+              id: doc.id,
+              ...questionData
+            });
+          });
+          console.log(`Loaded ${triviaSnapshot.docs.length} questions from trivia-questions collection`);
+        }
+
+      } catch (error) {
+        console.error(`Error loading questions from Firebase for ${hauntId}:`, error);
+        return res.status(500).json({ error: "Failed to load questions from database" });
       }
 
-      // If no questions loaded from any packs, use starter pack as fallback
-      if (questions.length === 0) {
-        console.log(`No question packs found for ${hauntId}, using starter pack fallback`);
-        questions = [
-          {
-            id: "starter-001",
-            text: "In the 1973 film 'The Exorcist', what is the name of the possessed girl?",
-            category: "Horror Movies",
-            difficulty: 2,
-            answers: ["Linda Blair", "Regan MacNeil", "Chris MacNeil", "Damien Karras"],
-            correctAnswer: 1,
-            explanation: "Regan MacNeil is the 12-year-old girl who becomes possessed by a demon in the classic horror film.",
-            points: 100
-          },
-          {
-            id: "starter-002", 
-            text: "What is the name of the hotel in Stephen King's 'The Shining'?",
-            category: "Horror Literature",
-            difficulty: 2,
-            answers: ["The Stanley Hotel", "The Overlook Hotel", "The Grand Hotel", "The Mountain View Hotel"],
-            correctAnswer: 1,
-            explanation: "The Overlook Hotel is the isolated Colorado hotel where Jack Torrance descends into madness.",
-            points: 100
-          },
-          {
-            id: "starter-003",
-            text: "Which horror movie features the character Michael Myers?",
-            category: "Horror Movies",
-            difficulty: 1,
-            answers: ["Friday the 13th", "A Nightmare on Elm Street", "Halloween", "Scream"],
-            correctAnswer: 2,
-            explanation: "Michael Myers is the masked killer from the Halloween franchise, first appearing in 1978.",
-            points: 100
-          },
-          {
-            id: "starter-004",
-            text: "What weapon is Freddy Krueger famous for using?",
-            category: "Horror Movies",
-            difficulty: 1,
-            answers: ["Chainsaw", "Machete", "Razor Glove", "Kitchen Knife"],
-            correctAnswer: 2,
-            explanation: "Freddy Krueger uses a glove fitted with razor blades to attack his victims in their dreams.",
-            points: 100
-          },
-          {
-            id: "starter-005",
-            text: "In which horror film would you find the Necronomicon?",
-            category: "Horror Movies",
-            difficulty: 3,
-            answers: ["The Evil Dead", "Hellraiser", "The Conjuring", "Insidious"],
-            correctAnswer: 0,
-            explanation: "The Necronomicon, or 'Book of the Dead', is the evil book from the Evil Dead franchise.",
-            points: 100
-          },
-          {
-            id: "starter-006",
-            text: "What is the name of the doll in the 'Child's Play' movies?",
-            category: "Horror Movies",
-            difficulty: 1,
-            answers: ["Annabelle", "Chucky", "Billy", "Robert"],
-            correctAnswer: 1,
-            explanation: "Chucky is the possessed Good Guy doll that terrorizes the Child's Play film series.",
-            points: 100
-          },
-          {
-            id: "starter-007",
-            text: "Which author wrote the novel 'Dracula'?",
-            category: "Horror Literature",
-            difficulty: 2,
-            answers: ["Edgar Allan Poe", "H.P. Lovecraft", "Bram Stoker", "Mary Shelley"],
-            correctAnswer: 2,
-            explanation: "Bram Stoker published his gothic horror novel Dracula in 1897.",
-            points: 100
-          },
-          {
-            id: "starter-008",
-            text: "In 'A Nightmare on Elm Street', on which street do the main characters live?",
-            category: "Horror Movies",
-            difficulty: 3,
-            answers: ["Oak Street", "Elm Street", "Main Street", "Maple Street"],
-            correctAnswer: 1,
-            explanation: "The teenagers live on Elm Street in Springwood, Ohio, where Freddy Krueger haunts their dreams.",
-            points: 100
-          },
-          {
-            id: "starter-009",
-            text: "What is the name of the motel in Alfred Hitchcock's 'Psycho'?",
-            category: "Horror Movies",
-            difficulty: 2,
-            answers: ["Seaside Motel", "Bates Motel", "Oak Grove Motel", "Fairview Motel"],
-            correctAnswer: 1,
-            explanation: "The Bates Motel is run by Norman Bates and his 'mother' in the classic thriller.",
-            points: 100
-          },
-          {
-            id: "starter-010",
-            text: "Which horror movie popularized the phrase 'Here's Johnny!'?",
-            category: "Horror Movies",
-            difficulty: 2,
-            answers: ["Halloween", "The Shining", "Friday the 13th", "Psycho"],
-            correctAnswer: 1,
-            explanation: "Jack Nicholson's character Jack Torrance says this line while breaking down a door in The Shining.",
-            points: 100
-          }
-        ];
+      // Ensure we have enough questions
+      if (questions.length < 20) {
+        console.error(`Insufficient questions loaded: ${questions.length}. Need at least 20 for a full game.`);
+        return res.status(500).json({ 
+          error: "Insufficient questions available", 
+          count: questions.length,
+          required: 20 
+        });
       }
 
-      console.log(`Returning ${questions.length} total questions for ${hauntId}`);
-      res.json(questions);
+      // Randomize question order for each session
+      const randomizedQuestions = questions.sort(() => Math.random() - 0.5);
+      
+      // Ensure we return at least 20 questions (or all available if more)
+      const questionsToReturn = randomizedQuestions.slice(0, Math.max(20, randomizedQuestions.length));
+      
+      console.log(`Returning ${questionsToReturn.length} randomized questions for ${hauntId} (from ${questions.length} total available)`);
+      res.json(questionsToReturn);
+      
     } catch (error) {
       console.error("Error fetching trivia questions:", error);
       res.status(500).json({ error: "Failed to fetch trivia questions" });
     }
   });
   // GROUP_MODE_END
+
+  // Test endpoint to verify Firebase question collections
+  app.get("/api/debug/questions/:hauntId", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      
+      if (!firestore) {
+        return res.json({ error: "Firebase not configured", collections: [] });
+      }
+      
+      const collections = [];
+      
+      // Check each collection for available questions
+      const collectionsToCheck = [
+        'horror-basics',
+        'trivia-questions', 
+        'question-packs',
+        `haunt-questions/${hauntId}/questions`
+      ];
+      
+      for (const collectionName of collectionsToCheck) {
+        try {
+          let ref;
+          if (collectionName.includes('/')) {
+            // Subcollection
+            const parts = collectionName.split('/');
+            ref = firestore.collection(parts[0]).doc(parts[1]).collection(parts[2]);
+          } else {
+            ref = firestore.collection(collectionName);
+          }
+          
+          const snapshot = await ref.get();
+          collections.push({
+            name: collectionName,
+            documentCount: snapshot.docs.length,
+            documents: snapshot.docs.map(doc => ({
+              id: doc.id,
+              hasQuestions: !!doc.data().questions,
+              questionCount: Array.isArray(doc.data().questions) ? doc.data().questions.length : 0,
+              fields: Object.keys(doc.data())
+            }))
+          });
+        } catch (error) {
+          collections.push({
+            name: collectionName,
+            error: error.message
+          });
+        }
+      }
+      
+      res.json({ collections });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
 
   // Initialize database with sample data
   app.post("/api/initialize-data", async (req, res) => {
