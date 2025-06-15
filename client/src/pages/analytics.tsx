@@ -324,7 +324,7 @@ export default function Analytics() {
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-gray-300">Completion Rate</span>
-                    <span className="text-lg font-semibold text-green-400">100%</span>
+                    <span className="text-lg font-semibold text-green-400">{analyticsData?.completionRate || 0}%</span>
                   </div>
                 </div>
               </div>
@@ -338,9 +338,9 @@ export default function Analytics() {
                 
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-300">Completion Rate</span>
-                  <span className="text-white">100%</span>
+                  <span className="text-white">{analyticsData?.completionRate || 0}%</span>
                 </div>
-                <Progress value={100} className="h-2" />
+                <Progress value={analyticsData?.completionRate || 0} className="h-2" />
               </div>
             </CardContent>
           </Card>
@@ -363,7 +363,7 @@ export default function Analytics() {
                     <ActivityIcon className="w-5 h-5 text-blue-400" />
                     <span className="text-gray-300">Avg. Session Time</span>
                   </div>
-                  <span className="text-white font-semibold">10 min</span>
+                  <span className="text-white font-semibold">{analyticsData?.avgSessionTime || 0} min</span>
                 </div>
                 
                 <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10">
@@ -371,7 +371,7 @@ export default function Analytics() {
                     <CalendarIcon className="w-5 h-5 text-purple-400" />
                     <span className="text-gray-300">Daily Average</span>
                   </div>
-                  <span className="text-white font-semibold">2 games</span>
+                  <span className="text-white font-semibold">{analyticsData?.dailyAverage || 0} games</span>
                 </div>
                 
                 <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10">
@@ -379,7 +379,7 @@ export default function Analytics() {
                     <TargetIcon className="w-5 h-5 text-yellow-400" />
                     <span className="text-gray-300">Peak Activity</span>
                   </div>
-                  <span className="text-white font-semibold">2025-06-13</span>
+                  <span className="text-white font-semibold">{analyticsData?.peakActivity || 'No data'}</span>
                 </div>
                 
                 {/* Ad Engagement Highlight */}
