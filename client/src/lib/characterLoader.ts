@@ -7,13 +7,15 @@
 // Dynamically import all PNG files from character directories
 const heinousFiles = import.meta.glob('/public/heinous/*.png', { 
   eager: true, 
-  as: 'url' 
-});
+  query: '?url',
+  import: 'default'
+}) as Record<string, string>;
 
 const chupacabraFiles = import.meta.glob('/public/chupacabra/*.png', { 
   eager: true, 
-  as: 'url' 
-});
+  query: '?url',
+  import: 'default'
+}) as Record<string, string>;
 
 /**
  * Transform file paths into sprite objects with filename keys
@@ -21,7 +23,7 @@ const chupacabraFiles = import.meta.glob('/public/chupacabra/*.png', {
 function createSpriteObject(files: Record<string, string>): Record<string, string> {
   const sprites: Record<string, string> = {};
   
-  Object.keys(files).forEach(path => {
+  Object.entries(files).forEach(([path, url]) => {
     // Extract filename without extension from full path
     // Example: "/public/heinous/charming.png" -> "charming"
     const filename = path.split('/').pop()?.replace('.png', '') || '';

@@ -194,31 +194,3 @@ export function Welcome() {
   );
 }
 
-// CSS animations (add to index.css or define in a <style> tag)
-const styles = `
-@keyframes lightning-flash {
-  0%, 90%, 100% { opacity: 0; }
-  5%, 85% { opacity: 1; }
-}
-
-@keyframes glitch-lines {
-  0% { transform: translateX(0); }
-  10% { transform: translateX(-2px); }
-  20% { transform: translateX(2px); }
-  30% { transform: translateX(-1px); }
-  40% { transform: translateX(1px); }
-  50% { transform: translateX(0); }
-  60% { transform: translateX(-1px); }
-  70% { transform: translateX(1px); }
-  80% { transform: translateX(-2px); }
-  90% { transform: translateX(2px); }
-  100% { transform: translateX(0); }
-}
-`;
-
-// Inject styles
-if (typeof document !== 'undefined') {
-  const styleSheet = document.createElement('style');
-  styleSheet.textContent = styles;
-  document.head.appendChild(styleSheet);
-}
