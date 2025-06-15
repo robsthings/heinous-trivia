@@ -1179,6 +1179,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const interactionRef = firestore.collection('ad_interactions').doc();
       await interactionRef.set({
         ...interactionData,
+        hauntId: interactionData.haunt, // Ensure both field names are available
         timestamp: new Date()
       });
       
