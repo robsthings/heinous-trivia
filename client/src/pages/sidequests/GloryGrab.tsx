@@ -231,25 +231,18 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
       {/* Main content */}
       <div className="relative z-10 flex items-center justify-center min-h-screen p-4">
         
-        {/* Title Screen */}
+        {/* Title Screen - Full clickable image */}
         {gamePhase === 'title' && (
-          <div className="text-center animate-fade-in">
-            <div 
-              className="w-full max-w-md aspect-[4/3] mx-auto mb-8"
-              style={{
-                backgroundImage: 'url(/sidequests/glory-grab/glory-title.png)',
-                backgroundSize: 'contain',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat'
-              }}
-            />
-            <Button
-              onClick={startGame}
-              className="bg-green-700 hover:bg-green-600 text-white px-8 py-4 text-lg font-bold"
-            >
-              🧪 Start Glory Grab!
-            </Button>
-          </div>
+          <div 
+            className="absolute inset-0 w-full h-full cursor-pointer animate-fade-in"
+            onClick={startGame}
+            style={{
+              backgroundImage: 'url(/sidequests/glory-grab/glory-title.png)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat'
+            }}
+          />
         )}
 
         {/* Game Screen */}
@@ -301,7 +294,7 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
                 <div 
                   className="w-full h-full relative"
                   style={{
-                    backgroundImage: 'url(/sidequests/glory-grab/vial-sprite.png)',
+                    backgroundImage: 'url(/sidequests/glory-grab/vial-sprites.png)',
                     backgroundSize: 'contain',
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat',

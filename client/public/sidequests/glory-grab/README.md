@@ -6,8 +6,8 @@ Required assets for the Glory Grab side quest:
 - `glory-bg.png` - Laboratory background with experimental equipment and bubbling beakers
 
 ## UI Elements
-- `glory-title.png` - Title screen showing "Glory Grab" with dramatic laboratory theme
-- `vial-sprite.png` - Small vial/beaker sprite that players click to collect (32x32 or 48x48px recommended)
+- `glory-title.png` - Full-screen title image that serves as start button (1920x1080 recommended)
+- `vial-sprites.png` - Small vial/beaker sprite that players click to collect (32x32 or 48x48px recommended)
 
 ## Optional Assets
 - Explosion effects for missed vials
