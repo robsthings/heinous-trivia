@@ -598,6 +598,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get trivia questions for a haunt
   app.get("/api/trivia-questions/:hauntId", async (req, res) => {
     try {
+      // Set explicit JSON content type and cache headers
+      res.setHeader('Content-Type', 'application/json');
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+      res.setHeader('Pragma', 'no-cache');
+      res.setHeader('Expires', '0');
+      
       const { hauntId } = req.params;
       
       // Get haunt configuration to determine question sources
@@ -1588,6 +1594,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Legacy route pattern for questions (for compatibility)
   app.get("/api/haunt/:hauntId/questions", async (req, res) => {
     try {
+      // Set explicit JSON content type and cache headers
+      res.setHeader('Content-Type', 'application/json');
+      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+      res.setHeader('Pragma', 'no-cache');
+      res.setHeader('Expires', '0');
+      
       const { hauntId } = req.params;
       
       // Get haunt configuration to determine question sources
