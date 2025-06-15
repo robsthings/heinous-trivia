@@ -22,6 +22,7 @@ import Info from "@/pages/info";
 import NotFound from "@/pages/not-found";
 import { TestProgressPage } from "@/pages/test-progress";
 import { MonsterNameGenerator } from "@/pages/sidequests/MonsterNameGenerator";
+import { GloryGrab } from "@/pages/sidequests/GloryGrab";
 
 function Router() {
   return (
@@ -43,6 +44,7 @@ function Router() {
       <Route path="/info" component={Info} />
       <Route path="/test-progress" component={TestProgressPage} />
       <Route path="/sidequest/monster-name-generator" component={MonsterNameGenerator} />
+      <Route path="/sidequest/glory-grab" component={GloryGrab} />
       <Route component={NotFound} />
     </Switch>
   );
