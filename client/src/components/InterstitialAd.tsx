@@ -114,7 +114,7 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
   }
 
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden">
+    <div className={`fixed inset-0 z-50 overflow-hidden ${gameState.hauntConfig?.skinUrl ? '' : 'bg-gradient-to-br from-gray-900 via-purple-900 to-black'}`}>
       <div className="w-full h-full">
         {/* Mobile-First Responsive Layout */}
         <div className="h-full flex flex-col justify-between p-4 max-w-md mx-auto lg:max-w-4xl">

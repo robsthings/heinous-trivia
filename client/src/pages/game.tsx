@@ -90,6 +90,15 @@ function Game() {
           updateMetaThemeColor(hauntConfig.theme.primaryColor);
         }
 
+        // Apply custom background skin only when actually configured
+        if (hauntConfig?.skinUrl && hauntConfig?.tier === 'premium') {
+          document.documentElement.style.setProperty('--custom-background-url', `url(${hauntConfig.skinUrl})`);
+          document.body.classList.add('custom-skin');
+        } else {
+          document.documentElement.style.removeProperty('--custom-background-url');
+          document.body.classList.remove('custom-skin');
+        }
+
         if (!playerName) {
           setShowNamePrompt(true);
         } else {
@@ -242,7 +251,7 @@ function Game() {
 
   if (gameState.gameComplete || gameState.showEndScreen) {
     return (
-      <div className={`game-container min-h-screen ${gameState.hauntConfig?.tier === 'premium' && gameState.hauntConfig?.skinUrl ? '' : 'bg-gradient-to-br from-gray-900 via-purple-900 to-black'}`}>
+      <div className={`game-container min-h-screen ${gameState.hauntConfig?.skinUrl ? '' : 'bg-gradient-to-br from-gray-900 via-purple-900 to-black'}`}>
         <GameHeader gameState={gameState} />
         
         <main className="px-3 sm:px-4 pb-20">
@@ -270,7 +279,7 @@ function Game() {
   }
 
   return (
-    <div className={`game-container min-h-screen ${gameState.hauntConfig?.tier === 'premium' && gameState.hauntConfig?.skinUrl ? '' : 'bg-gradient-to-br from-gray-900 via-purple-900 to-black'}`}>
+    <div className={`game-container min-h-screen ${gameState.hauntConfig?.skinUrl ? '' : 'bg-gradient-to-br from-gray-900 via-purple-900 to-black'}`}>
       <GameHeader 
         gameState={gameState}
       />
