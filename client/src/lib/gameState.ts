@@ -44,6 +44,46 @@ export class GameManager {
     };
   }
 
+  static async initializeGameState(haunt: string): Promise<Partial<GameState>> {
+    try {
+      // Load questions and ads for the haunt
+      const [questionsResponse, adsResponse] = await Promise.all([
+        fetch(`/api/trivia-questions/${haunt}`, {
+          headers: {
+            'Cache-Control': 'no-cache',
+            'Content-Type': 'application/json'
+          }
+        }),
+        fetch(`/api/ads/${haunt}`, {
+          headers: {
+            'Cache-Control': 'no-cache', 
+            'Content-Type': 'application/json'
+          }
+        })
+      ]);
+
+      if (!questionsResponse.ok) {
+        throw new Error(`Failed to load questions: ${questionsResponse.status}`);
+      }
+
+      const questions = await questionsResponse.json();
+      const ads = adsResponse.ok ? await adsResponse.json() : [];
+
+      // Validate questions data
+      if (!Array.isArray(questions) || questions.length === 0) {
+        throw new Error('No valid questions available for this haunt');
+      }
+
+      return {
+        questions: questions.slice(0, this.QUESTIONS_PER_ROUND), // Limit to 20 questions
+        ads: Array.isArray(ads) ? ads : [],
+      };
+    } catch (error) {
+      console.error('Failed to initialize game state:', error);
+      throw error;
+    }
+  }
+
   static selectAnswer(state: GameState, answerIndex: number): GameState {
     if (state.selectedAnswer !== null) return state;
     
