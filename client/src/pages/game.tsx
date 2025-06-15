@@ -16,12 +16,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { User } from "lucide-react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { useToast } from "@/hooks/use-toast";
 import type { LeaderboardEntry } from "@shared/schema";
 import { useCustomSkin } from "@/hooks/use-custom-skin";
 
 function Game() {
+  const [, setLocation] = useLocation();
   const [gameState, setGameState] = useState<GameState>(() => 
     GameManager.createInitialState(getHauntFromURL())
   );
@@ -36,6 +37,18 @@ function Game() {
   const [tempName, setTempName] = useState("");
   const [loadedHauntConfig, setLoadedHauntConfig] = useState<HauntConfig | null>(null);
   const { toast } = useToast();
+
+  // Check for first-time user and redirect to welcome screen
+  useEffect(() => {
+    const hasSeenIntro = localStorage.getItem('hasSeenHeinousIntro');
+    const currentHaunt = getHauntFromURL();
+    
+    if (!hasSeenIntro && currentHaunt) {
+      console.log('First-time user detected, redirecting to welcome screen');
+      setLocation(`/welcome/${currentHaunt}`);
+      return;
+    }
+  }, [setLocation]);
 
   useCustomSkin(gameState.hauntConfig);
 
