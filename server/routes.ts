@@ -607,10 +607,68 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ error: "Haunt not found" });
       }
 
-      // Start with default horror trivia pack
-      let questions = [
+      let questions = [];
+
+      if (firestore) {
+        try {
+          // Load all available question packs for this haunt
+          
+          // 1. Load custom questions (haunt-specific)
+          const customQuestionsRef = firestore.collection('haunt-questions').doc(hauntId).collection('questions');
+          const customSnapshot = await customQuestionsRef.get();
+          
+          if (!customSnapshot.empty) {
+            const customQuestions = customSnapshot.docs.map(doc => ({
+              id: doc.id,
+              ...doc.data()
+            }));
+            questions = [...questions, ...customQuestions];
+            console.log(`Loaded ${customQuestions.length} custom questions for ${hauntId}`);
+          }
+
+          // 2. Load assigned trivia packs (if any)
+          if (config.triviaPacks && config.triviaPacks.length > 0) {
+            for (const packId of config.triviaPacks) {
+              try {
+                const packRef = firestore.collection('trivia-packs').doc(packId);
+                const packDoc = await packRef.get();
+                
+                if (packDoc.exists) {
+                  const packData = packDoc.data();
+                  if (packData.questions && Array.isArray(packData.questions)) {
+                    questions = [...questions, ...packData.questions];
+                    console.log(`Loaded ${packData.questions.length} questions from pack ${packId}`);
+                  }
+                }
+              } catch (error) {
+                console.warn(`Could not load trivia pack ${packId}:`, error);
+              }
+            }
+          }
+
+          // 3. Load global trivia packs available to all haunts
+          const globalPacksRef = firestore.collection('trivia-packs').where('accessType', '==', 'all');
+          const globalSnapshot = await globalPacksRef.get();
+          
+          globalSnapshot.docs.forEach(doc => {
+            const packData = doc.data();
+            if (packData.questions && Array.isArray(packData.questions)) {
+              questions = [...questions, ...packData.questions];
+              console.log(`Loaded ${packData.questions.length} questions from global pack ${doc.id}`);
+            }
+          });
+
+        } catch (error) {
+          console.warn(`Error loading question packs for ${hauntId}:`, error);
+        }
+      }
+
+      // If no questions loaded from any packs, use starter pack as fallback
+      if (questions.length === 0) {
+        console.log(`No question packs found for ${hauntId}, using starter pack fallback`);
+        questions = [
           {
-            id: "horror-001",
+            id: "starter-001",
             text: "In the 1973 film 'The Exorcist', what is the name of the possessed girl?",
             category: "Horror Movies",
             difficulty: 2,
@@ -620,7 +678,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             points: 100
           },
           {
-            id: "horror-002", 
+            id: "starter-002", 
             text: "What is the name of the hotel in Stephen King's 'The Shining'?",
             category: "Horror Literature",
             difficulty: 2,
@@ -630,7 +688,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             points: 100
           },
           {
-            id: "horror-003",
+            id: "starter-003",
             text: "Which horror movie features the character Michael Myers?",
             category: "Horror Movies",
             difficulty: 1,
@@ -640,7 +698,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             points: 100
           },
           {
-            id: "horror-004",
+            id: "starter-004",
             text: "What weapon is Freddy Krueger famous for using?",
             category: "Horror Movies",
             difficulty: 1,
@@ -650,7 +708,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             points: 100
           },
           {
-            id: "horror-005",
+            id: "starter-005",
             text: "In which horror film would you find the Necronomicon?",
             category: "Horror Movies",
             difficulty: 3,
@@ -660,7 +718,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             points: 100
           },
           {
-            id: "horror-006",
+            id: "starter-006",
             text: "What is the name of the doll in the 'Child's Play' movies?",
             category: "Horror Movies",
             difficulty: 1,
@@ -670,7 +728,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             points: 100
           },
           {
-            id: "horror-007",
+            id: "starter-007",
             text: "Which author wrote the novel 'Dracula'?",
             category: "Horror Literature",
             difficulty: 2,
@@ -680,7 +738,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             points: 100
           },
           {
-            id: "horror-008",
+            id: "starter-008",
             text: "In 'A Nightmare on Elm Street', on which street do the main characters live?",
             category: "Horror Movies",
             difficulty: 3,
@@ -690,7 +748,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             points: 100
           },
           {
-            id: "horror-009",
+            id: "starter-009",
             text: "What is the name of the motel in Alfred Hitchcock's 'Psycho'?",
             category: "Horror Movies",
             difficulty: 2,
@@ -700,7 +758,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             points: 100
           },
           {
-            id: "horror-010",
+            id: "starter-010",
             text: "Which horror movie popularized the phrase 'Here's Johnny!'?",
             category: "Horror Movies",
             difficulty: 2,
@@ -710,27 +768,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
             points: 100
           }
         ];
-
-      // Add custom questions from Firestore to the pool
-      if (firestore) {
-        try {
-          const customQuestionsRef = firestore.collection('haunt-questions').doc(hauntId).collection('questions');
-          const customSnapshot = await customQuestionsRef.get();
-          
-          if (!customSnapshot.empty) {
-            const customQuestions = customSnapshot.docs.map(doc => ({
-              id: doc.id,
-              ...doc.data()
-            }));
-            
-            // Add custom questions to the pool, not replace
-            questions = [...questions, ...customQuestions];
-          }
-        } catch (error) {
-          console.warn(`Could not load custom questions for ${hauntId}:`, error);
-        }
       }
 
+      console.log(`Returning ${questions.length} total questions for ${hauntId}`);
       res.json(questions);
     } catch (error) {
       console.error("Error fetching trivia questions:", error);
