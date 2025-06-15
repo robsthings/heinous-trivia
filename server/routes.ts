@@ -1285,6 +1285,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
       
       console.log(`[ANALYTICS] Found ${adInteractions.length} ad interactions in range`);
+      if (adInteractions.length > 0) {
+        console.log(`[ANALYTICS] Sample ad interaction:`, adInteractions[0]);
+      }
       
       // Get leaderboard data - this is what's displayed in the working leaderboard endpoint
       // Use the same collection structure that works for /api/leaderboard/:hauntId
@@ -1355,9 +1358,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         : sessions.length > 0 ? Math.round((sessions.filter(s => s.status === 'completed').length / sessions.length) * 100) : 0;
       
       // Calculate ad metrics
-      const adViews = adInteractions.filter(interaction => interaction.interactionType === 'view').length;
-      const adClicks = adInteractions.filter(interaction => interaction.interactionType === 'click').length;
+      const adViews = adInteractions.filter(interaction => interaction.action === 'view' || interaction.interactionType === 'view').length;
+      const adClicks = adInteractions.filter(interaction => interaction.action === 'click' || interaction.interactionType === 'click').length;
       const adClickThrough = adViews > 0 ? (adClicks / adViews) * 100 : 0;
+      
+      console.log(`[ANALYTICS] Ad metrics calculation: views=${adViews}, clicks=${adClicks}, CTR=${adClickThrough}%`);
       
       // Calculate session time from available data
       const sessionsWithDuration = sessions.filter(s => s.startTime && s.endTime);
