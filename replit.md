@@ -159,9 +159,10 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 Preferred communication style: Simple, everyday language.
 
 **Critical Development Standards:**
-- Always reference FIELD_NAMES_REFERENCE.md before creating any API endpoints or database queries
+- Always reference fieldGlossary.json before creating any API endpoints or database queries
 - Field name consistency is mandatory - prevent mismatches between frontend/backend
 - Use standardized field names: 'haunt' for queries, 'action' for ad interactions, etc.
+- Reference comments added to all Firebase integration files pointing to fieldGlossary.json
 
 ## Upcoming Features
 

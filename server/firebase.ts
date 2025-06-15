@@ -1,3 +1,10 @@
+/**
+ * FIREBASE FIELD NAME REFERENCE: Check /fieldGlossary.json before modifying any Firebase operations
+ * - Use 'haunt' for query parameters, 'hauntId' for Firebase document fields
+ * - Use 'action' for ad interactions (NOT 'interactionType')
+ * - Collections: game_sessions, ad_interactions (snake_case), haunt-ads (kebab-case)
+ * - Verify all field names against canonical glossary before changes
+ */
 import { initializeApp, cert, getApps } from 'firebase-admin/app';
 import { getFirestore, FieldValue } from 'firebase-admin/firestore';
 import { getStorage } from 'firebase-admin/storage';
