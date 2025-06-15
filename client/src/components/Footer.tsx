@@ -45,10 +45,6 @@ export function Footer({ showInstallButton = false }: FooterProps) {
               <Link href="/terms" className="hover:text-red-400 transition-colors">
                 Terms of Use
               </Link>
-              {" | "}
-              <Link href="/upload-guidelines" className="hover:text-red-400 transition-colors">
-                Upload Guidelines
-              </Link>
             </div>
             
             {/* DeSpookify Mode Toggle */}
