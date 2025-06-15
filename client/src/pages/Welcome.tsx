@@ -197,6 +197,21 @@ export function Welcome() {
           </Button>
         </div>
 
+        {/* Development Helper - Reset First Time Experience */}
+        {process.env.NODE_ENV === 'development' && (
+          <div className="mt-4 text-center">
+            <button
+              onClick={() => {
+                localStorage.removeItem('hasSeenHeinousIntro');
+                window.location.reload();
+              }}
+              className="text-xs text-gray-600 hover:text-red-400 underline"
+            >
+              [DEV] Reset First-Time Experience
+            </button>
+          </div>
+        )}
+
         {/* Haunt Info */}
         <div className={`mt-8 text-center transition-all duration-1000 delay-1500 ${
           isAnimating ? 'opacity-0' : 'opacity-100'
