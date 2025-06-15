@@ -59,28 +59,18 @@ export function Welcome() {
     : 'Ready for another spine-chilling round of trivia?';
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black overflow-hidden relative">
+    <div className={`min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black overflow-hidden relative ${
+      isFirstTime && showGlitchEffect ? 'animate-lightning-flash' : ''
+    }`}>
       {/* Lightning/Glitch Background Effects for First-Time Users */}
       {isFirstTime && (
         <>
-          {/* Lightning effect */}
-          <div 
-            className={`absolute inset-0 transition-opacity duration-300 ${
-              showGlitchEffect ? 'opacity-30 animate-lightning-flash' : 'opacity-0'
-            }`}
-            style={{
-              background: `
-                radial-gradient(ellipse at 20% 50%, rgba(139, 0, 0, 0.3) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 30%, rgba(75, 0, 130, 0.3) 0%, transparent 50%),
-                radial-gradient(ellipse at 40% 80%, rgba(255, 107, 53, 0.2) 0%, transparent 50%)
-              `
-            }}
-          />
+          {/* Lightning effect - background integrated into main container */}
           
           {/* Glitch overlay */}
           <div 
-            className={`absolute inset-0 mix-blend-multiply transition-opacity duration-500 ${
-              showGlitchEffect ? 'opacity-20 animate-glitch-lines' : 'opacity-0'
+            className={`absolute inset-0 z-10 mix-blend-multiply transition-opacity duration-500 ${
+              showGlitchEffect ? 'opacity-30 animate-glitch-lines' : 'opacity-0'
             }`}
             style={{
               background: `
@@ -90,6 +80,13 @@ export function Welcome() {
                   transparent 2px,
                   rgba(139, 0, 0, 0.1) 2px,
                   rgba(139, 0, 0, 0.1) 4px
+                ),
+                repeating-linear-gradient(
+                  0deg,
+                  transparent,
+                  transparent 1px,
+                  rgba(30, 144, 255, 0.05) 1px,
+                  rgba(30, 144, 255, 0.05) 3px
                 )
               `
             }}
@@ -104,16 +101,14 @@ export function Welcome() {
         <div className="mb-8">
           {characterSprite ? (
             <img
-              src={characterSprite}
+              src={isFirstTime ? heinousSprites.talking : heinousSprites.charming}
               alt="Dr. Heinous"
-              className={`w-48 h-48 lg:w-64 lg:h-64 object-contain drop-shadow-2xl ${
-                isFirstTime ? 'animate-sprite-glitch-in' : 
-                isAnimating ? 'scale-50 opacity-0 rotate-12' : 'scale-100 opacity-100 rotate-0 transition-all duration-1000'
-              }`}
+              className={`w-48 h-48 lg:w-64 lg:h-64 object-contain drop-shadow-2xl animate-sprite-glitch-in`}
               style={{
                 filter: isFirstTime && showGlitchEffect ? 
                   'drop-shadow(0 0 20px rgba(139, 0, 0, 0.7))' : 
-                  'drop-shadow(0 0 15px rgba(255, 107, 53, 0.5))'
+                  'drop-shadow(0 0 15px rgba(255, 107, 53, 0.5))',
+                animationDelay: isFirstTime ? '0.5s' : '0.2s'
               }}
             />
           ) : (
@@ -125,25 +120,42 @@ export function Welcome() {
         </div>
 
         {/* Welcome Text */}
-        <div className={`text-center max-w-2xl mx-auto mb-8 transition-all duration-1000 delay-500 ${
-          isAnimating ? 'translate-y-10 opacity-0' : 'translate-y-0 opacity-100'
-        }`}>
+        <div className="text-center max-w-2xl mx-auto mb-8">
           <h1 className={`font-nosifer text-3xl lg:text-5xl mb-6 ${
-            isFirstTime ? 'text-red-500 animate-pulse' : 'text-orange-500'
-          }`}>
+            isFirstTime ? 'text-red-500 animate-fade-in' : 'text-orange-500 animate-pulse'
+          }`}
+          style={{
+            animationDelay: isFirstTime ? '1s' : '0s',
+            animationDuration: isFirstTime ? '0.8s' : '3s',
+            animationFillMode: 'forwards',
+            opacity: isFirstTime ? 0 : 1
+          }}>
             {welcomeTitle}
           </h1>
           
           <p className={`text-lg lg:text-xl mb-8 leading-relaxed ${
-            isFirstTime ? 'text-gray-300' : 'text-gray-400'
-          }`}>
+            isFirstTime ? 'text-gray-300 animate-fade-in' : 'text-gray-400'
+          } ${
+            !isFirstTime && !isAnimating ? 'translate-y-0 opacity-100 transition-all duration-1000' : 
+            !isFirstTime && isAnimating ? 'translate-y-10 opacity-0 transition-all duration-1000' : ''
+          }`}
+          style={isFirstTime ? {
+            animationDelay: '1.8s',
+            animationDuration: '0.8s',
+            animationFillMode: 'forwards',
+            opacity: 0
+          } : {}}>
             {welcomeMessage}
           </p>
 
           {isFirstTime && (
-            <div className={`text-sm text-red-400 mb-6 transition-opacity duration-1000 delay-1000 ${
-              showGlitchEffect ? 'opacity-100' : 'opacity-0'
-            }`}>
+            <div className="text-sm text-red-400 mb-6 animate-fade-in"
+            style={{
+              animationDelay: '2.5s',
+              animationDuration: '0.8s',
+              animationFillMode: 'forwards',
+              opacity: 0
+            }}>
               <p className="animate-pulse">
                 ⚡ Warning: This experience may contain jump scares and disturbing content ⚡
               </p>
@@ -152,9 +164,16 @@ export function Welcome() {
         </div>
 
         {/* Action Button */}
-        <div className={`transition-all duration-1000 delay-1000 ${
-          isAnimating ? 'translate-y-10 opacity-0' : 'translate-y-0 opacity-100'
-        }`}>
+        <div className={`${
+          isFirstTime ? 'animate-fade-in' : 
+          isAnimating ? 'translate-y-10 opacity-0 transition-all duration-1000' : 'translate-y-0 opacity-100 transition-all duration-1000'
+        }`}
+        style={isFirstTime ? {
+          animationDelay: '3.2s',
+          animationDuration: '0.8s',
+          animationFillMode: 'forwards',
+          opacity: 0
+        } : {}}>
           <Button
             onClick={handleStartGame}
             size="lg"
