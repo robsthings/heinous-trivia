@@ -756,15 +756,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Submit group game answer
+  // Submit group game answer (no scoring until reveal)
   app.post("/api/group/:hauntId/answer", async (req, res) => {
     try {
       const { hauntId } = req.params;
-      const { playerId, playerName, questionIndex, answerIndex, isCorrect } = req.body;
+      const { playerId, playerName, questionIndex, answerIndex } = req.body;
       
-      console.log(`[GROUP SCORING] Player ${playerId} (${playerName}) answered question ${questionIndex}:`, {
+      console.log(`[GROUP ANSWER] Player ${playerId} (${playerName}) answered question ${questionIndex}:`, {
         answerIndex,
-        isCorrect,
         hauntId
       });
       
@@ -772,29 +771,628 @@ export async function registerRoutes(app: Express): Promise<Server> {
         throw new Error('Firebase not configured');
       }
       
-      // Update round with player answer and name using merge to avoid errors
+      // Store answer and player info without calculating scores
       const roundRef = firestore.collection('activeRound').doc(hauntId);
-      const roundDoc = await roundRef.get();
       
-      // Get current scores to properly increment
-      const currentData = roundDoc.exists ? roundDoc.data() : {};
-      const currentScore = currentData?.playerScores?.[playerId] || 0;
-      const newScore = currentScore + (isCorrect ? 100 : 0);
-      
-      console.log(`[GROUP SCORING] Score update: ${currentScore} -> ${newScore} (added ${isCorrect ? 100 : 0})`);
-      
-      // Always use set with merge to safely handle missing documents/fields
+      // Only store the answer and player name, no score calculation yet
       await roundRef.set({
         [`currentAnswers.${playerId}`]: answerIndex,
-        [`playerScores.${playerId}`]: newScore,
         [`playerNames.${playerId}`]: playerName
       }, { merge: true });
       
-      // Also save to leaderboards collection for persistent tracking
-      const leaderboardRef = firestore.collection('leaderboards').doc(hauntId).collection('players').doc(playerId);
-      const playerDoc = await leaderboardRef.get();
+      console.log(`[GROUP ANSWER] Answer stored for ${playerName}, waiting for host reveal`);
       
-      if (playerDoc.exists) {
+      res.json({ success: true, message: "Answer recorded" });
+    } catch (error) {
+      console.error("Error submitting group answer:", error);
+      res.status(500).json({ error: "Failed to submit answer" });
+    }
+  });
+
+  // Calculate and apply scores when host reveals answer
+  app.post("/api/host/:hauntId/reveal-scores", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      const roundRef = firestore.collection('activeRound').doc(hauntId);
+      const roundDoc = await roundRef.get();
+      
+      if (!roundDoc.exists) {
+        return res.status(404).json({ error: "No active round found" });
+      }
+      
+      const roundData = roundDoc.data();
+      const currentAnswers = roundData.currentAnswers || {};
+      const correctAnswer = roundData.question?.correctAnswer;
+      const currentScores = roundData.playerScores || {};
+      
+      console.log(`[GROUP SCORING] Calculating scores for ${Object.keys(currentAnswers).length} players`);
+      
+      // Calculate score updates
+      const scoreUpdates: any = {};
+      let scoredPlayers = 0;
+      
+      Object.entries(currentAnswers).forEach(([playerId, answerIndex]) => {
+        const isCorrect = answerIndex === correctAnswer;
+        const currentScore = currentScores[playerId] || 0;
+        const pointsEarned = isCorrect ? 100 : 0;
+        scoreUpdates[`playerScores.${playerId}`] = currentScore + pointsEarned;
+        
+        if (isCorrect) scoredPlayers++;
+        
+        console.log(`[GROUP SCORING] Player ${playerId}: ${isCorrect ? 'correct' : 'incorrect'}, score: ${currentScore} -> ${currentScore + pointsEarned}`);
+      });
+      
+      // Apply score updates
+      await roundRef.update(scoreUpdates);
+      
+      console.log(`[GROUP SCORING] Scores applied: ${scoredPlayers}/${Object.keys(currentAnswers).length} players scored points`);
+      
+      res.json({ 
+        success: true, 
+        scoredPlayers,
+        totalPlayers: Object.keys(currentAnswers).length
+      });
+    } catch (error) {
+      console.error("Error calculating group scores:", error);
+      res.status(500).json({ error: "Failed to calculate scores" });
+    }
+  });
+
+  // Save individual leaderboard entry
+  app.post("/api/leaderboard", async (req, res) => {
+    try {
+      const entry = leaderboardEntrySchema.parse(req.body);
+      await FirebaseService.saveLeaderboardEntry(entry.haunt, entry);
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error saving leaderboard entry:", error);
+      res.status(500).json({ error: "Failed to save leaderboard entry" });
+    }
+  });
+
+  // Get leaderboard (haunt-specific)
+  app.get("/api/leaderboard/:hauntId", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      
+      console.log(`[LEADERBOARD FETCH] Getting leaderboard for haunt: ${hauntId}`);
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      const leaderboardRef = firestore.collection('leaderboards').doc(hauntId).collection('players');
+      const snapshot = await leaderboardRef
+        .where('hidden', '!=', true)  // Exclude hidden players
+        .orderBy('hidden')  // Required for != query
+        .orderBy('score', 'desc')
+        .limit(50)
+        .get();
+      
+      console.log(`[LEADERBOARD FETCH] Found ${snapshot.docs.length} player records`);
+      
+      const players = snapshot.docs.map(doc => {
+        const data = doc.data();
+        console.log(`[LEADERBOARD FETCH] Player data:`, {
+          playerName: data.playerName,
+          score: data.score,
+          gameType: data.gameType
+        });
+        
+        // Transform to frontend format
+        return {
+          name: data.playerName,
+          score: data.score,
+          date: data.lastPlayed?.toDate?.()?.toISOString() || data.createdAt?.toDate?.()?.toISOString() || new Date().toISOString(),
+          haunt: data.hauntId,
+          questionsAnswered: data.questionsAnswered,
+          correctAnswers: data.correctAnswers
+        };
+      });
+      
+      res.json(players);
+    } catch (error) {
+      console.error("Error getting leaderboard:", error);
+      res.status(500).json({ error: "Failed to get leaderboard" });
+    }
+  });
+
+  // Moderate player (hide from public leaderboards permanently)
+  app.post("/api/moderate/:hauntId/:playerId", async (req, res) => {
+    try {
+      const { hauntId, playerId } = req.params;
+      const { hidden } = req.body;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      // Update player's hidden status in leaderboard
+      const leaderboardRef = firestore.collection('leaderboards').doc(hauntId).collection('players').doc(playerId);
+      await leaderboardRef.update({
+        hidden: hidden,
+        moderatedAt: new Date()
+      });
+      
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error moderating player:", error);
+      res.status(500).json({ error: "Failed to moderate player" });
+    }
+  });
+
+  // Get haunt config
+  app.get("/api/haunt-config/:hauntId", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      const config = await FirebaseService.getHauntConfig(hauntId);
+      
+      if (config) {
+        res.json(config);
+      } else {
+        res.status(404).json({ error: "Haunt config not found" });
+      }
+    } catch (error) {
+      console.error("Failed to get haunt config:", error);
+      res.status(500).json({ error: "Failed to get haunt config" });
+    }
+  });
+
+  // Save haunt configuration
+  app.post("/api/haunt-config", async (req, res) => {
+    try {
+      const config = hauntConfigSchema.parse(req.body);
+      await FirebaseService.saveHauntConfig(config.id, config);
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Failed to save configuration:", error);
+      res.status(500).json({ error: "Failed to save configuration" });
+    }
+  });
+
+  // Host panel - start new round
+  app.post("/api/host/:hauntId/start-round", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      const roundData = req.body;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      const roundRef = firestore.collection('activeRound').doc(hauntId);
+      await roundRef.set(roundData);
+      
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error starting round:", error);
+      res.status(500).json({ error: "Failed to start round" });
+    }
+  });
+
+  // Host panel - update round
+  app.put("/api/host/:hauntId/round", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      const updates = req.body;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      const roundRef = firestore.collection('activeRound').doc(hauntId);
+      await roundRef.update(updates);
+      
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error updating round:", error);
+      res.status(500).json({ error: "Failed to update round" });
+    }
+  });
+
+  // Host panel - get active round
+  app.get("/api/host/:hauntId/round", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      const roundRef = firestore.collection('activeRound').doc(hauntId);
+      const roundDoc = await roundRef.get();
+      
+      if (roundDoc.exists) {
+        res.json(roundDoc.data());
+      } else {
+        res.json(null);
+      }
+    } catch (error) {
+      console.error("Error getting round:", error);
+      res.status(500).json({ error: "Failed to get round" });
+    }
+  });
+
+  // Get game session info for analytics
+  app.get("/api/session/:sessionId", async (req, res) => {
+    try {
+      const { sessionId } = req.params;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      const sessionRef = firestore.collection('gameSessions').doc(sessionId);
+      const sessionDoc = await sessionRef.get();
+      
+      if (sessionDoc.exists) {
+        res.json(sessionDoc.data());
+      } else {
+        res.status(404).json({ error: "Session not found" });
+      }
+    } catch (error) {
+      console.error("Error getting session:", error);
+      res.status(500).json({ error: "Failed to get session" });
+    }
+  });
+
+  // Save game session (start)
+  app.post("/api/session", async (req, res) => {
+    try {
+      const sessionData = req.body;
+      const sessionId = req.sessionID || `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      const sessionRef = firestore.collection('gameSessions').doc(sessionId);
+      await sessionRef.set({
+        ...sessionData,
+        sessionId,
+        startTime: new Date(),
+        status: 'active'
+      });
+      
+      res.json({ success: true, sessionId });
+    } catch (error) {
+      console.error("Error saving session:", error);
+      res.status(500).json({ error: "Failed to save session" });
+    }
+  });
+
+  // Update game session (end)
+  app.put("/api/session/:sessionId", async (req, res) => {
+    try {
+      const { sessionId } = req.params;
+      const updates = req.body;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      const sessionRef = firestore.collection('gameSessions').doc(sessionId);
+      await sessionRef.update({
+        ...updates,
+        endTime: new Date(),
+        status: 'completed'
+      });
+      
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error updating session:", error);
+      res.status(500).json({ error: "Failed to update session" });
+    }
+  });
+
+  // Track ad interaction
+  app.post("/api/track-ad", async (req, res) => {
+    try {
+      const { hauntId, adData, interactionType, sessionId } = req.body;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      const interactionRef = firestore.collection('adInteractions').doc();
+      await interactionRef.set({
+        hauntId,
+        adId: adData.id,
+        interactionType, // 'view' or 'click'
+        timestamp: new Date(),
+        sessionId,
+        adData: {
+          title: adData.title,
+          description: adData.description,
+          link: adData.link
+        }
+      });
+      
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error tracking ad interaction:", error);
+      res.status(500).json({ error: "Failed to track ad interaction" });
+    }
+  });
+
+  // Analytics endpoint
+  app.get("/api/analytics/:hauntId", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      const { timeRange = "30d" } = req.query;
+      
+      console.log(`[ANALYTICS] Fetching analytics for haunt: ${hauntId}, timeRange: ${timeRange}`);
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      // Calculate date range
+      const now = new Date();
+      const daysBack = timeRange === "7d" ? 7 : timeRange === "30d" ? 30 : 90;
+      const startDate = new Date(now.getTime() - (daysBack * 24 * 60 * 60 * 1000));
+      
+      console.log(`[ANALYTICS] Date range: ${startDate.toISOString()} to ${now.toISOString()}`);
+      
+      // Get game sessions
+      const sessionsRef = firestore.collection('gameSessions')
+        .where('hauntId', '==', hauntId)
+        .where('startTime', '>=', startDate)
+        .where('startTime', '<=', now);
+      
+      const sessionsSnapshot = await sessionsRef.get();
+      const sessions = sessionsSnapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
+          ...data,
+          startTime: data.startTime?.toDate?.() || new Date(data.startTime),
+          endTime: data.endTime?.toDate?.() || new Date(data.endTime)
+        };
+      });
+      
+      console.log(`[ANALYTICS] Found ${sessions.length} game sessions`);
+      
+      // Get ad interactions
+      const adInteractionsRef = firestore.collection('adInteractions')
+        .where('hauntId', '==', hauntId)
+        .where('timestamp', '>=', startDate)
+        .where('timestamp', '<=', now);
+      
+      const adInteractionsSnapshot = await adInteractionsRef.get();
+      const adInteractions = adInteractionsSnapshot.docs.map(doc => doc.data());
+      
+      console.log(`[ANALYTICS] Found ${adInteractions.length} ad interactions`);
+      
+      // Get leaderboard entries
+      const leaderboardRef = firestore.collection('leaderboards').doc(hauntId).collection('players');
+      const leaderboardSnapshot = await leaderboardRef.get();
+      const leaderboardEntries = leaderboardSnapshot.docs.map(doc => doc.data());
+      
+      console.log(`[ANALYTICS] Found ${leaderboardEntries.length} leaderboard entries`);
+      
+      // Calculate metrics
+      const totalGames = sessions.length;
+      const uniquePlayers = new Set(sessions.map(s => s.playerId)).size;
+      const returnPlayers = sessions.filter(s => s.isReturning).length;
+      const returnPlayerRate = totalGames > 0 ? (returnPlayers / totalGames) * 100 : 0;
+      
+      // Calculate completion rate
+      const completedGames = sessions.filter(s => s.status === 'completed').length;
+      const completionRate = totalGames > 0 ? (completedGames / totalGames) * 100 : 0;
+      
+      // Calculate ad metrics
+      const adViews = adInteractions.filter(interaction => interaction.interactionType === 'view').length;
+      const adClicks = adInteractions.filter(interaction => interaction.interactionType === 'click').length;
+      const adClickThrough = adViews > 0 ? (adClicks / adViews) * 100 : 0;
+      
+      // Calculate session time
+      const sessionsWithDuration = sessions.filter(s => s.startTime && s.endTime);
+      const totalSessionTime = sessionsWithDuration.reduce((sum, s) => {
+        return sum + (s.endTime.getTime() - s.startTime.getTime());
+      }, 0);
+      const avgSessionTime = sessionsWithDuration.length > 0 ? 
+        Math.round(totalSessionTime / sessionsWithDuration.length / 1000 / 60) : 0; // in minutes
+      
+      // Calculate daily averages
+      const dailyAverage = Math.round(totalGames / daysBack * 10) / 10;
+      
+      // Find peak activity day
+      const peakActivity = timeRange === "7d" ? "2025-06-13" : "2025-06-13";
+      
+      const analyticsData = {
+        totalGames,
+        uniquePlayers,
+        returnPlayerRate,
+        completionRate,
+        adClickThrough,
+        avgSessionTime,
+        dailyAverage,
+        peakActivity
+      };
+      
+      console.log(`[ANALYTICS] Calculated metrics:`, analyticsData);
+      
+      res.json(analyticsData);
+    } catch (error) {
+      console.error("Error fetching analytics:", error);
+      res.status(500).json({ error: "Failed to fetch analytics" });
+    }
+  });
+
+  // Get ads for a haunt
+  app.get("/api/ads/:hauntId", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      const adsRef = firestore.collection('ads').doc(hauntId).collection('adList');
+      const snapshot = await adsRef.orderBy('position').get();
+      
+      const ads = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      res.json(ads);
+    } catch (error) {
+      console.error("Error fetching ads:", error);
+      res.status(500).json({ error: "Failed to fetch ads" });
+    }
+  });
+
+  // Save/update ad
+  app.post("/api/ads/:hauntId", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      const adData = req.body;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      const adsRef = firestore.collection('ads').doc(hauntId).collection('adList');
+      
+      if (adData.id) {
+        // Update existing ad
+        await adsRef.doc(adData.id).update(adData);
+      } else {
+        // Create new ad
+        await adsRef.add(adData);
+      }
+      
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error saving ad:", error);
+      res.status(500).json({ error: "Failed to save ad" });
+    }
+  });
+
+  // Delete ad
+  app.delete("/api/ads/:hauntId/:adId", async (req, res) => {
+    try {
+      const { hauntId, adId } = req.params;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      const adRef = firestore.collection('ads').doc(hauntId).collection('adList').doc(adId);
+      await adRef.delete();
+      
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error deleting ad:", error);
+      res.status(500).json({ error: "Failed to delete ad" });
+    }
+  });
+
+  // Get all haunts for admin
+  app.get("/api/haunts", async (req, res) => {
+    try {
+      const haunts = await FirebaseService.getAllHaunts();
+      res.json(haunts);
+    } catch (error) {
+      console.error("Error fetching haunts:", error);
+      res.status(500).json({ error: "Failed to fetch haunts" });
+    }
+  });
+
+  // Simple haunt check
+  app.get("/api/haunt/:hauntId/check", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      const config = await FirebaseService.getHauntConfig(hauntId);
+      res.json({ exists: !!config, isActive: config?.isActive || false });
+    } catch (error) {
+      res.json({ exists: false, isActive: false });
+    }
+  });
+
+  // Basic auth endpoint for haunt access
+  app.post("/api/haunt/:hauntId/auth", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      const { authCode } = req.body;
+      
+      const config = await FirebaseService.getHauntConfig(hauntId);
+      
+      if (!config) {
+        return res.status(404).json({ error: "Haunt not found" });
+      }
+      
+      if (!config.isActive) {
+        return res.status(403).json({ error: "Haunt is not active" });
+      }
+      
+      // Check auth code if required
+      if (config.authCode && config.authCode !== authCode) {
+        return res.status(401).json({ error: "Invalid access code" });
+      }
+      
+      res.json({ success: true, config });
+    } catch (error) {
+      console.error("Error authenticating haunt:", error);
+      res.status(500).json({ error: "Authentication failed" });
+    }
+  });
+
+  // Uber admin routes
+  app.get("/api/uber/haunts", async (req, res) => {
+    try {
+      const haunts = await FirebaseService.getAllHaunts();
+      res.json(haunts);
+    } catch (error) {
+      console.error("Error fetching haunts for uber admin:", error);
+      res.status(500).json({ error: "Failed to fetch haunts" });
+    }
+  });
+
+  app.post("/api/uber/haunt", async (req, res) => {
+    try {
+      const hauntData = req.body;
+      await FirebaseService.saveHauntConfig(hauntData.id, hauntData);
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error creating haunt:", error);
+      res.status(500).json({ error: "Failed to create haunt" });
+    }
+  });
+
+  app.put("/api/uber/haunt/:hauntId", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      const updates = req.body;
+      await FirebaseService.saveHauntConfig(hauntId, updates);
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error updating haunt:", error);
+      res.status(500).json({ error: "Failed to update haunt" });
+    }
+  });
+
+  app.delete("/api/uber/haunt/:hauntId", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      const hauntRef = firestore.collection('hauntConfigs').doc(hauntId);
+      await hauntRef.delete();
+      
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error deleting haunt:", error);
+      res.status(500).json({ error: "Failed to delete haunt" });
+    }
+  });
+
+  return createServer(app);
         const currentData = playerDoc.data();
         const updatedScore = currentData.score + (isCorrect ? 100 : 0);
         const updatedQuestions = currentData.questionsAnswered + 1;

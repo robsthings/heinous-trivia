@@ -276,8 +276,6 @@ function Game() {
     
     setGroupAnswer(answerIndex);
     
-    const isCorrect = answerIndex === activeRound.question.correctAnswer;
-    
     try {
       const response = await fetch(`/api/group/${gameState.currentHaunt}/answer`, {
         method: 'POST',
@@ -288,21 +286,14 @@ function Game() {
           playerId,
           playerName,
           questionIndex: activeRound.questionIndex,
-          answerIndex,
-          isCorrect
+          answerIndex
         })
       });
 
       if (response.ok) {
-        // Update local score for header display
-        if (isCorrect) {
-          const newScore = groupScore + 100;
-          setGroupScore(newScore);
-        }
-        
         toast({
           title: "Answer Submitted!",
-          description: `Your answer has been recorded. ${isCorrect ? 'Correct!' : 'Wait for the reveal...'}`,
+          description: "Your answer has been recorded. Wait for the host to reveal results...",
           duration: 3000,
         });
       } else {
