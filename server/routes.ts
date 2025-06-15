@@ -1271,9 +1271,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         })));
       }
       
-      // Get ad interactions with single field query
+      // Get ad interactions with single field query - try both field names
       const adInteractionsRef = firestore.collection('ad_interactions')
-        .where('hauntId', '==', hauntId);
+        .where('haunt', '==', hauntId);
       
       const adInteractionsSnapshot = await adInteractionsRef.get();
       const allAdInteractions = adInteractionsSnapshot.docs.map(doc => doc.data());
