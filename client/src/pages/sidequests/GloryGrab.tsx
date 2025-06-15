@@ -306,7 +306,7 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
             {vials.map(vial => (
               <div
                 key={vial.id}
-                className={`absolute w-12 h-12 sm:w-16 sm:h-16 cursor-pointer transform transition-all duration-300 ${
+                className={`absolute w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 cursor-pointer transform transition-all duration-300 ${
                   vial.isCollected ? 'scale-150 opacity-0' : 
                   vial.isExploding ? 'scale-150 opacity-0' : 
                   'scale-100 opacity-100 animate-bounce'
@@ -327,11 +327,11 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
                   }}
                 />
                 
-                <div className="absolute -top-2 left-1/2 transform -translate-x-1/2">
+                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                   <div 
-                    className="w-8 h-1 bg-red-500 rounded"
+                    className="h-1.5 bg-red-500 rounded"
                     style={{
-                      width: `${(vial.countdown / vial.maxCountdown) * 32}px`,
+                      width: `${Math.max((vial.countdown / vial.maxCountdown) * 56, 4)}px`,
                       backgroundColor: vial.countdown > 1 ? '#10b981' : '#ef4444'
                     }}
                   />
