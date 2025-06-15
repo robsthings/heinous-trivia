@@ -164,7 +164,7 @@ export default function Info() {
 
             </div>
 
-            {/* Pro Tier */}
+            {/* Pro Tier - Updated to remove group mode */}
             <div className="bg-gradient-to-b from-red-900 to-black border-2 border-red-500 rounded-lg p-8 text-center relative transform scale-105">
               <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-4 py-1 rounded-full text-sm font-bold">
                 MOST POPULAR
