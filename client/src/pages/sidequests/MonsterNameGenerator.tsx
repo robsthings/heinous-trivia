@@ -203,11 +203,15 @@ function MonsterNameGeneratorCore({ showHeinous = true }: MonsterNameGeneratorPr
               backgroundRepeat: 'no-repeat'
             }}
           >
-            {/* Monster name display */}
+            {/* Monster name display - always two lines */}
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center px-4">
-                <h1 className="text-xl sm:text-2xl md:text-3xl font-nosifer text-red-500 leading-tight animate-fade-in">
-                  {monsterName}
+              <div className="text-center px-6">
+                <h1 className="text-lg sm:text-xl md:text-2xl font-nosifer text-red-500 leading-tight animate-fade-in">
+                  {monsterName.split(' ').map((word, index) => (
+                    <div key={index} className="block">
+                      {word}
+                    </div>
+                  ))}
                 </h1>
               </div>
             </div>
