@@ -87,6 +87,7 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 - Authenticated write access for admin uploads
 
 ## Changelog
+- June 15, 2025: **FIXED FIREBASE COLLECTION NAMING ALIGNMENT** - Updated all server-side collection references from camelCase (gameSessions, adInteractions) to snake_case (game_sessions, ad_interactions) matching Firebase console collection structure, resolving analytics endpoint failures and enabling authentic data retrieval with proper index utilization
 - June 15, 2025: **COMPLETED COMPREHENSIVE GROUP MODE REMOVAL** - Eliminated all Group Mode Express routes (/api/host, /api/group), removed host-panel.tsx page, cleaned up 32+ GROUP_MODE comment blocks while preserving ads, analytics, and leaderboard functionality for individual-only gameplay
 - June 15, 2025: Added Random Sidequests feature to all subscription tiers - Basic: 3, Pro: 5, Premium: 10 sidequests per tier
 - June 15, 2025: Removed Group Party Mode and Real-time multiplayer references from Pro and Premium tier descriptions on /info page to accurately reflect individual-only functionality
