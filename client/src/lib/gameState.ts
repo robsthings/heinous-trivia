@@ -184,6 +184,15 @@ export class GameManager {
   }
 
   static async saveScore(playerName: string, state: GameState): Promise<void> {
+    // Import AnalyticsTracker dynamically to avoid circular imports
+    const { AnalyticsTracker } = await import('./analytics');
+    
+    // Complete the analytics session when score is saved
+    await AnalyticsTracker.completeSession(
+      state.questionsAnswered,
+      state.correctAnswers,
+      state.score
+    );
 
     const entry = {
       name: playerName,
