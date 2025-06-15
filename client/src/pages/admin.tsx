@@ -1523,7 +1523,6 @@ export default function Admin() {
                                     Controlled by haunt owner
                                   </p>
                                 </div>
-                                // GROUP_MODE_END
 
                                 {/* Admin Actions */}
                                 <div className="space-y-2">
