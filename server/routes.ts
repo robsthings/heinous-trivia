@@ -1219,7 +1219,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Analytics endpoint
+  // Analytics endpoint - requires Firebase composite indexes
   app.get("/api/analytics/:hauntId", async (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Cache-Control', 'no-cache');
@@ -1241,14 +1241,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       console.log(`[ANALYTICS] Date range: ${startDate.toISOString()} to ${now.toISOString()}`);
       
-      // Get game sessions
+      // Try single-field query first - less likely to need composite index
       const sessionsRef = firestore.collection('gameSessions')
-        .where('hauntId', '==', hauntId)
-        .where('startTime', '>=', startDate)
-        .where('startTime', '<=', now);
+        .where('hauntId', '==', hauntId);
       
       const sessionsSnapshot = await sessionsRef.get();
-      const sessions = sessionsSnapshot.docs.map(doc => {
+      const allSessions = sessionsSnapshot.docs.map(doc => {
         const data = doc.data();
         return {
           ...data,
@@ -1257,29 +1255,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
         };
       });
       
-      console.log(`[ANALYTICS] Found ${sessions.length} game sessions`);
+      // Filter by date range in application code
+      const sessions = allSessions.filter(session => {
+        const sessionTime = session.startTime;
+        return sessionTime >= startDate && sessionTime <= now;
+      });
       
-      // Get ad interactions
+      console.log(`[ANALYTICS] Found ${sessions.length} sessions in range from ${allSessions.length} total`);
+      
+      // Get ad interactions with single field query
       const adInteractionsRef = firestore.collection('adInteractions')
-        .where('hauntId', '==', hauntId)
-        .where('timestamp', '>=', startDate)
-        .where('timestamp', '<=', now);
+        .where('hauntId', '==', hauntId);
       
       const adInteractionsSnapshot = await adInteractionsRef.get();
-      const adInteractions = adInteractionsSnapshot.docs.map(doc => doc.data());
+      const allAdInteractions = adInteractionsSnapshot.docs.map(doc => doc.data());
       
-      console.log(`[ANALYTICS] Found ${adInteractions.length} ad interactions`);
+      // Filter by date range in application code
+      const adInteractions = allAdInteractions.filter(interaction => {
+        const interactionTime = interaction.timestamp?.toDate?.() || new Date(interaction.timestamp);
+        return interactionTime >= startDate && interactionTime <= now;
+      });
       
-      // Get leaderboard entries
-      const leaderboardRef = firestore.collection('leaderboards').doc(hauntId).collection('players');
-      const leaderboardSnapshot = await leaderboardRef.get();
-      const leaderboardEntries = leaderboardSnapshot.docs.map(doc => doc.data());
+      console.log(`[ANALYTICS] Found ${adInteractions.length} ad interactions in range`);
       
-      console.log(`[ANALYTICS] Found ${leaderboardEntries.length} leaderboard entries`);
-      
-      // Calculate metrics
+      // Calculate authentic metrics from actual data
       const totalGames = sessions.length;
-      const uniquePlayers = new Set(sessions.map(s => s.playerId)).size;
+      const uniquePlayers = new Set(sessions.map(s => s.playerId).filter(Boolean)).size;
       const returnPlayers = sessions.filter(s => s.isReturning).length;
       const returnPlayerRate = totalGames > 0 ? (returnPlayers / totalGames) * 100 : 0;
       
@@ -1295,7 +1296,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Calculate session time
       const sessionsWithDuration = sessions.filter(s => s.startTime && s.endTime);
       const totalSessionTime = sessionsWithDuration.reduce((sum, s) => {
-        return sum + (s.endTime.getTime() - s.startTime.getTime());
+        const duration = s.endTime.getTime() - s.startTime.getTime();
+        return sum + duration;
       }, 0);
       const avgSessionTime = sessionsWithDuration.length > 0 ? 
         Math.round(totalSessionTime / sessionsWithDuration.length / 1000 / 60) : 0; // in minutes
@@ -1303,26 +1305,45 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Calculate daily averages
       const dailyAverage = Math.round(totalGames / daysBack * 10) / 10;
       
-      // Find peak activity day
-      const peakActivity = timeRange === "7d" ? "2025-06-13" : "2025-06-13";
+      // Find peak activity day from actual data
+      const sessionsByDay = {};
+      sessions.forEach(session => {
+        const day = session.startTime.toISOString().split('T')[0];
+        sessionsByDay[day] = (sessionsByDay[day] || 0) + 1;
+      });
+      
+      const peakActivity = Object.entries(sessionsByDay).length > 0 ? 
+        Object.entries(sessionsByDay).reduce((peak, [day, count]) => 
+          count > (sessionsByDay[peak] || 0) ? day : peak, 
+          Object.keys(sessionsByDay)[0]) : 
+        new Date().toISOString().split('T')[0];
       
       const analyticsData = {
         totalGames,
         uniquePlayers,
-        returnPlayerRate,
-        completionRate,
-        adClickThrough,
+        returnPlayerRate: Math.round(returnPlayerRate * 10) / 10,
+        completionRate: Math.round(completionRate * 10) / 10,
+        adClickThrough: Math.round(adClickThrough * 10) / 10,
         avgSessionTime,
         dailyAverage,
         peakActivity
       };
       
-      console.log(`[ANALYTICS] Calculated metrics:`, analyticsData);
+      console.log(`[ANALYTICS] Calculated authentic metrics:`, analyticsData);
       
       res.json(analyticsData);
     } catch (error) {
       console.error("Error fetching analytics:", error);
-      res.status(500).json({ error: "Failed to fetch analytics" });
+      // Return structured error indicating missing index requirement
+      if (error.code === 9) {
+        res.status(503).json({ 
+          error: "Analytics requires Firebase index configuration",
+          indexRequired: true,
+          details: "Composite indexes needed for gameSessions and adInteractions collections"
+        });
+      } else {
+        res.status(500).json({ error: "Failed to fetch analytics" });
+      }
     }
   });
 
