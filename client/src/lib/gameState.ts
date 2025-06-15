@@ -141,9 +141,10 @@ export class GameManager {
           selectedAnswer: null,
         };
       } else {
-        // Show ad between rounds
+        // Show ad between rounds - advance question index so we don't repeat
         return {
           ...state,
+          currentQuestionIndex: nextIndex,
           showAd: true,
           showFeedback: false,
           selectedAnswer: null,
@@ -172,10 +173,8 @@ export class GameManager {
   }
 
   static closeAd(state: GameState): GameState {
-    // Check if we need to advance to next question or end game
-    const nextIndex = state.currentQuestionIndex + 1;
-    
-    if (nextIndex >= state.questions.length) {
+    // Check if we've reached the end of available questions
+    if (state.currentQuestionIndex >= state.questions.length) {
       // Game complete after this ad
       return {
         ...state,
@@ -186,11 +185,10 @@ export class GameManager {
       };
     }
     
-    // Continue to next question
+    // Simply close the ad - question index was already advanced in nextQuestion
     return {
       ...state,
       showAd: false,
-      currentQuestionIndex: nextIndex,
       selectedAnswer: null,
       showFeedback: false,
       isCorrect: false,

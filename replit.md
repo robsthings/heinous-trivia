@@ -106,6 +106,7 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 5. Game state updates with loaded data
 
 ## Changelog
+- June 15, 2025: **FIXED QUESTION REPETITION BUG IN AD FLOW** - Corrected game state logic where questions 5, 10, and 15 were being repeated after ads by ensuring question index is only advanced once during ad transitions
 - June 15, 2025: **COMPLETED GAME FUNCTIONALITY RESTORATION** - Fixed click handler arguments in game component, resolving non-interactive answer buttons and enabling full 20-question gameplay with authentic 205 questions from Firebase trivia packs
 - June 15, 2025: **FIXED CRITICAL GAME ROUTING AND INITIALIZATION** - Added missing `/game/:hauntId` route and restored `initializeGameState` method to GameManager, resolving 404 errors and function reference failures that prevented game loading
 - June 15, 2025: **RESTORED AD PERFORMANCE METRICS DISPLAY** - Fixed missing Ad Performance section in analytics dashboard by correcting data structure alignment and adding fallback display for ads with zero interactions, ensuring all 6 uploaded ads appear in analytics table with current metrics
