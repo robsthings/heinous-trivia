@@ -104,6 +104,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to update haunt branding" });
     }
   });
+  // GROUP_MODE_END
 
   // Upload branding assets to Firebase Storage (Uber Admin only)
   app.post("/api/branding/upload", upload.single('file'), async (req, res) => {
@@ -248,6 +249,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     }
   });
+  // GROUP_MODE_END
 
   // Get branding assets (Uber Admin only)
   app.get("/api/branding/assets", async (req, res) => {
@@ -259,6 +261,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to fetch branding assets" });
     }
   });
+  // GROUP_MODE_END
 
   // Delete branding asset (Uber Admin only)
   app.delete("/api/branding/assets/:assetId", async (req, res) => {
@@ -290,6 +293,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to save branding metadata" });
     }
   });
+  // GROUP_MODE_END
 
   // Individual Ad Management API endpoints
   
@@ -392,6 +396,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to fetch ads" });
     }
   });
+  // GROUP_MODE_END
 
   // Add new ad
   app.post("/api/ads/:hauntId", upload.single('image'), async (req, res) => {
@@ -460,6 +465,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to add ad" });
     }
   });
+  // GROUP_MODE_END
 
   // Update existing ad
   app.put("/api/ads/:hauntId/:adId", upload.single('image'), async (req, res) => {
@@ -527,6 +533,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to update ad" });
     }
   });
+  // GROUP_MODE_END
 
   // Delete ad
   app.delete("/api/ads/:hauntId/:adId", async (req, res) => {
@@ -556,6 +563,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to delete ad" });
     }
   });
+  // GROUP_MODE_END
 
   // Save leaderboard entry (haunt-specific)
   app.post("/api/leaderboard/:hauntId", async (req, res) => {
@@ -570,6 +578,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to save leaderboard entry" });
     }
   });
+  // GROUP_MODE_END
 
   // Get leaderboard (haunt-specific)
   app.get("/api/leaderboard/:hauntId", async (req, res) => {
@@ -582,6 +591,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to fetch leaderboard" });
     }
   });
+  // GROUP_MODE_END
 
   // Get haunt configuration
   app.get("/api/haunt-config/:hauntId", async (req, res) => {
@@ -594,6 +604,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to fetch configuration" });
     }
   });
+  // GROUP_MODE_END
 
   // Get trivia questions for a haunt
   app.get("/api/trivia-questions/:hauntId", async (req, res) => {
@@ -804,6 +815,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to fetch trivia questions" });
     }
   });
+  // GROUP_MODE_END
 
   // Initialize database with sample data
   app.post("/api/initialize-data", async (req, res) => {
@@ -860,6 +872,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to initialize data" });
     }
   });
+  // GROUP_MODE_END
 
   // Save haunt configuration
   app.post("/api/haunt-config/:hauntId", async (req, res) => {
@@ -874,7 +887,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to save configuration" });
     }
   });
+  // GROUP_MODE_END
 
+  // GROUP_MODE_START - Host panel round management
   // Host panel - start new round
   app.post("/api/host/:hauntId/start-round", async (req, res) => {
     try {
@@ -906,7 +921,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to start round" });
     }
   });
+  // GROUP_MODE_END
 
+  // GROUP_MODE_START - Host panel round updates
   // Host panel - update round
   app.put("/api/host/:hauntId/round", async (req, res) => {
     try {
@@ -938,7 +955,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to update round" });
     }
   });
+  // GROUP_MODE_END
 
+  // GROUP_MODE_START - Host panel round retrieval
   // Host panel - get active round
   app.get("/api/host/:hauntId/round", async (req, res) => {
     try {
@@ -973,6 +992,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to get round" });
     }
   });
+  // GROUP_MODE_END
 
   // Track ad metrics
   app.post("/api/ad-metrics/:hauntId/:adIndex/:metric", async (req, res) => {
@@ -1001,6 +1021,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to track ad metric" });
     }
   });
+  // GROUP_MODE_END
 
   // Submit group game answer (no scoring until reveal)
   app.post("/api/group/:hauntId/answer", async (req, res) => {
@@ -1034,6 +1055,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to submit answer" });
     }
   });
+  // GROUP_MODE_END
 
   // Calculate and apply scores when host reveals answer
   app.post("/api/host/:hauntId/reveal-scores", async (req, res) => {
@@ -1110,6 +1132,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to calculate scores" });
     }
   });
+  // GROUP_MODE_END
 
   // Save individual leaderboard entry
   app.post("/api/leaderboard", async (req, res) => {
@@ -1122,6 +1145,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to save leaderboard entry" });
     }
   });
+  // GROUP_MODE_END
 
   // Get leaderboard (haunt-specific)
   app.get("/api/leaderboard/:hauntId", async (req, res) => {
@@ -1169,6 +1193,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to get leaderboard" });
     }
   });
+  // GROUP_MODE_END
 
   // Moderate player (hide from public leaderboards permanently)
   app.post("/api/moderate/:hauntId/:playerId", async (req, res) => {
@@ -1193,6 +1218,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to moderate player" });
     }
   });
+  // GROUP_MODE_END
 
   // Get haunt config
   app.get("/api/haunt-config/:hauntId", async (req, res) => {
@@ -1210,6 +1236,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to get haunt config" });
     }
   });
+  // GROUP_MODE_END
 
   // Save haunt configuration
   app.post("/api/haunt-config", async (req, res) => {
@@ -1222,6 +1249,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to save configuration" });
     }
   });
+  // GROUP_MODE_END
 
   // Host panel - start new round
   app.post("/api/host/:hauntId/start-round", async (req, res) => {
@@ -1254,6 +1282,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to start round" });
     }
   });
+  // GROUP_MODE_END
 
   // Host panel - update round
   app.put("/api/host/:hauntId/round", async (req, res) => {
@@ -1286,6 +1315,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to update round" });
     }
   });
+  // GROUP_MODE_END
 
   // Host panel - get active round
   app.get("/api/host/:hauntId/round", async (req, res) => {
@@ -1321,6 +1351,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to get round" });
     }
   });
+  // GROUP_MODE_END
 
   // Get game session info for analytics
   app.get("/api/session/:sessionId", async (req, res) => {
@@ -1344,6 +1375,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to get session" });
     }
   });
+  // GROUP_MODE_END
 
   // Save game session (start)
   app.post("/api/session", async (req, res) => {
@@ -1369,6 +1401,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to save session" });
     }
   });
+  // GROUP_MODE_END
 
   // Update game session (end)
   app.put("/api/session/:sessionId", async (req, res) => {
@@ -1393,6 +1426,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to update session" });
     }
   });
+  // GROUP_MODE_END
 
   // Track ad interaction
   app.post("/api/track-ad", async (req, res) => {
@@ -1423,6 +1457,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to track ad interaction" });
     }
   });
+  // GROUP_MODE_END
 
   // Analytics endpoint
   app.get("/api/analytics/:hauntId", async (req, res) => {
@@ -1527,6 +1562,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to fetch analytics" });
     }
   });
+  // GROUP_MODE_END
 
   // Get ads for a haunt
   app.get("/api/ads/:hauntId", async (req, res) => {
@@ -1547,6 +1583,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to fetch ads" });
     }
   });
+  // GROUP_MODE_END
 
   // Save/update ad
   app.post("/api/ads/:hauntId", async (req, res) => {
@@ -1574,6 +1611,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to save ad" });
     }
   });
+  // GROUP_MODE_END
 
   // Delete ad
   app.delete("/api/ads/:hauntId/:adId", async (req, res) => {
@@ -1593,6 +1631,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to delete ad" });
     }
   });
+  // GROUP_MODE_END
 
   // Get all haunts for admin
   app.get("/api/haunts", async (req, res) => {
@@ -1604,6 +1643,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to fetch haunts" });
     }
   });
+  // GROUP_MODE_END
 
   // Simple haunt check
   app.get("/api/haunt/:hauntId/check", async (req, res) => {
@@ -1615,6 +1655,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ exists: false, isActive: false });
     }
   });
+  // GROUP_MODE_END
 
   // Basic auth endpoint for haunt access
   app.post("/api/haunt/:hauntId/auth", async (req, res) => {
@@ -1643,6 +1684,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Authentication failed" });
     }
   });
+  // GROUP_MODE_END
 
   // Uber admin routes
   app.get("/api/uber/haunts", async (req, res) => {
@@ -1695,6 +1737,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ error: "Failed to delete haunt" });
     }
   });
+  // GROUP_MODE_END
 
   // Legacy route pattern for questions (for compatibility)
   app.get("/api/haunt/:hauntId/questions", async (req, res) => {

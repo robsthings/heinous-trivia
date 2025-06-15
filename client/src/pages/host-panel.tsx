@@ -28,6 +28,7 @@ interface ActiveRound {
   questionResetId?: number;
 }
 
+// GROUP_MODE_START - Host panel component
 export default function HostPanel() {
   const [, params] = useRoute("/host-panel/:hauntId");
   const hauntId = params?.hauntId || "";
@@ -756,3 +757,4 @@ export default function HostPanel() {
     </div>
   );
 }
+// GROUP_MODE_END

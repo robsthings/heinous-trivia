@@ -415,6 +415,7 @@ function Game() {
       />
       
       <main className="px-3 sm:px-4 pb-20">
+        {/* GROUP_MODE_START - Disabled group mode UI */}
         {/* Individual play mode only - group mode disabled */}
         {false ? (
           !activeRound ? (
@@ -502,6 +503,7 @@ function Game() {
               </CardContent>
             </Card>
           )
+        // GROUP_MODE_END
         ) : (
           !gameState.showAd && (
             <TriviaCard
