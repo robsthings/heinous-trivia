@@ -446,7 +446,7 @@ export default function HostPanel() {
                         <div className="text-center">
                           <p className="text-gray-400 text-sm">Players</p>
                           <p className="font-bold text-lg text-white">
-                            {Object.keys(activeRound.currentAnswers).length}
+                            {Object.keys(activeRound.currentAnswers || {}).length}
                           </p>
                         </div>
                         <div className="text-center">
@@ -573,7 +573,7 @@ export default function HostPanel() {
               </Card>
 
               {/* Player Answers (if active round) */}
-              {activeRound && Object.keys(activeRound.currentAnswers).length > 0 && (
+              {activeRound && Object.keys(activeRound.currentAnswers || {}).length > 0 && (
                 <Card className="bg-gray-900/50 border-gray-700">
                   <CardHeader>
                     <CardTitle className="text-red-400">📝 Player Answers</CardTitle>
@@ -599,9 +599,9 @@ export default function HostPanel() {
                     <p className="text-gray-400 text-sm">Control player name visibility on public leaderboards</p>
                   </CardHeader>
                   <CardContent>
-                    {Object.keys(activeRound.currentAnswers).length > 0 ? (
+                    {Object.keys(activeRound.currentAnswers || {}).length > 0 ? (
                       <div className="space-y-3">
-                        {Object.keys(activeRound.currentAnswers).map((playerId) => {
+                        {Object.keys(activeRound.currentAnswers || {}).map((playerId) => {
                           const isHidden = activeRound.hiddenPlayers?.[playerId] || false;
                           const playerScore = activeRound.playerScores?.[playerId] || 0;
                           const playerName = activeRound.playerNames?.[playerId] || playerId;

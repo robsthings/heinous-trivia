@@ -87,6 +87,7 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 - Authenticated write access for admin uploads
 
 ## Changelog
+- June 14, 2025: Fixed Host panel crash by adding null safety checks to Object.keys() calls on currentAnswers - prevents "Cannot convert undefined or null to object" error when loading host interface
 - June 14, 2025: Fixed Tawk.to customer support chat widget with correct widget ID (1it08ki7i) - now working on production domain for /info page and Pro/Premium haunt admin panels
 - June 14, 2025: Removed broken question performance tracking system to eliminate console errors and improve stability - focusing analytics on business-critical ad engagement metrics only
 - June 14, 2025: Fixed critical analytics dashboard bug - updated ad performance metrics to use unique Firebase document IDs instead of position-based tracking, ensuring accurate historical insights survive ad reordering and deletion
