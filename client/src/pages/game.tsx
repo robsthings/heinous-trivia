@@ -207,43 +207,7 @@ function Game() {
 
   // Group mode countdown and answer tracking disabled - individual play only
 
-  const handleGroupAnswer = async (answerIndex: number) => {
-    if (!activeRound || !playerId || !playerName) return;
-    
-    setGroupAnswer(answerIndex);
-    
-    try {
-      const response = await fetch(`/api/group/${gameState.currentHaunt}/answer`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          playerId,
-          playerName,
-          questionIndex: activeRound.questionIndex,
-          answerIndex
-        })
-      });
-
-      if (response.ok) {
-        toast({
-          title: "Answer Submitted!",
-          description: "Your answer has been recorded. Wait for the host to reveal results...",
-          duration: 3000,
-        });
-      } else {
-        throw new Error('Failed to submit answer');
-      }
-    } catch (error) {
-      toast({
-        title: "Submission Failed",
-        description: "Could not submit your answer. Please try again.",
-        variant: "destructive",
-        duration: 5000,
-      });
-    }
-  };
+  // Group answer handling disabled - individual play mode only
 
   const savePlayerInfo = (name: string) => {
     const newPlayerId = playerId || `player_${Math.random().toString(36).substr(2, 9)}`;
@@ -260,7 +224,7 @@ function Game() {
 
     // Start analytics session when player info is saved
     if (haunt) {
-      AnalyticsTracker.startSession(haunt, isGroupMode ? 'group' : 'individual');
+      AnalyticsTracker.startSession(haunt, 'individual');
     }
   };
 
@@ -446,12 +410,13 @@ function Game() {
     <div className={`game-container min-h-screen ${gameState.hauntConfig?.tier === 'premium' && gameState.hauntConfig?.skinUrl ? '' : 'bg-gradient-to-br from-gray-900 via-purple-900 to-black'}`}>
       <GameHeader 
         gameState={gameState} 
-        isGroupMode={isGroupMode}
-        groupScore={groupScore}
+        isGroupMode={false}
+        groupScore={0}
       />
       
       <main className="px-3 sm:px-4 pb-20">
-        {isGroupMode ? (
+        {/* Individual play mode only - group mode disabled */}
+        {false ? (
           !activeRound ? (
             <Card className="bg-gray-900/50 border-gray-700 text-white max-w-sm sm:max-w-md mx-auto">
               <CardHeader>
@@ -498,7 +463,7 @@ function Game() {
                       {activeRound.question.answers.map((answer, index) => (
                         <Button
                           key={index}
-                          onClick={() => handleGroupAnswer(index)}
+                          onClick={() => {/* Group mode disabled */}}
                           disabled={activeRound.status === "reveal" || activeRound.status === "countdown" || activeRound.status === "waiting" || groupAnswer !== null}
                           variant={
                             activeRound.status === "reveal" && index === activeRound.question.correctAnswer
