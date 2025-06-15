@@ -106,6 +106,10 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 5. Game state updates with loaded data
 
 ## Changelog
+- June 15, 2025: **FIXED MANAGE ADS BUTTON URL** - Corrected analytics dashboard "Manage Ads" button to point to https://heinoustrivia.com/haunt-admin/{hauntId} instead of broken relative path, enabling proper navigation to haunt admin panel
+- June 15, 2025: **FIXED AD CAMPAIGN SUMMARY CALCULATIONS** - Updated Ad Campaign Summary to use analyticsData.adPerformanceData instead of separate query, displaying authentic metrics (19 total impressions, 50 total engagements) from Firebase data instead of zeros
+- June 15, 2025: **FIXED ANALYTICS SESSION COMPLETION TRACKING** - Added missing AnalyticsTracker.completeSession call to GameManager.saveScore method, enabling real-time analytics updates when players finish games and save scores
+- June 15, 2025: **FIXED VIEW FULL LEADERBOARD BUTTON** - Corrected API endpoint from query parameter (?haunt=) to path parameter (/:hauntId) format, enabling proper display of authentic player leaderboard data
 - June 15, 2025: **FIXED AD PERFORMANCE METRICS TRACKING** - Resolved field name mismatch between analytics tracker (action) and dashboard query (interactionType) by updating calculation logic to check both field names, enabling accurate display of ad views, clicks, and CTR in analytics dashboard
 - June 15, 2025: **FIXED LEADERBOARD BUTTON** - Corrected API parameter mismatch in handleViewLeaderboard function (changed hauntId to haunt) enabling "View Full Leaderboard" button to properly fetch and display leaderboard data after game completion
 - June 15, 2025: **FIXED GAME COMPLETION FLOW** - Corrected game state progression after question 20 by updating nextQuestion logic to properly check for completion conditions and fixed game component to recognize gameComplete/showEndScreen flags instead of invalid gamePhase property, ensuring players reach end screen and leaderboard

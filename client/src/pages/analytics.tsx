@@ -808,7 +808,7 @@ export default function Analytics() {
                   </div>
                   <div className="flex flex-col sm:flex-row gap-3">
                     <Button 
-                      onClick={() => window.location.href = `/admin/${hauntId}`}
+                      onClick={() => window.location.href = `https://heinoustrivia.com/haunt-admin/${hauntId}`}
                       className="bg-purple-500 hover:bg-purple-600 text-white border-0"
                     >
                       <MousePointerClickIcon className="w-4 h-4 mr-2" />
