@@ -1,0 +1,7 @@
+This folder contains placeholder assets for the Monster Name Generator.
+
+Required assets:
+- monster-library-bg.png: Dark laboratory background
+- monster-card.png: Card frame for monster name display
+
+These will be replaced with actual horror-themed graphics when available.
