@@ -113,6 +113,12 @@ function Game() {
     };
 
     initializeGame();
+    
+    // Cleanup function to remove custom skin when component unmounts
+    return () => {
+      document.documentElement.style.removeProperty('--custom-background-url');
+      document.body.classList.remove('custom-skin');
+    };
   }, [gameState.currentHaunt]);
 
   const savePlayerInfo = (name: string) => {
