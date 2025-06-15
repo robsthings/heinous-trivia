@@ -59,18 +59,28 @@ export function Welcome() {
     : 'Ready for another spine-chilling round of trivia?';
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black overflow-hidden relative ${
-      isFirstTime && showGlitchEffect ? 'animate-lightning-flash' : ''
-    }`}>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black overflow-hidden relative">
       {/* Lightning/Glitch Background Effects for First-Time Users */}
       {isFirstTime && (
         <>
-          {/* Lightning effect - background integrated into main container */}
-          
-          {/* Glitch overlay */}
+          {/* Lightning effect overlay */}
           <div 
-            className={`absolute inset-0 z-10 mix-blend-multiply transition-opacity duration-500 ${
-              showGlitchEffect ? 'opacity-30 animate-glitch-lines' : 'opacity-0'
+            className={`absolute inset-0 z-0 transition-opacity duration-300 ${
+              showGlitchEffect ? 'opacity-40 animate-lightning-flash' : 'opacity-0'
+            }`}
+            style={{
+              background: `
+                radial-gradient(ellipse at 20% 50%, rgba(30, 144, 255, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 30%, rgba(139, 0, 0, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at 40% 80%, rgba(255, 107, 53, 0.2) 0%, transparent 50%)
+              `
+            }}
+          />
+          
+          {/* Glitch lines overlay */}
+          <div 
+            className={`absolute inset-0 z-5 pointer-events-none transition-opacity duration-500 ${
+              showGlitchEffect ? 'opacity-20 animate-glitch-lines' : 'opacity-0'
             }`}
             style={{
               background: `
@@ -95,7 +105,7 @@ export function Welcome() {
       )}
 
       {/* Main Content */}
-      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-4">
+      <div className="relative z-20 min-h-screen flex flex-col items-center justify-center p-4">
         
         {/* Character Sprite */}
         <div className="mb-8">
