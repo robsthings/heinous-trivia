@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Home from "@/pages/home";
 import Game from "@/pages/game";
+import { Welcome } from "@/pages/Welcome";
 import Admin from "@/pages/admin";
 import HauntAdmin from "@/pages/haunt-admin";
 import HauntAuth from "@/pages/haunt-auth";
@@ -36,6 +37,7 @@ function Router() {
         // Otherwise show the homepage
         return <Home />;
       }} />
+      <Route path="/welcome/:hauntId" component={Welcome} />
       <Route path="/game" component={Game} />
       <Route path="/game/:hauntId" component={Game} />
       <Route path="/admin" component={Admin} />

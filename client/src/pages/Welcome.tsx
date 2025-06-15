@@ -1,0 +1,224 @@
+import { useState, useEffect } from 'react';
+import { useRoute, useLocation } from 'wouter';
+import { heinousSprites } from '@/lib/characterLoader';
+import { Button } from '@/components/ui/button';
+
+export function Welcome() {
+  const [, navigate] = useLocation();
+  const [, params] = useRoute('/welcome/:hauntId');
+  const [isFirstTime, setIsFirstTime] = useState(false);
+  const [showGlitchEffect, setShowGlitchEffect] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(true);
+
+  const currentHauntId = params?.hauntId || 'headquarters';
+
+  useEffect(() => {
+    // Check if user has seen the intro before
+    const hasSeenIntro = localStorage.getItem('hasSeenHeinousIntro');
+    const isFirstVisit = !hasSeenIntro;
+    
+    setIsFirstTime(isFirstVisit);
+
+    // Trigger glitch effect for first-time users
+    if (isFirstVisit) {
+      const glitchTimer = setTimeout(() => {
+        setShowGlitchEffect(true);
+      }, 1000);
+
+      const animationTimer = setTimeout(() => {
+        setIsAnimating(false);
+      }, 3000);
+
+      return () => {
+        clearTimeout(glitchTimer);
+        clearTimeout(animationTimer);
+      };
+    } else {
+      // Shorter animation for returning users
+      const animationTimer = setTimeout(() => {
+        setIsAnimating(false);
+      }, 1500);
+
+      return () => clearTimeout(animationTimer);
+    }
+  }, []);
+
+  const handleStartGame = () => {
+    // Mark intro as seen
+    localStorage.setItem('hasSeenHeinousIntro', 'true');
+    
+    // Navigate to game
+    navigate(`/game/${currentHauntId}`);
+  };
+
+  const characterSprite = isFirstTime ? heinousSprites.talking : heinousSprites.charming;
+  const buttonText = isFirstTime ? 'Start Game' : 'Play Again';
+  const welcomeTitle = isFirstTime ? 'Welcome to Heinous Trivia' : 'Welcome Back';
+  const welcomeMessage = isFirstTime 
+    ? 'Prepare yourself for a terrifying journey through the darkest corners of trivia knowledge...'
+    : 'Ready for another spine-chilling round of trivia?';
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black overflow-hidden relative">
+      {/* Lightning/Glitch Background Effects for First-Time Users */}
+      {isFirstTime && (
+        <>
+          {/* Lightning effect */}
+          <div 
+            className={`absolute inset-0 transition-opacity duration-300 ${
+              showGlitchEffect ? 'opacity-30' : 'opacity-0'
+            }`}
+            style={{
+              background: `
+                radial-gradient(ellipse at 20% 50%, rgba(139, 0, 0, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 30%, rgba(75, 0, 130, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at 40% 80%, rgba(255, 107, 53, 0.2) 0%, transparent 50%)
+              `,
+              animation: showGlitchEffect ? 'lightning-flash 2s infinite' : 'none'
+            }}
+          />
+          
+          {/* Glitch overlay */}
+          <div 
+            className={`absolute inset-0 mix-blend-multiply transition-opacity duration-500 ${
+              showGlitchEffect ? 'opacity-20' : 'opacity-0'
+            }`}
+            style={{
+              background: `
+                repeating-linear-gradient(
+                  90deg,
+                  transparent,
+                  transparent 2px,
+                  rgba(139, 0, 0, 0.1) 2px,
+                  rgba(139, 0, 0, 0.1) 4px
+                )
+              `,
+              animation: showGlitchEffect ? 'glitch-lines 1.5s infinite' : 'none'
+            }}
+          />
+        </>
+      )}
+
+      {/* Main Content */}
+      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-4">
+        
+        {/* Character Sprite */}
+        <div className={`mb-8 transition-all duration-1000 ${
+          isAnimating ? 'scale-50 opacity-0 rotate-12' : 'scale-100 opacity-100 rotate-0'
+        }`}>
+          {characterSprite ? (
+            <img
+              src={characterSprite}
+              alt="Dr. Heinous"
+              className={`w-48 h-48 lg:w-64 lg:h-64 object-contain drop-shadow-2xl ${
+                isFirstTime && showGlitchEffect ? 'animate-pulse' : ''
+              }`}
+              style={{
+                filter: isFirstTime && showGlitchEffect ? 
+                  'drop-shadow(0 0 20px rgba(139, 0, 0, 0.7)) hue-rotate(15deg)' : 
+                  'drop-shadow(0 0 15px rgba(255, 107, 53, 0.5))'
+              }}
+            />
+          ) : (
+            // Fallback if sprite doesn't load
+            <div className="w-48 h-48 lg:w-64 lg:h-64 bg-gradient-to-br from-red-900 to-purple-900 rounded-full flex items-center justify-center">
+              <span className="text-6xl">👹</span>
+            </div>
+          )}
+        </div>
+
+        {/* Welcome Text */}
+        <div className={`text-center max-w-2xl mx-auto mb-8 transition-all duration-1000 delay-500 ${
+          isAnimating ? 'translate-y-10 opacity-0' : 'translate-y-0 opacity-100'
+        }`}>
+          <h1 className={`font-nosifer text-3xl lg:text-5xl mb-6 ${
+            isFirstTime ? 'text-red-500 animate-pulse' : 'text-orange-500'
+          }`}>
+            {welcomeTitle}
+          </h1>
+          
+          <p className={`text-lg lg:text-xl mb-8 leading-relaxed ${
+            isFirstTime ? 'text-gray-300' : 'text-gray-400'
+          }`}>
+            {welcomeMessage}
+          </p>
+
+          {isFirstTime && (
+            <div className={`text-sm text-red-400 mb-6 transition-opacity duration-1000 delay-1000 ${
+              showGlitchEffect ? 'opacity-100' : 'opacity-0'
+            }`}>
+              <p className="animate-pulse">
+                ⚡ Warning: This experience may contain jump scares and disturbing content ⚡
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* Action Button */}
+        <div className={`transition-all duration-1000 delay-1000 ${
+          isAnimating ? 'translate-y-10 opacity-0' : 'translate-y-0 opacity-100'
+        }`}>
+          <Button
+            onClick={handleStartGame}
+            size="lg"
+            className={`
+              px-8 py-4 text-lg font-bold font-creepster
+              bg-gradient-to-r from-red-600 to-red-800 
+              hover:from-red-500 hover:to-red-700
+              border-2 border-red-400
+              shadow-lg hover:shadow-red-500/50
+              transform hover:scale-105 
+              transition-all duration-300
+              ${isFirstTime && showGlitchEffect ? 'animate-pulse' : ''}
+            `}
+            style={{
+              boxShadow: isFirstTime && showGlitchEffect ? 
+                '0 0 30px rgba(139, 0, 0, 0.8)' : 
+                '0 4px 20px rgba(0, 0, 0, 0.5)'
+            }}
+          >
+            {buttonText}
+          </Button>
+        </div>
+
+        {/* Haunt Info */}
+        <div className={`mt-8 text-center transition-all duration-1000 delay-1500 ${
+          isAnimating ? 'opacity-0' : 'opacity-100'
+        }`}>
+          <p className="text-sm text-gray-500">
+            Haunt: <span className="text-orange-400 font-semibold">{currentHauntId}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// CSS animations (add to index.css or define in a <style> tag)
+const styles = `
+@keyframes lightning-flash {
+  0%, 90%, 100% { opacity: 0; }
+  5%, 85% { opacity: 1; }
+}
+
+@keyframes glitch-lines {
+  0% { transform: translateX(0); }
+  10% { transform: translateX(-2px); }
+  20% { transform: translateX(2px); }
+  30% { transform: translateX(-1px); }
+  40% { transform: translateX(1px); }
+  50% { transform: translateX(0); }
+  60% { transform: translateX(-1px); }
+  70% { transform: translateX(1px); }
+  80% { transform: translateX(-2px); }
+  90% { transform: translateX(2px); }
+  100% { transform: translateX(0); }
+}
+`;
+
+// Inject styles
+if (typeof document !== 'undefined') {
+  const styleSheet = document.createElement('style');
+  styleSheet.textContent = styles;
+  document.head.appendChild(styleSheet);
+}
