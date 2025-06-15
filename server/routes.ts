@@ -1428,6 +1428,73 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   // GROUP_MODE_END
 
+  // Analytics session endpoints
+  app.post("/api/analytics/session", async (req, res) => {
+    try {
+      const sessionData = req.body;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      const sessionRef = firestore.collection('gameSessions').doc();
+      await sessionRef.set({
+        ...sessionData,
+        startTime: new Date(),
+        status: 'active'
+      });
+      
+      res.json({ success: true, id: sessionRef.id });
+    } catch (error) {
+      console.error("Error creating analytics session:", error);
+      res.status(500).json({ error: "Failed to create session" });
+    }
+  });
+
+  app.put("/api/analytics/session/:sessionId", async (req, res) => {
+    try {
+      const { sessionId } = req.params;
+      const updateData = req.body;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      const sessionRef = firestore.collection('gameSessions').doc(sessionId);
+      await sessionRef.update({
+        ...updateData,
+        endTime: new Date(),
+        status: 'completed'
+      });
+      
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error updating analytics session:", error);
+      res.status(500).json({ error: "Failed to update session" });
+    }
+  });
+
+  app.post("/api/analytics/ad-interaction", async (req, res) => {
+    try {
+      const interactionData = req.body;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      const interactionRef = firestore.collection('adInteractions').doc();
+      await interactionRef.set({
+        ...interactionData,
+        timestamp: new Date()
+      });
+      
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error tracking ad interaction:", error);
+      res.status(500).json({ error: "Failed to track interaction" });
+    }
+  });
+
   // Track ad interaction
   app.post("/api/track-ad", async (req, res) => {
     try {
