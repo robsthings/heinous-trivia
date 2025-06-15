@@ -157,10 +157,13 @@ function Game() {
   const handleViewLeaderboard = async () => {
     setLeaderboardLoading(true);
     try {
-      const response = await fetch(`/api/leaderboard?haunt=${gameState.currentHaunt}&limit=10`);
+      const response = await fetch(`/api/leaderboard/${gameState.currentHaunt}`);
       if (response.ok) {
         const data = await response.json();
         setLeaderboard(data);
+        console.log('Leaderboard loaded:', data.length, 'entries');
+      } else {
+        console.error('Failed to fetch leaderboard:', response.status, response.statusText);
       }
     } catch (error) {
       console.error('Failed to load leaderboard:', error);
