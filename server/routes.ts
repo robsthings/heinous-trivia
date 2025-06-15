@@ -611,8 +611,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       let questions = [];
 
+      console.log(`DEBUG: Firestore connection status for ${hauntId}:`, !!firestore);
+      console.log(`DEBUG: Firebase service account configured:`, !!process.env.FIREBASE_SERVICE_ACCOUNT_JSON);
+      
+      if (!firestore) {
+        console.log(`DEBUG: Firestore is null - Firebase not initialized properly`);
+      }
+      
       if (firestore) {
         try {
+          console.log(`DEBUG: Starting question load process for ${hauntId}`);
           // Load all available question packs for this haunt
           
           // 1. Load custom questions (haunt-specific)
@@ -629,7 +637,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }
 
           // 2. Load assigned trivia packs (if any)
-          if (config.triviaPacks && config.triviaPacks.length > 0) {
+          if (config && config.triviaPacks && config.triviaPacks.length > 0) {
             for (const packId of config.triviaPacks) {
               try {
                 const packRef = firestore.collection('trivia-packs').doc(packId);
@@ -649,14 +657,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }
 
           // 3. Load global question packs available to all haunts
+          console.log(`DEBUG: Attempting to load from globalQuestionPacks collection`);
           const globalPacksRef = firestore.collection('globalQuestionPacks');
           const globalSnapshot = await globalPacksRef.get();
           
+          console.log(`DEBUG: Found ${globalSnapshot.docs.length} documents in globalQuestionPacks`);
+          
           globalSnapshot.docs.forEach(doc => {
             const packData = doc.data();
+            console.log(`DEBUG: Pack ${doc.id} data structure:`, Object.keys(packData));
             if (packData.questions && Array.isArray(packData.questions)) {
               questions = [...questions, ...packData.questions];
               console.log(`Loaded ${packData.questions.length} questions from global pack ${doc.id}`);
+            } else {
+              console.log(`DEBUG: Pack ${doc.id} missing questions array`);
             }
           });
 
@@ -1641,14 +1655,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }
 
           // 3. Always load global question packs available to all haunts
+          console.log(`DEBUG: Attempting to load global question packs for ${hauntId}`);
           const globalPacksRef = firestore.collection('globalQuestionPacks');
           const globalSnapshot = await globalPacksRef.get();
           
+          console.log(`DEBUG: Found ${globalSnapshot.docs.length} documents in globalQuestionPacks collection`);
+          
           globalSnapshot.docs.forEach(doc => {
+            console.log(`DEBUG: Processing pack ${doc.id}:`, doc.data());
             const packData = doc.data();
             if (packData.questions && Array.isArray(packData.questions)) {
               questions = [...questions, ...packData.questions];
               console.log(`Loaded ${packData.questions.length} questions from global pack ${doc.id}`);
+            } else {
+              console.log(`DEBUG: Pack ${doc.id} has no questions array`);
             }
           });
 
