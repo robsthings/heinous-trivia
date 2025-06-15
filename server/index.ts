@@ -87,28 +87,17 @@ app.use((req, res, next) => {
 
 
 
-  // Custom static serving for production that preserves API routes
+  // Setup serving based on environment
   if (app.get("env") === "development") {
     await setupVite(app, server);
   } else {
-    // Add middleware to handle non-API routes with static serving
-    app.use((req, res, next) => {
-      if (req.path.startsWith('/api/')) {
-        // Let API routes through to 404 if not found
-        return next();
-      }
-      // Handle static files and SPA routing
-      const distPath = path.resolve(import.meta.dirname, "server", "public");
-      if (fs.existsSync(distPath)) {
-        express.static(distPath)(req, res, () => {
-          // If static file not found, serve index.html for SPA routes
-          res.sendFile(path.resolve(distPath, "index.html"));
-        });
-      } else {
-        next();
-      }
-    });
+    serveStatic(app);
   }
+
+  // Add explicit 404 handler for unmatched API routes after static serving
+  app.use('/api/*', (req, res) => {
+    res.status(404).json({ error: 'API endpoint not found' });
+  });
 
   // ALWAYS serve the app on port 5000
   // this serves both the API and the client.
