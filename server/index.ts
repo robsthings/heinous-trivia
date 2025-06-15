@@ -64,10 +64,7 @@ app.use((req, res, next) => {
 });
 
 (async () => {
-  // Register API routes first to ensure they take priority over static serving
-  const server = await registerRoutes(app);
-
-  // Add launcher routes after API routes
+  // Add launcher routes before other routes to ensure they take priority
   app.get("/launcher", (req, res) => {
     res.sendFile(path.resolve(process.cwd(), "client", "public", "launcher.html"));
   });
@@ -77,6 +74,8 @@ app.use((req, res, next) => {
     res.sendFile(path.resolve(process.cwd(), "client", "public", "launcher.html"));
   });
 
+  const server = await registerRoutes(app);
+
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
@@ -85,19 +84,14 @@ app.use((req, res, next) => {
     throw err;
   });
 
-
-
-  // Setup serving based on environment
+  // importantly only setup vite in development and after
+  // setting up all the other routes so the catch-all route
+  // doesn't interfere with the other routes
   if (app.get("env") === "development") {
     await setupVite(app, server);
   } else {
     serveStatic(app);
   }
-
-  // Add explicit 404 handler for unmatched API routes after static serving
-  app.use('/api/*', (req, res) => {
-    res.status(404).json({ error: 'API endpoint not found' });
-  });
 
   // ALWAYS serve the app on port 5000
   // this serves both the API and the client.
