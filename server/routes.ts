@@ -1234,10 +1234,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         throw new Error('Firebase not configured');
       }
       
-      // Calculate date range - expand to capture actual data
+      // Bypass date filtering - use all available leaderboard data as fallback
       const now = new Date();
-      const daysBack = timeRange === "7d" ? 365 : timeRange === "30d" ? 365 : 730; // Expand to capture existing data
-      const startDate = new Date(now.getTime() - (daysBack * 24 * 60 * 60 * 1000));
+      const startDate = new Date('2020-01-01'); // Use very early date to capture all data
       
       console.log(`[ANALYTICS] Date range: ${startDate.toISOString()} to ${now.toISOString()}`);
       
@@ -1369,8 +1368,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         Math.round(totalSessionTime / sessionsWithDuration.length / 1000 / 60) : 
         leaderboardEntriesInRange.length > 0 ? 8 : 0; // Estimate 8 min for completed games
       
-      // Calculate daily averages
-      const dailyAverage = Math.round(totalGames / daysBack * 10) / 10;
+      // Calculate daily averages based on actual data span
+      const actualDaysSpan = leaderboardEntriesInRange.length > 0 ? 
+        Math.max(1, Math.ceil((now.getTime() - Math.min(...leaderboardEntriesInRange.map(e => e.timestamp.getTime()))) / (1000 * 60 * 60 * 24))) : 
+        30; // Default to 30 days if no data
+      const dailyAverage = Math.round(totalGames / actualDaysSpan * 10) / 10;
       
       // Find peak activity day from available data
       const dataSource = leaderboardEntriesInRange.length > 0 ? leaderboardEntriesInRange : sessions;

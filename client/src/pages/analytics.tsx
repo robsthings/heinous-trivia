@@ -13,10 +13,11 @@ interface AnalyticsData {
   totalGames: number;
   uniquePlayers: number;
   returnPlayerRate: number;
+  completionRate: number;
   adClickThrough: number;
-  adViews: number;
-  adClicks: number;
-  averageScore: number;
+  avgSessionTime: number;
+  dailyAverage: number;
+  peakActivity: string;
 }
 
 interface AdData {
@@ -249,17 +250,17 @@ export default function Analytics() {
             </CardContent>
           </Card>
 
-          {/* Average Score */}
+          {/* Completion Rate */}
           <Card className="bg-gradient-to-br from-yellow-500/10 to-yellow-600/5 border-yellow-500/20 backdrop-blur-sm">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
-              <CardTitle className="text-sm font-medium text-yellow-200">Average Score</CardTitle>
+              <CardTitle className="text-sm font-medium text-yellow-200">Completion Rate</CardTitle>
               <div className="bg-yellow-500/20 p-2 rounded-lg">
                 <AwardIcon className="h-5 w-5 text-yellow-400" />
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-white">{analyticsData?.averageScore || 0}</div>
-              <p className="text-xs text-yellow-300 mt-1">Points per game</p>
+              <div className="text-3xl font-bold text-white">{analyticsData?.completionRate || 0}%</div>
+              <p className="text-xs text-yellow-300 mt-1">Games finished</p>
             </CardContent>
           </Card>
 
