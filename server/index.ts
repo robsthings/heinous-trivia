@@ -63,7 +63,10 @@ app.use((req, res, next) => {
 });
 
 (async () => {
-  // Add launcher routes before other routes to ensure they take priority
+  // Register API routes first to ensure they take priority over static serving
+  const server = await registerRoutes(app);
+
+  // Add launcher routes after API routes
   app.get("/launcher", (req, res) => {
     res.sendFile(path.resolve(process.cwd(), "client", "public", "launcher.html"));
   });
@@ -72,8 +75,6 @@ app.use((req, res, next) => {
   app.get("/launcher/:hauntId", (req, res) => {
     res.sendFile(path.resolve(process.cwd(), "client", "public", "launcher.html"));
   });
-
-  const server = await registerRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
