@@ -844,76 +844,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
 
 
-  // GROUP_MODE_START - Host panel round updates
-  // Host panel - update round
-  app.put("/api/host/:hauntId/round", async (req, res) => {
-    try {
-      const { hauntId } = req.params;
-      const updates = req.body;
-      
-      if (!firestore) {
-        throw new Error('Firebase not configured');
-      }
-      
-            // GUARD: Group mode disabled - prevent activeRound operations
-      console.log(`[GROUP MODE DISABLED] Blocked activeRound operation for haunt: ${req.params.hauntId}`);
-      res.status(403).json({ 
-        error: "Group mode functionality is disabled", 
-        message: "Individual play mode is now enforced across all haunts" 
-      });
-      return;
-      
 
-      
-      const roundRef = firestore.collection('activeRound').doc(hauntId);
 
-      
-      await roundRef.update(updates);
-      
-      res.json({ success: true });
-    } catch (error) {
-      console.error("Error updating round:", error);
-      res.status(500).json({ error: "Failed to update round" });
-    }
-  });
-  // GROUP_MODE_END
 
-  // GROUP_MODE_START - Host panel round retrieval
-  // Host panel - get active round
-  app.get("/api/host/:hauntId/round", async (req, res) => {
-    try {
-      const { hauntId } = req.params;
-      
-      if (!firestore) {
-        throw new Error('Firebase not configured');
-      }
-      
-            // GUARD: Group mode disabled - prevent activeRound operations
-      console.log(`[GROUP MODE DISABLED] Blocked activeRound operation for haunt: ${req.params.hauntId}`);
-      res.status(403).json({ 
-        error: "Group mode functionality is disabled", 
-        message: "Individual play mode is now enforced across all haunts" 
-      });
-      return;
-      
-
-      
-      const roundRef = firestore.collection('activeRound').doc(hauntId);
-
-      
-      const roundDoc = await roundRef.get();
-      
-      if (roundDoc.exists) {
-        res.json(roundDoc.data());
-      } else {
-        res.json(null);
-      }
-    } catch (error) {
-      console.error("Error getting round:", error);
-      res.status(500).json({ error: "Failed to get round" });
-    }
-  });
-  // GROUP_MODE_END
 
   // Track ad metrics
   app.post("/api/ad-metrics/:hauntId/:adIndex/:metric", async (req, res) => {
@@ -944,116 +877,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   // GROUP_MODE_END
 
-  // Submit group game answer (no scoring until reveal)
-  app.post("/api/group/:hauntId/answer", async (req, res) => {
-    try {
-      const { hauntId } = req.params;
-      const { playerId, playerName, questionIndex, answerIndex } = req.body;
-      
-      console.log(`[GROUP ANSWER] Player ${playerId} (${playerName}) answered question ${questionIndex}:`, {
-        answerIndex,
-        hauntId
-      });
-      
-      if (!firestore) {
-        throw new Error('Firebase not configured');
-      }
-      
-      // Store answer and player info without calculating scores
-      const roundRef = firestore.collection('activeRound').doc(hauntId);
-      
-      // Only store the answer and player name, no score calculation yet
-      await roundRef.set({
-        [`currentAnswers.${playerId}`]: answerIndex,
-        [`playerNames.${playerId}`]: playerName
-      }, { merge: true });
-      
-      console.log(`[GROUP ANSWER] Answer stored for ${playerName}, waiting for host reveal`);
-      
-      res.json({ success: true, message: "Answer recorded" });
-    } catch (error) {
-      console.error("Error submitting group answer:", error);
-      res.status(500).json({ error: "Failed to submit answer" });
-    }
-  });
-  // GROUP_MODE_END
 
-  // Calculate and apply scores when host reveals answer
-  app.post("/api/host/:hauntId/reveal-scores", async (req, res) => {
-    try {
-      const { hauntId } = req.params;
-      
-      if (!firestore) {
-        throw new Error('Firebase not configured');
-      }
-      
-            // GUARD: Group mode disabled - prevent activeRound operations
-      console.log(`[GROUP MODE DISABLED] Blocked activeRound operation for haunt: ${req.params.hauntId}`);
-      res.status(403).json({ 
-        error: "Group mode functionality is disabled", 
-        message: "Individual play mode is now enforced across all haunts" 
-      });
-      return;
-      
 
-      
-      const roundRef = firestore.collection('activeRound').doc(hauntId);
 
-      
-      const roundDoc = await roundRef.get();
-      
-      if (!roundDoc.exists) {
-        return res.status(404).json({ error: "No active round found" });
-      }
-      
-      const roundData = roundDoc.data();
-      const currentAnswers = roundData?.currentAnswers || {};
-      const question = roundData?.question;
-      const correctAnswer = question?.correctAnswer;
-      const currentScores = roundData?.playerScores || {};
-      
-      // Validate that we have a question and correct answer
-      if (!question || correctAnswer === undefined || correctAnswer === null) {
-        return res.status(400).json({ error: "No active question or missing correct answer" });
-      }
-      
-      console.log(`[GROUP SCORING] Calculating scores for ${Object.keys(currentAnswers).length} players`);
-      console.log(`[GROUP SCORING] Question: ${question.text}, Correct Answer: ${correctAnswer}`);
-      
-      // Calculate score updates
-      const scoreUpdates: any = {};
-      let scoredPlayers = 0;
-      
-      Object.entries(currentAnswers).forEach(([playerId, answerIndex]) => {
-        const isCorrect = Number(answerIndex) === Number(correctAnswer);
-        const currentScore = currentScores[playerId] || 0;
-        const pointsEarned = isCorrect ? 100 : 0;
-        scoreUpdates[`playerScores.${playerId}`] = currentScore + pointsEarned;
-        
-        if (isCorrect) scoredPlayers++;
-        
-        console.log(`[GROUP SCORING] Player ${playerId}: answer ${answerIndex} vs correct ${correctAnswer} = ${isCorrect ? 'correct' : 'incorrect'}, score: ${currentScore} -> ${currentScore + pointsEarned}`);
-      });
-      
-      // Apply score updates only if there are updates to make
-      if (Object.keys(scoreUpdates).length > 0) {
-        await roundRef.update(scoreUpdates);
-        console.log(`[GROUP SCORING] Scores applied: ${scoredPlayers}/${Object.keys(currentAnswers).length} players scored points`);
-      } else {
-        console.log(`[GROUP SCORING] No players to score, skipping update`);
-      }
-      
-      res.json({ 
-        success: true, 
-        scoredPlayers,
-        totalPlayers: Object.keys(currentAnswers).length
-      });
-    } catch (error) {
-      console.error("Error calculating group scores:", error);
-      res.status(500).json({ error: "Failed to calculate scores" });
-    }
-  });
-  // GROUP_MODE_END
 
   // Get leaderboard (query parameter version for GameEndScreen)
   app.get("/api/leaderboard", async (req, res) => {
@@ -1229,71 +1055,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
   // GROUP_MODE_END
 
-  // Host panel - start new round
-  app.post("/api/host/:hauntId/start-round", async (req, res) => {
-    try {
-      const { hauntId } = req.params;
-      const roundData = req.body;
-      
-      if (!firestore) {
-        throw new Error('Firebase not configured');
-      }
-      
-            // GUARD: Group mode disabled - prevent activeRound operations
-      console.log(`[GROUP MODE DISABLED] Blocked activeRound operation for haunt: ${req.params.hauntId}`);
-      res.status(403).json({ 
-        error: "Group mode functionality is disabled", 
-        message: "Individual play mode is now enforced across all haunts" 
-      });
-      return;
-      
 
-      
-      const roundRef = firestore.collection('activeRound').doc(hauntId);
 
-      
-      await roundRef.set(roundData);
-      
-      res.json({ success: true });
-    } catch (error) {
-      console.error("Error starting round:", error);
-      res.status(500).json({ error: "Failed to start round" });
-    }
-  });
-  // GROUP_MODE_END
 
-  // Host panel - update round
-  app.put("/api/host/:hauntId/round", async (req, res) => {
-    try {
-      const { hauntId } = req.params;
-      const updates = req.body;
-      
-      if (!firestore) {
-        throw new Error('Firebase not configured');
-      }
-      
-            // GUARD: Group mode disabled - prevent activeRound operations
-      console.log(`[GROUP MODE DISABLED] Blocked activeRound operation for haunt: ${req.params.hauntId}`);
-      res.status(403).json({ 
-        error: "Group mode functionality is disabled", 
-        message: "Individual play mode is now enforced across all haunts" 
-      });
-      return;
-      
-
-      
-      const roundRef = firestore.collection('activeRound').doc(hauntId);
-
-      
-      await roundRef.update(updates);
-      
-      res.json({ success: true });
-    } catch (error) {
-      console.error("Error updating round:", error);
-      res.status(500).json({ error: "Failed to update round" });
-    }
-  });
-  // GROUP_MODE_END
 
   // Host panel - get active round
   app.get("/api/host/:hauntId/round", async (req, res) => {
