@@ -1074,7 +1074,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         throw new Error('Firebase not configured');
       }
       
-      const sessionRef = firestore.collection('gameSessions').doc(sessionId);
+      const sessionRef = firestore.collection('game_sessions').doc(sessionId);
       await sessionRef.set({
         ...sessionData,
         sessionId,
@@ -1099,7 +1099,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         throw new Error('Firebase not configured');
       }
       
-      const sessionRef = firestore.collection('gameSessions').doc(sessionId);
+      const sessionRef = firestore.collection('game_sessions').doc(sessionId);
       await sessionRef.update({
         ...updates,
         endTime: new Date(),
@@ -1125,7 +1125,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         throw new Error('Firebase not configured');
       }
       
-      const sessionRef = firestore.collection('gameSessions').doc();
+      const sessionRef = firestore.collection('game_sessions').doc();
       await sessionRef.set({
         ...sessionData,
         startTime: new Date(),
@@ -1242,7 +1242,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log(`[ANALYTICS] Date range: ${startDate.toISOString()} to ${now.toISOString()}`);
       
       // Try single-field query first - less likely to need composite index
-      const sessionsRef = firestore.collection('gameSessions')
+      const sessionsRef = firestore.collection('game_sessions')
         .where('hauntId', '==', hauntId);
       
       const sessionsSnapshot = await sessionsRef.get();
