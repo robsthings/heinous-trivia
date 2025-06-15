@@ -1392,5 +1392,59 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Calculate and apply scores when host reveals answer
+  app.post("/api/host/:hauntId/reveal-scores", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      const roundRef = firestore.collection('activeRound').doc(hauntId);
+      const roundDoc = await roundRef.get();
+      
+      if (!roundDoc.exists) {
+        return res.status(404).json({ error: "No active round found" });
+      }
+      
+      const roundData = roundDoc.data();
+      const currentAnswers = roundData.currentAnswers || {};
+      const correctAnswer = roundData.question?.correctAnswer;
+      const currentScores = roundData.playerScores || {};
+      
+      console.log(`[GROUP SCORING] Calculating scores for ${Object.keys(currentAnswers).length} players`);
+      
+      // Calculate score updates
+      const scoreUpdates: any = {};
+      let scoredPlayers = 0;
+      
+      Object.entries(currentAnswers).forEach(([playerId, answerIndex]) => {
+        const isCorrect = answerIndex === correctAnswer;
+        const currentScore = currentScores[playerId] || 0;
+        const pointsEarned = isCorrect ? 100 : 0;
+        scoreUpdates[`playerScores.${playerId}`] = currentScore + pointsEarned;
+        
+        if (isCorrect) scoredPlayers++;
+        
+        console.log(`[GROUP SCORING] Player ${playerId}: ${isCorrect ? 'correct' : 'incorrect'}, score: ${currentScore} -> ${currentScore + pointsEarned}`);
+      });
+      
+      // Apply score updates
+      await roundRef.update(scoreUpdates);
+      
+      console.log(`[GROUP SCORING] Scores applied: ${scoredPlayers}/${Object.keys(currentAnswers).length} players scored points`);
+      
+      res.json({ 
+        success: true, 
+        scoredPlayers,
+        totalPlayers: Object.keys(currentAnswers).length
+      });
+    } catch (error) {
+      console.error("Error calculating group scores:", error);
+      res.status(500).json({ error: "Failed to calculate scores" });
+    }
+  });
+
   return createServer(app);
 }

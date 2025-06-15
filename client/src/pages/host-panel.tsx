@@ -264,6 +264,21 @@ export default function HostPanel() {
     if (!activeRound) return;
 
     try {
+      // First, calculate and apply scores
+      const scoreResponse = await fetch(`/api/host/${hauntId}/reveal-scores`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!scoreResponse.ok) {
+        throw new Error('Failed to calculate scores');
+      }
+
+      const scoreResult = await scoreResponse.json();
+
+      // Then update the round status to reveal
       const response = await fetch(`/api/host/${hauntId}/round`, {
         method: 'PUT',
         headers: {
@@ -280,7 +295,7 @@ export default function HostPanel() {
 
       toast({
         title: "Answer Revealed",
-        description: "Correct answer is now shown to all players",
+        description: `Scores applied! ${scoreResult.scoredPlayers}/${scoreResult.totalPlayers} players scored points.`,
       });
     } catch (error) {
       console.error('Failed to reveal answer:', error);
