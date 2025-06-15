@@ -128,40 +128,7 @@ export function GameEndScreen({
             )}
           </div>
 
-          {/* Leaderboard Summary */}
-          <div className="bg-gray-800 rounded-lg p-4 mb-4 sm:mb-6">
-            <h3 className="text-orange-400 font-bold text-sm mb-3">Top Players</h3>
-            {isLoadingLeaderboard ? (
-              <div className="text-gray-400 text-xs text-center">Loading leaderboard...</div>
-            ) : leaderboard.length > 0 ? (
-              <div className="space-y-2">
-                {leaderboard.slice(0, 5).map((entry, index) => {
-                  const currentPlayerName = savedPlayerName || playerName.trim();
-                  const isCurrentPlayer = currentPlayerName && entry.name === currentPlayerName && entry.score === gameState.score;
-                  
-                  return (
-                    <div 
-                      key={`${entry.name}-${entry.score}-${index}`}
-                      className={`flex justify-between items-center text-xs ${
-                        isCurrentPlayer
-                          ? 'bg-orange-900/30 rounded px-2 py-1 border-l-2 border-orange-500'
-                          : ''
-                      }`}
-                    >
-                      <span className="text-white">
-                        #{index + 1} {entry.name}
-                      </span>
-                      <span className="text-orange-400 font-bold">
-                        {entry.score}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-            ) : (
-              <div className="text-gray-400 text-xs text-center">No scores yet</div>
-            )}
-          </div>
+
 
           {savedPlayerName ? (
             <div className="mb-4 sm:mb-6 text-center">
