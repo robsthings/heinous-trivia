@@ -8,7 +8,7 @@ import Game from "@/pages/game";
 import Admin from "@/pages/admin";
 import HauntAdmin from "@/pages/haunt-admin";
 import HauntAuth from "@/pages/haunt-auth";
-import HostPanel from "@/pages/host-panel";
+
 import Analytics from "@/pages/analytics";
 import AnalyticsTest from "@/pages/analytics-test";
 import AnalyticsSimple from "@/pages/analytics-simple";
@@ -40,7 +40,7 @@ function Router() {
       <Route path="/admin" component={Admin} />
       <Route path="/haunt-auth/:hauntId" component={HauntAuth} />
       <Route path="/haunt-admin/:hauntId" component={HauntAdmin} />
-      <Route path="/host-panel/:hauntId" component={HostPanel} />
+
       <Route path="/analytics/:hauntId" component={Analytics} />
       <Route path="/analytics-test/:hauntId" component={AnalyticsTest} />
       <Route path="/uber-admin" component={UberAdmin} />

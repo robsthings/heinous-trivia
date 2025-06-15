@@ -17,26 +17,14 @@ import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { User, Users } from "lucide-react";
+import { User } from "lucide-react";
 import { Link } from "wouter";
 import { useToast } from "@/hooks/use-toast";
 import type { LeaderboardEntry, TriviaQuestion } from "@shared/schema";
 // CUSTOM SKIN & PROGRESS BAR LOGIC
 import { useCustomSkin } from "@/hooks/use-custom-skin";
 
-interface ActiveRound {
-  questionIndex: number;
-  question: TriviaQuestion;
-  status: "countdown" | "live" | "reveal" | "waiting";
-  startTime: number;
-  currentAnswers: Record<string, string>;
-  totalQuestions: number;
-  hiddenPlayers?: Record<string, boolean>;
-  playerScores?: Record<string, number>;
-  playerNames?: Record<string, string>;
-  countdownDuration?: number;
-  questionResetId?: number;
-}
+
 
 function Game() {
   const [gameState, setGameState] = useState<GameState>(() => 
@@ -415,103 +403,12 @@ function Game() {
       />
       
       <main className="px-3 sm:px-4 pb-20">
-        {/* GROUP_MODE_START - Disabled group mode UI */}
-        {/* Individual play mode only - group mode disabled */}
-        {false ? (
-          !activeRound ? (
-            <Card className="bg-gray-900/50 border-gray-700 text-white max-w-sm sm:max-w-md mx-auto">
-              <CardHeader>
-                <CardTitle className="text-center text-red-400 flex items-center justify-center gap-2 text-lg sm:text-xl">
-                  <Users className="h-5 w-5 sm:h-6 sm:w-6" />
-                  Group Mode
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-center space-y-3 sm:space-y-4">
-                <div className="text-gray-300 text-sm sm:text-base">
-                  Welcome, <span className="text-white font-bold">{playerName}</span>!
-                </div>
-                <div className="text-yellow-400 text-base sm:text-lg">
-                  Waiting for host to start the game...
-                </div>
-                <div className="text-gray-400 text-xs sm:text-sm">
-                  The host will control when questions begin. Get ready for synchronized trivia fun!
-                </div>
-              </CardContent>
-            </Card>
-          ) : (
-            <Card className="bg-gray-900/50 border-gray-700 text-white max-w-2xl mx-auto">
-              <CardHeader>
-                <CardTitle className="text-center text-red-400 flex items-center justify-center gap-2">
-                  <Users className="h-6 w-6" />
-                  Group Question {activeRound.questionIndex + 1} of {activeRound.totalQuestions}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {activeRound.status === "countdown" && countdown > 0 && (
-                  <div className="text-center">
-                    <div className="text-4xl font-bold text-yellow-400 mb-2">{countdown}</div>
-                    <div className="text-gray-300">Get ready...</div>
-                  </div>
-                )}
-                
-                {(activeRound.status === "live" || activeRound.status === "reveal") && (
-                  <>
-                    <div className="text-center text-white text-lg font-medium mb-6">
-                      {activeRound.question.text}
-                    </div>
-                    
-                    <div className="grid gap-3">
-                      {activeRound.question.answers.map((answer, index) => (
-                        <Button
-                          key={index}
-                          onClick={() => {/* Group mode disabled */}}
-                          disabled={activeRound.status === "reveal" || activeRound.status === "countdown" || activeRound.status === "waiting" || groupAnswer !== null}
-                          variant={
-                            activeRound.status === "reveal" && index === activeRound.question.correctAnswer
-                              ? "default"
-                              : groupAnswer === index
-                              ? "secondary"
-                              : "outline"
-                          }
-                          className={`p-4 text-left h-auto ${
-                            activeRound.status === "reveal" && index === activeRound.question.correctAnswer
-                              ? "bg-green-600 hover:bg-green-700 border-green-500"
-                              : groupAnswer === index
-                              ? "bg-blue-600 hover:bg-blue-700"
-                              : "bg-gray-800 hover:bg-gray-700 border-gray-600"
-                          }`}
-                        >
-                          <span className="font-medium">{String.fromCharCode(65 + index)}.</span> {answer}
-                        </Button>
-                      ))}
-                    </div>
-                    
-                    {activeRound.status === "reveal" && activeRound.question.explanation && (
-                      <div className="mt-4 p-4 bg-gray-800 rounded-lg">
-                        <div className="font-medium text-green-400 mb-2">Explanation:</div>
-                        <div className="text-gray-300">{activeRound.question.explanation}</div>
-                      </div>
-                    )}
-                  </>
-                )}
-                
-                {activeRound.status === "waiting" && (
-                  <div className="text-center text-yellow-400">
-                    Waiting for host to start the next question...
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          )
-        // GROUP_MODE_END
-        ) : (
-          !gameState.showAd && (
-            <TriviaCard
-              gameState={gameState}
-              onSelectAnswer={handleSelectAnswer}
-              onNextQuestion={handleNextQuestion}
-            />
-          )
+        {!gameState.showAd && (
+          <TriviaCard
+            gameState={gameState}
+            onSelectAnswer={handleSelectAnswer}
+            onNextQuestion={handleNextQuestion}
+          />
         )}
       </main>
 
