@@ -652,8 +652,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
             }
           }
 
-          // 3. Load global trivia packs available to all haunts
-          const globalPacksRef = firestore.collection('trivia-packs').where('accessType', '==', 'all');
+          // 3. Load global question packs available to all haunts
+          const globalPacksRef = firestore.collection('globalQuestionPacks');
           const globalSnapshot = await globalPacksRef.get();
           
           globalSnapshot.docs.forEach(doc => {
@@ -1602,7 +1602,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const { hauntId } = req.params;
       
-      // Get haunt configuration to determine question sources
+      // Get haunt configuration to determine question sources (optional)
       const config = await FirebaseService.getHauntConfig(hauntId);
       
       let questions = [];
@@ -1644,7 +1644,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             }
           }
 
-          // 3. Load global question packs available to all haunts
+          // 3. Always load global question packs available to all haunts
           const globalPacksRef = firestore.collection('globalQuestionPacks');
           const globalSnapshot = await globalPacksRef.get();
           
