@@ -1575,57 +1575,75 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Calculate and apply scores when host reveals answer
-  app.post("/api/host/:hauntId/reveal-scores", async (req, res) => {
+  // Legacy route pattern for questions (for compatibility)
+  app.get("/api/haunt/:hauntId/questions", async (req, res) => {
     try {
       const { hauntId } = req.params;
       
-      if (!firestore) {
-        throw new Error('Firebase not configured');
+      // Get haunt configuration to determine question sources
+      const config = await FirebaseService.getHauntConfig(hauntId);
+      
+      if (!config) {
+        return res.status(404).json({ error: "Haunt not found" });
       }
-      
-      const roundRef = firestore.collection('activeRound').doc(hauntId);
-      const roundDoc = await roundRef.get();
-      
-      if (!roundDoc.exists) {
-        return res.status(404).json({ error: "No active round found" });
+
+      let questions = [];
+
+      // Load custom questions from haunt's Firebase collection
+      if (firestore) {
+        const customQuestionsRef = firestore.collection('questions').doc(hauntId);
+        const customDoc = await customQuestionsRef.get();
+        
+        if (customDoc.exists) {
+          const customData = customDoc.data();
+          if (customData.questions && Array.isArray(customData.questions)) {
+            questions = questions.concat(customData.questions);
+            console.log(`Loaded ${customData.questions.length} custom questions for ${hauntId}`);
+          }
+        }
       }
-      
-      const roundData = roundDoc.data();
-      const currentAnswers = roundData.currentAnswers || {};
-      const correctAnswer = roundData.question?.correctAnswer;
-      const currentScores = roundData.playerScores || {};
-      
-      console.log(`[GROUP SCORING] Calculating scores for ${Object.keys(currentAnswers).length} players`);
-      
-      // Calculate score updates
-      const scoreUpdates: any = {};
-      let scoredPlayers = 0;
-      
-      Object.entries(currentAnswers).forEach(([playerId, answerIndex]) => {
-        const isCorrect = answerIndex === correctAnswer;
-        const currentScore = currentScores[playerId] || 0;
-        const pointsEarned = isCorrect ? 100 : 0;
-        scoreUpdates[`playerScores.${playerId}`] = currentScore + pointsEarned;
+
+      // Load questions from assigned packs
+      if (config.assignedPacks && Array.isArray(config.assignedPacks)) {
+        for (const packId of config.assignedPacks) {
+          try {
+            if (firestore) {
+              const packRef = firestore.collection('globalQuestionPacks').doc(packId);
+              const packDoc = await packRef.get();
+              
+              if (packDoc.exists) {
+                const packData = packDoc.data();
+                if (packData.questions && Array.isArray(packData.questions)) {
+                  questions = questions.concat(packData.questions);
+                  console.log(`Loaded ${packData.questions.length} questions from assigned pack ${packId}`);
+                }
+              }
+            }
+          } catch (error) {
+            console.error(`Error loading assigned pack ${packId}:`, error);
+          }
+        }
+      }
+
+      // Load questions from global packs
+      if (firestore) {
+        const globalPacksRef = firestore.collection('globalQuestionPacks');
+        const globalPacksSnapshot = await globalPacksRef.get();
         
-        if (isCorrect) scoredPlayers++;
-        
-        console.log(`[GROUP SCORING] Player ${playerId}: ${isCorrect ? 'correct' : 'incorrect'}, score: ${currentScore} -> ${currentScore + pointsEarned}`);
-      });
-      
-      // Apply score updates
-      await roundRef.update(scoreUpdates);
-      
-      console.log(`[GROUP SCORING] Scores applied: ${scoredPlayers}/${Object.keys(currentAnswers).length} players scored points`);
-      
-      res.json({ 
-        success: true, 
-        scoredPlayers,
-        totalPlayers: Object.keys(currentAnswers).length
-      });
+        globalPacksSnapshot.forEach(doc => {
+          const packData = doc.data();
+          if (packData.questions && Array.isArray(packData.questions)) {
+            questions = questions.concat(packData.questions);
+            console.log(`Loaded ${packData.questions.length} questions from global pack ${doc.id}`);
+          }
+        });
+      }
+
+      console.log(`Returning ${questions.length} total questions for ${hauntId}`);
+      res.json(questions);
     } catch (error) {
-      console.error("Error calculating group scores:", error);
-      res.status(500).json({ error: "Failed to calculate scores" });
+      console.error("Error loading questions:", error);
+      res.status(500).json({ error: "Failed to fetch trivia questions" });
     }
   });
 
