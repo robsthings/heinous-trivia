@@ -86,7 +86,27 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 - Public read access for branding assets
 - Authenticated write access for admin uploads
 
+## Critical Game Dependencies
+
+### Required Routes (App.tsx)
+- `/game/:hauntId` - Individual game sessions (CRITICAL: must match URL pattern)
+- `/game` - Fallback game route
+- Root route with haunt parameter handling
+
+### Required GameManager Methods (client/src/lib/gameState.ts)
+- `initializeGameState(haunt: string)` - Loads questions and ads for game sessions
+- `createInitialState(haunt: string)` - Creates base game state
+- All static methods must be properly exported from GameManager class
+
+### Game Initialization Flow
+1. Router matches `/game/:hauntId` pattern
+2. Game component calls `GameManager.initializeGameState(haunt)`
+3. Method fetches questions from `/api/trivia-questions/${haunt}`
+4. Method fetches ads from `/api/ads/${haunt}`
+5. Game state updates with loaded data
+
 ## Changelog
+- June 15, 2025: **FIXED CRITICAL GAME ROUTING AND INITIALIZATION** - Added missing `/game/:hauntId` route and restored `initializeGameState` method to GameManager, resolving 404 errors and function reference failures that prevented game loading
 - June 15, 2025: **RESTORED AD PERFORMANCE METRICS DISPLAY** - Fixed missing Ad Performance section in analytics dashboard by correcting data structure alignment and adding fallback display for ads with zero interactions, ensuring all 6 uploaded ads appear in analytics table with current metrics
 - June 15, 2025: **COMPLETED ANALYTICS DATA STRUCTURE ALIGNMENT** - Fixed frontend-backend data interface mismatches by updating AnalyticsData interface to match backend response structure (completionRate vs averageScore), enabling authentic display of 31 games, 14 players, 71% completion rate from real Firebase data
 - June 15, 2025: **FIXED FIREBASE COLLECTION NAMING ALIGNMENT** - Updated all server-side collection references from camelCase (gameSessions, adInteractions) to snake_case (game_sessions, ad_interactions) matching Firebase console collection structure, resolving analytics endpoint failures and enabling authentic data retrieval with proper index utilization
