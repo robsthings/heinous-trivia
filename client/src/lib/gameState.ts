@@ -141,13 +141,14 @@ export class GameManager {
           selectedAnswer: null,
         };
       } else {
-        // Show ad between rounds - advance question index so we don't repeat
+        // Show ad between rounds - advance question index and select random ad
         return {
           ...state,
           currentQuestionIndex: nextIndex,
           showAd: true,
           showFeedback: false,
           selectedAnswer: null,
+          currentAdIndex: state.ads.length > 0 ? Math.floor(Math.random() * state.ads.length) : 0,
         };
       }
     }
@@ -181,7 +182,7 @@ export class GameManager {
         showAd: false,
         gameComplete: true,
         showEndScreen: true,
-        currentAdIndex: state.ads.length > 0 ? (state.currentAdIndex + 1) % state.ads.length : 0,
+        currentAdIndex: state.ads.length > 0 ? Math.floor(Math.random() * state.ads.length) : 0,
       };
     }
     
@@ -192,7 +193,7 @@ export class GameManager {
       selectedAnswer: null,
       showFeedback: false,
       isCorrect: false,
-      currentAdIndex: state.ads.length > 0 ? (state.currentAdIndex + 1) % state.ads.length : 0,
+      currentAdIndex: state.ads.length > 0 ? Math.floor(Math.random() * state.ads.length) : 0,
     };
   }
 
