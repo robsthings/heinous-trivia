@@ -11,6 +11,8 @@ interface Vial {
   maxCountdown: number;
   isExploding: boolean;
   isCollected: boolean;
+  vialType: number; // 1-4 for normal vials, 0 for empty decoy
+  isEmpty: boolean; // true for decoy vials
 }
 
 interface GloryGrabProps {
@@ -41,6 +43,12 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
       "My experiments are ruined!",
       "Pathetic! Simply pathetic!"
     ],
+    decoy: [
+      "You fool! That was empty!",
+      "Wasted effort, imbecile!",
+      "Distracted by nothing!",
+      "My decoys work perfectly!"
+    ],
     start: [
       "Protect my precious experiments!",
       "Don't let them explode!",
@@ -61,6 +69,23 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
     setTimeout(() => setShowHeinousMessage(false), 2500);
   };
 
+  const getVialImage = (vial: Vial) => {
+    if (vial.isEmpty) {
+      return '/sidequests/glory-grab/vial-empty.png';
+    }
+    
+    if (vial.isExploding) {
+      return `/sidequests/glory-grab/vial-${vial.vialType}-exploding.png`;
+    }
+    
+    // Show glowing when countdown is low (last 30% of time)
+    if (vial.countdown / vial.maxCountdown < 0.3) {
+      return `/sidequests/glory-grab/vial-${vial.vialType}-glowing.png`;
+    }
+    
+    return `/sidequests/glory-grab/vial-${vial.vialType}-normal.png`;
+  };
+
   const generateRandomPosition = () => {
     if (!gameAreaRef.current) return { x: 50, y: 50 };
     
@@ -79,6 +104,10 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
     const position = generateRandomPosition();
     const countdown = 2 + Math.random() * 2;
     
+    // 20% chance for decoy vial
+    const isEmpty = Math.random() < 0.2;
+    const vialType = isEmpty ? 0 : Math.floor(Math.random() * 4) + 1; // 1-4 for normal, 0 for empty
+    
     const newVial: Vial = {
       id: vialIdCounter.current++,
       x: position.x,
@@ -86,21 +115,33 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
       countdown: countdown,
       maxCountdown: countdown,
       isExploding: false,
-      isCollected: false
+      isCollected: false,
+      vialType: vialType,
+      isEmpty: isEmpty
     };
 
     setVials(prev => [...prev, newVial]);
   }, [gamePhase]);
 
   const collectVial = (vialId: number) => {
-    setVials(prev => prev.map(vial => 
-      vial.id === vialId ? { ...vial, isCollected: true } : vial
+    const vial = vials.find(v => v.id === vialId);
+    if (!vial) return;
+    
+    setVials(prev => prev.map(v => 
+      v.id === vialId ? { ...v, isCollected: true } : v
     ));
-    setScore(prev => prev + 10);
-    showHeinousReaction('good');
+    
+    if (vial.isEmpty) {
+      // Decoy vial - no points, different reaction
+      showHeinousReaction('decoy');
+    } else {
+      // Real vial - add points
+      setScore(prev => prev + 10);
+      showHeinousReaction('good');
+    }
     
     setTimeout(() => {
-      setVials(prev => prev.filter(vial => vial.id !== vialId));
+      setVials(prev => prev.filter(v => v.id !== vialId));
     }, 300);
   };
 
@@ -277,22 +318,14 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
                 }}
                 onClick={() => !vial.isCollected && !vial.isExploding && collectVial(vial.id)}
               >
-                <div 
-                  className="w-full h-full relative flex items-center justify-center"
+                <img
+                  src={getVialImage(vial)}
+                  alt={vial.isEmpty ? "Empty vial" : `Vial ${vial.vialType}`}
+                  className="w-full h-full object-contain"
                   style={{
-                    backgroundImage: 'url(/sidequests/glory-grab/vial-sprites.png)',
-                    backgroundSize: 'contain',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat',
                     filter: vial.isExploding ? 'brightness(3) saturate(3) hue-rotate(0deg)' : 'none'
                   }}
-                >
-                  <div className={`w-8 h-10 rounded-t-full rounded-b-sm border-2 ${
-                    vial.isExploding ? 'bg-red-500 border-red-700' : 'bg-green-400 border-green-600'
-                  } relative`}>
-                    <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-2 h-1 bg-gray-700 rounded-sm"></div>
-                  </div>
-                </div>
+                />
                 
                 <div className="absolute -top-2 left-1/2 transform -translate-x-1/2">
                   <div 
