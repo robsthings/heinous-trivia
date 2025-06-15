@@ -1607,67 +1607,71 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       let questions = [];
 
-      // Load custom questions from haunt's Firebase collection
       if (firestore) {
-        const customQuestionsRef = firestore.collection('questions').doc(hauntId);
-        const customDoc = await customQuestionsRef.get();
-        
-        if (customDoc.exists) {
-          const customData = customDoc.data();
-          if (customData.questions && Array.isArray(customData.questions)) {
-            questions = questions.concat(customData.questions);
-            console.log(`Loaded ${customData.questions.length} custom questions for ${hauntId}`);
+        try {
+          // Load all available question packs for this haunt
+          
+          // 1. Load custom questions (haunt-specific)
+          const customQuestionsRef = firestore.collection('haunt-questions').doc(hauntId).collection('questions');
+          const customSnapshot = await customQuestionsRef.get();
+          
+          if (!customSnapshot.empty) {
+            const customQuestions = customSnapshot.docs.map(doc => ({
+              id: doc.id,
+              ...doc.data()
+            }));
+            questions = [...questions, ...customQuestions];
+            console.log(`Loaded ${customQuestions.length} custom questions for ${hauntId}`);
           }
-        }
-      }
 
-      // Load questions from assigned packs (if config exists)
-      if (config && config.assignedPacks && Array.isArray(config.assignedPacks)) {
-        for (const packId of config.assignedPacks) {
-          try {
-            if (firestore) {
-              const packRef = firestore.collection('globalQuestionPacks').doc(packId);
-              const packDoc = await packRef.get();
-              
-              if (packDoc.exists) {
-                const packData = packDoc.data();
-                if (packData.questions && Array.isArray(packData.questions)) {
-                  questions = questions.concat(packData.questions);
-                  console.log(`Loaded ${packData.questions.length} questions from assigned pack ${packId}`);
+          // 2. Load assigned trivia packs (if any)
+          if (config && config.triviaPacks && config.triviaPacks.length > 0) {
+            for (const packId of config.triviaPacks) {
+              try {
+                const packRef = firestore.collection('trivia-packs').doc(packId);
+                const packDoc = await packRef.get();
+                
+                if (packDoc.exists) {
+                  const packData = packDoc.data();
+                  if (packData.questions && Array.isArray(packData.questions)) {
+                    questions = [...questions, ...packData.questions];
+                    console.log(`Loaded ${packData.questions.length} questions from pack ${packId}`);
+                  }
                 }
+              } catch (error) {
+                console.warn(`Could not load trivia pack ${packId}:`, error);
               }
             }
-          } catch (error) {
-            console.error(`Error loading assigned pack ${packId}:`, error);
           }
+
+          // 3. Load global question packs available to all haunts
+          const globalPacksRef = firestore.collection('globalQuestionPacks');
+          const globalSnapshot = await globalPacksRef.get();
+          
+          globalSnapshot.docs.forEach(doc => {
+            const packData = doc.data();
+            if (packData.questions && Array.isArray(packData.questions)) {
+              questions = [...questions, ...packData.questions];
+              console.log(`Loaded ${packData.questions.length} questions from global pack ${doc.id}`);
+            }
+          });
+
+        } catch (error) {
+          console.warn(`Error loading question packs for ${hauntId}:`, error);
         }
       }
 
-      // Always load questions from global packs as fallback
-      if (firestore) {
-        const globalPacksRef = firestore.collection('globalQuestionPacks');
-        const globalPacksSnapshot = await globalPacksRef.get();
-        
-        globalPacksSnapshot.forEach(doc => {
-          const packData = doc.data();
-          if (packData.questions && Array.isArray(packData.questions)) {
-            questions = questions.concat(packData.questions);
-            console.log(`Loaded ${packData.questions.length} questions from global pack ${doc.id}`);
-          }
-        });
-      }
-
-      // Fallback to starter pack if no questions found
+      // If no questions loaded from any packs, use starter pack as fallback
       if (questions.length === 0) {
-        // Default starter questions as final fallback
+        console.log(`No question packs found for ${hauntId}, using starter pack fallback`);
         questions = [
           {
-            id: "default-1",
-            text: "What is the most common fear phobia?",
-            category: "psychology", 
-            difficulty: 1,
-            answers: ["Heights", "Spiders", "Public Speaking", "Death"],
-            correctAnswer: 2
+            id: "starter-001",
+            text: "In the 1973 film 'The Exorcist', what is the name of the possessed girl?",
+            category: "Horror Movies",
+            difficulty: 2,
+            answers: ["Regan", "Carrie", "Samara", "Linda"],
+            correctAnswer: 0
           }
         ];
       }
