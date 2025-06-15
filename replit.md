@@ -106,6 +106,7 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 5. Game state updates with loaded data
 
 ## Changelog
+- June 15, 2025: **FIXED WELCOME SCREEN REDIRECT LOOP** - Resolved deployment issue where Start Game/Play Again buttons caused infinite redirect loops by implementing sessionStorage tracking to distinguish users coming from welcome screen vs direct game URL access
 - June 15, 2025: **ADDED INTERACTIVE SPEECH BUBBLE SYSTEM** - Created typewriter effect speech bubble above Dr. Heinous sprite with cycling dialogue: first-time users see 3 messages ("Initializing Evil Protocols…", "Dare ye match wits with ME?!", "Prepare for HEINOUS challenges!"), returning users see 1 message ("Back for more punishment?") - text types out character by character then deletes before switching lines
 - June 15, 2025: **COMPLETED WELCOME SCREEN FLOW FOR ALL USERS** - All users accessing /game/:hauntId now redirect to /welcome/:hauntId with appropriate experiences: first-time users see dramatic intro animations, returning users see "Back for more?" welcome with charming sprite and lab background
 - June 15, 2025: **INTEGRATED WELCOME SCREEN INTO GAME FLOW** - Updated Game component to redirect first-time users from /game/:hauntId to /welcome/:hauntId, ensuring all new players experience dramatic intro animations before gameplay
