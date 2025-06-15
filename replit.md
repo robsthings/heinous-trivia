@@ -125,3 +125,7 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+
+## Upcoming Features
+
+- Mini games to replace removed group mode functionality (planned for June 16, 2025)
