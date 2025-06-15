@@ -1,0 +1,49 @@
+Create a new side quest view at:  
+client/src/pages/sidequests/MonsterNameGenerator.tsx
+
+Requirements:
+
+🧠 STRUCTURE:
+- Display full-screen using the background image:
+  /sidequests/monster-name-generator/monster-library-bg.png
+- Overlay centered card frame:
+  /sidequests/monster-name-generator/monster-card.png
+- Position Dr. Heinous sprite (optional, like heinousSprites.charming) near the side
+
+🔍 SCAN PHASE:
+- Begin with a fake loading sequence that lasts ~4 seconds before revealing the name
+- Center a glowing animated scan bar that moves vertically down the card area
+- Cycle through the following scanning phrases (1 per second, fade in or typewriter style):
+  1. Scanning Subject...
+  2. Analyzing Bone Structure...
+  3. Detecting Curses...
+  4. Soul Searching...
+  5. Monster Name Acquired!
+
+💡 SCAN BAR:
+- Use animated CSS if no scan bar asset exists
+- Should loop vertically over the card until scan completes
+
+🧛 MONSTER NAME GENERATION:
+- After scan completes, generate and display a monster name
+- Monster names = [Adjective] + [Creature], e.g. "Gloopy Fiend", "Cryptic Lurker"
+- Pull from two internal arrays:
+  adjectives = ["Gloopy", "Cryptic", "Snarling", "Chittering", "Pustulent", "Barbed", "Doomed", "Festering"]
+  creatures = ["Fiend", "Ghoul", "Wretch", "Lurker", "Wailer", "Banshee", "Beast", "Goblyn"]
+- Format as large stylized text centered on the card
+
+📸 SCREENSHOT MOMENT:
+- Below the name, show a button: "📸 Save Your Monster Card"
+- On click, use `html2canvas` to screenshot the visible card area and download as PNG
+- Optional: brief flash effect when saving
+
+🎭 REPLAY BUTTON:
+- Below screenshot button, show: "🔁 Generate Another"
+- Clicking it resets the scan and starts again
+
+🧪 OPTIONAL:
+- Allow an optional prop like `showHeinous: true` to toggle character presence
+- Animate Heinous in with a floating speech bubble: “Hold still. This won’t hurt… much.”
+
+Routing:
+- Add this route to `App.tsx` as: `/sidequest/monster-name-generator`

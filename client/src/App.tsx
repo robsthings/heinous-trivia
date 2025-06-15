@@ -21,6 +21,7 @@ import UploadGuidelines from "@/pages/upload-guidelines";
 import Info from "@/pages/info";
 import NotFound from "@/pages/not-found";
 import { TestProgressPage } from "@/pages/test-progress";
+import { MonsterNameGenerator } from "@/pages/sidequests/MonsterNameGenerator";
 
 function Router() {
   return (
@@ -41,6 +42,7 @@ function Router() {
       <Route path="/upload-guidelines" component={UploadGuidelines} />
       <Route path="/info" component={Info} />
       <Route path="/test-progress" component={TestProgressPage} />
+      <Route path="/sidequest/monster-name-generator" component={MonsterNameGenerator} />
       <Route component={NotFound} />
     </Switch>
   );
