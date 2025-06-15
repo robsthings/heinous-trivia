@@ -177,8 +177,6 @@ export default function Info() {
                 <li>✓ Advanced question packs</li>
                 <li>✓ Custom branding & colors</li>
                 <li>✓ Individual Player Mode</li>
-                <li>✓ Group Party Mode</li>
-                <li>✓ Real-time multiplayer</li>
                 <li>✓ Analytics dashboard</li>
                 <li>✓ Priority support</li>
               </ul>
@@ -195,7 +193,6 @@ export default function Info() {
                 <li>✓ Elite question packs</li>
                 <li>✓ Custom branding & colors</li>
                 <li>✓ Individual Player Mode</li>
-                <li>✓ Group Party Mode</li>
                 <li>✓ Analytics dashboard</li>
                 <li>✓ One additional Basic game</li>
                 <li>✓ Near white-label experience</li>

@@ -87,6 +87,7 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 - Authenticated write access for admin uploads
 
 ## Changelog
+- June 15, 2025: Removed Group Party Mode and Real-time multiplayer references from Pro and Premium tier descriptions on /info page to accurately reflect individual-only functionality
 - June 15, 2025: Removed Game Configuration section from haunt-admin panel since all haunts now operate in individual-only mode - streamlined interface eliminates redundant game mode selector
 - June 15, 2025: Removed redundant mini leaderboard from game end screen, streamlining flow to comprehensive top 10 leaderboard
 - June 15, 2025: Completed Individual Mode question loading audit - removed hardcoded fallback questions, fixed Firebase collection loading order, added proper server-side randomization with 205+ questions available from trivia-packs collections ensuring every 20-question session has unique randomized order
