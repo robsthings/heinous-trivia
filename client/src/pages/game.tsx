@@ -119,7 +119,8 @@ function Game() {
   };
 
   const handleSelectAnswer = (answerIndex: number) => {
-    GameManager.selectAnswer(gameState, setGameState, answerIndex);
+    const newState = GameManager.selectAnswer(gameState, answerIndex);
+    setGameState(newState);
   };
 
   const handleNextQuestion = () => {
