@@ -181,17 +181,15 @@ function Game() {
           updateMetaThemeColor(hauntConfig.theme.primaryColor);
         }
 
-        // Check if haunt is configured for group mode and has proper tier access
-        if (hauntConfig?.mode === "queue" && (hauntConfig?.tier === "pro" || hauntConfig?.tier === "premium")) {
-          setIsGroupMode(true);
-        }
+        // Group mode disabled - all users default to individual play mode
+        setIsGroupMode(false);
 
         // Initialize player if needed
         if (!playerId || !playerName) {
           setShowNamePrompt(true);
         } else {
           // If player info already exists, start analytics session immediately
-          AnalyticsTracker.startSession(haunt, hauntConfig?.mode === "queue" ? 'group' : 'individual');
+          AnalyticsTracker.startSession(haunt, 'individual');
         }
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Failed to initialize game';
@@ -205,71 +203,9 @@ function Game() {
     initializeGame();
   }, [gameState.currentHaunt]);
 
-  // Listen for active round updates in group mode
-  useEffect(() => {
-    if (!isGroupMode || !gameState.currentHaunt) return;
+  // Group mode polling disabled - all users use individual play mode
 
-    const pollForRoundUpdates = async () => {
-      try {
-        const response = await fetch(`/api/host/${gameState.currentHaunt}/round`);
-        if (response.ok) {
-          const roundData = await response.json();
-          
-          // Update active round and sync player score from server
-          setActiveRound(roundData);
-          
-          // Update local score from server data if available
-          if (roundData && roundData.playerScores && playerId && roundData.playerScores[playerId]) {
-            const serverScore = roundData.playerScores[playerId];
-            setGroupScore(serverScore);
-          } else {
-            // No server score found for player
-          }
-        }
-      } catch (error) {
-        // Error polling for round updates - silent handling
-      }
-    };
-
-    // Initial load
-    pollForRoundUpdates();
-
-    // Poll every 2 seconds for updates
-    const interval = setInterval(pollForRoundUpdates, 2000);
-
-    return () => clearInterval(interval);
-  }, [isGroupMode, gameState.currentHaunt, playerId]);
-
-  // Handle countdown in group mode
-  useEffect(() => {
-    if (!isGroupMode || !activeRound || activeRound.status !== "countdown") return;
-
-    const countdownDuration = activeRound.countdownDuration || 3;
-    const elapsed = Math.floor((Date.now() - activeRound.startTime) / 1000);
-    const remaining = Math.max(0, countdownDuration - elapsed);
-    
-    setCountdown(remaining);
-
-    if (remaining > 0) {
-      const timer = setTimeout(() => {
-        setCountdown(remaining - 1);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  }, [isGroupMode, activeRound, activeRound?.status, activeRound?.startTime]);
-
-  // Reset groupAnswer only when host advances questions
-  useEffect(() => {
-    if (!activeRound) return;
-    
-    const hasAdvanced = lastSeenQuestionIndex !== null && activeRound.questionIndex !== lastSeenQuestionIndex;
-
-    if (hasAdvanced && activeRound.status === "waiting") {
-      setGroupAnswer(null); // Only clear answer when host explicitly advances
-    }
-
-    setLastSeenQuestionIndex(activeRound.questionIndex);
-  }, [activeRound?.questionIndex, activeRound?.status]);
+  // Group mode countdown and answer tracking disabled - individual play only
 
   const handleGroupAnswer = async (answerIndex: number) => {
     if (!activeRound || !playerId || !playerName) return;

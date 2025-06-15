@@ -663,6 +663,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
           
           console.log(`DEBUG: Found ${globalSnapshot.docs.length} documents in globalQuestionPacks`);
           
+          // Also check alternative collection names
+          console.log(`DEBUG: Checking trivia-packs collection`);
+          const triviaPacksRef = firestore.collection('trivia-packs');
+          const triviaSnapshot = await triviaPacksRef.get();
+          console.log(`DEBUG: Found ${triviaSnapshot.docs.length} documents in trivia-packs`);
+          
+          console.log(`DEBUG: Checking questionPacks collection`);
+          const questionPacksRef = firestore.collection('questionPacks');
+          const questionSnapshot = await questionPacksRef.get();
+          console.log(`DEBUG: Found ${questionSnapshot.docs.length} documents in questionPacks`);
+          
           globalSnapshot.docs.forEach(doc => {
             const packData = doc.data();
             console.log(`DEBUG: Pack ${doc.id} data structure:`, Object.keys(packData));
