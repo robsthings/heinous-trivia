@@ -27,6 +27,7 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
   const [timeLeft, setTimeLeft] = useState(20);
   const [heinousMessage, setHeinousMessage] = useState('');
   const [showHeinousMessage, setShowHeinousMessage] = useState(false);
+  const [chaosLevel, setChaosLevel] = useState(1); // Increases with each replay
   const gameAreaRef = useRef<HTMLDivElement>(null);
   const vialIdCounter = useRef(0);
 
@@ -58,6 +59,12 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
       "The carnage... it's beautiful!",
       "My lab will never recover!",
       "You've doomed us all!"
+    ],
+    chaos: [
+      "MORE CHAOS! I LOVE IT!",
+      "Yes! Let the mayhem multiply!",
+      "The laboratory trembles with power!",
+      "ASCENDING TO NEW LEVELS OF MADNESS!"
     ]
   };
 
@@ -167,7 +174,13 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
     setTimeLeft(20);
     setVials([]);
     vialIdCounter.current = 0;
-    showHeinousReaction('start');
+    
+    // Show chaos escalation if replaying
+    if (chaosLevel > 1) {
+      showHeinousReaction('chaos');
+    } else {
+      showHeinousReaction('start');
+    }
   };
 
   const endGame = () => {
@@ -212,18 +225,28 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
     }
   }, [gamePhase]);
 
-  // Spawn vials randomly during gameplay
+  // Spawn vials randomly during gameplay with chaos escalation
   useEffect(() => {
     if (gamePhase === 'playing') {
+      // Chaos level affects max vials and spawn rate
+      const maxVials = Math.min(8 + (chaosLevel - 1) * 3, 20); // Cap at 20 vials
+      const baseSpawnRate = 1000;
+      const chaosSpeedMultiplier = Math.max(0.3, 1 - (chaosLevel - 1) * 0.15); // Faster spawning
+      const spawnRate = baseSpawnRate * chaosSpeedMultiplier;
+      
       const spawnInterval = setInterval(() => {
-        if (vials.length < 8) {
-          createVial();
+        if (vials.length < maxVials) {
+          // Spawn multiple vials at higher chaos levels
+          const vialsToSpawn = chaosLevel >= 3 ? Math.min(2, maxVials - vials.length) : 1;
+          for (let i = 0; i < vialsToSpawn; i++) {
+            setTimeout(() => createVial(), i * 100); // Stagger spawns slightly
+          }
         }
-      }, 1000 + Math.random() * 1500);
+      }, spawnRate + Math.random() * (spawnRate * 0.5));
       
       return () => clearInterval(spawnInterval);
     }
-  }, [gamePhase, vials.length, createVial]);
+  }, [gamePhase, vials.length, createVial, chaosLevel]);
 
   return (
     <div 
@@ -283,7 +306,7 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
             className="absolute inset-0 w-full h-full"
           >
             <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-30">
-              <div className="bg-black/70 rounded-lg px-4 py-2 flex gap-6 text-white">
+              <div className="bg-black/70 rounded-lg px-4 py-2 flex gap-4 text-white">
                 <div className="text-center">
                   <div className="text-xs text-gray-300">SCORE</div>
                   <div className="text-xl font-bold text-green-400">{score}</div>
@@ -292,6 +315,17 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
                   <div className="text-xs text-gray-300">TIME</div>
                   <div className="text-xl font-bold text-red-400">{timeLeft}s</div>
                 </div>
+                {chaosLevel > 1 && (
+                  <div className="text-center">
+                    <div className="text-xs text-gray-300">CHAOS</div>
+                    <div className={`text-xl font-bold ${
+                      chaosLevel <= 3 ? 'text-yellow-400' :
+                      chaosLevel <= 6 ? 'text-orange-400' : 'text-red-400'
+                    } animate-pulse`}>
+                      {chaosLevel}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 
@@ -350,18 +384,38 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
               <div className="text-2xl font-bold text-green-400 mb-6">
                 Final Score: {score}
               </div>
-              <div className="text-gray-300 mb-8">
+              <div className="text-gray-300 mb-4">
                 {score >= 100 ? "Magnificent! You saved the lab!" :
                  score >= 50 ? "Not bad, but my vials are still smoking..." :
                  "Pathetic! My laboratory is in ruins!"}
               </div>
               
+              {chaosLevel > 1 && (
+                <div className="text-center mb-6">
+                  <div className={`text-lg font-bold ${
+                    chaosLevel <= 3 ? 'text-yellow-400' :
+                    chaosLevel <= 6 ? 'text-orange-400' : 'text-red-400'
+                  }`}>
+                    Chaos Level {chaosLevel} Complete!
+                  </div>
+                  <div className="text-sm text-gray-400 mt-1">
+                    {chaosLevel <= 2 ? "The laboratory grows unstable..." :
+                     chaosLevel <= 4 ? "Vials spawn faster and multiply!" :
+                     chaosLevel <= 6 ? "MAXIMUM MAYHEM APPROACHING!" :
+                     "REALITY BENDS TO YOUR CHAOS!"}
+                  </div>
+                </div>
+              )}
+              
               <div className="flex flex-col gap-3">
                 <Button
-                  onClick={startGame}
+                  onClick={() => {
+                    setChaosLevel(prev => prev + 1);
+                    startGame();
+                  }}
                   className="bg-green-700 hover:bg-green-600 text-white px-6 py-3 text-sm font-semibold w-full"
                 >
-                  Play Again
+                  {chaosLevel === 1 ? 'Play Again' : `CHAOS LEVEL ${chaosLevel + 1}!`}
                 </Button>
                 
                 <Button
