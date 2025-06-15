@@ -146,10 +146,8 @@ function Game() {
     const nameToUse = playerNameOverride || playerName;
     
     if (nameToUse && gameState.score > 0) {
-      GameManager.saveScore(gameState, nameToUse);
+      GameManager.saveScore(nameToUse, gameState);
     }
-    
-    setGameState(prev => ({ ...prev, gamePhase: 'completed' }));
   };
 
   const handlePlayAgain = () => {
@@ -239,7 +237,7 @@ function Game() {
     );
   }
 
-  if (gameState.gamePhase === 'completed') {
+  if (gameState.gameComplete || gameState.showEndScreen) {
     return (
       <div className={`game-container min-h-screen ${gameState.hauntConfig?.tier === 'premium' && gameState.hauntConfig?.skinUrl ? '' : 'bg-gradient-to-br from-gray-900 via-purple-900 to-black'}`}>
         <GameHeader gameState={gameState} />

@@ -117,9 +117,9 @@ export class GameManager {
   static nextQuestion(state: GameState): GameState {
     const nextIndex = state.currentQuestionIndex + 1;
     
-    // Check if we've completed the full round (20 questions)
-    if (state.questionsAnswered >= this.QUESTIONS_PER_ROUND) {
-      // Game complete after 20 questions
+    // Check if we've completed the full round (20 questions) OR reached the end of available questions
+    if (state.questionsAnswered >= this.QUESTIONS_PER_ROUND || nextIndex >= state.questions.length) {
+      // Game complete after 20 questions or when we run out of questions
       return {
         ...state,
         gameComplete: true,
@@ -129,41 +129,20 @@ export class GameManager {
       };
     }
     
-    // Check if we've completed 5 questions and should show an ad (every 5 questions)
-    if (state.questionsAnswered > 0 && state.questionsAnswered % 5 === 0) {
-      if (nextIndex >= state.questions.length) {
-        // Game complete if no more questions available
-        return {
-          ...state,
-          gameComplete: true,
-          showEndScreen: true,
-          showFeedback: false,
-          selectedAnswer: null,
-        };
-      } else {
-        // Show ad between rounds - advance question index and select random ad
-        return {
-          ...state,
-          currentQuestionIndex: nextIndex,
-          showAd: true,
-          showFeedback: false,
-          selectedAnswer: null,
-          currentAdIndex: state.ads.length > 0 ? Math.floor(Math.random() * state.ads.length) : 0,
-        };
-      }
-    }
-
-    // Continue to next question
-    if (nextIndex >= state.questions.length) {
+    // Check if we've completed 5, 10, or 15 questions and should show an ad
+    if (state.questionsAnswered > 0 && state.questionsAnswered % 5 === 0 && state.questionsAnswered < this.QUESTIONS_PER_ROUND) {
+      // Show ad between rounds - advance question index and select random ad
       return {
         ...state,
-        gameComplete: true,
-        showEndScreen: true,
+        currentQuestionIndex: nextIndex,
+        showAd: true,
         showFeedback: false,
         selectedAnswer: null,
+        currentAdIndex: state.ads.length > 0 ? Math.floor(Math.random() * state.ads.length) : 0,
       };
     }
 
+    // Continue to next question
     return {
       ...state,
       currentQuestionIndex: nextIndex,
