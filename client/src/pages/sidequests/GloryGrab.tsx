@@ -231,14 +231,14 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
       {/* Main content */}
       <div className="relative z-10 flex items-center justify-center min-h-screen p-4">
         
-        {/* Title Screen - Full clickable image */}
+        {/* Title Screen - Full height clickable image */}
         {gamePhase === 'title' && (
           <div 
-            className="absolute inset-0 w-full h-full cursor-pointer animate-fade-in"
+            className="w-full h-full max-w-2xl mx-auto cursor-pointer animate-fade-in"
             onClick={startGame}
             style={{
               backgroundImage: 'url(/sidequests/glory-grab/glory-title.png)',
-              backgroundSize: 'cover',
+              backgroundSize: 'contain',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat'
             }}
