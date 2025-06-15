@@ -87,6 +87,9 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 - Authenticated write access for admin uploads
 
 ## Changelog
+- June 15, 2025: Fixed group mode reveal-scores endpoint with proper error handling and validation for question data and scoring logic
+- June 15, 2025: Removed duplicate reveal-scores route that was causing 500 errors
+- June 15, 2025: Added legacy route pattern `/api/haunt/:hauntId/questions` for compatibility
 - June 15, 2025: Restored original working trivia questions API endpoint by reverting routing changes that were interfering with existing functionality
 - June 15, 2025: Fixed missing trivia questions endpoint causing JSON parsing errors - added `/api/trivia-questions/:hauntId` route that combines default horror pack with custom questions as additional question pools rather than giving custom questions preference
 - June 15, 2025: Fixed group mode scoring logic - answers now recorded without immediate scoring, scores calculated only when host clicks "Reveal Answer" button, preventing premature score updates during gameplay

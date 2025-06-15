@@ -989,25 +989,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       const roundData = roundDoc.data();
-      const currentAnswers = roundData.currentAnswers || {};
-      const correctAnswer = roundData.question?.correctAnswer;
-      const currentScores = roundData.playerScores || {};
+      const currentAnswers = roundData?.currentAnswers || {};
+      const question = roundData?.question;
+      const correctAnswer = question?.correctAnswer;
+      const currentScores = roundData?.playerScores || {};
+      
+      // Validate that we have a question and correct answer
+      if (!question || correctAnswer === undefined || correctAnswer === null) {
+        return res.status(400).json({ error: "No active question or missing correct answer" });
+      }
       
       console.log(`[GROUP SCORING] Calculating scores for ${Object.keys(currentAnswers).length} players`);
+      console.log(`[GROUP SCORING] Question: ${question.text}, Correct Answer: ${correctAnswer}`);
       
       // Calculate score updates
       const scoreUpdates: any = {};
       let scoredPlayers = 0;
       
       Object.entries(currentAnswers).forEach(([playerId, answerIndex]) => {
-        const isCorrect = answerIndex === correctAnswer;
+        const isCorrect = Number(answerIndex) === Number(correctAnswer);
         const currentScore = currentScores[playerId] || 0;
         const pointsEarned = isCorrect ? 100 : 0;
         scoreUpdates[`playerScores.${playerId}`] = currentScore + pointsEarned;
         
         if (isCorrect) scoredPlayers++;
         
-        console.log(`[GROUP SCORING] Player ${playerId}: ${isCorrect ? 'correct' : 'incorrect'}, score: ${currentScore} -> ${currentScore + pointsEarned}`);
+        console.log(`[GROUP SCORING] Player ${playerId}: answer ${answerIndex} vs correct ${correctAnswer} = ${isCorrect ? 'correct' : 'incorrect'}, score: ${currentScore} -> ${currentScore + pointsEarned}`);
       });
       
       // Apply score updates
