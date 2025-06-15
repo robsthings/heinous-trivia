@@ -59,14 +59,25 @@ export function Welcome() {
     : 'Ready for another spine-chilling round of trivia?';
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black overflow-hidden relative">
+    <div 
+      className="min-h-screen overflow-hidden relative"
+      style={{
+        backgroundImage: 'url(/backgrounds/lab-dark-blue.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
+      {/* Dark gradient overlay for contrast */}
+      <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-gray-900/70 to-black/80 z-0" />
+
       {/* Lightning/Glitch Background Effects for First-Time Users */}
       {isFirstTime && (
         <>
           {/* Lightning effect overlay */}
           <div 
-            className={`absolute inset-0 z-0 transition-opacity duration-300 ${
-              showGlitchEffect ? 'opacity-40 animate-lightning-flash' : 'opacity-0'
+            className={`absolute inset-0 z-5 transition-opacity duration-300 ${
+              showGlitchEffect ? 'opacity-30 animate-lightning-flash' : 'opacity-0'
             }`}
             style={{
               background: `
@@ -79,7 +90,7 @@ export function Welcome() {
           
           {/* Glitch lines overlay */}
           <div 
-            className={`absolute inset-0 z-5 pointer-events-none transition-opacity duration-500 ${
+            className={`absolute inset-0 z-10 pointer-events-none transition-opacity duration-500 ${
               showGlitchEffect ? 'opacity-20 animate-glitch-lines' : 'opacity-0'
             }`}
             style={{
