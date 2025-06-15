@@ -65,7 +65,7 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
     if (!gameAreaRef.current) return { x: 50, y: 50 };
     
     const rect = gameAreaRef.current.getBoundingClientRect();
-    const margin = 80; // Keep vials away from edges
+    const margin = 80;
     
     return {
       x: Math.random() * (rect.width - margin * 2) + margin,
@@ -77,7 +77,7 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
     if (gamePhase !== 'playing') return;
     
     const position = generateRandomPosition();
-    const countdown = 2 + Math.random() * 2; // 2-4 seconds
+    const countdown = 2 + Math.random() * 2;
     
     const newVial: Vial = {
       id: vialIdCounter.current++,
@@ -99,7 +99,6 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
     setScore(prev => prev + 10);
     showHeinousReaction('good');
     
-    // Remove collected vial after animation
     setTimeout(() => {
       setVials(prev => prev.filter(vial => vial.id !== vialId));
     }, 300);
@@ -110,7 +109,6 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
       vial.id === vialId ? { ...vial, isExploding: true } : vial
     ));
     
-    // Check if multiple vials exploded recently for meltdown message
     setTimeout(() => {
       setVials(prev => {
         const explodingCount = prev.filter(v => v.isExploding).length;
@@ -177,10 +175,10 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
   useEffect(() => {
     if (gamePhase === 'playing') {
       const spawnInterval = setInterval(() => {
-        if (vials.length < 8) { // Max 8 vials on screen
+        if (vials.length < 8) {
           createVial();
         }
-      }, 1000 + Math.random() * 1500); // Spawn every 1-2.5 seconds
+      }, 1000 + Math.random() * 1500);
       
       return () => clearInterval(spawnInterval);
     }
@@ -196,20 +194,16 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
         backgroundRepeat: 'no-repeat'
       }}
     >
-      {/* Dark overlay for better contrast */}
       <div className="absolute inset-0 bg-black/30" />
       
-      {/* Dr. Heinous sprite with reactions */}
       {showHeinous && (
         <div className="absolute left-4 sm:left-8 z-20" style={{ top: 'calc(50% - 2rem)' }}>
           <div className="relative">
-            {/* Heinous reaction message */}
             {showHeinousMessage && (
               <div className="absolute -top-20 sm:-top-24 left-1/2 transform -translate-x-1/2 bg-gray-900 border-2 border-red-600 rounded-lg px-3 py-2 w-48 sm:w-56 shadow-lg animate-fade-in z-10">
                 <div className="text-red-400 text-xs sm:text-sm font-semibold text-center">
                   {heinousMessage}
                 </div>
-                {/* Speech bubble tail pointing down */}
                 <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2">
                   <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-red-600"></div>
                   <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[4px] border-r-[4px] border-t-[4px] border-l-transparent border-r-transparent border-t-gray-900"></div>
@@ -217,7 +211,6 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
               </div>
             )}
             
-            {/* Dr. Heinous sprite */}
             <img
               src={heinousSprites.scheming}
               alt="Dr. Heinous"
@@ -228,13 +221,11 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
         </div>
       )}
 
-      {/* Main content */}
       <div className="relative z-10 flex items-center justify-center min-h-screen p-4">
         
-        {/* Title Screen - Full height clickable image */}
         {gamePhase === 'title' && (
           <div 
-            className="w-full h-full max-w-2xl mx-auto cursor-pointer animate-fade-in"
+            className="w-full h-96 max-w-2xl mx-auto cursor-pointer animate-fade-in"
             onClick={startGame}
             style={{
               backgroundImage: 'url(/sidequests/glory-grab/glory-title.png)',
@@ -245,13 +236,11 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
           />
         )}
 
-        {/* Game Screen */}
         {gamePhase === 'playing' && (
           <div 
             ref={gameAreaRef}
             className="absolute inset-0 w-full h-full"
           >
-            {/* Game UI */}
             <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-30">
               <div className="bg-black/70 rounded-lg px-4 py-2 flex gap-6 text-white">
                 <div className="text-center">
@@ -265,7 +254,6 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
               </div>
             </div>
 
-            {/* Glitch overlay for meltdown */}
             {vials.filter(v => v.isExploding).length >= 2 && (
               <div className="absolute inset-0 z-25 pointer-events-none">
                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-red-500 text-4xl font-bold animate-pulse">
@@ -274,7 +262,6 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
               </div>
             )}
 
-            {/* Vials */}
             {vials.map(vial => (
               <div
                 key={vial.id}
@@ -290,9 +277,8 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
                 }}
                 onClick={() => !vial.isCollected && !vial.isExploding && collectVial(vial.id)}
               >
-                {/* Vial sprite */}
                 <div 
-                  className="w-full h-full relative"
+                  className="w-full h-full relative flex items-center justify-center"
                   style={{
                     backgroundImage: 'url(/sidequests/glory-grab/vial-sprites.png)',
                     backgroundSize: 'contain',
@@ -301,23 +287,27 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
                     filter: vial.isExploding ? 'brightness(3) saturate(3) hue-rotate(0deg)' : 'none'
                   }}
                 >
-                  {/* Countdown indicator */}
-                  <div className="absolute -top-2 left-1/2 transform -translate-x-1/2">
-                    <div 
-                      className="w-8 h-1 bg-red-500 rounded"
-                      style={{
-                        width: `${(vial.countdown / vial.maxCountdown) * 32}px`,
-                        backgroundColor: vial.countdown > 1 ? '#10b981' : '#ef4444'
-                      }}
-                    />
+                  <div className={`w-8 h-10 rounded-t-full rounded-b-sm border-2 ${
+                    vial.isExploding ? 'bg-red-500 border-red-700' : 'bg-green-400 border-green-600'
+                  } relative`}>
+                    <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-2 h-1 bg-gray-700 rounded-sm"></div>
                   </div>
+                </div>
+                
+                <div className="absolute -top-2 left-1/2 transform -translate-x-1/2">
+                  <div 
+                    className="w-8 h-1 bg-red-500 rounded"
+                    style={{
+                      width: `${(vial.countdown / vial.maxCountdown) * 32}px`,
+                      backgroundColor: vial.countdown > 1 ? '#10b981' : '#ef4444'
+                    }}
+                  />
                 </div>
               </div>
             ))}
           </div>
         )}
 
-        {/* End Screen */}
         {gamePhase === 'complete' && (
           <div className="text-center animate-fade-in">
             <div className="bg-black/80 rounded-lg p-8 max-w-md mx-auto">
@@ -338,7 +328,7 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
                   onClick={startGame}
                   className="bg-green-700 hover:bg-green-600 text-white px-6 py-3 text-sm font-semibold w-full"
                 >
-                  🔁 Play Again
+                  Play Again
                 </Button>
                 
                 <Button
@@ -357,7 +347,6 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
   );
 }
 
-// Route wrapper component
 export function GloryGrab() {
   return <GloryGrabCore />;
 }
