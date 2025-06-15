@@ -1265,7 +1265,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log(`[ANALYTICS] Found ${sessions.length} sessions in range from ${allSessions.length} total`);
       if (allSessions.length > 0) {
         console.log(`[ANALYTICS] Sample session timestamps:`, allSessions.slice(0, 3).map(s => ({
-          startTime: s.startTime?.toISOString?.(),
+          startTime: s.startTime instanceof Date && !isNaN(s.startTime.getTime()) ? s.startTime.toISOString() : 'Invalid Date',
           hauntId: s.hauntId,
           status: s.status
         })));
@@ -1286,37 +1286,51 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       console.log(`[ANALYTICS] Found ${adInteractions.length} ad interactions in range`);
       
-      // Get leaderboard data as fallback for session metrics when session data is sparse
+      // Get leaderboard data - this is what's displayed in the working leaderboard endpoint
+      // Use the same collection structure that works for /api/leaderboard/:hauntId
       const leaderboardRef = firestore.collection('leaderboards').doc(hauntId).collection('players');
       const leaderboardSnapshot = await leaderboardRef.get();
-      const leaderboardEntries = leaderboardSnapshot.docs.map(doc => {
-        const data = doc.data();
-        // Handle Firestore timestamp conversion properly
-        let timestamp;
-        if (data.timestamp && data.timestamp._seconds) {
-          timestamp = new Date(data.timestamp._seconds * 1000);
-        } else if (data.timestamp?.toDate) {
-          timestamp = data.timestamp.toDate();
-        } else if (data.lastPlayed?.toDate) {
-          timestamp = data.lastPlayed.toDate();
-        } else if (data.createdAt?.toDate) {
-          timestamp = data.createdAt.toDate();
-        } else {
-          timestamp = new Date(); // fallback to now
-        }
-        
-        return {
-          ...data,
-          timestamp
-        };
-      });
+      
+      let leaderboardEntries = [];
+      if (!leaderboardSnapshot.empty) {
+        leaderboardEntries = leaderboardSnapshot.docs.map(doc => {
+          const data = doc.data();
+          // Use the same timestamp handling as the working leaderboard endpoint
+          let timestamp = new Date(); // safe fallback
+          
+          try {
+            if (data.timestamp && typeof data.timestamp._seconds === 'number') {
+              timestamp = new Date(data.timestamp._seconds * 1000);
+            } else if (data.timestamp?.toDate && typeof data.timestamp.toDate === 'function') {
+              timestamp = data.timestamp.toDate();
+            } else if (data.lastPlayed?.toDate && typeof data.lastPlayed.toDate === 'function') {
+              timestamp = data.lastPlayed.toDate();
+            } else if (data.createdAt?.toDate && typeof data.createdAt.toDate === 'function') {
+              timestamp = data.createdAt.toDate();
+            }
+          } catch (e) {
+            // Keep fallback timestamp on any conversion error
+            console.log(`[ANALYTICS] Timestamp conversion error for entry:`, e);
+          }
+          
+          return {
+            id: doc.id,
+            playerName: data.name || data.playerName,
+            score: data.score || 0,
+            questionsAnswered: data.questionsAnswered || 20,
+            correctAnswers: data.correctAnswers || 0,
+            haunt: data.haunt || hauntId,
+            timestamp
+          };
+        }).filter(entry => entry.playerName); // Only include entries with player names
+      }
       
       console.log(`[ANALYTICS] Processing ${leaderboardEntries.length} leaderboard entries`);
       if (leaderboardEntries.length > 0) {
         console.log(`[ANALYTICS] Sample entry timestamps:`, leaderboardEntries.slice(0, 3).map(e => ({
           playerName: e.playerName,
           score: e.score,
-          timestamp: e.timestamp.toISOString()
+          timestamp: e.timestamp instanceof Date && !isNaN(e.timestamp.getTime()) ? e.timestamp.toISOString() : 'Invalid Date'
         })));
       }
       
