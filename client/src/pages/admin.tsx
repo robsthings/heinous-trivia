@@ -1416,7 +1416,7 @@ export default function Admin() {
                                     </Button>
                                   </div>
 
-                                  {/* Host Panel Link */}
+                                  {/* Host Panel Link - Hidden/Disabled
                                   <div className="flex items-center gap-2">
                                     <Button 
                                       size="sm" 
@@ -1437,6 +1437,7 @@ export default function Admin() {
                                       <Copy className="h-3 w-3" />
                                     </Button>
                                   </div>
+                                  */}
 
                                   {/* Reset Password */}
                                   <div className="flex items-center gap-2">

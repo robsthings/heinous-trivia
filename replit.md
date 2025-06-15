@@ -87,6 +87,7 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 - Authenticated write access for admin uploads
 
 ## Changelog
+- June 15, 2025: Hidden host panel UI links from admin interfaces while keeping backend routes intact - soft disable prevents access to group hosting features while preserving code functionality
 - June 15, 2025: Disabled client-side group mode detection forcing all users to individual play mode - removed group mode UI components, polling logic, and answer handling while preserving backend group functionality
 - June 15, 2025: Added explicit Content-Type headers and cache-busting to trivia questions API endpoints to prevent HTML responses in production browsers
 - June 15, 2025: Fixed group mode reveal-scores endpoint with proper error handling and validation for question data and scoring logic

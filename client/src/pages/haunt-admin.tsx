@@ -1190,6 +1190,7 @@ export default function HauntAdmin() {
           >
             {isSaving ? "Saving..." : "💾 Save Configuration"}
           </Button>
+          {/* Host Panel Button - Hidden/Disabled
           <Button
             onClick={() => window.open(`/host-panel/${hauntId}`, '_blank')}
             variant="outline"
@@ -1197,6 +1198,7 @@ export default function HauntAdmin() {
           >
             👑 Open Host Panel
           </Button>
+          */}
           <Button
             onClick={() => window.location.href = `/?haunt=${hauntId}`}
             variant="outline"
