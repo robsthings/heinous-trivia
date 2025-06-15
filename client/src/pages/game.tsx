@@ -157,7 +157,7 @@ function Game() {
   const handleViewLeaderboard = async () => {
     setLeaderboardLoading(true);
     try {
-      const response = await fetch(`/api/leaderboard?hauntId=${gameState.currentHaunt}&limit=10`);
+      const response = await fetch(`/api/leaderboard?haunt=${gameState.currentHaunt}&limit=10`);
       if (response.ok) {
         const data = await response.json();
         setLeaderboard(data);
