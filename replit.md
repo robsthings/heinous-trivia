@@ -106,6 +106,7 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 5. Game state updates with loaded data
 
 ## Changelog
+- June 15, 2025: **FIXED AD PERFORMANCE METRICS TRACKING** - Resolved field name mismatch between analytics tracker (action) and dashboard query (interactionType) by updating calculation logic to check both field names, enabling accurate display of ad views, clicks, and CTR in analytics dashboard
 - June 15, 2025: **FIXED LEADERBOARD BUTTON** - Corrected API parameter mismatch in handleViewLeaderboard function (changed hauntId to haunt) enabling "View Full Leaderboard" button to properly fetch and display leaderboard data after game completion
 - June 15, 2025: **FIXED GAME COMPLETION FLOW** - Corrected game state progression after question 20 by updating nextQuestion logic to properly check for completion conditions and fixed game component to recognize gameComplete/showEndScreen flags instead of invalid gamePhase property, ensuring players reach end screen and leaderboard
 - June 15, 2025: **COMPLETED ANALYTICS DASHBOARD IMPROVEMENTS** - Fixed performance badges to show meaningful data based on actual CTR (Excellent: 5%+, Good: 2-4%, Needs Improvement: <2%) and added comprehensive Ad Campaign Summary section with metrics, performance indicators, and call-to-action buttons for managing ads and refreshing data
