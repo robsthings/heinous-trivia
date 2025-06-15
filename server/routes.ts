@@ -1050,7 +1050,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         throw new Error('Firebase not configured');
       }
       
-      const sessionRef = firestore.collection('gameSessions').doc(sessionId);
+      const sessionRef = firestore.collection('game_sessions').doc(sessionId);
       const sessionDoc = await sessionRef.get();
       
       if (sessionDoc.exists) {
@@ -1151,7 +1151,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         throw new Error('Firebase not configured');
       }
       
-      const sessionRef = firestore.collection('gameSessions').doc(sessionId);
+      const sessionRef = firestore.collection('game_sessions').doc(sessionId);
       await sessionRef.update({
         ...updateData,
         endTime: new Date(),
@@ -1176,7 +1176,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         throw new Error('Firebase not configured');
       }
       
-      const interactionRef = firestore.collection('adInteractions').doc();
+      const interactionRef = firestore.collection('ad_interactions').doc();
       await interactionRef.set({
         ...interactionData,
         timestamp: new Date()
@@ -1198,7 +1198,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         throw new Error('Firebase not configured');
       }
       
-      const interactionRef = firestore.collection('adInteractions').doc();
+      const interactionRef = firestore.collection('ad_interactions').doc();
       await interactionRef.set({
         hauntId,
         adId: adData.id,
@@ -1264,7 +1264,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log(`[ANALYTICS] Found ${sessions.length} sessions in range from ${allSessions.length} total`);
       
       // Get ad interactions with single field query
-      const adInteractionsRef = firestore.collection('adInteractions')
+      const adInteractionsRef = firestore.collection('ad_interactions')
         .where('hauntId', '==', hauntId);
       
       const adInteractionsSnapshot = await adInteractionsRef.get();
