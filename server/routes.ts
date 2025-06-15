@@ -606,12 +606,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const { hauntId } = req.params;
       
-      // Get haunt configuration to determine question sources
+      // Get haunt configuration to determine question sources (optional)
       const config = await FirebaseService.getHauntConfig(hauntId);
-      
-      if (!config) {
-        return res.status(404).json({ error: "Haunt not found" });
-      }
 
       let questions = [];
 
