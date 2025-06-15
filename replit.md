@@ -87,6 +87,8 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 - Authenticated write access for admin uploads
 
 ## Changelog
+- June 15, 2025: **RESTORED AD PERFORMANCE METRICS DISPLAY** - Fixed missing Ad Performance section in analytics dashboard by correcting data structure alignment and adding fallback display for ads with zero interactions, ensuring all 6 uploaded ads appear in analytics table with current metrics
+- June 15, 2025: **COMPLETED ANALYTICS DATA STRUCTURE ALIGNMENT** - Fixed frontend-backend data interface mismatches by updating AnalyticsData interface to match backend response structure (completionRate vs averageScore), enabling authentic display of 31 games, 14 players, 71% completion rate from real Firebase data
 - June 15, 2025: **FIXED FIREBASE COLLECTION NAMING ALIGNMENT** - Updated all server-side collection references from camelCase (gameSessions, adInteractions) to snake_case (game_sessions, ad_interactions) matching Firebase console collection structure, resolving analytics endpoint failures and enabling authentic data retrieval with proper index utilization
 - June 15, 2025: **COMPLETED COMPREHENSIVE GROUP MODE REMOVAL** - Eliminated all Group Mode Express routes (/api/host, /api/group), removed host-panel.tsx page, cleaned up 32+ GROUP_MODE comment blocks while preserving ads, analytics, and leaderboard functionality for individual-only gameplay
 - June 15, 2025: Added Random Sidequests feature to all subscription tiers - Basic: 3, Pro: 5, Premium: 10 sidequests per tier

@@ -173,6 +173,7 @@ export default function Analytics() {
   console.log('Ads Data:', adsData?.length, 'ads loaded');
   console.log('Ad Performance Data:', adPerformanceData?.length, 'ad performance entries');
   console.log('Ad Metrics Loading:', adMetricsLoading);
+  console.log('Query Enabled:', !!hauntId && !!adsData && adsData && adsData.length > 0);
 
   return (
     <TooltipProvider>
@@ -432,6 +433,86 @@ export default function Analytics() {
                   <p className="text-gray-400 text-lg">No ads found for this haunt</p>
                   <p className="text-gray-500 text-sm mt-1">Upload ads through the haunt admin panel to see performance metrics here</p>
                 </div>
+              </div>
+            ) : !adPerformanceData && !adMetricsLoading && adsData && adsData.length > 0 ? (
+              <div className="space-y-4">
+                {/* Table Header */}
+                <div className="grid grid-cols-12 gap-4 pb-3 border-b border-white/10 text-sm font-medium text-gray-300">
+                  <div className="col-span-1">Preview</div>
+                  <div className="col-span-4">Ad Details</div>
+                  <div className="col-span-2 text-center">Views</div>
+                  <div className="col-span-2 text-center">Clicks</div>
+                  <div className="col-span-2 text-center">CTR</div>
+                  <div className="col-span-1 text-center">Performance</div>
+                </div>
+
+                {/* Show ads with zero metrics while performance data loads */}
+                {adsData.map((ad, index) => (
+                  <div key={ad.id || index} className="grid grid-cols-12 gap-4 py-4 border-b border-white/5 hover:bg-white/5 rounded-lg transition-colors">
+                    {/* Thumbnail */}
+                    <div className="col-span-1">
+                      <div className="w-12 h-12 rounded-lg overflow-hidden bg-slate-800 border border-slate-700">
+                        {ad.imageUrl ? (
+                          <img 
+                            src={ad.imageUrl} 
+                            alt={ad.title}
+                            className="w-full h-full object-cover"
+                            onError={(e) => {
+                              const target = e.currentTarget as HTMLImageElement;
+                              target.style.display = 'none';
+                              const fallback = target.nextElementSibling as HTMLElement;
+                              if (fallback) fallback.style.display = 'flex';
+                            }}
+                          />
+                        ) : null}
+                        <div className="w-full h-full flex items-center justify-center text-gray-500" style={{display: ad.imageUrl ? 'none' : 'flex'}}>
+                          <PieChartIcon className="w-6 h-6" />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Ad Details */}
+                    <div className="col-span-4 space-y-1">
+                      <h4 className="text-white font-medium truncate">{ad.title || 'Untitled Ad'}</h4>
+                      <p className="text-gray-400 text-sm truncate">{ad.description || 'No description'}</p>
+                      {ad.link && ad.link !== '#' && (
+                        <a 
+                          href={ad.link} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-blue-400 text-xs hover:text-blue-300 truncate block"
+                        >
+                          {ad.link}
+                        </a>
+                      )}
+                    </div>
+
+                    {/* Views */}
+                    <div className="col-span-2 text-center">
+                      <div className="text-white font-semibold text-lg">0</div>
+                      <div className="text-gray-400 text-xs">impressions</div>
+                    </div>
+
+                    {/* Clicks */}
+                    <div className="col-span-2 text-center">
+                      <div className="text-white font-semibold text-lg">0</div>
+                      <div className="text-gray-400 text-xs">engagements</div>
+                    </div>
+
+                    {/* CTR */}
+                    <div className="col-span-2 text-center">
+                      <div className="font-bold text-lg text-gray-400">0%</div>
+                      <div className="text-gray-400 text-xs">click rate</div>
+                    </div>
+
+                    {/* Performance Badge */}
+                    <div className="col-span-1 text-center">
+                      <Badge variant="outline" className="bg-gray-500/20 text-gray-300 border-gray-500/30 text-xs">
+                        No Data
+                      </Badge>
+                    </div>
+                  </div>
+                ))}
               </div>
             ) : (
               <div className="space-y-4">
