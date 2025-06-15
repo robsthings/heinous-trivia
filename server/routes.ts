@@ -1407,6 +1407,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
         ? Math.round(((totalGames - uniquePlayers) / totalGames) * 100 * 10) / 10 
         : 0;
       
+      // Calculate individual ad performance metrics
+      const adPerformanceMap = {};
+      
+      // Group ad interactions by adId
+      adInteractions.forEach(interaction => {
+        const adId = interaction.adId;
+        if (!adId) return;
+        
+        if (!adPerformanceMap[adId]) {
+          adPerformanceMap[adId] = { views: 0, clicks: 0 };
+        }
+        
+        const action = interaction.action || interaction.interactionType;
+        if (action === 'view') {
+          adPerformanceMap[adId].views++;
+        } else if (action === 'click') {
+          adPerformanceMap[adId].clicks++;
+        }
+      });
+      
+      // Calculate CTR for each ad
+      const adPerformanceData = Object.entries(adPerformanceMap).map(([adId, metrics]) => ({
+        adId,
+        views: metrics.views,
+        clicks: metrics.clicks,
+        ctr: metrics.views > 0 ? (metrics.clicks / metrics.views) * 100 : 0
+      }));
+      
+      console.log(`[ANALYTICS] Individual ad performance:`, adPerformanceData);
+
       const analyticsData = {
         totalGames,
         uniquePlayers,
@@ -1415,7 +1445,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         adClickThrough: Math.round(adClickThrough * 10) / 10,
         avgSessionTime,
         dailyAverage,
-        peakActivity
+        peakActivity,
+        adPerformanceData
       };
       
       console.log(`[ANALYTICS] Calculated authentic metrics:`, analyticsData);
