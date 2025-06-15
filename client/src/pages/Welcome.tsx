@@ -59,6 +59,9 @@ export function Welcome() {
     // Mark intro as seen
     localStorage.setItem('hasSeenHeinousIntro', 'true');
     
+    // Add a flag to indicate we're coming from welcome screen
+    sessionStorage.setItem('fromWelcomeScreen', 'true');
+    
     // Navigate to game
     navigate(`/game/${currentHauntId}`);
   };

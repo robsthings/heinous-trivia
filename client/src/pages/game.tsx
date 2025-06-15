@@ -38,14 +38,19 @@ function Game() {
   const [loadedHauntConfig, setLoadedHauntConfig] = useState<HauntConfig | null>(null);
   const { toast } = useToast();
 
-  // Always redirect to welcome screen - different experience for first-time vs returning users
+  // Redirect to welcome screen unless coming from welcome screen
   useEffect(() => {
     const currentHaunt = getHauntFromURL();
+    const fromWelcomeScreen = sessionStorage.getItem('fromWelcomeScreen');
     
-    if (currentHaunt) {
+    if (currentHaunt && !fromWelcomeScreen) {
       console.log('Redirecting to welcome screen for haunt:', currentHaunt);
       setLocation(`/welcome/${currentHaunt}`);
       return;
+    } else if (fromWelcomeScreen) {
+      console.log('User coming from welcome screen, proceeding to game');
+      // Clear the flag so future direct visits go to welcome
+      sessionStorage.removeItem('fromWelcomeScreen');
     }
   }, [setLocation]);
 
