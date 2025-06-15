@@ -237,6 +237,10 @@
   .animate-sprite-idle-twitch {
     animation: sprite-idle-twitch 4s ease-in-out infinite;
   }
+  
+  .animate-speech-bubble-in {
+    animation: speech-bubble-in 0.8s ease-out forwards;
+  }
 }
 
 @keyframes pulse-glow {
@@ -407,6 +411,17 @@
   }
   75% {
     transform: scale(1.01) rotate(0.2deg);
+  }
+}
+
+@keyframes speech-bubble-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 

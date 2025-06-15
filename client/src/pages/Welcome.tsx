@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useRoute, useLocation } from 'wouter';
 import { heinousSprites } from '@/lib/characterLoader';
 import { Button } from '@/components/ui/button';
+import { SpeechBubble } from '@/components/SpeechBubble';
 
 export function Welcome() {
   const [, navigate] = useLocation();
@@ -11,6 +12,17 @@ export function Welcome() {
   const [isAnimating, setIsAnimating] = useState(true);
 
   const currentHauntId = params?.hauntId || 'headquarters';
+
+  // Define dialogue messages for different user types
+  const firstTimeMessages = [
+    "Initializing Evil Protocols…",
+    "Dare ye match wits with ME?!",
+    "Prepare for HEINOUS challenges!"
+  ];
+
+  const returningUserMessages = [
+    "Back for more punishment?"
+  ];
 
   useEffect(() => {
     // Check if user has seen the intro before
@@ -119,8 +131,19 @@ export function Welcome() {
       {/* Main Content - responsive container */}
       <div className="relative z-20 min-h-screen w-full flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8">
         
-        {/* Character Sprite - responsive sizing */}
-        <div className="mb-6 sm:mb-8 flex-shrink-0">
+        {/* Character Sprite with Speech Bubble - responsive sizing */}
+        <div className="mb-6 sm:mb-8 flex-shrink-0 relative flex flex-col items-center">
+          
+          {/* Speech Bubble - positioned above sprite */}
+          <div className="mb-4 sm:mb-6">
+            <SpeechBubble 
+              messages={isFirstTime ? firstTimeMessages : returningUserMessages}
+              isVisible={true}
+              className="animate-speech-bubble-in"
+            />
+          </div>
+
+          {/* Character Sprite */}
           {characterSprite ? (
             <img
               src={isFirstTime ? heinousSprites.talking : heinousSprites.charming}
