@@ -595,6 +595,150 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get trivia questions for a haunt
+  app.get("/api/trivia-questions/:hauntId", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      
+      // Get haunt configuration to determine question sources
+      const config = await FirebaseService.getHauntConfig(hauntId);
+      
+      if (!config) {
+        return res.status(404).json({ error: "Haunt not found" });
+      }
+
+      let questions = [];
+
+      // Load custom questions from Firestore if they exist
+      if (firestore) {
+        try {
+          const customQuestionsRef = firestore.collection('haunt-questions').doc(hauntId).collection('questions');
+          const customSnapshot = await customQuestionsRef.get();
+          
+          if (!customSnapshot.empty) {
+            questions = customSnapshot.docs.map(doc => ({
+              id: doc.id,
+              ...doc.data()
+            }));
+          }
+        } catch (error) {
+          console.warn(`Could not load custom questions for ${hauntId}:`, error);
+        }
+      }
+
+      // If no custom questions, provide default horror trivia pack
+      if (questions.length === 0) {
+        questions = [
+          {
+            id: "horror-001",
+            text: "In the 1973 film 'The Exorcist', what is the name of the possessed girl?",
+            category: "Horror Movies",
+            difficulty: 2,
+            answers: ["Linda Blair", "Regan MacNeil", "Chris MacNeil", "Damien Karras"],
+            correctAnswer: 1,
+            explanation: "Regan MacNeil is the 12-year-old girl who becomes possessed by a demon in the classic horror film.",
+            points: 100
+          },
+          {
+            id: "horror-002", 
+            text: "What is the name of the hotel in Stephen King's 'The Shining'?",
+            category: "Horror Literature",
+            difficulty: 2,
+            answers: ["The Stanley Hotel", "The Overlook Hotel", "The Grand Hotel", "The Mountain View Hotel"],
+            correctAnswer: 1,
+            explanation: "The Overlook Hotel is the isolated Colorado hotel where Jack Torrance descends into madness.",
+            points: 100
+          },
+          {
+            id: "horror-003",
+            text: "Which horror movie features the character Michael Myers?",
+            category: "Horror Movies",
+            difficulty: 1,
+            answers: ["Friday the 13th", "A Nightmare on Elm Street", "Halloween", "Scream"],
+            correctAnswer: 2,
+            explanation: "Michael Myers is the masked killer from the Halloween franchise, first appearing in 1978.",
+            points: 100
+          },
+          {
+            id: "horror-004",
+            text: "What weapon is Freddy Krueger famous for using?",
+            category: "Horror Movies",
+            difficulty: 1,
+            answers: ["Chainsaw", "Machete", "Razor Glove", "Kitchen Knife"],
+            correctAnswer: 2,
+            explanation: "Freddy Krueger uses a glove fitted with razor blades to attack his victims in their dreams.",
+            points: 100
+          },
+          {
+            id: "horror-005",
+            text: "In which horror film would you find the Necronomicon?",
+            category: "Horror Movies",
+            difficulty: 3,
+            answers: ["The Evil Dead", "Hellraiser", "The Conjuring", "Insidious"],
+            correctAnswer: 0,
+            explanation: "The Necronomicon, or 'Book of the Dead', is the evil book from the Evil Dead franchise.",
+            points: 100
+          },
+          {
+            id: "horror-006",
+            text: "What is the name of the doll in the 'Child's Play' movies?",
+            category: "Horror Movies",
+            difficulty: 1,
+            answers: ["Annabelle", "Chucky", "Billy", "Robert"],
+            correctAnswer: 1,
+            explanation: "Chucky is the possessed Good Guy doll that terrorizes the Child's Play film series.",
+            points: 100
+          },
+          {
+            id: "horror-007",
+            text: "Which author wrote the novel 'Dracula'?",
+            category: "Horror Literature",
+            difficulty: 2,
+            answers: ["Edgar Allan Poe", "H.P. Lovecraft", "Bram Stoker", "Mary Shelley"],
+            correctAnswer: 2,
+            explanation: "Bram Stoker published his gothic horror novel Dracula in 1897.",
+            points: 100
+          },
+          {
+            id: "horror-008",
+            text: "In 'A Nightmare on Elm Street', on which street do the main characters live?",
+            category: "Horror Movies",
+            difficulty: 3,
+            answers: ["Oak Street", "Elm Street", "Main Street", "Maple Street"],
+            correctAnswer: 1,
+            explanation: "The teenagers live on Elm Street in Springwood, Ohio, where Freddy Krueger haunts their dreams.",
+            points: 100
+          },
+          {
+            id: "horror-009",
+            text: "What is the name of the motel in Alfred Hitchcock's 'Psycho'?",
+            category: "Horror Movies",
+            difficulty: 2,
+            answers: ["Seaside Motel", "Bates Motel", "Oak Grove Motel", "Fairview Motel"],
+            correctAnswer: 1,
+            explanation: "The Bates Motel is run by Norman Bates and his 'mother' in the classic thriller.",
+            points: 100
+          },
+          {
+            id: "horror-010",
+            text: "Which horror movie popularized the phrase 'Here's Johnny!'?",
+            category: "Horror Movies",
+            difficulty: 2,
+            answers: ["Halloween", "The Shining", "Friday the 13th", "Psycho"],
+            correctAnswer: 1,
+            explanation: "Jack Nicholson's character Jack Torrance says this line while breaking down a door in The Shining.",
+            points: 100
+          }
+        ];
+      }
+
+      res.json(questions);
+    } catch (error) {
+      console.error("Error fetching trivia questions:", error);
+      res.status(500).json({ error: "Failed to fetch trivia questions" });
+    }
+  });
+
   // Initialize database with sample data
   app.post("/api/initialize-data", async (req, res) => {
     try {
