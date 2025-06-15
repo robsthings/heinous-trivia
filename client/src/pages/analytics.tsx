@@ -293,8 +293,18 @@ export default function Analytics() {
               <div className="text-3xl font-bold text-white">{analyticsData?.adClickThrough || 0}%</div>
               <p className="text-xs text-purple-300 mt-1">Click-through rate</p>
               <div className="mt-2">
-                <Badge className="bg-purple-500/30 text-purple-200 border-purple-500/50">
-                  High Performance
+                <Badge className={`${
+                  (analyticsData?.adClickThrough || 0) >= 5 
+                    ? 'bg-green-500/30 text-green-200 border-green-500/50' 
+                    : (analyticsData?.adClickThrough || 0) >= 2 
+                    ? 'bg-yellow-500/30 text-yellow-200 border-yellow-500/50'
+                    : 'bg-red-500/30 text-red-200 border-red-500/50'
+                }`}>
+                  {(analyticsData?.adClickThrough || 0) >= 5 
+                    ? 'Excellent' 
+                    : (analyticsData?.adClickThrough || 0) >= 2 
+                    ? 'Good'
+                    : 'Needs Improvement'}
                 </Badge>
               </div>
             </CardContent>
@@ -399,8 +409,18 @@ export default function Analytics() {
                   </div>
                   <div className="flex items-center space-x-2">
                     <span className="text-white font-bold text-lg">{analyticsData?.adClickThrough || 0}%</span>
-                    <Badge className="bg-purple-500/30 text-purple-200 border-purple-500/50 text-xs">
-                      Excellent
+                    <Badge className={`text-xs ${
+                      (analyticsData?.adClickThrough || 0) >= 5 
+                        ? 'bg-green-500/30 text-green-200 border-green-500/50' 
+                        : (analyticsData?.adClickThrough || 0) >= 2 
+                        ? 'bg-yellow-500/30 text-yellow-200 border-yellow-500/50'
+                        : 'bg-red-500/30 text-red-200 border-red-500/50'
+                    }`}>
+                      {(analyticsData?.adClickThrough || 0) >= 5 
+                        ? 'Excellent' 
+                        : (analyticsData?.adClickThrough || 0) >= 2 
+                        ? 'Good'
+                        : 'Needs Improvement'}
                     </Badge>
                   </div>
                 </div>
@@ -657,6 +677,123 @@ export default function Analytics() {
                 )}
               </div>
             )}
+          </CardContent>
+        </Card>
+
+        {/* Ad Summary Section */}
+        <Card className="bg-gradient-to-br from-purple-500/10 to-pink-500/5 border-purple-500/20 backdrop-blur-sm">
+          <CardHeader>
+            <CardTitle className="text-xl font-semibold text-white flex items-center">
+              <MousePointerClickIcon className="w-5 h-5 mr-2 text-purple-400" />
+              Ad Campaign Summary
+            </CardTitle>
+            <CardDescription className="text-gray-300">
+              Comprehensive overview of all advertising performance across your haunt
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {/* Total Ads */}
+              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="bg-blue-500/20 p-2 rounded-lg">
+                    <PieChartIcon className="w-5 h-5 text-blue-400" />
+                  </div>
+                  <Badge variant="outline" className="bg-blue-500/20 text-blue-300 border-blue-500/30 text-xs">
+                    Active
+                  </Badge>
+                </div>
+                <div className="text-2xl font-bold text-white">{adsData?.length || 0}</div>
+                <div className="text-gray-300 text-sm">Total Ads Uploaded</div>
+              </div>
+
+              {/* Total Impressions */}
+              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="bg-green-500/20 p-2 rounded-lg">
+                    <TrendingUpIcon className="w-5 h-5 text-green-400" />
+                  </div>
+                  <Badge variant="outline" className="bg-green-500/20 text-green-300 border-green-500/30 text-xs">
+                    Views
+                  </Badge>
+                </div>
+                <div className="text-2xl font-bold text-white">
+                  {adPerformanceData?.reduce((sum, ad) => sum + ad.views, 0) || 0}
+                </div>
+                <div className="text-gray-300 text-sm">Total Impressions</div>
+              </div>
+
+              {/* Total Clicks */}
+              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="bg-yellow-500/20 p-2 rounded-lg">
+                    <MousePointerClickIcon className="w-5 h-5 text-yellow-400" />
+                  </div>
+                  <Badge variant="outline" className="bg-yellow-500/20 text-yellow-300 border-yellow-500/30 text-xs">
+                    Clicks
+                  </Badge>
+                </div>
+                <div className="text-2xl font-bold text-white">
+                  {adPerformanceData?.reduce((sum, ad) => sum + ad.clicks, 0) || 0}
+                </div>
+                <div className="text-gray-300 text-sm">Total Engagements</div>
+              </div>
+
+              {/* Overall Performance */}
+              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="bg-purple-500/20 p-2 rounded-lg">
+                    <AwardIcon className="w-5 h-5 text-purple-400" />
+                  </div>
+                  <Badge className={`text-xs ${
+                    (analyticsData?.adClickThrough || 0) >= 5 
+                      ? 'bg-green-500/30 text-green-200 border-green-500/50' 
+                      : (analyticsData?.adClickThrough || 0) >= 2 
+                      ? 'bg-yellow-500/30 text-yellow-200 border-yellow-500/50'
+                      : 'bg-red-500/30 text-red-200 border-red-500/50'
+                  }`}>
+                    {(analyticsData?.adClickThrough || 0) >= 5 
+                      ? 'Excellent' 
+                      : (analyticsData?.adClickThrough || 0) >= 2 
+                      ? 'Good'
+                      : 'Needs Improvement'}
+                  </Badge>
+                </div>
+                <div className="text-2xl font-bold text-white">{analyticsData?.adClickThrough || 0}%</div>
+                <div className="text-gray-300 text-sm">Overall CTR</div>
+              </div>
+            </div>
+
+            {/* Call to Action */}
+            <div className="mt-6 pt-6 border-t border-white/10">
+              <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/10 rounded-lg p-6 border border-purple-500/30">
+                <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                  <div className="space-y-2">
+                    <h3 className="text-lg font-semibold text-white">Ready to optimize your ad performance?</h3>
+                    <p className="text-gray-300 text-sm">
+                      Upload more ads, adjust targeting, and maximize your haunt's revenue potential with detailed analytics insights.
+                    </p>
+                  </div>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <Button 
+                      onClick={() => window.location.href = `/admin/${hauntId}`}
+                      className="bg-purple-500 hover:bg-purple-600 text-white border-0"
+                    >
+                      <MousePointerClickIcon className="w-4 h-4 mr-2" />
+                      Manage Ads
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      onClick={refreshData}
+                      className="bg-white/5 border-white/20 text-white hover:bg-white/10"
+                    >
+                      <RefreshCwIcon className="w-4 h-4 mr-2" />
+                      Refresh Data
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </CardContent>
         </Card>
 
