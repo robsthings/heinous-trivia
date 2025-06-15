@@ -133,16 +133,11 @@ function Game() {
   };
 
   const handleVisitAd = (link: string) => {
-    const currentQuestion = gameState.currentQuestionIndex;
     const adIndex = gameState.currentAdIndex || 0;
+    const currentAd = gameState.ads[adIndex];
     
-    AnalyticsTracker.trackAdInteraction(gameState.currentHaunt, {
-      adIndex,
-      questionIndex: currentQuestion,
-      type: 'click',
-      timestamp: Date.now(),
-      link
-    });
+    // Track the ad click using the existing analytics method
+    AnalyticsTracker.trackAdClick(gameState.currentHaunt, adIndex, currentAd?.id);
 
     window.open(link, '_blank');
   };
