@@ -1017,10 +1017,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.log(`[GROUP SCORING] Player ${playerId}: answer ${answerIndex} vs correct ${correctAnswer} = ${isCorrect ? 'correct' : 'incorrect'}, score: ${currentScore} -> ${currentScore + pointsEarned}`);
       });
       
-      // Apply score updates
-      await roundRef.update(scoreUpdates);
-      
-      console.log(`[GROUP SCORING] Scores applied: ${scoredPlayers}/${Object.keys(currentAnswers).length} players scored points`);
+      // Apply score updates only if there are updates to make
+      if (Object.keys(scoreUpdates).length > 0) {
+        await roundRef.update(scoreUpdates);
+        console.log(`[GROUP SCORING] Scores applied: ${scoredPlayers}/${Object.keys(currentAnswers).length} players scored points`);
+      } else {
+        console.log(`[GROUP SCORING] No players to score, skipping update`);
+      }
       
       res.json({ 
         success: true, 
