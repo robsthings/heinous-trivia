@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Home from "@/pages/home";
 import Game from "@/pages/game";
 import { Welcome } from "@/pages/Welcome";
+import { RootRedirector } from "@/components/RootRedirector";
 import Admin from "@/pages/admin";
 import HauntAdmin from "@/pages/haunt-admin";
 import HauntAuth from "@/pages/haunt-auth";
@@ -24,19 +25,7 @@ import { TestProgressPage } from "@/pages/test-progress";
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={(params) => {
-        // Check if there's a haunt parameter in the URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const haunt = urlParams.get('haunt');
-        
-        // If haunt parameter exists, show the game
-        if (haunt) {
-          return <Game />;
-        }
-        
-        // Otherwise show the homepage
-        return <Home />;
-      }} />
+      <Route path="/" component={RootRedirector} />
       <Route path="/welcome/:hauntId" component={Welcome} />
       <Route path="/game" component={Game} />
       <Route path="/game/:hauntId" component={Game} />

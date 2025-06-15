@@ -106,6 +106,7 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 5. Game state updates with loaded data
 
 ## Changelog
+- June 15, 2025: **IMPLEMENTED QR CODE REDIRECT SYSTEM** - Created RootRedirector component that detects ?haunt= query parameters and routes first-time users to /welcome/:hauntId or returning users to /game/:hauntId, maintaining backward compatibility with existing QR codes
 - June 15, 2025: **CREATED DYNAMIC WELCOME SCREEN** - Built responsive Welcome component with localStorage-based first-time detection, character sprite integration, and horror-themed animations including lightning effects and glitch overlays for immersive user onboarding
 - June 15, 2025: **MAJOR ATTACHED ASSETS CLEANUP** - Removed 90 unused screenshots and example images not referenced in codebase, freeing 31MB of storage space and reducing attached_assets directory from 35MB to 308KB (99% reduction)
 - June 15, 2025: **CREATED DYNAMIC CHARACTER SPRITE LOADER** - Built utility at client/src/lib/characterLoader.ts using import.meta.glob to dynamically load PNG files from /public/heinous and /public/chupacabra directories, enabling extensible character asset management
