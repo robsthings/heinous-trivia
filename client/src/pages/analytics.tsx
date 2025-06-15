@@ -750,7 +750,7 @@ export default function Analytics() {
                   </Badge>
                 </div>
                 <div className="text-2xl font-bold text-white">
-                  {adPerformanceData?.reduce((sum, ad) => sum + ad.views, 0) || 0}
+                  {analyticsData?.adPerformanceData?.reduce((sum, ad) => sum + ad.views, 0) || 0}
                 </div>
                 <div className="text-gray-300 text-sm">Total Impressions</div>
               </div>
@@ -766,7 +766,7 @@ export default function Analytics() {
                   </Badge>
                 </div>
                 <div className="text-2xl font-bold text-white">
-                  {adPerformanceData?.reduce((sum, ad) => sum + ad.clicks, 0) || 0}
+                  {analyticsData?.adPerformanceData?.reduce((sum, ad) => sum + ad.clicks, 0) || 0}
                 </div>
                 <div className="text-gray-300 text-sm">Total Engagements</div>
               </div>
