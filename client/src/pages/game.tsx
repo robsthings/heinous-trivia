@@ -129,7 +129,7 @@ function Game() {
   };
 
   const handleCloseAd = () => {
-    setGameState(prev => ({ ...prev, showAd: false }));
+    setGameState(prev => GameManager.closeAd(prev));
   };
 
   const handleVisitAd = (link: string) => {
