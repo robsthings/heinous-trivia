@@ -1,0 +1,121 @@
+{
+  "collections": {
+    "canonical": {
+      "haunts": "Main haunt configurations",
+      "leaderboards": "Player leaderboard data with subcollections",
+      "game_sessions": "Individual game session analytics",
+      "ad_interactions": "Ad view and click tracking",
+      "question_performance": "Question-level analytics (deprecated)",
+      "haunt-ads": "Ad management with subcollections",
+      "haunt-questions": "Custom questions with subcollections",
+      "trivia-packs": "Question pack collections",
+      "horror-basics": "Default horror question pool",
+      "trivia-questions": "General trivia question pool",
+      "globalQuestionPacks": "System-wide question packs",
+      "branding-assets": "Custom branding and assets",
+      "hauntConfigs": "Legacy haunt configuration collection"
+    },
+    "subcollections": {
+      "leaderboards/{hauntId}/players": "Player entries for specific haunt",
+      "haunt-ads/{hauntId}/ads": "Ads for specific haunt",
+      "haunt-questions/{hauntId}/questions": "Custom questions for haunt",
+      "ads/{hauntId}/adList": "Legacy ad storage structure",
+      "ads/{hauntId}/items": "Alternative ad storage structure"
+    }
+  },
+  "fields": {
+    "identifiers": {
+      "hauntId": "Primary haunt identifier (used in Firebase documents)",
+      "haunt": "Haunt identifier (used in API queries and frontend)",
+      "playerId": "Unique player identifier for analytics",
+      "sessionId": "Game session tracking ID",
+      "adId": "Unique advertisement identifier"
+    },
+    "player_data": {
+      "playerName": "Display name for leaderboards",
+      "name": "Alternative field name for player identity",
+      "score": "Final game score",
+      "finalScore": "Completed session score field"
+    },
+    "timestamps": {
+      "createdAt": "Document creation timestamp",
+      "updatedAt": "Last modification timestamp",
+      "completedAt": "Session completion timestamp",
+      "timestamp": "Generic timestamp field",
+      "startTime": "Session start time"
+    },
+    "analytics": {
+      "action": "Ad interaction type (view/click) - correct field name",
+      "interactionType": "Legacy ad interaction field - should use 'action'",
+      "questionsAnswered": "Number of questions completed",
+      "correctAnswers": "Number of correct responses",
+      "sessionType": "Game session type (individual/group)",
+      "groupId": "Group session identifier (deprecated)"
+    },
+    "game_state": {
+      "currentQuestionIndex": "Active question position",
+      "selectedAnswer": "Player's chosen answer",
+      "isCorrect": "Answer correctness flag",
+      "showFeedback": "UI feedback display state"
+    },
+    "ad_data": {
+      "title": "Advertisement title text",
+      "description": "Advertisement description",
+      "link": "Advertisement destination URL",
+      "imageUrl": "Advertisement image location",
+      "filename": "Uploaded file name"
+    },
+    "configuration": {
+      "isActive": "Haunt operational status",
+      "authCode": "Haunt access code",
+      "tier": "Subscription tier (basic/pro/premium)",
+      "triviaPacks": "Assigned question pack IDs",
+      "logoPath": "Haunt logo image path"
+    }
+  },
+  "critical_mismatches": [
+    {
+      "issue": "Ad interaction field inconsistency",
+      "wrong": "interactionType",
+      "correct": "action",
+      "locations": ["server/firebase.ts:213-214", "client/src/lib/analytics.ts:67,84"],
+      "status": "FIXED"
+    },
+    {
+      "issue": "Query parameter inconsistency",
+      "wrong": "hauntId",
+      "correct": "haunt",
+      "locations": ["client API calls", "server route handlers"],
+      "status": "FIXED"
+    },
+    {
+      "issue": "Collection naming inconsistency",
+      "collections_snake_case": ["game_sessions", "ad_interactions"],
+      "collections_kebab_case": ["game-sessions", "ad-interactions"],
+      "note": "Server uses snake_case collections, COLLECTIONS constants use kebab-case",
+      "status": "VERIFIED_WORKING"
+    }
+  ],
+  "verification_status": {
+    "leaderboard_api": "✅ Working - uses 'haunt' parameter correctly",
+    "ad_tracking": "✅ Working - uses 'action' field correctly", 
+    "analytics_dashboard": "✅ Working - field mappings resolved",
+    "question_loading": "✅ Working - multiple collection sources",
+    "game_completion": "✅ Working - 20-question sessions complete"
+  },
+  "maintenance_rules": {
+    "before_new_endpoints": "Check this glossary for field names",
+    "before_database_queries": "Verify collection and field references",
+    "before_analytics_changes": "Ensure 'action' not 'interactionType'",
+    "before_leaderboard_changes": "Use 'haunt' for queries, 'hauntId' for documents"
+  },
+  "last_updated": "2025-06-15",
+  "audit_scope": [
+    "server/firebase.ts",
+    "server/routes.ts", 
+    "client/src/lib/analytics.ts",
+    "client/src/lib/gameState.ts",
+    "client/src/components/*.tsx",
+    "client/src/pages/*.tsx"
+  ]
+}
