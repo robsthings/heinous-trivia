@@ -1,0 +1,17 @@
+=== ATTACHED ASSETS CLEANUP LOG ===
+Date: Sun Jun 15 06:01:50 PM UTC 2025
+Criteria: Files >1MB, older than 3 days, not referenced in codebase
+
+DELETED FILES:
+- IMG_1301.jpeg (1,230,469 bytes, modified May 29 23:36)
+  Reason: >1MB, older than 3 days, no code references
+
+SPACE SAVINGS:
+- Freed: 1.17 MB
+
+REMAINING LARGE FILES (kept due to recent modification):
+- attached_assets/image_1749823596799.png (1.3M, modified Jun 13 14:06)
+- attached_assets/image_1749865056297.png (1.4M, modified Jun 14 01:37)
+- attached_assets/image_1749867426368.png (2.4M, modified Jun 14 02:17)
+- attached_assets/image_1749924913224.png (1.5M, modified Jun 14 18:15)
+- attached_assets/image_1749925393721.png (1.2M, modified Jun 14 18:23)

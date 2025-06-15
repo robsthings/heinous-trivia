@@ -106,6 +106,7 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 5. Game state updates with loaded data
 
 ## Changelog
+- June 15, 2025: **CLEANED UP ATTACHED ASSETS** - Removed oversized files over 1MB older than 3 days and not referenced in codebase, freeing 1.17MB of storage space while preserving recent development artifacts
 - June 15, 2025: **CREATED DYNAMIC CHARACTER SPRITE LOADER** - Built utility at client/src/lib/characterLoader.ts using import.meta.glob to dynamically load PNG files from /public/heinous and /public/chupacabra directories, enabling extensible character asset management
 - June 15, 2025: **REMOVED UPLOAD GUIDELINES FROM FOOTER** - Cleaned up game footer by removing Upload Guidelines link, simplifying navigation to only show Privacy Policy and Terms of Use
 - June 15, 2025: **IMPLEMENTED CONDITIONAL CUSTOM BACKGROUND SYSTEM** - Fixed custom skins to only show when skinUrl is actually configured, maintaining original black/gradient backgrounds when no custom skin is present
