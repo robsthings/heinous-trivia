@@ -607,28 +607,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ error: "Haunt not found" });
       }
 
-      let questions = [];
-
-      // Load custom questions from Firestore if they exist
-      if (firestore) {
-        try {
-          const customQuestionsRef = firestore.collection('haunt-questions').doc(hauntId).collection('questions');
-          const customSnapshot = await customQuestionsRef.get();
-          
-          if (!customSnapshot.empty) {
-            questions = customSnapshot.docs.map(doc => ({
-              id: doc.id,
-              ...doc.data()
-            }));
-          }
-        } catch (error) {
-          console.warn(`Could not load custom questions for ${hauntId}:`, error);
-        }
-      }
-
-      // If no custom questions, provide default horror trivia pack
-      if (questions.length === 0) {
-        questions = [
+      // Start with default horror trivia pack
+      let questions = [
           {
             id: "horror-001",
             text: "In the 1973 film 'The Exorcist', what is the name of the possessed girl?",
@@ -730,6 +710,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
             points: 100
           }
         ];
+
+      // Add custom questions from Firestore to the pool
+      if (firestore) {
+        try {
+          const customQuestionsRef = firestore.collection('haunt-questions').doc(hauntId).collection('questions');
+          const customSnapshot = await customQuestionsRef.get();
+          
+          if (!customSnapshot.empty) {
+            const customQuestions = customSnapshot.docs.map(doc => ({
+              id: doc.id,
+              ...doc.data()
+            }));
+            
+            // Add custom questions to the pool, not replace
+            questions = [...questions, ...customQuestions];
+          }
+        } catch (error) {
+          console.warn(`Could not load custom questions for ${hauntId}:`, error);
+        }
       }
 
       res.json(questions);
