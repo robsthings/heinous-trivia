@@ -9,6 +9,7 @@ export function CrypticCompliments() {
   const [unfurlingFrame, setUnfurlingFrame] = useState(1);
   const [heinousReaction, setHeinousReaction] = useState("");
   const [showSignature, setShowSignature] = useState(false);
+  const [signatureComplete, setSignatureComplete] = useState(false);
 
 
   const complimentComponents = {
@@ -73,6 +74,10 @@ export function CrypticCompliments() {
           // Show signature 1.5 seconds after text appears
           setTimeout(() => {
             setShowSignature(true);
+            // Mark signature as complete after animation duration
+            setTimeout(() => {
+              setSignatureComplete(true);
+            }, 2500); // Allow time for GIF to complete one cycle
           }, 1500);
         }, 300);
       }
@@ -103,6 +108,7 @@ export function CrypticCompliments() {
     setUnfurlingFrame(1);
     setHeinousReaction("");
     setShowSignature(false);
+    setSignatureComplete(false);
   };
 
   return (
@@ -186,7 +192,9 @@ export function CrypticCompliments() {
                             alt="Dr. Heinous Signature"
                             className="max-w-full h-auto"
                             style={{
-                              filter: "drop-shadow(1px 1px 1px rgba(0,0,0,0.2))"
+                              filter: "drop-shadow(1px 1px 1px rgba(0,0,0,0.2))",
+                              animationPlayState: signatureComplete ? 'paused' : 'running',
+                              animationIterationCount: signatureComplete ? '1' : 'infinite'
                             }}
                           />
                         </div>
