@@ -158,17 +158,17 @@ export function CrypticCompliments() {
               
               {/* Compliment Text Overlay - positioned over the parchment */}
               {phase === "revealed" && isTextRevealed && (
-                <div className="absolute inset-0 flex items-center justify-center p-4">
-                  <div className="w-full text-center">
+                <div className="absolute inset-0 flex items-center justify-center p-8">
+                  <div className="w-full text-center" style={{ maxWidth: '320px', marginTop: '10px' }}>
                     <p className="compliment-text">
                       "{compliment}"
                     </p>
-                    <div className="mt-8 flex justify-center animate-fade-in">
+                    <div className="mt-4 flex justify-end pr-4 animate-fade-in">
                       <div 
                         className="signature-handwriting transform -rotate-2 opacity-80"
                         style={{
                           fontFamily: "'Homemade Apple', cursive",
-                          fontSize: "1.5rem",
+                          fontSize: "1.2rem",
                           color: "#2b1a12",
                           textShadow: "1px 1px 2px rgba(0,0,0,0.3)",
                           filter: "drop-shadow(1px 1px 1px rgba(0,0,0,0.2))"
