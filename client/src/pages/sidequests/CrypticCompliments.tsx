@@ -8,7 +8,7 @@ export function CrypticCompliments() {
   const [isTextRevealed, setIsTextRevealed] = useState(false);
   const [unfurlingFrame, setUnfurlingFrame] = useState(1);
   const [heinousReaction, setHeinousReaction] = useState("");
-  const [signatureText, setSignatureText] = useState("");
+
 
   const complimentComponents = {
     adjectives: [
@@ -69,28 +69,13 @@ export function CrypticCompliments() {
         setTimeout(() => {
           setPhase("revealed");
           setIsTextRevealed(true);
-          // Start signature animation after text is revealed
-          setTimeout(() => {
-            startSignatureAnimation();
-          }, 1000);
+
         }, 300);
       }
     }, 250);
   };
 
-  const startSignatureAnimation = () => {
-    const fullSignature = "Dr. Heinous";
-    let currentIndex = 0;
-    
-    const signatureInterval = setInterval(() => {
-      if (currentIndex <= fullSignature.length) {
-        setSignatureText(fullSignature.substring(0, currentIndex));
-        currentIndex++;
-      } else {
-        clearInterval(signatureInterval);
-      }
-    }, 120); // Slower typing for handwriting effect
-  };
+
 
   const takeScreenshot = async () => {
     const element = document.getElementById('compliment-display');
@@ -182,20 +167,22 @@ export function CrypticCompliments() {
                     </p>
                     <div className="mt-6 pr-2">
                       <div 
-                        className="signature-handwriting transform -rotate-2 opacity-80"
+                        className="transform -rotate-2 opacity-80"
                         style={{
-                          fontFamily: "'Homemade Apple', cursive",
-                          fontSize: "1.4rem",
-                          color: "#2b1a12",
-                          textShadow: "1px 1px 2px rgba(0,0,0,0.3)",
-                          filter: "drop-shadow(1px 1px 1px rgba(0,0,0,0.2))",
-                          minHeight: "1.8rem",
-                          width: "120px", // Fixed width to prevent repositioning
-                          textAlign: "right",
                           marginLeft: "auto", // Right align the container
+                          width: "120px", // Fixed width to prevent repositioning
+                          display: "flex",
+                          justifyContent: "flex-end"
                         }}
                       >
-                        {signatureText}
+                        <img 
+                          src="/heinous/signature.gif"
+                          alt="Dr. Heinous Signature"
+                          className="max-w-full h-auto"
+                          style={{
+                            filter: "drop-shadow(1px 1px 1px rgba(0,0,0,0.2))"
+                          }}
+                        />
                       </div>
                     </div>
                   </div>
