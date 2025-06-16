@@ -222,6 +222,19 @@
     animation: scale-in 0.6s ease-out;
   }
   
+  .compliment-text {
+    font-family: 'Cinzel Decorative', 'IM Fell English SC', serif;
+    font-size: clamp(1.25rem, 2vw, 2rem);
+    line-height: 1.6;
+    color: #2b1a12;
+    text-align: center;
+    max-width: 85%;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    animation: burnIn 2s ease-out forwards;
+    font-weight: 700;
+  }
+  
   .animate-lightning-flash {
     animation: lightning-flash 2s infinite;
   }
@@ -370,6 +383,29 @@
   100% {
     opacity: 1;
     transform: scale(1) rotateY(0deg);
+  }
+}
+
+@keyframes burnIn {
+  0% {
+    opacity: 0;
+    filter: blur(2px) brightness(0.5);
+    text-shadow: 0 0 10px rgba(43, 26, 18, 0.3);
+  }
+  25% {
+    opacity: 0.3;
+    filter: blur(1px) brightness(0.7);
+    text-shadow: 0 0 8px rgba(43, 26, 18, 0.5);
+  }
+  50% {
+    opacity: 0.6;
+    filter: blur(0.5px) brightness(0.9);
+    text-shadow: 0 0 6px rgba(43, 26, 18, 0.7);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0px) brightness(1);
+    text-shadow: 0 0 4px rgba(43, 26, 18, 0.8);
   }
 }
 

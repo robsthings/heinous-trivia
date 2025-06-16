@@ -169,13 +169,13 @@ export function CrypticCompliments() {
               
               {/* Compliment Text Overlay - positioned over the parchment */}
               {phase === "revealed" && (
-                <div className="absolute inset-0 flex items-center justify-center p-8">
-                  <div className="max-w-sm w-full text-center">
-                    <p className="text-base sm:text-lg text-gray-800 leading-relaxed font-serif italic">
+                <div className="absolute inset-0 flex items-center justify-center p-4">
+                  <div className="w-full text-center">
+                    <p className="compliment-text">
                       "{revealText}"
                     </p>
                     {revealText.length === compliment.length && (
-                      <div className="mt-4 text-sm text-gray-600 animate-fade-in">
+                      <div className="mt-6 text-sm font-serif italic animate-fade-in" style={{ color: '#2b1a12' }}>
                         - Dr. Heinous
                       </div>
                     )}
