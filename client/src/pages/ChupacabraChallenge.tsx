@@ -144,9 +144,12 @@ export function ChupacabraChallenge() {
           <p className="text-xl text-red-200 drop-shadow-md">
             Match the cryptid pairs before they escape!
           </p>
-          <div className="mt-4">
+          <div className="mt-4 flex flex-col sm:flex-row gap-4 justify-center">
             <p className="text-lg text-red-200">
               Matched Pairs: {matchedPairs}/8
+            </p>
+            <p className="text-lg text-red-200">
+              Attempts: {attempts}
             </p>
           </div>
         </div>
@@ -198,10 +201,13 @@ export function ChupacabraChallenge() {
           <div className="text-center mb-8">
             <div className="bg-black/70 border border-red-500 rounded-lg p-8 max-w-md mx-auto">
               <h2 className="text-4xl font-bold text-green-400 mb-4">
-                Victory!
+                You've survived the Chupacabra Challenge!
               </h2>
-              <p className="text-xl text-red-200 mb-6">
-                You've captured all the cryptids! The Chupacabra is impressed by your memory skills.
+              <p className="text-xl text-red-200 mb-4">
+                All cryptid pairs matched in {attempts} attempts!
+              </p>
+              <p className="text-lg text-red-300 mb-6">
+                The Chupacabra is impressed by your memory skills.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
