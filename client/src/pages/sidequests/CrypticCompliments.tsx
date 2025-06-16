@@ -5,7 +5,7 @@ import html2canvas from "html2canvas";
 export function CrypticCompliments() {
   const [phase, setPhase] = useState<"intro" | "unfurling" | "revealed">("intro");
   const [compliment, setCompliment] = useState("");
-  const [revealText, setRevealText] = useState("");
+  const [isTextRevealed, setIsTextRevealed] = useState(false);
   const [unfurlingFrame, setUnfurlingFrame] = useState(1);
   const [heinousReaction, setHeinousReaction] = useState("");
 
@@ -66,25 +66,14 @@ export function CrypticCompliments() {
         clearInterval(frameInterval);
         // Start text reveal after parchment is fully unfurled
         setTimeout(() => {
-          startTextReveal(newCompliment);
+          setPhase("revealed");
+          setIsTextRevealed(true);
         }, 300);
       }
     }, 250);
   };
 
-  const startTextReveal = (text: string) => {
-    setPhase("revealed");
-    let currentIndex = 0;
-    
-    const revealInterval = setInterval(() => {
-      if (currentIndex <= text.length) {
-        setRevealText(text.substring(0, currentIndex));
-        currentIndex++;
-      } else {
-        clearInterval(revealInterval);
-      }
-    }, 50); // Letter-by-letter reveal
-  };
+
 
   const takeScreenshot = async () => {
     const element = document.getElementById('compliment-display');
@@ -104,7 +93,7 @@ export function CrypticCompliments() {
   const resetGame = () => {
     setPhase("intro");
     setCompliment("");
-    setRevealText("");
+    setIsTextRevealed(false);
     setUnfurlingFrame(1);
     setHeinousReaction("");
   };
@@ -168,24 +157,22 @@ export function CrypticCompliments() {
               />
               
               {/* Compliment Text Overlay - positioned over the parchment */}
-              {phase === "revealed" && (
+              {phase === "revealed" && isTextRevealed && (
                 <div className="absolute inset-0 flex items-center justify-center p-4">
                   <div className="w-full text-center">
                     <p className="compliment-text">
-                      "{revealText}"
+                      "{compliment}"
                     </p>
-                    {revealText.length === compliment.length && (
-                      <div className="mt-6 text-sm font-serif italic animate-fade-in" style={{ color: '#2b1a12' }}>
-                        - Dr. Heinous
-                      </div>
-                    )}
+                    <div className="mt-6 text-sm font-serif italic animate-fade-in" style={{ color: '#2b1a12' }}>
+                      - Dr. Heinous
+                    </div>
                   </div>
                 </div>
               )}
             </div>
 
             {/* Dr. Heinous Reaction */}
-            {phase === "revealed" && revealText.length === compliment.length && (
+            {phase === "revealed" && isTextRevealed && (
               <div className="mb-8 animate-fade-in">
                 <img 
                   src="/heinous/neutral.png"
@@ -199,7 +186,7 @@ export function CrypticCompliments() {
             )}
 
             {/* Action Buttons */}
-            {phase === "revealed" && revealText.length === compliment.length && (
+            {phase === "revealed" && isTextRevealed && (
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in">
                 <button
                   onClick={takeScreenshot}

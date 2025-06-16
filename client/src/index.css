@@ -389,23 +389,17 @@
 @keyframes burnIn {
   0% {
     opacity: 0;
-    filter: blur(2px) brightness(0.5);
-    text-shadow: 0 0 10px rgba(43, 26, 18, 0.3);
-  }
-  25% {
-    opacity: 0.3;
-    filter: blur(1px) brightness(0.7);
-    text-shadow: 0 0 8px rgba(43, 26, 18, 0.5);
+    filter: blur(4px) brightness(1.2);
+    transform: scale(1.05);
   }
   50% {
-    opacity: 0.6;
-    filter: blur(0.5px) brightness(0.9);
-    text-shadow: 0 0 6px rgba(43, 26, 18, 0.7);
+    opacity: 0.5;
+    filter: blur(2px);
   }
   100% {
     opacity: 1;
-    filter: blur(0px) brightness(1);
-    text-shadow: 0 0 4px rgba(43, 26, 18, 0.8);
+    filter: blur(0);
+    transform: scale(1);
   }
 }
 
