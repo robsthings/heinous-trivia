@@ -167,18 +167,26 @@ export default function ChupacabraChallenge() {
         <div className="fixed top-4 left-4 md:top-1/2 md:left-4 md:-translate-y-1/2 z-40">
           <div className="flex flex-col items-center">
             {/* Timer vial container */}
-            <div className="relative w-8 h-40 md:w-12 md:h-64 bg-gray-800 border-2 border-cyan-400 rounded-full shadow-lg shadow-cyan-400/50">
-              {/* Liquid fill */}
-              <div 
-                className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-cyan-400 to-cyan-300 rounded-full transition-all duration-1000 ease-linear"
-                style={{ height: `${timerPercentage}%` }}
-              >
-                {/* Glowing effect */}
-                <div className="absolute inset-0 bg-cyan-300/50 rounded-full animate-pulse" />
-              </div>
+            <div className="relative w-12 h-48 md:w-16 md:h-64">
+              {/* Vial background container */}
+              <img 
+                src="/sidequests/chupacabra-challenge/timer-vial-bg.png"
+                alt="Timer Vial"
+                className="w-full h-full object-contain"
+              />
               
-              {/* Timer cap */}
-              <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-6 h-4 md:w-8 md:h-6 bg-gray-700 border border-cyan-400 rounded-t-lg" />
+              {/* Liquid fill overlay */}
+              <div className="absolute inset-0 overflow-hidden">
+                <img 
+                  src="/sidequests/chupacabra-challenge/timer-liquid-fill.png"
+                  alt="Timer Liquid"
+                  className="absolute bottom-0 left-0 right-0 w-full object-contain transition-all duration-1000 ease-linear"
+                  style={{ 
+                    height: `${timerPercentage}%`,
+                    transform: `translateY(${100 - timerPercentage}%)`
+                  }}
+                />
+              </div>
             </div>
             
             {/* Time display */}
