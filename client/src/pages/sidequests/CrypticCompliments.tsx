@@ -164,11 +164,18 @@ export function CrypticCompliments() {
                       "{compliment}"
                     </p>
                     <div className="mt-8 flex justify-center animate-fade-in">
-                      <img 
-                        src="/sidequests/cryptic-compliments/dr-heinous-signature.svg"
-                        alt="Dr. Heinous signature"
-                        className="w-32 h-auto opacity-80"
-                      />
+                      <div 
+                        className="signature-handwriting transform -rotate-2 opacity-80"
+                        style={{
+                          fontFamily: "'Homemade Apple', cursive",
+                          fontSize: "1.5rem",
+                          color: "#2b1a12",
+                          textShadow: "1px 1px 2px rgba(0,0,0,0.3)",
+                          filter: "drop-shadow(1px 1px 1px rgba(0,0,0,0.2))"
+                        }}
+                      >
+                        Dr. Heinous
+                      </div>
                     </div>
                   </div>
                 </div>
