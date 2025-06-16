@@ -138,8 +138,8 @@ export function ChupacabraChallenge() {
       <div className="relative z-10 w-full max-w-4xl">
         {/* Title */}
         <div className="text-center mb-8">
-          <h1 className="text-5xl font-bold text-red-300 mb-4 drop-shadow-lg">
-            Chupacabra Challenge
+          <h1 className="text-5xl font-bold text-red-300 mb-4 drop-shadow-lg" style={{ fontFamily: 'Frijole, cursive' }}>
+            CHUPACABRA CHALLENGE
           </h1>
           <p className="text-xl text-red-200 drop-shadow-md">
             Match the cryptid pairs before they escape!
@@ -156,39 +156,76 @@ export function ChupacabraChallenge() {
 
         {/* Game Grid */}
         {!gameComplete && (
-          <div className="grid grid-cols-4 gap-4 max-w-2xl mx-auto mb-8">
+          <div className="grid grid-cols-4 gap-2 sm:gap-4 max-w-xl sm:max-w-2xl mx-auto mb-8 px-2">
             {cards.map((card) => (
               <div
                 key={card.id}
-                className="aspect-square cursor-pointer transform transition-all duration-300 hover:scale-105"
+                className={`
+                  aspect-square cursor-pointer relative
+                  ${!(card.isFlipped || card.isMatched) && !isChecking ? 'hover:scale-105 active:scale-95' : ''}
+                  ${isChecking && flippedCards.includes(card.id) ? 'pointer-events-none' : ''}
+                  transition-transform duration-200 ease-out
+                `}
                 onClick={() => flipCard(card.id)}
+                style={{ perspective: '1000px' }}
               >
-                <div className="relative w-full h-full preserve-3d group">
-                  {/* Card Container with flip animation */}
+                <div 
+                  className={`
+                    relative w-full h-full transition-transform duration-600 ease-in-out
+                    ${card.isFlipped || card.isMatched ? 'rotate-y-180' : ''}
+                  `}
+                  style={{ 
+                    transformStyle: 'preserve-3d',
+                    transform: card.isFlipped || card.isMatched ? 'rotateY(180deg)' : 'rotateY(0deg)'
+                  }}
+                >
+                  {/* Card Back (Hidden Face) */}
                   <div 
-                    className={`w-full h-full transition-transform duration-700 preserve-3d ${
-                      card.isFlipped || card.isMatched ? 'rotate-y-180' : ''
-                    }`}
+                    className={`
+                      absolute inset-0 w-full h-full rounded-lg overflow-hidden
+                      border-2 transition-all duration-300
+                      ${!(card.isFlipped || card.isMatched) ? 
+                        'border-red-600 hover:border-red-400 hover:shadow-lg hover:shadow-red-500/30' : 
+                        'border-transparent'
+                      }
+                    `}
+                    style={{ 
+                      backfaceVisibility: 'hidden',
+                      transform: 'rotateY(0deg)'
+                    }}
                   >
-                    {/* Card Back */}
-                    <div className="absolute inset-0 w-full h-full backface-hidden">
-                      <img
-                        src="/sidequests/chupacabra-challenge/card-back.png"
-                        alt="Card Back"
-                        className="w-full h-full object-cover rounded-lg shadow-lg"
-                      />
-                    </div>
-                    
-                    {/* Card Front */}
-                    <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180">
-                      <img
-                        src={`/sidequests/chupacabra-challenge/card-${card.faceValue}.png`}
-                        alt={`Cryptid ${card.faceValue}`}
-                        className={`w-full h-full object-cover rounded-lg shadow-lg ${
-                          card.isMatched ? 'opacity-75 ring-4 ring-green-400' : ''
-                        }`}
-                      />
-                    </div>
+                    <img
+                      src="/sidequests/chupacabra-challenge/card-back.png"
+                      alt="Card Back"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  
+                  {/* Card Front (Revealed Face) */}
+                  <div 
+                    className={`
+                      absolute inset-0 w-full h-full rounded-lg overflow-hidden
+                      border-2 transition-all duration-300
+                      ${card.isMatched 
+                        ? 'border-green-500 shadow-lg shadow-green-500/50 ring-2 ring-green-400/30' 
+                        : isChecking && card.isFlipped && !card.isMatched
+                          ? 'border-red-500 shadow-lg shadow-red-500/50 ring-2 ring-red-400/30'
+                          : 'border-blue-400 shadow-lg shadow-blue-400/30'
+                      }
+                    `}
+                    style={{ 
+                      backfaceVisibility: 'hidden',
+                      transform: 'rotateY(180deg)'
+                    }}
+                  >
+                    <img
+                      src={`/sidequests/chupacabra-challenge/card-${card.faceValue}.png`}
+                      alt={`Cryptid ${card.faceValue}`}
+                      className={`
+                        w-full h-full object-cover transition-all duration-300
+                        ${card.isMatched ? 'brightness-110 contrast-110' : ''}
+                      `}
+                    />
                   </div>
                 </div>
               </div>
