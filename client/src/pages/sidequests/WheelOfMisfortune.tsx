@@ -127,7 +127,7 @@ export function WheelOfMisfortune() {
       } else {
         setGamePhase("result");
       }
-    }, 5000);
+    }, 8000);
   };
 
   const startEyeBlink = () => {
@@ -207,11 +207,12 @@ export function WheelOfMisfortune() {
             <img 
               src="/sidequests/wheel-of-misfortune/wheel.png"
               alt="Wheel of Misfortune"
-              className="w-72 h-72 lg:w-80 lg:h-80 transition-transform duration-5000"
+              className="w-72 h-72 lg:w-80 lg:h-80 transition-transform duration-[8000ms]"
               style={{
-                transitionTimingFunction: isSpinning ? 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'ease-out',
+                transitionTimingFunction: isSpinning ? 'cubic-bezier(0.11, 0, 0.5, 0)' : 'ease-out',
                 transform: `rotate(${wheelRotation}deg)`,
-                filter: isSpinning ? 'blur(1px)' : 'blur(0px)'
+                filter: isSpinning ? 'blur(1px)' : 'blur(0px)',
+                transitionDuration: '8s'
               }}
             />
             
