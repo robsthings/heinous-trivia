@@ -106,6 +106,7 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 5. Game state updates with loaded data
 
 ## Changelog
+- June 16, 2025: **COMPLETED CHUPACABRA CHALLENGE COUNTDOWN TIMER** - Added 90-second vertical countdown timer positioned on left edge, styled as glowing cyan liquid column that drains from top to bottom, game failure state when timer hits zero with "You failed the Chupacabra Challenge!" message, timer stops on victory/defeat, responsive sizing across mobile/desktop
 - June 16, 2025: **COMPLETED CHUPACABRA CHALLENGE CARD FLIP ANIMATIONS** - Enhanced memory game with professional 3D card flip animations (600ms duration), mobile-first responsive design (gap-2 on mobile, gap-4 on desktop), dynamic visual feedback system (green glow for matches, red borders for mismatches), hover effects with scale transforms, pointer-events management during checking phase, brightness/contrast enhancement for matched cards
 - June 16, 2025: **ADDED FRIJOLE GOOGLE FONT TO CHUPACABRA CHALLENGE** - Imported Frijole font family and applied to "CHUPACABRA CHALLENGE" title with proper styling, creating authentic cryptid-themed typography that matches the game's supernatural atmosphere
 - June 16, 2025: **ENHANCED CHUPACABRA CHALLENGE STATE MANAGEMENT** - Implemented complete game state tracking with attempts counter, prevented 3rd card flipping during checking phase, auto-hide unmatched cards after 1 second, victory detection with performance stats display, proper game reset functionality

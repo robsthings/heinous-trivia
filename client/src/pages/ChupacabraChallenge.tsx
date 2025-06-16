@@ -166,30 +166,17 @@ export default function ChupacabraChallenge() {
       {timerActive && !gameComplete && !gameFailed && (
         <div className="fixed top-4 left-4 md:top-1/2 md:left-4 md:-translate-y-1/2 z-40">
           <div className="flex flex-col items-center">
-            {/* Timer vial container */}
-            <div className="relative w-12 h-48 md:w-16 md:h-64">
-              {/* Glowing liquid fill behind vial */}
-              <div className="absolute inset-0 flex items-end justify-center overflow-hidden">
-                <div 
-                  className="w-8 md:w-10 bg-gradient-to-t from-cyan-400 via-cyan-300 to-cyan-200 transition-all duration-1000 ease-linear shadow-lg shadow-cyan-400/50"
-                  style={{ 
-                    height: `${timerPercentage * 0.85}%`, // 85% to fit inside vial shape
-                    borderRadius: '0 0 20px 20px', // rounded bottom
-                    filter: 'blur(1px)', // slight glow effect
-                    marginBottom: '8%' // offset from vial bottom
-                  }}
-                >
-                  {/* Inner glow */}
-                  <div className="absolute inset-0 bg-cyan-300/60 animate-pulse" style={{ borderRadius: '0 0 20px 20px' }} />
-                </div>
+            {/* Timer liquid container */}
+            <div className="relative w-8 h-40 md:w-12 md:h-56">
+              <div 
+                className="w-full bg-gradient-to-t from-cyan-400 via-cyan-300 to-cyan-200 transition-all duration-1000 ease-linear shadow-lg shadow-cyan-400/50 border-2 border-cyan-500/30 rounded-full"
+                style={{ 
+                  height: `${timerPercentage}%`
+                }}
+              >
+                {/* Inner glow */}
+                <div className="absolute inset-0 bg-cyan-300/60 animate-pulse rounded-full" />
               </div>
-              
-              {/* Vial container on top */}
-              <img 
-                src="/sidequests/chupacabra-challenge/timer-vial-bg.png"
-                alt="Timer Vial"
-                className="relative z-10 w-full h-full object-contain"
-              />
             </div>
             
             {/* Time display */}
