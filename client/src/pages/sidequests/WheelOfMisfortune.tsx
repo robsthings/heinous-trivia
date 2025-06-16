@@ -192,7 +192,7 @@ export function WheelOfMisfortune() {
         </div>
 
         {/* Dr. Heinous & Wheel Side by Side */}
-        <div className="mb-8 flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-16">
+        <div className="mb-8 flex flex-col lg:flex-row items-center justify-center gap-4 lg:gap-6">
           {/* Dr. Heinous Presenting */}
           <div className="flex-shrink-0">
             <img 

@@ -25,6 +25,7 @@ import { MonsterNameGenerator } from "@/pages/sidequests/MonsterNameGenerator";
 import { GloryGrab } from "@/pages/sidequests/GloryGrab";
 import { CrypticCompliments } from "@/pages/sidequests/CrypticCompliments";
 import { WheelOfMisfortune } from "@/pages/sidequests/WheelOfMisfortune";
+import { ChupacabraChallenge } from "@/pages/sidequests/ChupacabraChallenge";
 
 function Router() {
   return (
@@ -53,6 +54,8 @@ function Router() {
       <Route path="/sidequests/glory-grab" component={GloryGrab} />
       <Route path="/sidequests/cryptic-compliments" component={CrypticCompliments} />
       <Route path="/sidequests/wheel-of-misfortune" component={WheelOfMisfortune} />
+      <Route path="/sidequest/chupacabra-challenge" component={ChupacabraChallenge} />
+      <Route path="/sidequests/chupacabra-challenge" component={ChupacabraChallenge} />
       <Route component={NotFound} />
     </Switch>
   );
