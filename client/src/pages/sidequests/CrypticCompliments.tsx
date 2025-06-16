@@ -224,21 +224,21 @@ export function CrypticCompliments() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in">
                 <button
                   onClick={takeScreenshot}
-                  className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-bold transition-colors duration-200 flex items-center gap-2"
+                  className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-bold transition-all duration-200 flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-105"
                 >
                   📸 Screenshot My Compliment
                 </button>
                 
                 <button
                   onClick={resetGame}
-                  className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg font-bold transition-colors duration-200 text-sm"
+                  className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-bold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
                 >
                   Get Another Gift
                 </button>
                 
                 <Link 
                   href="/game/headquarters"
-                  className="text-purple-300 hover:text-purple-100 underline font-bold"
+                  className="bg-purple-800 hover:bg-purple-900 text-white px-6 py-3 rounded-lg font-bold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 no-underline"
                 >
                   Return to Main Game
                 </Link>
