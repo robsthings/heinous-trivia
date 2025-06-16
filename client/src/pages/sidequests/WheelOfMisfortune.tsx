@@ -111,7 +111,7 @@ export function WheelOfMisfortune() {
     // Each slice is 45 degrees (360/8), pointer points to top center
     const sliceAngle = 45;
     const targetAngle = randomSlice.id * sliceAngle;
-    const extraSpins = 3 + Math.random() * 2; // 3-5 full rotations for effect
+    const extraSpins = 5 + Math.random() * 3; // 5-8 full rotations for more dramatic effect
     const totalRotation = wheelRotation + (extraSpins * 360) + (360 - targetAngle);
     
     setWheelRotation(totalRotation);
@@ -127,7 +127,7 @@ export function WheelOfMisfortune() {
       } else {
         setGamePhase("result");
       }
-    }, 3000);
+    }, 5000);
   };
 
   const startEyeBlink = () => {
@@ -178,14 +178,9 @@ export function WheelOfMisfortune() {
           />
         </div>
 
-        {/* Dr. Heinous */}
+        {/* Dr. Heinous Speech */}
         <div className="mb-8">
-          <img 
-            src="/heinous/presenting.png"
-            alt="Dr. Heinous presenting"
-            className="w-32 h-32 mx-auto"
-          />
-          <div className="mt-4 bg-gray-900 border-2 border-purple-400 rounded-lg p-4 max-w-md mx-auto relative">
+          <div className="bg-gray-900 border-2 border-purple-400 rounded-lg p-4 max-w-md mx-auto relative">
             <p className="text-purple-100 text-lg font-creepster">
               {gamePhase === "intro" && "Step right up! Spin my wheel of delicious misfortune!"}
               {gamePhase === "spinning" && "The wheel of fate turns..."}
@@ -196,16 +191,27 @@ export function WheelOfMisfortune() {
           </div>
         </div>
 
-        {/* Wheel Container */}
-        <div className="relative mb-8 flex justify-center">
+        {/* Dr. Heinous & Wheel Side by Side */}
+        <div className="mb-8 flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-16">
+          {/* Dr. Heinous Presenting */}
+          <div className="flex-shrink-0">
+            <img 
+              src="/heinous/presenting.png"
+              alt="Dr. Heinous presenting"
+              className="w-40 h-40 lg:w-48 lg:h-48"
+            />
+          </div>
+
           {/* Spinning Wheel */}
-          <div className="relative">
+          <div className="relative flex-shrink-0">
             <img 
               src="/sidequests/wheel-of-misfortune/wheel.png"
               alt="Wheel of Misfortune"
-              className="w-80 h-80 transition-transform duration-3000 ease-out"
+              className="w-72 h-72 lg:w-80 lg:h-80 transition-transform duration-5000"
               style={{
-                transform: `rotate(${wheelRotation}deg)`
+                transitionTimingFunction: isSpinning ? 'cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'ease-out',
+                transform: `rotate(${wheelRotation}deg)`,
+                filter: isSpinning ? 'blur(1px)' : 'blur(0px)'
               }}
             />
             
