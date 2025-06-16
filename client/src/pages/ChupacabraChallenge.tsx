@@ -14,8 +14,11 @@ export default function ChupacabraChallenge() {
   const [matched, setMatched] = useState(new Set<number>());
   const [attempts, setAttempts] = useState(0);
   const [gameComplete, setGameComplete] = useState(false);
+  const [gameFailed, setGameFailed] = useState(false);
   const [isChecking, setIsChecking] = useState(false);
   const [showChupacabraReaction, setShowChupacabraReaction] = useState<'scheming' | 'taunting' | null>(null);
+  const [timeLeft, setTimeLeft] = useState(90);
+  const [timerActive, setTimerActive] = useState(false);
 
   // Initialize 4x4 grid with 8 pairs (16 total cards)
   const initializeCards = () => {
@@ -37,17 +40,38 @@ export default function ChupacabraChallenge() {
     setMatched(new Set());
     setAttempts(0);
     setGameComplete(false);
+    setGameFailed(false);
     setIsChecking(false);
     setShowChupacabraReaction(null);
+    setTimeLeft(90);
+    setTimerActive(true);
   };
 
   useEffect(() => {
     initializeCards();
   }, []);
 
+  // Timer countdown effect
+  useEffect(() => {
+    if (!timerActive || gameComplete || gameFailed) return;
+
+    const timer = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev <= 1) {
+          setTimerActive(false);
+          setGameFailed(true);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [timerActive, gameComplete, gameFailed]);
+
   const flipCard = (cardId: number) => {
-    // Prevent flipping 3rd card while 2 are revealed
-    if (isChecking || flippedCards.length >= 2) return;
+    // Prevent flipping if game is over or 3rd card while 2 are revealed
+    if (isChecking || flippedCards.length >= 2 || gameComplete || gameFailed) return;
     
     const card = cards.find(c => c.id === cardId);
     if (!card || card.isFlipped || card.isMatched) return;
@@ -96,6 +120,7 @@ export default function ChupacabraChallenge() {
           // Check if all 8 pairs are matched
           if (newMatched.size === 16) {
             setGameComplete(true);
+            setTimerActive(false);
           }
           
           setShowChupacabraReaction(null);
@@ -140,7 +165,7 @@ export default function ChupacabraChallenge() {
         {/* Title */}
         <div className="text-center mb-6 sm:mb-8">
           <h1 
-            className="text-3xl sm:text-4xl md:text-5xl font-bold text-red-300 mb-4 drop-shadow-lg" 
+            className="text-3xl sm:text-4xl md:text-5xl font-bold text-orange-300 mb-4 drop-shadow-lg" 
             style={{ fontFamily: 'Frijole, cursive' }}
           >
             CHUPACABRA CHALLENGE
