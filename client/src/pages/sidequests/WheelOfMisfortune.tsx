@@ -132,16 +132,18 @@ export function WheelOfMisfortune() {
       <div 
         className="absolute inset-0 bg-cover bg-center opacity-40"
         style={{
-          backgroundImage: `url('/sidequests/wheel-of-misfortune/laboratory-background.jpg')`
+          backgroundImage: `url('/sidequests/wheel-of-misfortune/wheel-bg.png')`
         }}
       />
       
       {/* Intro Phase */}
       {gamePhase === "intro" && (
         <div className="text-center mb-8 z-10">
-          <h1 className="text-5xl font-bold text-purple-300 mb-4 animate-pulse">
-            Wheel of Misfortune
-          </h1>
+          <img 
+            src="/sidequests/wheel-of-misfortune/wheel-banner.png"
+            alt="Wheel of Misfortune"
+            className="w-auto h-24 lg:h-32 mx-auto mb-4 object-contain"
+          />
           <p className="text-xl text-purple-200 mb-8">
             Dare to spin Dr. Heinous's wheel of chaotic consequences!
           </p>
@@ -171,7 +173,7 @@ export function WheelOfMisfortune() {
               } ${isSpinning ? 'blur-sm' : ''}`}
               style={{
                 transform: `rotate(${wheelRotation}deg)`,
-                backgroundImage: `url('/sidequests/wheel-of-misfortune/wheel-8-slice.png')`,
+                backgroundImage: `url('/sidequests/wheel-of-misfortune/wheel.png')`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center'
               }}
@@ -182,7 +184,7 @@ export function WheelOfMisfortune() {
               className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-2 z-10"
             >
               <img 
-                src="/sidequests/wheel-of-misfortune/pointer.png"
+                src="/sidequests/wheel-of-misfortune/pointer-skeleton.png"
                 alt="Wheel Pointer"
                 className="w-8 h-12 object-contain"
               />
