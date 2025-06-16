@@ -1,244 +1,245 @@
-import { useState, useEffect } from 'react';
-import { useLocation } from 'wouter';
-import { Button } from '@/components/ui/button';
-import { heinousSprites } from '@/lib/characterLoader';
-import html2canvas from 'html2canvas';
+import { useState, useEffect } from "react";
+import { Link } from "wouter";
+import { loadCharacterSprites } from "@/lib/characterLoader";
+import html2canvas from "html2canvas";
 
-interface CrypticComplimentsProps {
-  showHeinous?: boolean;
-}
+export function CrypticCompliments() {
+  const [phase, setPhase] = useState<"intro" | "unfurling" | "revealed">("intro");
+  const [compliment, setCompliment] = useState("");
+  const [revealText, setRevealText] = useState("");
+  const [unfurlingFrame, setUnfurlingFrame] = useState(1);
+  const [characterSprites, setCharacterSprites] = useState<Record<string, Record<string, string>>>({});
+  const [heinousReaction, setHeinousReaction] = useState("");
 
-function CrypticComplimentsCore({ showHeinous = true }: CrypticComplimentsProps) {
-  const [, navigate] = useLocation();
-  const [gamePhase, setGamePhase] = useState<'initial' | 'gift' | 'parchment' | 'compliment'>('initial');
-  const [currentCompliment, setCurrentCompliment] = useState('');
-  const [complimentCount, setComplimentCount] = useState(0);
-  const [showSpeechBubble, setShowSpeechBubble] = useState(false);
+  useEffect(() => {
+    const loadSprites = async () => {
+      const sprites = await loadCharacterSprites();
+      setCharacterSprites(sprites);
+    };
+    loadSprites();
+  }, []);
 
-  // Mad lib components for compliment generation
-  const complimentParts = {
+  const complimentComponents = {
     adjectives: [
-      "gelatinous", "magnificent", "bewildering", "luminous", "ethereal", "grotesque",
-      "sublime", "preposterous", "ghastly", "resplendent", "peculiar", "stupendous",
-      "monstrous", "delightful", "abominable", "exquisite", "hideous", "spectacular"
+      "magnificent", "gelatinous", "otherworldly", "bewildering", "cryptic",
+      "enigmatic", "shadowy", "spectral", "ethereal", "haunting"
     ],
     nouns: [
-      "aristocrat", "creature", "specimen", "entity", "being", "wretch",
-      "monstrosity", "aberration", "marvel", "horror", "wonder", "fiend",
-      "phantom", "apparition", "manifestation", "anomaly", "terror", "beauty"
+      "aristocrat", "phantom", "apparition", "wraith", "entity",
+      "creature", "being", "soul", "spirit", "essence"
     ],
     connectors: [
-      "radiating the mystique of",
-      "embodying the essence of",
-      "channeling the spirit of",
-      "manifesting the aura of",
-      "exuding the power of",
-      "reflecting the glory of",
-      "displaying the majesty of",
-      "wielding the force of"
+      "radiating the mystique of", "embodying the essence of", "channeling the energy of",
+      "wielding the power of", "harboring the secrets of", "carrying the wisdom of"
     ],
     metaphors: [
-      "a cryptid's tax return",
-      "midnight's forgotten sock",
-      "a vampire's grocery list",
-      "thunder's lost echo",
-      "a ghost's diary entry",
-      "starlight's secret recipe",
-      "a demon's love letter",
-      "chaos theory's homework",
-      "a banshee's lullaby",
-      "destiny's rough draft"
+      "a cryptid's tax return", "an ancient tome's bookmark", "a ghost's favorite playlist",
+      "a vampire's sunscreen", "a werewolf's grooming kit", "a banshee's lullaby"
     ],
     closers: [
-      "May your shadow never be questioned.",
-      "Let your presence haunt all who witness it.",
-      "May your existence perplex generations.",
-      "Let your aura disturb the natural order.",
-      "May your essence confound the universe.",
-      "Let your being transcend mortal understanding.",
-      "May your spirit bewilder eternity itself.",
-      "Let your soul mystify the very cosmos."
+      "May your shadow never be questioned.", "Your aura is magnificently unsettling.",
+      "You possess a truly haunting charm.", "Your presence is delightfully ominous.",
+      "You are wonderfully mysterious."
     ]
   };
 
-  const generateCompliment = () => {
-    const adjective = complimentParts.adjectives[Math.floor(Math.random() * complimentParts.adjectives.length)];
-    const noun = complimentParts.nouns[Math.floor(Math.random() * complimentParts.nouns.length)];
-    const connector = complimentParts.connectors[Math.floor(Math.random() * complimentParts.connectors.length)];
-    const metaphor = complimentParts.metaphors[Math.floor(Math.random() * complimentParts.metaphors.length)];
-    const closer = complimentParts.closers[Math.floor(Math.random() * complimentParts.closers.length)];
+  const heinousReactions = [
+    "Did I mean that? Who knows.",
+    "Take this. You're exhausting.",
+    "That's the nicest I've been all decade.",
+    "That's... shockingly accurate."
+  ];
 
-    return `You ${adjective} ${noun}, ${connector} ${metaphor}. ${closer}`;
-  };
+  const startParchmentUnfurling = () => {
+    setPhase("unfurling");
+    
+    // Generate compliment
+    const adjective = complimentComponents.adjectives[Math.floor(Math.random() * complimentComponents.adjectives.length)];
+    const noun = complimentComponents.nouns[Math.floor(Math.random() * complimentComponents.nouns.length)];
+    const connector = complimentComponents.connectors[Math.floor(Math.random() * complimentComponents.connectors.length)];
+    const metaphor = complimentComponents.metaphors[Math.floor(Math.random() * complimentComponents.metaphors.length)];
+    const closer = complimentComponents.closers[Math.floor(Math.random() * complimentComponents.closers.length)];
 
-  const handleParchmentClick = () => {
-    if (complimentCount < 3) {
-      const newCompliment = generateCompliment();
-      setCurrentCompliment(newCompliment);
-      setGamePhase('compliment');
-      setComplimentCount(prev => prev + 1);
-    }
-  };
+    const newCompliment = `You ${adjective} ${noun}, ${connector} ${metaphor}. ${closer}`;
+    setCompliment(newCompliment);
+    
+    // Random reaction
+    setHeinousReaction(heinousReactions[Math.floor(Math.random() * heinousReactions.length)]);
 
-  const handleGenerateAnother = () => {
-    if (complimentCount < 3) {
-      const newCompliment = generateCompliment();
-      setCurrentCompliment(newCompliment);
-      setComplimentCount(prev => prev + 1);
-    }
-  };
-
-  const handleScreenshot = async () => {
-    const complimentElement = document.getElementById('compliment-card');
-    if (complimentElement) {
-      try {
-        const canvas = await html2canvas(complimentElement, {
-          backgroundColor: '#000000',
-          scale: 2
-        });
-        
-        const link = document.createElement('a');
-        link.download = 'cryptic-compliment.png';
-        link.href = canvas.toDataURL();
-        link.click();
-      } catch (error) {
-        console.error('Screenshot failed:', error);
+    // Animate through paper frames
+    let currentFrame = 1;
+    const frameInterval = setInterval(() => {
+      currentFrame++;
+      setUnfurlingFrame(currentFrame);
+      
+      if (currentFrame >= 4) {
+        clearInterval(frameInterval);
+        // Start text reveal after parchment is fully unfurled
+        setTimeout(() => {
+          startTextReveal(newCompliment);
+        }, 300);
       }
+    }, 250);
+  };
+
+  const startTextReveal = (text: string) => {
+    setPhase("revealed");
+    let currentIndex = 0;
+    
+    const revealInterval = setInterval(() => {
+      if (currentIndex <= text.length) {
+        setRevealText(text.substring(0, currentIndex));
+        currentIndex++;
+      } else {
+        clearInterval(revealInterval);
+      }
+    }, 50); // Letter-by-letter reveal
+  };
+
+  const takeScreenshot = async () => {
+    const element = document.getElementById('compliment-display');
+    if (element) {
+      const canvas = await html2canvas(element, {
+        backgroundColor: null,
+        scale: 2
+      });
+      
+      const link = document.createElement('a');
+      link.download = 'heinous-compliment.png';
+      link.href = canvas.toDataURL();
+      link.click();
     }
   };
 
-  const handleReturnToGame = () => {
-    navigate('/game/headquarters');
+  const resetGame = () => {
+    setPhase("intro");
+    setCompliment("");
+    setRevealText("");
+    setUnfurlingFrame(1);
+    setHeinousReaction("");
   };
-
-  // Animation sequence
-  useEffect(() => {
-    // Start with charming sprite
-    const timer1 = setTimeout(() => {
-      setGamePhase('gift');
-      setShowSpeechBubble(true);
-    }, 1500);
-
-    const timer2 = setTimeout(() => {
-      setGamePhase('parchment');
-    }, 2500);
-
-    return () => {
-      clearTimeout(timer1);
-      clearTimeout(timer2);
-    };
-  }, []);
 
   return (
-    <div 
-      className="min-h-screen w-full relative overflow-hidden"
-      style={{
-        backgroundImage: 'url(/sidequests/cryptic-compliments/compliments-bg.png)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
-      }}
-    >
-      <div className="absolute inset-0 bg-black/30" />
-      
-      {showHeinous && (
-        <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
-          <div className="relative">
-            {/* Speech bubble */}
-            {showSpeechBubble && gamePhase === 'gift' && (
-              <div className="absolute -top-24 -left-32 bg-gray-900 border-2 border-purple-600 rounded-lg px-4 py-3 w-64 shadow-lg animate-fade-in z-10">
-                <div className="text-purple-400 text-sm font-semibold text-left">
-                  A token of my distaste... for everyone else.
+    <div className="min-h-screen bg-gradient-to-b from-purple-900 via-black to-purple-900 flex flex-col items-center justify-center p-4 relative overflow-hidden">
+      {/* Background */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center opacity-30"
+        style={{
+          backgroundImage: "url('/sidequests/cryptic-compliments/compliments-bg.png')"
+        }}
+      />
+
+      {/* Content */}
+      <div className="relative z-10 w-full max-w-4xl mx-auto text-center">
+        {phase === "intro" && (
+          <div className="animate-scale-in">
+            {/* Title */}
+            <h1 className="text-4xl font-nosifer text-purple-200 mb-8">CRYPTIC COMPLIMENTS</h1>
+            
+            {/* Dr. Heinous with Gift */}
+            <div className="mb-8">
+              {characterSprites.heinous?.gift && (
+                <div className="relative inline-block">
+                  <img 
+                    src={characterSprites.heinous.gift}
+                    alt="Dr. Heinous offering a gift" 
+                    className="w-64 h-64 mx-auto cursor-pointer hover:scale-105 transition-transform duration-300"
+                    onClick={startParchmentUnfurling}
+                  />
+                  {/* Soft pulsing glow */}
+                  <div className="absolute inset-0 bg-yellow-400 opacity-20 rounded-full blur-xl animate-pulse pointer-events-none"></div>
                 </div>
-                <div className="absolute top-full left-8">
-                  <div className="w-0 h-0 border-l-[8px] border-r-[8px] border-t-[8px] border-l-transparent border-r-transparent border-t-purple-600"></div>
-                  <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-gray-900"></div>
+              )}
+              
+              {/* Speech Bubble */}
+              <div className="mt-6 relative">
+                <div className="bg-gray-900 border-2 border-purple-400 rounded-lg p-4 max-w-md mx-auto relative">
+                  <p className="text-purple-100 text-lg font-creepster">
+                    I have something for you... I think.
+                  </p>
+                  <div className="absolute bottom-[-10px] left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[10px] border-r-[10px] border-t-[10px] border-l-transparent border-r-transparent border-t-purple-400"></div>
                 </div>
               </div>
-            )}
-            
-            {/* Character sprite */}
-            <div className="relative">
-              <img
-                src={gamePhase === 'initial' ? heinousSprites.charming : heinousSprites.gift}
-                alt="Dr. Heinous"
-                className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 object-contain drop-shadow-2xl transition-all duration-500"
+            </div>
+
+            {/* Instructions */}
+            <div className="text-purple-200 text-xl">
+              <p>Click Dr. Heinous to receive your... gift</p>
+            </div>
+          </div>
+        )}
+
+        {(phase === "unfurling" || phase === "revealed") && (
+          <div className="animate-scale-in" id="compliment-display">
+            {/* Parchment Animation Container */}
+            <div className="mb-8 flex justify-center relative">
+              <img 
+                src={`/sidequests/cryptic-compliments/paper-${unfurlingFrame}.png`}
+                alt="Parchment unfurling"
+                className="max-w-lg w-full h-auto"
               />
               
-              {/* Glowing parchment in palm */}
-              {gamePhase === 'parchment' && (
-                <div 
-                  className="absolute bottom-8 left-12 w-8 h-10 cursor-pointer animate-pulse"
-                  onClick={handleParchmentClick}
-                  style={{
-                    background: 'radial-gradient(circle, rgba(255,215,0,0.8) 0%, rgba(255,215,0,0.4) 50%, transparent 100%)',
-                    borderRadius: '50% 50% 50% 50% / 60% 60% 40% 40%',
-                    boxShadow: '0 0 20px rgba(255,215,0,0.6)',
-                    animation: 'pulse 2s infinite'
-                  }}
-                >
-                  <div className="w-full h-full bg-yellow-200 rounded-sm opacity-80 flex items-center justify-center text-xs text-gray-800">
-                    📜
+              {/* Compliment Text Overlay - positioned over the parchment */}
+              {phase === "revealed" && (
+                <div className="absolute inset-0 flex items-center justify-center p-8">
+                  <div className="max-w-sm w-full text-center">
+                    <p className="text-base sm:text-lg text-gray-800 leading-relaxed font-serif italic">
+                      "{revealText}"
+                    </p>
+                    {revealText.length === compliment.length && (
+                      <div className="mt-4 text-sm text-gray-600 animate-fade-in">
+                        - Dr. Heinous
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
             </div>
-          </div>
-        </div>
-      )}
 
-      {/* Compliment display */}
-      {gamePhase === 'compliment' && (
-        <div className="absolute inset-0 flex items-center justify-center z-30 p-4">
-          <div 
-            id="compliment-card"
-            className="bg-gradient-to-br from-purple-900 via-gray-900 to-black border-2 border-purple-500 rounded-lg p-8 max-w-lg mx-auto text-center animate-scale-in shadow-2xl"
-          >
-            <div className="mb-6">
-              <h2 className="text-2xl font-bold text-purple-400 mb-4">
-                Cryptic Compliment
-              </h2>
-              <div className="text-lg text-gray-200 leading-relaxed italic">
-                "{currentCompliment}"
+            {/* Dr. Heinous Reaction */}
+            {phase === "revealed" && revealText.length === compliment.length && (
+              <div className="mb-8 animate-fade-in">
+                {characterSprites.heinous?.neutral && (
+                  <img 
+                    src={characterSprites.heinous.neutral}
+                    alt="Dr. Heinous" 
+                    className="w-32 h-32 mx-auto"
+                  />
+                )}
+                <p className="text-purple-200 text-lg font-creepster mt-4">
+                  "{heinousReaction}"
+                </p>
               </div>
-            </div>
-            
-            <div className="text-xs text-purple-300 mb-6">
-              — Dr. Heinous, Master of Backhanded Praise
-            </div>
-            
-            <div className="flex flex-col gap-3">
-              {complimentCount < 3 && (
-                <Button
-                  onClick={handleGenerateAnother}
-                  className="bg-purple-700 hover:bg-purple-600 text-white px-6 py-3 text-sm font-semibold w-full"
+            )}
+
+            {/* Action Buttons */}
+            {phase === "revealed" && revealText.length === compliment.length && (
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in">
+                <button
+                  onClick={takeScreenshot}
+                  className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-bold transition-colors duration-200 flex items-center gap-2"
                 >
-                  Generate Another ({3 - complimentCount} left)
-                </Button>
-              )}
-              
-              <Button
-                onClick={handleScreenshot}
-                className="bg-yellow-700 hover:bg-yellow-600 text-white px-6 py-3 text-sm font-semibold w-full"
-              >
-                📸 Screenshot My Compliment
-              </Button>
-              
-              <Button
-                onClick={handleReturnToGame}
-                variant="ghost"
-                className="text-gray-400 hover:text-white px-6 py-3 text-sm w-full"
-              >
-                Return to Main Game
-              </Button>
-            </div>
+                  📸 Screenshot My Compliment
+                </button>
+                
+                <button
+                  onClick={resetGame}
+                  className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg font-bold transition-colors duration-200 text-sm"
+                >
+                  Get Another Gift
+                </button>
+                
+                <Link 
+                  href="/game/headquarters"
+                  className="text-purple-300 hover:text-purple-100 underline font-bold"
+                >
+                  Return to Main Game
+                </Link>
+              </div>
+            )}
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
-}
-
-export function CrypticCompliments() {
-  return <CrypticComplimentsCore />;
 }

@@ -85,6 +85,14 @@ export function getSpritePath(characterName: string, spriteName: string): string
   return sprites[spriteName] || null;
 }
 
+/**
+ * Load all character sprites and return organized by character
+ * @returns Promise that resolves to character sprites object
+ */
+export async function loadCharacterSprites(): Promise<Record<string, Record<string, string>>> {
+  return characterRegistry;
+}
+
 // Development helper: Log loaded sprites in development mode
 if (import.meta.env.DEV) {
   console.log('🎭 Character Loader initialized:', {
