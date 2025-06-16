@@ -63,6 +63,8 @@ function Router() {
       <Route path="/sidequests/necromancers-gambit" component={NecromancersGambit} />
       <Route path="/sidequest/spectral-memory" component={SpectralMemory} />
       <Route path="/sidequests/spectral-memory" component={SpectralMemory} />
+      <Route path="/sidequest/phantoms-puzzle" component={PhantomsPuzzle} />
+      <Route path="/sidequests/phantoms-puzzle" component={PhantomsPuzzle} />
       <Route component={NotFound} />
     </Switch>
   );
