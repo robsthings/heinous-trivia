@@ -53,11 +53,11 @@ const sliceEffects: SliceData[] = [
   },
   {
     id: 5,
-    label: "Physical Challenge",
-    effect: "A challenge awaits your mortal form...",
-    animationClass: "challenge-prompt",
-    reactionLine: "Show me your pathetic human movements!",
-    icon: "👁"
+    label: "Missed Call from the Void",
+    effect: "You receive a voicemail from beyond the void.",
+    animationClass: "void-call",
+    reactionLine: "Probably another call about a car's extended warranty.",
+    icon: "📞"
   },
   {
     id: 6,
@@ -89,14 +89,12 @@ const physicalChallenges = [
 ];
 
 export function WheelOfMisfortune() {
-  const [gamePhase, setGamePhase] = useState<"intro" | "spinning" | "result" | "physical-challenge" | "witnesseth" | "verification">("intro");
+  const [gamePhase, setGamePhase] = useState<"intro" | "spinning" | "result">("intro");
   const [selectedSlice, setSelectedSlice] = useState<SliceData | null>(null);
   const [wheelRotation, setWheelRotation] = useState(0);
   const [isSpinning, setIsSpinning] = useState(false);
-  const [currentChallenge, setCurrentChallenge] = useState("");
-  const [eyePhase, setEyePhase] = useState<"zoom-out" | "blinking" | "witnesseth">("zoom-out");
-  const [eyeOpen, setEyeOpen] = useState(true);
-  const [challengeCompleted, setChallengeCompleted] = useState<boolean | null>(null);
+
+  const [doomlightTime, setDoomlightTime] = useState<string>("0.013");
 
   const spinWheel = () => {
     if (isSpinning) return;
@@ -107,6 +105,12 @@ export function WheelOfMisfortune() {
     // Randomly select a slice
     const randomSlice = sliceEffects[Math.floor(Math.random() * sliceEffects.length)];
     setSelectedSlice(randomSlice);
+    
+    // If Doomlight Savings Time is selected, generate random time between 0.001 and 1.000
+    if (randomSlice.id === 3) {
+      const randomTime = (Math.random() * 0.999 + 0.001).toFixed(3);
+      setDoomlightTime(randomTime);
+    }
     
     // Calculate rotation to land on selected slice
     // Each slice is 45 degrees (360/8), pointer points to top center
@@ -251,7 +255,12 @@ export function WheelOfMisfortune() {
           <div className={`effect-container ${selectedSlice.animationClass} mb-6`}>
             <div className="text-center">
               <h2 className="text-3xl font-bold text-purple-300 mb-2">{selectedSlice.label}</h2>
-              <p className="text-xl text-purple-200">{selectedSlice.effect}</p>
+              <p className="text-xl text-purple-200">
+                {selectedSlice.id === 3 
+                  ? `We just sucked ${doomlightTime} seconds from your life!`
+                  : selectedSlice.effect
+                }
+              </p>
               
               {/* Physical Challenge Result */}
               {selectedSlice.id === 5 && challengeCompleted !== null && (
