@@ -153,7 +153,7 @@ export function CrypticCompliments() {
               <img 
                 src={`/sidequests/cryptic-compliments/paper-${unfurlingFrame}.png`}
                 alt="Parchment unfurling"
-                className="max-w-lg w-full h-auto"
+                className={`max-w-lg w-full h-auto ${phase === "revealed" ? "floating-scroll" : ""}`}
               />
               
               {/* Compliment Text Overlay - positioned over the parchment */}

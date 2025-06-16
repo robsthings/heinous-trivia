@@ -235,6 +235,12 @@
     font-weight: 700;
   }
   
+  .floating-scroll {
+    animation: float 4s ease-in-out infinite;
+    filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.5));
+    transform: rotate(-1.5deg);
+  }
+  
   .animate-lightning-flash {
     animation: lightning-flash 2s infinite;
   }
@@ -416,6 +422,15 @@
     filter: brightness(1) contrast(1) blur(0);
     transform: scale(1);
     text-shadow: 0 0 2px rgba(43, 26, 18, 0.3);
+  }
+}
+
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0px) rotate(-1.5deg); 
+  }
+  50% { 
+    transform: translateY(-6px) rotate(-1.5deg); 
   }
 }
 
