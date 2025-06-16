@@ -8,6 +8,7 @@ export function CrypticCompliments() {
   const [isTextRevealed, setIsTextRevealed] = useState(false);
   const [unfurlingFrame, setUnfurlingFrame] = useState(1);
   const [heinousReaction, setHeinousReaction] = useState("");
+  const [showSignature, setShowSignature] = useState(false);
 
 
   const complimentComponents = {
@@ -69,7 +70,10 @@ export function CrypticCompliments() {
         setTimeout(() => {
           setPhase("revealed");
           setIsTextRevealed(true);
-
+          // Show signature 1.5 seconds after text appears
+          setTimeout(() => {
+            setShowSignature(true);
+          }, 1500);
         }, 300);
       }
     }, 250);
@@ -98,6 +102,7 @@ export function CrypticCompliments() {
     setIsTextRevealed(false);
     setUnfurlingFrame(1);
     setHeinousReaction("");
+    setShowSignature(false);
   };
 
   return (
@@ -165,26 +170,28 @@ export function CrypticCompliments() {
                     <p className="compliment-text">
                       "{compliment}"
                     </p>
-                    <div className="mt-6 pr-2">
-                      <div 
-                        className="transform -rotate-2 opacity-80"
-                        style={{
-                          marginLeft: "auto", // Right align the container
-                          width: "120px", // Fixed width to prevent repositioning
-                          display: "flex",
-                          justifyContent: "flex-end"
-                        }}
-                      >
-                        <img 
-                          src="/heinous/signature.gif"
-                          alt="Dr. Heinous Signature"
-                          className="max-w-full h-auto"
+                    {showSignature && (
+                      <div className="mt-6 pr-2 animate-fade-in">
+                        <div 
+                          className="transform -rotate-2 opacity-80"
                           style={{
-                            filter: "drop-shadow(1px 1px 1px rgba(0,0,0,0.2))"
+                            marginLeft: "auto", // Right align the container
+                            width: "120px", // Fixed width to prevent repositioning
+                            display: "flex",
+                            justifyContent: "flex-end"
                           }}
-                        />
+                        >
+                          <img 
+                            src="/heinous/signature.gif"
+                            alt="Dr. Heinous Signature"
+                            className="max-w-full h-auto"
+                            style={{
+                              filter: "drop-shadow(1px 1px 1px rgba(0,0,0,0.2))"
+                            }}
+                          />
+                        </div>
                       </div>
-                    </div>
+                    )}
                   </div>
                 </div>
               )}
