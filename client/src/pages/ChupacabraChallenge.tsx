@@ -168,25 +168,28 @@ export default function ChupacabraChallenge() {
           <div className="flex flex-col items-center">
             {/* Timer vial container */}
             <div className="relative w-12 h-48 md:w-16 md:h-64">
-              {/* Vial background container */}
+              {/* Glowing liquid fill behind vial */}
+              <div className="absolute inset-0 flex items-end justify-center overflow-hidden">
+                <div 
+                  className="w-8 md:w-10 bg-gradient-to-t from-cyan-400 via-cyan-300 to-cyan-200 transition-all duration-1000 ease-linear shadow-lg shadow-cyan-400/50"
+                  style={{ 
+                    height: `${timerPercentage * 0.85}%`, // 85% to fit inside vial shape
+                    borderRadius: '0 0 20px 20px', // rounded bottom
+                    filter: 'blur(1px)', // slight glow effect
+                    marginBottom: '8%' // offset from vial bottom
+                  }}
+                >
+                  {/* Inner glow */}
+                  <div className="absolute inset-0 bg-cyan-300/60 animate-pulse" style={{ borderRadius: '0 0 20px 20px' }} />
+                </div>
+              </div>
+              
+              {/* Vial container on top */}
               <img 
                 src="/sidequests/chupacabra-challenge/timer-vial-bg.png"
                 alt="Timer Vial"
-                className="w-full h-full object-contain"
+                className="relative z-10 w-full h-full object-contain"
               />
-              
-              {/* Liquid fill overlay */}
-              <div className="absolute inset-0 overflow-hidden">
-                <img 
-                  src="/sidequests/chupacabra-challenge/timer-liquid-fill.png"
-                  alt="Timer Liquid"
-                  className="absolute bottom-0 left-0 right-0 w-full object-contain transition-all duration-1000 ease-linear"
-                  style={{ 
-                    height: `${timerPercentage}%`,
-                    transform: `translateY(${100 - timerPercentage}%)`
-                  }}
-                />
-              </div>
             </div>
             
             {/* Time display */}
