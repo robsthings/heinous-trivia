@@ -147,6 +147,7 @@ export default function ChupacabraChallenge() {
   };
 
   const matchedPairs = matched.size / 2;
+  const timerPercentage = (timeLeft / 90) * 100;
 
   return (
     <div 
@@ -160,6 +161,33 @@ export default function ChupacabraChallenge() {
     >
       {/* Dark overlay */}
       <div className="absolute inset-0 bg-black/40" />
+      
+      {/* Vertical Timer - Left side on desktop, top-left on mobile */}
+      {timerActive && !gameComplete && !gameFailed && (
+        <div className="fixed top-4 left-4 md:top-1/2 md:left-4 md:-translate-y-1/2 z-40">
+          <div className="flex flex-col items-center">
+            {/* Timer vial container */}
+            <div className="relative w-8 h-40 md:w-12 md:h-64 bg-gray-800 border-2 border-cyan-400 rounded-full shadow-lg shadow-cyan-400/50">
+              {/* Liquid fill */}
+              <div 
+                className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-cyan-400 to-cyan-300 rounded-full transition-all duration-1000 ease-linear"
+                style={{ height: `${timerPercentage}%` }}
+              >
+                {/* Glowing effect */}
+                <div className="absolute inset-0 bg-cyan-300/50 rounded-full animate-pulse" />
+              </div>
+              
+              {/* Timer cap */}
+              <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-6 h-4 md:w-8 md:h-6 bg-gray-700 border border-cyan-400 rounded-t-lg" />
+            </div>
+            
+            {/* Time display */}
+            <div className="mt-2 text-cyan-300 font-bold text-xs md:text-sm text-center">
+              {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
+            </div>
+          </div>
+        </div>
+      )}
       
       <div className="relative z-10 w-full max-w-4xl">
         {/* Title */}
@@ -184,7 +212,7 @@ export default function ChupacabraChallenge() {
         </div>
 
         {/* 4x4 Game Grid */}
-        {!gameComplete && (
+        {!gameComplete && !gameFailed && (
           <div className="grid grid-cols-4 gap-1 sm:gap-3 max-w-sm sm:max-w-lg md:max-w-2xl mx-auto mb-8 px-2">
             {cards.map((card) => (
               <div
@@ -263,6 +291,37 @@ export default function ChupacabraChallenge() {
               </p>
               <p className="text-base sm:text-lg text-red-300 mb-6">
                 The Chupacabra is impressed by your memory skills.
+              </p>
+              
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+                <button
+                  onClick={initializeCards}
+                  className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200"
+                >
+                  Play Again
+                </button>
+                <Link href="/game/headquarters">
+                  <button className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200">
+                    Return to Main Game
+                  </button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Game Failed Overlay */}
+        {gameFailed && (
+          <div className="text-center mb-8">
+            <div className="bg-black/80 border border-red-500 rounded-lg p-6 sm:p-8 max-w-md mx-auto">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-red-400 mb-4">
+                You failed the Chupacabra Challenge!
+              </h2>
+              <p className="text-lg sm:text-xl text-red-200 mb-4">
+                Time ran out! You matched {matchedPairs}/8 pairs in {attempts} attempts.
+              </p>
+              <p className="text-base sm:text-lg text-red-300 mb-6">
+                The Chupacabra escapes into the night...
               </p>
               
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
