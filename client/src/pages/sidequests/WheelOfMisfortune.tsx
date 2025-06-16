@@ -203,7 +203,7 @@ export function WheelOfMisfortune() {
             <img 
               src="/sidequests/wheel-of-misfortune/wheel.png"
               alt="Wheel of Misfortune"
-              className={`w-80 h-80 transition-transform duration-3000 ease-out ${isSpinning ? 'animate-spin-custom' : ''}`}
+              className="w-80 h-80 transition-transform duration-3000 ease-out"
               style={{
                 transform: `rotate(${wheelRotation}deg)`
               }}

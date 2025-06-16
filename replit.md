@@ -106,6 +106,7 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 5. Game state updates with loaded data
 
 ## Changelog
+- June 16, 2025: **CREATED WHEEL OF MISFORTUNE MINI-GAME** - Built complete spinning wheel game with 8 unique outcomes (Cursed, Mystery Prize, Ghosted, Doomlight Savings Time, Cringe Echo, Physical Challenge, Glory by Accident, Unknowable Insight), deterministic wheel rotation to selected slice, physical challenge mode with eye-blink animation and "Witnesseth" button, comprehensive CSS effect animations for each result, responsive layout with all required assets integrated
 - June 16, 2025: **POLISHED CRYPTIC COMPLIMENTS BUTTON STYLING** - Unified button design with consistent px-6 py-3 padding, enhanced hover effects with shadows and scale transforms, converted "Return to Main Game" link to proper button styling, improved visual hierarchy with purple/gray color scheme
 - June 16, 2025: **FINALIZED CRYPTIC COMPLIMENTS SIGNATURE TIMING** - Added 1.5 second delay so signature appears after compliment text with permanent visibility, signature GIF loops continuously but provides authentic handwriting animation effect, creates natural progression where Dr. Heinous reads compliment then signs scroll
 - June 16, 2025: **COMPLETED CRYPTIC COMPLIMENTS SIGNATURE ANIMATION** - Replaced text-based signature animation with authentic signature.gif providing smooth handwriting effect, eliminated flash and positioning issues during animation reveal, maintains proper right alignment and timing in scroll sequence
