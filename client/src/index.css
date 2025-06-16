@@ -231,7 +231,7 @@
     max-width: 85%;
     margin: 0 auto;
     padding: 1rem 2rem;
-    animation: burnIn 2s ease-out forwards;
+    animation: burnIn 3.5s ease-out forwards;
     font-weight: 700;
   }
   
@@ -389,17 +389,33 @@
 @keyframes burnIn {
   0% {
     opacity: 0;
-    filter: blur(4px) brightness(1.2);
-    transform: scale(1.05);
+    filter: brightness(0) contrast(0) blur(3px);
+    transform: scale(0.95);
+    text-shadow: 0 0 20px rgba(255, 140, 0, 0.8), 0 0 30px rgba(255, 69, 0, 0.6);
+  }
+  25% {
+    opacity: 0.3;
+    filter: brightness(0.5) contrast(1.5) blur(2px);
+    transform: scale(0.98);
+    text-shadow: 0 0 15px rgba(255, 140, 0, 0.6), 0 0 25px rgba(255, 69, 0, 0.4);
   }
   50% {
-    opacity: 0.5;
-    filter: blur(2px);
+    opacity: 0.6;
+    filter: brightness(0.8) contrast(1.2) blur(1px);
+    transform: scale(1.01);
+    text-shadow: 0 0 10px rgba(139, 69, 19, 0.4), 0 0 15px rgba(160, 82, 45, 0.3);
+  }
+  75% {
+    opacity: 0.8;
+    filter: brightness(0.9) contrast(1.1) blur(0.5px);
+    transform: scale(1);
+    text-shadow: 0 0 5px rgba(139, 69, 19, 0.2);
   }
   100% {
     opacity: 1;
-    filter: blur(0);
+    filter: brightness(1) contrast(1) blur(0);
     transform: scale(1);
+    text-shadow: 0 0 2px rgba(43, 26, 18, 0.3);
   }
 }
 
