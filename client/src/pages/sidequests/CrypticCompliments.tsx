@@ -188,10 +188,11 @@ export function CrypticCompliments() {
                           fontSize: "1.4rem",
                           color: "#2b1a12",
                           textShadow: "1px 1px 2px rgba(0,0,0,0.3)",
-                          filter: "drop-shadow(1px 1px 1px rgba(0,0,0,0.2))"
+                          filter: "drop-shadow(1px 1px 1px rgba(0,0,0,0.2))",
+                          minHeight: "1.8rem", // Prevent layout shift during animation
                         }}
                       >
-                        Dr. Heinous
+                        {signatureText}
                       </div>
                     </div>
                   </div>
