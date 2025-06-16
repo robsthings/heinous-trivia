@@ -2,11 +2,11 @@
   <defs>
     <style>
       .signature-text {
-        font-family: 'Creepster', cursive, serif;
-        font-size: 24px;
+        font-family: 'Homemade Apple', cursive, serif;
+        font-size: 28px;
         fill: #2b1a12;
         stroke: #1a0f08;
-        stroke-width: 0.5;
+        stroke-width: 0.3;
         filter: url(#roughPaper);
       }
       .ink-splatter {
