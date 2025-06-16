@@ -163,8 +163,12 @@ export function CrypticCompliments() {
                     <p className="compliment-text">
                       "{compliment}"
                     </p>
-                    <div className="mt-6 text-sm font-serif italic animate-fade-in" style={{ color: '#2b1a12' }}>
-                      - Dr. Heinous
+                    <div className="mt-8 flex justify-center animate-fade-in">
+                      <img 
+                        src="/sidequests/cryptic-compliments/dr-heinous-signature.svg"
+                        alt="Dr. Heinous signature"
+                        className="w-32 h-auto opacity-80"
+                      />
                     </div>
                   </div>
                 </div>
