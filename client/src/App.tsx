@@ -47,6 +47,9 @@ function Router() {
       <Route path="/sidequest/monster-name-generator" component={MonsterNameGenerator} />
       <Route path="/sidequest/glory-grab" component={GloryGrab} />
       <Route path="/sidequest/cryptic-compliments" component={CrypticCompliments} />
+      <Route path="/sidequests/monster-name-generator" component={MonsterNameGenerator} />
+      <Route path="/sidequests/glory-grab" component={GloryGrab} />
+      <Route path="/sidequests/cryptic-compliments" component={CrypticCompliments} />
       <Route component={NotFound} />
     </Switch>
   );
