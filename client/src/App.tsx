@@ -26,6 +26,9 @@ import { GloryGrab } from "@/pages/sidequests/GloryGrab";
 import { CrypticCompliments } from "@/pages/sidequests/CrypticCompliments";
 import { WheelOfMisfortune } from "@/pages/sidequests/WheelOfMisfortune";
 import { ChupacabraChallenge } from "@/pages/sidequests/ChupacabraChallenge";
+import { NecromancersGambit } from "@/pages/sidequests/NecromancersGambit";
+import { SpectralMemory } from "@/pages/sidequests/SpectralMemory";
+import { PhantomsPuzzle } from "@/pages/sidequests/PhantomsPuzzle";
 
 function Router() {
   return (
@@ -56,6 +59,10 @@ function Router() {
       <Route path="/sidequests/wheel-of-misfortune" component={WheelOfMisfortune} />
       <Route path="/sidequest/chupacabra-challenge" component={ChupacabraChallenge} />
       <Route path="/sidequests/chupacabra-challenge" component={ChupacabraChallenge} />
+      <Route path="/sidequest/necromancers-gambit" component={NecromancersGambit} />
+      <Route path="/sidequests/necromancers-gambit" component={NecromancersGambit} />
+      <Route path="/sidequest/spectral-memory" component={SpectralMemory} />
+      <Route path="/sidequests/spectral-memory" component={SpectralMemory} />
       <Route component={NotFound} />
     </Switch>
   );
