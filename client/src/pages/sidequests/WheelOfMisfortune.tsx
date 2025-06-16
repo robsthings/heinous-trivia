@@ -110,9 +110,16 @@ export function WheelOfMisfortune() {
     // Calculate rotation to land on selected slice
     // Each slice is 45 degrees (360/8), pointer points to top center
     const sliceAngle = 45;
-    const targetAngle = randomSlice.id * sliceAngle;
     const extraSpins = 5 + Math.random() * 3; // 5-8 full rotations for more dramatic effect
-    const totalRotation = wheelRotation + (extraSpins * 360) + (360 - targetAngle);
+    
+    // Calculate the angle needed to position the selected slice at the top (under the pointer)
+    // For slice 0 to be at top, we need 0 degrees rotation
+    // For slice 1 to be at top, we need -45 degrees rotation (rotate counterclockwise)
+    // For slice 2 to be at top, we need -90 degrees rotation, etc.
+    const targetAngle = -(randomSlice.id * sliceAngle);
+    
+    // Add extra spins and calculate total rotation
+    const totalRotation = wheelRotation + (extraSpins * 360) + targetAngle;
     
     setWheelRotation(totalRotation);
     
