@@ -1,0 +1,56 @@
+Chupacabra Challenge matching game (a spooky memory game with wild flavor and responsive design):
+
+🔧 Prompt 1 — Scaffold Chupacabra Challenge Page
+Prompt:
+
+Create a new page at client/src/pages/ChupacabraChallenge.tsx.
+This is a cryptid-themed memory game. Use the background image at /sidequests/chupacabra-challenge/challenge-bg.png to fill the screen.
+Center a 4x4 grid of cards using the goat-themed card back (card-back.png).
+On click, cards flip to reveal one of 8 matching card faces (card-1.png through card-8.png).
+There should be two of each card face. Shuffle cards randomly on each load.
+Add subtle flip animation on reveal, and a delay on mismatches before flipping back.
+Limit the number of cards flipped at once to 2.
+Track matched pairs and end the game when all 8 pairs are matched.
+Show a “Play Again” and “Return to Main Game” button at the end.
+All assets are in /public/sidequests/chupacabra-challenge/.
+
+🎨 Prompt 2 — Add Chupacabra Reactions
+Prompt:
+
+On the Chupacabra Challenge page, add two image overlays of Chupacabra:
+
+/chupacabra/chupacabra-2.png for when the player flips the wrong pair
+
+/chupacabra/chupacabra-4.png for when the player makes a correct match
+Position these near the corner of the screen.
+When a match is made, show the “scheming” image for 2 seconds with a taunting CSS pulse or glow.
+When a mismatch is made, show the “taunting” version briefly.
+Only one Chupacabra image should appear at a time.
+Hide them when no reaction is active.
+
+🧠 Prompt 3 — Add Game State + Match Logic
+Prompt:
+
+Add React state logic to track:
+
+flippedCards: number[] — indices of currently flipped cards
+
+matched: Set<number> — indices of cards that have been matched
+
+attempts counter
+Prevent flipping a 3rd card while 2 are revealed.
+After 1 second, auto-hide unmatched cards.
+When all cards are matched, show an overlay with a congratulatory message:
+"You've survived the Chupacabra Challenge!"
+Add buttons: "Play Again" (resets game), "Return to Main Game" (navigates to /game/:hauntId).
+
+🖼 Prompt 4 — Card Flip Animation & Style Polish
+Prompt:
+
+Add card flip animations using CSS.
+Each card should appear as a rectangular tile with a front (card-back) and back (card face).
+On hover, if clickable, use a subtle cursor and highlight.
+Flip animation should trigger when card is revealed.
+Matched cards should stay visible and get a green glow border.
+Mismatched cards get a red border for a moment before hiding.
+Use mobile-first responsive layout: cards should stack slightly tighter on small screens.

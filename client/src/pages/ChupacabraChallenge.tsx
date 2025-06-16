@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Link } from "wouter";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'wouter';
 
 interface Card {
   id: number;
@@ -8,162 +8,165 @@ interface Card {
   isMatched: boolean;
 }
 
-export function ChupacabraChallenge() {
+export default function ChupacabraChallenge() {
   const [cards, setCards] = useState<Card[]>([]);
   const [flippedCards, setFlippedCards] = useState<number[]>([]);
-  const [matchedPairs, setMatchedPairs] = useState(0);
+  const [matched, setMatched] = useState(new Set<number>());
+  const [attempts, setAttempts] = useState(0);
   const [gameComplete, setGameComplete] = useState(false);
   const [isChecking, setIsChecking] = useState(false);
-  const [chupacabraReaction, setChupacabraReaction] = useState<"match" | "mismatch" | null>(null);
-  const [attempts, setAttempts] = useState(0);
+  const [showChupacabraReaction, setShowChupacabraReaction] = useState<'scheming' | 'taunting' | null>(null);
 
-  // Initialize and shuffle cards
+  // Initialize 4x4 grid with 8 pairs (16 total cards)
   const initializeCards = () => {
     const cardPairs: Card[] = [];
     
-    // Create pairs of cards (8 different faces, 2 of each)
+    // Create 8 pairs (2 of each card type)
     for (let i = 1; i <= 8; i++) {
       cardPairs.push(
-        { id: i * 2 - 1, faceValue: i, isFlipped: false, isMatched: false },
-        { id: i * 2, faceValue: i, isFlipped: false, isMatched: false }
+        { id: i * 2 - 2, faceValue: i, isFlipped: false, isMatched: false },
+        { id: i * 2 - 1, faceValue: i, isFlipped: false, isMatched: false }
       );
     }
     
-    // Shuffle the cards
-    const shuffled = cardPairs.sort(() => Math.random() - 0.5);
+    // Shuffle cards randomly
+    const shuffled = [...cardPairs].sort(() => Math.random() - 0.5);
+    
     setCards(shuffled);
     setFlippedCards([]);
-    setMatchedPairs(0);
+    setMatched(new Set());
+    setAttempts(0);
     setGameComplete(false);
     setIsChecking(false);
-    setChupacabraReaction(null);
-    setAttempts(0);
+    setShowChupacabraReaction(null);
   };
 
-  // Initialize cards on component mount
   useEffect(() => {
     initializeCards();
   }, []);
 
-  // Handle card flip
   const flipCard = (cardId: number) => {
+    // Prevent flipping 3rd card while 2 are revealed
     if (isChecking || flippedCards.length >= 2) return;
     
     const card = cards.find(c => c.id === cardId);
     if (!card || card.isFlipped || card.isMatched) return;
 
-    // Flip the card
-    setCards(prev => prev.map(c => 
-      c.id === cardId ? { ...c, isFlipped: true } : c
-    ));
-    
     const newFlippedCards = [...flippedCards, cardId];
     setFlippedCards(newFlippedCards);
+
+    // Flip the card
+    setCards(prevCards => 
+      prevCards.map(c => 
+        c.id === cardId ? { ...c, isFlipped: true } : c
+      )
+    );
 
     // Check for match when 2 cards are flipped
     if (newFlippedCards.length === 2) {
       setIsChecking(true);
       setAttempts(prev => prev + 1);
       
-      const [firstId, secondId] = newFlippedCards;
-      const firstCard = cards.find(c => c.id === firstId);
-      const secondCard = cards.find(c => c.id === secondId);
-      
+      const [firstCardId, secondCardId] = newFlippedCards;
+      const firstCard = cards.find(c => c.id === firstCardId);
+      const secondCard = cards.find(c => c.id === secondCardId);
+
       if (firstCard && secondCard && firstCard.faceValue === secondCard.faceValue) {
-        // Match found! Show scheming Chupacabra
-        setChupacabraReaction("match");
+        // Match found - show scheming Chupacabra
+        setShowChupacabraReaction('scheming');
         
         setTimeout(() => {
-          setCards(prev => prev.map(c => 
-            (c.id === firstId || c.id === secondId) 
-              ? { ...c, isMatched: true }
-              : c
-          ));
-          setMatchedPairs(prev => prev + 1);
+          // Mark cards as matched
+          setCards(prevCards => 
+            prevCards.map(c => 
+              c.id === firstCardId || c.id === secondCardId 
+                ? { ...c, isMatched: true } 
+                : c
+            )
+          );
+          
+          const newMatched = new Set(matched);
+          newMatched.add(firstCardId);
+          newMatched.add(secondCardId);
+          setMatched(newMatched);
+          
           setFlippedCards([]);
           setIsChecking(false);
-          setChupacabraReaction(null);
           
-          // Check if game is complete
-          if (matchedPairs + 1 === 8) {
+          // Check if all 8 pairs are matched
+          if (newMatched.size === 16) {
             setGameComplete(true);
           }
+          
+          setShowChupacabraReaction(null);
         }, 1000);
       } else {
-        // No match - show taunting Chupacabra then auto-hide unmatched cards after 1 second
-        setChupacabraReaction("mismatch");
+        // No match - show taunting Chupacabra
+        setShowChupacabraReaction('taunting');
         
+        // Auto-hide unmatched cards after 1 second
         setTimeout(() => {
-          setCards(prev => prev.map(c => 
-            (c.id === firstId || c.id === secondId) 
-              ? { ...c, isFlipped: false }
-              : c
-          ));
+          setCards(prevCards => 
+            prevCards.map(c => 
+              c.id === firstCardId || c.id === secondCardId 
+                ? { ...c, isFlipped: false } 
+                : c
+            )
+          );
           setFlippedCards([]);
           setIsChecking(false);
-          setChupacabraReaction(null);
+          setShowChupacabraReaction(null);
         }, 1000);
       }
     }
   };
 
+  const matchedPairs = matched.size / 2;
+
   return (
     <div 
-      className="min-h-screen bg-cover bg-center flex flex-col items-center justify-center p-4 relative"
+      className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden p-2"
       style={{
-        backgroundImage: `url('/sidequests/chupacabra-challenge/challenge-bg.png')`
+        backgroundImage: 'url(/sidequests/chupacabra-challenge/challenge-bg.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
       }}
     >
-      {/* Dark overlay for readability */}
-      <div className="absolute inset-0 bg-black/50" />
-      
-      {/* Chupacabra Reaction Overlays */}
-      {chupacabraReaction && (
-        <div className="fixed top-4 right-4 z-50 pointer-events-none">
-          <img
-            src={chupacabraReaction === "match" 
-              ? "/chupacabra/chupacabra-4.png" 
-              : "/chupacabra/chupacabra-2.png"
-            }
-            alt={chupacabraReaction === "match" ? "Scheming Chupacabra" : "Taunting Chupacabra"}
-            className={`w-32 h-32 object-contain transition-all duration-300 ${
-              chupacabraReaction === "match" 
-                ? "animate-pulse drop-shadow-[0_0_20px_rgba(34,197,94,0.8)]" 
-                : "animate-bounce drop-shadow-[0_0_15px_rgba(239,68,68,0.6)]"
-            }`}
-          />
-        </div>
-      )}
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-black/40" />
       
       <div className="relative z-10 w-full max-w-4xl">
         {/* Title */}
-        <div className="text-center mb-8">
-          <h1 className="text-5xl font-bold text-red-300 mb-4 drop-shadow-lg" style={{ fontFamily: 'Frijole, cursive' }}>
+        <div className="text-center mb-6 sm:mb-8">
+          <h1 
+            className="text-3xl sm:text-4xl md:text-5xl font-bold text-red-300 mb-4 drop-shadow-lg" 
+            style={{ fontFamily: 'Frijole, cursive' }}
+          >
             CHUPACABRA CHALLENGE
           </h1>
-          <p className="text-xl text-red-200 drop-shadow-md">
+          <p className="text-lg sm:text-xl text-red-200 drop-shadow-md">
             Match the cryptid pairs before they escape!
           </p>
-          <div className="mt-4 flex flex-col sm:flex-row gap-4 justify-center">
-            <p className="text-lg text-red-200">
+          <div className="mt-4 flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center">
+            <p className="text-base sm:text-lg text-red-200">
               Matched Pairs: {matchedPairs}/8
             </p>
-            <p className="text-lg text-red-200">
+            <p className="text-base sm:text-lg text-red-200">
               Attempts: {attempts}
             </p>
           </div>
         </div>
 
-        {/* Game Grid */}
+        {/* 4x4 Game Grid */}
         {!gameComplete && (
-          <div className="grid grid-cols-4 gap-2 sm:gap-4 max-w-xl sm:max-w-2xl mx-auto mb-8 px-2">
+          <div className="grid grid-cols-4 gap-1 sm:gap-3 max-w-sm sm:max-w-lg md:max-w-2xl mx-auto mb-8 px-2">
             {cards.map((card) => (
               <div
                 key={card.id}
                 className={`
                   aspect-square cursor-pointer relative
-                  ${!(card.isFlipped || card.isMatched) && !isChecking ? 'hover:scale-105 active:scale-95' : ''}
-                  ${isChecking && flippedCards.includes(card.id) ? 'pointer-events-none' : ''}
+                  ${!(card.isFlipped || card.isMatched) && !isChecking ? 'hover:scale-105' : ''}
                   transition-transform duration-200 ease-out
                 `}
                 onClick={() => flipCard(card.id)}
@@ -171,7 +174,7 @@ export function ChupacabraChallenge() {
               >
                 <div 
                   className={`
-                    relative w-full h-full transition-transform duration-600 ease-in-out
+                    relative w-full h-full transition-transform duration-600 ease-in-out preserve-3d
                     ${card.isFlipped || card.isMatched ? 'rotate-y-180' : ''}
                   `}
                   style={{ 
@@ -179,16 +182,9 @@ export function ChupacabraChallenge() {
                     transform: card.isFlipped || card.isMatched ? 'rotateY(180deg)' : 'rotateY(0deg)'
                   }}
                 >
-                  {/* Card Back (Hidden Face) */}
+                  {/* Card Back (face down) */}
                   <div 
-                    className={`
-                      absolute inset-0 w-full h-full rounded-lg overflow-hidden
-                      border-2 transition-all duration-300
-                      ${!(card.isFlipped || card.isMatched) ? 
-                        'border-red-600 hover:border-red-400 hover:shadow-lg hover:shadow-red-500/30' : 
-                        'border-transparent'
-                      }
-                    `}
+                    className="absolute inset-0 w-full h-full rounded-lg overflow-hidden backface-hidden border-2 border-red-600 hover:border-red-400 transition-colors duration-300"
                     style={{ 
                       backfaceVisibility: 'hidden',
                       transform: 'rotateY(0deg)'
@@ -201,16 +197,16 @@ export function ChupacabraChallenge() {
                     />
                   </div>
                   
-                  {/* Card Front (Revealed Face) */}
+                  {/* Card Front (face up) */}
                   <div 
                     className={`
-                      absolute inset-0 w-full h-full rounded-lg overflow-hidden
+                      absolute inset-0 w-full h-full rounded-lg overflow-hidden backface-hidden
                       border-2 transition-all duration-300
                       ${card.isMatched 
-                        ? 'border-green-500 shadow-lg shadow-green-500/50 ring-2 ring-green-400/30' 
+                        ? 'border-green-500 shadow-lg shadow-green-500/50' 
                         : isChecking && card.isFlipped && !card.isMatched
-                          ? 'border-red-500 shadow-lg shadow-red-500/50 ring-2 ring-red-400/30'
-                          : 'border-blue-400 shadow-lg shadow-blue-400/30'
+                          ? 'border-red-500 shadow-lg shadow-red-500/50'
+                          : 'border-blue-400'
                       }
                     `}
                     style={{ 
@@ -221,10 +217,7 @@ export function ChupacabraChallenge() {
                     <img
                       src={`/sidequests/chupacabra-challenge/card-${card.faceValue}.png`}
                       alt={`Cryptid ${card.faceValue}`}
-                      className={`
-                        w-full h-full object-cover transition-all duration-300
-                        ${card.isMatched ? 'brightness-110 contrast-110' : ''}
-                      `}
+                      className="w-full h-full object-cover"
                     />
                   </div>
                 </div>
@@ -233,45 +226,49 @@ export function ChupacabraChallenge() {
           </div>
         )}
 
-        {/* Game Complete Screen */}
+        {/* Game Complete Overlay */}
         {gameComplete && (
           <div className="text-center mb-8">
-            <div className="bg-black/70 border border-red-500 rounded-lg p-8 max-w-md mx-auto">
-              <h2 className="text-4xl font-bold text-green-400 mb-4">
+            <div className="bg-black/80 border border-red-500 rounded-lg p-6 sm:p-8 max-w-md mx-auto">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-green-400 mb-4">
                 You've survived the Chupacabra Challenge!
               </h2>
-              <p className="text-xl text-red-200 mb-4">
+              <p className="text-lg sm:text-xl text-red-200 mb-4">
                 All cryptid pairs matched in {attempts} attempts!
               </p>
-              <p className="text-lg text-red-300 mb-6">
+              <p className="text-base sm:text-lg text-red-300 mb-6">
                 The Chupacabra is impressed by your memory skills.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                 <button
                   onClick={initializeCards}
-                  className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-bold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+                  className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200"
                 >
                   Play Again
                 </button>
-                
-                <Link 
-                  href="/game/headquarters"
-                  className="bg-purple-800 hover:bg-purple-900 text-white px-6 py-3 rounded-lg font-bold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 no-underline text-center"
-                >
-                  Return to Main Game
+                <Link href="/game/headquarters">
+                  <button className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200">
+                    Return to Main Game
+                  </button>
                 </Link>
               </div>
             </div>
           </div>
         )}
 
-        {/* Instructions (only show during gameplay) */}
-        {!gameComplete && (
-          <div className="text-center">
-            <p className="text-red-200 drop-shadow-md">
-              Click cards to flip them. Match pairs to capture the cryptids!
-            </p>
+        {/* Chupacabra Reactions - positioned in corner */}
+        {showChupacabraReaction && (
+          <div className="fixed bottom-4 right-4 z-50">
+            <img
+              src={`/chupacabra/chupacabra-${showChupacabraReaction === 'scheming' ? '4' : '2'}.png`}
+              alt={`Chupacabra ${showChupacabraReaction}`}
+              className={`w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 object-contain ${
+                showChupacabraReaction === 'scheming' 
+                  ? 'animate-pulse' 
+                  : 'animate-bounce'
+              }`}
+            />
           </div>
         )}
       </div>
