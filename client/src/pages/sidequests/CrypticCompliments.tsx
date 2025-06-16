@@ -180,7 +180,7 @@ export function CrypticCompliments() {
                     <p className="compliment-text">
                       "{compliment}"
                     </p>
-                    <div className="mt-6 flex justify-end pr-2 animate-fade-in">
+                    <div className="mt-6 pr-2">
                       <div 
                         className="signature-handwriting transform -rotate-2 opacity-80"
                         style={{
@@ -189,7 +189,10 @@ export function CrypticCompliments() {
                           color: "#2b1a12",
                           textShadow: "1px 1px 2px rgba(0,0,0,0.3)",
                           filter: "drop-shadow(1px 1px 1px rgba(0,0,0,0.2))",
-                          minHeight: "1.8rem", // Prevent layout shift during animation
+                          minHeight: "1.8rem",
+                          width: "120px", // Fixed width to prevent repositioning
+                          textAlign: "right",
+                          marginLeft: "auto", // Right align the container
                         }}
                       >
                         {signatureText}
