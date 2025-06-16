@@ -14,6 +14,8 @@ export function ChupacabraChallenge() {
   const [matchedPairs, setMatchedPairs] = useState(0);
   const [gameComplete, setGameComplete] = useState(false);
   const [isChecking, setIsChecking] = useState(false);
+  const [chupacabraReaction, setChupacabraReaction] = useState<"match" | "mismatch" | null>(null);
+  const [attempts, setAttempts] = useState(0);
 
   // Initialize and shuffle cards
   const initializeCards = () => {
@@ -34,6 +36,8 @@ export function ChupacabraChallenge() {
     setMatchedPairs(0);
     setGameComplete(false);
     setIsChecking(false);
+    setChupacabraReaction(null);
+    setAttempts(0);
   };
 
   // Initialize cards on component mount
@@ -59,13 +63,16 @@ export function ChupacabraChallenge() {
     // Check for match when 2 cards are flipped
     if (newFlippedCards.length === 2) {
       setIsChecking(true);
+      setAttempts(prev => prev + 1);
       
       const [firstId, secondId] = newFlippedCards;
       const firstCard = cards.find(c => c.id === firstId);
       const secondCard = cards.find(c => c.id === secondId);
       
       if (firstCard && secondCard && firstCard.faceValue === secondCard.faceValue) {
-        // Match found!
+        // Match found! Show scheming Chupacabra
+        setChupacabraReaction("match");
+        
         setTimeout(() => {
           setCards(prev => prev.map(c => 
             (c.id === firstId || c.id === secondId) 
@@ -75,6 +82,7 @@ export function ChupacabraChallenge() {
           setMatchedPairs(prev => prev + 1);
           setFlippedCards([]);
           setIsChecking(false);
+          setChupacabraReaction(null);
           
           // Check if game is complete
           if (matchedPairs + 1 === 8) {
@@ -82,7 +90,9 @@ export function ChupacabraChallenge() {
           }
         }, 1000);
       } else {
-        // No match - flip cards back after delay
+        // No match - show taunting Chupacabra then auto-hide unmatched cards after 1 second
+        setChupacabraReaction("mismatch");
+        
         setTimeout(() => {
           setCards(prev => prev.map(c => 
             (c.id === firstId || c.id === secondId) 
@@ -91,7 +101,8 @@ export function ChupacabraChallenge() {
           ));
           setFlippedCards([]);
           setIsChecking(false);
-        }, 1500);
+          setChupacabraReaction(null);
+        }, 1000);
       }
     }
   };
@@ -105,6 +116,24 @@ export function ChupacabraChallenge() {
     >
       {/* Dark overlay for readability */}
       <div className="absolute inset-0 bg-black/50" />
+      
+      {/* Chupacabra Reaction Overlays */}
+      {chupacabraReaction && (
+        <div className="fixed top-4 right-4 z-50 pointer-events-none">
+          <img
+            src={chupacabraReaction === "match" 
+              ? "/chupacabra/chupacabra-4.png" 
+              : "/chupacabra/chupacabra-2.png"
+            }
+            alt={chupacabraReaction === "match" ? "Scheming Chupacabra" : "Taunting Chupacabra"}
+            className={`w-32 h-32 object-contain transition-all duration-300 ${
+              chupacabraReaction === "match" 
+                ? "animate-pulse drop-shadow-[0_0_20px_rgba(34,197,94,0.8)]" 
+                : "animate-bounce drop-shadow-[0_0_15px_rgba(239,68,68,0.6)]"
+            }`}
+          />
+        </div>
+      )}
       
       <div className="relative z-10 w-full max-w-4xl">
         {/* Title */}
