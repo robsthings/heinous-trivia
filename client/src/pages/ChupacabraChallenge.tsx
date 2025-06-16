@@ -148,19 +148,31 @@ export default function ChupacabraChallenge() {
 
   const matchedPairs = matched.size / 2;
   const timerPercentage = (timeLeft / 90) * 100;
+  const isPanicMode = timeLeft <= 15 && timerActive && !gameComplete && !gameFailed;
 
   return (
     <div 
-      className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden p-2"
+      className={`min-h-screen flex flex-col items-center justify-center relative overflow-hidden p-2 ${
+        isPanicMode ? 'animate-pulse' : ''
+      }`}
       style={{
         backgroundImage: 'url(/sidequests/chupacabra-challenge/challenge-bg.png)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat'
+        backgroundRepeat: 'no-repeat',
+        filter: isPanicMode ? 'contrast(1.3) saturate(1.4)' : 'none',
+        transition: 'filter 0.3s ease-in-out'
       }}
     >
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-black/40" />
+      {/* Dark overlay with panic effect */}
+      <div className={`absolute inset-0 ${
+        isPanicMode ? 'bg-red-900/60' : 'bg-black/40'
+      } transition-colors duration-300`} />
+      
+      {/* Panic Mode Red Flash Overlay */}
+      {isPanicMode && (
+        <div className="absolute inset-0 bg-red-500/20 animate-ping pointer-events-none" />
+      )}
       
       {/* Vertical Timer - Left side on desktop, top-left on mobile */}
       {timerActive && !gameComplete && !gameFailed && (
@@ -169,20 +181,46 @@ export default function ChupacabraChallenge() {
             {/* Timer liquid container */}
             <div className="relative w-8 h-40 md:w-12 md:h-56">
               <div 
-                className="w-full bg-gradient-to-t from-cyan-400 via-cyan-300 to-cyan-200 transition-all duration-1000 ease-linear shadow-lg shadow-cyan-400/50 border-2 border-cyan-500/30 rounded-full"
+                className={`w-full transition-all duration-1000 ease-linear shadow-lg border-2 rounded-full ${
+                  isPanicMode 
+                    ? 'bg-gradient-to-t from-red-500 via-red-400 to-red-300 shadow-red-500/70 border-red-400/50 animate-pulse' 
+                    : 'bg-gradient-to-t from-cyan-400 via-cyan-300 to-cyan-200 shadow-cyan-400/50 border-cyan-500/30'
+                }`}
                 style={{ 
                   height: `${timerPercentage}%`
                 }}
               >
                 {/* Inner glow */}
-                <div className="absolute inset-0 bg-cyan-300/60 animate-pulse rounded-full" />
+                <div className={`absolute inset-0 rounded-full ${
+                  isPanicMode 
+                    ? 'bg-red-300/70 animate-ping' 
+                    : 'bg-cyan-300/60 animate-pulse'
+                }`} />
               </div>
             </div>
             
             {/* Time display */}
-            <div className="mt-2 text-cyan-300 font-bold text-xs md:text-sm text-center">
+            <div className={`mt-2 font-bold text-xs md:text-sm text-center transition-colors duration-300 ${
+              isPanicMode 
+                ? 'text-red-300 animate-pulse' 
+                : 'text-cyan-300'
+            }`}>
               {Math.floor(timeLeft / 60)}:{(timeLeft % 60).toString().padStart(2, '0')}
             </div>
+          </div>
+        </div>
+      )}
+      
+      {/* Panic Mode Warning Text */}
+      {isPanicMode && (
+        <div className="fixed top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
+          <div className="text-center">
+            <h2 className="text-4xl md:text-6xl font-bold text-red-400 animate-bounce drop-shadow-lg">
+              ⚠️ CONTAINMENT FAILING! ⚠️
+            </h2>
+            <p className="text-xl md:text-2xl text-red-300 animate-pulse mt-2">
+              The Chupacabra is breaking free!
+            </p>
           </div>
         </div>
       )}
@@ -211,7 +249,9 @@ export default function ChupacabraChallenge() {
 
         {/* 4x4 Game Grid */}
         {!gameComplete && !gameFailed && (
-          <div className="grid grid-cols-4 gap-1 sm:gap-3 max-w-sm sm:max-w-lg md:max-w-2xl mx-auto mb-8 px-2">
+          <div className={`grid grid-cols-4 gap-1 sm:gap-3 max-w-sm sm:max-w-lg md:max-w-2xl mx-auto mb-8 px-2 ${
+            isPanicMode ? 'animate-pulse' : ''
+          }`}>
             {cards.map((card) => (
               <div
                 key={card.id}
