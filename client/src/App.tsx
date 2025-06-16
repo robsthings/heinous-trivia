@@ -24,6 +24,7 @@ import { TestProgressPage } from "@/pages/test-progress";
 import { MonsterNameGenerator } from "@/pages/sidequests/MonsterNameGenerator";
 import { GloryGrab } from "@/pages/sidequests/GloryGrab";
 import { CrypticCompliments } from "@/pages/sidequests/CrypticCompliments";
+import { WheelOfMisfortune } from "@/pages/sidequests/WheelOfMisfortune";
 
 function Router() {
   return (
@@ -47,9 +48,11 @@ function Router() {
       <Route path="/sidequest/monster-name-generator" component={MonsterNameGenerator} />
       <Route path="/sidequest/glory-grab" component={GloryGrab} />
       <Route path="/sidequest/cryptic-compliments" component={CrypticCompliments} />
+      <Route path="/sidequest/wheel-of-misfortune" component={WheelOfMisfortune} />
       <Route path="/sidequests/monster-name-generator" component={MonsterNameGenerator} />
       <Route path="/sidequests/glory-grab" component={GloryGrab} />
       <Route path="/sidequests/cryptic-compliments" component={CrypticCompliments} />
+      <Route path="/sidequests/wheel-of-misfortune" component={WheelOfMisfortune} />
       <Route component={NotFound} />
     </Switch>
   );
