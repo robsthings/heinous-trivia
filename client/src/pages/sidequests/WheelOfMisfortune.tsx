@@ -89,13 +89,14 @@ const physicalChallenges = [
 ];
 
 export function WheelOfMisfortune() {
-  const [gamePhase, setGamePhase] = useState<"intro" | "spinning" | "result" | "physical-challenge">("intro");
+  const [gamePhase, setGamePhase] = useState<"intro" | "spinning" | "result" | "physical-challenge" | "witnesseth" | "verification">("intro");
   const [selectedSlice, setSelectedSlice] = useState<SliceData | null>(null);
   const [wheelRotation, setWheelRotation] = useState(0);
   const [isSpinning, setIsSpinning] = useState(false);
   const [currentChallenge, setCurrentChallenge] = useState("");
-  const [showEyeBlink, setShowEyeBlink] = useState(false);
+  const [eyePhase, setEyePhase] = useState<"zoom-out" | "blinking" | "witnesseth">("zoom-out");
   const [eyeOpen, setEyeOpen] = useState(true);
+  const [challengeCompleted, setChallengeCompleted] = useState<boolean | null>(null);
 
   const spinWheel = () => {
     if (isSpinning) return;
@@ -130,24 +131,41 @@ export function WheelOfMisfortune() {
       if (randomSlice.id === 5) { // Physical Challenge
         setGamePhase("physical-challenge");
         setCurrentChallenge(physicalChallenges[Math.floor(Math.random() * physicalChallenges.length)]);
-        startEyeBlink();
+        startPhysicalChallenge();
       } else {
         setGamePhase("result");
       }
     }, 8000);
   };
 
-  const startEyeBlink = () => {
-    setShowEyeBlink(true);
-    const blinkInterval = setInterval(() => {
-      setEyeOpen(prev => !prev);
-    }, 500);
+  const startPhysicalChallenge = () => {
+    // Start with zoom-out effect
+    setEyePhase("zoom-out");
+    setEyeOpen(true);
     
+    // After zoom-out, start blinking sequence
     setTimeout(() => {
-      clearInterval(blinkInterval);
-      setShowEyeBlink(false);
-      setEyeOpen(true);
-    }, 3000);
+      setEyePhase("blinking");
+      const blinkInterval = setInterval(() => {
+        setEyeOpen(prev => !prev);
+      }, 800); // Slower, more deliberate blinks
+      
+      // After blinking, show witnesseth button
+      setTimeout(() => {
+        clearInterval(blinkInterval);
+        setEyePhase("witnesseth");
+        setEyeOpen(true);
+      }, 4000); // 4 seconds of blinking
+    }, 2000); // 2 seconds for zoom-out
+  };
+
+  const handleWitnesseth = () => {
+    setGamePhase("verification");
+  };
+
+  const handleChallengeVerification = (completed: boolean) => {
+    setChallengeCompleted(completed);
+    setGamePhase("result");
   };
 
   const resetGame = () => {
@@ -155,13 +173,9 @@ export function WheelOfMisfortune() {
     setSelectedSlice(null);
     setIsSpinning(false);
     setCurrentChallenge("");
-    setShowEyeBlink(false);
+    setEyePhase("zoom-out");
     setEyeOpen(true);
-  };
-
-  const handleWitnesseth = () => {
-    setGamePhase("result");
-    setShowEyeBlink(false);
+    setChallengeCompleted(null);
   };
 
   return (
@@ -238,6 +252,26 @@ export function WheelOfMisfortune() {
             <div className="text-center">
               <h2 className="text-3xl font-bold text-purple-300 mb-2">{selectedSlice.label}</h2>
               <p className="text-xl text-purple-200">{selectedSlice.effect}</p>
+              
+              {/* Physical Challenge Result */}
+              {selectedSlice.id === 5 && challengeCompleted !== null && (
+                <div className={`mt-4 p-4 rounded-lg border ${
+                  challengeCompleted 
+                    ? 'bg-green-900/30 border-green-500/50' 
+                    : 'bg-red-900/30 border-red-500/50'
+                }`}>
+                  <p className={`text-lg font-bold ${
+                    challengeCompleted ? 'text-green-300' : 'text-red-300'
+                  }`}>
+                    {challengeCompleted 
+                      ? "Excellent! Your physical prowess impresses even me!" 
+                      : "Pathetic! Your weakness amuses me greatly."}
+                  </p>
+                  <p className="text-sm text-gray-400 mt-2">
+                    Challenge: {currentChallenge}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -245,31 +279,58 @@ export function WheelOfMisfortune() {
         {/* Physical Challenge Display */}
         {gamePhase === "physical-challenge" && (
           <div className="mb-8 text-center">
-            {/* Eye Blink Animation */}
-            {showEyeBlink && (
-              <div className="mb-6 flex justify-center">
-                <img 
-                  src={`/sidequests/wheel-of-misfortune/eye-${eyeOpen ? 'open' : 'closed'}.png`}
-                  alt="Dr. Heinous Eye"
-                  className="w-32 h-32 transition-opacity duration-200"
-                />
-              </div>
-            )}
+            {/* Eye Through Phone Experience */}
+            <div className="mb-6 flex justify-center">
+              <img 
+                src={`/sidequests/wheel-of-misfortune/eye-${eyeOpen ? 'open' : 'closed'}.png`}
+                alt="Dr. Heinous Eye"
+                className={`transition-all duration-1000 ${
+                  eyePhase === "zoom-out" ? "w-64 h-64 animate-pulse" : "w-32 h-32"
+                } ${eyePhase === "blinking" ? "animate-pulse" : ""}`}
+              />
+            </div>
             
-            {/* Challenge Prompt */}
-            {!showEyeBlink && (
-              <div className="bg-red-900 border-2 border-red-500 rounded-lg p-6 max-w-md mx-auto">
-                <h3 className="text-2xl font-bold text-red-300 mb-4">Physical Challenge!</h3>
-                <p className="text-xl text-red-200 mb-6">{currentChallenge}</p>
+            {/* Witnesseth Button */}
+            {eyePhase === "witnesseth" && (
+              <div className="flex justify-center">
                 <button
                   onClick={handleWitnesseth}
-                  className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-lg font-bold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 flex items-center gap-2 mx-auto"
+                  className="transition-all hover:scale-105"
                 >
-                  <img src="/sidequests/wheel-of-misfortune/witnesseth.png" alt="Witnesseth" className="w-6 h-6" />
-                  Witnesseth!
+                  <img 
+                    src="/sidequests/wheel-of-misfortune/witnesseth.png"
+                    alt="Witnesseth"
+                    className="w-32 h-12"
+                  />
                 </button>
               </div>
             )}
+          </div>
+        )}
+
+        {/* Verification Phase */}
+        {gamePhase === "verification" && (
+          <div className="mb-8 text-center">
+            <div className="bg-gray-900/50 border border-gray-500/50 rounded-lg p-6 max-w-md mx-auto">
+              <h3 className="text-2xl font-bold text-purple-300 mb-4">Physical Challenge</h3>
+              <p className="text-lg text-gray-200 mb-4">{currentChallenge}</p>
+              <p className="text-md text-gray-300 mb-6">Did they complete the physical challenge?</p>
+              
+              <div className="flex gap-4 justify-center">
+                <button
+                  onClick={() => handleChallengeVerification(true)}
+                  className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-bold transition-colors"
+                >
+                  YES
+                </button>
+                <button
+                  onClick={() => handleChallengeVerification(false)}
+                  className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-bold transition-colors"
+                >
+                  NO
+                </button>
+              </div>
+            </div>
           </div>
         )}
 
