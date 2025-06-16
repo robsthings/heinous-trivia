@@ -8,6 +8,7 @@ export function CrypticCompliments() {
   const [isTextRevealed, setIsTextRevealed] = useState(false);
   const [unfurlingFrame, setUnfurlingFrame] = useState(1);
   const [heinousReaction, setHeinousReaction] = useState("");
+  const [signatureText, setSignatureText] = useState("");
 
   const complimentComponents = {
     adjectives: [
@@ -68,12 +69,28 @@ export function CrypticCompliments() {
         setTimeout(() => {
           setPhase("revealed");
           setIsTextRevealed(true);
+          // Start signature animation after text is revealed
+          setTimeout(() => {
+            startSignatureAnimation();
+          }, 1000);
         }, 300);
       }
     }, 250);
   };
 
-
+  const startSignatureAnimation = () => {
+    const fullSignature = "Dr. Heinous";
+    let currentIndex = 0;
+    
+    const signatureInterval = setInterval(() => {
+      if (currentIndex <= fullSignature.length) {
+        setSignatureText(fullSignature.substring(0, currentIndex));
+        currentIndex++;
+      } else {
+        clearInterval(signatureInterval);
+      }
+    }, 120); // Slower typing for handwriting effect
+  };
 
   const takeScreenshot = async () => {
     const element = document.getElementById('compliment-display');
