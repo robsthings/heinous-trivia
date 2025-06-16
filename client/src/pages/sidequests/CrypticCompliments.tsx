@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "wouter";
-import { loadCharacterSprites } from "@/lib/characterLoader";
 import html2canvas from "html2canvas";
 
 export function CrypticCompliments() {
@@ -8,16 +7,7 @@ export function CrypticCompliments() {
   const [compliment, setCompliment] = useState("");
   const [revealText, setRevealText] = useState("");
   const [unfurlingFrame, setUnfurlingFrame] = useState(1);
-  const [characterSprites, setCharacterSprites] = useState<Record<string, Record<string, string>>>({});
   const [heinousReaction, setHeinousReaction] = useState("");
-
-  useEffect(() => {
-    const loadSprites = async () => {
-      const sprites = await loadCharacterSprites();
-      setCharacterSprites(sprites);
-    };
-    loadSprites();
-  }, []);
 
   const complimentComponents = {
     adjectives: [
@@ -138,18 +128,16 @@ export function CrypticCompliments() {
             
             {/* Dr. Heinous with Gift */}
             <div className="mb-8">
-              {characterSprites.heinous?.gift && (
-                <div className="relative inline-block">
-                  <img 
-                    src={characterSprites.heinous.gift}
-                    alt="Dr. Heinous offering a gift" 
-                    className="w-64 h-64 mx-auto cursor-pointer hover:scale-105 transition-transform duration-300"
-                    onClick={startParchmentUnfurling}
-                  />
-                  {/* Soft pulsing glow */}
-                  <div className="absolute inset-0 bg-yellow-400 opacity-20 rounded-full blur-xl animate-pulse pointer-events-none"></div>
-                </div>
-              )}
+              <div className="relative inline-block">
+                <img 
+                  src="/heinous/gift.png"
+                  alt="Dr. Heinous offering a gift" 
+                  className="w-64 h-64 mx-auto cursor-pointer hover:scale-105 transition-transform duration-300"
+                  onClick={startParchmentUnfurling}
+                />
+                {/* Soft pulsing glow */}
+                <div className="absolute inset-0 bg-yellow-400 opacity-20 rounded-full blur-xl animate-pulse pointer-events-none"></div>
+              </div>
               
               {/* Speech Bubble */}
               <div className="mt-6 relative">
@@ -199,13 +187,11 @@ export function CrypticCompliments() {
             {/* Dr. Heinous Reaction */}
             {phase === "revealed" && revealText.length === compliment.length && (
               <div className="mb-8 animate-fade-in">
-                {characterSprites.heinous?.neutral && (
-                  <img 
-                    src={characterSprites.heinous.neutral}
-                    alt="Dr. Heinous" 
-                    className="w-32 h-32 mx-auto"
-                  />
-                )}
+                <img 
+                  src="/heinous/neutral.png"
+                  alt="Dr. Heinous" 
+                  className="w-32 h-32 mx-auto"
+                />
                 <p className="text-purple-200 text-lg font-creepster mt-4">
                   "{heinousReaction}"
                 </p>
