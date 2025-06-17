@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'wouter';
 
 interface GameState {
@@ -22,6 +22,8 @@ export function WackAChupacabra() {
   });
 
   const [spriteVisible, setSpriteVisible] = useState(false);
+  const gameTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const hideTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const getRandomSprite = (): 'chupacabra' | 'decoy' | 'vial' => {
     const rand = Math.random();
@@ -34,11 +36,14 @@ export function WackAChupacabra() {
     return Math.floor(Math.random() * 5); // 0-4 for 5 holes
   };
 
-  const spawnSprite = useCallback(() => {
-    if (gameState.isGameOver || !gameState.isPlaying) return;
+  const spawnNextSprite = () => {
+    if (gameTimeoutRef.current) clearTimeout(gameTimeoutRef.current);
+    if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
 
     const newHole = getRandomHole();
     const newSprite = getRandomSprite();
+    
+    console.log('Spawning sprite:', { hole: newHole, sprite: newSprite });
 
     setGameState(prev => ({
       ...prev,
@@ -48,7 +53,7 @@ export function WackAChupacabra() {
     setSpriteVisible(true);
 
     // Hide sprite after duration
-    setTimeout(() => {
+    hideTimeoutRef.current = setTimeout(() => {
       setSpriteVisible(false);
       setGameState(prev => ({
         ...prev,
@@ -57,11 +62,30 @@ export function WackAChupacabra() {
       }));
 
       // Schedule next spawn
-      setTimeout(() => {
-        spawnSprite();
+      gameTimeoutRef.current = setTimeout(() => {
+        spawnNextSprite();
       }, SPAWN_DELAY);
     }, SPRITE_DURATION);
-  }, [gameState.isGameOver, gameState.isPlaying]);
+  };
+
+  // Start spawning when game begins
+  useEffect(() => {
+    if (gameState.isPlaying && !gameState.isGameOver) {
+      console.log('Starting sprite spawning');
+      gameTimeoutRef.current = setTimeout(() => {
+        spawnNextSprite();
+      }, 1000);
+    } else {
+      // Clean up timeouts when game stops
+      if (gameTimeoutRef.current) clearTimeout(gameTimeoutRef.current);
+      if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
+    }
+
+    return () => {
+      if (gameTimeoutRef.current) clearTimeout(gameTimeoutRef.current);
+      if (hideTimeoutRef.current) clearTimeout(hideTimeoutRef.current);
+    };
+  }, [gameState.isPlaying, gameState.isGameOver]);
 
   const handleHoleClick = (holeIndex: number) => {
     if (!gameState.isPlaying || gameState.isGameOver || !spriteVisible) return;
@@ -100,11 +124,6 @@ export function WackAChupacabra() {
       isPlaying: true
     });
     setSpriteVisible(false);
-    
-    // Start first spawn after a short delay
-    setTimeout(() => {
-      spawnSprite();
-    }, 1000);
   };
 
   const resetGame = () => {
@@ -189,6 +208,13 @@ export function WackAChupacabra() {
             Wack-A-Chupacabra
           </div>
         </div>
+        
+        {/* Debug Info */}
+        {gameState.isPlaying && (
+          <div className="text-white text-sm p-2 bg-black bg-opacity-50">
+            Debug: Hole {gameState.currentHole}, Sprite {gameState.currentSprite}, Visible {spriteVisible ? 'true' : 'false'}
+          </div>
+        )}
 
         {/* Game Start Screen */}
         {!gameState.isPlaying && !gameState.isGameOver && (
