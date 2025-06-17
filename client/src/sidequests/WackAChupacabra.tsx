@@ -213,21 +213,29 @@ export function WackAChupacabra() {
         {/* Game Area - Holes Grid */}
         {gameState.isPlaying && (
           <div className="flex-1 flex items-end justify-center pb-20">
-            <div className="grid grid-cols-3 grid-rows-2 gap-6 md:gap-8 place-items-center">
+            <div className="grid grid-cols-3 grid-rows-2 gap-6 md:gap-8 place-items-center max-w-md mx-auto">
               {Array.from({ length: 5 }, (_, index) => {
-                // Position holes: top row has 2 holes (indices 0,1), bottom row has 3 holes (indices 2,3,4)
-                const isTopRow = index < 2;
-                const gridPosition = isTopRow 
-                  ? `col-start-${index + 1} col-span-1 row-start-1`
-                  : `col-start-${index - 1} col-span-1 row-start-2`;
+                // Position holes: top row has 2 holes centered (indices 0,1), bottom row has 3 holes (indices 2,3,4)
+                let gridColumnStart;
+                let gridRowStart;
+                
+                if (index < 2) {
+                  // Top row: center 2 holes by starting at column 1 and 3 (skipping middle column)
+                  gridColumnStart = index === 0 ? 1 : 3;
+                  gridRowStart = 1;
+                } else {
+                  // Bottom row: 3 holes across all columns
+                  gridColumnStart = index - 2 + 1; // Maps 2,3,4 to 1,2,3
+                  gridRowStart = 2;
+                }
                 
                 return (
                   <div
                     key={index}
-                    className={`relative cursor-pointer ${isTopRow ? 'col-start-' + (index + 1) : 'col-start-' + (index - 1)}`}
+                    className="relative cursor-pointer"
                     style={{
-                      gridColumn: isTopRow ? `${index + 1} / span 1` : `${index - 1} / span 1`,
-                      gridRow: isTopRow ? '1' : '2'
+                      gridColumn: `${gridColumnStart} / span 1`,
+                      gridRow: gridRowStart
                     }}
                     onClick={() => handleHoleClick(index)}
                   >
