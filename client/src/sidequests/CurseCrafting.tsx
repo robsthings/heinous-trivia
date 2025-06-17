@@ -326,13 +326,13 @@ export function CurseCrafting() {
                 </p>
                 
                 {/* Target */}
-                <p className="text-xs sm:text-sm italic text-gray-700 font-serif">
+                <p className="text-xs sm:text-sm italic text-gray-900 font-serif">
                   — Upon {generatedCurse.target}
                 </p>
                 
                 {/* Side Effect */}
                 {generatedCurse.sideEffect && (
-                  <p className="text-xs text-gray-600 font-serif mt-1">
+                  <p className="text-xs text-gray-800 font-serif mt-1">
                     {generatedCurse.sideEffect}
                   </p>
                 )}
