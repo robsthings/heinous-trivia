@@ -277,7 +277,7 @@ export function WackAChupacabra() {
                       <img
                         src={getSpriteImagePath(gameState.currentSprite)}
                         alt={gameState.currentSprite}
-                        className="absolute -top-12 left-1/2 transform -translate-x-1/2 w-16 h-16 md:w-20 md:h-20 animate-bounce pointer-events-none"
+                        className="absolute -top-8 left-1/2 transform -translate-x-1/2 w-12 h-12 md:w-16 md:h-16 animate-bounce pointer-events-none z-10"
                       />
                     )}
                   </div>
