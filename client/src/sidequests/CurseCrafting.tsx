@@ -301,6 +301,57 @@ export function CurseCrafting() {
           </div>
         </div>
       )}
+
+      {/* Scroll Reveal Animation */}
+      {gamePhase === 'revealing' && generatedCurse && (
+        <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+          <div className="relative animate-scroll-reveal">
+            {/* Scroll Image */}
+            <img 
+              src="/sidequests/curse-crafting/scroll-1.png"
+              alt="Cursed Scroll"
+              className="w-80 h-96 sm:w-96 sm:h-[28rem] object-contain mx-auto"
+            />
+            
+            {/* Curse Text Overlay */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center px-8 py-12">
+              <div className="text-center space-y-4 max-w-sm">
+                {/* Main Curse */}
+                <p className="text-lg sm:text-xl font-bold text-gray-800 leading-tight font-serif">
+                  {generatedCurse.curse}
+                </p>
+                
+                {/* Target */}
+                <p className="text-sm sm:text-base italic text-gray-700 font-serif">
+                  — Upon {generatedCurse.target}
+                </p>
+                
+                {/* Side Effect */}
+                {generatedCurse.sideEffect && (
+                  <p className="text-xs sm:text-sm text-gray-600 font-serif mt-2">
+                    {generatedCurse.sideEffect}
+                  </p>
+                )}
+              </div>
+            </div>
+            
+            {/* Action Buttons */}
+            <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2 flex gap-4">
+              <Button
+                onClick={craftAgain}
+                className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-bold shadow-lg transform hover:scale-105 transition-all"
+              >
+                🔁 Craft Again
+              </Button>
+              <Link href="/game/headquarters">
+                <Button className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-lg font-bold shadow-lg transform hover:scale-105 transition-all">
+                  🧪 Return to Main Game
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

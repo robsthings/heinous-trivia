@@ -249,6 +249,12 @@
     animation: glitch-lines 1.5s infinite;
   }
   
+  .animate-scroll-reveal {
+    animation: scroll-reveal 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    opacity: 0;
+    transform: scale(0.3) rotate(180deg);
+  }
+  
   .animate-sprite-glitch-in {
     animation: sprite-glitch-in 2s ease-out forwards;
   }
@@ -389,6 +395,28 @@
   100% {
     opacity: 1;
     transform: scale(1) rotateY(0deg);
+  }
+}
+
+@keyframes scroll-reveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) rotate(180deg) translateY(-100px);
+  }
+  30% {
+    opacity: 0.8;
+    transform: scale(0.8) rotate(45deg) translateY(-20px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.1) rotate(-5deg) translateY(10px);
+  }
+  80% {
+    transform: scale(0.95) rotate(2deg) translateY(-5px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg) translateY(0);
   }
 }
 
