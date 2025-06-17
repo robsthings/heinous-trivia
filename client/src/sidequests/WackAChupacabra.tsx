@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
+import { useQuery } from '@tanstack/react-query';
 
 interface GameState {
   score: number;
@@ -13,6 +14,9 @@ const SPRITE_DURATION = 1200; // 1.2 seconds
 const SPAWN_DELAY = 800; // Delay between spawns
 
 export function WackAChupacabra() {
+  const [location] = useLocation();
+  const hauntId = new URLSearchParams(window.location.search).get('haunt') || 'headquarters';
+  
   const [gameState, setGameState] = useState<GameState>({
     score: 0,
     isGameOver: false,
@@ -24,6 +28,13 @@ export function WackAChupacabra() {
   const [spriteVisible, setSpriteVisible] = useState(false);
   const gameTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const hideTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Fetch haunt configuration for logo
+  const { data: hauntConfig } = useQuery({
+    queryKey: ['/api/haunt-config', hauntId],
+    queryFn: () => fetch(`/api/haunt-config/${hauntId}`).then(res => res.json()),
+    enabled: !!hauntId
+  });
 
   const getRandomSprite = (): 'chupacabra' | 'decoy' | 'vial' => {
     const rand = Math.random();
