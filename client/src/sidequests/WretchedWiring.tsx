@@ -5,6 +5,7 @@ interface GameState {
   isPlaying: boolean;
   showCertificate: boolean;
   currentTaunt: string | null;
+  currentHeinousSprite: string;
   wires: Wire[];
   chupacabraVisible: boolean;
   chupacabraMessage: string | null;
@@ -30,7 +31,29 @@ const HEINOUS_TAUNTS = [
   "Even my grandmother could do better!",
   "The sparks are supposed to be INSIDE the box!",
   "Perhaps engineering isn't your calling.",
-  "At least the fire department gets exercise."
+  "At least the fire department gets exercise.",
+  "Are you connecting those randomly?",
+  "That's not how electricity works, genius.",
+  "I'm starting to question your qualifications.",
+  "The manual clearly states... oh wait, you can't read.",
+  "Is this your first day with opposable thumbs?",
+  "I've seen more organization in a tornado.",
+  "That wire goes THERE, not... wherever that is.",
+  "Physics called. It wants its laws back.",
+  "You're making this harder than rocket science.",
+  "The Chupacabra is laughing at you.",
+  "Even I'm embarrassed for you right now.",
+  "This is painful to watch. For me, not you.",
+  "You know what? Just... just stop.",
+  "I'm going to pretend I didn't see that.",
+  "The warranty doesn't cover whatever this is."
+];
+
+const HEINOUS_SPRITES = [
+  'unimpressed.png',
+  'charming.png', 
+  'ffs.png',
+  'shocked.png'
 ];
 
 const CHUPACABRA_MESSAGES = [
@@ -45,6 +68,7 @@ const INITIAL_GAME_STATE: GameState = {
   isPlaying: false,
   showCertificate: false,
   currentTaunt: null,
+  currentHeinousSprite: 'unimpressed.png',
   wires: [],
   chupacabraVisible: false,
   chupacabraMessage: null
@@ -203,13 +227,19 @@ export function WretchedWiring() {
     }, 4000);
   };
 
-  // Show random taunts
+  // Show random taunts with random Dr. Heinous sprites
   useEffect(() => {
     if (!gameState.isPlaying) return;
 
     const tauntInterval = setInterval(() => {
       const randomTaunt = HEINOUS_TAUNTS[Math.floor(Math.random() * HEINOUS_TAUNTS.length)];
-      setGameState(prev => ({ ...prev, currentTaunt: randomTaunt }));
+      const randomSprite = HEINOUS_SPRITES[Math.floor(Math.random() * HEINOUS_SPRITES.length)];
+      
+      setGameState(prev => ({ 
+        ...prev, 
+        currentTaunt: randomTaunt,
+        currentHeinousSprite: randomSprite
+      }));
 
       setTimeout(() => {
         setGameState(prev => ({ ...prev, currentTaunt: null }));
@@ -405,15 +435,26 @@ export function WretchedWiring() {
         </div>
       )}
 
-      {/* Heinous Taunts */}
+      {/* Heinous Taunts with Sprite */}
       {gameState.currentTaunt && (
-        <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-40 animate-bounce">
-          <div className="bg-gray-900 bg-opacity-95 border-2 border-red-500 rounded-lg p-4 max-w-sm">
-            <div className="text-red-400 font-bold text-sm mb-1">Dr. Heinous says:</div>
-            <div className="text-white text-sm">{gameState.currentTaunt}</div>
-            {/* Speech bubble tail */}
-            <div className="absolute bottom-0 left-8 transform translate-y-full">
-              <div className="w-0 h-0 border-l-4 border-r-4 border-t-8 border-transparent border-t-red-500"></div>
+        <div className="fixed top-16 left-1/2 transform -translate-x-1/2 z-40">
+          <div className="flex flex-col items-center">
+            {/* Speech Bubble */}
+            <div className="bg-gray-900 bg-opacity-95 border-2 border-red-500 rounded-lg p-4 max-w-sm mb-2 animate-bounce">
+              <div className="text-red-400 font-bold text-sm mb-1">Dr. Heinous says:</div>
+              <div className="text-white text-sm">{gameState.currentTaunt}</div>
+              {/* Speech bubble tail */}
+              <div className="absolute bottom-0 left-1/2 transform translate-y-full -translate-x-1/2">
+                <div className="w-0 h-0 border-l-4 border-r-4 border-t-8 border-transparent border-t-red-500"></div>
+              </div>
+            </div>
+            {/* Dr. Heinous Sprite */}
+            <div className="animate-pulse">
+              <img 
+                src={`/heinous/${gameState.currentHeinousSprite}`}
+                alt="Dr. Heinous"
+                className="w-24 h-24 object-contain"
+              />
             </div>
           </div>
         </div>
