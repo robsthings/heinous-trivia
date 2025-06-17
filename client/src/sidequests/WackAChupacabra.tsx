@@ -213,30 +213,42 @@ export function WackAChupacabra() {
         {/* Game Area - Holes Grid */}
         {gameState.isPlaying && (
           <div className="flex-1 flex items-end justify-center pb-20">
-            <div className="grid grid-cols-5 gap-4 md:gap-8">
-              {Array.from({ length: 5 }, (_, index) => (
-                <div
-                  key={index}
-                  className="relative cursor-pointer"
-                  onClick={() => handleHoleClick(index)}
-                >
-                  {/* Hole */}
-                  <img
-                    src="/sidequests/wack-a-chupacabra/wack-hole.png"
-                    alt={`Hole ${index + 1}`}
-                    className="w-20 h-20 md:w-24 md:h-24 block"
-                  />
-                  
-                  {/* Sprite */}
-                  {gameState.currentHole === index && gameState.currentSprite && spriteVisible && (
+            <div className="grid grid-cols-3 grid-rows-2 gap-6 md:gap-8 place-items-center">
+              {Array.from({ length: 5 }, (_, index) => {
+                // Position holes: top row has 2 holes (indices 0,1), bottom row has 3 holes (indices 2,3,4)
+                const isTopRow = index < 2;
+                const gridPosition = isTopRow 
+                  ? `col-start-${index + 1} col-span-1 row-start-1`
+                  : `col-start-${index - 1} col-span-1 row-start-2`;
+                
+                return (
+                  <div
+                    key={index}
+                    className={`relative cursor-pointer ${isTopRow ? 'col-start-' + (index + 1) : 'col-start-' + (index - 1)}`}
+                    style={{
+                      gridColumn: isTopRow ? `${index + 1} / span 1` : `${index - 1} / span 1`,
+                      gridRow: isTopRow ? '1' : '2'
+                    }}
+                    onClick={() => handleHoleClick(index)}
+                  >
+                    {/* Hole */}
                     <img
-                      src={getSpriteImagePath(gameState.currentSprite)}
-                      alt={gameState.currentSprite}
-                      className="absolute -top-12 left-1/2 transform -translate-x-1/2 w-16 h-16 md:w-20 md:h-20 animate-bounce pointer-events-none"
+                      src="/sidequests/wack-a-chupacabra/wack-hole.png"
+                      alt={`Hole ${index + 1}`}
+                      className="w-20 h-20 md:w-24 md:h-24 block"
                     />
-                  )}
-                </div>
-              ))}
+                    
+                    {/* Sprite */}
+                    {gameState.currentHole === index && gameState.currentSprite && spriteVisible && (
+                      <img
+                        src={getSpriteImagePath(gameState.currentSprite)}
+                        alt={gameState.currentSprite}
+                        className="absolute -top-12 left-1/2 transform -translate-x-1/2 w-16 h-16 md:w-20 md:h-20 animate-bounce pointer-events-none"
+                      />
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}
