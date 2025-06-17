@@ -31,6 +31,7 @@ import { SpectralMemory } from "@/pages/sidequests/SpectralMemory";
 import { PhantomsPuzzle } from "@/pages/sidequests/PhantomsPuzzle";
 import { CurseCrafting } from "@/sidequests/CurseCrafting";
 import { WackAChupacabra } from "@/sidequests/WackAChupacabra";
+import { WretchedWiring } from "@/sidequests/WretchedWiring";
 
 function Router() {
   return (
@@ -71,6 +72,8 @@ function Router() {
       <Route path="/sidequests/curse-crafting" component={CurseCrafting} />
       <Route path="/sidequest/wack-a-chupacabra" component={WackAChupacabra} />
       <Route path="/sidequests/wack-a-chupacabra" component={WackAChupacabra} />
+      <Route path="/sidequest/wretched-wiring" component={WretchedWiring} />
+      <Route path="/sidequests/wretched-wiring" component={WretchedWiring} />
       <Route component={NotFound} />
     </Switch>
   );

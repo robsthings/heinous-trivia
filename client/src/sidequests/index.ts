@@ -11,6 +11,7 @@ export { WackAChupacabra } from './WackAChupacabra';
 export { HeinousHighScore } from './HeinousHighScore';
 export { CurseCrafting } from './CurseCrafting';
 export { WheelOfMisfortune } from './WheelOfMisfortune';
+export { WretchedWiring } from './WretchedWiring';
 
 // Side Quest metadata for dynamic loading
 export const SIDE_QUESTS = {
@@ -83,6 +84,13 @@ export const SIDE_QUESTS = {
     description: 'Spin for your fate',
     difficulty: 'Easy',
     estimatedTime: '1-2 minutes'
+  },
+  'wretched-wiring': {
+    name: 'Wretched Wiring',
+    component: 'WretchedWiring',
+    description: 'Chaotic electrical "repair" simulation with no actual logic',
+    difficulty: 'Impossible',
+    estimatedTime: '5-10 minutes (or until you give up)'
   }
 } as const;
 
