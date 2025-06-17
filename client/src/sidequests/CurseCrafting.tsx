@@ -36,59 +36,81 @@ interface GeneratedCurse {
   sideEffect?: string;
 }
 
-// Curse generation data
 const curseTemplates = [
-  (i1: string, i2: string, i3: string) => `May every shoelace they tie turn into ${i1}.`,
-  (i1: string, i2: string, i3: string) => `Whenever they speak, it sounds like ${i2} and smells like ${i3}.`,
-  (i1: string, i2: string, i3: string) => `May their ${i1.toLowerCase()} be haunted by whispers of ${i2.toLowerCase()}.`,
-  (i1: string, i2: string, i3: string) => `May ${i1} and ${i2} appear in their bathtub every Tuesday.`,
-  (i1: string, i2: string, i3: string) => `May every mirror reflect their face wearing ${i3}.`,
-  (i1: string, i2: string, i3: string) => `Cursed to sneeze out ${i1}, then apologize in ${i2}.`,
-  (i1: string, i2: string, i3: string) => `May their shadow be replaced by ${i3}.`,
-  (i1: string, i2: string, i3: string) => `They must explain ${i2} to a panel of angry ghosts using only ${i1}.`,
+  ({ object, action, result }: { object: string; action: string; result: string }) =>
+    `May every ${object} they ${action} turn into ${result}.`,
+  ({ action, result }: { action: string; result: string }) =>
+    `Whenever they ${action}, they hear the sound of ${result}.`,
+  ({ bodyPart, result }: { bodyPart: string; result: string }) =>
+    `May their ${bodyPart} develop an uncontrollable craving for ${result}.`,
+  ({ objectPlural, absurdity }: { objectPlural: string; absurdity: string }) =>
+    `May ${objectPlural} follow them, whispering secrets about ${absurdity}.`,
+  ({ result }: { result: string }) =>
+    `May they forever smell faintly of ${result}, no matter how hard they scrub.`,
 ];
 
 const curseTargets = [
   "your old gym teacher",
+  "your middle school nemesis",
   "that one barista who judged you",
   "your ex's new partner",
-  "your least favorite coworker",
-  "someone who calls you 'buddy'",
-  "a guy named Chad (he knows what he did)",
-  "your unfinished tax return",
-  "the influencer who faked a haunting",
   "the cousin who ruined game night",
-  "your childhood imaginary friend (they're back)",
+  "someone who calls you 'buddy' in a condescending tone",
+  "your least favorite coworker",
+  "an influencer who faked a haunting",
+  "your unfinished tax return",
+  "a guy named Chad (he knows what he did)",
 ];
 
 const sideEffects = [
   "Also, mild goat noises.",
-  "Everything smells faintly of regret.",
-  "They can't stop clapping at inappropriate times.",
-  "Their shoes are always slightly damp.",
-  "They cry whenever they hear a kazoo.",
+  "And yet, still somehow smug.",
+  "Now banned from using elevators.",
+  "They must explain NFTs at every party.",
+  "Everything tastes faintly like pennies.",
+  "Uncontrollable kazoo solos under pressure.",
+  "Their phone autocorrects to embarrassing typos.",
   "Haunted by the scent of ham.",
-  "Autocorrect now only speaks in riddles.",
-  "They must start every sentence with 'Well, actually…'",
-  "They age one day per curse crafted.",
-  "Slightly more haunted than medically recommended.",
+  "They cry whenever they hear a kazoo.",
+  "Pants slightly tighter every Tuesday.",
 ];
 
-function generateCurse(selectedIngredients: Ingredient[]) {
-  if (selectedIngredients.length !== 3) return null;
+// Wordbanks
+const wordbanks = {
+  object: ["shoelace", "sandwich", "text message", "door handle", "thought"],
+  objectPlural: ["clocks", "plastic lawn gnomes", "sentient loofahs", "ants"],
+  action: ["touch", "eat", "clean", "tie", "whisper to"],
+  result: ["live worms", "wet socks", "expired mayo", "glitter vomit", "tiny bees"],
+  absurdity: ["ancient cheese politics", "your browser history", "haunted fonts"],
+  bodyPart: ["elbow", "left nostril", "knee", "pinky toe", "eyelid"],
+};
 
-  const [i1, i2, i3] = selectedIngredients.map((i: Ingredient) => i.name);
-  const template = curseTemplates[Math.floor(Math.random() * curseTemplates.length)];
-  const target = curseTargets[Math.floor(Math.random() * curseTargets.length)];
-  const side = sideEffects[Math.floor(Math.random() * sideEffects.length)];
+function generateCurse() {
+  const template =
+    curseTemplates[Math.floor(Math.random() * curseTemplates.length)];
 
-  const curseText = template(i1, i2, i3);
+  const data = {
+    object: rand(wordbanks.object),
+    objectPlural: rand(wordbanks.objectPlural),
+    action: rand(wordbanks.action),
+    result: rand(wordbanks.result),
+    absurdity: rand(wordbanks.absurdity),
+    bodyPart: rand(wordbanks.bodyPart),
+  };
+
+  const curseText = template(data);
+  const target = `Target: ${rand(curseTargets)}`;
+  const sideEffect = rand(sideEffects);
 
   return {
     curseText,
-    target: `Target: ${target}`,
-    sideEffect: side,
+    target,
+    sideEffect,
   };
+}
+
+function rand(arr: string[]): string {
+  return arr[Math.floor(Math.random() * arr.length)];
 }
 
 export function CurseCrafting() {
@@ -148,15 +170,13 @@ export function CurseCrafting() {
   };
 
   const stirIrresponsibly = () => {
-    const curse = generateCurse(cauldronIngredients);
-    if (curse) {
-      setGeneratedCurse({
-        curse: curse.curseText,
-        target: curse.target,
-        sideEffect: curse.sideEffect
-      });
-      setGamePhase('revealing');
-    }
+    const curse = generateCurse();
+    setGeneratedCurse({
+      curse: curse.curseText,
+      target: curse.target,
+      sideEffect: curse.sideEffect
+    });
+    setGamePhase('revealing');
   };
 
   const craftAgain = () => {
