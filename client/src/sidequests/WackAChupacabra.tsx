@@ -43,7 +43,7 @@ export function WackAChupacabra() {
     const newHole = getRandomHole();
     const newSprite = getRandomSprite();
     
-    console.log('Spawning sprite:', { hole: newHole, sprite: newSprite });
+
 
     setGameState(prev => ({
       ...prev,
@@ -187,10 +187,10 @@ export function WackAChupacabra() {
                 Try Again
               </button>
               <Link
-                href="/sidequests"
+                href="/game"
                 className="block px-8 py-3 bg-gray-600 hover:bg-gray-700 text-white font-bold rounded-lg transition-colors duration-200 shadow-lg"
               >
-                Return to Side Quests
+                Return to Game
               </Link>
             </div>
           </div>
@@ -209,12 +209,7 @@ export function WackAChupacabra() {
           </div>
         </div>
         
-        {/* Debug Info */}
-        {gameState.isPlaying && (
-          <div className="text-white text-sm p-2 bg-black bg-opacity-50">
-            Debug: Hole {gameState.currentHole}, Sprite {gameState.currentSprite}, Visible {spriteVisible ? 'true' : 'false'}
-          </div>
-        )}
+
 
         {/* Game Start Screen */}
         {!gameState.isPlaying && !gameState.isGameOver && (
@@ -293,10 +288,10 @@ export function WackAChupacabra() {
         {!gameState.isPlaying && !gameState.isGameOver && (
           <div className="absolute bottom-6 left-6">
             <Link
-              href="/sidequests"
+              href="/game"
               className="px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white font-bold rounded-lg transition-colors duration-200 shadow-lg"
             >
-              ← Back to Side Quests
+              ← Return to Game
             </Link>
           </div>
         )}
