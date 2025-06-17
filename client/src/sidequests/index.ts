@@ -7,7 +7,7 @@ export { ChupacabraChallenge } from './ChupacabraChallenge';
 export { CrypticCompliments } from './CrypticCompliments';
 export { HexOrFlex } from './HexOrFlex';
 export { LabEscape } from './LabEscape';
-export { GhoulYourOwnAdventure } from './GhoulYourOwnAdventure';
+export { WackAChupacabra } from './WackAChupacabra';
 export { HeinousHighScore } from './HeinousHighScore';
 export { CurseCrafting } from './CurseCrafting';
 export { WheelOfMisfortune } from './WheelOfMisfortune';
@@ -56,12 +56,12 @@ export const SIDE_QUESTS = {
     difficulty: 'Hard',
     estimatedTime: '7-10 minutes'
   },
-  'ghoul-your-own-adventure': {
-    name: 'Ghoul Your Own Adventure',
-    component: 'GhoulYourOwnAdventure',
-    description: 'Interactive horror story',
+  'wack-a-chupacabra': {
+    name: 'Wack-A-Chupacabra',
+    component: 'WackAChupacabra',
+    description: 'Reflex hit game with Chupacabra taunts and trick targets',
     difficulty: 'Medium',
-    estimatedTime: '5-8 minutes'
+    estimatedTime: '3-5 minutes'
   },
   'heinous-high-score': {
     name: 'Heinous High Score',
