@@ -61,11 +61,14 @@ const HEINOUS_SPRITES = [
 ];
 
 const CHUPACABRA_MESSAGES = [
-  "I'm sure we won't need that.",
-  "This looks tasty!",
-  "Copper is my favorite flavor.",
-  "Nom nom nom... wire snacks!",
-  "Don't mind me, just tidying up."
+  "Grrrrrawwwwrrrr...",
+  "Hssssssss... *sniff sniff*",
+  "Grnnnnhhhhh... *chomp*",
+  "*growl* Rrrrraaaahhhh!",
+  "Hisssss... grrrrunt...",
+  "*snort* Grawwwwwrrr...",
+  "Ggrrrrhhhhh... *crunch*",
+  "Hssss... *grunt grunt*"
 ];
 
 const INITIAL_GAME_STATE: GameState = {

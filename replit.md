@@ -106,6 +106,7 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 5. Game state updates with loaded data
 
 ## Changelog
+- June 17, 2025: **ENHANCED CHUPACABRA AUTHENTICITY** - Replaced human speech with creature sounds (growls, hisses, grunts, chomping) for authentic cryptid wire theft experience
 - June 17, 2025: **UPGRADED DR. HEINOUS COMMENTARY SYSTEM** - Expanded to 29 premium snarky taunts including "Error 666: Haunting Intensifies", "We are now operating entirely on vibes", and "You've achieved total un-circuitry", creating maximum personality-driven frustration experience
 - June 17, 2025: **CREATED WRETCHED WIRING CHAOS SIMULATOR** - Built intentionally broken "puzzle" game with draggable/rotatable wires, fake countdown timer with panic flashes, Dr. Heinous taunts every 6-10 seconds, Chupacabra wire theft events, glowing "I Give Up" button leading to certificate screen, complete with terminal nodes and chaotic interactions
 - June 17, 2025: **IMPLEMENTED MOON-FRAMED HAUNT BRANDING** - Replaced standalone logo watermark with wack-moon.png background and centered haunt logo overlay (75% size, 80% opacity), creating integrated moon-framed branding that feels natural within spooky atmosphere
