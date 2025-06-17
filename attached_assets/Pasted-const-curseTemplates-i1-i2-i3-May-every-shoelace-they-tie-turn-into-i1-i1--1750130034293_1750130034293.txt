@@ -1,0 +1,53 @@
+const curseTemplates = [
+  (i1, i2, i3) => `May every shoelace they tie turn into ${i1}.`,
+  (i1, i2, i3) => `Whenever they speak, it sounds like ${i2} and smells like ${i3}.`,
+  (i1, i2, i3) => `May their ${i1.toLowerCase()} be haunted by whispers of ${i2.toLowerCase()}.`,
+  (i1, i2, i3) => `May ${i1} and ${i2} appear in their bathtub every Tuesday.`,
+  (i1, i2, i3) => `May every mirror reflect their face wearing ${i3}.`,
+  (i1, i2, i3) => `Cursed to sneeze out ${i1}, then apologize in ${i2}.`,
+  (i1, i2, i3) => `May their shadow be replaced by ${i3}.`,
+  (i1, i2, i3) => `They must explain ${i2} to a panel of angry ghosts using only ${i1}.`,
+];
+
+const curseTargets = [
+  "your old gym teacher",
+  "that one barista who judged you",
+  "your ex’s new partner",
+  "your least favorite coworker",
+  "someone who calls you 'buddy'",
+  "a guy named Chad (he knows what he did)",
+  "your unfinished tax return",
+  "the influencer who faked a haunting",
+  "the cousin who ruined game night",
+  "your childhood imaginary friend (they’re back)",
+];
+
+const sideEffects = [
+  "Also, mild goat noises.",
+  "Everything smells faintly of regret.",
+  "They can’t stop clapping at inappropriate times.",
+  "Their shoes are always slightly damp.",
+  "They cry whenever they hear a kazoo.",
+  "Haunted by the scent of ham.",
+  "Autocorrect now only speaks in riddles.",
+  "They must start every sentence with 'Well, actually…'",
+  "They age one day per curse crafted.",
+  "Slightly more haunted than medically recommended.",
+];
+
+export function generateCurse(selectedIngredients) {
+  if (selectedIngredients.length !== 3) return null;
+
+  const [i1, i2, i3] = selectedIngredients.map(i => i.name);
+  const template = curseTemplates[Math.floor(Math.random() * curseTemplates.length)];
+  const target = curseTargets[Math.floor(Math.random() * curseTargets.length)];
+  const side = sideEffects[Math.floor(Math.random() * sideEffects.length)];
+
+  const curseText = template(i1, i2, i3);
+
+  return {
+    curseText,
+    target: `Target: ${target}`,
+    sideEffect: side,
+  };
+}
