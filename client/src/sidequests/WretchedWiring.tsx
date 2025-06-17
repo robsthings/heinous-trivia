@@ -524,63 +524,120 @@ export function WretchedWiring() {
       {/* Tech Control Panel */}
       {gameState.isPlaying && (
         <div className="fixed bottom-24 left-1/2 transform -translate-x-1/2 z-20">
-          <div className="bg-gray-900 bg-opacity-90 border-2 border-cyan-400 rounded-lg p-4 backdrop-blur-sm">
-            <div className="flex flex-col sm:flex-row gap-3 items-center">
+          <div className="bg-black bg-opacity-95 border-4 border-yellow-600 rounded-none p-6 backdrop-blur-sm" style={{ 
+            boxShadow: 'inset 0 0 20px rgba(255, 255, 0, 0.3), 0 0 30px rgba(255, 255, 0, 0.2)',
+            background: 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%)'
+          }}>
+            <div className="text-center mb-3">
+              <div className="text-yellow-400 text-xs font-mono tracking-widest">CONTROL MATRIX</div>
+              <div className="h-px bg-yellow-600 w-full mt-1"></div>
+            </div>
+            
+            <div className="flex flex-col sm:flex-row gap-4 items-center">
               
               {/* Flux Capacitor */}
-              <button
-                onClick={toggleFluxCapacitor}
-                className={`flex flex-col items-center p-2 rounded-lg border-2 transition-all duration-200 min-w-[80px] ${
-                  gameState.techControls.fluxCapacitor 
-                    ? 'bg-blue-600 border-blue-400 text-white' 
-                    : 'bg-gray-700 border-gray-500 text-gray-300'
-                }`}
-              >
-                <span className="text-xl">⚡</span>
-                <span className="text-xs font-mono">FLUX</span>
-              </button>
+              <div className="flex flex-col items-center">
+                <button
+                  onClick={toggleFluxCapacitor}
+                  className={`relative w-16 h-16 border-4 transition-all duration-200 ${
+                    gameState.techControls.fluxCapacitor 
+                      ? 'border-blue-400 bg-blue-900 shadow-lg' 
+                      : 'border-gray-600 bg-gray-800'
+                  }`}
+                  style={{
+                    clipPath: 'polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)',
+                    boxShadow: gameState.techControls.fluxCapacitor 
+                      ? '0 0 20px rgba(59, 130, 246, 0.6), inset 0 0 10px rgba(59, 130, 246, 0.3)' 
+                      : 'inset 0 0 10px rgba(0, 0, 0, 0.5)'
+                  }}
+                >
+                  <span className={`text-2xl ${gameState.techControls.fluxCapacitor ? 'text-white animate-pulse' : 'text-gray-400'}`}>⚡</span>
+                </button>
+                <span className="text-xs font-mono text-yellow-300 mt-2 tracking-wider">FLUX CAP</span>
+              </div>
 
               {/* Ghostproofing */}
-              <button
-                onClick={toggleGhostproofing}
-                className={`flex flex-col items-center p-2 rounded-lg border-2 transition-all duration-200 min-w-[80px] ${
-                  gameState.techControls.ghostproofing 
-                    ? 'bg-purple-600 border-purple-400 text-white' 
-                    : 'bg-gray-700 border-gray-500 text-gray-300'
-                }`}
-              >
-                <span className="text-xl">👻</span>
-                <span className="text-xs font-mono">GHOST</span>
-              </button>
+              <div className="flex flex-col items-center">
+                <button
+                  onClick={toggleGhostproofing}
+                  className={`relative w-16 h-16 border-4 transition-all duration-200 ${
+                    gameState.techControls.ghostproofing 
+                      ? 'border-purple-400 bg-purple-900 shadow-lg' 
+                      : 'border-gray-600 bg-gray-800'
+                  }`}
+                  style={{
+                    clipPath: 'polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)',
+                    boxShadow: gameState.techControls.ghostproofing 
+                      ? '0 0 20px rgba(147, 51, 234, 0.6), inset 0 0 10px rgba(147, 51, 234, 0.3)' 
+                      : 'inset 0 0 10px rgba(0, 0, 0, 0.5)'
+                  }}
+                >
+                  <span className={`text-2xl ${gameState.techControls.ghostproofing ? 'text-white animate-pulse' : 'text-gray-400'}`}>👻</span>
+                </button>
+                <span className="text-xs font-mono text-yellow-300 mt-2 tracking-wider">ECTO-SHLD</span>
+              </div>
 
               {/* Auto-Wire */}
-              <button
-                onClick={toggleAutoWire}
-                className={`flex flex-col items-center p-2 rounded-lg border-2 transition-all duration-200 min-w-[80px] ${
-                  gameState.techControls.autoWire 
-                    ? 'bg-green-600 border-green-400 text-white' 
-                    : 'bg-gray-700 border-gray-500 text-gray-300'
-                }`}
-              >
-                <span className="text-xl">🔧</span>
-                <span className="text-xs font-mono">AUTO</span>
-              </button>
+              <div className="flex flex-col items-center">
+                <button
+                  onClick={toggleAutoWire}
+                  className={`relative w-16 h-16 border-4 transition-all duration-200 ${
+                    gameState.techControls.autoWire 
+                      ? 'border-green-400 bg-green-900 shadow-lg' 
+                      : 'border-gray-600 bg-gray-800'
+                  }`}
+                  style={{
+                    clipPath: 'polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)',
+                    boxShadow: gameState.techControls.autoWire 
+                      ? '0 0 20px rgba(34, 197, 94, 0.6), inset 0 0 10px rgba(34, 197, 94, 0.3)' 
+                      : 'inset 0 0 10px rgba(0, 0, 0, 0.5)'
+                  }}
+                >
+                  <span className={`text-2xl ${gameState.techControls.autoWire ? 'text-white animate-pulse' : 'text-gray-400'}`}>🔧</span>
+                </button>
+                <span className="text-xs font-mono text-yellow-300 mt-2 tracking-wider">AUTO-SYS</span>
+              </div>
 
               {/* Use AI */}
-              <button
-                onClick={toggleUseAI}
-                className={`flex flex-col items-center p-2 rounded-lg border-2 transition-all duration-200 min-w-[80px] ${
-                  gameState.aiGlitch
-                    ? 'bg-red-600 border-red-400 text-white animate-pulse'
-                    : gameState.techControls.useAI 
-                      ? 'bg-orange-600 border-orange-400 text-white' 
-                      : 'bg-gray-700 border-gray-500 text-gray-300'
-                }`}
-              >
-                <span className={`text-xl ${gameState.aiGlitch ? 'animate-spin' : ''}`}>🤖</span>
-                <span className="text-xs font-mono">AI™</span>
-              </button>
+              <div className="flex flex-col items-center">
+                <button
+                  onClick={toggleUseAI}
+                  className={`relative w-16 h-16 border-4 transition-all duration-200 ${
+                    gameState.aiGlitch
+                      ? 'border-red-400 bg-red-900 animate-pulse'
+                      : gameState.techControls.useAI 
+                        ? 'border-orange-400 bg-orange-900 shadow-lg' 
+                        : 'border-gray-600 bg-gray-800'
+                  }`}
+                  style={{
+                    clipPath: 'polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)',
+                    boxShadow: gameState.aiGlitch 
+                      ? '0 0 20px rgba(239, 68, 68, 0.8), inset 0 0 10px rgba(239, 68, 68, 0.5)' 
+                      : gameState.techControls.useAI
+                        ? '0 0 20px rgba(249, 115, 22, 0.6), inset 0 0 10px rgba(249, 115, 22, 0.3)'
+                        : 'inset 0 0 10px rgba(0, 0, 0, 0.5)'
+                  }}
+                >
+                  <span className={`text-2xl ${
+                    gameState.aiGlitch 
+                      ? 'text-white animate-spin' 
+                      : gameState.techControls.useAI 
+                        ? 'text-white animate-pulse' 
+                        : 'text-gray-400'
+                  }`}>🤖</span>
+                </button>
+                <span className="text-xs font-mono text-yellow-300 mt-2 tracking-wider">AI-CORE™</span>
+              </div>
               
+            </div>
+            
+            {/* Status Bar */}
+            <div className="mt-4 pt-3 border-t border-yellow-600">
+              <div className="flex justify-center items-center gap-2">
+                <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+                <span className="text-xs font-mono text-yellow-300 tracking-wider">SYSTEM OPERATIONAL</span>
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              </div>
             </div>
           </div>
         </div>

@@ -106,7 +106,7 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 5. Game state updates with loaded data
 
 ## Changelog
-- June 17, 2025: **TECH CONTROL PANEL** - Added four toggle-style tech-lab buttons (Flux Capacitor, Ghostproofing, Auto-Wire, Use AI) beneath wire area with visual gags, sparks effects, auto-wire animations, AI glitch behavior, and snarky toast notifications for enhanced chaos simulation
+- June 17, 2025: **INDUSTRIAL TECH CONTROL PANEL** - Redesigned four tech-lab buttons with authentic laboratory aesthetic featuring octagonal metallic shapes, gradient backgrounds, "CONTROL MATRIX" header, status LEDs, and industrial yellow/black color scheme matching game's wretched wiring theme
 - June 17, 2025: **RESPONSIVE CERTIFICATE OF FAILURE** - Made certificate screen fully mobile-responsive with proper scaling (max-w-lg for optimal size), stacked mobile buttons, and touch-friendly sizing for Dr. Heinous's sarcastic failure award
 - June 17, 2025: **BROKEN "I GIVE UP" BUTTON** - Enhanced chaos simulator with malfunctioning surrender button requiring 3 clicks and displaying "That's broken too" message, completing the everything-is-broken experience
 - June 17, 2025: **AMPLIFIED FAKE TIMER PANIC MODE** - Enhanced red panic phases with vibration (bounce), intense red glow, scale increase, spinning rings, and "PANIC!" text transformation for maximum dramatic effect
