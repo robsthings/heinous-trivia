@@ -106,6 +106,7 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 5. Game state updates with loaded data
 
 ## Changelog
+- June 17, 2025: **IMPLEMENTED MOON-FRAMED HAUNT BRANDING** - Replaced standalone logo watermark with wack-moon.png background and centered haunt logo overlay (75% size, 80% opacity), creating integrated moon-framed branding that feels natural within spooky atmosphere
 - June 17, 2025: **ENHANCED WACK-A-CHUPACABRA TYPOGRAPHY** - Applied Frijole Google font to main title and header for authentic cryptid-themed typography, creating consistent spooky carnival atmosphere matching Chupacabra Challenge styling
 - June 17, 2025: **ADDED HAUNT BRANDING TO WACK-A-CHUPACABRA** - Integrated haunt logo watermark positioned over moon in background (top-right corner), using same implementation as trivia cards with 30% opacity grayscale filter, fetches haunt configuration for custom branding per venue
 - June 17, 2025: **POLISHED WACK-A-CHUPACABRA MINI-GAME** - Perfected sprite positioning (-top-1 for realistic hole emergence), increased hole and sprite sizes by 50% for better visibility, removed debugging interface, updated navigation to return players to main trivia game instead of side quests menu, creating seamless mini-game diversions

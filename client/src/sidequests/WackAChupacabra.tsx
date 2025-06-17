@@ -169,22 +169,32 @@ export function WackAChupacabra() {
         style={{ backgroundImage: 'url(/sidequests/wack-a-chupacabra/wack-bg.png)' }}
       />
 
-      {/* Haunt Logo Watermark positioned over moon */}
-      {hauntConfig?.logoPath && (
-        <div className="fixed opacity-30 z-5 pointer-events-none" 
-             style={{
-               top: 'clamp(2rem, 8vh, 4rem)',
-               right: 'clamp(1rem, 8vw, 3rem)',
-               width: 'clamp(4rem, 12vw, 8rem)',
-               height: 'clamp(4rem, 12vw, 8rem)'
-             }}>
-          <img 
-            src={hauntConfig.logoPath} 
-            alt="Haunt Logo"
-            className="w-full h-full object-contain filter grayscale"
-          />
-        </div>
-      )}
+      {/* Moon with Haunt Logo Overlay */}
+      <div className="fixed z-5 pointer-events-none" 
+           style={{
+             top: 'clamp(2rem, 8vh, 4rem)',
+             right: 'clamp(1rem, 8vw, 3rem)',
+             width: 'clamp(6rem, 15vw, 10rem)',
+             height: 'clamp(6rem, 15vw, 10rem)'
+           }}>
+        {/* Moon Background */}
+        <img 
+          src="/sidequests/wack-a-chupacabra/wack-moon.png" 
+          alt="Moon"
+          className="w-full h-full object-contain"
+        />
+        
+        {/* Haunt Logo Overlay */}
+        {hauntConfig?.logoPath && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <img 
+              src={hauntConfig.logoPath} 
+              alt="Haunt Logo"
+              className="w-3/4 h-3/4 object-contain opacity-80 filter grayscale"
+            />
+          </div>
+        )}
+      </div>
 
       {/* Game Over Overlay */}
       {gameState.isGameOver && (
