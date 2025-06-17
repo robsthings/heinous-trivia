@@ -179,7 +179,7 @@ export function CurseCrafting() {
       {/* Ingredient Grid - Top of screen - Hidden during reveal */}
       <div className={`pt-8 px-4 transition-opacity duration-1000 ${gamePhase === 'revealing' ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl md:text-6xl font-bold text-center text-purple-300 mb-8 drop-shadow-lg">
+          <h1 className="text-4xl md:text-6xl font-bold text-center text-purple-300 mb-8 drop-shadow-lg" style={{ fontFamily: 'Eater, cursive' }}>
             CURSE CRAFTING
           </h1>
           
