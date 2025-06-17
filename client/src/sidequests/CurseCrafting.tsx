@@ -90,179 +90,139 @@ export function CurseCrafting() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden p-4 bg-gradient-to-b from-purple-900 via-green-900 to-black">
-      {/* Mystical background effect */}
-      <div className="absolute inset-0 opacity-20">
-        <div className="absolute top-10 left-10 w-32 h-32 bg-purple-500 rounded-full blur-xl animate-pulse" />
-        <div className="absolute bottom-20 right-20 w-24 h-24 bg-green-500 rounded-full blur-xl animate-pulse delay-1000" />
-        <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-yellow-500 rounded-full blur-xl animate-pulse delay-2000" />
-      </div>
-
-      <div className="relative z-10 w-full max-w-6xl">
-        {/* Title */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-6xl font-bold text-green-300 mb-4 drop-shadow-lg">
+    <div 
+      className="min-h-screen relative overflow-hidden"
+      style={{
+        backgroundImage: 'url(/sidequests/curse-crafting/cursed-bg.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+      onMouseMove={handleMouseMove}
+    >
+      {/* Ingredient Grid - Top of screen */}
+      <div className="pt-8 px-4">
+        <div className="max-w-6xl mx-auto">
+          <h1 className="text-4xl md:text-6xl font-bold text-center text-purple-300 mb-8 drop-shadow-lg">
             CURSE CRAFTING
           </h1>
-          <p className="text-lg md:text-xl text-green-200 drop-shadow-md">
-            Brew the perfect curse from mystical ingredients!
-          </p>
+          
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 sm:gap-4">
+            {availableIngredients.map((ingredient) => {
+              const isSelected = selectedIngredients.find(i => i.id === ingredient.id);
+              const isInCauldron = cauldronIngredients.find(i => i.id === ingredient.id);
+              const isDragging = draggedIngredient?.id === ingredient.id;
+              
+              return (
+                <div
+                  key={ingredient.id}
+                  className={`relative cursor-pointer transition-all duration-300 transform ${
+                    isDragging ? 'scale-110 rotate-3' : 'hover:scale-105'
+                  } ${
+                    isInCauldron 
+                      ? 'opacity-50 grayscale pointer-events-none' 
+                      : isSelected 
+                        ? 'ring-2 ring-purple-400 bg-purple-900/30' 
+                        : 'hover:ring-2 hover:ring-green-400'
+                  }`}
+                  draggable={isSelected && !isInCauldron}
+                  onClick={() => handleIngredientClick(ingredient)}
+                  onDragStart={(e) => isSelected && handleDragStart(e, ingredient)}
+                  onDragEnd={handleDragEnd}
+                  onMouseEnter={() => setHoveredIngredient(ingredient)}
+                  onMouseLeave={() => setHoveredIngredient(null)}
+                >
+                  <div className="bg-black/60 border border-gray-600 rounded-lg p-2 sm:p-3 backdrop-blur-sm">
+                    <img 
+                      src={ingredient.icon} 
+                      alt={ingredient.name}
+                      className="w-12 h-12 sm:w-16 sm:h-16 mx-auto object-contain"
+                    />
+                    <p className="text-xs text-center text-white mt-2 truncate">{ingredient.name}</p>
+                  </div>
+                  
+                  {/* Selection indicator */}
+                  {isSelected && !isInCauldron && (
+                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                      ✓
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* Cauldron - Bottom center */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
+        <div
+          className={`relative transition-all duration-300 ${
+            draggedIngredient ? 'scale-110 ring-4 ring-purple-400 ring-opacity-50' : ''
+          }`}
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+        >
+          <img 
+            src="/sidequests/curse-crafting/cursed-cauldron.png"
+            alt="Cursed Cauldron"
+            className="w-32 h-32 sm:w-48 sm:h-48 object-contain"
+          />
+          
+          {/* Ingredients in cauldron */}
+          {cauldronIngredients.length > 0 && (
+            <div className="absolute top-4 left-1/2 transform -translate-x-1/2 flex gap-1">
+              {cauldronIngredients.map((ingredient, index) => (
+                <div
+                  key={ingredient.id}
+                  className="w-6 h-6 sm:w-8 sm:h-8 animate-bounce"
+                  style={{ animationDelay: `${index * 200}ms` }}
+                >
+                  <img 
+                    src={ingredient.icon} 
+                    alt={ingredient.name}
+                    className="w-full h-full object-contain opacity-80"
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+          
+          {/* Cauldron count indicator */}
+          <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-black/80 px-3 py-1 rounded-full">
+            <span className="text-white text-sm font-bold">{cauldronIngredients.length}/3</span>
+          </div>
         </div>
 
-        {gamePhase === "intro" && (
-          <div className="text-center mb-8">
-            <div className="bg-black/80 border border-green-500 rounded-lg p-6 md:p-8 max-w-md mx-auto">
-              <h2 className="text-2xl md:text-3xl font-bold text-green-400 mb-4">
-                Welcome to the Curse Laboratory
-              </h2>
-              <p className="text-base md:text-lg text-green-200 mb-4">
-                Select ingredients to brew a custom curse. Each combination creates unique magical effects!
-              </p>
-              <div className="text-sm md:text-base text-green-300 mb-6 space-y-2">
-                <p>• Choose up to 3 ingredients from the mystical pantry</p>
-                <p>• Each ingredient adds its own dark energy</p>
-                <p>• Brew your curse and witness its power</p>
-                <p>• Experiment with different combinations!</p>
-              </div>
-              
-              <Button
-                onClick={initializeGame}
-                className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200"
-              >
-                Enter the Laboratory
-              </Button>
-            </div>
-          </div>
-        )}
-
-        {gamePhase === "brewing" && (
-          <>
-            {/* Cauldron and Selected Ingredients */}
-            <div className="text-center mb-8">
-              <div className="bg-black/80 border border-green-500 rounded-lg p-6 max-w-2xl mx-auto">
-                <h3 className="text-xl md:text-2xl font-bold text-green-400 mb-4">
-                  Brewing Cauldron ({selectedIngredients.length}/3)
-                </h3>
-                
-                {selectedIngredients.length === 0 ? (
-                  <p className="text-green-300 italic">Select ingredients to begin brewing...</p>
-                ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                    {selectedIngredients.map((ingredient) => (
-                      <div
-                        key={ingredient.id}
-                        className="bg-purple-900/50 border border-purple-400 rounded-lg p-3 cursor-pointer hover:bg-purple-800/50 transition-colors"
-                        onClick={() => removeIngredient(ingredient.id)}
-                      >
-                        <img 
-                          src={ingredient.icon} 
-                          alt={ingredient.name}
-                          className="w-12 h-12 mx-auto mb-2 object-contain"
-                        />
-                        <h4 className="text-sm font-bold text-purple-300 mb-1">{ingredient.name}</h4>
-                        <p className="text-xs text-purple-200">{ingredient.description}</p>
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                {selectedIngredients.length > 0 && (
-                  <Button
-                    onClick={brewCurse}
-                    className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200"
-                  >
-                    Brew Curse
-                  </Button>
-                )}
-              </div>
-            </div>
-
-            {/* Available Ingredients */}
-            <div className="mb-8">
-              <h3 className="text-xl md:text-2xl font-bold text-green-300 text-center mb-6">
-                Mystical Pantry
-              </h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {availableIngredients.map((ingredient) => {
-                  const isSelected = selectedIngredients.find(i => i.id === ingredient.id);
-                  const isDisabled = selectedIngredients.length >= 3 && !isSelected;
-                  
-                  return (
-                    <div
-                      key={ingredient.id}
-                      className={`bg-black/60 border rounded-lg p-4 cursor-pointer transition-all duration-200 ${
-                        isSelected 
-                          ? 'border-purple-400 bg-purple-900/50' 
-                          : isDisabled
-                            ? 'border-gray-600 opacity-50 cursor-not-allowed'
-                            : 'border-green-500 hover:border-green-400 hover:bg-green-900/30 transform hover:scale-105'
-                      }`}
-                      onClick={() => !isDisabled && addIngredient(ingredient)}
-                    >
-                      <img 
-                        src={ingredient.icon} 
-                        alt={ingredient.name}
-                        className="w-16 h-16 mx-auto mb-3 object-contain"
-                      />
-                      <h4 className="text-sm font-bold text-green-300 mb-2 text-center">{ingredient.name}</h4>
-                      <p className="text-xs text-green-200 text-center">{ingredient.description}</p>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </>
-        )}
-
-        {gamePhase === "result" && (
-          <div className="text-center mb-8">
-            <div className="bg-black/80 border border-purple-500 rounded-lg p-6 md:p-8 max-w-2xl mx-auto">
-              <h2 className="text-3xl md:text-4xl font-bold text-purple-400 mb-4">
-                Curse Successfully Brewed!
-              </h2>
-              
-              <div className="bg-purple-900/50 border border-purple-400 rounded-lg p-6 mb-6">
-                <h3 className="text-xl md:text-2xl font-bold text-purple-300 mb-3">
-                  {curseName}
-                </h3>
-                <p className="text-base md:text-lg text-purple-200 italic">
-                  "{brewedCurse}"
-                </p>
-              </div>
-
-              <div className="mb-6">
-                <h4 className="text-lg font-bold text-purple-300 mb-3">Ingredients Used:</h4>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                  {selectedIngredients.map((ingredient) => (
-                    <div key={ingredient.id} className="text-center">
-                      <img 
-                        src={ingredient.icon} 
-                        alt={ingredient.name}
-                        className="w-12 h-12 mx-auto mb-2 object-contain"
-                      />
-                      <p className="text-sm text-purple-200">{ingredient.name}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-                <Button
-                  onClick={initializeGame}
-                  className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200"
-                >
-                  Brew Another Curse
-                </Button>
-                <Link href="/game/headquarters">
-                  <Button className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200">
-                    Return to Main Game
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        )}
+        {/* Stir Button */}
+        <Button
+          onClick={stirIrresponsibly}
+          disabled={cauldronIngredients.length !== 3}
+          className={`mt-4 px-8 py-3 text-lg font-bold rounded-lg shadow-lg transition-all duration-200 ${
+            cauldronIngredients.length === 3
+              ? 'bg-purple-600 hover:bg-purple-700 text-white transform hover:scale-105'
+              : 'bg-gray-600 text-gray-400 cursor-not-allowed'
+          }`}
+        >
+          Stir Irresponsibly
+        </Button>
       </div>
+
+      {/* Tooltip */}
+      {hoveredIngredient && (
+        <div
+          className="fixed z-50 pointer-events-none"
+          style={{
+            left: tooltipPosition.x + 10,
+            top: tooltipPosition.y - 60,
+          }}
+        >
+          <div className="bg-black/90 border border-purple-400 rounded-lg p-3 max-w-xs backdrop-blur-sm">
+            <h4 className="text-purple-300 font-bold text-sm">{hoveredIngredient.name}</h4>
+            <p className="text-gray-300 text-xs mt-1">{hoveredIngredient.description}</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
