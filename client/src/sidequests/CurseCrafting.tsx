@@ -30,6 +30,49 @@ interface Ingredient {
   icon: string;
 }
 
+interface GeneratedCurse {
+  curse: string;
+  target: string;
+  sideEffect?: string;
+}
+
+// Curse generation data
+const curseTemplates = [
+  "May every {noun} they {verb} turn into {outcome}",
+  "Whenever they {verb} a {noun}, may it become {outcome}",
+  "Let all their {noun} attempts result in {outcome}",
+  "May their {noun} always {verb} and transform into {outcome}",
+];
+
+const verbs = ["touch", "use", "hold", "wear", "eat", "drink", "throw", "catch", "open", "close", "step on", "look at"];
+const nouns = ["shoelace", "doorknob", "coffee cup", "phone", "pillow", "pen", "sock", "mirror", "sandwich", "book"];
+const outcomes = [
+  "live worms", "soggy lettuce", "aggressive squirrels", "tiny screaming voices", 
+  "glitter that never comes off", "cold soup", "judgmental stares", "off-key singing",
+  "the smell of wet dog", "inexplicably sticky surfaces", "minor inconveniences"
+];
+
+const targets = [
+  "your old gym teacher",
+  "an ex you still cyberstalk", 
+  "that one barista who judged you",
+  "your middle school rival",
+  "the person who cuts in line",
+  "whoever double-parks",
+  "people who don't return shopping carts",
+  "anyone who leaves one item on the shelf"
+];
+
+const sideEffects = [
+  "Also, mild goat noises.",
+  "Plus occasional hiccups that sound like dolphin clicks.",
+  "Bonus: everything they touch feels slightly damp.",
+  "Side effect: compulsive urge to apologize to houseplants.",
+  "Additional curse: their socks will never match again.",
+  "Also cursed to always have one eyelash in their eye.",
+  "Plus they'll hear faint carnival music at 3 AM."
+];
+
 export function CurseCrafting() {
   const [availableIngredients, setAvailableIngredients] = useState<Ingredient[]>([]);
   const [selectedIngredients, setSelectedIngredients] = useState<Ingredient[]>([]);
@@ -37,6 +80,8 @@ export function CurseCrafting() {
   const [draggedIngredient, setDraggedIngredient] = useState<Ingredient | null>(null);
   const [hoveredIngredient, setHoveredIngredient] = useState<Ingredient | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
+  const [gamePhase, setGamePhase] = useState<'selecting' | 'brewing' | 'revealing'>('selecting');
+  const [generatedCurse, setGeneratedCurse] = useState<GeneratedCurse | null>(null);
 
   // Initialize with 8 random ingredients on component mount
   useEffect(() => {
@@ -84,9 +129,40 @@ export function CurseCrafting() {
     setTooltipPosition({ x: e.clientX, y: e.clientY });
   };
 
+  const generateCurse = (): GeneratedCurse => {
+    const template = curseTemplates[Math.floor(Math.random() * curseTemplates.length)];
+    const verb = verbs[Math.floor(Math.random() * verbs.length)];
+    const noun = nouns[Math.floor(Math.random() * nouns.length)];
+    const outcome = outcomes[Math.floor(Math.random() * outcomes.length)];
+    const target = targets[Math.floor(Math.random() * targets.length)];
+    
+    const curse = template
+      .replace('{verb}', verb)
+      .replace('{noun}', noun)
+      .replace('{outcome}', outcome);
+    
+    // 70% chance of side effect for extra humor
+    const sideEffect = Math.random() < 0.7 
+      ? sideEffects[Math.floor(Math.random() * sideEffects.length)]
+      : undefined;
+
+    return { curse, target, sideEffect };
+  };
+
   const stirIrresponsibly = () => {
-    // Animation trigger - will be expanded in future prompts
-    console.log('Stirring irresponsibly with:', cauldronIngredients);
+    const curse = generateCurse();
+    setGeneratedCurse(curse);
+    setGamePhase('revealing');
+  };
+
+  const craftAgain = () => {
+    // Reset everything and generate new ingredients
+    const shuffled = [...ingredients].sort(() => Math.random() - 0.5);
+    setAvailableIngredients(shuffled.slice(0, 8));
+    setSelectedIngredients([]);
+    setCauldronIngredients([]);
+    setGeneratedCurse(null);
+    setGamePhase('selecting');
   };
 
   return (
@@ -100,8 +176,8 @@ export function CurseCrafting() {
       }}
       onMouseMove={handleMouseMove}
     >
-      {/* Ingredient Grid - Top of screen */}
-      <div className="pt-8 px-4">
+      {/* Ingredient Grid - Top of screen - Hidden during reveal */}
+      <div className={`pt-8 px-4 transition-opacity duration-1000 ${gamePhase === 'revealing' ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
         <div className="max-w-6xl mx-auto">
           <h1 className="text-4xl md:text-6xl font-bold text-center text-purple-300 mb-8 drop-shadow-lg">
             CURSE CRAFTING
@@ -194,11 +270,13 @@ export function CurseCrafting() {
           </div>
         </div>
 
-        {/* Stir Button */}
+        {/* Stir Button - Hidden during reveal */}
         <Button
           onClick={stirIrresponsibly}
           disabled={cauldronIngredients.length !== 3}
-          className={`mt-4 px-8 py-3 text-lg font-bold rounded-lg shadow-lg transition-all duration-200 ${
+          className={`mt-4 px-8 py-3 text-lg font-bold rounded-lg shadow-lg transition-all duration-1000 ${
+            gamePhase === 'revealing' ? 'opacity-0 pointer-events-none' : 'opacity-100'
+          } ${
             cauldronIngredients.length === 3
               ? 'bg-purple-600 hover:bg-purple-700 text-white transform hover:scale-105'
               : 'bg-gray-600 text-gray-400 cursor-not-allowed'
