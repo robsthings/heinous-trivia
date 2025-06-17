@@ -173,23 +173,34 @@ export function WretchedWiring() {
     const randomWire = availableWires[Math.floor(Math.random() * availableWires.length)];
     const randomMessage = CHUPACABRA_MESSAGES[Math.floor(Math.random() * CHUPACABRA_MESSAGES.length)];
 
+    // Replace stolen wire with chupa-wire.png
     setGameState(prev => ({
       ...prev,
       chupacabraVisible: true,
       chupacabraMessage: randomMessage,
       wires: prev.wires.map(w =>
-        w.id === randomWire.id ? { ...w, isStolen: true } : w
+        w.id === randomWire.id 
+          ? { ...w, isStolen: true, assetName: 'chupa-wire.png' } 
+          : w
       )
     }));
 
-    // Hide chupacabra after animation
+    // Show the chewed wire for 2 seconds, then hide completely
     setTimeout(() => {
       setGameState(prev => ({
         ...prev,
         chupacabraVisible: false,
         chupacabraMessage: null
       }));
-    }, 3000);
+    }, 2000);
+
+    // Hide the chewed wire after showing it briefly
+    setTimeout(() => {
+      setGameState(prev => ({
+        ...prev,
+        wires: prev.wires.filter(w => w.id !== randomWire.id)
+      }));
+    }, 4000);
   };
 
   // Show random taunts
