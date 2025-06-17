@@ -11,6 +11,16 @@ interface GameState {
   chupacabraMessage: string | null;
   giveUpClicks: number;
   showGiveUpMessage: boolean;
+  techControls: {
+    fluxCapacitor: boolean;
+    ghostproofing: boolean;
+    autoWire: boolean;
+    useAI: boolean;
+  };
+  showToast: string | null;
+  showSparks: boolean;
+  autoWireAnimation: boolean;
+  aiGlitch: boolean;
 }
 
 interface Wire {
@@ -82,7 +92,17 @@ const INITIAL_GAME_STATE: GameState = {
   chupacabraVisible: false,
   chupacabraMessage: null,
   giveUpClicks: 0,
-  showGiveUpMessage: false
+  showGiveUpMessage: false,
+  techControls: {
+    fluxCapacitor: false,
+    ghostproofing: false,
+    autoWire: false,
+    useAI: false
+  },
+  showToast: null,
+  showSparks: false,
+  autoWireAnimation: false,
+  aiGlitch: false
 };
 
 export function WretchedWiring() {
@@ -160,6 +180,88 @@ export function WretchedWiring() {
       return () => clearTimeout(timer);
     }
   }, [gameState.showGiveUpMessage]);
+
+  // Hide toast after delay
+  useEffect(() => {
+    if (gameState.showToast) {
+      const timer = setTimeout(() => {
+        setGameState(prev => ({ ...prev, showToast: null }));
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [gameState.showToast]);
+
+  // Hide sparks after delay
+  useEffect(() => {
+    if (gameState.showSparks) {
+      const timer = setTimeout(() => {
+        setGameState(prev => ({ ...prev, showSparks: false }));
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [gameState.showSparks]);
+
+  // Hide auto-wire animation after delay
+  useEffect(() => {
+    if (gameState.autoWireAnimation) {
+      const timer = setTimeout(() => {
+        setGameState(prev => ({ ...prev, autoWireAnimation: false }));
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [gameState.autoWireAnimation]);
+
+  // Hide AI glitch after delay
+  useEffect(() => {
+    if (gameState.aiGlitch) {
+      const timer = setTimeout(() => {
+        setGameState(prev => ({ ...prev, aiGlitch: false }));
+      }, 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [gameState.aiGlitch]);
+
+  // Tech control button handlers
+  const toggleFluxCapacitor = () => {
+    setGameState(prev => ({
+      ...prev,
+      techControls: { ...prev.techControls, fluxCapacitor: !prev.techControls.fluxCapacitor },
+      showToast: "Flux enabled. Time travel… delayed indefinitely.",
+      showSparks: true
+    }));
+  };
+
+  const toggleGhostproofing = () => {
+    setGameState(prev => ({
+      ...prev,
+      techControls: { ...prev.techControls, ghostproofing: !prev.techControls.ghostproofing },
+      showToast: "Ectoplasmic shielding active. Results inconclusive."
+    }));
+  };
+
+  const toggleAutoWire = () => {
+    setGameState(prev => ({
+      ...prev,
+      techControls: { ...prev.techControls, autoWire: !prev.techControls.autoWire },
+      showToast: "System attempted optimization. It failed gloriously.",
+      autoWireAnimation: true
+    }));
+  };
+
+  const toggleUseAI = () => {
+    setGameState(prev => ({
+      ...prev,
+      aiGlitch: true,
+      showToast: "AI has abandoned us. Again."
+    }));
+    // Reset AI button after glitch
+    setTimeout(() => {
+      setGameState(prev => ({
+        ...prev,
+        techControls: { ...prev.techControls, useAI: false }
+      }));
+    }, 1500);
+  };
 
   // Handle wire rotation
   const rotateWire = (wireId: string) => {
@@ -329,7 +431,7 @@ export function WretchedWiring() {
       {/* Certificate Screen */}
       {gameState.showCertificate && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 p-4">
-          <div className="relative w-full max-w-2xl mx-auto">
+          <div className="relative w-full max-w-lg mx-auto">
             <img 
               src="/sidequests/wretched-wiring/certificate.png" 
               alt="Certificate of Giving Up"
@@ -387,16 +489,101 @@ export function WretchedWiring() {
         <>
           {/* Left Side Terminals */}
           <div className="absolute left-8 top-1/2 transform -translate-y-1/2 space-y-8">
-            <img src="/sidequests/wretched-wiring/node-red-left.png" alt="Red Terminal Left" className="w-16 h-16" />
-            <img src="/sidequests/wretched-wiring/node-blue-left.png" alt="Blue Terminal Left" className="w-16 h-16" />
+            <div className={`relative transition-all duration-200 ${gameState.showSparks ? 'animate-pulse' : ''}`}>
+              <img src="/sidequests/wretched-wiring/node-red-left.png" alt="Red Terminal Left" className="w-16 h-16" />
+              {gameState.showSparks && (
+                <div className="absolute inset-0 animate-ping bg-blue-400 rounded-full opacity-75"></div>
+              )}
+            </div>
+            <div className={`relative transition-all duration-200 ${gameState.showSparks ? 'animate-pulse' : ''}`}>
+              <img src="/sidequests/wretched-wiring/node-blue-left.png" alt="Blue Terminal Left" className="w-16 h-16" />
+              {gameState.showSparks && (
+                <div className="absolute inset-0 animate-ping bg-blue-400 rounded-full opacity-75"></div>
+              )}
+            </div>
           </div>
 
           {/* Right Side Terminals */}
           <div className="absolute right-8 top-1/2 transform -translate-y-1/2 space-y-8">
-            <img src="/sidequests/wretched-wiring/node-red-right.png" alt="Red Terminal Right" className="w-16 h-16" />
-            <img src="/sidequests/wretched-wiring/node-blue-right.png" alt="Blue Terminal Right" className="w-16 h-16" />
+            <div className={`relative transition-all duration-200 ${gameState.showSparks ? 'animate-pulse' : ''}`}>
+              <img src="/sidequests/wretched-wiring/node-red-right.png" alt="Red Terminal Right" className="w-16 h-16" />
+              {gameState.showSparks && (
+                <div className="absolute inset-0 animate-ping bg-blue-400 rounded-full opacity-75"></div>
+              )}
+            </div>
+            <div className={`relative transition-all duration-200 ${gameState.showSparks ? 'animate-pulse' : ''}`}>
+              <img src="/sidequests/wretched-wiring/node-blue-right.png" alt="Blue Terminal Right" className="w-16 h-16" />
+              {gameState.showSparks && (
+                <div className="absolute inset-0 animate-ping bg-blue-400 rounded-full opacity-75"></div>
+              )}
+            </div>
           </div>
         </>
+      )}
+
+      {/* Tech Control Panel */}
+      {gameState.isPlaying && (
+        <div className="fixed bottom-24 left-1/2 transform -translate-x-1/2 z-20">
+          <div className="bg-gray-900 bg-opacity-90 border-2 border-cyan-400 rounded-lg p-4 backdrop-blur-sm">
+            <div className="flex flex-col sm:flex-row gap-3 items-center">
+              
+              {/* Flux Capacitor */}
+              <button
+                onClick={toggleFluxCapacitor}
+                className={`flex flex-col items-center p-2 rounded-lg border-2 transition-all duration-200 min-w-[80px] ${
+                  gameState.techControls.fluxCapacitor 
+                    ? 'bg-blue-600 border-blue-400 text-white' 
+                    : 'bg-gray-700 border-gray-500 text-gray-300'
+                }`}
+              >
+                <span className="text-xl">⚡</span>
+                <span className="text-xs font-mono">FLUX</span>
+              </button>
+
+              {/* Ghostproofing */}
+              <button
+                onClick={toggleGhostproofing}
+                className={`flex flex-col items-center p-2 rounded-lg border-2 transition-all duration-200 min-w-[80px] ${
+                  gameState.techControls.ghostproofing 
+                    ? 'bg-purple-600 border-purple-400 text-white' 
+                    : 'bg-gray-700 border-gray-500 text-gray-300'
+                }`}
+              >
+                <span className="text-xl">👻</span>
+                <span className="text-xs font-mono">GHOST</span>
+              </button>
+
+              {/* Auto-Wire */}
+              <button
+                onClick={toggleAutoWire}
+                className={`flex flex-col items-center p-2 rounded-lg border-2 transition-all duration-200 min-w-[80px] ${
+                  gameState.techControls.autoWire 
+                    ? 'bg-green-600 border-green-400 text-white' 
+                    : 'bg-gray-700 border-gray-500 text-gray-300'
+                }`}
+              >
+                <span className="text-xl">🔧</span>
+                <span className="text-xs font-mono">AUTO</span>
+              </button>
+
+              {/* Use AI */}
+              <button
+                onClick={toggleUseAI}
+                className={`flex flex-col items-center p-2 rounded-lg border-2 transition-all duration-200 min-w-[80px] ${
+                  gameState.aiGlitch
+                    ? 'bg-red-600 border-red-400 text-white animate-pulse'
+                    : gameState.techControls.useAI 
+                      ? 'bg-orange-600 border-orange-400 text-white' 
+                      : 'bg-gray-700 border-gray-500 text-gray-300'
+                }`}
+              >
+                <span className={`text-xl ${gameState.aiGlitch ? 'animate-spin' : ''}`}>🤖</span>
+                <span className="text-xs font-mono">AI™</span>
+              </button>
+              
+            </div>
+          </div>
+        </div>
       )}
 
       {/* Draggable Wires */}
@@ -587,6 +774,32 @@ export function WretchedWiring() {
           <h1 className="text-3xl font-bold text-yellow-400 drop-shadow-lg" style={{ fontFamily: 'Courier, monospace' }}>
             WRETCHED WIRING
           </h1>
+        </div>
+      )}
+
+      {/* Toast Notifications */}
+      {gameState.showToast && (
+        <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 animate-bounce">
+          <div className="bg-gray-900 bg-opacity-95 border-2 border-cyan-400 rounded-lg p-4 max-w-sm mx-auto backdrop-blur-sm">
+            <div className="text-cyan-300 text-sm font-mono text-center">
+              {gameState.showToast}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Auto-Wire Animation Overlay */}
+      {gameState.autoWireAnimation && (
+        <div className="fixed inset-0 z-30 pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <div className="animate-ping bg-green-400 rounded-full w-8 h-8 opacity-75"></div>
+          </div>
+          <div className="absolute top-1/3 left-1/3 transform -translate-x-1/2 -translate-y-1/2 animate-pulse">
+            <div className="bg-red-500 w-2 h-16 rotate-45 opacity-80"></div>
+          </div>
+          <div className="absolute bottom-1/3 right-1/3 transform translate-x-1/2 translate-y-1/2 animate-bounce">
+            <div className="bg-blue-500 w-2 h-12 -rotate-12 opacity-80"></div>
+          </div>
         </div>
       )}
     </div>
