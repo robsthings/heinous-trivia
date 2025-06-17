@@ -29,6 +29,7 @@ import ChupacabraChallenge from "@/pages/ChupacabraChallenge";
 import { NecromancersGambit } from "@/pages/sidequests/NecromancersGambit";
 import { SpectralMemory } from "@/pages/sidequests/SpectralMemory";
 import { PhantomsPuzzle } from "@/pages/sidequests/PhantomsPuzzle";
+import { CurseCrafting } from "@/sidequests/CurseCrafting";
 
 function Router() {
   return (
@@ -65,6 +66,8 @@ function Router() {
       <Route path="/sidequests/spectral-memory" component={SpectralMemory} />
       <Route path="/sidequest/phantoms-puzzle" component={PhantomsPuzzle} />
       <Route path="/sidequests/phantoms-puzzle" component={PhantomsPuzzle} />
+      <Route path="/sidequest/curse-crafting" component={CurseCrafting} />
+      <Route path="/sidequests/curse-crafting" component={CurseCrafting} />
       <Route component={NotFound} />
     </Switch>
   );
