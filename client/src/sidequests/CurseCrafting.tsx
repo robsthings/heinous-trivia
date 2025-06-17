@@ -318,21 +318,21 @@ export function CurseCrafting() {
             />
             
             {/* Curse Text Overlay */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center px-8 py-12">
-              <div className="text-center space-y-4 max-w-sm">
+            <div className="absolute inset-0 flex flex-col items-center justify-center px-12 py-16 sm:px-16 sm:py-20">
+              <div className="text-center space-y-3 max-w-xs sm:max-w-sm">
                 {/* Main Curse */}
-                <p className="text-lg sm:text-xl font-bold text-gray-800 leading-tight font-serif">
+                <p className="text-base sm:text-lg font-bold text-gray-800 leading-snug font-serif">
                   {generatedCurse.curse}
                 </p>
                 
                 {/* Target */}
-                <p className="text-sm sm:text-base italic text-gray-700 font-serif">
+                <p className="text-xs sm:text-sm italic text-gray-700 font-serif">
                   — Upon {generatedCurse.target}
                 </p>
                 
                 {/* Side Effect */}
                 {generatedCurse.sideEffect && (
-                  <p className="text-xs sm:text-sm text-gray-600 font-serif mt-2">
+                  <p className="text-xs text-gray-600 font-serif mt-1">
                     {generatedCurse.sideEffect}
                   </p>
                 )}
