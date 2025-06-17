@@ -232,8 +232,8 @@ export function WackAChupacabra() {
           <div className="text-2xl font-bold text-white drop-shadow-lg">
             Score: {gameState.score}
           </div>
-          <div className="text-lg text-white drop-shadow-lg">
-            Wack-A-Chupacabra
+          <div className="text-lg text-white drop-shadow-lg" style={{ fontFamily: 'Frijole, cursive' }}>
+            WACK-A-CHUPACABRA
           </div>
         </div>
         
@@ -243,8 +243,8 @@ export function WackAChupacabra() {
         {!gameState.isPlaying && !gameState.isGameOver && (
           <div className="flex-1 flex items-center justify-center">
             <div className="text-center">
-              <h1 className="text-4xl font-bold text-white mb-6 drop-shadow-lg">
-                Wack-A-Chupacabra
+              <h1 className="text-4xl font-bold text-white mb-6 drop-shadow-lg" style={{ fontFamily: 'Frijole, cursive' }}>
+                WACK-A-CHUPACABRA
               </h1>
               <p className="text-lg text-white mb-8 drop-shadow-lg max-w-md">
                 Hit the Chupacabras (+1 point), avoid decoys (-1 point), and DON'T hit the poison vials!
