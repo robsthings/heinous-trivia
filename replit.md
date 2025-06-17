@@ -106,6 +106,7 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 5. Game state updates with loaded data
 
 ## Changelog
+- June 17, 2025: **ADDED HAUNT BRANDING TO WACK-A-CHUPACABRA** - Integrated haunt logo watermark positioned over moon in background (top-right corner), using same implementation as trivia cards with 30% opacity grayscale filter, fetches haunt configuration for custom branding per venue
 - June 17, 2025: **POLISHED WACK-A-CHUPACABRA MINI-GAME** - Perfected sprite positioning (-top-1 for realistic hole emergence), increased hole and sprite sizes by 50% for better visibility, removed debugging interface, updated navigation to return players to main trivia game instead of side quests menu, creating seamless mini-game diversions
 - June 17, 2025: **COMPLETED WACK-A-CHUPACABRA MINI-GAME** - Built complete reflex game with 5-hole grid layout, random sprite spawning system (70% Chupacabra +1pt, 20% decoy -1pt, 10% poison vial = game over), 1.2-second sprite visibility with bounce animations, instant game over with green goo splash overlay, responsive mobile design with proper click detection, full routing integration
 - June 17, 2025: **REPLACED GHOUL YOUR OWN ADVENTURE WITH WACK-A-CHUPACABRA** - Removed GhoulYourOwnAdventure side quest and created new WackAChupacabra structure, updated sidequests index and metadata with proper game description ("Reflex hit game with Chupacabra taunts and trick targets"), prepared asset folder for future implementation
