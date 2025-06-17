@@ -269,7 +269,7 @@ export function WackAChupacabra() {
                     <img
                       src="/sidequests/wack-a-chupacabra/wack-hole.png"
                       alt={`Hole ${index + 1}`}
-                      className="w-20 h-20 md:w-24 md:h-24 block"
+                      className="w-30 h-30 md:w-36 md:h-36 block"
                     />
                     
                     {/* Sprite */}
@@ -278,7 +278,7 @@ export function WackAChupacabra() {
                         <img
                           src={getSpriteImagePath(gameState.currentSprite)}
                           alt={gameState.currentSprite}
-                          className="w-12 h-12 md:w-16 md:h-16 animate-bounce"
+                          className="w-18 h-18 md:w-24 md:h-24 animate-bounce"
                         />
                       </div>
                     )}
