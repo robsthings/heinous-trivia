@@ -166,7 +166,7 @@ export function CurseCrafting() {
           <img 
             src="/sidequests/curse-crafting/cursed-cauldron.png"
             alt="Cursed Cauldron"
-            className="w-32 h-32 sm:w-48 sm:h-48 object-contain"
+            className="w-48 h-48 sm:w-72 sm:h-72 object-contain"
           />
           
           {/* Ingredients in cauldron */}
