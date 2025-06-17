@@ -106,6 +106,7 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 5. Game state updates with loaded data
 
 ## Changelog
+- June 17, 2025: **BROKEN "I GIVE UP" BUTTON** - Enhanced chaos simulator with malfunctioning surrender button requiring 3 clicks and displaying "That's broken too" message, completing the everything-is-broken experience
 - June 17, 2025: **AMPLIFIED FAKE TIMER PANIC MODE** - Enhanced red panic phases with vibration (bounce), intense red glow, scale increase, spinning rings, and "PANIC!" text transformation for maximum dramatic effect
 - June 17, 2025: **ENHANCED CHUPACABRA AUTHENTICITY** - Replaced human speech with creature sounds (growls, hisses, grunts, chomping) for authentic cryptid wire theft experience
 - June 17, 2025: **UPGRADED DR. HEINOUS COMMENTARY SYSTEM** - Expanded to 29 premium snarky taunts including "Error 666: Haunting Intensifies", "We are now operating entirely on vibes", and "You've achieved total un-circuitry", creating maximum personality-driven frustration experience

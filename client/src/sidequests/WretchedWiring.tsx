@@ -9,6 +9,8 @@ interface GameState {
   wires: Wire[];
   chupacabraVisible: boolean;
   chupacabraMessage: string | null;
+  giveUpClicks: number;
+  showGiveUpMessage: boolean;
 }
 
 interface Wire {
@@ -78,7 +80,9 @@ const INITIAL_GAME_STATE: GameState = {
   currentHeinousSprite: 'unimpressed.png',
   wires: [],
   chupacabraVisible: false,
-  chupacabraMessage: null
+  chupacabraMessage: null,
+  giveUpClicks: 0,
+  showGiveUpMessage: false
 };
 
 export function WretchedWiring() {
@@ -125,10 +129,37 @@ export function WretchedWiring() {
     timerRef.current = 0;
   };
 
-  // Show certificate
+  // Show certificate (broken - requires 3 clicks)
   const giveUp = () => {
-    setGameState(prev => ({ ...prev, showCertificate: true }));
+    setGameState(prev => {
+      const newClicks = prev.giveUpClicks + 1;
+      
+      if (newClicks < 3) {
+        return { 
+          ...prev, 
+          giveUpClicks: newClicks,
+          showGiveUpMessage: true
+        };
+      } else {
+        return { 
+          ...prev, 
+          showCertificate: true,
+          giveUpClicks: 0,
+          showGiveUpMessage: false
+        };
+      }
+    });
   };
+
+  // Hide "That's broken too" message after delay
+  useEffect(() => {
+    if (gameState.showGiveUpMessage) {
+      const timer = setTimeout(() => {
+        setGameState(prev => ({ ...prev, showGiveUpMessage: false }));
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [gameState.showGiveUpMessage]);
 
   // Handle wire rotation
   const rotateWire = (wireId: string) => {
@@ -527,15 +558,26 @@ export function WretchedWiring() {
       {/* I Give Up Button */}
       {gameState.isPlaying && (
         <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-30">
-          <button
-            onClick={giveUp}
-            className="px-8 py-4 bg-red-600 hover:bg-red-700 text-white font-bold rounded-full transition-all duration-300 shadow-lg animate-pulse border-4 border-red-400"
-            style={{
-              boxShadow: '0 0 20px rgba(239, 68, 68, 0.5), inset 0 0 20px rgba(239, 68, 68, 0.1)'
-            }}
-          >
-            🏳️ I GIVE UP 🏳️
-          </button>
+          <div className="relative">
+            <button
+              onClick={giveUp}
+              className="px-8 py-4 bg-red-600 hover:bg-red-700 text-white font-bold rounded-full transition-all duration-300 shadow-lg animate-pulse border-4 border-red-400"
+              style={{
+                boxShadow: '0 0 20px rgba(239, 68, 68, 0.5), inset 0 0 20px rgba(239, 68, 68, 0.1)'
+              }}
+            >
+              🏳️ I GIVE UP 🏳️
+            </button>
+            
+            {/* "That's broken too" message */}
+            {gameState.showGiveUpMessage && (
+              <div className="absolute -top-16 left-1/2 transform -translate-x-1/2 whitespace-nowrap animate-bounce">
+                <div className="bg-red-900 bg-opacity-95 border-2 border-red-400 rounded-lg p-3 text-white font-bold text-sm">
+                  That's broken too.
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       )}
 
