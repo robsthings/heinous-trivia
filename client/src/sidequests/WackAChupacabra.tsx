@@ -174,8 +174,8 @@ export function WackAChupacabra() {
            style={{
              top: 'clamp(2rem, 8vh, 4rem)',
              right: 'clamp(1rem, 8vw, 3rem)',
-             width: 'clamp(6rem, 15vw, 10rem)',
-             height: 'clamp(6rem, 15vw, 10rem)'
+             width: 'clamp(9rem, 22.5vw, 15rem)',
+             height: 'clamp(9rem, 22.5vw, 15rem)'
            }}>
         {/* Moon Background */}
         <img 
