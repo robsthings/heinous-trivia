@@ -364,8 +364,8 @@ export function CurseCrafting() {
             />
             
             {/* Curse Text Overlay */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center px-12 py-16 sm:px-16 sm:py-20 z-20">
-              <div className="text-center space-y-3 max-w-xs sm:max-w-sm">
+            <div className="absolute inset-0 flex flex-col items-center justify-center px-16 py-20 sm:px-20 sm:py-24 z-20">
+              <div className="text-center space-y-2 max-w-56 sm:max-w-72">
                 {/* Main Curse */}
                 <p className="text-base sm:text-lg font-bold text-gray-800 leading-snug font-serif">
                   {generatedCurse.curse}
