@@ -398,8 +398,27 @@ export function WretchedWiring() {
 
       {/* Fake Timer Ring */}
       {gameState.isPlaying && (
-        <div className="absolute top-8 right-8 w-20 h-20 z-30">
-          <svg width="80" height="80" className="transform -rotate-90">
+        <div 
+          className={`absolute top-8 right-8 w-20 h-20 z-30 transition-all duration-200 ${
+            Math.abs(timerRef.current % 360) < 30 
+              ? 'animate-bounce scale-110' 
+              : ''
+          }`}
+          style={{
+            filter: Math.abs(timerRef.current % 360) < 30 
+              ? 'drop-shadow(0 0 20px rgba(239, 68, 68, 0.8))' 
+              : 'none'
+          }}
+        >
+          <svg 
+            width="80" 
+            height="80" 
+            className={`transform -rotate-90 transition-all duration-200 ${
+              Math.abs(timerRef.current % 360) < 30 
+                ? 'animate-pulse' 
+                : ''
+            }`}
+          >
             {/* Background ring */}
             <circle
               cx="40"
@@ -415,29 +434,49 @@ export function WretchedWiring() {
               cy="40"
               r="35"
               fill="none"
-              stroke="#10b981"
+              stroke={Math.abs(timerRef.current % 360) < 30 ? "#ef4444" : "#10b981"}
               strokeWidth="4"
               strokeDasharray={`${2 * Math.PI * 35}`}
               strokeDashoffset={`${2 * Math.PI * 35 * (1 - (timerRef.current / 360))}`}
-              className="transition-all duration-75"
+              className="transition-all duration-200"
             />
-            {/* Panic slice */}
+            {/* Panic slice with intense effects */}
             {Math.abs(timerRef.current % 360) < 30 && (
-              <circle
-                cx="40"
-                cy="40"
-                r="35"
-                fill="none"
-                stroke="#ef4444"
-                strokeWidth="6"
-                strokeDasharray="20"
-                strokeDashoffset="0"
-                className="animate-pulse"
-              />
+              <>
+                <circle
+                  cx="40"
+                  cy="40"
+                  r="35"
+                  fill="none"
+                  stroke="#ef4444"
+                  strokeWidth="8"
+                  strokeDasharray="15"
+                  strokeDashoffset="0"
+                  className="animate-spin"
+                  style={{ animationDuration: '0.5s' }}
+                />
+                <circle
+                  cx="40"
+                  cy="40"
+                  r="30"
+                  fill="none"
+                  stroke="#fbbf24"
+                  strokeWidth="2"
+                  strokeDasharray="10"
+                  strokeDashoffset="0"
+                  className="animate-pulse"
+                />
+              </>
             )}
           </svg>
-          <div className="absolute inset-0 flex items-center justify-center text-white font-bold text-xs">
-            FAKE
+          <div 
+            className={`absolute inset-0 flex items-center justify-center font-bold text-xs transition-all duration-200 ${
+              Math.abs(timerRef.current % 360) < 30 
+                ? 'text-red-300 animate-pulse scale-110' 
+                : 'text-white'
+            }`}
+          >
+            {Math.abs(timerRef.current % 360) < 30 ? 'PANIC!' : 'FAKE'}
           </div>
         </div>
       )}
