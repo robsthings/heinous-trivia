@@ -328,23 +328,23 @@ export function WretchedWiring() {
 
       {/* Certificate Screen */}
       {gameState.showCertificate && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90">
-          <div className="relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 p-4">
+          <div className="relative w-full max-w-2xl mx-auto">
             <img 
               src="/sidequests/wretched-wiring/certificate.png" 
               alt="Certificate of Giving Up"
-              className="max-w-full max-h-full object-contain"
+              className="w-full h-auto object-contain rounded-lg shadow-2xl"
             />
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 space-x-4">
+            <div className="absolute bottom-2 sm:bottom-4 left-1/2 transform -translate-x-1/2 flex flex-col sm:flex-row gap-2 sm:gap-4 w-full px-4 sm:px-0 sm:w-auto">
               <button
                 onClick={resetGame}
-                className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors duration-200 shadow-lg"
+                className="px-4 py-2 sm:px-6 sm:py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors duration-200 shadow-lg text-sm sm:text-base"
               >
                 Try Again
               </button>
               <Link
                 href="/game"
-                className="px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white font-bold rounded-lg transition-colors duration-200 shadow-lg inline-block"
+                className="px-4 py-2 sm:px-6 sm:py-3 bg-gray-600 hover:bg-gray-700 text-white font-bold rounded-lg transition-colors duration-200 shadow-lg inline-block text-center text-sm sm:text-base"
               >
                 Return to Game
               </Link>
