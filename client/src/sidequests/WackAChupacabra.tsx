@@ -169,9 +169,15 @@ export function WackAChupacabra() {
         style={{ backgroundImage: 'url(/sidequests/wack-a-chupacabra/wack-bg.png)' }}
       />
 
-      {/* Haunt Logo Watermark over moon */}
+      {/* Haunt Logo Watermark positioned over moon */}
       {hauntConfig?.logoPath && (
-        <div className="fixed top-8 right-8 opacity-30 w-32 h-32 z-5 pointer-events-none">
+        <div className="fixed opacity-30 z-5 pointer-events-none" 
+             style={{
+               top: 'clamp(2rem, 8vh, 4rem)',
+               right: 'clamp(1rem, 8vw, 3rem)',
+               width: 'clamp(4rem, 12vw, 8rem)',
+               height: 'clamp(4rem, 12vw, 8rem)'
+             }}>
           <img 
             src={hauntConfig.logoPath} 
             alt="Haunt Logo"
