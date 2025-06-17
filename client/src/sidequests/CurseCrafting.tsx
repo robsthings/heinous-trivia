@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
+import html2canvas from "html2canvas";
 
 const ingredients = [
   { id: "potion-1", name: "Easther of Wood Rossen", description: "A botanical distillate no druid will take credit for.", icon: "/sidequests/curse-crafting/potion-1.png" },
@@ -189,6 +190,27 @@ export function CurseCrafting() {
     setGamePhase('selecting');
   };
 
+  const captureScrollScreenshot = async () => {
+    const scrollElement = document.getElementById('curse-scroll-container');
+    if (scrollElement) {
+      try {
+        const canvas = await html2canvas(scrollElement, {
+          backgroundColor: 'transparent',
+          scale: 2,
+          logging: false
+        });
+        
+        // Create download link
+        const link = document.createElement('a');
+        link.download = 'cursed-scroll.png';
+        link.href = canvas.toDataURL();
+        link.click();
+      } catch (error) {
+        console.error('Screenshot failed:', error);
+      }
+    }
+  };
+
   return (
     <div 
       className="min-h-screen relative overflow-hidden"
@@ -329,12 +351,16 @@ export function CurseCrafting() {
       {/* Scroll Reveal Animation */}
       {gamePhase === 'revealing' && generatedCurse && (
         <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-          <div className="relative animate-scroll-reveal">
+          <div id="curse-scroll-container" className="relative animate-scroll-reveal">
+            {/* Toxic Green Glow Background */}
+            <div className="absolute inset-0 bg-green-400/30 rounded-full blur-3xl scale-125 animate-pulse"></div>
+            
             {/* Scroll Image */}
             <img 
+              id="curse-scroll"
               src="/sidequests/curse-crafting/scroll-1.png"
               alt="Cursed Scroll"
-              className="w-80 h-96 sm:w-96 sm:h-[28rem] object-contain mx-auto"
+              className="w-80 h-96 sm:w-96 sm:h-[28rem] object-contain mx-auto relative z-10"
             />
             
             {/* Curse Text Overlay */}
@@ -360,15 +386,21 @@ export function CurseCrafting() {
             </div>
             
             {/* Action Buttons */}
-            <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2 flex gap-4">
+            <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2 flex gap-3">
+              <Button
+                onClick={captureScrollScreenshot}
+                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-bold shadow-lg transform hover:scale-105 transition-all"
+              >
+                📸 Screenshot
+              </Button>
               <Button
                 onClick={craftAgain}
-                className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-bold shadow-lg transform hover:scale-105 transition-all"
+                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-bold shadow-lg transform hover:scale-105 transition-all"
               >
                 🔁 Craft Again
               </Button>
               <Link href="/game/headquarters">
-                <Button className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded-lg font-bold shadow-lg transform hover:scale-105 transition-all">
+                <Button className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg font-bold shadow-lg transform hover:scale-105 transition-all">
                   🧪 Return to Main Game
                 </Button>
               </Link>
