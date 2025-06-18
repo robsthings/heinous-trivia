@@ -309,7 +309,7 @@ export function LabEscape() {
           <img 
             src="/sidequests/lab-escape/door-2.png" 
             alt="Door 2"
-            className="absolute top-1/3 left-1/2 transform -translate-x-1/2 w-48 h-auto cursor-pointer hover:animate-pulse transition-all duration-200 hover:brightness-110"
+            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-auto cursor-pointer hover:animate-pulse transition-all duration-200 hover:brightness-110"
             onClick={() => handleDoorClick(2)}
           />
           <img 
