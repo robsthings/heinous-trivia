@@ -175,6 +175,16 @@
     overflow: hidden;
   }
   
+  /* Door gentle floating animation */
+  @keyframes gentle-float {
+    0%, 100% { 
+      transform: translateY(0px);
+    }
+    50% { 
+      transform: translateY(-3px);
+    }
+  }
+
   /* Mobile touch optimization */
   .touch-manipulation {
     touch-action: manipulation;

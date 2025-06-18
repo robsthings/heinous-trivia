@@ -261,22 +261,31 @@ export function LabEscape() {
           <img 
             src="/sidequests/lab-escape/door-1.png" 
             alt="Door 1"
-            className="absolute top-1/2 left-8 transform -translate-y-1/2 w-48 h-auto cursor-pointer hover:animate-pulse transition-all duration-200 hover:brightness-110 animate-bounce"
-            style={{ animationDuration: '3s', animationIterationCount: 'infinite' }}
+            className="absolute top-1/2 left-8 transform -translate-y-1/2 w-48 h-auto cursor-pointer hover:animate-pulse transition-all duration-200 hover:brightness-110"
+            style={{ 
+              animation: 'gentle-float 4s ease-in-out infinite',
+              animationDelay: '0s'
+            }}
             onClick={() => handleDoorClick(1)}
           />
           <img 
             src="/sidequests/lab-escape/door-2.png" 
             alt="Door 2"
-            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-full w-48 h-auto cursor-pointer hover:animate-pulse transition-all duration-200 hover:brightness-110 animate-bounce"
-            style={{ animationDuration: '2.5s', animationIterationCount: 'infinite', animationDelay: '0.5s' }}
+            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-full w-48 h-auto cursor-pointer hover:animate-pulse transition-all duration-200 hover:brightness-110"
+            style={{ 
+              animation: 'gentle-float 3.5s ease-in-out infinite',
+              animationDelay: '0.5s'
+            }}
             onClick={() => handleDoorClick(2)}
           />
           <img 
             src="/sidequests/lab-escape/door-3.png" 
             alt="Door 3"
-            className="absolute top-1/2 right-8 transform -translate-y-1/2 w-48 h-auto cursor-pointer hover:animate-pulse transition-all duration-200 hover:brightness-110 animate-bounce"
-            style={{ animationDuration: '3.5s', animationIterationCount: 'infinite', animationDelay: '1s' }}
+            className="absolute top-1/2 right-8 transform -translate-y-1/2 w-48 h-auto cursor-pointer hover:animate-pulse transition-all duration-200 hover:brightness-110"
+            style={{ 
+              animation: 'gentle-float 4.5s ease-in-out infinite',
+              animationDelay: '1s'
+            }}
             onClick={() => handleDoorClick(3)}
           />
         </>
