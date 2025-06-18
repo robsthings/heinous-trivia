@@ -75,8 +75,8 @@ function Router() {
       <Route path="/sidequests/wack-a-chupacabra" component={WackAChupacabra} />
       <Route path="/sidequest/wretched-wiring" component={WretchedWiring} />
       <Route path="/sidequests/wretched-wiring" component={WretchedWiring} />
-      <Route path="/lab-escape" component={LabEscape} />
-      <Route path="/pages/lab-escape" component={LabEscape} />
+      <Route path="/sidequest/lab-escape" component={LabEscape} />
+      <Route path="/sidequests/lab-escape" component={LabEscape} />
       <Route component={NotFound} />
     </Switch>
   );
