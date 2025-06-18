@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'wouter';
+import riddlesData from '../data/riddles.json';
 
 interface GameState {
   correctAnswers: number;
@@ -21,56 +22,13 @@ interface Riddle {
   hint?: string;
 }
 
-const RIDDLES: Riddle[] = [
-  {
-    id: 1,
-    question: "I have keys but no locks. I have space but no room. You can enter, but you can't go outside. What am I?",
-    answer: "keyboard",
-    hint: "Dr. Heinous types his evil schemes on this..."
-  },
-  {
-    id: 2,
-    question: "What gets wetter the more it dries?",
-    answer: "towel",
-    hint: "Found in the lab's decontamination chamber..."
-  },
-  {
-    id: 3,
-    question: "I'm tall when I'm young, and short when I'm old. What am I?",
-    answer: "candle",
-    hint: "Flickering light in the haunted laboratory..."
-  },
-  {
-    id: 4,
-    question: "What has many teeth but cannot bite?",
-    answer: "saw",
-    hint: "Dr. Heinous's favorite cutting tool..."
-  },
-  {
-    id: 5,
-    question: "The more you take, the more you leave behind. What am I?",
-    answer: "footsteps",
-    hint: "Evidence of your escape attempt..."
-  },
-  {
-    id: 6,
-    question: "What can travel around the world while staying in a corner?",
-    answer: "stamp",
-    hint: "Found on Dr. Heinous's evil correspondence..."
-  },
-  {
-    id: 7,
-    question: "I have a head and a tail, but no body. What am I?",
-    answer: "coin",
-    hint: "Currency from the realm of the living..."
-  },
-  {
-    id: 8,
-    question: "What comes once in a minute, twice in a moment, but never in a thousand years?",
-    answer: "m",
-    hint: "Look at the letters themselves..."
-  }
-];
+// Convert riddles data to match our interface format
+const RIDDLES: Riddle[] = riddlesData.map(riddle => ({
+  id: parseInt(riddle.id),
+  question: riddle.question,
+  answer: riddle.answer.toLowerCase(),
+  hint: "Dr. Heinous whispers: Think carefully about the wording..."
+}));
 
 const CHUPACABRA_TAUNTS = [
   "Wrong! Even I could answer that one.",
