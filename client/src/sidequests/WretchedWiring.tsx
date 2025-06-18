@@ -11,7 +11,7 @@ interface GameState {
   chupacabraMessage: string | null;
   giveUpClicks: number;
   showGiveUpMessage: boolean;
-
+  pullChainPulled: boolean;
 }
 
 interface Wire {
@@ -83,7 +83,8 @@ const INITIAL_GAME_STATE: GameState = {
   chupacabraVisible: false,
   chupacabraMessage: null,
   giveUpClicks: 0,
-  showGiveUpMessage: false
+  showGiveUpMessage: false,
+  pullChainPulled: false
 };
 
 export function WretchedWiring() {
@@ -162,7 +163,53 @@ export function WretchedWiring() {
     }
   }, [gameState.showGiveUpMessage]);
 
+  // Reset pull chain animation
+  useEffect(() => {
+    if (gameState.pullChainPulled) {
+      const timer = setTimeout(() => {
+        setGameState(prev => ({ ...prev, pullChainPulled: false }));
+      }, 800);
+      return () => clearTimeout(timer);
+    }
+  }, [gameState.pullChainPulled]);
 
+  // Handle pull chain interaction
+  const handlePullChain = () => {
+    if (!gameState.isPlaying || gameState.pullChainPulled) return;
+
+    // Generate 1-5 new wires
+    const numNewWires = Math.floor(Math.random() * 5) + 1;
+    const wireAssets = [
+      'wire-red-1.png', 'wire-red-2.png', 'wire-red-3.png',
+      'wire-blue-1.png', 'wire-blue-2.png', 'wire-blue-3.png'
+    ];
+
+    const newWires: Wire[] = [];
+    for (let i = 0; i < numNewWires; i++) {
+      const assetName = wireAssets[Math.floor(Math.random() * wireAssets.length)];
+      const newWire: Wire = {
+        id: `wire-${Date.now()}-${i}`,
+        color: assetName.includes('red') ? 'red' : 'blue',
+        assetName,
+        position: {
+          x: Math.random() * (window.innerWidth - 100) + 50,
+          y: Math.random() * (window.innerHeight - 200) + 150
+        },
+        rotation: Math.floor(Math.random() * 4) * 90,
+        isDragging: false,
+        isStolen: false
+      };
+      newWires.push(newWire);
+    }
+
+    setGameState(prev => ({
+      ...prev,
+      wires: [...prev.wires, ...newWires],
+      pullChainPulled: true,
+      currentTaunt: `${numNewWires} more wires? Excellent. More chaos!`,
+      currentHeinousSprite: 'scheming.png'
+    }));
+  };
 
   // Handle wire rotation
   const rotateWire = (wireId: string) => {
@@ -410,7 +457,28 @@ export function WretchedWiring() {
         </>
       )}
 
-
+      {/* Pull Chain */}
+      {gameState.isPlaying && (
+        <div 
+          className="absolute top-8 left-8 z-30 cursor-pointer select-none"
+          onClick={handlePullChain}
+        >
+          <img 
+            src="/sidequests/wretched-wiring/Pull-Chain.png" 
+            alt="Pull Chain"
+            className={`w-12 h-auto transition-all duration-300 hover:brightness-110 ${
+              gameState.pullChainPulled 
+                ? 'transform translate-y-4 animate-bounce' 
+                : 'hover:scale-105'
+            }`}
+            style={{
+              filter: gameState.pullChainPulled 
+                ? 'drop-shadow(0 4px 8px rgba(255,255,0,0.6))' 
+                : 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))'
+            }}
+          />
+        </div>
+      )}
 
       {/* Draggable Wires */}
       {gameState.isPlaying && gameState.wires.map(wire => (
