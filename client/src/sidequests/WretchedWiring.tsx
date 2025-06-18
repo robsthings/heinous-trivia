@@ -11,16 +11,7 @@ interface GameState {
   chupacabraMessage: string | null;
   giveUpClicks: number;
   showGiveUpMessage: boolean;
-  techControls: {
-    fluxCapacitor: boolean;
-    ghostproofing: boolean;
-    autoWire: boolean;
-    useAI: boolean;
-  };
-  showToast: string | null;
-  showSparks: boolean;
-  autoWireAnimation: boolean;
-  aiGlitch: boolean;
+
 }
 
 interface Wire {
@@ -92,17 +83,7 @@ const INITIAL_GAME_STATE: GameState = {
   chupacabraVisible: false,
   chupacabraMessage: null,
   giveUpClicks: 0,
-  showGiveUpMessage: false,
-  techControls: {
-    fluxCapacitor: false,
-    ghostproofing: false,
-    autoWire: false,
-    useAI: false
-  },
-  showToast: null,
-  showSparks: false,
-  autoWireAnimation: false,
-  aiGlitch: false
+  showGiveUpMessage: false
 };
 
 export function WretchedWiring() {
@@ -181,87 +162,7 @@ export function WretchedWiring() {
     }
   }, [gameState.showGiveUpMessage]);
 
-  // Hide toast after delay
-  useEffect(() => {
-    if (gameState.showToast) {
-      const timer = setTimeout(() => {
-        setGameState(prev => ({ ...prev, showToast: null }));
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [gameState.showToast]);
 
-  // Hide sparks after delay
-  useEffect(() => {
-    if (gameState.showSparks) {
-      const timer = setTimeout(() => {
-        setGameState(prev => ({ ...prev, showSparks: false }));
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [gameState.showSparks]);
-
-  // Hide auto-wire animation after delay
-  useEffect(() => {
-    if (gameState.autoWireAnimation) {
-      const timer = setTimeout(() => {
-        setGameState(prev => ({ ...prev, autoWireAnimation: false }));
-      }, 3000);
-      return () => clearTimeout(timer);
-    }
-  }, [gameState.autoWireAnimation]);
-
-  // Hide AI glitch after delay
-  useEffect(() => {
-    if (gameState.aiGlitch) {
-      const timer = setTimeout(() => {
-        setGameState(prev => ({ ...prev, aiGlitch: false }));
-      }, 1500);
-      return () => clearTimeout(timer);
-    }
-  }, [gameState.aiGlitch]);
-
-  // Tech control button handlers
-  const toggleFluxCapacitor = () => {
-    setGameState(prev => ({
-      ...prev,
-      techControls: { ...prev.techControls, fluxCapacitor: !prev.techControls.fluxCapacitor },
-      showToast: "Flux enabled. Time travel… delayed indefinitely.",
-      showSparks: true
-    }));
-  };
-
-  const toggleGhostproofing = () => {
-    setGameState(prev => ({
-      ...prev,
-      techControls: { ...prev.techControls, ghostproofing: !prev.techControls.ghostproofing },
-      showToast: "Ectoplasmic shielding active. Results inconclusive."
-    }));
-  };
-
-  const toggleAutoWire = () => {
-    setGameState(prev => ({
-      ...prev,
-      techControls: { ...prev.techControls, autoWire: !prev.techControls.autoWire },
-      showToast: "System attempted optimization. It failed gloriously.",
-      autoWireAnimation: true
-    }));
-  };
-
-  const toggleUseAI = () => {
-    setGameState(prev => ({
-      ...prev,
-      aiGlitch: true,
-      showToast: "AI has abandoned us. Again."
-    }));
-    // Reset AI button after glitch
-    setTimeout(() => {
-      setGameState(prev => ({
-        ...prev,
-        techControls: { ...prev.techControls, useAI: false }
-      }));
-    }, 1500);
-  };
 
   // Handle wire rotation
   const rotateWire = (wireId: string) => {
@@ -489,159 +390,27 @@ export function WretchedWiring() {
         <>
           {/* Left Side Terminals */}
           <div className="absolute left-8 top-1/2 transform -translate-y-1/2 space-y-8">
-            <div className={`relative transition-all duration-200 ${gameState.showSparks ? 'animate-pulse' : ''}`}>
+            <div className="relative">
               <img src="/sidequests/wretched-wiring/node-red-left.png" alt="Red Terminal Left" className="w-16 h-16" />
-              {gameState.showSparks && (
-                <div className="absolute inset-0 animate-ping bg-blue-400 rounded-full opacity-75"></div>
-              )}
             </div>
-            <div className={`relative transition-all duration-200 ${gameState.showSparks ? 'animate-pulse' : ''}`}>
+            <div className="relative">
               <img src="/sidequests/wretched-wiring/node-blue-left.png" alt="Blue Terminal Left" className="w-16 h-16" />
-              {gameState.showSparks && (
-                <div className="absolute inset-0 animate-ping bg-blue-400 rounded-full opacity-75"></div>
-              )}
             </div>
           </div>
 
           {/* Right Side Terminals */}
           <div className="absolute right-8 top-1/2 transform -translate-y-1/2 space-y-8">
-            <div className={`relative transition-all duration-200 ${gameState.showSparks ? 'animate-pulse' : ''}`}>
+            <div className="relative">
               <img src="/sidequests/wretched-wiring/node-red-right.png" alt="Red Terminal Right" className="w-16 h-16" />
-              {gameState.showSparks && (
-                <div className="absolute inset-0 animate-ping bg-blue-400 rounded-full opacity-75"></div>
-              )}
             </div>
-            <div className={`relative transition-all duration-200 ${gameState.showSparks ? 'animate-pulse' : ''}`}>
+            <div className="relative">
               <img src="/sidequests/wretched-wiring/node-blue-right.png" alt="Blue Terminal Right" className="w-16 h-16" />
-              {gameState.showSparks && (
-                <div className="absolute inset-0 animate-ping bg-blue-400 rounded-full opacity-75"></div>
-              )}
             </div>
           </div>
         </>
       )}
 
-      {/* Tech Control Panel */}
-      {gameState.isPlaying && (
-        <div className="fixed bottom-24 left-1/2 transform -translate-x-1/2 z-20">
-          <div className="bg-black bg-opacity-95 border-4 border-yellow-600 rounded-none p-6 backdrop-blur-sm" style={{ 
-            boxShadow: 'inset 0 0 20px rgba(255, 255, 0, 0.3), 0 0 30px rgba(255, 255, 0, 0.2)',
-            background: 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%)'
-          }}>
-            <div className="text-center mb-3">
-              <div className="text-yellow-400 text-xs font-mono tracking-widest">CONTROL MATRIX</div>
-              <div className="h-px bg-yellow-600 w-full mt-1"></div>
-            </div>
-            
-            <div className="flex flex-col sm:flex-row gap-4 items-center">
-              
-              {/* Flux Capacitor */}
-              <div className="flex flex-col items-center">
-                <button
-                  onClick={toggleFluxCapacitor}
-                  className={`relative w-16 h-16 border-4 transition-all duration-200 ${
-                    gameState.techControls.fluxCapacitor 
-                      ? 'border-blue-400 bg-blue-900 shadow-lg' 
-                      : 'border-gray-600 bg-gray-800'
-                  }`}
-                  style={{
-                    clipPath: 'polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)',
-                    boxShadow: gameState.techControls.fluxCapacitor 
-                      ? '0 0 20px rgba(59, 130, 246, 0.6), inset 0 0 10px rgba(59, 130, 246, 0.3)' 
-                      : 'inset 0 0 10px rgba(0, 0, 0, 0.5)'
-                  }}
-                >
-                  <span className={`text-2xl ${gameState.techControls.fluxCapacitor ? 'text-white animate-pulse' : 'text-gray-400'}`}>⚡</span>
-                </button>
-                <span className="text-xs font-mono text-yellow-300 mt-2 tracking-wider">FLUX CAP</span>
-              </div>
 
-              {/* Ghostproofing */}
-              <div className="flex flex-col items-center">
-                <button
-                  onClick={toggleGhostproofing}
-                  className={`relative w-16 h-16 border-4 transition-all duration-200 ${
-                    gameState.techControls.ghostproofing 
-                      ? 'border-purple-400 bg-purple-900 shadow-lg' 
-                      : 'border-gray-600 bg-gray-800'
-                  }`}
-                  style={{
-                    clipPath: 'polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)',
-                    boxShadow: gameState.techControls.ghostproofing 
-                      ? '0 0 20px rgba(147, 51, 234, 0.6), inset 0 0 10px rgba(147, 51, 234, 0.3)' 
-                      : 'inset 0 0 10px rgba(0, 0, 0, 0.5)'
-                  }}
-                >
-                  <span className={`text-2xl ${gameState.techControls.ghostproofing ? 'text-white animate-pulse' : 'text-gray-400'}`}>👻</span>
-                </button>
-                <span className="text-xs font-mono text-yellow-300 mt-2 tracking-wider">ECTO-SHLD</span>
-              </div>
-
-              {/* Auto-Wire */}
-              <div className="flex flex-col items-center">
-                <button
-                  onClick={toggleAutoWire}
-                  className={`relative w-16 h-16 border-4 transition-all duration-200 ${
-                    gameState.techControls.autoWire 
-                      ? 'border-green-400 bg-green-900 shadow-lg' 
-                      : 'border-gray-600 bg-gray-800'
-                  }`}
-                  style={{
-                    clipPath: 'polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)',
-                    boxShadow: gameState.techControls.autoWire 
-                      ? '0 0 20px rgba(34, 197, 94, 0.6), inset 0 0 10px rgba(34, 197, 94, 0.3)' 
-                      : 'inset 0 0 10px rgba(0, 0, 0, 0.5)'
-                  }}
-                >
-                  <span className={`text-2xl ${gameState.techControls.autoWire ? 'text-white animate-pulse' : 'text-gray-400'}`}>🔧</span>
-                </button>
-                <span className="text-xs font-mono text-yellow-300 mt-2 tracking-wider">AUTO-SYS</span>
-              </div>
-
-              {/* Use AI */}
-              <div className="flex flex-col items-center">
-                <button
-                  onClick={toggleUseAI}
-                  className={`relative w-16 h-16 border-4 transition-all duration-200 ${
-                    gameState.aiGlitch
-                      ? 'border-red-400 bg-red-900 animate-pulse'
-                      : gameState.techControls.useAI 
-                        ? 'border-orange-400 bg-orange-900 shadow-lg' 
-                        : 'border-gray-600 bg-gray-800'
-                  }`}
-                  style={{
-                    clipPath: 'polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)',
-                    boxShadow: gameState.aiGlitch 
-                      ? '0 0 20px rgba(239, 68, 68, 0.8), inset 0 0 10px rgba(239, 68, 68, 0.5)' 
-                      : gameState.techControls.useAI
-                        ? '0 0 20px rgba(249, 115, 22, 0.6), inset 0 0 10px rgba(249, 115, 22, 0.3)'
-                        : 'inset 0 0 10px rgba(0, 0, 0, 0.5)'
-                  }}
-                >
-                  <span className={`text-2xl ${
-                    gameState.aiGlitch 
-                      ? 'text-white animate-spin' 
-                      : gameState.techControls.useAI 
-                        ? 'text-white animate-pulse' 
-                        : 'text-gray-400'
-                  }`}>🤖</span>
-                </button>
-                <span className="text-xs font-mono text-yellow-300 mt-2 tracking-wider">AI-CORE™</span>
-              </div>
-              
-            </div>
-            
-            {/* Status Bar */}
-            <div className="mt-4 pt-3 border-t border-yellow-600">
-              <div className="flex justify-center items-center gap-2">
-                <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-                <span className="text-xs font-mono text-yellow-300 tracking-wider">SYSTEM OPERATIONAL</span>
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Draggable Wires */}
       {gameState.isPlaying && gameState.wires.map(wire => (
@@ -834,31 +603,7 @@ export function WretchedWiring() {
         </div>
       )}
 
-      {/* Toast Notifications */}
-      {gameState.showToast && (
-        <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 animate-bounce">
-          <div className="bg-gray-900 bg-opacity-95 border-2 border-cyan-400 rounded-lg p-4 max-w-sm mx-auto backdrop-blur-sm">
-            <div className="text-cyan-300 text-sm font-mono text-center">
-              {gameState.showToast}
-            </div>
-          </div>
-        </div>
-      )}
 
-      {/* Auto-Wire Animation Overlay */}
-      {gameState.autoWireAnimation && (
-        <div className="fixed inset-0 z-30 pointer-events-none">
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            <div className="animate-ping bg-green-400 rounded-full w-8 h-8 opacity-75"></div>
-          </div>
-          <div className="absolute top-1/3 left-1/3 transform -translate-x-1/2 -translate-y-1/2 animate-pulse">
-            <div className="bg-red-500 w-2 h-16 rotate-45 opacity-80"></div>
-          </div>
-          <div className="absolute bottom-1/3 right-1/3 transform translate-x-1/2 translate-y-1/2 animate-bounce">
-            <div className="bg-blue-500 w-2 h-12 -rotate-12 opacity-80"></div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
