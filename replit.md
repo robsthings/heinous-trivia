@@ -106,7 +106,7 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 5. Game state updates with loaded data
 
 ## Changelog
-- June 18, 2025: **WRETCHED WIRING CLEANUP** - Removed distracting Control Matrix fake buttons (FLUX CAP, ECTO-SHLD, AUTO-SYS, AI-CORE) from Wretched Wiring game to create more streamlined chaos simulator experience, softened Dr. Heinous taunt from harsh to sarcastic tone
+- June 18, 2025: **WRETCHED WIRING ENHANCEMENT** - Added interactive pull chain that spawns 1-5 additional wires when pulled, creating escalating chaos gameplay; removed distracting Control Matrix fake buttons to streamline experience; softened Dr. Heinous commentary tone
 - June 18, 2025: **LAB ESCAPE COMPLETION** - Completed Lab Escape mini-game with comprehensive 99-riddle database, stable door positioning with pulsing glow effects, enhanced riddle cards with special effects, confetti.gif victory animation, Return to Game button navigation, mobile-optimized interactions, and aligned URL structure to `/sidequest/lab-escape` following side quest naming conventions
 - June 17, 2025: **LAB ESCAPE MINI-GAME** - Created haunted laboratory escape room with 3 interactive doors, 8 riddles with hints, win/fail conditions (3/5 attempts), Chupacabra taunts for wrong answers, confetti victory effects, and prison fail screen using all specified assets
 - June 17, 2025: **INDUSTRIAL TECH CONTROL PANEL** - Redesigned four tech-lab buttons with authentic laboratory aesthetic featuring octagonal metallic shapes, gradient backgrounds, "CONTROL MATRIX" header, status LEDs, and industrial yellow/black color scheme matching game's wretched wiring theme

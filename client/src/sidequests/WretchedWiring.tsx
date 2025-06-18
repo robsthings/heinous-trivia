@@ -481,8 +481,6 @@ export function WretchedWiring() {
                 minWidth: '84px'
               }}
             />
-            {/* Visual indicator that it's interactive */}
-            <div className="absolute -bottom-2 -left-2 -right-2 h-1 bg-yellow-400 opacity-50 rounded-full animate-pulse"></div>
           </div>
         </div>
       )}
