@@ -303,8 +303,8 @@ export function LabEscape() {
               alt="Chupacabra"
               className="w-32 h-32"
             />
-            <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
-              <div className="bg-red-900 bg-opacity-95 border-2 border-red-400 rounded-lg p-2 text-white text-xs max-w-40">
+            <div className="absolute -top-16 left-1/2 transform -translate-x-1/2">
+              <div className="bg-red-900 bg-opacity-95 border-2 border-red-400 rounded-lg p-3 text-white text-xs max-w-48 text-center">
                 {gameState.chupacabraMessage}
               </div>
             </div>
