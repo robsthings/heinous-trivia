@@ -15,9 +15,9 @@ interface GameState {
 }
 
 const CHOICES: { value: Choice; image: string; label: string }[] = [
-  { value: 'rock', image: '/face-the-chupacabra/chupa-rock.png', label: '👊 Rock' },
-  { value: 'paper', image: '/face-the-chupacabra/chupa-paper.png', label: '✋ Paper' },
-  { value: 'scissors', image: '/face-the-chupacabra/chupa-scissors.png', label: '✌️ Scissors' },
+  { value: 'rock', image: '/sidequests/face-the-chupacabra/chupa-rock.png', label: 'Rock' },
+  { value: 'paper', image: '/sidequests/face-the-chupacabra/chupa-paper.png', label: 'Paper' },
+  { value: 'scissors', image: '/sidequests/face-the-chupacabra/chupa-scissors.png', label: 'Scissors' },
 ];
 
 export function FaceTheChupacabra() {
@@ -99,15 +99,15 @@ export function FaceTheChupacabra() {
   const getBackgroundImage = () => {
     switch (gameState.phase) {
       case 'start':
-        return '/face-the-chupacabra/chupa-behind-bars.png';
+        return '/sidequests/face-the-chupacabra/chupa-behind-bars.png';
       case 'playing':
-        return '/face-the-chupacabra/chupa-bg.png';
+        return '/sidequests/face-the-chupacabra/chupa-bg.png';
       case 'won':
-        return '/face-the-chupacabra/chupa-bg.png';
+        return '/sidequests/face-the-chupacabra/chupa-bg.png';
       case 'lost':
-        return '/face-the-chupacabra/chupa-bg-bars.png';
+        return '/sidequests/face-the-chupacabra/chupa-bg-bars.png';
       default:
-        return '/face-the-chupacabra/chupa-bg.png';
+        return '/sidequests/face-the-chupacabra/chupa-bg.png';
     }
   };
 
@@ -118,8 +118,8 @@ export function FaceTheChupacabra() {
           <img
             key={keyNum}
             src={keyNum <= gameState.playerKeys 
-              ? `/face-the-chupacabra/chupa-key-${keyNum}.png`
-              : `/face-the-chupacabra/chupa-key.png`
+              ? `/sidequests/face-the-chupacabra/chupa-key-${keyNum}.png`
+              : `/sidequests/face-the-chupacabra/chupa-key.png`
             }
             alt={`Key ${keyNum}`}
             className={`w-12 h-12 ${keyNum <= gameState.playerKeys ? 'opacity-100' : 'opacity-30'}`}
@@ -216,7 +216,7 @@ export function FaceTheChupacabra() {
                     <div className="text-red-400">
                       <div>Chupacabra Wins!</div>
                       <img
-                        src="/face-the-chupacabra/chupa-bite.png"
+                        src="/sidequests/face-the-chupacabra/chupa-bite.png"
                         alt="Chupacabra bite"
                         className="w-24 h-24 mx-auto mt-2 animate-bounce"
                       />
@@ -264,7 +264,7 @@ export function FaceTheChupacabra() {
             <h2 className="text-4xl font-bold text-red-500 mb-4">💀 GAME OVER 💀</h2>
             <div className="relative">
               <img
-                src="/face-the-chupacabra/chupa-bite.png"
+                src="/sidequests/face-the-chupacabra/chupa-bite.png"
                 alt="Chupacabra victory"
                 className="w-32 h-32 mx-auto animate-bounce"
               />
