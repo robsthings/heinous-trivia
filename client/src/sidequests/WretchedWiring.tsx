@@ -506,7 +506,8 @@ export function WretchedWiring() {
             <img 
               src={`/sidequests/wretched-wiring/${wire.assetName}`} 
               alt={`${wire.color} wire`}
-              className="w-20 h-20 pointer-events-none"
+              className="w-25 h-25 pointer-events-none"
+              style={{ width: '100px', height: '100px' }}
               draggable={false}
             />
           </div>
