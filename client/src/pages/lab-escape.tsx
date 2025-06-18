@@ -319,46 +319,68 @@ export function LabEscape() {
 
       {/* Riddle Input Modal */}
       {gameState.showInput && gameState.currentRiddle && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80">
-          <div className="bg-gray-900 border-4 border-yellow-600 rounded-lg p-8 max-w-md mx-auto">
-            <h2 className="text-yellow-400 font-bold text-xl mb-4 text-center">
-              RIDDLE
-            </h2>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 backdrop-blur-sm">
+          <div className="relative max-w-lg mx-4 animate-in fade-in zoom-in duration-500">
+            {/* Glowing border effect */}
+            <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-yellow-500 to-purple-600 rounded-xl blur opacity-75 animate-pulse"></div>
             
-            <p className="text-white text-lg mb-6 text-center">
-              {gameState.currentRiddle.question}
-            </p>
-            
-            {gameState.currentRiddle.hint && (
-              <p className="text-gray-400 text-sm mb-4 italic text-center">
-                Hint: {gameState.currentRiddle.hint}
-              </p>
-            )}
-            
-            <input
-              type="text"
-              value={gameState.userAnswer}
-              onChange={(e) => setGameState(prev => ({ ...prev, userAnswer: e.target.value }))}
-              onKeyPress={handleKeyPress}
-              placeholder="Enter your answer..."
-              className="w-full p-3 bg-gray-800 border-2 border-gray-600 rounded text-white focus:border-yellow-400 focus:outline-none mb-4"
-              autoFocus
-            />
-            
-            <div className="flex gap-4 justify-center">
-              <button
-                onClick={handleSubmitAnswer}
-                disabled={!gameState.userAnswer.trim()}
-                className="px-6 py-2 bg-green-600 hover:bg-green-700 disabled:bg-gray-600 text-white font-bold rounded transition-colors duration-200"
-              >
-                Submit
-              </button>
-              <button
-                onClick={() => setGameState(prev => ({ ...prev, showInput: false, currentRiddle: null, userAnswer: '' }))}
-                className="px-6 py-2 bg-red-600 hover:bg-red-700 text-white font-bold rounded transition-colors duration-200"
-              >
-                Cancel
-              </button>
+            {/* Main card */}
+            <div className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-black border-4 border-yellow-500 rounded-xl p-8 shadow-2xl">
+              {/* Floating particles effect */}
+              <div className="absolute inset-0 overflow-hidden rounded-xl">
+                <div className="absolute top-2 left-4 w-1 h-1 bg-yellow-400 rounded-full animate-ping"></div>
+                <div className="absolute top-8 right-6 w-1 h-1 bg-purple-400 rounded-full animate-ping" style={{ animationDelay: '0.5s' }}></div>
+                <div className="absolute bottom-6 left-8 w-1 h-1 bg-green-400 rounded-full animate-ping" style={{ animationDelay: '1s' }}></div>
+                <div className="absolute bottom-4 right-4 w-1 h-1 bg-red-400 rounded-full animate-ping" style={{ animationDelay: '1.5s' }}></div>
+              </div>
+              
+              {/* Content */}
+              <div className="relative z-10">
+                <h2 className="text-yellow-400 font-bold text-2xl mb-6 text-center tracking-wider drop-shadow-lg" style={{ fontFamily: 'Creepster, cursive' }}>
+                  ⚡ RIDDLE OF THE LAB ⚡
+                </h2>
+                
+                <div className="bg-black bg-opacity-50 rounded-lg p-6 mb-6 border border-yellow-500/30">
+                  <p className="text-white text-lg mb-4 text-center leading-relaxed font-medium">
+                    {gameState.currentRiddle.question}
+                  </p>
+                  
+                  {gameState.currentRiddle.hint && (
+                    <div className="border-t border-gray-600 pt-4">
+                      <p className="text-amber-300 text-sm italic text-center flex items-center justify-center gap-2">
+                        <span className="text-yellow-400">💡</span>
+                        <span>Hint: {gameState.currentRiddle.hint}</span>
+                      </p>
+                    </div>
+                  )}
+                </div>
+                
+                <input
+                  type="text"
+                  value={gameState.userAnswer}
+                  onChange={(e) => setGameState(prev => ({ ...prev, userAnswer: e.target.value }))}
+                  onKeyPress={handleKeyPress}
+                  placeholder="Type your answer..."
+                  className="w-full p-4 bg-gray-800 border-2 border-gray-600 rounded-lg text-white text-lg focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 focus:outline-none mb-6 shadow-inner transition-all duration-200"
+                  autoFocus
+                />
+                
+                <div className="flex gap-4 justify-center">
+                  <button
+                    onClick={handleSubmitAnswer}
+                    disabled={!gameState.userAnswer.trim()}
+                    className="px-8 py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 disabled:from-gray-600 disabled:to-gray-700 text-white font-bold rounded-lg transition-all duration-200 shadow-lg hover:shadow-green-500/25 transform hover:scale-105 disabled:hover:scale-100"
+                  >
+                    🔬 Submit
+                  </button>
+                  <button
+                    onClick={() => setGameState(prev => ({ ...prev, showInput: false, currentRiddle: null, userAnswer: '' }))}
+                    className="px-8 py-3 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold rounded-lg transition-all duration-200 shadow-lg hover:shadow-red-500/25 transform hover:scale-105"
+                  >
+                    🚪 Escape
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
