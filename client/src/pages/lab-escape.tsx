@@ -44,14 +44,14 @@ const CHUPACABRA_TAUNTS = [
 const CHUPACABRA_SPRITES = ['chupacabra-3.png', 'chupacabra-5.png', 'chupacabra-7.png'];
 
 const INITIAL_STATE: GameState = {
-  correctAnswers: 0,
+  correctAnswers: 3,
   totalAttempts: 0,
   currentRiddle: null,
   showInput: false,
   userAnswer: '',
-  gameWon: false,
+  gameWon: true,
   gameFailed: false,
-  showConfetti: false,
+  showConfetti: true,
   chupacabraMessage: null,
   selectedChupacabra: CHUPACABRA_SPRITES[Math.floor(Math.random() * CHUPACABRA_SPRITES.length)]
 };
