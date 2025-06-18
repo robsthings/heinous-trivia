@@ -35,7 +35,7 @@ const HEINOUS_TAUNTS = [
   "Whelp, that didn't work.",
   "Did that make sense in your meat-brain?",
   "You've truly mastered the art of regression.",
-  "Try unplugging it. And yourself.",
+  "Did you try unplugging it?",
   "Why didn't I think of that? Oh, because it doesn't work.",
   "I bet this looked easier from outside the brain.",
   "Congratulations! You've made it worse.",
