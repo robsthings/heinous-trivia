@@ -697,3 +697,20 @@
 .rotate-y-180 {
   transform: rotateY(180deg);
 }
+
+/* Enchanted Door Animations */
+@keyframes enchanted-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes enchanted-pulse {
+  0%, 100% { 
+    opacity: 1; 
+    filter: brightness(1) drop-shadow(0 0 0px rgba(147, 51, 234, 0)); 
+  }
+  50% { 
+    opacity: 0.85; 
+    filter: brightness(1.1) drop-shadow(0 0 8px rgba(147, 51, 234, 0.4)); 
+  }
+}
