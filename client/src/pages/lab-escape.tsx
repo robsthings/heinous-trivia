@@ -189,16 +189,8 @@ export function LabEscape() {
           className="w-full h-full object-cover"
         />
         
-        <div className="absolute inset-0 flex flex-col justify-between">
-          <div className="flex-1 flex items-center justify-center">
-            <div className="text-center">
-              <h1 className="text-4xl font-bold text-red-400 mb-4 animate-pulse">
-                "Whatcha in for?"
-              </h1>
-            </div>
-          </div>
-          
-          <div className="pb-8 flex justify-center">
+        <div className="absolute inset-0 flex items-end justify-center">
+          <div className="pb-8">
             <div className="space-x-4">
               <button
                 onClick={resetGame}
