@@ -460,23 +460,30 @@ export function WretchedWiring() {
       {/* Pull Chain */}
       {gameState.isPlaying && (
         <div 
-          className="absolute top-8 left-8 z-30 cursor-pointer select-none"
+          className="absolute top-16 left-16 z-40 cursor-pointer select-none"
           onClick={handlePullChain}
+          style={{ zIndex: 1000 }}
         >
-          <img 
-            src="/sidequests/wretched-wiring/Pull-Chain.png" 
-            alt="Pull Chain"
-            className={`w-12 h-auto transition-all duration-300 hover:brightness-110 ${
-              gameState.pullChainPulled 
-                ? 'transform translate-y-4 animate-bounce' 
-                : 'hover:scale-105'
-            }`}
-            style={{
-              filter: gameState.pullChainPulled 
-                ? 'drop-shadow(0 4px 8px rgba(255,255,0,0.6))' 
-                : 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))'
-            }}
-          />
+          <div className="relative">
+            <img 
+              src="/sidequests/wretched-wiring/Pull-Chain.png" 
+              alt="Pull Chain"
+              className={`w-16 h-auto transition-all duration-300 hover:brightness-125 hover:scale-110 ${
+                gameState.pullChainPulled 
+                  ? 'transform translate-y-6 animate-bounce' 
+                  : ''
+              }`}
+              style={{
+                filter: gameState.pullChainPulled 
+                  ? 'drop-shadow(0 6px 12px rgba(255,255,0,0.8)) brightness(1.2)' 
+                  : 'drop-shadow(0 4px 8px rgba(0,0,0,0.5)) brightness(1.1)',
+                maxWidth: '64px',
+                minWidth: '48px'
+              }}
+            />
+            {/* Visual indicator that it's interactive */}
+            <div className="absolute -bottom-2 -left-2 -right-2 h-1 bg-yellow-400 opacity-50 rounded-full animate-pulse"></div>
+          </div>
         </div>
       )}
 
