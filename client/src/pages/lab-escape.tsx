@@ -44,14 +44,14 @@ const CHUPACABRA_TAUNTS = [
 const CHUPACABRA_SPRITES = ['chupacabra-3.png', 'chupacabra-5.png', 'chupacabra-7.png'];
 
 const INITIAL_STATE: GameState = {
-  correctAnswers: 3,
+  correctAnswers: 0,
   totalAttempts: 0,
   currentRiddle: null,
   showInput: false,
   userAnswer: '',
-  gameWon: true,
+  gameWon: false,
   gameFailed: false,
-  showConfetti: true,
+  showConfetti: false,
   chupacabraMessage: null,
   selectedChupacabra: CHUPACABRA_SPRITES[Math.floor(Math.random() * CHUPACABRA_SPRITES.length)]
 };
@@ -239,10 +239,10 @@ export function LabEscape() {
             
             <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
               <Link
-                href="/game"
-                className="px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition-colors duration-200 shadow-lg inline-block"
+                href="/game/headquarters"
+                className="px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold rounded-lg transition-all duration-200 shadow-lg transform hover:scale-105 inline-block"
               >
-                Back to Game
+                🎮 Return to Game
               </Link>
             </div>
           </div>
