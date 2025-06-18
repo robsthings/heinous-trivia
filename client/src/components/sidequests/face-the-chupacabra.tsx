@@ -139,13 +139,15 @@ export function FaceTheChupacabra() {
       
       <div className="relative z-10 text-center max-w-lg w-full">
         {gameState.phase === 'start' && (
-          <div className="space-y-8">
-            <h1 className="text-5xl font-bold text-red-500 mb-8 drop-shadow-lg" style={{ fontFamily: 'Creepster, cursive' }}>
-              Face the Chupacabra
-            </h1>
-            <p className="text-xl mb-8 text-gray-200">
-              Win 3 rounds of rock-paper-scissors to escape!
-            </p>
+          <div className="flex flex-col items-center justify-start min-h-screen pt-8 space-y-8">
+            <div className="text-center">
+              <h1 className="text-5xl font-bold text-red-500 mb-4 drop-shadow-lg" style={{ fontFamily: 'Creepster, cursive' }}>
+                Face the Chupacabra
+              </h1>
+              <p className="text-xl text-gray-200">
+                Win 3 rounds of rock-paper-scissors to escape!
+              </p>
+            </div>
             <button
               onClick={startGame}
               className="bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-xl transition-all hover:scale-105 shadow-lg"
