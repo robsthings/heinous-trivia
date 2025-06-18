@@ -140,7 +140,7 @@ export function FaceTheChupacabra() {
       <div className="relative z-10 text-center max-w-lg w-full">
         {gameState.phase === 'start' && (
           <div className="space-y-8">
-            <h1 className="text-5xl font-bold text-red-500 mb-8 drop-shadow-lg">
+            <h1 className="text-5xl font-bold text-red-500 mb-8 drop-shadow-lg" style={{ fontFamily: 'Creepster, cursive' }}>
               Face the Chupacabra
             </h1>
             <p className="text-xl mb-8 text-gray-200">
