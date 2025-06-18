@@ -468,7 +468,7 @@ export function WretchedWiring() {
             <img 
               src="/sidequests/wretched-wiring/Pull-Chain.png" 
               alt="Pull Chain"
-              className={`w-16 h-auto transition-all duration-300 hover:brightness-125 hover:scale-110 ${
+              className={`w-28 h-auto transition-all duration-300 hover:brightness-125 hover:scale-110 ${
                 gameState.pullChainPulled 
                   ? 'transform translate-y-6 animate-bounce' 
                   : ''
@@ -477,8 +477,8 @@ export function WretchedWiring() {
                 filter: gameState.pullChainPulled 
                   ? 'drop-shadow(0 6px 12px rgba(255,255,0,0.8)) brightness(1.2)' 
                   : 'drop-shadow(0 4px 8px rgba(0,0,0,0.5)) brightness(1.1)',
-                maxWidth: '64px',
-                minWidth: '48px'
+                maxWidth: '112px',
+                minWidth: '84px'
               }}
             />
             {/* Visual indicator that it's interactive */}
