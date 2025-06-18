@@ -106,6 +106,7 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 5. Game state updates with loaded data
 
 ## Changelog
+- June 18, 2025: **LAB ESCAPE ENHANCEMENT** - Enhanced mini-game with comprehensive 99-riddle database from user file, fixed door positioning issues, replaced floating animations with stable pulsing glow effects, improved Chupacabra speech bubble sizing for proper text containment, complete escape room experience with enhanced replayability
 - June 17, 2025: **LAB ESCAPE MINI-GAME** - Created haunted laboratory escape room with 3 interactive doors, 8 riddles with hints, win/fail conditions (3/5 attempts), Chupacabra taunts for wrong answers, confetti victory effects, and prison fail screen using all specified assets
 - June 17, 2025: **INDUSTRIAL TECH CONTROL PANEL** - Redesigned four tech-lab buttons with authentic laboratory aesthetic featuring octagonal metallic shapes, gradient backgrounds, "CONTROL MATRIX" header, status LEDs, and industrial yellow/black color scheme matching game's wretched wiring theme
 - June 17, 2025: **RESPONSIVE CERTIFICATE OF FAILURE** - Made certificate screen fully mobile-responsive with proper scaling (max-w-lg for optimal size), stacked mobile buttons, and touch-friendly sizing for Dr. Heinous's sarcastic failure award
