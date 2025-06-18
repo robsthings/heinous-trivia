@@ -230,11 +230,12 @@ export function LabEscape() {
               className="max-w-full max-h-full object-contain animate-pulse"
             />
             
-            {/* Sparkling effects */}
-            <div className="absolute top-10 left-10 w-4 h-4 bg-yellow-400 rounded-full animate-ping"></div>
-            <div className="absolute top-20 right-20 w-3 h-3 bg-blue-400 rounded-full animate-ping" style={{ animationDelay: '0.5s' }}></div>
-            <div className="absolute bottom-20 left-20 w-5 h-5 bg-green-400 rounded-full animate-ping" style={{ animationDelay: '1s' }}></div>
-            <div className="absolute bottom-10 right-10 w-2 h-2 bg-purple-400 rounded-full animate-ping" style={{ animationDelay: '1.5s' }}></div>
+            {/* Confetti effects */}
+            <img 
+              src="/sidequests/lab-escape/confetti.gif" 
+              alt="Confetti"
+              className="absolute top-0 left-0 w-full h-full object-cover pointer-events-none opacity-80"
+            />
             
             <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
               <Link
