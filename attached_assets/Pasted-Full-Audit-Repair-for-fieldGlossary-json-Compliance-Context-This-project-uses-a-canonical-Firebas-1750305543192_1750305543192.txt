@@ -1,0 +1,73 @@
+Full Audit & Repair for fieldGlossary.json Compliance
+Context:
+This project uses a canonical Firebase schema defined in fieldGlossary.json at the root. It governs collection names, field usage, routing parameters, and integration patterns for all haunts in this multi-tenant SaaS game.
+Recent changes have violated this schema, causing cross-haunt data exposure and broken functionality.
+
+✅ TASK: Audit and Correct Schema Violations
+Carefully review and fix these areas:
+
+🔁 Routing Fixes
+Use :haunt as the API route parameter (e.g. /api/trivia-questions/:haunt)
+
+Internally map haunt → hauntId when querying Firestore
+
+Add inline comments like:
+
+ts
+Copy
+Edit
+// 🔒 fieldGlossary.json: use `haunt` in route, map to `hauntId` for Firestore
+🔒 Firebase Collection Access
+Verify only these collections are accessed:
+
+trivia-questions/{hauntId}/questions
+
+haunt-questions/{hauntId}/questions
+
+game_sessions
+
+leaderboards/{hauntId}/players
+
+ad_interactions
+
+haunt-ads/{hauntId}/ads
+
+Ensure collection names match glossary exactly — no unverified or legacy paths like globalQuestionPacks, horror-basics, etc.
+
+📊 Analytics & Leaderboards
+leaderboards and ad_interactions must scope by hauntId
+
+Field names must match glossary exactly:
+
+Use action, not interactionType
+
+Use playerName, score, finalScore
+
+Confirm all analytics records include sessionId, playerId, and hauntId
+
+🧪 Verification Setup (Optional but Recommended)
+Create a /api/schema-check route that:
+
+Lists all known collections and subcollections currently in use
+
+Confirms each follows fieldGlossary.json
+
+Reports mismatches (e.g. using interactionType or missing hauntId)
+
+🚫 DO NOT
+Create or use fallback logic that defaults to headquarters
+
+Hardcode collection names or infer fields without glossary verification
+
+Use generic doc.data() access without explicit field reference
+
+✅ SUCCESS CRITERIA
+/api/trivia-questions?haunt=sorcererslair only loads Sorcerers Lair data
+
+/api/leaderboard?haunt=sorcererslair only returns that haunt’s scores
+
+No shared question leakage between haunts
+
+Firebase reads/writes fully align with fieldGlossary.json
+
+All route handlers include inline schema compliance comments

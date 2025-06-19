@@ -653,26 +653,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
           console.log(`✅ Loaded ${customQuestions.length} custom questions for hauntId: ${hauntId}`);
         }
 
-        // 2. Load from assigned triviaPacks only (no global packs unless explicitly assigned)
-        // 📘 fieldGlossary.json: Use triviaPacks field from haunt configuration
-        if (hauntConfig?.triviaPacks && Array.isArray(hauntConfig.triviaPacks)) {
-          console.log(`📘 Loading assigned triviaPacks: ${hauntConfig.triviaPacks.join(', ')}`);
+        // 1b. Check for haunt-specific trivia pack assignments in configuration
+        // 📘 fieldGlossary.json: "triviaPacks" field from haunt configuration
+        if (hauntConfig?.triviaPacks && Array.isArray(hauntConfig.triviaPacks) && hauntConfig.triviaPacks.length > 0) {
+          console.log(`📘 Found haunt-specific triviaPacks for ${hauntId}: ${hauntConfig.triviaPacks.join(', ')}`);
           
           for (const packId of hauntConfig.triviaPacks) {
-            const packRef = firestore.collection('trivia-packs').doc(packId);
-            const packDoc = await packRef.get();
-            
-            if (packDoc.exists) {
-              const packData = packDoc.data();
-              if (packData.questions && Array.isArray(packData.questions)) {
-                questions = [...questions, ...packData.questions];
-                console.log(`✅ Loaded ${packData.questions.length} questions from assigned pack: ${packId}`);
+            try {
+              const packRef = firestore.collection('trivia-packs').doc(packId);
+              const packDoc = await packRef.get();
+              
+              if (packDoc.exists) {
+                const packData = packDoc.data();
+                if (packData.questions && Array.isArray(packData.questions)) {
+                  questions = [...questions, ...packData.questions];
+                  console.log(`✅ Loaded ${packData.questions.length} questions from haunt-specific pack: ${packId}`);
+                }
               }
-            } else {
-              console.log(`❌ Assigned pack ${packId} not found for haunt: ${hauntId}`);
+            } catch (error) {
+              console.warn(`⚠️ Could not load haunt-specific pack ${packId}:`, error);
             }
           }
-        } else {
+          
+          // If haunt has specific assignments, don't load major packs as fallback
+          if (questions.length >= 20) {
+            console.log(`✅ Sufficient questions from haunt-specific sources: ${questions.length}`);
+            // Skip major pack loading and proceed to randomization
+          }
+        }
+
+        // Skip the haunt-specific triviaPacks loading since it's handled above
+
+        // 2. If no haunt-specific sources found, load major packs as fallback
+        if (questions.length < 20) {
           console.log(`📘 No triviaPacks assigned for haunt: ${hauntId}, loading major packs`);
           console.log(`📘 DEBUG: Starting major pack loading sequence`);
           
