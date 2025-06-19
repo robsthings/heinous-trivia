@@ -109,7 +109,7 @@ export function FaceTheChupacabra() {
       case 'won':
         return '/sidequests/face-the-chupacabra/chupa-bg.png';
       case 'lost':
-        return '/sidequests/face-the-chupacabra/chupa-bg-bars.png';
+        return '/sidequests/face-the-chupacabra/chupa-bg.png'; // Base background for lost phase
       default:
         return '/sidequests/face-the-chupacabra/chupa-bg.png';
     }
@@ -268,36 +268,59 @@ export function FaceTheChupacabra() {
         )}
 
         {gameState.phase === 'lost' && (
-          <div className="space-y-6">
-            <h2 className="text-4xl font-bold text-red-500 mb-4">💀 GAME OVER 💀</h2>
-            <div className="relative">
-              <img
-                src="/sidequests/face-the-chupacabra/chupa-bite.png"
-                alt="Chupacabra victory"
-                className="w-32 h-32 mx-auto animate-bounce"
-              />
-              <div className="absolute inset-0 flex items-center justify-center animate-pulse">
-                <div className="text-6xl">🔒</div>
+          <>
+            {/* Animated bars dropping overlay */}
+            <div 
+              className="absolute inset-0 bg-cover bg-center bg-no-repeat animate-slide-down"
+              style={{ 
+                backgroundImage: `url(/sidequests/face-the-chupacabra/chupa-bg-bars.png)`,
+                animationDelay: '0.5s',
+                animationDuration: '1s',
+                animationFillMode: 'forwards',
+                transform: 'translateY(-100%)'
+              }}
+            ></div>
+            
+            {/* Dust clouds at bottom */}
+            <div className="absolute bottom-0 left-0 right-0 h-20 opacity-0 animate-dust-clouds"
+                 style={{ 
+                   animationDelay: '1.5s',
+                   animationDuration: '0.8s',
+                   animationFillMode: 'forwards'
+                 }}>
+              <div className="absolute bottom-0 left-1/4 w-16 h-16 bg-gray-400 rounded-full opacity-60 animate-bounce"></div>
+              <div className="absolute bottom-0 right-1/4 w-12 h-12 bg-gray-500 rounded-full opacity-40 animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+              <div className="absolute bottom-0 left-1/2 w-10 h-10 bg-gray-600 rounded-full opacity-50 animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+            </div>
+
+            <div className="space-y-6 relative z-10">
+              <h2 className="text-4xl font-bold text-red-500 mb-4">💀 GAME OVER 💀</h2>
+              <div className="relative">
+                <img
+                  src="/sidequests/face-the-chupacabra/chupa-bite.png"
+                  alt="Chupacabra victory"
+                  className="w-32 h-32 mx-auto animate-bounce"
+                />
+              </div>
+              <p className="text-xl text-gray-200 mb-6">
+                The Chupacabra has defeated you! You remain trapped...
+              </p>
+              <div className="space-y-4">
+                <button
+                  onClick={resetGame}
+                  className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-all hover:scale-105 shadow-lg"
+                >
+                  Try Again
+                </button>
+                <Link
+                  href="/game/headquarters"
+                  className="block bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg transition-all hover:scale-105 shadow-lg"
+                >
+                  Return to Main Game
+                </Link>
               </div>
             </div>
-            <p className="text-xl text-gray-200 mb-6">
-              The Chupacabra has defeated you! You remain trapped...
-            </p>
-            <div className="space-y-4">
-              <button
-                onClick={resetGame}
-                className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-all hover:scale-105 shadow-lg"
-              >
-                Try Again
-              </button>
-              <Link
-                href="/game/headquarters"
-                className="block bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg transition-all hover:scale-105 shadow-lg"
-              >
-                Return to Main Game
-              </Link>
-            </div>
-          </div>
+          </>
         )}
       </div>
     </div>
