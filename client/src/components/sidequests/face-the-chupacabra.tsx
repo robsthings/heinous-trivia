@@ -165,8 +165,6 @@ export function FaceTheChupacabra() {
           <div className="space-y-6">
             <h2 className="text-3xl font-bold text-red-500 mb-4">Choose Your Weapon!</h2>
             
-            {renderKeys()}
-            
             {!gameState.showResult && (
               <div className="grid grid-cols-3 gap-4">
                 {CHOICES.map((choice) => (
@@ -245,7 +243,7 @@ export function FaceTheChupacabra() {
             )}
             
             <div className="text-sm text-gray-300">
-              Keys: {gameState.playerKeys}/3 | Losses: {gameState.playerLosses}/3
+              Wins: {gameState.playerKeys}/3 | Losses: {gameState.playerLosses}/3
             </div>
           </div>
         )}
@@ -253,17 +251,30 @@ export function FaceTheChupacabra() {
         {gameState.phase === 'won' && (
           <div className="space-y-6 animate-pulse">
             <h2 className="text-4xl font-bold text-green-400 mb-4">🎉 ESCAPED! 🎉</h2>
-            <div className="flex justify-center mb-6">
+            <div className="relative">
               <img
-                src="/sidequests/face-the-chupacabra/chupa-key-3.png"
-                alt="Final Key"
-                className="w-12 h-32 animate-bounce"
+                src="/sidequests/face-the-chupacabra/chupa-bite.png"
+                alt="Victory"
+                className="w-32 h-32 mx-auto animate-bounce"
               />
             </div>
             <p className="text-xl text-gray-200 mb-6">
-              You collected all 3 keys and escaped! Returning to Main Game...
+              You defeated the Chupacabra and escaped! Returning to Main Game...
             </p>
-            {renderKeys()}
+            <div className="space-y-4">
+              <button
+                onClick={resetGame}
+                className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition-all hover:scale-105 shadow-lg"
+              >
+                Play Again
+              </button>
+              <Link
+                href="/game/headquarters"
+                className="block bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg transition-all hover:scale-105 shadow-lg"
+              >
+                Return to Main Game
+              </Link>
+            </div>
           </div>
         )}
 

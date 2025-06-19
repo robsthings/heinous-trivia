@@ -106,6 +106,7 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 5. Game state updates with loaded data
 
 ## Changelog
+- June 19, 2025: **FACE THE CHUPACABRA GAME OVER POLISH** - Removed key collection visuals (chupa-key.png) from game board display, created animated Game Over sequence with full-screen dropping bars (chupa-bg-bars.png slides down over chupa-bg.png base), updated status text to show "Wins" instead of "Keys", enhanced victory screen with proper Play Again/Return buttons, removed bouncing ball dust effects for cleaner animation
 - June 18, 2025: **WRETCHED WIRING ENHANCEMENT** - Added interactive pull chain that spawns 1-5 additional wires when pulled, creating escalating chaos gameplay; removed distracting Control Matrix fake buttons to streamline experience; softened Dr. Heinous commentary tone
 - June 18, 2025: **LAB ESCAPE COMPLETION** - Completed Lab Escape mini-game with comprehensive 99-riddle database, stable door positioning with pulsing glow effects, enhanced riddle cards with special effects, confetti.gif victory animation, Return to Game button navigation, mobile-optimized interactions, and aligned URL structure to `/sidequest/lab-escape` following side quest naming conventions
 - June 17, 2025: **LAB ESCAPE MINI-GAME** - Created haunted laboratory escape room with 3 interactive doors, 8 riddles with hints, win/fail conditions (3/5 attempts), Chupacabra taunts for wrong answers, confetti victory effects, and prison fail screen using all specified assets
