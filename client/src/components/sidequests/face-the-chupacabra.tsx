@@ -87,6 +87,10 @@ export function FaceTheChupacabra() {
     // Check win/lose conditions after a delay
     setTimeout(() => {
       if (newKeys >= 3) {
+        // Automatically return to main game after 3rd key
+        setTimeout(() => {
+          window.location.href = '/game/headquarters';
+        }, 2000);
         setGameState(prev => ({ ...prev, phase: 'won' }));
       } else if (newLosses >= 3) {
         setGameState(prev => ({ ...prev, phase: 'lost' }));
@@ -212,7 +216,16 @@ export function FaceTheChupacabra() {
                 
                 <div className="text-2xl font-bold">
                   {gameState.lastResult === 'win' && (
-                    <div className="text-green-400">You Won! 🗝️</div>
+                    <div className="text-green-400">
+                      <div>You Won!</div>
+                      <div className="flex justify-center mt-2">
+                        <img
+                          src={`/sidequests/face-the-chupacabra/chupa-key-${gameState.playerKeys}.png`}
+                          alt={`Key ${gameState.playerKeys}`}
+                          className="w-16 h-16 animate-bounce"
+                        />
+                      </div>
+                    </div>
                   )}
                   {gameState.lastResult === 'lose' && (
                     <div className="text-red-400">
@@ -240,24 +253,17 @@ export function FaceTheChupacabra() {
         {gameState.phase === 'won' && (
           <div className="space-y-6 animate-pulse">
             <h2 className="text-4xl font-bold text-green-400 mb-4">🎉 ESCAPED! 🎉</h2>
+            <div className="flex justify-center mb-6">
+              <img
+                src="/sidequests/face-the-chupacabra/chupa-key-3.png"
+                alt="Final Key"
+                className="w-24 h-24 animate-bounce"
+              />
+            </div>
             <p className="text-xl text-gray-200 mb-6">
-              You collected all 3 keys and escaped the Chupacabra's cell!
+              You collected all 3 keys and escaped! Returning to Main Game...
             </p>
             {renderKeys()}
-            <div className="space-y-4">
-              <Link
-                href="/game/headquarters"
-                className="block bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition-all hover:scale-105 shadow-lg"
-              >
-                Return to Main Game
-              </Link>
-              <button
-                onClick={resetGame}
-                className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg transition-all hover:scale-105 shadow-lg"
-              >
-                Play Again
-              </button>
-            </div>
           </div>
         )}
 
