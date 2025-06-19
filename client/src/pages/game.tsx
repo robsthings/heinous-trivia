@@ -7,7 +7,8 @@ import { Leaderboard } from "@/components/Leaderboard";
 import { Footer } from "@/components/Footer";
 import { SpookyLoader } from "@/components/SpookyLoader";
 import { MiniSpookyLoader } from "@/components/MiniSpookyLoader";
-import { ConfigLoader, getHauntFromURL, validateHauntAccess } from "@/lib/configLoader";
+import { ConfigLoader } from "@/lib/configLoader";
+import { HauntSecurity } from "@/lib/hauntSecurity";
 import { GameManager, type GameState } from "@/lib/gameState";
 import type { HauntConfig } from "@shared/schema";
 import { AnalyticsTracker } from "@/lib/analytics";
@@ -24,14 +25,14 @@ import { useCustomSkin } from "@/hooks/use-custom-skin";
 function Game() {
   const [, setLocation] = useLocation();
   const [gameState, setGameState] = useState<GameState>(() => 
-    GameManager.createInitialState(getHauntFromURL())
+    GameManager.createInitialState(HauntSecurity.getHauntFromURL())
   );
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [leaderboard, setLeaderboard] = useState<any[]>([]);
   const [leaderboardLoading, setLeaderboardLoading] = useState(false);
   const [playerName, setPlayerName] = useState<string>(() => 
-    localStorage.getItem(`heinous-player-name-${getHauntFromURL()}`) || ""
+    localStorage.getItem(`heinous-player-name-${HauntSecurity.getHauntFromURL()}`) || ""
   );
   const [showNamePrompt, setShowNamePrompt] = useState(false);
   const [tempName, setTempName] = useState("");
@@ -45,14 +46,19 @@ function Game() {
     
     // Validate haunt access before proceeding
     const validateAndRedirect = async () => {
+      const currentHaunt = HauntSecurity.getHauntFromURL();
+      
       if (currentHaunt && currentHaunt !== 'headquarters') {
-        const isValidHaunt = await validateHauntAccess(currentHaunt);
+        const isValidHaunt = await HauntSecurity.validateHauntAccess(currentHaunt);
         if (!isValidHaunt) {
           console.warn(`Invalid haunt access attempt: ${currentHaunt}`);
           setError(`Haunt "${currentHaunt}" not found or not accessible`);
           return;
         }
       }
+      
+      // Enforce haunt isolation
+      HauntSecurity.enforceHauntIsolation(currentHaunt);
       
       if (currentHaunt && !fromWelcomeScreen) {
         console.log('Redirecting to welcome screen for haunt:', currentHaunt);
