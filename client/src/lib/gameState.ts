@@ -216,6 +216,7 @@ export class GameManager {
       haunt: state.currentHaunt,
       questionsAnswered: state.questionsAnswered,
       correctAnswers: state.correctAnswers,
+      date: new Date().toISOString(),
     };
 
     try {

@@ -1077,7 +1077,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .where('hidden', '!=', true)  // Exclude hidden players
         .orderBy('hidden')  // Required for != query
         .orderBy('score', 'desc')
-        .limit(50)
+        .limit(10)
         .get();
       
       console.log(`[LEADERBOARD FETCH] Found ${snapshot.docs.length} player records`);
