@@ -603,7 +603,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Get trivia questions for a haunt
-  app.get("/api/trivia-questions/:hauntId", async (req, res) => {
+  app.get("/api/trivia-questions/:haunt", async (req, res) => {
     try {
       // Set explicit JSON content type and cache headers
       res.setHeader('Content-Type', 'application/json');
@@ -611,7 +611,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.setHeader('Pragma', 'no-cache');
       res.setHeader('Expires', '0');
       
-      const { hauntId } = req.params;
+      const { haunt: hauntId } = req.params;
       
       if (!firestore) {
         return res.status(500).json({ error: "Firebase not configured" });
@@ -622,7 +622,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       let questions = [];
 
       try {
-        // 1. Load custom questions (haunt-specific)
+        /**
+         * FIREBASE FIELD NAME REFERENCE: Check /fieldGlossary.json before modifying any Firebase operations
+         * - Use 'haunt' for query parameters, 'hauntId' for Firebase document fields
+         * - Collections: Use canonical names from fieldGlossary.json
+         * - Verify all field names against canonical glossary before changes
+         */
+
+        // 1. Load custom questions (haunt-specific subcollection per glossary)
         const customQuestionsRef = firestore.collection('haunt-questions').doc(hauntId).collection('questions');
         const customSnapshot = await customQuestionsRef.get();
         
@@ -632,10 +639,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
             ...doc.data()
           }));
           questions = [...questions, ...customQuestions];
-          console.log(`Loaded ${customQuestions.length} custom questions for ${hauntId}`);
+          console.log(`Loaded ${customQuestions.length} custom questions for hauntId: ${hauntId}`);
         }
 
-        // 2. Load from trivia-packs collection (existing packs with question arrays)
+        // 2. Load from trivia-packs collection (canonical collection per glossary)
         const triviaPacksRef = firestore.collection('trivia-packs');
         const packsSnapshot = await triviaPacksRef.get();
         
@@ -650,7 +657,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           });
         }
 
-        // 3. Load from horror-basics collection (default question pool)
+        // 3. Load from horror-basics collection (canonical collection per glossary)
         const horrorBasicsRef = firestore.collection('horror-basics');
         const horrorSnapshot = await horrorBasicsRef.get();
         
@@ -665,7 +672,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           console.log(`Loaded ${horrorSnapshot.docs.length} questions from horror-basics collection`);
         }
 
-        // 4. Load from trivia-questions collection (general question pool)
+        // 4. Load from trivia-questions collection (canonical collection per glossary)
         const triviaQuestionsRef = firestore.collection('trivia-questions');
         const triviaSnapshot = await triviaQuestionsRef.get();
         
