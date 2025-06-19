@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'wouter';
 import Home from '@/pages/home';
 import { HauntSecurity } from '@/lib/hauntSecurity';
+import { extractHauntId, preserveHauntId, isValidHauntId } from '@/lib/hauntUrls';
 
 /**
  * RootRedirector Component
@@ -13,53 +14,20 @@ import { HauntSecurity } from '@/lib/hauntSecurity';
  * - Redirects to /game/:hauntId for returning users
  */
 export function RootRedirector() {
-  const [, navigate] = useLocation();
+  const [location, navigate] = useLocation();
   const [showHome, setShowHome] = useState(false);
 
   useEffect(() => {
-    // Multiple strategies to detect haunt parameter in production environment
-    let hauntId: string | null = null;
+    // Use robust haunt detection system with multiple URL format support
+    const hauntId = extractHauntId();
     
-    // Strategy 1: Standard URL parameters (for development and compatible hosts)
-    const urlParams = new URLSearchParams(window.location.search);
-    hauntId = urlParams.get('haunt');
-    
-    // Strategy 2: Hash-based parameters (fallback for production)
-    // Support URLs like: https://heinoustrivia.com/#haunt=Sorcererslair
-    if (!hauntId && window.location.hash) {
-      const hash = window.location.hash.substring(1); // Remove #
-      if (hash.includes('haunt=')) {
-        const hashParams = new URLSearchParams(hash);
-        hauntId = hashParams.get('haunt');
-      }
-      // Also support direct hash format: #Sorcererslair
-      else if (hash && !hash.includes('=')) {
-        hauntId = hash;
-      }
-    }
-    
-    // Strategy 3: Path-based haunt detection
-    // Support URLs like: https://heinoustrivia.com/h/Sorcererslair
-    const pathSegments = window.location.pathname.split('/');
-    if (!hauntId && pathSegments[1] === 'h' && pathSegments[2]) {
-      hauntId = pathSegments[2];
-    }
-    
-    // Strategy 4: Check sessionStorage for preserved haunt parameter
-    if (!hauntId) {
-      hauntId = sessionStorage.getItem('preservedHauntParam');
-    }
-    
-    console.log('RootRedirector - Detection strategies:');
-    console.log('  - Query param:', urlParams.get('haunt'));
-    console.log('  - Hash:', window.location.hash);
-    console.log('  - Path:', window.location.pathname);
-    console.log('  - SessionStorage:', sessionStorage.getItem('preservedHauntParam'));
-    console.log('RootRedirector - Final hauntId:', hauntId);
+    console.log('RootRedirector - Detected hauntId:', hauntId);
+    console.log('RootRedirector - Current URL:', window.location.href);
+    console.log('RootRedirector - Wouter location:', location);
 
-    // If hauntId is detected, preserve it in sessionStorage for future navigation
-    if (hauntId) {
-      sessionStorage.setItem('preservedHauntParam', hauntId);
+    // Preserve valid haunt ID for navigation persistence
+    if (hauntId && isValidHauntId(hauntId)) {
+      preserveHauntId(hauntId);
     }
 
     // Only proceed if haunt parameter is present

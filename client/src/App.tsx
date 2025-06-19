@@ -39,6 +39,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={RootRedirector} />
+      <Route path="/h/:hauntId" component={RootRedirector} />
       <Route path="/welcome/:hauntId" component={Welcome} />
       <Route path="/game" component={Game} />
       <Route path="/game/:hauntId" component={Game} />
