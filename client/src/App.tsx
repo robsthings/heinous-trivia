@@ -34,6 +34,7 @@ import { WackAChupacabra } from "@/sidequests/WackAChupacabra";
 import { WretchedWiring } from "@/sidequests/WretchedWiring";
 import { LabEscape } from "@/pages/lab-escape";
 import { FaceTheChupacabra } from "@/components/sidequests/face-the-chupacabra";
+import HauntTest from "@/pages/haunt-test";
 
 function Router() {
   return (
@@ -55,6 +56,7 @@ function Router() {
       <Route path="/upload-guidelines" component={UploadGuidelines} />
       <Route path="/info" component={Info} />
       <Route path="/test-progress" component={TestProgressPage} />
+      <Route path="/haunt-test" component={HauntTest} />
       <Route path="/sidequest/monster-name-generator" component={MonsterNameGenerator} />
       <Route path="/sidequest/glory-grab" component={GloryGrab} />
       <Route path="/sidequest/cryptic-compliments" component={CrypticCompliments} />
@@ -87,11 +89,6 @@ function Router() {
 }
 
 function App() {
-  // Debug URL at App component level
-  console.log('App.tsx - Component render');
-  console.log('App.tsx - window.location.href:', window.location.href);
-  console.log('App.tsx - window.location.search:', window.location.search);
-  
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
