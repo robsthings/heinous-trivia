@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 
 const distPath = path.resolve("dist/index.js");
+const buildOnly = process.argv.includes("--build-only");
 
 try {
   console.log("🔨 Creating server-only deployment build...");
@@ -79,20 +80,44 @@ try {
       "firebase-admin": "^13.0.1",
       "express": "^4.21.1",
       "bcrypt": "^6.0.0",
-      "ws": "^8.18.0"
+      "ws": "^8.18.0",
+      "cors": "^2.8.5",
+      "express-session": "^1.18.1",
+      "connect-pg-simple": "^9.0.1",
+      "passport": "^0.7.0",
+      "passport-local": "^1.0.0",
+      "multer": "^1.4.5-lts.1",
+      "zod": "^3.23.8",
+      "drizzle-zod": "^0.5.1"
     }
   };
   
   fs.writeFileSync('./dist/package.json', JSON.stringify(prodPackageJson, null, 2));
   console.log("📦 Production package.json created");
 
+  // Install dependencies in the dist directory
+  console.log("📥 Installing production dependencies...");
+  execSync("cd dist && npm install --production --silent", { stdio: "inherit" });
+  console.log("✅ Dependencies installed successfully");
+
   if (!fs.existsSync(distPath)) {
     console.error("❌ dist/index.js not found after build. Aborting.");
     process.exit(1);
   }
 
-  console.log("🚀 Starting server...");
-  execSync("node dist/index.js", { stdio: "inherit" });
+  console.log("✅ Build complete! Files ready for deployment:");
+  console.log("  - dist/index.js (server)");
+  console.log("  - dist/package.json (production deps)");
+  console.log("  - dist/node_modules/ (installed deps)");
+  console.log("  - dist/public/ (static assets)");
+
+  if (buildOnly) {
+    console.log("🏗️  Build-only mode complete. Use 'cd dist && node index.js' to start server.");
+    process.exit(0);
+  }
+
+  console.log("🚀 Starting server from production directory...");
+  execSync("cd dist && node index.js", { stdio: "inherit" });
 } catch (err) {
   console.error("💥 Error in build-and-start:", err);
   process.exit(1);
