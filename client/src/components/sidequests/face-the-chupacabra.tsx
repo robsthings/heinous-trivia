@@ -126,7 +126,7 @@ export function FaceTheChupacabra() {
               : `/sidequests/face-the-chupacabra/chupa-key.png`
             }
             alt={`Key ${keyNum}`}
-            className={`w-12 h-12 ${keyNum <= gameState.playerKeys ? 'opacity-100' : 'opacity-30'}`}
+            className={`w-16 h-16 ${keyNum <= gameState.playerKeys ? 'opacity-100' : 'opacity-30'}`}
           />
         ))}
       </div>
@@ -222,7 +222,7 @@ export function FaceTheChupacabra() {
                         <img
                           src={`/sidequests/face-the-chupacabra/chupa-key-${gameState.playerKeys}.png`}
                           alt={`Key ${gameState.playerKeys}`}
-                          className="w-16 h-16 animate-bounce"
+                          className="w-24 h-24 animate-bounce"
                         />
                       </div>
                     </div>
