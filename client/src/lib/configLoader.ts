@@ -56,6 +56,13 @@ export class ConfigLoader {
 }
 
 export function getHauntFromURL(): string {
+  // First check URL path for /game/:hauntId or /welcome/:hauntId pattern
+  const pathParts = window.location.pathname.split('/');
+  if (pathParts.length >= 3 && (pathParts[1] === 'game' || pathParts[1] === 'welcome')) {
+    return pathParts[2];
+  }
+  
+  // Fallback to query parameter for root URL redirects
   const urlParams = new URLSearchParams(window.location.search);
   return urlParams.get('haunt') || 'headquarters';
 }
