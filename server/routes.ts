@@ -715,10 +715,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
                   questions = [...questions, ...packData.questions];
                   console.log(`✅ Loaded ${packData.questions.length} questions from haunt-specific pack: ${packId}`);
                 } else {
-                  console.log(`❌ Haunt-specific pack ${packId} has no questions array`);
+                  console.log(`❌ Haunt-specific pack ${packId} has no questions array, data:`, packData);
                 }
               } else {
                 console.log(`❌ Haunt-specific pack ${packId} does not exist in trivia-packs collection`);
+                // Debug: List available trivia packs to verify collection structure (only on first missing pack)
+                if (packId === 'cryptid-chaos') {
+                  const allPacksRef = firestore.collection('trivia-packs');
+                  const allPacksSnapshot = await allPacksRef.get();
+                  const availablePacks = allPacksSnapshot.docs.map(doc => doc.id);
+                  console.log(`🔍 Available trivia packs:`, availablePacks);
+                }
               }
             } catch (error) {
               console.warn(`⚠️ Could not load haunt-specific pack ${packId}:`, error);
