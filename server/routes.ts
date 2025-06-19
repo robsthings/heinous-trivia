@@ -694,7 +694,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             hauntSpecificPacks = ['cJ2QUpSECaKdOMbGUGBD', 'starter-pack'];
             console.log(`📘 Loading headquarters-specific packs: ${hauntSpecificPacks.join(', ')}`);
           } else if (hauntId === 'Sorcererslair') {
-            hauntSpecificPacks = ['Sorcererslair-emergency-pack', 'starter-pack'];
+            hauntSpecificPacks = ['cryptid-chaos', 'starter-pack'];
             console.log(`📘 Loading Sorcererslair-specific packs: ${hauntSpecificPacks.join(', ')}`);
           } else {
             // For other haunts, use appropriate general packs
@@ -725,6 +725,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
                   const allPacksSnapshot = await allPacksRef.get();
                   const availablePacks = allPacksSnapshot.docs.map(doc => doc.id);
                   console.log(`🔍 Available trivia packs:`, availablePacks);
+                  
+                  // Check if cryptid-chaos exists in a different collection structure
+                  const globalPacksRef = firestore.collection('globalQuestionPacks');
+                  const globalSnapshot = await globalPacksRef.get();
+                  if (!globalSnapshot.empty) {
+                    const globalPacks = globalSnapshot.docs.map(doc => doc.id);
+                    console.log(`🔍 Available global question packs:`, globalPacks);
+                  }
                 }
               }
             } catch (error) {
