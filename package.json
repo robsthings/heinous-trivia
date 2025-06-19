@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "NODE_ENV=development tsx server/index.ts",
     "build": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outfile=dist/index.js --define:import.meta.dirname=__dirname --banner:js='import { fileURLToPath } from \"url\"; import { dirname } from \"path\"; const __filename = fileURLToPath(import.meta.url); const __dirname = dirname(__filename);'",
-    "start": "NODE_ENV=production node dist/index.js",
+    "start": "node build-and-start.js",
     "check": "tsc",
     "db:push": "drizzle-kit push"
   },
@@ -100,12 +100,12 @@
     "@vitejs/plugin-react": "^4.3.2",
     "autoprefixer": "^10.4.20",
     "drizzle-kit": "^0.30.4",
-    "esbuild": "^0.25.0",
+    "esbuild": "^0.25.5",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.17",
     "tsx": "^4.20.3",
     "typescript": "5.6.3",
-    "vite": "^5.4.14"
+    "vite": "^5.4.19"
   },
   "optionalDependencies": {
     "bufferutil": "^4.0.8"
