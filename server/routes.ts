@@ -694,8 +694,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
             hauntSpecificPacks = ['cJ2QUpSECaKdOMbGUGBD', 'starter-pack'];
             console.log(`📘 Loading headquarters-specific packs: ${hauntSpecificPacks.join(', ')}`);
           } else if (hauntId === 'Sorcererslair') {
-            hauntSpecificPacks = ['cryptid-chaos', 'starter-pack'];
-            console.log(`📘 Loading Sorcererslair-specific packs: ${hauntSpecificPacks.join(', ')}`);
+            // For now, use existing packs until cryptid-chaos is created
+            hauntSpecificPacks = ['Sorcererslair-emergency-pack', 'starter-pack'];
+            console.log(`📘 Loading Sorcererslair assigned packs: ${hauntSpecificPacks.join(', ')}`);
           } else {
             // For other haunts, use appropriate general packs
             hauntSpecificPacks = ['starter-pack'];
@@ -718,21 +719,63 @@ export async function registerRoutes(app: Express): Promise<Server> {
                   console.log(`❌ Haunt-specific pack ${packId} has no questions array, data:`, packData);
                 }
               } else {
-                console.log(`❌ Haunt-specific pack ${packId} does not exist in trivia-packs collection`);
-                // Debug: List available trivia packs to verify collection structure (only on first missing pack)
-                if (packId === 'cryptid-chaos') {
-                  const allPacksRef = firestore.collection('trivia-packs');
-                  const allPacksSnapshot = await allPacksRef.get();
-                  const availablePacks = allPacksSnapshot.docs.map(doc => doc.id);
-                  console.log(`🔍 Available trivia packs:`, availablePacks);
+                console.log(`❌ Pack ${packId} does not exist in trivia-packs collection`);
+                
+                // Try to find it in globalQuestionPacks collection
+                try {
+                  const globalPackRef = firestore.collection('globalQuestionPacks').doc(packId);
+                  const globalPackDoc = await globalPackRef.get();
                   
-                  // Check if cryptid-chaos exists in a different collection structure
-                  const globalPacksRef = firestore.collection('globalQuestionPacks');
-                  const globalSnapshot = await globalPacksRef.get();
-                  if (!globalSnapshot.empty) {
-                    const globalPacks = globalSnapshot.docs.map(doc => doc.id);
-                    console.log(`🔍 Available global question packs:`, globalPacks);
+                  if (globalPackDoc.exists) {
+                    console.log(`✅ Found ${packId} in globalQuestionPacks collection`);
+                    const globalPackData = globalPackDoc.data();
+                    if (globalPackData.questions && Array.isArray(globalPackData.questions)) {
+                      questions = [...questions, ...globalPackData.questions];
+                      console.log(`✅ Loaded ${globalPackData.questions.length} questions from global pack: ${packId}`);
+                    } else {
+                      console.log(`❌ Global pack ${packId} has no questions array`);
+                    }
+                  } else {
+                    console.log(`❌ Pack ${packId} not found in globalQuestionPacks either`);
+                    
+                    // Debug: List available collections only for cryptid-chaos
+                    if (packId === 'cryptid-chaos') {
+                      console.log(`🔍 Searching for cryptid-chaos across all possible collections...`);
+                      
+                      // Check trivia-packs
+                      const allPacksRef = firestore.collection('trivia-packs');
+                      const allPacksSnapshot = await allPacksRef.get();
+                      const availablePacks = allPacksSnapshot.docs.map(doc => doc.id);
+                      console.log(`🔍 Available trivia-packs:`, availablePacks);
+                      
+                      // Check globalQuestionPacks
+                      const globalPacksRef = firestore.collection('globalQuestionPacks');
+                      const globalSnapshot = await globalPacksRef.get();
+                      if (!globalSnapshot.empty) {
+                        const globalPacks = globalSnapshot.docs.map(doc => doc.id);
+                        console.log(`🔍 Available globalQuestionPacks:`, globalPacks);
+                      } else {
+                        console.log(`🔍 globalQuestionPacks collection is empty`);
+                      }
+                      
+                      // Try alternative collection names
+                      const altCollections = ['question-packs', 'packs', 'triviaPacks', 'questionPacks'];
+                      for (const colName of altCollections) {
+                        try {
+                          const altRef = firestore.collection(colName);
+                          const altSnapshot = await altRef.get();
+                          if (!altSnapshot.empty) {
+                            const altPacks = altSnapshot.docs.map(doc => doc.id);
+                            console.log(`🔍 Available ${colName}:`, altPacks);
+                          }
+                        } catch (e) {
+                          // Collection doesn't exist, skip
+                        }
+                      }
+                    }
                   }
+                } catch (globalError) {
+                  console.warn(`⚠️ Could not check globalQuestionPacks for ${packId}:`, globalError);
                 }
               }
             } catch (error) {
