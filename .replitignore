@@ -1,0 +1,50 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+.next/
+out/
+
+# Cache directories
+.turbo/
+.parcel-cache/
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+temp/
+tmp/
+*.tmp
+*.temp
+
+# Attached assets and debugging files
+attached_assets/
+cleanup_log.txt
+asset_cleanup_log.txt
+headers.txt
+temp_files_list.txt
+total_space.txt
+unused_assets.txt
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Firebase cache
+.firebase/
