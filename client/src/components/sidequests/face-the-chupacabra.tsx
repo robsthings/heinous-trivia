@@ -269,9 +269,9 @@ export function FaceTheChupacabra() {
 
         {gameState.phase === 'lost' && (
           <>
-            {/* Animated bars dropping overlay */}
+            {/* Animated bars dropping overlay - full screen */}
             <div 
-              className="absolute inset-0 bg-cover bg-center bg-no-repeat animate-slide-down"
+              className="fixed inset-0 w-full h-full bg-cover bg-center bg-no-repeat animate-slide-down z-0"
               style={{ 
                 backgroundImage: `url(/sidequests/face-the-chupacabra/chupa-bg-bars.png)`,
                 animationDelay: '0.5s',
@@ -280,18 +280,6 @@ export function FaceTheChupacabra() {
                 transform: 'translateY(-100%)'
               }}
             ></div>
-            
-            {/* Dust clouds at bottom */}
-            <div className="absolute bottom-0 left-0 right-0 h-20 opacity-0 animate-dust-clouds"
-                 style={{ 
-                   animationDelay: '1.5s',
-                   animationDuration: '0.8s',
-                   animationFillMode: 'forwards'
-                 }}>
-              <div className="absolute bottom-0 left-1/4 w-16 h-16 bg-gray-400 rounded-full opacity-60 animate-bounce"></div>
-              <div className="absolute bottom-0 right-1/4 w-12 h-12 bg-gray-500 rounded-full opacity-40 animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-              <div className="absolute bottom-0 left-1/2 w-10 h-10 bg-gray-600 rounded-full opacity-50 animate-bounce" style={{ animationDelay: '0.4s' }}></div>
-            </div>
 
             <div className="space-y-6 relative z-10">
               <h2 className="text-4xl font-bold text-red-500 mb-4">💀 GAME OVER 💀</h2>
