@@ -17,9 +17,19 @@ export function RootRedirector() {
   const [showHome, setShowHome] = useState(false);
 
   useEffect(() => {
+    console.log('RootRedirector - Initial render');
+    console.log('RootRedirector - window.location:', window.location);
+    console.log('RootRedirector - pathname:', window.location.pathname);
+    console.log('RootRedirector - search:', window.location.search);
+    console.log('RootRedirector - href:', window.location.href);
+    
     // Parse URL to check for haunt query parameter
     const urlParams = new URLSearchParams(window.location.search);
     const hauntId = urlParams.get('haunt');
+
+    console.log('RootRedirector - URLSearchParams object:', urlParams);
+    console.log('RootRedirector - All params:', Array.from(urlParams.entries()));
+    console.log('RootRedirector - Extracted hauntId:', hauntId);
 
     // Only proceed if haunt parameter is present
     if (hauntId) {
@@ -29,6 +39,9 @@ export function RootRedirector() {
       // Check if user has seen the intro before (same logic as Welcome screen)
       const hasSeenIntro = localStorage.getItem('hasSeenHeinousIntro');
       const isFirstVisit = !hasSeenIntro;
+
+      console.log('RootRedirector - isFirstVisit:', isFirstVisit);
+      console.log('RootRedirector - Will redirect to:', isFirstVisit ? `/welcome/${hauntId}` : `/game/${hauntId}`);
 
       // Clear the query parameter from URL without triggering reload
       const cleanUrl = window.location.pathname;

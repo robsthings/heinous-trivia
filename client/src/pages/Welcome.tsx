@@ -12,6 +12,10 @@ export function Welcome() {
   const [isAnimating, setIsAnimating] = useState(true);
 
   const currentHauntId = params?.hauntId || 'headquarters';
+  
+  // Debug the haunt extraction
+  console.log('Welcome component - URL params:', params);
+  console.log('Welcome component - currentHauntId:', currentHauntId);
 
   // Define dialogue messages for different user types
   const firstTimeMessages = [
