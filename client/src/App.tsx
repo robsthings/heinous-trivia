@@ -86,6 +86,11 @@ function Router() {
 }
 
 function App() {
+  // Debug URL at App component level
+  console.log('App.tsx - Component render');
+  console.log('App.tsx - window.location.href:', window.location.href);
+  console.log('App.tsx - window.location.search:', window.location.search);
+  
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
