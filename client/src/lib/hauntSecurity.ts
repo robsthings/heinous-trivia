@@ -66,7 +66,7 @@ export class HauntSecurity {
   }
 
   /**
-   * Extracts haunt ID from current URL
+   * Extracts haunt ID from current URL using multiple detection strategies
    */
   static getHauntFromURL(): string {
     const pathParts = window.location.pathname.split('/');
@@ -76,16 +76,41 @@ export class HauntSecurity {
       return 'headquarters'; // Safe default for admin contexts
     }
 
-    // Check URL path for /game/:hauntId or /welcome/:hauntId
+    // Strategy 1: Check URL path for /game/:hauntId or /welcome/:hauntId
     if (pathParts.length >= 3 && (pathParts[1] === 'game' || pathParts[1] === 'welcome')) {
       return pathParts[2];
     }
     
-    // Check query parameter for QR code redirects
+    // Strategy 2: Check path-based haunt detection (/h/HauntName)
+    if (pathParts.length >= 3 && pathParts[1] === 'h') {
+      return pathParts[2];
+    }
+    
+    // Strategy 3: Check query parameter for QR code redirects
     const urlParams = new URLSearchParams(window.location.search);
     const queryHaunt = urlParams.get('haunt');
     if (queryHaunt) {
       return queryHaunt;
+    }
+    
+    // Strategy 4: Hash-based parameters (production fallback)
+    if (window.location.hash) {
+      const hash = window.location.hash.substring(1);
+      if (hash.includes('haunt=')) {
+        const hashParams = new URLSearchParams(hash);
+        const hashHaunt = hashParams.get('haunt');
+        if (hashHaunt) return hashHaunt;
+      }
+      // Direct hash format: #HauntName
+      else if (hash && !hash.includes('=') && hash.length > 2) {
+        return hash;
+      }
+    }
+    
+    // Strategy 5: Check preserved haunt parameter
+    const preservedHaunt = sessionStorage.getItem('preservedHauntParam');
+    if (preservedHaunt) {
+      return preservedHaunt;
     }
     
     // Fallback to session or default

@@ -16,49 +16,58 @@ import { extractHauntId, preserveHauntId, isValidHauntId } from '@/lib/hauntUrls
 export function RootRedirector() {
   const [location, navigate] = useLocation();
   const [showHome, setShowHome] = useState(false);
+  
+  // Extract haunt parameter from Wouter route params
+  const params = new URLSearchParams();
+  const pathSegments = location.split('/');
+  let routeHauntId: string | null = null;
+  
+  // Check if we're on /h/:hauntId route
+  if (pathSegments[1] === 'h' && pathSegments[2]) {
+    routeHauntId = pathSegments[2];
+  }
 
   useEffect(() => {
-    // Use robust haunt detection system with multiple URL format support
-    const hauntId = extractHauntId();
+    // Priority 1: Use route parameter if on /h/:hauntId path
+    let detectedHauntId = routeHauntId;
     
-    console.log('RootRedirector - Detected hauntId:', hauntId);
+    // Priority 2: Use comprehensive URL detection if no route param
+    if (!detectedHauntId) {
+      detectedHauntId = extractHauntId();
+    }
+    
+    console.log('RootRedirector - Route haunt:', routeHauntId);
+    console.log('RootRedirector - Extracted haunt:', extractHauntId());
+    console.log('RootRedirector - Final haunt:', detectedHauntId);
     console.log('RootRedirector - Current URL:', window.location.href);
     console.log('RootRedirector - Wouter location:', location);
 
-    // Preserve valid haunt ID for navigation persistence
-    if (hauntId && isValidHauntId(hauntId)) {
-      preserveHauntId(hauntId);
+    // Process valid haunt ID for Firebase isolation
+    if (detectedHauntId && isValidHauntId(detectedHauntId)) {
+      preserveHauntId(detectedHauntId);
+      
+      // Enforce haunt isolation through HauntSecurity
+      HauntSecurity.enforceHauntIsolation(detectedHauntId);
+      
+      // Check if this is a first-time visit for this haunt
+      const visitKey = `heinous-first-visit-${detectedHauntId}`;
+      const isFirstVisit = !localStorage.getItem(visitKey);
+      
+      if (isFirstVisit) {
+        localStorage.setItem(visitKey, 'true');
+        navigate(`/welcome/${detectedHauntId}`);
+        return;
+      } else {
+        navigate(`/game/${detectedHauntId}`);
+        return;
+      }
     }
 
-    // Only proceed if haunt parameter is present
-    if (hauntId) {
-      // Enforce haunt isolation to prevent cross-contamination
-      HauntSecurity.enforceHauntIsolation(hauntId);
-
-      // Check if user has seen the intro before (same logic as Welcome screen)
-      const hasSeenIntro = localStorage.getItem('hasSeenHeinousIntro');
-      const isFirstVisit = !hasSeenIntro;
-
-      console.log('RootRedirector - isFirstVisit:', isFirstVisit);
-      console.log('RootRedirector - Will redirect to:', isFirstVisit ? `/welcome/${hauntId}` : `/game/${hauntId}`);
-
-      // Clear the query parameter from URL without triggering reload
-      const cleanUrl = window.location.pathname;
-      window.history.replaceState({}, document.title, cleanUrl);
-
-      // Redirect based on visit history
-      if (isFirstVisit) {
-        // First-time user: show welcome screen
-        navigate(`/welcome/${hauntId}`);
-      } else {
-        // Returning user: go directly to game
-        navigate(`/game/${hauntId}`);
-      }
-    } else {
-      // No haunt parameter: show homepage
+    // If no valid haunt detected after all strategies, show homepage
+    if (!detectedHauntId || !isValidHauntId(detectedHauntId)) {
       setShowHome(true);
     }
-  }, [navigate]);
+  }, [location, routeHauntId, navigate]);
 
   // Show homepage if no haunt parameter
   if (showHome) {

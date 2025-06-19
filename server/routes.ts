@@ -635,49 +635,52 @@ export async function registerRoutes(app: Express): Promise<Server> {
           console.log(`Loaded ${customQuestions.length} custom questions for ${hauntId}`);
         }
 
-        // 2. Load from trivia-packs collection (existing packs with question arrays)
-        const triviaPacksRef = firestore.collection('trivia-packs');
-        const packsSnapshot = await triviaPacksRef.get();
+        // 2. Load haunt-specific trivia packs only
+        const hauntConfig = await FirebaseService.getHauntConfig(hauntId);
         
-        if (!packsSnapshot.empty) {
-          packsSnapshot.docs.forEach(doc => {
-            const packData = doc.data();
-            console.log(`Checking pack ${doc.id}, data structure:`, Object.keys(packData));
+        // Check if haunt has specific trivia pack assignments
+        if (hauntConfig?.triviaPackIds && Array.isArray(hauntConfig.triviaPackIds)) {
+          console.log(`Loading assigned trivia packs for ${hauntId}:`, hauntConfig.triviaPackIds);
+          
+          for (const packId of hauntConfig.triviaPackIds) {
+            const packRef = firestore.collection('trivia-packs').doc(packId);
+            const packDoc = await packRef.get();
+            
+            if (packDoc.exists) {
+              const packData = packDoc.data();
+              if (packData.questions && Array.isArray(packData.questions)) {
+                questions = [...questions, ...packData.questions];
+                console.log(`Loaded ${packData.questions.length} questions from assigned pack ${packId}`);
+              }
+            }
+          }
+        } else {
+          // Load haunt-specific question pack by naming convention
+          const hauntPackRef = firestore.collection('trivia-packs').doc(`${hauntId}-pack`);
+          const hauntPackDoc = await hauntPackRef.get();
+          
+          if (hauntPackDoc.exists) {
+            const packData = hauntPackDoc.data();
             if (packData.questions && Array.isArray(packData.questions)) {
               questions = [...questions, ...packData.questions];
-              console.log(`Loaded ${packData.questions.length} questions from pack ${doc.id}`);
+              console.log(`Loaded ${packData.questions.length} questions from haunt-specific pack: ${hauntId}-pack`);
             }
-          });
-        }
-
-        // 3. Load from horror-basics collection (default question pool)
-        const horrorBasicsRef = firestore.collection('horror-basics');
-        const horrorSnapshot = await horrorBasicsRef.get();
-        
-        if (!horrorSnapshot.empty) {
-          horrorSnapshot.docs.forEach(doc => {
-            const questionData = doc.data();
-            questions.push({
-              id: doc.id,
-              ...questionData
-            });
-          });
-          console.log(`Loaded ${horrorSnapshot.docs.length} questions from horror-basics collection`);
-        }
-
-        // 4. Load from trivia-questions collection (general question pool)
-        const triviaQuestionsRef = firestore.collection('trivia-questions');
-        const triviaSnapshot = await triviaQuestionsRef.get();
-        
-        if (!triviaSnapshot.empty) {
-          triviaSnapshot.docs.forEach(doc => {
-            const questionData = doc.data();
-            questions.push({
-              id: doc.id,
-              ...questionData
-            });
-          });
-          console.log(`Loaded ${triviaSnapshot.docs.length} questions from trivia-questions collection`);
+          } else {
+            // Only as final fallback, load from horror-basics for this specific haunt
+            console.log(`No haunt-specific questions found for ${hauntId}, using minimal fallback`);
+            const fallbackRef = firestore.collection('horror-basics').limit(50);
+            const fallbackSnapshot = await fallbackRef.get();
+            
+            if (!fallbackSnapshot.empty) {
+              fallbackSnapshot.docs.forEach(doc => {
+                questions.push({
+                  id: `${hauntId}-${doc.id}`,
+                  ...doc.data()
+                });
+              });
+              console.log(`Loaded ${fallbackSnapshot.docs.length} fallback questions for ${hauntId}`);
+            }
+          }
         }
 
       } catch (error) {
