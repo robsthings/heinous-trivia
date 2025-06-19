@@ -694,8 +694,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
             hauntSpecificPacks = ['cJ2QUpSECaKdOMbGUGBD', 'starter-pack'];
             console.log(`📘 Loading headquarters-specific packs: ${hauntSpecificPacks.join(', ')}`);
           } else if (hauntId === 'Sorcererslair') {
-            // Using existing packs until cryptid-chaos Firebase path is resolved
-            hauntSpecificPacks = ['Sorcererslair-emergency-pack', 'starter-pack'];
+            // Sorcererslair gets cryptid-chaos pack (cJ2QUpSECaKdOMbGUGBD) + starter-pack
+            hauntSpecificPacks = ['cJ2QUpSECaKdOMbGUGBD', 'starter-pack'];
             console.log(`📘 Loading Sorcererslair assigned packs: ${hauntSpecificPacks.join(', ')}`);
           } else {
             // For other haunts, use appropriate general packs
