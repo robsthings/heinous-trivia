@@ -673,9 +673,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
             }
           }
         } else {
-          console.log(`📘 No triviaPacks assigned for haunt: ${hauntId}, loading default collections`);
+          console.log(`📘 No triviaPacks assigned for haunt: ${hauntId}, loading major packs`);
+          console.log(`📘 DEBUG: Starting major pack loading sequence`);
           
-          // Fallback to general collections only if no triviaPacks assigned
+          // Auto-assign major trivia packs for sufficient question coverage
+          const majorPacks = ['cJ2QUpSECaKdOMbGUGBD', 'starter-pack'];
+          
+          for (const packId of majorPacks) {
+            try {
+              console.log(`🔍 Attempting to load major pack: ${packId}`);
+              const packRef = firestore.collection('trivia-packs').doc(packId);
+              const packDoc = await packRef.get();
+              
+              if (packDoc.exists) {
+                console.log(`✅ Found major pack: ${packId}`);
+                const packData = packDoc.data();
+                if (packData.questions && Array.isArray(packData.questions)) {
+                  questions = [...questions, ...packData.questions];
+                  console.log(`✅ Loaded ${packData.questions.length} questions from major pack: ${packId}`);
+                } else {
+                  console.log(`❌ Major pack ${packId} has no questions array`);
+                }
+              } else {
+                console.log(`❌ Major pack ${packId} does not exist in trivia-packs collection`);
+              }
+            } catch (error) {
+              console.warn(`⚠️ Could not load major pack ${packId}:`, error);
+            }
+          }
+          
+          // Fallback to general collections as additional backup
           const triviaPacksRef = firestore.collection('trivia-packs');
           const packsSnapshot = await triviaPacksRef.get();
           
