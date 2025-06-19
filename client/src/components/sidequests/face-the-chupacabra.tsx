@@ -165,6 +165,24 @@ export function FaceTheChupacabra() {
           <div className="space-y-6">
             <h2 className="text-3xl font-bold text-red-500 mb-4">Choose Your Weapon!</h2>
             
+            {/* Collected keys display */}
+            <div className="flex gap-3 justify-center mb-4">
+              {[1, 2, 3].map((keyNum) => (
+                <div key={keyNum} className="relative">
+                  {keyNum <= gameState.playerKeys ? (
+                    <img
+                      src={`/sidequests/face-the-chupacabra/chupa-key-${keyNum}.png`}
+                      alt={`Collected Key ${keyNum}`}
+                      className="w-8 h-20 animate-bounce"
+                      style={{ animationDelay: `${keyNum * 0.2}s` }}
+                    />
+                  ) : (
+                    <div className="w-8 h-20 border-2 border-dashed border-gray-600 rounded opacity-30"></div>
+                  )}
+                </div>
+              ))}
+            </div>
+            
             {!gameState.showResult && (
               <div className="grid grid-cols-3 gap-4">
                 {CHOICES.map((choice) => (
@@ -251,6 +269,20 @@ export function FaceTheChupacabra() {
         {gameState.phase === 'won' && (
           <div className="space-y-6 animate-pulse">
             <h2 className="text-4xl font-bold text-green-400 mb-4">🎉 ESCAPED! 🎉</h2>
+            
+            {/* All collected keys display */}
+            <div className="flex gap-4 justify-center mb-6">
+              {[1, 2, 3].map((keyNum) => (
+                <img
+                  key={keyNum}
+                  src={`/sidequests/face-the-chupacabra/chupa-key-${keyNum}.png`}
+                  alt={`Victory Key ${keyNum}`}
+                  className="w-10 h-26 animate-bounce"
+                  style={{ animationDelay: `${keyNum * 0.3}s` }}
+                />
+              ))}
+            </div>
+            
             <div className="relative">
               <img
                 src="/sidequests/face-the-chupacabra/chupa-bite.png"
@@ -259,7 +291,7 @@ export function FaceTheChupacabra() {
               />
             </div>
             <p className="text-xl text-gray-200 mb-6">
-              You defeated the Chupacabra and escaped! Returning to Main Game...
+              You collected all 3 keys and escaped! The Chupacabra is defeated!
             </p>
             <div className="space-y-4">
               <button
