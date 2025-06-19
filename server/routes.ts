@@ -686,47 +686,42 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
         // 2. If no haunt-specific sources found, assign appropriate fallback packs per haunt
         if (questions.length < 20) {
-          console.log(`📘 No triviaPacks assigned for haunt: ${hauntId}, assigning haunt-appropriate packs`);
+          console.log(`📘 No trivia-packs assigned for haunt: ${hauntId}, loading haunt-specific packs`);
           
-          // Assign different trivia packs based on haunt identity for proper isolation
-          let fallbackPacks = [];
+          // Assign different trivia packs based on haunt identity for proper isolation per fieldGlossary.json
+          let hauntSpecificPacks = [];
           if (hauntId === 'headquarters') {
-            fallbackPacks = ['cJ2QUpSECaKdOMbGUGBD', 'starter-pack'];
-            console.log(`📘 Assigning headquarters-specific packs: ${fallbackPacks.join(', ')}`);
+            hauntSpecificPacks = ['cJ2QUpSECaKdOMbGUGBD', 'starter-pack'];
+            console.log(`📘 Loading headquarters-specific packs: ${hauntSpecificPacks.join(', ')}`);
           } else if (hauntId === 'Sorcererslair') {
-            fallbackPacks = ['sorcerer-specialty-pack', 'starter-pack'];
-            console.log(`📘 Assigning Sorcererslair-specific packs: ${fallbackPacks.join(', ')}`);
+            hauntSpecificPacks = ['cryptid-chaos', 'starter-pack'];
+            console.log(`📘 Loading Sorcererslair-specific packs: ${hauntSpecificPacks.join(', ')}`);
           } else {
             // For other haunts, use appropriate general packs
-            fallbackPacks = ['starter-pack'];
-            console.log(`📘 Assigning general pack for ${hauntId}: ${fallbackPacks.join(', ')}`);
+            hauntSpecificPacks = ['starter-pack'];
+            console.log(`📘 Loading general pack for ${hauntId}: ${hauntSpecificPacks.join(', ')}`);
           }
           
-          for (const packId of fallbackPacks) {
+          for (const packId of hauntSpecificPacks) {
             try {
-              console.log(`🔍 Attempting to load fallback pack: ${packId}`);
+              console.log(`🔍 Attempting to load haunt-specific pack: ${packId}`);
               const packRef = firestore.collection('trivia-packs').doc(packId);
               const packDoc = await packRef.get();
               
               if (packDoc.exists) {
-                console.log(`✅ Found fallback pack: ${packId}`);
+                console.log(`✅ Found haunt-specific pack: ${packId}`);
                 const packData = packDoc.data();
                 if (packData.questions && Array.isArray(packData.questions)) {
                   questions = [...questions, ...packData.questions];
-                  console.log(`✅ Loaded ${packData.questions.length} questions from fallback pack: ${packId}`);
+                  console.log(`✅ Loaded ${packData.questions.length} questions from haunt-specific pack: ${packId}`);
                 } else {
-                  console.log(`❌ Fallback pack ${packId} has no questions array`);
+                  console.log(`❌ Haunt-specific pack ${packId} has no questions array`);
                 }
               } else {
-                console.log(`❌ Fallback pack ${packId} does not exist, creating from emergency pack`);
-                // If sorcerer-specialty-pack doesn't exist, create it from emergency pack
-                if (packId === 'sorcerer-specialty-pack') {
-                  console.log(`🔧 Creating sorcerer-specialty-pack from emergency pack questions`);
-                  // This would need to be handled by admin panel or manual creation
-                }
+                console.log(`❌ Haunt-specific pack ${packId} does not exist in trivia-packs collection`);
               }
             } catch (error) {
-              console.warn(`⚠️ Could not load fallback pack ${packId}:`, error);
+              console.warn(`⚠️ Could not load haunt-specific pack ${packId}:`, error);
             }
           }
           
