@@ -81,8 +81,21 @@ export class GameManager {
         throw new Error('No valid questions available for this haunt');
       }
 
+      const gameQuestions = questions.slice(0, this.QUESTIONS_PER_ROUND);
+      console.log(`🎮 Game initialized for ${haunt}: ${gameQuestions.length} questions selected from ${questions.length} available`);
+      
+      // Validate each question has required fields
+      const validQuestions = gameQuestions.filter(q => 
+        q && q.text && Array.isArray(q.answers) && q.answers.length > 0 && 
+        typeof q.correctAnswer === 'number' && q.correctAnswer >= 0 && q.correctAnswer < q.answers.length
+      );
+      
+      if (validQuestions.length !== gameQuestions.length) {
+        console.warn(`⚠️ Filtered ${gameQuestions.length - validQuestions.length} invalid questions, ${validQuestions.length} valid questions remaining`);
+      }
+
       return {
-        questions: questions.slice(0, this.QUESTIONS_PER_ROUND), // Limit to 20 questions
+        questions: validQuestions, // Use only validated questions
         ads: Array.isArray(ads) ? ads : [],
       };
     } catch (error) {
@@ -124,8 +137,11 @@ export class GameManager {
   static nextQuestion(state: GameState): GameState {
     const nextIndex = state.currentQuestionIndex + 1;
     
+    console.log(`🎮 Next question: answered=${state.questionsAnswered}/${this.QUESTIONS_PER_ROUND}, nextIndex=${nextIndex}/${state.questions.length}`);
+    
     // Check if we've completed the full round (20 questions) OR reached the end of available questions
     if (state.questionsAnswered >= this.QUESTIONS_PER_ROUND || nextIndex >= state.questions.length) {
+      console.log(`🏁 Game complete: answered=${state.questionsAnswered}, available=${state.questions.length}`);
       // Game complete after 20 questions or when we run out of questions
       return {
         ...state,
