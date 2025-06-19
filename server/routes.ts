@@ -694,7 +694,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             hauntSpecificPacks = ['cJ2QUpSECaKdOMbGUGBD', 'starter-pack'];
             console.log(`📘 Loading headquarters-specific packs: ${hauntSpecificPacks.join(', ')}`);
           } else if (hauntId === 'Sorcererslair') {
-            // For now, use existing packs until cryptid-chaos is created
+            // Using existing packs until cryptid-chaos Firebase path is resolved
             hauntSpecificPacks = ['Sorcererslair-emergency-pack', 'starter-pack'];
             console.log(`📘 Loading Sorcererslair assigned packs: ${hauntSpecificPacks.join(', ')}`);
           } else {
@@ -758,19 +758,50 @@ export async function registerRoutes(app: Express): Promise<Server> {
                         console.log(`🔍 globalQuestionPacks collection is empty`);
                       }
                       
-                      // Try alternative collection names
-                      const altCollections = ['question-packs', 'packs', 'triviaPacks', 'questionPacks'];
+                      // Try alternative collection names and structures
+                      const altCollections = ['question-packs', 'packs', 'triviaPacks', 'questionPacks', 'globalPacks', 'global-packs'];
                       for (const colName of altCollections) {
                         try {
                           const altRef = firestore.collection(colName);
                           const altSnapshot = await altRef.get();
                           if (!altSnapshot.empty) {
-                            const altPacks = altSnapshot.docs.map(doc => doc.id);
+                            const altPacks = altSnapshot.docs.map(doc => ({ id: doc.id, hasQuestions: !!doc.data().questions }));
                             console.log(`🔍 Available ${colName}:`, altPacks);
+                            
+                            // Check if cryptid-chaos is in this collection
+                            const cryptidDoc = altSnapshot.docs.find(doc => doc.id === 'cryptid-chaos');
+                            if (cryptidDoc) {
+                              console.log(`✅ Found cryptid-chaos in ${colName}! Loading questions...`);
+                              const cryptidData = cryptidDoc.data();
+                              if (cryptidData && cryptidData.questions && Array.isArray(cryptidData.questions)) {
+                                questions = [...questions, ...cryptidData.questions];
+                                console.log(`✅ Loaded ${cryptidData.questions.length} questions from cryptid-chaos in ${colName}`);
+                              }
+                            }
                           }
                         } catch (e) {
                           // Collection doesn't exist, skip
                         }
+                      }
+                      
+                      // Also try searching by name field across all collections
+                      try {
+                        const searchCollections = ['trivia-packs', 'globalQuestionPacks', 'question-packs', 'packs'];
+                        for (const searchCol of searchCollections) {
+                          const nameQuery = await firestore.collection(searchCol)
+                            .where('name', '==', 'cryptid-chaos').get();
+                          if (!nameQuery.empty) {
+                            console.log(`✅ Found cryptid-chaos by name in ${searchCol}, document ID:`, nameQuery.docs[0].id);
+                            const nameData = nameQuery.docs[0].data();
+                            if (nameData && nameData.questions && Array.isArray(nameData.questions)) {
+                              questions = [...questions, ...nameData.questions];
+                              console.log(`✅ Loaded ${nameData.questions.length} questions from cryptid-chaos by name search`);
+                            }
+                            break;
+                          }
+                        }
+                      } catch (e) {
+                        console.log(`⚠️ Name search failed:`, e.message);
                       }
                     }
                   }
