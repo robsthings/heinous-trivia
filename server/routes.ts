@@ -603,6 +603,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Get trivia questions for a haunt
+  // 📘 fieldGlossary.json compliance: Use `haunt` for API route param, `hauntId` for Firebase path
   app.get("/api/trivia-questions/:haunt", async (req, res) => {
     try {
       // Set explicit JSON content type and cache headers
@@ -611,7 +612,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.setHeader('Pragma', 'no-cache');
       res.setHeader('Expires', '0');
       
-      const { haunt: hauntId } = req.params;
+      // 📘 fieldGlossary.json: Use `haunt` for API queries, `hauntId` for Firebase document fields
+      const { haunt } = req.params;
+      const hauntId = haunt; // Map API param to Firebase document field
       
       if (!firestore) {
         return res.status(500).json({ error: "Firebase not configured" });
@@ -623,13 +626,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       try {
         /**
-         * FIREBASE FIELD NAME REFERENCE: Check /fieldGlossary.json before modifying any Firebase operations
-         * - Use 'haunt' for query parameters, 'hauntId' for Firebase document fields
-         * - Collections: Use canonical names from fieldGlossary.json
-         * - Verify all field names against canonical glossary before changes
+         * 📘 fieldGlossary.json compliance:
+         * - Use `haunt` for API route param, `hauntId` for Firebase path
+         * - Only use canonical collection names from glossary
+         * - Load haunt-specific questions ONLY, no global fallbacks unless in triviaPacks config
          */
 
+        // Get haunt configuration to check for assigned triviaPacks
+        const hauntConfig = await FirebaseService.getHauntConfig(hauntId);
+        console.log(`📘 Loading questions for haunt: ${hauntId} with config:`, {
+          hasTriviaPacks: !!(hauntConfig?.triviaPacks),
+          triviaPackCount: hauntConfig?.triviaPacks?.length || 0
+        });
+
         // 1. Load custom questions (haunt-specific subcollection per glossary)
+        // 📘 fieldGlossary.json: "haunt-questions/{hauntId}/questions"
         const customQuestionsRef = firestore.collection('haunt-questions').doc(hauntId).collection('questions');
         const customSnapshot = await customQuestionsRef.get();
         
@@ -639,52 +650,56 @@ export async function registerRoutes(app: Express): Promise<Server> {
             ...doc.data()
           }));
           questions = [...questions, ...customQuestions];
-          console.log(`Loaded ${customQuestions.length} custom questions for hauntId: ${hauntId}`);
+          console.log(`✅ Loaded ${customQuestions.length} custom questions for hauntId: ${hauntId}`);
         }
 
-        // 2. Load from trivia-packs collection (canonical collection per glossary)
-        const triviaPacksRef = firestore.collection('trivia-packs');
-        const packsSnapshot = await triviaPacksRef.get();
-        
-        if (!packsSnapshot.empty) {
-          packsSnapshot.docs.forEach(doc => {
-            const packData = doc.data();
-            console.log(`Checking pack ${doc.id}, data structure:`, Object.keys(packData));
-            if (packData.questions && Array.isArray(packData.questions)) {
-              questions = [...questions, ...packData.questions];
-              console.log(`Loaded ${packData.questions.length} questions from pack ${doc.id}`);
+        // 2. Load from assigned triviaPacks only (no global packs unless explicitly assigned)
+        // 📘 fieldGlossary.json: Use triviaPacks field from haunt configuration
+        if (hauntConfig?.triviaPacks && Array.isArray(hauntConfig.triviaPacks)) {
+          console.log(`📘 Loading assigned triviaPacks: ${hauntConfig.triviaPacks.join(', ')}`);
+          
+          for (const packId of hauntConfig.triviaPacks) {
+            const packRef = firestore.collection('trivia-packs').doc(packId);
+            const packDoc = await packRef.get();
+            
+            if (packDoc.exists) {
+              const packData = packDoc.data();
+              if (packData.questions && Array.isArray(packData.questions)) {
+                questions = [...questions, ...packData.questions];
+                console.log(`✅ Loaded ${packData.questions.length} questions from assigned pack: ${packId}`);
+              }
+            } else {
+              console.log(`❌ Assigned pack ${packId} not found for haunt: ${hauntId}`);
             }
-          });
+          }
+        } else {
+          console.log(`📘 No triviaPacks assigned for haunt: ${hauntId}, loading default collections`);
+          
+          // Fallback to general collections only if no triviaPacks assigned
+          const triviaPacksRef = firestore.collection('trivia-packs');
+          const packsSnapshot = await triviaPacksRef.get();
+          
+          if (!packsSnapshot.empty) {
+            packsSnapshot.docs.forEach(doc => {
+              const packData = doc.data();
+              // 📘 fieldGlossary.json: Check allowedHaunts field from configuration section
+              if (packData.questions && Array.isArray(packData.questions)) {
+                // Only load packs that don't have haunt restrictions or include this haunt
+                if (!packData.allowedHaunts || packData.allowedHaunts.includes(hauntId)) {
+                  questions = [...questions, ...packData.questions];
+                  console.log(`✅ Loaded ${packData.questions.length} questions from general pack: ${doc.id}`);
+                }
+              }
+            });
+          }
         }
 
-        // 3. Load from horror-basics collection (canonical collection per glossary)
-        const horrorBasicsRef = firestore.collection('horror-basics');
-        const horrorSnapshot = await horrorBasicsRef.get();
-        
-        if (!horrorSnapshot.empty) {
-          horrorSnapshot.docs.forEach(doc => {
-            const questionData = doc.data();
-            questions.push({
-              id: doc.id,
-              ...questionData
-            });
+        // Ensure we have minimum questions for game functionality
+        if (questions.length === 0) {
+          console.log(`❌ No questions found for haunt: ${hauntId}`);
+          return res.status(404).json({ 
+            error: `No trivia questions configured for haunt: ${hauntId}. Please assign triviaPacks or add custom questions.` 
           });
-          console.log(`Loaded ${horrorSnapshot.docs.length} questions from horror-basics collection`);
-        }
-
-        // 4. Load from trivia-questions collection (canonical collection per glossary)
-        const triviaQuestionsRef = firestore.collection('trivia-questions');
-        const triviaSnapshot = await triviaQuestionsRef.get();
-        
-        if (!triviaSnapshot.empty) {
-          triviaSnapshot.docs.forEach(doc => {
-            const questionData = doc.data();
-            questions.push({
-              id: doc.id,
-              ...questionData
-            });
-          });
-          console.log(`Loaded ${triviaSnapshot.docs.length} questions from trivia-questions collection`);
         }
 
       } catch (error) {
@@ -1642,104 +1657,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Legacy route pattern for questions (for compatibility)
-  app.get("/api/haunt/:hauntId/questions", async (req, res) => {
-    try {
-      // Set explicit JSON content type and cache headers
-      res.setHeader('Content-Type', 'application/json');
-      res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
-      res.setHeader('Pragma', 'no-cache');
-      res.setHeader('Expires', '0');
-      
-      const { hauntId } = req.params;
-      
-      // Get haunt configuration to determine question sources (optional)
-      const config = await FirebaseService.getHauntConfig(hauntId);
-      
-      let questions = [];
-
-      if (firestore) {
-        try {
-          // Load all available question packs for this haunt
-          
-          // 1. Load custom questions (haunt-specific)
-          const customQuestionsRef = firestore.collection('haunt-questions').doc(hauntId).collection('questions');
-          const customSnapshot = await customQuestionsRef.get();
-          
-          if (!customSnapshot.empty) {
-            const customQuestions = customSnapshot.docs.map(doc => ({
-              id: doc.id,
-              ...doc.data()
-            }));
-            questions = [...questions, ...customQuestions];
-            console.log(`Loaded ${customQuestions.length} custom questions for ${hauntId}`);
-          }
-
-          // 2. Load assigned trivia packs (if any)
-          if (config && config.triviaPacks && config.triviaPacks.length > 0) {
-            for (const packId of config.triviaPacks) {
-              try {
-                const packRef = firestore.collection('trivia-packs').doc(packId);
-                const packDoc = await packRef.get();
-                
-                if (packDoc.exists) {
-                  const packData = packDoc.data();
-                  if (packData.questions && Array.isArray(packData.questions)) {
-                    questions = [...questions, ...packData.questions];
-                    console.log(`Loaded ${packData.questions.length} questions from pack ${packId}`);
-                  }
-                }
-              } catch (error) {
-                console.warn(`Could not load trivia pack ${packId}:`, error);
-              }
-            }
-          }
-
-          // 3. Always load global question packs available to all haunts
-          console.log(`DEBUG: Attempting to load global question packs for ${hauntId}`);
-          const globalPacksRef = firestore.collection('globalQuestionPacks');
-          const globalSnapshot = await globalPacksRef.get();
-          
-          console.log(`DEBUG: Found ${globalSnapshot.docs.length} documents in globalQuestionPacks collection`);
-          
-          globalSnapshot.docs.forEach(doc => {
-            console.log(`DEBUG: Processing pack ${doc.id}:`, doc.data());
-            const packData = doc.data();
-            if (packData.questions && Array.isArray(packData.questions)) {
-              questions = [...questions, ...packData.questions];
-              console.log(`Loaded ${packData.questions.length} questions from global pack ${doc.id}`);
-            } else {
-              console.log(`DEBUG: Pack ${doc.id} has no questions array`);
-            }
-          });
-
-        } catch (error) {
-          console.warn(`Error loading question packs for ${hauntId}:`, error);
-        }
-      }
-
-      // If no questions loaded from any packs, use starter pack as fallback
-      if (questions.length === 0) {
-        console.log(`No question packs found for ${hauntId}, using starter pack fallback`);
-        questions = [
-          {
-            id: "starter-001",
-            text: "In the 1973 film 'The Exorcist', what is the name of the possessed girl?",
-            category: "Horror Movies",
-            difficulty: 2,
-            answers: ["Regan", "Carrie", "Samara", "Linda"],
-            correctAnswer: 0
-          }
-        ];
-      }
-
-      console.log(`Returning ${questions.length} total questions for ${hauntId}`);
-      res.json(questions);
-    } catch (error) {
-      console.error("Error loading questions:", error);
-      res.status(500).json({ error: "Failed to fetch trivia questions" });
-    }
-  });
+  // 📘 fieldGlossary.json compliance: Legacy non-compliant route removed
+  // Use /api/trivia-questions/:haunt instead (fieldGlossary.json compliant)
 
   return createServer(app);
 }
