@@ -33,7 +33,7 @@ export class GameManager {
   static createInitialState(haunt: string): GameState {
     return {
       currentHaunt: haunt,
-      hauntConfig: null,
+      hauntConfig: undefined,
       score: 0,
       currentQuestionIndex: 0,
       questions: [],

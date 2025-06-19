@@ -36,7 +36,7 @@ function Game() {
   );
   const [showNamePrompt, setShowNamePrompt] = useState(false);
   const [tempName, setTempName] = useState("");
-  const [loadedHauntConfig, setLoadedHauntConfig] = useState<HauntConfig | null>(null);
+  const [loadedHauntConfig, setLoadedHauntConfig] = useState<HauntConfig | undefined>(undefined);
   const { toast } = useToast();
 
   // Redirect to welcome screen unless coming from welcome screen
@@ -118,9 +118,9 @@ function Game() {
         setGameState(prev => ({ 
           ...prev, 
           ...gameConfig,
-          hauntConfig: hauntConfig || null
+          hauntConfig: hauntConfig || undefined
         }));
-        setLoadedHauntConfig(hauntConfig);
+        setLoadedHauntConfig(hauntConfig || undefined);
 
         if (hauntConfig?.theme?.primaryColor) {
           updateMetaThemeColor(hauntConfig.theme.primaryColor);
@@ -229,7 +229,7 @@ function Game() {
         <SpookyLoader 
           message="Loading your trivia experience..." 
           showProgress={true}
-          hauntConfig={loadedHauntConfig}
+          hauntConfig={loadedHauntConfig || null}
         />
       </div>
     );
