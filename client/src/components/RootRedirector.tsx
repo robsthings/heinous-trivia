@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'wouter';
 import Home from '@/pages/home';
+import { HauntSecurity } from '@/lib/hauntSecurity';
 
 /**
  * RootRedirector Component
@@ -22,18 +23,8 @@ export function RootRedirector() {
 
     // Only proceed if haunt parameter is present
     if (hauntId) {
-      // Clear any existing haunt session data to prevent cross-contamination
-      const previousHaunt = sessionStorage.getItem('currentHaunt');
-      if (previousHaunt && previousHaunt !== hauntId) {
-        // Switching haunts - clear all haunt-specific data
-        sessionStorage.removeItem('fromWelcomeScreen');
-        sessionStorage.removeItem('gameState');
-        Object.keys(localStorage).forEach(key => {
-          if (key.startsWith(`heinous-player-name-${previousHaunt}`)) {
-            // Don't clear player names - they're haunt-specific and should persist
-          }
-        });
-      }
+      // Enforce haunt isolation to prevent cross-contamination
+      HauntSecurity.enforceHauntIsolation(hauntId);
 
       // Check if user has seen the intro before (same logic as Welcome screen)
       const hasSeenIntro = localStorage.getItem('hasSeenHeinousIntro');

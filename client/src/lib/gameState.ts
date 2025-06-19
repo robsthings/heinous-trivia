@@ -9,7 +9,7 @@ import type { TriviaQuestion, LeaderboardEntry, HauntConfig, AdData } from "@sha
 
 export interface GameState {
   currentHaunt: string;
-  hauntConfig: HauntConfig | null;
+  hauntConfig: HauntConfig | undefined;
   score: number;
   currentQuestionIndex: number;
   questions: TriviaQuestion[];

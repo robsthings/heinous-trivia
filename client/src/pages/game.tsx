@@ -41,7 +41,6 @@ function Game() {
 
   // Redirect to welcome screen unless coming from welcome screen
   useEffect(() => {
-    const currentHaunt = getHauntFromURL();
     const fromWelcomeScreen = sessionStorage.getItem('fromWelcomeScreen');
     
     // Validate haunt access before proceeding
@@ -119,7 +118,7 @@ function Game() {
         setGameState(prev => ({ 
           ...prev, 
           ...gameConfig,
-          hauntConfig: hauntConfig || undefined
+          hauntConfig: hauntConfig || null
         }));
         setLoadedHauntConfig(hauntConfig);
 
