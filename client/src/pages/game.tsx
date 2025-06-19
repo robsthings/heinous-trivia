@@ -104,11 +104,15 @@ function Game() {
         setIsLoading(true);
         setError(null);
 
-        const haunt = gameState.currentHaunt;
+        // Always get current haunt from URL to ensure proper isolation
+        const haunt = HauntSecurity.getHauntFromURL();
         if (!haunt) {
           setError('No haunt specified in URL');
           return;
         }
+
+        // Enforce haunt isolation
+        HauntSecurity.enforceHauntIsolation(haunt);
 
         const [gameConfig, hauntConfig] = await Promise.all([
           GameManager.initializeGameState(haunt),
@@ -118,6 +122,7 @@ function Game() {
         setGameState(prev => ({ 
           ...prev, 
           ...gameConfig,
+          currentHaunt: haunt, // Ensure current haunt is updated
           hauntConfig: hauntConfig || undefined
         }));
         setLoadedHauntConfig(hauntConfig || undefined);
@@ -229,7 +234,7 @@ function Game() {
         <SpookyLoader 
           message="Loading your trivia experience..." 
           showProgress={true}
-          hauntConfig={loadedHauntConfig || null}
+          hauntConfig={loadedHauntConfig}
         />
       </div>
     );

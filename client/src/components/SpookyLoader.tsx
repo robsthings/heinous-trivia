@@ -6,7 +6,7 @@ import type { HauntConfig } from "@shared/schema";
 interface SpookyLoaderProps {
   message?: string;
   showProgress?: boolean;
-  hauntConfig?: HauntConfig;
+  hauntConfig?: HauntConfig | null | undefined;
 }
 
 export function SpookyLoader({ 
