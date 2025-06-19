@@ -30,7 +30,7 @@ export function GameEndScreen({
     
     try {
       setIsLoadingLeaderboard(true);
-      const response = await fetch(`/api/leaderboard?haunt=${gameState.currentHaunt}`);
+      const response = await fetch(`/api/leaderboard/${gameState.currentHaunt}`);
       
       if (response.ok) {
         const data: LeaderboardEntry[] = await response.json();

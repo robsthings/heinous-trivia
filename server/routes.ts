@@ -1034,58 +1034,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
 
 
-  // Get leaderboard (query parameter version for GameEndScreen)
+  // Get leaderboard (query parameter version for GameEndScreen - redirect to path version)
   app.get("/api/leaderboard", async (req, res) => {
-    res.setHeader('Content-Type', 'application/json');
-    res.setHeader('Cache-Control', 'no-cache');
+    const hauntId = req.query.haunt as string;
     
-    try {
-      const hauntId = req.query.haunt as string;
-      
-      if (!hauntId) {
-        return res.status(400).json({ error: "haunt parameter is required" });
-      }
-      
-      console.log(`[LEADERBOARD FETCH] Getting leaderboard for haunt: ${hauntId}`);
-      
-      if (!firestore) {
-        throw new Error('Firebase not configured');
-      }
-      
-      const leaderboardRef = firestore.collection('leaderboards').doc(hauntId).collection('players');
-      const snapshot = await leaderboardRef
-        .where('hidden', '!=', true)  // Exclude hidden players
-        .orderBy('hidden')  // Required for != query
-        .orderBy('score', 'desc')
-        .limit(50)
-        .get();
-      
-      console.log(`[LEADERBOARD FETCH] Found ${snapshot.docs.length} player records`);
-      
-      const players = snapshot.docs.map(doc => {
-        const data = doc.data();
-        console.log(`[LEADERBOARD FETCH] Player data:`, {
-          playerName: data.playerName,
-          score: data.score,
-          gameType: data.gameType
-        });
-        
-        // Transform to frontend format
-        return {
-          name: data.playerName,
-          score: data.score,
-          date: data.lastPlayed?.toDate?.()?.toISOString() || data.createdAt?.toDate?.()?.toISOString() || new Date().toISOString(),
-          haunt: data.hauntId,
-          questionsAnswered: data.questionsAnswered,
-          correctAnswers: data.correctAnswers
-        };
-      });
-      
-      res.json(players);
-    } catch (error) {
-      console.error("Error getting leaderboard:", error);
-      res.status(500).json({ error: "Failed to get leaderboard" });
+    if (!hauntId) {
+      return res.status(400).json({ error: "haunt parameter is required" });
     }
+    
+    // Redirect to the standardized path parameter endpoint
+    res.redirect(`/api/leaderboard/${hauntId}`);
   });
 
   // Save individual leaderboard entry

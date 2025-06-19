@@ -20,28 +20,8 @@ interface LeaderboardProps {
 export function Leaderboard({ isVisible, leaderboard, onClose, hauntId, currentPlayer, isLoading = false }: LeaderboardProps) {
   const [hiddenPlayers, setHiddenPlayers] = useState<Record<string, boolean>>({});
 
-  // Poll for hidden player changes from server instead of direct Firestore
-  useEffect(() => {
-    if (!hauntId) return;
-
-    const pollHiddenPlayers = async () => {
-      try {
-        const response = await fetch(`/api/host/${hauntId}/round`);
-        if (response.ok) {
-          const data = await response.json();
-          if (data && data.hiddenPlayers) {
-            setHiddenPlayers(data.hiddenPlayers);
-          }
-        }
-      } catch (error) {
-        // Silent error handling for production
-      }
-    };
-
-    pollHiddenPlayers();
-    const interval = setInterval(pollHiddenPlayers, 5000);
-    return () => clearInterval(interval);
-  }, [hauntId]);
+  // Individual mode only - no hidden player polling needed
+  // Removed group mode hidden player polling logic
 
   const getDisplayName = (playerName: string) => {
     // Always show the current player their own name
