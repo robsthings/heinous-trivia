@@ -7,7 +7,7 @@ import { Leaderboard } from "@/components/Leaderboard";
 import { Footer } from "@/components/Footer";
 import { SpookyLoader } from "@/components/SpookyLoader";
 import { MiniSpookyLoader } from "@/components/MiniSpookyLoader";
-import { ConfigLoader, getHauntFromURL } from "@/lib/configLoader";
+import { ConfigLoader, getHauntFromURL, validateHauntAccess } from "@/lib/configLoader";
 import { GameManager, type GameState } from "@/lib/gameState";
 import type { HauntConfig } from "@shared/schema";
 import { AnalyticsTracker } from "@/lib/analytics";
@@ -43,15 +43,29 @@ function Game() {
     const currentHaunt = getHauntFromURL();
     const fromWelcomeScreen = sessionStorage.getItem('fromWelcomeScreen');
     
-    if (currentHaunt && !fromWelcomeScreen) {
-      console.log('Redirecting to welcome screen for haunt:', currentHaunt);
-      setLocation(`/welcome/${currentHaunt}`);
-      return;
-    } else if (fromWelcomeScreen) {
-      console.log('User coming from welcome screen, proceeding to game');
-      // Clear the flag so future direct visits go to welcome
-      sessionStorage.removeItem('fromWelcomeScreen');
-    }
+    // Validate haunt access before proceeding
+    const validateAndRedirect = async () => {
+      if (currentHaunt && currentHaunt !== 'headquarters') {
+        const isValidHaunt = await validateHauntAccess(currentHaunt);
+        if (!isValidHaunt) {
+          console.warn(`Invalid haunt access attempt: ${currentHaunt}`);
+          setError(`Haunt "${currentHaunt}" not found or not accessible`);
+          return;
+        }
+      }
+      
+      if (currentHaunt && !fromWelcomeScreen) {
+        console.log('Redirecting to welcome screen for haunt:', currentHaunt);
+        setLocation(`/welcome/${currentHaunt}`);
+        return;
+      } else if (fromWelcomeScreen) {
+        console.log('User coming from welcome screen, proceeding to game');
+        // Clear the flag so future direct visits go to welcome
+        sessionStorage.removeItem('fromWelcomeScreen');
+      }
+    };
+    
+    validateAndRedirect();
   }, [setLocation]);
 
   useCustomSkin(gameState.hauntConfig);

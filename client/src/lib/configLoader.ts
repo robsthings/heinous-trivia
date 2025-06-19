@@ -59,10 +59,48 @@ export function getHauntFromURL(): string {
   // First check URL path for /game/:hauntId or /welcome/:hauntId pattern
   const pathParts = window.location.pathname.split('/');
   if (pathParts.length >= 3 && (pathParts[1] === 'game' || pathParts[1] === 'welcome')) {
-    return pathParts[2];
+    const hauntId = pathParts[2];
+    // Store the current haunt for session consistency
+    sessionStorage.setItem('currentHaunt', hauntId);
+    return hauntId;
   }
   
-  // Fallback to query parameter for root URL redirects
+  // Check for query parameter (QR code redirects)
   const urlParams = new URLSearchParams(window.location.search);
-  return urlParams.get('haunt') || 'headquarters';
+  const queryHaunt = urlParams.get('haunt');
+  if (queryHaunt) {
+    sessionStorage.setItem('currentHaunt', queryHaunt);
+    return queryHaunt;
+  }
+  
+  // Admin pages should not interfere with haunt routing
+  if (pathParts[1] === 'admin' || pathParts[1] === 'haunt-admin' || pathParts[1] === 'analytics') {
+    // Don't return stored haunt for admin pages - they have their own routing
+    return 'headquarters'; // Safe default for admin contexts
+  }
+  
+  // For other pages, use stored haunt or default
+  return sessionStorage.getItem('currentHaunt') || 'headquarters';
+}
+
+export async function validateHauntAccess(hauntId: string): Promise<boolean> {
+  try {
+    const response = await fetch(`/api/haunt-config/${hauntId}`);
+    if (response.ok) {
+      const config = await response.json();
+      // Check if haunt is active and accessible
+      return config && config.isActive !== false;
+    }
+    return false;
+  } catch (error) {
+    console.error('Failed to validate haunt access:', error);
+    return false;
+  }
+}
+
+export function clearHauntSession() {
+  // Clear all haunt-specific session data
+  sessionStorage.removeItem('currentHaunt');
+  sessionStorage.removeItem('fromWelcomeScreen');
+  sessionStorage.removeItem('gameState');
 }
