@@ -658,9 +658,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
         if (hauntConfig?.triviaPacks && Array.isArray(hauntConfig.triviaPacks) && hauntConfig.triviaPacks.length > 0) {
           console.log(`📘 Found haunt-specific triviaPacks for ${hauntId}: ${hauntConfig.triviaPacks.join(', ')}`);
           
-          // Load questions from each assigned pack separately to ensure equal distribution
-          const packQuestions = [];
-          
           for (const packId of hauntConfig.triviaPacks) {
             try {
               const packRef = firestore.collection('trivia-packs').doc(packId);
@@ -669,15 +666,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
               if (packDoc.exists) {
                 const packData = packDoc.data();
                 if (packData.questions && Array.isArray(packData.questions)) {
-                  // Store pack questions separately with pack identifier
-                  const questionsWithPackId = packData.questions.map(q => ({
-                    ...q,
-                    sourcePackId: packId
-                  }));
-                  packQuestions.push({
-                    packId: packId,
-                    questions: questionsWithPackId
-                  });
+                  questions = [...questions, ...packData.questions];
                   console.log(`✅ Loaded ${packData.questions.length} questions from haunt-specific pack: ${packId}`);
                 }
               }
@@ -686,26 +675,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
             }
           }
           
-          // Distribute questions equally from all assigned packs
-          if (packQuestions.length > 0) {
-            const questionsPerPack = Math.ceil(20 / packQuestions.length);
-            console.log(`📊 Distributing ${questionsPerPack} questions per pack from ${packQuestions.length} assigned packs`);
-            
-            for (const pack of packQuestions) {
-              // Randomly select questions from each pack
-              const shuffledPackQuestions = pack.questions.sort(() => Math.random() - 0.5);
-              const selectedFromPack = shuffledPackQuestions.slice(0, questionsPerPack);
-              questions = [...questions, ...selectedFromPack];
-              console.log(`📦 Selected ${selectedFromPack.length} questions from pack: ${pack.packId}`);
-            }
-            
-            console.log(`✅ Equal distribution complete: ${questions.length} questions from ${packQuestions.length} assigned packs`);
-            
-            // If we have enough questions, skip fallback loading
-            if (questions.length >= 20) {
-              console.log(`✅ Sufficient questions from haunt-specific sources: ${questions.length}`);
-              // Skip major pack loading and proceed to randomization
-            }
+          // If haunt has specific assignments, don't load major packs as fallback
+          if (questions.length >= 20) {
+            console.log(`✅ Sufficient questions from haunt-specific sources: ${questions.length}`);
+            // Skip major pack loading and proceed to randomization
           }
         }
 
@@ -730,9 +703,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
             console.log(`📘 No primary pack for ${hauntId}, will use starter-pack fallback`);
           }
           
-          // Load questions from each assigned pack separately for equal distribution
-          const fallbackPackQuestions = [];
-          
           for (const packId of hauntSpecificPacks) {
             try {
               console.log(`🔍 Attempting to load haunt-specific pack: ${packId}`);
@@ -743,15 +713,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
                 console.log(`✅ Found haunt-specific pack: ${packId}`);
                 const packData = packDoc.data();
                 if (packData.questions && Array.isArray(packData.questions)) {
-                  // Store pack questions separately with pack identifier
-                  const questionsWithPackId = packData.questions.map(q => ({
-                    ...q,
-                    sourcePackId: packId
-                  }));
-                  fallbackPackQuestions.push({
-                    packId: packId,
-                    questions: questionsWithPackId
-                  });
+                  questions = [...questions, ...packData.questions];
                   console.log(`✅ Loaded ${packData.questions.length} questions from haunt-specific pack: ${packId}`);
                 } else {
                   console.log(`❌ Haunt-specific pack ${packId} has no questions array, data:`, packData);
@@ -850,22 +812,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
             } catch (error) {
               console.warn(`⚠️ Could not load haunt-specific pack ${packId}:`, error);
             }
-          }
-          
-          // Distribute questions equally from fallback packs
-          if (fallbackPackQuestions.length > 0) {
-            const questionsPerPack = Math.ceil(20 / fallbackPackQuestions.length);
-            console.log(`📊 Fallback distribution: ${questionsPerPack} questions per pack from ${fallbackPackQuestions.length} packs`);
-            
-            for (const pack of fallbackPackQuestions) {
-              // Randomly select questions from each pack
-              const shuffledPackQuestions = pack.questions.sort(() => Math.random() - 0.5);
-              const selectedFromPack = shuffledPackQuestions.slice(0, questionsPerPack);
-              questions = [...questions, ...selectedFromPack];
-              console.log(`📦 Selected ${selectedFromPack.length} questions from fallback pack: ${pack.packId}`);
-            }
-            
-            console.log(`✅ Fallback equal distribution complete: ${questions.length} questions from ${fallbackPackQuestions.length} packs`);
           }
           
           // Fallback to general collections as additional backup
@@ -998,48 +944,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       console.log(`✅ Validated ${validQuestions.length} questions from ${questions.length} total (filtered ${questions.length - validQuestions.length} invalid)`);
       
-      // Check if we have multiple packs with sourcePackId for equal distribution
-      const questionsWithPackId = validQuestions.filter(q => q.sourcePackId);
-      const questionsWithoutPackId = validQuestions.filter(q => !q.sourcePackId);
-      
-      let questionsToReturn = [];
-      
-      if (questionsWithPackId.length >= 20) {
-        // Group questions by source pack for equal distribution
-        const questionsByPack = {};
-        questionsWithPackId.forEach(q => {
-          if (!questionsByPack[q.sourcePackId]) {
-            questionsByPack[q.sourcePackId] = [];
-          }
-          questionsByPack[q.sourcePackId].push(q);
-        });
-        
-        const packIds = Object.keys(questionsByPack);
-        if (packIds.length > 1) {
-          console.log(`📊 Implementing equal distribution across ${packIds.length} packs: ${packIds.join(', ')}`);
-          
-          const questionsPerPack = Math.ceil(20 / packIds.length);
-          
-          for (const packId of packIds) {
-            const packQuestions = questionsByPack[packId].sort(() => Math.random() - 0.5);
-            const selectedFromPack = packQuestions.slice(0, questionsPerPack);
-            questionsToReturn = [...questionsToReturn, ...selectedFromPack];
-            console.log(`📦 Selected ${selectedFromPack.length} questions from pack: ${packId}`);
-          }
-          
-          // Trim to exactly 20 questions if we went over
-          questionsToReturn = questionsToReturn.slice(0, 20);
-          console.log(`✅ Equal distribution complete: ${questionsToReturn.length} questions from ${packIds.length} packs`);
-        } else {
-          // Single pack, just randomize
-          questionsToReturn = questionsWithPackId.sort(() => Math.random() - 0.5).slice(0, 20);
-          console.log(`📦 Single pack randomization: ${questionsToReturn.length} questions from ${packIds[0]}`);
-        }
-      } else {
-        // Fallback to normal randomization if no pack distribution needed
-        questionsToReturn = validQuestions.sort(() => Math.random() - 0.5).slice(0, 20);
-        console.log(`📦 Standard randomization: ${questionsToReturn.length} questions (no pack distribution)`);
-      }
+      // 4. Final randomization
+      const questionsToReturn = validQuestions.sort(() => Math.random() - 0.5).slice(0, 20);
       
       console.log(`Returning ${questionsToReturn.length} randomized questions for ${hauntId} (from ${validQuestions.length} valid available)`);
       res.json(questionsToReturn);
