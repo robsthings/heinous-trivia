@@ -55,17 +55,15 @@ export function useSidequestAssets(sidequestName: string) {
 }
 
 /**
- * Get asset URL with fallback to local assets
+ * Get asset URL from Firebase Storage
  * 
  * @param sidequestName - Name of the sidequest (e.g., "wack-a-chupacabra")
  * @param assetName - Name of the asset file without extension (e.g., "wack-bg")
- * @param localPath - Fallback local path if Firebase asset not available
  */
 export function useSidequestAsset(
   sidequestName: string, 
-  assetName: string, 
-  localPath: string
-): string {
+  assetName: string
+): string | undefined {
   const { data: assets, isLoading, error } = useSidequestAssets(sidequestName);
   
   // Return Firebase URL if available
@@ -73,8 +71,8 @@ export function useSidequestAsset(
     return assets[assetName];
   }
   
-  // Fallback to local path
-  return localPath;
+  // Return undefined if not loaded yet or not found
+  return undefined;
 }
 
 /**
@@ -82,29 +80,21 @@ export function useSidequestAsset(
  */
 export const SidequestAssetHelper = {
   /**
-   * Generate local asset path for fallback
-   */
-  getLocalPath: (sidequestName: string, filename: string) => 
-    `/sidequests/${sidequestName}/${filename}`,
-    
-  /**
    * Extract asset name from filename (removes extension)
    */
   getAssetName: (filename: string) => 
     filename.replace(/\.[^/.]+$/, ''),
     
   /**
-   * Get asset with automatic local fallback
+   * Get asset URL from Firebase Storage
    */
   getAsset: (
     assets: SidequestAssets | undefined, 
-    assetName: string, 
-    sidequestName: string, 
-    filename: string
-  ) => {
+    assetName: string
+  ): string | undefined => {
     if (assets && assets[assetName]) {
       return assets[assetName];
     }
-    return SidequestAssetHelper.getLocalPath(sidequestName, filename);
+    return undefined;
   }
 };
