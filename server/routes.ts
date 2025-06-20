@@ -901,13 +901,56 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // Don't return error - proceed with whatever questions we have
       }
 
+      // Normalize and validate questions before sending to client
+      const normalizedQuestions = questions.map((q, index) => {
+        // Handle different field naming conventions
+        const questionText = q.text || q.question || '';
+        const questionAnswers = q.answers || q.choices || [];
+        let correctAnswerIndex = q.correctAnswer;
+        
+        // Convert string-based correct answers to indices
+        if (typeof correctAnswerIndex === 'string') {
+          const foundIndex = questionAnswers.findIndex(answer => answer === correctAnswerIndex);
+          correctAnswerIndex = foundIndex >= 0 ? foundIndex : 0;
+        }
+        
+        // Ensure correctAnswer is a valid number
+        if (typeof correctAnswerIndex !== 'number' || correctAnswerIndex < 0 || correctAnswerIndex >= questionAnswers.length) {
+          correctAnswerIndex = 0;
+        }
+        
+        return {
+          id: q.id || `question-${index}`,
+          text: questionText,
+          category: q.category || 'General',
+          difficulty: q.difficulty || 1,
+          answers: questionAnswers,
+          correctAnswer: correctAnswerIndex,
+          explanation: q.explanation || '',
+          points: q.points || 100
+        };
+      });
+      
+      // Filter out invalid questions
+      const validQuestions = normalizedQuestions.filter(q => 
+        q.text && 
+        Array.isArray(q.answers) && 
+        q.answers.length >= 2 &&
+        q.answers.every(answer => answer && answer.trim().length > 0) &&
+        typeof q.correctAnswer === 'number' &&
+        q.correctAnswer >= 0 &&
+        q.correctAnswer < q.answers.length
+      );
+      
+      console.log(`✅ Validated ${validQuestions.length} questions from ${questions.length} total (filtered ${questions.length - validQuestions.length} invalid)`);
+      
       // Randomize question order for each session
-      const randomizedQuestions = questions.sort(() => Math.random() - 0.5);
+      const randomizedQuestions = validQuestions.sort(() => Math.random() - 0.5);
       
-      // Ensure we return at least 20 questions (or all available if more)
-      const questionsToReturn = randomizedQuestions.slice(0, Math.max(20, randomizedQuestions.length));
+      // Return exactly 20 questions for consistent gameplay
+      const questionsToReturn = randomizedQuestions.slice(0, 20);
       
-      console.log(`Returning ${questionsToReturn.length} randomized questions for ${hauntId} (from ${questions.length} total available)`);
+      console.log(`Returning ${questionsToReturn.length} randomized questions for ${hauntId} (from ${validQuestions.length} valid available)`);
       res.json(questionsToReturn);
       
     } catch (error) {

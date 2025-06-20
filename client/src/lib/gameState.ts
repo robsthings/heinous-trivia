@@ -81,21 +81,49 @@ export class GameManager {
         throw new Error('No valid questions available for this haunt');
       }
 
-      const gameQuestions = questions.slice(0, this.QUESTIONS_PER_ROUND);
-      console.log(`🎮 Game initialized for ${haunt}: ${gameQuestions.length} questions selected from ${questions.length} available`);
+      // Validate and filter questions first to ensure we get enough valid ones
+      const validQuestions = questions.filter(q => {
+        // Basic existence checks
+        if (!q || !q.text) return false;
+        
+        // Handle both 'answers' and 'choices' field names for compatibility
+        const questionAnswers = q.answers || q.choices;
+        if (!Array.isArray(questionAnswers) || questionAnswers.length === 0) return false;
+        
+        // Ensure answers are not empty strings
+        const nonEmptyAnswers = questionAnswers.filter(answer => answer && answer.trim().length > 0);
+        if (nonEmptyAnswers.length < 2) return false; // Need at least 2 valid answers
+        
+        // Validate correctAnswer field
+        if (typeof q.correctAnswer === 'number') {
+          return q.correctAnswer >= 0 && q.correctAnswer < questionAnswers.length;
+        }
+        
+        // Handle string-based correct answers (fallback compatibility)
+        if (typeof q.correctAnswer === 'string') {
+          const correctIndex = questionAnswers.findIndex(answer => answer === q.correctAnswer);
+          if (correctIndex >= 0) {
+            q.correctAnswer = correctIndex; // Convert to index
+            return true;
+          }
+        }
+        
+        // If no valid correctAnswer, default to first answer
+        q.correctAnswer = 0;
+        return true;
+      });
       
-      // Validate each question has required fields
-      const validQuestions = gameQuestions.filter(q => 
-        q && q.text && Array.isArray(q.answers) && q.answers.length > 0 && 
-        typeof q.correctAnswer === 'number' && q.correctAnswer >= 0 && q.correctAnswer < q.answers.length
-      );
-      
-      if (validQuestions.length !== gameQuestions.length) {
-        console.warn(`⚠️ Filtered ${gameQuestions.length - validQuestions.length} invalid questions, ${validQuestions.length} valid questions remaining`);
+      // Ensure we have enough questions for a full game
+      if (validQuestions.length < this.QUESTIONS_PER_ROUND) {
+        console.warn(`⚠️ Only ${validQuestions.length} valid questions available, need ${this.QUESTIONS_PER_ROUND}. Game may be shorter.`);
       }
+      
+      // Take exactly the number we need for the game
+      const gameQuestions = validQuestions.slice(0, this.QUESTIONS_PER_ROUND);
+      console.log(`🎮 Game initialized for ${haunt}: ${gameQuestions.length} questions selected from ${questions.length} available`);
 
       return {
-        questions: validQuestions, // Use only validated questions
+        questions: gameQuestions,
         ads: Array.isArray(ads) ? ads : [],
       };
     } catch (error) {
