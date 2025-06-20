@@ -1799,6 +1799,43 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // ===== SIDEQUEST ASSETS ENDPOINTS =====
+  
+  // Get all sidequest assets
+  app.get('/api/sidequests/assets', async (req: Request, res: Response) => {
+    try {
+      const assets = await FirebaseService.getBrandingAssets();
+      const sidequestMapping = assets.find((asset: any) => asset.id === 'sidequest-assets');
+      
+      if (sidequestMapping && sidequestMapping.mapping) {
+        res.json({ assets: sidequestMapping.mapping });
+      } else {
+        res.json({ assets: {} });
+      }
+    } catch (error) {
+      console.error('Failed to get sidequest assets:', error);
+      res.status(500).json({ error: 'Failed to retrieve sidequest assets' });
+    }
+  });
+  
+  // Get assets for a specific sidequest
+  app.get('/api/sidequests/:sidequestName/assets', async (req: Request, res: Response) => {
+    try {
+      const { sidequestName } = req.params;
+      const assets = await FirebaseService.getBrandingAssets();
+      const sidequestMapping = assets.find((asset: any) => asset.id === 'sidequest-assets');
+      
+      if (sidequestMapping && sidequestMapping.mapping && sidequestMapping.mapping[sidequestName]) {
+        res.json({ assets: sidequestMapping.mapping[sidequestName] });
+      } else {
+        res.json({ assets: {} });
+      }
+    } catch (error) {
+      console.error(`Failed to get assets for ${req.params.sidequestName}:`, error);
+      res.status(500).json({ error: 'Failed to retrieve sidequest assets' });
+    }
+  });
+
   // 📘 fieldGlossary.json compliance: Legacy non-compliant route removed
   // Use /api/trivia-questions/:haunt instead (fieldGlossary.json compliant)
 
