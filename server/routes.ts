@@ -688,19 +688,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
         if (questions.length < 20) {
           console.log(`📘 No trivia-packs assigned for haunt: ${hauntId}, loading haunt-specific packs`);
           
-          // Assign different trivia packs based on haunt identity for proper isolation per fieldGlossary.json
+          // Assign primary trivia packs based on haunt identity for proper isolation per fieldGlossary.json
           let hauntSpecificPacks = [];
           if (hauntId === 'headquarters') {
-            hauntSpecificPacks = ['cJ2QUpSECaKdOMbGUGBD', 'starter-pack'];
-            console.log(`📘 Loading headquarters-specific packs: ${hauntSpecificPacks.join(', ')}`);
+            hauntSpecificPacks = ['cJ2QUpSECaKdOMbGUGBD'];
+            console.log(`📘 Loading headquarters primary pack: ${hauntSpecificPacks.join(', ')}`);
           } else if (hauntId === 'Sorcererslair') {
-            // Sorcererslair gets cryptid-chaos pack (cJ2QUpSECaKdOMbGUGBD) + starter-pack
-            hauntSpecificPacks = ['cJ2QUpSECaKdOMbGUGBD', 'starter-pack'];
-            console.log(`📘 Loading Sorcererslair assigned packs: ${hauntSpecificPacks.join(', ')}`);
+            // Sorcererslair gets cryptid-chaos pack (cJ2QUpSECaKdOMbGUGBD)
+            hauntSpecificPacks = ['cJ2QUpSECaKdOMbGUGBD'];
+            console.log(`📘 Loading Sorcererslair primary pack: ${hauntSpecificPacks.join(', ')}`);
           } else {
-            // For other haunts, use appropriate general packs
-            hauntSpecificPacks = ['starter-pack'];
-            console.log(`📘 Loading general pack for ${hauntId}: ${hauntSpecificPacks.join(', ')}`);
+            // For other haunts, no primary pack - will fall back to starter-pack
+            hauntSpecificPacks = [];
+            console.log(`📘 No primary pack for ${hauntId}, will use starter-pack fallback`);
           }
           
           for (const packId of hauntSpecificPacks) {
