@@ -26,10 +26,20 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
   
   // Enhanced null checks to prevent crashes
   if (!currentQuestion || !currentQuestion.answers || !Array.isArray(currentQuestion.answers)) {
+    console.error(`🚨 CRITICAL: Question unavailable at index ${gameState.currentQuestionIndex}`);
+    console.error(`🚨 Total questions loaded: ${gameState.questions.length}`);
+    console.error(`🚨 Questions answered so far: ${gameState.questionsAnswered}`);
+    console.error(`🚨 Current question data:`, currentQuestion);
+    
+    // Trigger game end instead of showing error message
+    setTimeout(() => {
+      onNextQuestion(); // This will trigger the game end logic
+    }, 1000);
+    
     return (
       <div className="glass-card rounded-xl p-6 mt-4 animate-fade-in">
         <div className="text-center text-gray-300">
-          <p>Question unavailable - Please try refreshing the game</p>
+          <p>Loading next question...</p>
         </div>
       </div>
     );

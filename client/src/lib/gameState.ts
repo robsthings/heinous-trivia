@@ -190,11 +190,27 @@ export class GameManager {
     const nextIndex = state.currentQuestionIndex + 1;
     
     console.log(`🎮 Next question: answered=${state.questionsAnswered}/${this.QUESTIONS_PER_ROUND}, nextIndex=${nextIndex}/${state.questions.length}`);
+    console.log(`🎮 Current question index: ${state.currentQuestionIndex}, questions available: ${state.questions.length}`);
+    console.log(`🎮 Next question exists:`, !!state.questions[nextIndex]);
     
-    // Check if we've completed the full round (20 questions) OR reached the end of available questions
-    if (state.questionsAnswered >= this.QUESTIONS_PER_ROUND || nextIndex >= state.questions.length) {
+    // Critical safety check - if next question doesn't exist, end game gracefully
+    if (nextIndex >= state.questions.length) {
+      console.error(`🚨 CRITICAL: Ran out of questions! nextIndex=${nextIndex}, available=${state.questions.length}`);
+      console.error(`🚨 Questions answered so far: ${state.questionsAnswered}/${this.QUESTIONS_PER_ROUND}`);
+      console.error(`🚨 Game ending prematurely due to insufficient questions`);
+      
+      return {
+        ...state,
+        gameComplete: true,
+        showEndScreen: true,
+        showFeedback: false,
+        selectedAnswer: null,
+      };
+    }
+    
+    // Check if we've completed the full round (20 questions)
+    if (state.questionsAnswered >= this.QUESTIONS_PER_ROUND) {
       console.log(`🏁 Game complete: answered=${state.questionsAnswered}, available=${state.questions.length}`);
-      // Game complete after 20 questions or when we run out of questions
       return {
         ...state,
         gameComplete: true,
