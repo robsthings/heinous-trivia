@@ -193,6 +193,51 @@
   .xl\:text-6xl { font-size: 3.75rem; line-height: 1; }
 }
 
+/* Glass card effects - critical for beautiful UI */
+.glass-card {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Dark theme background gradients */
+.bg-gradient-horror {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+}
+
+.bg-gradient-dark {
+  background: linear-gradient(to bottom right, rgba(0,0,0,0.9), rgba(17,24,39,0.8), rgba(0,0,0,0.95));
+}
+
+/* Horror themed colors */
+.text-horror-red { color: #8B0000; }
+.text-horror-orange { color: #FF6B35; }
+.text-horror-purple { color: #2D1B69; }
+.border-horror-red { border-color: #8B0000; }
+.border-horror-orange { border-color: #FF6B35; }
+.bg-horror-red { background-color: rgba(139, 0, 0, 0.2); }
+.bg-horror-orange { background-color: rgba(255, 107, 53, 0.2); }
+
+/* Answer button styling */
+.answer-button {
+  background: rgba(31, 41, 55, 0.8);
+  border: 2px solid rgba(75, 85, 99, 0.6);
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+}
+
+.answer-button:hover {
+  background: rgba(55, 65, 81, 0.9);
+  border-color: rgba(156, 163, 175, 0.8);
+  transform: scale(1.02);
+}
+
+/* Font family definitions */
+.font-creepster { font-family: 'Creepster', cursive; }
+.font-nosifer { font-family: 'Nosifer', cursive; }
+.font-eater { font-family: 'Eater', cursive; }
+
 /* Additional layout classes */
 .flex-shrink-0 { flex-shrink: 0; }
 .object-contain { object-fit: contain; }

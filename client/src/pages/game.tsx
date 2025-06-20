@@ -298,7 +298,7 @@ function Game() {
 
   if (gameState.gameComplete || gameState.showEndScreen) {
     return (
-      <div className={`game-container min-h-screen ${gameState.hauntConfig?.skinUrl ? '' : 'bg-gradient-to-br from-gray-900 via-purple-900 to-black'}`}>
+      <div className={`game-container min-h-screen ${gameState.hauntConfig?.skinUrl ? '' : 'bg-gradient-dark'}`}>
         <GameHeader gameState={gameState} />
         
         <main className="px-3 sm:px-4 pb-20">
@@ -326,7 +326,7 @@ function Game() {
   }
 
   return (
-    <div className={`game-container min-h-screen ${gameState.hauntConfig?.skinUrl ? '' : 'bg-gradient-to-br from-gray-900 via-purple-900 to-black'}`}>
+    <div className={`game-container min-h-screen ${gameState.hauntConfig?.skinUrl ? '' : 'bg-gradient-dark'}`}>
       <GameHeader 
         gameState={gameState}
       />
