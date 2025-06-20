@@ -944,7 +944,81 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       console.log(`✅ Validated ${validQuestions.length} questions from ${questions.length} total (filtered ${questions.length - validQuestions.length} invalid)`);
       
-      // 4. Final randomization
+      // 4. Emergency fallback system - never let games fail
+      if (validQuestions.length < 20) {
+        console.error(`🚨 CRITICAL: Only ${validQuestions.length} valid questions available, need 20 minimum`);
+        console.error(`🔍 Firebase connection status: ${firestore ? 'Connected' : 'Disconnected'}`);
+        console.error(`🔍 Original questions loaded: ${questions.length}`);
+        console.error(`🔍 Questions after validation: ${validQuestions.length}`);
+        
+        // Create emergency questions to fill the gap
+        const emergencyQuestions = [
+          {
+            id: "emergency-1",
+            text: "What horror movie features the character Michael Myers?",
+            category: "Horror",
+            difficulty: 1,
+            answers: ["Friday the 13th", "Halloween", "Scream", "The Shining"],
+            correctAnswer: 1,
+            explanation: "Michael Myers is the killer in the Halloween franchise.",
+            points: 100
+          },
+          {
+            id: "emergency-2", 
+            text: "Who wrote the novel 'Dracula'?",
+            category: "Literature",
+            difficulty: 1,
+            answers: ["Mary Shelley", "Edgar Allan Poe", "Bram Stoker", "H.P. Lovecraft"],
+            correctAnswer: 2,
+            explanation: "Bram Stoker published Dracula in 1897.",
+            points: 100
+          },
+          {
+            id: "emergency-3",
+            text: "What creature is said to suck the blood of livestock?",
+            category: "Cryptids",
+            difficulty: 1,
+            answers: ["Bigfoot", "Chupacabra", "Mothman", "Jersey Devil"],
+            correctAnswer: 1,
+            explanation: "The Chupacabra is known for attacking livestock.",
+            points: 100
+          },
+          {
+            id: "emergency-4",
+            text: "In which state was the Salem witch trials held?",
+            category: "History",
+            difficulty: 1,
+            answers: ["Massachusetts", "Virginia", "Pennsylvania", "Connecticut"],
+            correctAnswer: 0,
+            explanation: "The Salem witch trials occurred in Massachusetts in 1692.",
+            points: 100
+          },
+          {
+            id: "emergency-5",
+            text: "What is the fear of ghosts called?",
+            category: "Phobias",
+            difficulty: 2,
+            answers: ["Thanatophobia", "Phasmophobia", "Necrophobia", "Spectrophobia"],
+            correctAnswer: 1,
+            explanation: "Phasmophobia is the fear of ghosts and phantoms.",
+            points: 100
+          }
+        ];
+        
+        // Fill remaining slots with emergency questions
+        const questionsNeeded = 20 - validQuestions.length;
+        for (let i = 0; i < questionsNeeded; i++) {
+          const emergencyQ = emergencyQuestions[i % emergencyQuestions.length];
+          validQuestions.push({
+            ...emergencyQ,
+            id: `emergency-${Date.now()}-${i}`
+          });
+        }
+        
+        console.log(`🆘 Added ${questionsNeeded} emergency questions to reach 20 total`);
+      }
+      
+      // 5. Final randomization
       const questionsToReturn = validQuestions.sort(() => Math.random() - 0.5).slice(0, 20);
       
       console.log(`Returning ${questionsToReturn.length} randomized questions for ${hauntId} (from ${validQuestions.length} valid available)`);

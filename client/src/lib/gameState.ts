@@ -69,15 +69,32 @@ export class GameManager {
         })
       ]);
 
+      let questions = [];
+      let ads = [];
+
       if (!questionsResponse.ok) {
+        console.error(`Failed to load questions: ${questionsResponse.status}`);
+        // Try to get error details
+        try {
+          const errorData = await questionsResponse.json();
+          console.error('Question loading error details:', errorData);
+        } catch (e) {
+          console.error('Could not parse error response');
+        }
         throw new Error(`Failed to load questions: ${questionsResponse.status}`);
       }
 
-      const questions = await questionsResponse.json();
-      const ads = adsResponse.ok ? await adsResponse.json() : [];
+      try {
+        questions = await questionsResponse.json();
+        ads = adsResponse.ok ? await adsResponse.json() : [];
+      } catch (parseError) {
+        console.error('Error parsing questions response:', parseError);
+        throw new Error('Invalid response format from server');
+      }
 
       // Validate questions data
       if (!Array.isArray(questions) || questions.length === 0) {
+        console.error('No questions received from server:', questions);
         throw new Error('No valid questions available for this haunt');
       }
 
@@ -115,11 +132,18 @@ export class GameManager {
       
       // Ensure we have enough questions for a full game
       if (validQuestions.length < this.QUESTIONS_PER_ROUND) {
-        console.warn(`⚠️ Only ${validQuestions.length} valid questions available, need ${this.QUESTIONS_PER_ROUND}. Game may be shorter.`);
+        console.warn(`⚠️ Only ${validQuestions.length} valid questions available, need ${this.QUESTIONS_PER_ROUND}`);
+        
+        // If we have significantly fewer questions, this indicates a server/Firebase issue
+        if (validQuestions.length < 10) {
+          throw new Error(`Insufficient questions for gameplay (${validQuestions.length} available, need ${this.QUESTIONS_PER_ROUND})`);
+        }
+        
+        console.warn(`🎮 Starting game with ${validQuestions.length} questions instead of ${this.QUESTIONS_PER_ROUND}`);
       }
       
-      // Take exactly the number we need for the game
-      const gameQuestions = validQuestions.slice(0, this.QUESTIONS_PER_ROUND);
+      // Take exactly the number we need for the game (or all available if less than required)
+      const gameQuestions = validQuestions.slice(0, Math.min(this.QUESTIONS_PER_ROUND, validQuestions.length));
       console.log(`🎮 Game initialized for ${haunt}: ${gameQuestions.length} questions selected from ${questions.length} available`);
 
       return {
