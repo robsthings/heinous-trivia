@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { usePWAInstall } from "@/hooks/use-pwa-install";
 
@@ -27,18 +26,12 @@ export function PWAInstallButton() {
   if (isInstalled || !isMobile) return null;
 
   return (
-    <Button
+    <button
       onClick={handleInstallClick}
-      variant="ghost"
-      size="sm"
-      className="flex items-center gap-2 text-gray-400 hover:text-white hover:bg-gray-800/50 transition-colors"
+      className="text-xs text-gray-400 hover:text-orange-400 transition-colors"
+      title="Install app to home screen"
     >
-      <img 
-        src="/icons/icon-128.png" 
-        alt="Install App" 
-        className="w-5 h-5"
-      />
-      <span className="text-sm">Install App</span>
-    </Button>
+      📱 Install App
+    </button>
   );
 }
