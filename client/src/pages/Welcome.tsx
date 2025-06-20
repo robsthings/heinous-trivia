@@ -240,30 +240,34 @@ export function Welcome() {
             {welcomeTitle}
           </h1>
           
-          <p className={`text-base sm:text-lg md:text-xl lg:text-2xl mb-6 sm:mb-8 leading-relaxed ${
-            isFirstTime ? 'text-gray-300 animate-fade-in' : 'text-gray-400'
-          } ${
-            !isFirstTime && !isAnimating ? 'translate-y-0 opacity-100 transition-all duration-1000' : 
-            !isFirstTime && isAnimating ? 'translate-y-10 opacity-0 transition-all duration-1000' : ''
-          }`}
-          style={isFirstTime ? {
-            animationDelay: '1.8s',
-            animationDuration: '0.8s',
-            animationFillMode: 'forwards',
-            opacity: 0
-          } : {}}>
+          <p 
+            style={{
+              fontSize: 'clamp(1rem, 4vw, 1.5rem)',
+              marginBottom: '2rem',
+              lineHeight: '1.6',
+              color: isFirstTime ? '#d1d5db' : '#9ca3af',
+              animation: isFirstTime ? 'fade-in 0.8s ease-in forwards' : 'none',
+              animationDelay: isFirstTime ? '1.8s' : '0s',
+              opacity: isFirstTime ? 0 : 1,
+              transform: !isFirstTime && isAnimating ? 'translateY(2.5rem)' : 'translateY(0)',
+              transition: !isFirstTime ? 'all 1s ease-in-out' : 'none'
+            }}
+          >
             {welcomeMessage}
           </p>
 
           {isFirstTime && (
-            <div className="text-xs sm:text-sm text-red-400 mb-4 sm:mb-6 animate-fade-in"
-            style={{
-              animationDelay: '2.5s',
-              animationDuration: '0.8s',
-              animationFillMode: 'forwards',
-              opacity: 0
-            }}>
-              <p className="animate-pulse">
+            <div 
+              style={{
+                fontSize: 'clamp(0.75rem, 2.5vw, 0.875rem)',
+                color: '#f87171',
+                marginBottom: '1.5rem',
+                animation: 'fade-in 0.8s ease-in forwards',
+                animationDelay: '2.5s',
+                opacity: 0
+              }}
+            >
+              <p style={{ animation: 'pulse 2s ease-in-out infinite' }}>
                 ⚡ Warning: This experience may contain jump scares and disturbing content ⚡
               </p>
             </div>
