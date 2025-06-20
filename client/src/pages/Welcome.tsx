@@ -274,41 +274,54 @@ export function Welcome() {
           )}
         </div>
 
-        {/* Action Button - responsive sizing */}
-        <div className={`flex justify-center w-full ${
-          isFirstTime ? 'animate-fade-in' : 
-          isAnimating ? 'translate-y-10 opacity-0 transition-all duration-1000' : 'translate-y-0 opacity-100 transition-all duration-1000'
-        }`}
-        style={isFirstTime ? {
-          animationDelay: '3.2s',
-          animationDuration: '0.8s',
-          animationFillMode: 'forwards',
-          opacity: 0
-        } : {}}>
-          <Button
+        {/* Action Button */}
+        <div 
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            width: '100%',
+            animation: isFirstTime ? 'fade-in 0.8s ease-in forwards' : 'none',
+            animationDelay: isFirstTime ? '3.2s' : '0s',
+            opacity: isFirstTime ? 0 : 1,
+            transform: !isFirstTime && isAnimating ? 'translateY(2.5rem)' : 'translateY(0)',
+            transition: !isFirstTime ? 'all 1s ease-in-out' : 'none'
+          }}
+        >
+          <button
             onClick={handleStartGame}
-            size="lg"
-            className={`
-              px-6 sm:px-8 py-3 sm:py-4 
-              text-base sm:text-lg md:text-xl 
-              font-bold font-creepster
-              bg-gradient-to-r from-red-600 to-red-800 
-              hover:from-red-500 hover:to-red-700
-              border-2 border-red-400
-              shadow-lg hover:shadow-red-500/50
-              transform hover:scale-105 
-              transition-all duration-300
-              min-w-[200px] sm:min-w-[250px]
-              ${isFirstTime && showGlitchEffect ? 'animate-pulse' : ''}
-            `}
             style={{
+              padding: 'clamp(0.75rem, 3vw, 1rem) clamp(1.5rem, 6vw, 2rem)',
+              fontSize: 'clamp(1rem, 4vw, 1.25rem)',
+              fontWeight: 'bold',
+              fontFamily: '"Creepster", cursive',
+              background: 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)',
+              color: 'white',
+              border: '2px solid #f87171',
+              borderRadius: '0.5rem',
               boxShadow: isFirstTime && showGlitchEffect ? 
                 '0 0 30px rgba(139, 0, 0, 0.8)' : 
-                '0 4px 20px rgba(0, 0, 0, 0.5)'
+                '0 4px 20px rgba(0, 0, 0, 0.5)',
+              cursor: 'pointer',
+              minWidth: 'clamp(200px, 50vw, 250px)',
+              transition: 'all 0.3s ease-in-out',
+              transform: 'scale(1)',
+              animation: isFirstTime && showGlitchEffect ? 'pulse 2s ease-in-out infinite' : 'none'
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.background = 'linear-gradient(135deg, #ef4444 0%, #b91c1c 100%)';
+              e.target.style.transform = 'scale(1.05)';
+              e.target.style.boxShadow = '0 8px 25px rgba(239, 68, 68, 0.5)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.background = 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)';
+              e.target.style.transform = 'scale(1)';
+              e.target.style.boxShadow = isFirstTime && showGlitchEffect ? 
+                '0 0 30px rgba(139, 0, 0, 0.8)' : 
+                '0 4px 20px rgba(0, 0, 0, 0.5)';
             }}
           >
             {buttonText}
-          </Button>
+          </button>
         </div>
 
         {/* Development Helper - Reset First Time Experience */}
