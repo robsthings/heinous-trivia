@@ -79,8 +79,11 @@ export function Welcome() {
 
   return (
     <div 
-      className="min-h-screen w-full overflow-hidden relative"
       style={{
+        minHeight: '100vh',
+        width: '100%',
+        overflow: 'hidden',
+        position: 'relative',
         backgroundImage: 'url(/backgrounds/lab-dark-blue.png)',
         backgroundSize: 'cover',
         backgroundPosition: 'center center',
@@ -88,8 +91,20 @@ export function Welcome() {
         backgroundAttachment: 'fixed'
       }}
     >
-      {/* Dark gradient overlay for contrast - responsive */}
-      <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-black/60 via-gray-900/70 to-black/80 z-0" />
+      {/* Dark gradient overlay for contrast */}
+      <div 
+        style={{
+          position: 'absolute',
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          background: 'linear-gradient(to bottom right, rgba(0, 0, 0, 0.6), rgba(17, 24, 39, 0.7), rgba(0, 0, 0, 0.8))',
+          zIndex: 0
+        }}
+      />
 
       {/* Lightning/Glitch Background Effects for First-Time Users - responsive */}
       {isFirstTime && (
@@ -136,13 +151,34 @@ export function Welcome() {
       )}
 
       {/* Main Content - responsive container */}
-      <div className="relative z-20 min-h-screen w-full flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8">
+      <div 
+        style={{
+          position: 'relative',
+          zIndex: 20,
+          minHeight: '100vh',
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '2rem'
+        }}
+      >
         
-        {/* Character Sprite with Speech Bubble - responsive sizing */}
-        <div className="mb-6 sm:mb-8 flex-shrink-0 relative flex flex-col items-center">
+        {/* Character Sprite with Speech Bubble */}
+        <div 
+          style={{
+            marginBottom: '2rem',
+            flexShrink: 0,
+            position: 'relative',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'
+          }}
+        >
           
           {/* Speech Bubble - positioned above sprite */}
-          <div className="mb-4 sm:mb-6">
+          <div style={{ marginBottom: '1.5rem' }}>
             <SpeechBubble 
               messages={isFirstTime ? firstTimeMessages : returningUserMessages}
               isVisible={true}
@@ -179,17 +215,28 @@ export function Welcome() {
           )}
         </div>
 
-        {/* Welcome Text - responsive typography */}
-        <div className="text-center max-w-xs sm:max-w-lg md:max-w-2xl lg:max-w-4xl mx-auto mb-6 sm:mb-8 px-2">
-          <h1 className={`font-nosifer text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-4 sm:mb-6 leading-tight ${
-            isFirstTime ? 'text-red-500 animate-fade-in' : 'text-orange-500 animate-pulse'
-          }`}
+        {/* Welcome Text */}
+        <div 
           style={{
-            animationDelay: isFirstTime ? '1s' : '0s',
-            animationDuration: isFirstTime ? '0.8s' : '3s',
-            animationFillMode: 'forwards',
-            opacity: isFirstTime ? 0 : 1
-          }}>
+            textAlign: 'center',
+            maxWidth: '90%',
+            margin: '0 auto 2rem auto',
+            padding: '0 1rem'
+          }}
+        >
+          <h1 
+            style={{
+              fontFamily: '"Nosifer", cursive',
+              fontSize: 'clamp(1.5rem, 8vw, 4rem)',
+              marginBottom: '1.5rem',
+              lineHeight: '1.2',
+              color: isFirstTime ? '#ef4444' : '#f97316',
+              animation: isFirstTime ? 'fade-in 0.8s ease-in forwards' : 'pulse 3s ease-in-out infinite',
+              animationDelay: isFirstTime ? '1s' : '0s',
+              opacity: isFirstTime ? 0 : 1,
+              textShadow: '2px 2px 4px rgba(0,0,0,0.8)'
+            }}
+          >
             {welcomeTitle}
           </h1>
           
