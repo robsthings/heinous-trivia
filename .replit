@@ -19,10 +19,9 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "npx tsx server/index.ts"
+args = "NODE_ENV=development npx tsx server/index.ts"
 waitForPort = 5000
 
 [[ports]]
 localPort = 5000
 externalPort = 80
-
