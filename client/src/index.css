@@ -201,13 +201,38 @@
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
-/* Dark theme background gradients */
+/* Dark theme background gradients - force development styling */
 .bg-gradient-horror {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
 }
 
 .bg-gradient-dark {
-  background: linear-gradient(to bottom right, rgba(0,0,0,0.9), rgba(17,24,39,0.8), rgba(0,0,0,0.95));
+  background: linear-gradient(to bottom right, rgba(0,0,0,0.9), rgba(17,24,39,0.8), rgba(0,0,0,0.95)) !important;
+}
+
+/* Force dark styling in development */
+.game-container {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
+  min-height: 100vh;
+}
+
+/* Enhanced glass card styling */
+.glass-card {
+  background: rgba(0, 0, 0, 0.75) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+  border-radius: 12px !important;
+}
+
+/* Force body background for development */
+body {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
+}
+
+/* Development override for all containers */
+div[class*="min-h-screen"] {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
 }
 
 /* Horror themed colors */

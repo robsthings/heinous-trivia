@@ -298,7 +298,15 @@ function Game() {
 
   if (gameState.gameComplete || gameState.showEndScreen) {
     return (
-      <div className={`game-container min-h-screen ${gameState.hauntConfig?.skinUrl ? '' : 'bg-gradient-dark'}`}>
+      <div 
+        className={`game-container min-h-screen ${gameState.hauntConfig?.skinUrl ? '' : 'bg-gradient-dark'}`}
+        style={{
+          background: gameState.hauntConfig?.skinUrl 
+            ? `url(${gameState.hauntConfig.skinUrl}) center/cover`
+            : 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
+          minHeight: '100vh'
+        }}
+      >
         <GameHeader gameState={gameState} />
         
         <main className="px-3 sm:px-4 pb-20">
@@ -326,7 +334,15 @@ function Game() {
   }
 
   return (
-    <div className={`game-container min-h-screen ${gameState.hauntConfig?.skinUrl ? '' : 'bg-gradient-dark'}`}>
+    <div 
+      className={`game-container min-h-screen ${gameState.hauntConfig?.skinUrl ? '' : 'bg-gradient-dark'}`}
+      style={{
+        background: gameState.hauntConfig?.skinUrl 
+          ? `url(${gameState.hauntConfig.skinUrl}) center/cover`
+          : 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
+        minHeight: '100vh'
+      }}
+    >
       <GameHeader 
         gameState={gameState}
       />
