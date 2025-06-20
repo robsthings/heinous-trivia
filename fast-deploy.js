@@ -53,11 +53,17 @@ if (fs.existsSync('./client/public')) {
   fs.writeFileSync('./dist/public/index.html', productionHtml);
 }
 
-// Build server
+// Build server with proper bundling
 console.log('⚙️ Building server...');
-execSync(`npx esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outfile=dist/index.js --define:import.meta.dirname='"."' --define:process.env.NODE_ENV='"production"' --banner:js="import { fileURLToPath } from 'url'; import { dirname } from 'path'; const __filename = fileURLToPath(import.meta.url); const __dirname = dirname(__filename);"`, {
-  stdio: 'inherit'
-});
+try {
+  execSync(`npx esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outfile=dist/index.js --define:import.meta.dirname='"."' --define:process.env.NODE_ENV='"production"' --external:vite --external:@vitejs/plugin-react --banner:js="import { fileURLToPath } from 'url'; import { dirname } from 'path'; const __filename = fileURLToPath(import.meta.url); const __dirname = dirname(__filename);"`, {
+    stdio: 'inherit'
+  });
+  console.log('✅ Server bundled successfully');
+} catch (error) {
+  console.error('❌ Server build failed:', error.message);
+  process.exit(1);
+}
 
 // Create production package.json
 console.log('📦 Creating production package.json...');
