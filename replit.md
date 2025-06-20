@@ -49,11 +49,12 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 
 ## Data Flow
 
-1. **Haunt Configuration**: Admins configure their haunt through the admin panel, setting themes, uploading assets, and customizing questions
+1. **Haunt Configuration**: Admins configure their haunt through the admin panel, setting themes, uploading assets, and creating custom questions based on subscription tier
 2. **Player Access**: Players access games through haunt-specific URLs with authentication codes
-3. **Game Session**: Questions are loaded from database or Firestore custom collections, answers tracked in real-time
-4. **Analytics**: Game completion data flows to analytics system for Pro/Premium users
-5. **Leaderboards**: Scores are persisted to PostgreSQL and displayed in real-time
+3. **Question Loading**: Each game loads questions from: (1) Haunt custom questions, (2) Uber admin assigned trivia packs, (3) Starter pack fallback
+4. **Game Session**: 20 randomized questions delivered from available question pool, answers tracked in real-time
+5. **Analytics**: Game completion data flows to analytics system for Pro/Premium users
+6. **Leaderboards**: Scores are persisted to Firebase and displayed in real-time
 
 ## External Dependencies
 
