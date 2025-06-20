@@ -998,11 +998,48 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       console.log(`✅ Validated ${validQuestions.length} questions from ${questions.length} total (filtered ${questions.length - validQuestions.length} invalid)`);
       
-      // Randomize question order for each session
-      const randomizedQuestions = validQuestions.sort(() => Math.random() - 0.5);
+      // Check if we have multiple packs with sourcePackId for equal distribution
+      const questionsWithPackId = validQuestions.filter(q => q.sourcePackId);
+      const questionsWithoutPackId = validQuestions.filter(q => !q.sourcePackId);
       
-      // Return exactly 20 questions for consistent gameplay
-      const questionsToReturn = randomizedQuestions.slice(0, 20);
+      let questionsToReturn = [];
+      
+      if (questionsWithPackId.length >= 20) {
+        // Group questions by source pack for equal distribution
+        const questionsByPack = {};
+        questionsWithPackId.forEach(q => {
+          if (!questionsByPack[q.sourcePackId]) {
+            questionsByPack[q.sourcePackId] = [];
+          }
+          questionsByPack[q.sourcePackId].push(q);
+        });
+        
+        const packIds = Object.keys(questionsByPack);
+        if (packIds.length > 1) {
+          console.log(`📊 Implementing equal distribution across ${packIds.length} packs: ${packIds.join(', ')}`);
+          
+          const questionsPerPack = Math.ceil(20 / packIds.length);
+          
+          for (const packId of packIds) {
+            const packQuestions = questionsByPack[packId].sort(() => Math.random() - 0.5);
+            const selectedFromPack = packQuestions.slice(0, questionsPerPack);
+            questionsToReturn = [...questionsToReturn, ...selectedFromPack];
+            console.log(`📦 Selected ${selectedFromPack.length} questions from pack: ${packId}`);
+          }
+          
+          // Trim to exactly 20 questions if we went over
+          questionsToReturn = questionsToReturn.slice(0, 20);
+          console.log(`✅ Equal distribution complete: ${questionsToReturn.length} questions from ${packIds.length} packs`);
+        } else {
+          // Single pack, just randomize
+          questionsToReturn = questionsWithPackId.sort(() => Math.random() - 0.5).slice(0, 20);
+          console.log(`📦 Single pack randomization: ${questionsToReturn.length} questions from ${packIds[0]}`);
+        }
+      } else {
+        // Fallback to normal randomization if no pack distribution needed
+        questionsToReturn = validQuestions.sort(() => Math.random() - 0.5).slice(0, 20);
+        console.log(`📦 Standard randomization: ${questionsToReturn.length} questions (no pack distribution)`);
+      }
       
       console.log(`Returning ${questionsToReturn.length} randomized questions for ${hauntId} (from ${validQuestions.length} valid available)`);
       res.json(questionsToReturn);
