@@ -15,7 +15,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const SERVER_URL = 'http://localhost:5000';
-const sidequestsDir = path.join(__dirname, 'client/public/sidequests');
 
 /**
  * Get all files recursively from a directory
@@ -28,10 +27,7 @@ function getAllFiles(dirPath, arrayOfFiles = []) {
     if (fs.statSync(fullPath).isDirectory()) {
       arrayOfFiles = getAllFiles(fullPath, arrayOfFiles);
     } else {
-      // Skip README.md and placeholder files
-      if (!file.endsWith('.md') && !file.includes('placeholder') && !file.includes('README')) {
-        arrayOfFiles.push(fullPath);
-      }
+      arrayOfFiles.push(fullPath);
     }
   });
 
@@ -43,43 +39,38 @@ function getAllFiles(dirPath, arrayOfFiles = []) {
  */
 async function uploadFileViaServer(filePath) {
   try {
-    // Get relative path from sidequests directory
-    const relativePath = path.relative(sidequestsDir, filePath);
-    const pathParts = relativePath.split(path.sep);
-    const sidequestName = pathParts[0];
-    const fileName = pathParts[pathParts.length - 1];
+    const form = new FormData();
+    const fileStream = fs.createReadStream(filePath);
+    const relativePath = path.relative(path.join(__dirname, 'client/public'), filePath);
+    const filename = path.basename(filePath);
     
-    console.log(`Uploading: ${relativePath}`);
+    form.append('file', fileStream);
+    form.append('path', path.dirname(relativePath));
     
-    // Create form data
-    const formData = new FormData();
-    formData.append('asset', fs.createReadStream(filePath));
+    console.log(`Uploading ${relativePath}...`);
     
-    // Upload to branding assets endpoint (which handles Firebase Storage)
-    const response = await fetch(`${SERVER_URL}/api/branding/assets`, {
+    const response = await fetch(`${SERVER_URL}/api/upload-asset`, {
       method: 'POST',
-      body: formData,
-      headers: formData.getHeaders()
+      body: form,
+      headers: form.getHeaders()
     });
     
     if (!response.ok) {
-      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      throw new Error(`Upload failed: ${response.status} ${response.statusText}`);
     }
     
     const result = await response.json();
-    console.log(`✓ Uploaded: ${relativePath} -> ${result.id}`);
+    console.log(`✓ Uploaded: ${result.url}`);
     
     return {
       path: relativePath,
-      assetId: result.id,
-      downloadURL: result.downloadURL,
-      sidequestName,
-      fileName
+      url: result.url,
+      filename: filename,
+      assetName: filename.replace(/\.[^/.]+$/, '') // Remove extension
     };
-    
   } catch (error) {
     console.error(`✗ Failed to upload ${filePath}:`, error.message);
-    return null;
+    throw error;
   }
 }
 
@@ -87,62 +78,90 @@ async function uploadFileViaServer(filePath) {
  * Main migration function
  */
 async function uploadSidequests() {
-  console.log('🎮 Starting sidequest asset upload via server API...\n');
-  
-  // Get all asset files
-  const assetFiles = getAllFiles(sidequestsDir);
-  console.log(`Found ${assetFiles.length} asset files to upload\n`);
-  
-  const results = [];
-  const sidequestAssets = {};
-  let successCount = 0;
-  let failCount = 0;
-  
-  // Upload files one by one to avoid overwhelming the server
-  for (const filePath of assetFiles) {
-    const result = await uploadFileViaServer(filePath);
-    if (result) {
-      results.push(result);
-      
-      // Group by sidequest
-      if (!sidequestAssets[result.sidequestName]) {
-        sidequestAssets[result.sidequestName] = [];
-      }
-      sidequestAssets[result.sidequestName].push(result);
-      
-      successCount++;
-    } else {
-      failCount++;
+  try {
+    console.log('🚀 Starting sidequest asset upload via server API...');
+    
+    const sidequestsDir = path.join(__dirname, 'client/public/sidequests');
+    
+    if (!fs.existsSync(sidequestsDir)) {
+      console.error('❌ Sidequests directory not found:', sidequestsDir);
+      return;
     }
     
-    // Small delay to avoid overwhelming the server
-    await new Promise(resolve => setTimeout(resolve, 200));
+    const allFiles = getAllFiles(sidequestsDir);
+    const imageFiles = allFiles.filter(file => 
+      /\.(png|jpg|jpeg|gif|svg)$/i.test(file)
+    );
+    
+    console.log(`📁 Found ${imageFiles.length} image files to upload`);
+    
+    const assetMapping = {};
+    let uploadedCount = 0;
+    
+    for (const filePath of imageFiles) {
+      try {
+        const result = await uploadFileViaServer(filePath);
+        
+        // Organize by sidequest name
+        const pathParts = result.path.split('/');
+        if (pathParts.length >= 2 && pathParts[0] === 'sidequests') {
+          const sidequestName = pathParts[1];
+          
+          if (!assetMapping[sidequestName]) {
+            assetMapping[sidequestName] = {};
+          }
+          
+          assetMapping[sidequestName][result.assetName] = result.url;
+        }
+        
+        uploadedCount++;
+        
+        // Small delay to avoid overwhelming the server
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+      } catch (error) {
+        console.error(`Failed to upload ${filePath}:`, error);
+      }
+    }
+    
+    // Save the asset mapping via API
+    if (Object.keys(assetMapping).length > 0) {
+      console.log('💾 Saving asset mapping via server API...');
+      
+      const response = await fetch(`${SERVER_URL}/api/branding-assets`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          assetId: 'sidequest-assets',
+          assetData: {
+            mapping: assetMapping,
+            uploadedAt: new Date().toISOString(),
+            totalAssets: uploadedCount
+          }
+        })
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Failed to save asset mapping: ${response.status}`);
+      }
+      
+      console.log('✓ Asset mapping saved successfully');
+    }
+    
+    console.log(`🎉 Upload complete! Uploaded ${uploadedCount} assets across ${Object.keys(assetMapping).length} sidequests`);
+    console.log('📊 Asset breakdown:');
+    
+    Object.entries(assetMapping).forEach(([sidequestName, assets]) => {
+      console.log(`  ${sidequestName}: ${Object.keys(assets).length} assets`);
+    });
+    
+  } catch (error) {
+    console.error('❌ Upload failed:', error);
+    process.exit(1);
   }
-  
-  console.log('\n📊 Upload Summary:');
-  console.log(`✓ Successfully uploaded: ${successCount} files`);
-  console.log(`✗ Failed uploads: ${failCount} files`);
-  
-  // Save detailed mapping
-  const mappingFile = path.join(__dirname, 'sidequest-asset-mapping.json');
-  fs.writeFileSync(mappingFile, JSON.stringify(results, null, 2));
-  
-  // Save organized by sidequest
-  const organizedFile = path.join(__dirname, 'sidequest-assets-by-game.json');
-  fs.writeFileSync(organizedFile, JSON.stringify(sidequestAssets, null, 2));
-  
-  console.log(`\n📝 Asset mapping saved to: ${mappingFile}`);
-  console.log(`📝 Organized assets saved to: ${organizedFile}`);
-  
-  console.log('\n🎉 Sidequest upload complete!');
-  process.exit(0);
 }
 
-// Handle errors
-process.on('unhandledRejection', (error) => {
-  console.error('Upload failed:', error);
-  process.exit(1);
-});
-
-// Run upload
+// Run upload if called directly
 uploadSidequests();

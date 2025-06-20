@@ -5,30 +5,12 @@
  * to Firebase Storage under the /sidequests/ path structure.
  */
 
-import { initializeApp } from 'firebase/app';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-// Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyCZpb5TwM4ZGwbzRYy5O0-oXTmJt3iOG8I",
-  authDomain: "heinous-trivia.firebaseapp.com",
-  projectId: "heinous-trivia",
-  storageBucket: "heinous-trivia.appspot.com",
-  messagingSenderId: "331549664886",
-  appId: "1:331549664886:web:8b85b1c49ec7e5b36b5f62"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const storage = getStorage(app);
-
-const sidequestsDir = path.join(__dirname, 'client/public/sidequests');
 
 /**
  * Get all files recursively from a directory
@@ -41,10 +23,7 @@ function getAllFiles(dirPath, arrayOfFiles = []) {
     if (fs.statSync(fullPath).isDirectory()) {
       arrayOfFiles = getAllFiles(fullPath, arrayOfFiles);
     } else {
-      // Skip README.md and placeholder files
-      if (!file.endsWith('.md') && !file.includes('placeholder') && !file.includes('README')) {
-        arrayOfFiles.push(fullPath);
-      }
+      arrayOfFiles.push(fullPath);
     }
   });
 
@@ -56,34 +35,27 @@ function getAllFiles(dirPath, arrayOfFiles = []) {
  */
 async function uploadFile(filePath) {
   try {
-    // Get relative path from sidequests directory
-    const relativePath = path.relative(sidequestsDir, filePath);
-    const storagePath = `sidequests/${relativePath.replace(/\\/g, '/')}`;
+    const { FirebaseService } = await import('./server/firebase.ts');
     
-    console.log(`Uploading: ${relativePath} -> ${storagePath}`);
-    
-    // Read file
     const fileBuffer = fs.readFileSync(filePath);
+    const relativePath = path.relative(path.join(__dirname, 'client/public'), filePath);
+    const filename = path.basename(filePath);
+    const storagePath = path.dirname(relativePath);
     
-    // Create storage reference
-    const storageRef = ref(storage, storagePath);
+    console.log(`Uploading ${relativePath}...`);
     
-    // Upload file
-    const snapshot = await uploadBytes(storageRef, fileBuffer);
+    const url = await FirebaseService.uploadFile(fileBuffer, filename, storagePath);
+    console.log(`✓ Uploaded: ${url}`);
     
-    // Get download URL
-    const downloadURL = await getDownloadURL(snapshot.ref);
-    
-    console.log(`✓ Uploaded: ${relativePath}`);
     return {
       path: relativePath,
-      storagePath,
-      downloadURL
+      url: url,
+      filename: filename,
+      assetName: filename.replace(/\.[^/.]+$/, '') // Remove extension
     };
-    
   } catch (error) {
     console.error(`✗ Failed to upload ${filePath}:`, error.message);
-    return null;
+    throw error;
   }
 }
 
@@ -91,48 +63,78 @@ async function uploadFile(filePath) {
  * Main migration function
  */
 async function migrateSidequests() {
-  console.log('🎮 Starting sidequest asset migration to Firebase Storage...\n');
-  
-  // Get all asset files
-  const assetFiles = getAllFiles(sidequestsDir);
-  console.log(`Found ${assetFiles.length} asset files to migrate\n`);
-  
-  const results = [];
-  let successCount = 0;
-  let failCount = 0;
-  
-  // Upload files one by one to avoid overwhelming Firebase
-  for (const filePath of assetFiles) {
-    const result = await uploadFile(filePath);
-    if (result) {
-      results.push(result);
-      successCount++;
-    } else {
-      failCount++;
+  try {
+    console.log('🚀 Starting sidequest asset migration...');
+    
+    const sidequestsDir = path.join(__dirname, 'client/public/sidequests');
+    
+    if (!fs.existsSync(sidequestsDir)) {
+      console.error('❌ Sidequests directory not found:', sidequestsDir);
+      return;
     }
     
-    // Small delay to avoid rate limiting
-    await new Promise(resolve => setTimeout(resolve, 100));
+    const allFiles = getAllFiles(sidequestsDir);
+    const imageFiles = allFiles.filter(file => 
+      /\.(png|jpg|jpeg|gif|svg)$/i.test(file)
+    );
+    
+    console.log(`📁 Found ${imageFiles.length} image files to migrate`);
+    
+    const assetMapping = {};
+    let uploadedCount = 0;
+    
+    for (const filePath of imageFiles) {
+      try {
+        const result = await uploadFile(filePath);
+        
+        // Organize by sidequest name
+        const pathParts = result.path.split('/');
+        if (pathParts.length >= 2 && pathParts[0] === 'sidequests') {
+          const sidequestName = pathParts[1];
+          
+          if (!assetMapping[sidequestName]) {
+            assetMapping[sidequestName] = {};
+          }
+          
+          assetMapping[sidequestName][result.assetName] = result.url;
+        }
+        
+        uploadedCount++;
+      } catch (error) {
+        console.error(`Failed to upload ${filePath}:`, error);
+      }
+    }
+    
+    // Save the asset mapping to Firebase for API access
+    if (Object.keys(assetMapping).length > 0) {
+      console.log('💾 Saving asset mapping to Firebase...');
+      const { FirebaseService } = await import('./server/firebase.ts');
+      
+      await FirebaseService.saveBrandingAsset('sidequest-assets', {
+        mapping: assetMapping,
+        uploadedAt: new Date().toISOString(),
+        totalAssets: uploadedCount
+      });
+      
+      console.log('✓ Asset mapping saved successfully');
+    }
+    
+    console.log(`🎉 Migration complete! Uploaded ${uploadedCount} assets across ${Object.keys(assetMapping).length} sidequests`);
+    console.log('📊 Asset breakdown:');
+    
+    Object.entries(assetMapping).forEach(([sidequestName, assets]) => {
+      console.log(`  ${sidequestName}: ${Object.keys(assets).length} assets`);
+    });
+    
+  } catch (error) {
+    console.error('❌ Migration failed:', error);
+    process.exit(1);
   }
-  
-  console.log('\n📊 Migration Summary:');
-  console.log(`✓ Successfully uploaded: ${successCount} files`);
-  console.log(`✗ Failed uploads: ${failCount} files`);
-  
-  // Save mapping file for reference
-  const mappingFile = path.join(__dirname, 'sidequest-asset-mapping.json');
-  fs.writeFileSync(mappingFile, JSON.stringify(results, null, 2));
-  console.log(`\n📝 Asset mapping saved to: ${mappingFile}`);
-  
-  console.log('\n🎉 Sidequest migration complete!');
-  process.exit(0);
 }
 
-// Handle errors
-process.on('unhandledRejection', (error) => {
-  console.error('Migration failed:', error);
-  process.exit(1);
-});
+// Run migration if called directly
+if (import.meta.url === `file://${process.argv[1]}`) {
+  migrateSidequests();
+}
 
-// Run migration
-migrateSidequests();
+export { migrateSidequests };

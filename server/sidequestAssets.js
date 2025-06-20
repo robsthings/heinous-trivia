@@ -5,7 +5,7 @@
  * using the existing server authentication infrastructure.
  */
 
-import { FirebaseService } from './firebase.js';
+import { FirebaseService } from './firebase.ts';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
