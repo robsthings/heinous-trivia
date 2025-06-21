@@ -447,4 +447,129 @@ export class FirebaseService {
       throw error;
     }
   }
+
+  // Sidequest management methods
+  static async saveSidequest(sidequestId: string, sidequestData: any) {
+    try {
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+
+      await firestore.collection('sidequests').doc(sidequestId).set({
+        ...sidequestData,
+        updatedAt: new Date().toISOString()
+      }, { merge: true });
+
+      return { success: true };
+    } catch (error) {
+      console.error('Error saving sidequest:', error);
+      throw error;
+    }
+  }
+
+  static async getSidequest(sidequestId: string) {
+    try {
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+
+      const doc = await firestore.collection('sidequests').doc(sidequestId).get();
+      
+      if (!doc.exists) {
+        return null;
+      }
+
+      return {
+        id: doc.id,
+        ...doc.data()
+      };
+    } catch (error) {
+      console.error('Error fetching sidequest:', error);
+      throw error;
+    }
+  }
+
+  static async getAllSidequests() {
+    try {
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+
+      const snapshot = await firestore.collection('sidequests').where('isActive', '==', true).get();
+      
+      return snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+    } catch (error) {
+      console.error('Error fetching sidequests:', error);
+      throw error;
+    }
+  }
+
+  static async getSidequestsByTier(requiredTier: string) {
+    try {
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+
+      const tierHierarchy = { 'Basic': 0, 'Pro': 1, 'Premium': 2 };
+      const userTierLevel = tierHierarchy[requiredTier as keyof typeof tierHierarchy] || 0;
+      
+      const snapshot = await firestore.collection('sidequests').where('isActive', '==', true).get();
+      
+      return snapshot.docs
+        .map(doc => ({ id: doc.id, ...doc.data() }))
+        .filter(sidequest => {
+          const sidequestTierLevel = tierHierarchy[sidequest.requiredTier as keyof typeof tierHierarchy] || 0;
+          return sidequestTierLevel <= userTierLevel;
+        });
+    } catch (error) {
+      console.error('Error fetching sidequests by tier:', error);
+      throw error;
+    }
+  }
+
+  static async saveSidequestProgress(progressData: any) {
+    try {
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+
+      const progressId = `${progressData.hauntId}_${progressData.sidequestId}_${progressData.sessionId}`;
+      
+      await firestore.collection('sidequest-progress').doc(progressId).set({
+        ...progressData,
+        updatedAt: new Date().toISOString()
+      }, { merge: true });
+
+      return { success: true };
+    } catch (error) {
+      console.error('Error saving sidequest progress:', error);
+      throw error;
+    }
+  }
+
+  static async getSidequestProgress(hauntId: string, sidequestId: string, sessionId: string) {
+    try {
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+
+      const progressId = `${hauntId}_${sidequestId}_${sessionId}`;
+      const doc = await firestore.collection('sidequest-progress').doc(progressId).get();
+      
+      if (!doc.exists) {
+        return null;
+      }
+
+      return {
+        id: doc.id,
+        ...doc.data()
+      };
+    } catch (error) {
+      console.error('Error fetching sidequest progress:', error);
+      throw error;
+    }
+  }
 }

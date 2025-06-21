@@ -1950,6 +1950,91 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Sidequest API endpoints
+  app.get("/api/sidequests", async (req, res) => {
+    try {
+      const { tier } = req.query;
+      
+      let sidequests;
+      if (tier && typeof tier === 'string') {
+        sidequests = await FirebaseService.getSidequestsByTier(tier);
+      } else {
+        sidequests = await FirebaseService.getAllSidequests();
+      }
+      
+      res.json(sidequests);
+    } catch (error) {
+      console.error("Error fetching sidequests:", error);
+      res.status(500).json({ error: "Failed to fetch sidequests" });
+    }
+  });
+
+  app.get("/api/sidequests/:sidequestId", async (req, res) => {
+    try {
+      const { sidequestId } = req.params;
+      const sidequest = await FirebaseService.getSidequest(sidequestId);
+      
+      if (!sidequest) {
+        return res.status(404).json({ error: "Sidequest not found" });
+      }
+      
+      res.json(sidequest);
+    } catch (error) {
+      console.error("Error fetching sidequest:", error);
+      res.status(500).json({ error: "Failed to fetch sidequest" });
+    }
+  });
+
+  app.post("/api/sidequests/:sidequestId", async (req, res) => {
+    try {
+      const { sidequestId } = req.params;
+      const sidequestData = {
+        ...req.body,
+        id: sidequestId,
+        createdAt: req.body.createdAt || new Date().toISOString()
+      };
+      
+      await FirebaseService.saveSidequest(sidequestId, sidequestData);
+      res.json({ success: true, message: "Sidequest saved successfully" });
+    } catch (error) {
+      console.error("Error saving sidequest:", error);
+      res.status(500).json({ error: "Failed to save sidequest" });
+    }
+  });
+
+  app.post("/api/sidequests/:sidequestId/progress", async (req, res) => {
+    try {
+      const { sidequestId } = req.params;
+      const progressData = {
+        sidequestId,
+        ...req.body,
+        createdAt: req.body.createdAt || new Date().toISOString()
+      };
+      
+      await FirebaseService.saveSidequestProgress(progressData);
+      res.json({ success: true, message: "Progress saved successfully" });
+    } catch (error) {
+      console.error("Error saving sidequest progress:", error);
+      res.status(500).json({ error: "Failed to save progress" });
+    }
+  });
+
+  app.get("/api/sidequests/:sidequestId/progress/:hauntId/:sessionId", async (req, res) => {
+    try {
+      const { sidequestId, hauntId, sessionId } = req.params;
+      const progress = await FirebaseService.getSidequestProgress(hauntId, sidequestId, sessionId);
+      
+      if (!progress) {
+        return res.status(404).json({ error: "Progress not found" });
+      }
+      
+      res.json(progress);
+    } catch (error) {
+      console.error("Error fetching sidequest progress:", error);
+      res.status(500).json({ error: "Failed to fetch progress" });
+    }
+  });
+
   // 📘 fieldGlossary.json compliance: Legacy non-compliant route removed
   // Use /api/trivia-questions/:haunt instead (fieldGlossary.json compliant)
 

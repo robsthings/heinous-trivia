@@ -196,3 +196,34 @@ export type TriviaQuestion = z.infer<typeof triviaQuestionSchema>;
 export type HauntConfig = z.infer<typeof hauntConfigSchema>;
 export type AdData = z.infer<typeof adDataSchema>;
 export type LeaderboardEntry = z.infer<typeof leaderboardEntrySchema>;
+
+// Sidequest schemas
+export const sidequestSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  description: z.string(),
+  difficulty: z.enum(["Easy", "Medium", "Hard", "Expert", "Impossible"]),
+  estimatedTime: z.string(),
+  componentType: z.string(),
+  config: z.record(z.any()),
+  isActive: z.boolean().default(true),
+  requiredTier: z.enum(["Basic", "Pro", "Premium"]).default("Basic"),
+  createdAt: z.string(),
+  updatedAt: z.string(),
+});
+
+export const sidequestProgressSchema = z.object({
+  sidequestId: z.string(),
+  hauntId: z.string(),
+  playerId: z.string().optional(),
+  sessionId: z.string(),
+  completed: z.boolean().default(false),
+  score: z.number().default(0),
+  timeSpent: z.number().default(0),
+  data: z.record(z.any()).default({}),
+  completedAt: z.string().optional(),
+  createdAt: z.string(),
+});
+
+export type Sidequest = z.infer<typeof sidequestSchema>;
+export type SidequestProgress = z.infer<typeof sidequestProgressSchema>;
