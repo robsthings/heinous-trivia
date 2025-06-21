@@ -1281,26 +1281,26 @@ export default function Admin() {
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="management" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-7 bg-gray-800">
-                <TabsTrigger value="management" className="text-white data-[state=active]:bg-red-600 text-xs md:text-sm">
+              <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-7 bg-black border border-gray-600">
+                <TabsTrigger value="management" className="text-gray-200 data-[state=active]:bg-red-600 data-[state=active]:text-white hover:text-white hover:bg-gray-700 text-xs md:text-sm font-medium">
                   Management
                 </TabsTrigger>
-                <TabsTrigger value="haunts" className="text-white data-[state=active]:bg-red-600 text-xs md:text-sm">
+                <TabsTrigger value="haunts" className="text-gray-200 data-[state=active]:bg-red-600 data-[state=active]:text-white hover:text-white hover:bg-gray-700 text-xs md:text-sm font-medium">
                   🏚️ Haunts
                 </TabsTrigger>
-                <TabsTrigger value="packs" className="text-white data-[state=active]:bg-red-600 text-xs md:text-sm">
+                <TabsTrigger value="packs" className="text-gray-200 data-[state=active]:bg-red-600 data-[state=active]:text-white hover:text-white hover:bg-gray-700 text-xs md:text-sm font-medium">
                   🧠 Packs
                 </TabsTrigger>
-                <TabsTrigger value="assignments" className="text-white data-[state=active]:bg-red-600 text-xs md:text-sm">
+                <TabsTrigger value="assignments" className="text-gray-200 data-[state=active]:bg-red-600 data-[state=active]:text-white hover:text-white hover:bg-gray-700 text-xs md:text-sm font-medium">
                   🎯 Assignments
                 </TabsTrigger>
-                <TabsTrigger value="default-ads" className="text-white data-[state=active]:bg-red-600 text-xs md:text-sm">
+                <TabsTrigger value="default-ads" className="text-gray-200 data-[state=active]:bg-red-600 data-[state=active]:text-white hover:text-white hover:bg-gray-700 text-xs md:text-sm font-medium">
                   📢 Default Ads
                 </TabsTrigger>
-                <TabsTrigger value="branding" className="text-white data-[state=active]:bg-red-600 text-xs md:text-sm">
+                <TabsTrigger value="branding" className="text-gray-200 data-[state=active]:bg-red-600 data-[state=active]:text-white hover:text-white hover:bg-gray-700 text-xs md:text-sm font-medium">
                   🎨 Branding
                 </TabsTrigger>
-                <TabsTrigger value="analytics" className="text-white data-[state=active]:bg-red-600 text-xs md:text-sm">
+                <TabsTrigger value="analytics" className="text-gray-200 data-[state=active]:bg-red-600 data-[state=active]:text-white hover:text-white hover:bg-gray-700 text-xs md:text-sm font-medium">
                   📊 Analytics
                 </TabsTrigger>
               </TabsList>
