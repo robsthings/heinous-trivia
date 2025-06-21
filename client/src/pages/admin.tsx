@@ -1229,148 +1229,95 @@ export default function Admin() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black p-4">
-      <div className="max-w-7xl mx-auto space-y-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-red-900 p-4">
+      <div className="max-w-4xl mx-auto">
         
-        {/* Header Section */}
-        <div className="text-center space-y-4">
-          <h1 className="text-4xl font-bold font-creepster text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-orange-500 to-red-600">
-            Heinous Trivia Super Admin
-          </h1>
-          <p className="text-gray-300 text-lg">
-            Complete Platform Management Dashboard
-          </p>
-          
-          {/* Quick Status Overview */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
-            <Card className="bg-gray-800/50 border-gray-700">
-              <CardContent className="p-4 text-center">
-                <div className="text-2xl font-bold text-green-400">{allHaunts.length}</div>
-                <div className="text-gray-400 text-sm">Active Haunts</div>
-              </CardContent>
-            </Card>
-            <Card className="bg-gray-800/50 border-gray-700">
-              <CardContent className="p-4 text-center">
-                <div className="text-2xl font-bold text-blue-400">{existingPacks.length}</div>
-                <div className="text-gray-400 text-sm">Trivia Packs</div>
-              </CardContent>
-            </Card>
-            <Card className="bg-gray-800/50 border-gray-700">
-              <CardContent className="p-4 text-center">
-                <div className="text-2xl font-bold text-purple-400">{defaultAds.length}</div>
-                <div className="text-gray-400 text-sm">Default Ads</div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
+        {/* Authentication Status Card */}
+        <Card className="bg-yellow-900/80 border-yellow-600 text-white mb-4">
+          <CardContent className="pt-6">
+            <div className="text-center">
+              <h3 className="text-xl font-bold mb-2">🔐 Authentication Status</h3>
+              <p className="mb-4">Status: {authStatus === 'authenticated' ? '✅ Authenticated' : '❌ Not Authenticated'}</p>
+              <p className="text-sm mb-4">User: {auth.currentUser?.uid || 'None'}</p>
+              
+              <Button 
+                onClick={async () => {
+                  try {
+                    console.log('Manual authentication attempt...');
+                    await signInAnonymously(auth);
+                    console.log('Authentication successful!', auth.currentUser);
+                    toast({
+                      title: "Success!",
+                      description: "Authentication successful",
+                    });
+                    setAuthStatus('authenticated');
+                    // Reload data after successful auth
+                    loadAllHaunts();
+                    loadExistingPacks();
+                  } catch (error) {
+                    console.error('Authentication failed:', error);
+                    toast({
+                      title: "Authentication Failed",
+                      description: error instanceof Error ? error.message : String(error),
+                      variant: "destructive"
+                    });
+                  }
+                }}
+                className="bg-green-600 hover:bg-green-700 text-lg px-8 py-3"
+                disabled={authStatus === 'authenticated'}
+              >
+                {authStatus === 'authenticated' ? '✅ Already Signed In' : '🔐 Sign In to Firebase'}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
 
-        {/* Authentication Status - Compact */}
-        {authStatus !== 'authenticated' && (
-          <Card className="bg-gradient-to-r from-yellow-900/80 to-orange-900/80 border-yellow-600">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
-                  <span className="text-yellow-200 font-medium">Authentication Required</span>
-                </div>
-                <Button 
-                  onClick={async () => {
-                    try {
-                      await signInAnonymously(auth);
-                      toast({
-                        title: "Connected",
-                        description: "Firebase authentication successful",
-                      });
-                      setAuthStatus('authenticated');
-                      loadAllHaunts();
-                      loadExistingPacks();
-                    } catch (error) {
-                      toast({
-                        title: "Connection Failed",
-                        description: error instanceof Error ? error.message : String(error),
-                        variant: "destructive"
-                      });
-                    }
-                  }}
-                  className="bg-green-600 hover:bg-green-700 text-white px-6"
-                >
-                  Connect to Firebase
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Main Admin Interface */}
-        <Card className="bg-gray-900/90 border-gray-700 shadow-2xl">
-          <CardContent className="p-6">
+        <Card className="bg-black/80 border-red-600 text-white">
+          <CardHeader>
+            <CardTitle className="text-3xl font-bold text-center text-red-500">
+              🎃 Heinous Trivia Uber Admin
+            </CardTitle>
+            <p className="text-center text-gray-300">Manage Haunts & Trivia Packs</p>
+          </CardHeader>
+          <CardContent>
             <Tabs defaultValue="management" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 lg:grid-cols-7 bg-black/80 border border-gray-600 rounded-lg p-1">
-                <TabsTrigger 
-                  value="management" 
-                  className="text-gray-300 data-[state=active]:bg-red-600 data-[state=active]:text-white hover:bg-gray-600 hover:text-white transition-all duration-200 text-xs md:text-sm font-medium"
-                >
-                  <Settings className="w-4 h-4 mr-1" />
-                  Overview
+              <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-7 bg-gray-800">
+                <TabsTrigger value="management" className="text-white data-[state=active]:bg-red-600 text-xs md:text-sm">
+                  Management
                 </TabsTrigger>
-                <TabsTrigger 
-                  value="haunts" 
-                  className="text-gray-300 data-[state=active]:bg-red-600 data-[state=active]:text-white hover:bg-gray-600 hover:text-white transition-all duration-200 text-xs md:text-sm font-medium"
-                >
-                  <GamepadIcon className="w-4 h-4 mr-1" />
-                  Haunts
+                <TabsTrigger value="haunts" className="text-white data-[state=active]:bg-red-600 text-xs md:text-sm">
+                  🏚️ Haunts
                 </TabsTrigger>
-                <TabsTrigger 
-                  value="packs" 
-                  className="text-gray-300 data-[state=active]:bg-red-600 data-[state=active]:text-white hover:bg-gray-600 hover:text-white transition-all duration-200 text-xs md:text-sm font-medium"
-                >
-                  <Zap className="w-4 h-4 mr-1" />
-                  Packs
+                <TabsTrigger value="packs" className="text-white data-[state=active]:bg-red-600 text-xs md:text-sm">
+                  🧠 Packs
                 </TabsTrigger>
-                <TabsTrigger 
-                  value="assignments" 
-                  className="text-gray-300 data-[state=active]:bg-red-600 data-[state=active]:text-white hover:bg-gray-600 hover:text-white transition-all duration-200 text-xs md:text-sm font-medium"
-                >
-                  <Target className="w-4 h-4 mr-1" />
-                  Assign
+                <TabsTrigger value="assignments" className="text-white data-[state=active]:bg-red-600 text-xs md:text-sm">
+                  🎯 Assignments
                 </TabsTrigger>
-                <TabsTrigger 
-                  value="default-ads" 
-                  className="text-gray-300 data-[state=active]:bg-red-600 data-[state=active]:text-white hover:bg-gray-600 hover:text-white transition-all duration-200 text-xs md:text-sm font-medium"
-                >
-                  <TrendingUp className="w-4 h-4 mr-1" />
-                  Ads
+                <TabsTrigger value="default-ads" className="text-white data-[state=active]:bg-red-600 text-xs md:text-sm">
+                  📢 Default Ads
                 </TabsTrigger>
-                <TabsTrigger 
-                  value="branding" 
-                  className="text-gray-300 data-[state=active]:bg-red-600 data-[state=active]:text-white hover:bg-gray-600 hover:text-white transition-all duration-200 text-xs md:text-sm font-medium"
-                >
-                  <Palette className="w-4 h-4 mr-1" />
-                  Brand
+                <TabsTrigger value="branding" className="text-white data-[state=active]:bg-red-600 text-xs md:text-sm">
+                  🎨 Branding
                 </TabsTrigger>
-                <TabsTrigger 
-                  value="analytics" 
-                  className="text-gray-300 data-[state=active]:bg-red-600 data-[state=active]:text-white hover:bg-gray-600 hover:text-white transition-all duration-200 text-xs md:text-sm font-medium"
-                >
-                  <BarChart3 className="w-4 h-4 mr-1" />
-                  Analytics
+                <TabsTrigger value="analytics" className="text-white data-[state=active]:bg-red-600 text-xs md:text-sm">
+                  📊 Analytics
                 </TabsTrigger>
               </TabsList>
 
               {/* Haunt Management Tab */}
-              <TabsContent value="management" className="space-y-6 mt-6">
-                <Card className="bg-gray-800/40 border-gray-600 shadow-lg">
-                  <CardHeader className="border-b border-gray-700">
-                    <CardTitle className="text-white flex items-center gap-2 text-xl">
-                      <Settings className="w-5 h-5 text-red-400" />
-                      Platform Overview
-                      <Badge variant="outline" className="text-gray-300 border-gray-500">
+              <TabsContent value="management" className="space-y-6">
+                <Card className="bg-gray-900/50 border-gray-700">
+                  <CardHeader>
+                    <CardTitle className="text-red-400 flex items-center gap-2">
+                      🏚️ All Participating Haunts
+                      <Badge variant="outline" className="text-gray-300">
                         {allHaunts.length} haunts
                       </Badge>
                     </CardTitle>
                     <p className="text-gray-400">Manage subscription levels and access for all haunts</p>
                   </CardHeader>
-                  <CardContent className="pt-6">
+                  <CardContent>
                     {allHaunts.length === 0 ? (
                       <div className="text-center py-8">
                         <p className="text-gray-400">No haunts found. Create your first haunt below!</p>

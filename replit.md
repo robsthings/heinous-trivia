@@ -234,6 +234,7 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+Admin Dashboard Design: Prefers original "OG styling" over redesigned versions - maintain classic emoji tabs, yellow auth cards, and traditional gray card backgrounds.
 
 **Critical Development Standards:**
 - Always reference fieldGlossary.json before creating any API endpoints or database queries
