@@ -1305,52 +1305,52 @@ export default function Admin() {
         <Card className="bg-gray-900/90 border-gray-700 shadow-2xl">
           <CardContent className="p-6">
             <Tabs defaultValue="management" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 lg:grid-cols-7 bg-gray-800/50 border border-gray-700 rounded-lg p-1">
+              <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 lg:grid-cols-7 bg-black/80 border border-gray-600 rounded-lg p-1">
                 <TabsTrigger 
                   value="management" 
-                  className="text-white data-[state=active]:bg-red-600 data-[state=active]:text-white hover:bg-gray-700 transition-colors text-xs md:text-sm"
+                  className="text-gray-300 data-[state=active]:bg-red-600 data-[state=active]:text-white hover:bg-gray-600 hover:text-white transition-all duration-200 text-xs md:text-sm font-medium"
                 >
                   <Settings className="w-4 h-4 mr-1" />
                   Overview
                 </TabsTrigger>
                 <TabsTrigger 
                   value="haunts" 
-                  className="text-white data-[state=active]:bg-red-600 data-[state=active]:text-white hover:bg-gray-700 transition-colors text-xs md:text-sm"
+                  className="text-gray-300 data-[state=active]:bg-red-600 data-[state=active]:text-white hover:bg-gray-600 hover:text-white transition-all duration-200 text-xs md:text-sm font-medium"
                 >
                   <GamepadIcon className="w-4 h-4 mr-1" />
                   Haunts
                 </TabsTrigger>
                 <TabsTrigger 
                   value="packs" 
-                  className="text-white data-[state=active]:bg-red-600 data-[state=active]:text-white hover:bg-gray-700 transition-colors text-xs md:text-sm"
+                  className="text-gray-300 data-[state=active]:bg-red-600 data-[state=active]:text-white hover:bg-gray-600 hover:text-white transition-all duration-200 text-xs md:text-sm font-medium"
                 >
                   <Zap className="w-4 h-4 mr-1" />
                   Packs
                 </TabsTrigger>
                 <TabsTrigger 
                   value="assignments" 
-                  className="text-white data-[state=active]:bg-red-600 data-[state=active]:text-white hover:bg-gray-700 transition-colors text-xs md:text-sm"
+                  className="text-gray-300 data-[state=active]:bg-red-600 data-[state=active]:text-white hover:bg-gray-600 hover:text-white transition-all duration-200 text-xs md:text-sm font-medium"
                 >
                   <Target className="w-4 h-4 mr-1" />
                   Assign
                 </TabsTrigger>
                 <TabsTrigger 
                   value="default-ads" 
-                  className="text-white data-[state=active]:bg-red-600 data-[state=active]:text-white hover:bg-gray-700 transition-colors text-xs md:text-sm"
+                  className="text-gray-300 data-[state=active]:bg-red-600 data-[state=active]:text-white hover:bg-gray-600 hover:text-white transition-all duration-200 text-xs md:text-sm font-medium"
                 >
                   <TrendingUp className="w-4 h-4 mr-1" />
                   Ads
                 </TabsTrigger>
                 <TabsTrigger 
                   value="branding" 
-                  className="text-white data-[state=active]:bg-red-600 data-[state=active]:text-white hover:bg-gray-700 transition-colors text-xs md:text-sm"
+                  className="text-gray-300 data-[state=active]:bg-red-600 data-[state=active]:text-white hover:bg-gray-600 hover:text-white transition-all duration-200 text-xs md:text-sm font-medium"
                 >
                   <Palette className="w-4 h-4 mr-1" />
                   Brand
                 </TabsTrigger>
                 <TabsTrigger 
                   value="analytics" 
-                  className="text-white data-[state=active]:bg-red-600 data-[state=active]:text-white hover:bg-gray-700 transition-colors text-xs md:text-sm"
+                  className="text-gray-300 data-[state=active]:bg-red-600 data-[state=active]:text-white hover:bg-gray-600 hover:text-white transition-all duration-200 text-xs md:text-sm font-medium"
                 >
                   <BarChart3 className="w-4 h-4 mr-1" />
                   Analytics
