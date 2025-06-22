@@ -47,7 +47,7 @@ export function GameHeader({ gameState, isGroupMode = false, groupScore = 0 }: G
   const progress = totalQuestions > 0 ? (questionsAnswered / totalQuestions) * 100 : 0;
 
   return (
-    <header className="glass-card mx-3 sm:mx-4 mt-3 sm:mt-4 p-3 sm:p-4 rounded-lg border-red-900">
+    <header className="bg-gray-800 border border-gray-600 mx-4 mt-4 p-4 rounded-xl">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1">
           {hauntConfig && (
@@ -59,18 +59,10 @@ export function GameHeader({ gameState, isGroupMode = false, groupScore = 0 }: G
             />
           )}
           <div className="min-w-0 flex-1">
-            <h1 
-              className={`font-creepster truncate ${hauntConfig?.tier === 'premium' ? 'text-xl sm:text-2xl' : 'text-lg sm:text-xl'}`}
-              style={{ color: accentColor }}
-            >
+            <h1 className="text-white text-xl font-semibold truncate">
               {hauntConfig?.name || 'Loading...'}
             </h1>
-            {hauntConfig?.tier !== 'premium' && (
-              <p className="text-xs sm:text-sm text-gray-300 opacity-75">Hosted by Dr. Heinous</p>
-            )}
-            {hauntConfig?.tier === 'premium' && (
-              <p className="text-xs sm:text-sm text-gray-300 opacity-75">Premium Experience</p>
-            )}
+            <p className="text-gray-400 text-sm">Horror Trivia Challenge</p>
           </div>
         </div>
         <div className="text-right flex-shrink-0 ml-2">
@@ -91,12 +83,11 @@ export function GameHeader({ gameState, isGroupMode = false, groupScore = 0 }: G
           </span>
           <span className="flex-shrink-0">{Math.round(progress)}%</span>
         </div>
-        <div className="w-full bg-black rounded-full h-2">
+        <div className="w-full bg-gray-700 rounded-full h-3">
           <div
-            className="h-2 rounded-full transition-all duration-300"
+            className="h-3 rounded-full transition-all duration-300 bg-gradient-to-r from-red-500 to-orange-500"
             style={{ 
-              width: `${progress}%`,
-              background: getProgressBarGradient(gameState.hauntConfig)
+              width: `${progress}%`
             }}
           />
         </div>

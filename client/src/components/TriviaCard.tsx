@@ -48,18 +48,18 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
   const answerLabels = ['A', 'B', 'C', 'D'];
 
   const getButtonClass = (index: number) => {
-    let baseClass = "w-full p-3 sm:p-4 rounded-lg text-left font-medium text-white hover:scale-[1.02] transition-all duration-200 border-2 touch-manipulation";
+    let baseClass = "w-full p-4 rounded-lg text-left font-medium transition-all duration-200 border-2 touch-manipulation";
     
     if (gameState.showFeedback && gameState.selectedAnswer !== null) {
       if (index === currentQuestion.correctAnswer) {
-        baseClass += " border-green-500 bg-green-600/20";
+        baseClass += " border-green-500 bg-green-600 text-white";
       } else if (index === gameState.selectedAnswer) {
-        baseClass += " border-red-500 bg-red-600/20";
+        baseClass += " border-red-500 bg-red-600/20 text-white";
       } else {
-        baseClass += ` border-gray-600 bg-gray-800/30`;
+        baseClass += " border-gray-600 bg-gray-800 text-gray-300";
       }
     } else {
-      baseClass += ` border-gray-600 bg-gray-800/30 haunt-themed-button`;
+      baseClass += " border-gray-600 bg-gray-800 text-white hover:bg-gray-700";
     }
     
     return baseClass;
@@ -78,28 +78,15 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
   };
 
   return (
-    <div className="glass-card rounded-xl p-4 sm:p-6 mt-4 animate-fade-in relative">
-      {/* Haunt Logo Watermark */}
-      {gameState.hauntConfig?.logoPath && (
-        <div className="absolute bottom-4 right-4 opacity-20 w-24 h-24 z-10 pointer-events-none">
-          <img 
-            src={gameState.hauntConfig.logoPath} 
-            alt="Haunt Logo"
-            className="w-full h-full object-contain filter grayscale"
-          />
-        </div>
-      )}
-      
-      <div className="mb-4 sm:mb-6">
-        <h2 className="font-creepster text-lg sm:text-xl md:text-2xl text-white mb-3 sm:mb-4 leading-tight">
+    <div className="max-w-2xl mx-auto">
+      {/* Question Card */}
+      <div className="bg-gray-800 border border-gray-600 rounded-xl p-6 mb-6">
+        <h2 className="text-white text-xl font-medium leading-relaxed mb-4">
           {currentQuestion.text}
         </h2>
         
-        <div className="flex items-center flex-wrap gap-2 sm:gap-3 mb-3 sm:mb-4">
-          <span 
-            className="text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium"
-            style={{ backgroundColor: secondaryColor }}
-          >
+        <div className="flex items-center gap-3 mb-4">
+          <span className="bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-medium">
             {currentQuestion.category}
           </span>
           <div className="flex space-x-1">
@@ -108,7 +95,8 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
         </div>
       </div>
 
-      <div className="space-y-2 sm:space-y-3">
+      {/* Answer Options */}
+      <div className="space-y-3">
         {currentQuestion.answers?.map((answer, index) => (
           <button
             key={index}
@@ -123,29 +111,26 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
             disabled={gameState.selectedAnswer !== null}
           >
             <div className="flex items-center">
-              <span 
-                className="w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold mr-3 sm:mr-4 text-white flex-shrink-0"
-                style={{ backgroundColor: primaryColor }}
-              >
+              <span className="w-8 h-8 rounded-full bg-red-600 text-white flex items-center justify-center text-sm font-bold mr-4 flex-shrink-0">
                 {answerLabels[index]}
               </span>
-              <span className="text-sm sm:text-base text-left break-words">{answer}</span>
+              <span className="text-base text-left break-words">{answer}</span>
             </div>
           </button>
         ))}
       </div>
 
       {gameState.showFeedback && (
-        <div className={`mt-4 sm:mt-6 p-3 sm:p-4 rounded-lg border animate-slide-up ${
+        <div className={`mt-6 p-4 rounded-lg border animate-slide-up ${
           gameState.isCorrect 
-            ? 'bg-green-900 border-green-600' 
-            : 'bg-red-900 border-red-600'
+            ? 'bg-green-600 border-green-500' 
+            : 'bg-red-600/90 border-red-500'
         }`}>
-          <div className="flex items-start space-x-2 sm:space-x-3">
-            <div className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
-              gameState.isCorrect ? 'bg-green-500' : 'bg-red-500'
+          <div className="flex items-start space-x-3">
+            <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
+              gameState.isCorrect ? 'bg-white text-green-600' : 'bg-white text-red-600'
             }`}>
-              <span className="text-white text-xs sm:text-sm">
+              <span className="text-sm font-bold">
                 {gameState.isCorrect ? '✓' : '✗'}
               </span>
             </div>
