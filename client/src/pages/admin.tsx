@@ -1348,17 +1348,17 @@ export default function Admin() {
                                       size="sm" 
                                       variant="outline"
                                       className="h-8 text-xs border-blue-600 text-blue-400 hover:bg-blue-600 hover:text-white flex-1"
-                                      onClick={() => window.open(`${window.location.origin}/?haunt=${haunt.id}`, '_blank')}
+                                      onClick={() => window.open(`${window.location.origin}/welcome/${haunt.id}`, '_blank')}
                                     >
                                       <GamepadIcon className="h-3 w-3 mr-1" />
-                                      Game: /?haunt={haunt.id}
+                                      Game: /welcome/{haunt.id}
                                       <ExternalLink className="h-3 w-3 ml-1" />
                                     </Button>
                                     <Button 
                                       size="sm" 
                                       variant="ghost"
                                       className="h-8 w-8 p-0 text-blue-400 hover:bg-blue-600 hover:text-white"
-                                      onClick={() => copyToClipboard(`${window.location.origin}/?haunt=${haunt.id}`, "Game URL")}
+                                      onClick={() => copyToClipboard(`${window.location.origin}/welcome/${haunt.id}`, "Game URL")}
                                     >
                                       <Copy className="h-3 w-3" />
                                     </Button>
