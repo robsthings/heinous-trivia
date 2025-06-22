@@ -102,7 +102,7 @@ export function Welcome() {
             }}
           >
             <p className="text-white text-sm text-center font-medium">
-              {isFirstTime ? "Dare ye match wits with ME?!" : "Back for more punishment?"}
+              {isFirstTime ? firstTimeMessages[1] : returningUserMessages[0]}
             </p>
             <div 
               className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full"
