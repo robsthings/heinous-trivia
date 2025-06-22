@@ -78,275 +78,49 @@ export function Welcome() {
     : 'Ready for another spine-chilling round of trivia?';
 
   return (
-    <div 
-      style={{
-        minHeight: '100vh',
-        width: '100%',
-        overflow: 'hidden',
-        position: 'relative',
-        backgroundImage: 'url(/backgrounds/lab-dark-blue.png)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center center',
-        backgroundRepeat: 'no-repeat',
-        backgroundAttachment: 'fixed'
-      }}
-    >
-      {/* Dark gradient overlay for contrast */}
-      <div 
-        style={{
-          position: 'absolute',
-          top: 0,
-          right: 0,
-          bottom: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          background: 'linear-gradient(to bottom right, rgba(0, 0, 0, 0.6), rgba(17, 24, 39, 0.7), rgba(0, 0, 0, 0.8))',
-          zIndex: 0
-        }}
-      />
+    <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
+      {/* Main Content */}
+      <div className="max-w-md w-full text-center space-y-6">
 
-      {/* Lightning/Glitch Background Effects for First-Time Users - responsive */}
-      {isFirstTime && (
-        <>
-          {/* Lightning effect overlay */}
-          <div 
-            className={`absolute inset-0 w-full h-full z-5 transition-opacity duration-300 ${
-              showGlitchEffect ? 'opacity-30 animate-lightning-flash' : 'opacity-0'
-            }`}
-            style={{
-              background: `
-                radial-gradient(ellipse at 20% 50%, rgba(30, 144, 255, 0.3) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 30%, rgba(139, 0, 0, 0.3) 0%, transparent 50%),
-                radial-gradient(ellipse at 40% 80%, rgba(255, 107, 53, 0.2) 0%, transparent 50%)
-              `
-            }}
-          />
-          
-          {/* Glitch lines overlay */}
-          <div 
-            className={`absolute inset-0 w-full h-full z-10 pointer-events-none transition-opacity duration-500 ${
-              showGlitchEffect ? 'opacity-20 animate-glitch-lines' : 'opacity-0'
-            }`}
-            style={{
-              background: `
-                repeating-linear-gradient(
-                  90deg,
-                  transparent,
-                  transparent 2px,
-                  rgba(139, 0, 0, 0.1) 2px,
-                  rgba(139, 0, 0, 0.1) 4px
-                ),
-                repeating-linear-gradient(
-                  0deg,
-                  transparent,
-                  transparent 1px,
-                  rgba(30, 144, 255, 0.05) 1px,
-                  rgba(30, 144, 255, 0.05) 3px
-                )
-              `
-            }}
-          />
-        </>
-      )}
-
-      {/* Main Content - responsive container */}
-      <div 
-        style={{
-          position: 'relative',
-          zIndex: 20,
-          minHeight: '100vh',
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '2rem'
-        }}
-      >
-        
-        {/* Character Sprite with Speech Bubble */}
-        <div 
-          style={{
-            marginBottom: '2rem',
-            flexShrink: 0,
-            position: 'relative',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center'
-          }}
-        >
-          
-          {/* Speech Bubble - positioned above sprite */}
-          <div style={{ marginBottom: '1.5rem' }}>
-            <SpeechBubble 
-              messages={isFirstTime ? firstTimeMessages : returningUserMessages}
-              isVisible={true}
-              className="animate-speech-bubble-in"
-            />
-          </div>
-
-          {/* Character Sprite */}
+        {/* Character Sprite */}
+        <div className="mb-6">
           {characterSprite ? (
             <img
               src={isFirstTime ? heinousSprites.talking : heinousSprites.charming}
               alt="Dr. Heinous"
-              className={`w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-64 lg:h-64 xl:w-72 xl:h-72 object-contain drop-shadow-2xl max-w-full ${
-                isFirstTime ? 'animate-sprite-slide-bounce-in' : 'animate-sprite-glitch-in'
-              }`}
-              style={{
-                filter: isFirstTime && showGlitchEffect ? 
-                  'drop-shadow(0 0 20px rgba(139, 0, 0, 0.7))' : 
-                  'drop-shadow(0 0 15px rgba(255, 107, 53, 0.5))',
-                animationDelay: isFirstTime ? '0.5s' : '0.2s'
-              }}
-              onAnimationEnd={(e) => {
-                // Add idle twitch animation after slide-bounce-in completes
-                if (isFirstTime && e.animationName === 'sprite-slide-bounce-in') {
-                  e.currentTarget.classList.add('animate-sprite-idle-twitch');
-                }
-              }}
+              className="w-32 h-32 mx-auto object-contain"
             />
           ) : (
-            // Fallback if sprite doesn't load
-            <div className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-64 lg:h-64 xl:w-72 xl:h-72 bg-gradient-to-br from-red-900 to-purple-900 rounded-full flex items-center justify-center max-w-full">
-              <span className="text-4xl sm:text-5xl lg:text-6xl">👹</span>
+            <div className="w-32 h-32 mx-auto bg-red-600 rounded-full flex items-center justify-center">
+              <span className="text-4xl">👹</span>
             </div>
           )}
         </div>
 
         {/* Welcome Text */}
-        <div 
-          style={{
-            textAlign: 'center',
-            maxWidth: '90%',
-            margin: '0 auto 2rem auto',
-            padding: '0 1rem'
-          }}
-        >
-          <h1 
-            style={{
-              fontFamily: '"Nosifer", cursive',
-              fontSize: 'clamp(1.5rem, 8vw, 4rem)',
-              marginBottom: '1.5rem',
-              lineHeight: '1.2',
-              color: isFirstTime ? '#ef4444' : '#f97316',
-              animation: isFirstTime ? 'fade-in 0.8s ease-in forwards' : 'pulse 3s ease-in-out infinite',
-              animationDelay: isFirstTime ? '1s' : '0s',
-              opacity: isFirstTime ? 0 : 1,
-              textShadow: '2px 2px 4px rgba(0,0,0,0.8)'
-            }}
-          >
+        <div className="text-center space-y-4">
+          <h1 className="text-2xl font-bold text-white">
             {welcomeTitle}
           </h1>
           
-          <p 
-            style={{
-              fontSize: 'clamp(1rem, 4vw, 1.5rem)',
-              marginBottom: '2rem',
-              lineHeight: '1.6',
-              color: isFirstTime ? '#d1d5db' : '#9ca3af',
-              animation: isFirstTime ? 'fade-in 0.8s ease-in forwards' : 'none',
-              animationDelay: isFirstTime ? '1.8s' : '0s',
-              opacity: isFirstTime ? 0 : 1,
-              transform: !isFirstTime && isAnimating ? 'translateY(2.5rem)' : 'translateY(0)',
-              transition: !isFirstTime ? 'all 1s ease-in-out' : 'none'
-            }}
-          >
+          <p className="text-gray-300 text-base leading-relaxed">
             {welcomeMessage}
           </p>
 
           {isFirstTime && (
-            <div 
-              style={{
-                fontSize: 'clamp(0.75rem, 2.5vw, 0.875rem)',
-                color: '#f87171',
-                marginBottom: '1.5rem',
-                animation: 'fade-in 0.8s ease-in forwards',
-                animationDelay: '2.5s',
-                opacity: 0
-              }}
-            >
-              <p style={{ animation: 'pulse 2s ease-in-out infinite' }}>
-                ⚡ Warning: This experience may contain jump scares and disturbing content ⚡
-              </p>
-            </div>
+            <p className="text-red-400 text-sm">
+              ⚡ Warning: This experience may contain jump scares and disturbing content ⚡
+            </p>
           )}
         </div>
 
         {/* Action Button */}
-        <div 
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            width: '100%',
-            animation: isFirstTime ? 'fade-in 0.8s ease-in forwards' : 'none',
-            animationDelay: isFirstTime ? '3.2s' : '0s',
-            opacity: isFirstTime ? 0 : 1,
-            transform: !isFirstTime && isAnimating ? 'translateY(2.5rem)' : 'translateY(0)',
-            transition: !isFirstTime ? 'all 1s ease-in-out' : 'none'
-          }}
+        <Button
+          onClick={handleStartGame}
+          className="mt-8 bg-red-600 hover:bg-red-700 text-white px-8 py-3 text-lg font-semibold"
         >
-          <button
-            onClick={handleStartGame}
-            style={{
-              padding: 'clamp(0.75rem, 3vw, 1rem) clamp(1.5rem, 6vw, 2rem)',
-              fontSize: 'clamp(1rem, 4vw, 1.25rem)',
-              fontWeight: 'bold',
-              fontFamily: '"Creepster", cursive',
-              background: 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)',
-              color: 'white',
-              border: '2px solid #f87171',
-              borderRadius: '0.5rem',
-              boxShadow: isFirstTime && showGlitchEffect ? 
-                '0 0 30px rgba(139, 0, 0, 0.8)' : 
-                '0 4px 20px rgba(0, 0, 0, 0.5)',
-              cursor: 'pointer',
-              minWidth: 'clamp(200px, 50vw, 250px)',
-              transition: 'all 0.3s ease-in-out',
-              transform: 'scale(1)',
-              animation: isFirstTime && showGlitchEffect ? 'pulse 2s ease-in-out infinite' : 'none'
-            }}
-            onMouseEnter={(e) => {
-              e.target.style.background = 'linear-gradient(135deg, #ef4444 0%, #b91c1c 100%)';
-              e.target.style.transform = 'scale(1.05)';
-              e.target.style.boxShadow = '0 8px 25px rgba(239, 68, 68, 0.5)';
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.background = 'linear-gradient(135deg, #dc2626 0%, #991b1b 100%)';
-              e.target.style.transform = 'scale(1)';
-              e.target.style.boxShadow = isFirstTime && showGlitchEffect ? 
-                '0 0 30px rgba(139, 0, 0, 0.8)' : 
-                '0 4px 20px rgba(0, 0, 0, 0.5)';
-            }}
-          >
-            {buttonText}
-          </button>
-        </div>
-
-        {/* Development Helper - Reset First Time Experience */}
-        {process.env.NODE_ENV === 'development' && (
-          <div className="mt-3 sm:mt-4 text-center">
-            <button
-              onClick={() => {
-                localStorage.removeItem('hasSeenHeinousIntro');
-                window.location.reload();
-              }}
-              className="text-xs sm:text-sm text-gray-600 hover:text-red-400 underline transition-colors duration-200"
-            >
-              [DEV] Reset First-Time Experience
-            </button>
-          </div>
-        )}
-
-        {/* Haunt Info - responsive footer */}
-        <div className={`mt-6 sm:mt-8 text-center transition-all duration-1000 delay-1500 ${
-          isAnimating ? 'opacity-0' : 'opacity-100'
-        }`}>
-          <p className="text-xs sm:text-sm text-gray-500 px-4">
-            Haunt: <span className="text-orange-400 font-semibold">{currentHauntId}</span>
-          </p>
-        </div>
+          {buttonText}
+        </Button>
       </div>
     </div>
   );
