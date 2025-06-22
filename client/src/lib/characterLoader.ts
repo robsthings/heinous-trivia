@@ -93,11 +93,4 @@ export async function loadCharacterSprites(): Promise<Record<string, Record<stri
   return characterRegistry;
 }
 
-// Development helper: Log loaded sprites in development mode
-if (import.meta.env.DEV) {
-  console.log('🎭 Character Loader initialized:', {
-    heinous: Object.keys(heinousSprites),
-    chupacabra: Object.keys(chupacabraSprites),
-    totalSprites: Object.keys(heinousSprites).length + Object.keys(chupacabraSprites).length
-  });
-}
+// Character loader initialized - debug logging removed for production performance

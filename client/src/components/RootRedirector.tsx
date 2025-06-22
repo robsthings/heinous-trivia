@@ -36,11 +36,7 @@ export function RootRedirector() {
       detectedHauntId = extractHauntId();
     }
     
-    console.log('RootRedirector - Route haunt:', routeHauntId);
-    console.log('RootRedirector - Extracted haunt:', extractHauntId());
-    console.log('RootRedirector - Final haunt:', detectedHauntId);
-    console.log('RootRedirector - Current URL:', window.location.href);
-    console.log('RootRedirector - Wouter location:', location);
+    // Debug logging removed for production performance
 
     // Process valid haunt ID for Firebase isolation
     if (detectedHauntId && isValidHauntId(detectedHauntId)) {

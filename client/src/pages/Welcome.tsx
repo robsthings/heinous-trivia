@@ -13,9 +13,7 @@ export function Welcome() {
 
   const currentHauntId = params?.hauntId || 'headquarters';
   
-  // Debug the haunt extraction
-  console.log('Welcome component - URL params:', params);
-  console.log('Welcome component - currentHauntId:', currentHauntId);
+  // Haunt extraction - debug logging removed for production
 
   // Define dialogue messages for different user types
   const firstTimeMessages = [
