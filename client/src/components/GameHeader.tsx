@@ -66,13 +66,10 @@ export function GameHeader({ gameState, isGroupMode = false, groupScore = 0 }: G
           </div>
         </div>
         <div className="text-right flex-shrink-0 ml-2">
-          <div 
-            className="text-xl sm:text-2xl font-bold"
-            style={{ color: accentColor }}
-          >
+          <div className="text-2xl font-bold text-white">
             {isGroupMode ? groupScore : score}
           </div>
-          <div className="text-xs sm:text-sm text-gray-300">Score</div>
+          <div className="text-sm text-gray-400">Score</div>
         </div>
       </div>
 
