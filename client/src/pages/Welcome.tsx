@@ -78,77 +78,98 @@ export function Welcome() {
     : 'Ready for another spine-chilling round of trivia?';
 
   return (
-    <div className="min-h-screen relative overflow-hidden" style={{
-      backgroundImage: 'url(/backgrounds/lab-dark-blue.png)',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundRepeat: 'no-repeat'
-    }}>
-      {/* Dark gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-gray-900/70 to-black/80" />
-      
-      {/* Main Content */}
-      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-4 text-center">
+    <div 
+      className="min-h-screen w-full relative"
+      style={{
+        background: `
+          linear-gradient(rgba(0, 0, 0, 0.7), rgba(17, 24, 39, 0.8), rgba(0, 0, 0, 0.9)),
+          url(/backgrounds/lab-dark-blue.png)
+        `,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'scroll'
+      }}
+    >
+      <div className="min-h-screen flex flex-col items-center justify-center px-4 py-8">
         
-        {/* Character Sprite with Speech Bubble */}
-        <div className="mb-8 relative">
-          {/* Speech Bubble */}
-          <div className="mb-6">
-            <SpeechBubble 
-              messages={isFirstTime ? firstTimeMessages : returningUserMessages}
-              isVisible={true}
-              className="mb-4"
+        {/* Speech Bubble */}
+        <div className="mb-4 w-full max-w-xs">
+          <div 
+            className="bg-red-800 border-2 border-red-600 rounded-lg px-4 py-3 relative"
+            style={{
+              borderRadius: '20px 20px 5px 20px'
+            }}
+          >
+            <p className="text-white text-sm text-center font-medium">
+              {isFirstTime ? "Dare ye match wits with ME?!" : "Back for more punishment?"}
+            </p>
+            <div 
+              className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full"
+              style={{
+                width: 0,
+                height: 0,
+                borderLeft: '8px solid transparent',
+                borderRight: '8px solid transparent',
+                borderTop: '8px solid #991b1b'
+              }}
             />
           </div>
+        </div>
 
-          {/* Character Sprite */}
+        {/* Character Sprite */}
+        <div className="mb-8">
           {characterSprite ? (
             <img
               src={isFirstTime ? heinousSprites.talking : heinousSprites.charming}
               alt="Dr. Heinous"
-              className="w-40 h-40 md:w-48 md:h-48 object-contain mx-auto drop-shadow-2xl"
+              className="w-32 h-32 object-contain"
             />
           ) : (
-            <div className="w-40 h-40 md:w-48 md:h-48 mx-auto bg-red-600 rounded-full flex items-center justify-center">
-              <span className="text-5xl">👹</span>
+            <div className="w-32 h-32 bg-red-600 rounded-full flex items-center justify-center">
+              <span className="text-4xl">👹</span>
             </div>
           )}
         </div>
 
-        {/* Welcome Text */}
-        <div className="max-w-sm mx-auto space-y-6">
-          <h1 className="text-3xl md:text-4xl font-bold text-orange-400" style={{
-            fontFamily: 'Creepster, cursive',
-            textShadow: '2px 2px 4px rgba(0,0,0,0.8)'
-          }}>
-            {welcomeTitle}
-          </h1>
-          
-          <p className="text-gray-300 text-lg leading-relaxed">
-            {welcomeMessage}
-          </p>
-
-          {isFirstTime && (
-            <p className="text-red-400 text-sm animate-pulse">
-              ⚡ Warning: This experience may contain jump scares and disturbing content ⚡
-            </p>
-          )}
-        </div>
-
-        {/* Action Button */}
-        <button
-          onClick={handleStartGame}
-          className="mt-8 bg-red-600 hover:bg-red-700 text-white px-8 py-4 text-xl font-bold rounded-lg border-2 border-red-500 transition-all duration-300 transform hover:scale-105 shadow-xl"
+        {/* Welcome Title */}
+        <h1 
+          className="text-2xl font-bold text-center mb-6 px-4"
           style={{
             fontFamily: 'Creepster, cursive',
-            textShadow: '1px 1px 2px rgba(0,0,0,0.8)'
+            color: '#fb923c',
+            textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
+            fontSize: 'clamp(1.5rem, 5vw, 2rem)'
+          }}
+        >
+          {welcomeTitle}
+        </h1>
+        
+        {/* Welcome Message */}
+        <p className="text-gray-300 text-center mb-6 px-4 max-w-sm leading-relaxed">
+          {welcomeMessage}
+        </p>
+
+        {/* Warning for first-time users */}
+        {isFirstTime && (
+          <p className="text-red-400 text-sm text-center mb-6 px-4">
+            ⚡ Warning: This experience may contain jump scares and disturbing content ⚡
+          </p>
+        )}
+
+        {/* Play Button */}
+        <button
+          onClick={handleStartGame}
+          className="bg-red-600 text-white px-8 py-3 text-lg font-bold rounded-lg border-2 border-red-500 shadow-lg"
+          style={{
+            fontFamily: 'Creepster, cursive'
           }}
         >
           {buttonText}
         </button>
 
         {/* Haunt Info */}
-        <div className="mt-8 text-center">
+        <div className="mt-6 text-center">
           <p className="text-sm text-gray-500">
             Haunt: <span className="text-orange-400 font-semibold">{currentHauntId}</span>
           </p>
