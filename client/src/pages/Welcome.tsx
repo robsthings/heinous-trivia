@@ -78,49 +78,81 @@ export function Welcome() {
     : 'Ready for another spine-chilling round of trivia?';
 
   return (
-    <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
+    <div className="min-h-screen relative overflow-hidden" style={{
+      backgroundImage: 'url(/backgrounds/lab-dark-blue.png)',
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat'
+    }}>
+      {/* Dark gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-gray-900/70 to-black/80" />
+      
       {/* Main Content */}
-      <div className="max-w-md w-full text-center space-y-6">
+      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-4 text-center">
+        
+        {/* Character Sprite with Speech Bubble */}
+        <div className="mb-8 relative">
+          {/* Speech Bubble */}
+          <div className="mb-6">
+            <SpeechBubble 
+              messages={isFirstTime ? firstTimeMessages : returningUserMessages}
+              isVisible={true}
+              className="mb-4"
+            />
+          </div>
 
-        {/* Character Sprite */}
-        <div className="mb-6">
+          {/* Character Sprite */}
           {characterSprite ? (
             <img
               src={isFirstTime ? heinousSprites.talking : heinousSprites.charming}
               alt="Dr. Heinous"
-              className="w-32 h-32 mx-auto object-contain"
+              className="w-40 h-40 md:w-48 md:h-48 object-contain mx-auto drop-shadow-2xl"
             />
           ) : (
-            <div className="w-32 h-32 mx-auto bg-red-600 rounded-full flex items-center justify-center">
-              <span className="text-4xl">👹</span>
+            <div className="w-40 h-40 md:w-48 md:h-48 mx-auto bg-red-600 rounded-full flex items-center justify-center">
+              <span className="text-5xl">👹</span>
             </div>
           )}
         </div>
 
         {/* Welcome Text */}
-        <div className="text-center space-y-4">
-          <h1 className="text-2xl font-bold text-white">
+        <div className="max-w-sm mx-auto space-y-6">
+          <h1 className="text-3xl md:text-4xl font-bold text-orange-400" style={{
+            fontFamily: 'Creepster, cursive',
+            textShadow: '2px 2px 4px rgba(0,0,0,0.8)'
+          }}>
             {welcomeTitle}
           </h1>
           
-          <p className="text-gray-300 text-base leading-relaxed">
+          <p className="text-gray-300 text-lg leading-relaxed">
             {welcomeMessage}
           </p>
 
           {isFirstTime && (
-            <p className="text-red-400 text-sm">
+            <p className="text-red-400 text-sm animate-pulse">
               ⚡ Warning: This experience may contain jump scares and disturbing content ⚡
             </p>
           )}
         </div>
 
         {/* Action Button */}
-        <Button
+        <button
           onClick={handleStartGame}
-          className="mt-8 bg-red-600 hover:bg-red-700 text-white px-8 py-3 text-lg font-semibold"
+          className="mt-8 bg-red-600 hover:bg-red-700 text-white px-8 py-4 text-xl font-bold rounded-lg border-2 border-red-500 transition-all duration-300 transform hover:scale-105 shadow-xl"
+          style={{
+            fontFamily: 'Creepster, cursive',
+            textShadow: '1px 1px 2px rgba(0,0,0,0.8)'
+          }}
         >
           {buttonText}
-        </Button>
+        </button>
+
+        {/* Haunt Info */}
+        <div className="mt-8 text-center">
+          <p className="text-sm text-gray-500">
+            Haunt: <span className="text-orange-400 font-semibold">{currentHauntId}</span>
+          </p>
+        </div>
       </div>
     </div>
   );
