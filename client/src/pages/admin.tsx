@@ -1533,20 +1533,20 @@ export default function Admin() {
                                     <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
                                       <SelectValue />
                                     </SelectTrigger>
-                                    <SelectContent>
-                                      <SelectItem value="basic">
+                                    <SelectContent className="bg-gray-800 border-gray-600">
+                                      <SelectItem value="basic" className="text-white hover:bg-gray-700">
                                         <div className="flex items-center gap-2">
                                           <Crown className="h-4 w-4" />
                                           Basic (5 questions, 3 ads)
                                         </div>
                                       </SelectItem>
-                                      <SelectItem value="pro">
+                                      <SelectItem value="pro" className="text-white hover:bg-gray-700">
                                         <div className="flex items-center gap-2">
                                           <Zap className="h-4 w-4" />
                                           Pro (15 questions, 5 ads)
                                         </div>
                                       </SelectItem>
-                                      <SelectItem value="premium">
+                                      <SelectItem value="premium" className="text-white hover:bg-gray-700">
                                         <div className="flex items-center gap-2">
                                           <Gem className="h-4 w-4" />
                                           Premium (50 questions, 10 ads)
@@ -1668,10 +1668,10 @@ export default function Admin() {
                               <SelectTrigger className="bg-gray-800 border-gray-600 text-white">
                                 <SelectValue />
                               </SelectTrigger>
-                              <SelectContent>
-                                <SelectItem value="basic">Basic (5 questions, 3 ads)</SelectItem>
-                                <SelectItem value="pro">Pro (15 questions, 5 ads)</SelectItem>
-                                <SelectItem value="premium">Premium (50 questions, 10 ads)</SelectItem>
+                              <SelectContent className="bg-gray-800 border-gray-600">
+                                <SelectItem value="basic" className="text-white hover:bg-gray-700">Basic (5 questions, 3 ads)</SelectItem>
+                                <SelectItem value="pro" className="text-white hover:bg-gray-700">Pro (15 questions, 5 ads)</SelectItem>
+                                <SelectItem value="premium" className="text-white hover:bg-gray-700">Premium (50 questions, 10 ads)</SelectItem>
                               </SelectContent>
                             </Select>
                           </div>
