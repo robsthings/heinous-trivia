@@ -1292,7 +1292,8 @@ export default function Admin() {
                     background: 'linear-gradient(to right, rgb(185, 28, 28), rgb(126, 34, 206))',
                     color: 'white'
                   } : {
-                    color: 'rgb(229, 231, 235)'
+                    color: 'white',
+                    backgroundColor: 'rgba(75, 85, 99, 0.3)'
                   }}
                 >
                   Management
@@ -1304,7 +1305,8 @@ export default function Admin() {
                     background: 'linear-gradient(to right, rgb(185, 28, 28), rgb(126, 34, 206))',
                     color: 'white'
                   } : {
-                    color: 'rgb(229, 231, 235)'
+                    color: 'white',
+                    backgroundColor: 'rgba(75, 85, 99, 0.3)'
                   }}
                 >
                   Haunts
@@ -1316,7 +1318,8 @@ export default function Admin() {
                     background: 'linear-gradient(to right, rgb(185, 28, 28), rgb(126, 34, 206))',
                     color: 'white'
                   } : {
-                    color: 'rgb(229, 231, 235)'
+                    color: 'white',
+                    backgroundColor: 'rgba(75, 85, 99, 0.3)'
                   }}
                 >
                   Packs
@@ -1328,7 +1331,8 @@ export default function Admin() {
                     background: 'linear-gradient(to right, rgb(185, 28, 28), rgb(126, 34, 206))',
                     color: 'white'
                   } : {
-                    color: 'rgb(229, 231, 235)'
+                    color: 'white',
+                    backgroundColor: 'rgba(75, 85, 99, 0.3)'
                   }}
                 >
                   Assignments
@@ -1340,7 +1344,8 @@ export default function Admin() {
                     background: 'linear-gradient(to right, rgb(185, 28, 28), rgb(126, 34, 206))',
                     color: 'white'
                   } : {
-                    color: 'rgb(229, 231, 235)'
+                    color: 'white',
+                    backgroundColor: 'rgba(75, 85, 99, 0.3)'
                   }}
                 >
                   Default Ads
@@ -1352,7 +1357,8 @@ export default function Admin() {
                     background: 'linear-gradient(to right, rgb(185, 28, 28), rgb(126, 34, 206))',
                     color: 'white'
                   } : {
-                    color: 'rgb(229, 231, 235)'
+                    color: 'white',
+                    backgroundColor: 'rgba(75, 85, 99, 0.3)'
                   }}
                 >
                   Branding
@@ -1364,7 +1370,8 @@ export default function Admin() {
                     background: 'linear-gradient(to right, rgb(185, 28, 28), rgb(126, 34, 206))',
                     color: 'white'
                   } : {
-                    color: 'rgb(229, 231, 235)'
+                    color: 'white',
+                    backgroundColor: 'rgba(75, 85, 99, 0.3)'
                   }}
                 >
                   Analytics
