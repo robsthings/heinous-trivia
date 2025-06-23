@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { SimpleSelect } from "@/components/SimpleSelect";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
@@ -81,25 +81,18 @@ function AnalyticsTab({
         {/* Haunt Selection */}
         <div className="mb-6">
           <Label className="text-white text-sm font-medium mb-2 block">Select Haunt for Analytics</Label>
-          <Select value={selectedAnalyticsHaunt} onValueChange={setSelectedAnalyticsHaunt}>
-            <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
-              <SelectValue placeholder="Choose a Pro/Premium haunt" />
-            </SelectTrigger>
-            <SelectContent className="bg-gray-700 border-gray-600">
-              {allHaunts
-                .filter(haunt => haunt.tier === 'pro' || haunt.tier === 'premium')
-                .map((haunt) => (
-                  <SelectItem key={haunt.id} value={haunt.id} className="text-white">
-                    <div className="flex items-center gap-2">
-                      <span>{haunt.name}</span>
-                      <Badge className={`${haunt.tier === 'premium' ? 'bg-purple-600' : 'bg-blue-600'} text-white`}>
-                        {haunt.tier?.toUpperCase()}
-                      </Badge>
-                    </div>
-                  </SelectItem>
-                ))}
-            </SelectContent>
-          </Select>
+          <SimpleSelect 
+            value={selectedAnalyticsHaunt} 
+            onValueChange={setSelectedAnalyticsHaunt}
+            options={allHaunts
+              .filter(haunt => haunt.tier === 'pro' || haunt.tier === 'premium')
+              .map((haunt) => ({
+                value: haunt.id,
+                label: `${haunt.name} (${haunt.tier?.toUpperCase()})`
+              }))
+            }
+            placeholder="Choose a Pro/Premium haunt"
+          />
         </div>
 
         {!selectedAnalyticsHaunt && (
@@ -1686,41 +1679,16 @@ export default function Admin() {
 
                           <div>
                             <Label htmlFor="edit-tier" className="text-white">Subscription Tier</Label>
-                            <Select value={formData.tier} onValueChange={(value) => setFormData(prev => ({ ...prev, tier: value }))}>
-                              <SelectTrigger className="bg-gray-800 border-gray-600 text-white">
-                                <SelectValue />
-                              </SelectTrigger>
-                              <SelectContent 
-                                className="bg-gray-800 border-gray-600"
-                                style={{ 
-                                  backgroundColor: 'rgb(31, 41, 55)',
-                                  borderColor: 'rgb(75, 85, 99)',
-                                  color: 'white'
-                                }}
-                              >
-                                <SelectItem 
-                                  value="basic" 
-                                  className="text-white hover:bg-gray-700"
-                                  style={{ color: 'white', backgroundColor: 'transparent' }}
-                                >
-                                  Basic (5 questions, 3 ads)
-                                </SelectItem>
-                                <SelectItem 
-                                  value="pro" 
-                                  className="text-white hover:bg-gray-700"
-                                  style={{ color: 'white', backgroundColor: 'transparent' }}
-                                >
-                                  Pro (15 questions, 5 ads)
-                                </SelectItem>
-                                <SelectItem 
-                                  value="premium" 
-                                  className="text-white hover:bg-gray-700"
-                                  style={{ color: 'white', backgroundColor: 'transparent' }}
-                                >
-                                  Premium (50 questions, 10 ads)
-                                </SelectItem>
-                              </SelectContent>
-                            </Select>
+                            <SimpleSelect 
+                              value={formData.tier} 
+                              onValueChange={(value) => setFormData(prev => ({ ...prev, tier: value }))}
+                              options={[
+                                { value: "basic", label: "Basic (5 questions, 3 ads)" },
+                                { value: "pro", label: "Pro (15 questions, 5 ads)" },
+                                { value: "premium", label: "Premium (50 questions, 10 ads)" }
+                              ]}
+                              placeholder="Select subscription tier"
+                            />
                           </div>
                         </div>
 
