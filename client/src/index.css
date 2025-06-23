@@ -886,6 +886,18 @@ div[class*="min-h-screen"] {
   [role="listbox"] * {
     color: white !important;
   }
+
+  /* Nuclear option: Override ALL possible select text colors */
+  [data-radix-select-item-text],
+  [data-radix-select-value],
+  .SelectItem,
+  .SelectValue,
+  div[data-radix-select-item] span,
+  div[data-radix-select-item] div,
+  div[data-radix-select-content] span,
+  div[data-radix-select-content] div {
+    color: white !important;
+  }
 }
 
 @layer utilities {
