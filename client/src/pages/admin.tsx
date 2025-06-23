@@ -1275,33 +1275,33 @@ export default function Admin() {
         <Card className="bg-black/80 border-red-600 text-white">
           <CardHeader>
             <CardTitle className="text-3xl font-bold text-center text-red-500">
-              🎃 Heinous Trivia Uber Admin
+              Heinous Trivia Uber Admin
             </CardTitle>
             <p className="text-center text-gray-300">Manage Haunts & Trivia Packs</p>
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="management" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-7 bg-black border border-gray-600">
-                <TabsTrigger value="management" className="text-gray-200 data-[state=active]:bg-red-600 data-[state=active]:text-white hover:text-white hover:bg-gray-700 text-xs md:text-sm font-medium">
+              <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-7 bg-gray-900/80 border border-gray-600 rounded-lg">
+                <TabsTrigger value="management" className="text-gray-200 data-[state=active]:bg-gradient-to-r data-[state=active]:from-red-700 data-[state=active]:to-purple-700 data-[state=active]:text-white hover:text-white hover:bg-gray-700/80 text-xs md:text-sm font-medium transition-all duration-200 rounded-md">
                   Management
                 </TabsTrigger>
-                <TabsTrigger value="haunts" className="text-gray-200 data-[state=active]:bg-red-600 data-[state=active]:text-white hover:text-white hover:bg-gray-700 text-xs md:text-sm font-medium">
-                  🏚️ Haunts
+                <TabsTrigger value="haunts" className="text-gray-200 data-[state=active]:bg-gradient-to-r data-[state=active]:from-red-700 data-[state=active]:to-purple-700 data-[state=active]:text-white hover:text-white hover:bg-gray-700/80 text-xs md:text-sm font-medium transition-all duration-200 rounded-md">
+                  Haunts
                 </TabsTrigger>
-                <TabsTrigger value="packs" className="text-gray-200 data-[state=active]:bg-red-600 data-[state=active]:text-white hover:text-white hover:bg-gray-700 text-xs md:text-sm font-medium">
-                  🧠 Packs
+                <TabsTrigger value="packs" className="text-gray-200 data-[state=active]:bg-gradient-to-r data-[state=active]:from-red-700 data-[state=active]:to-purple-700 data-[state=active]:text-white hover:text-white hover:bg-gray-700/80 text-xs md:text-sm font-medium transition-all duration-200 rounded-md">
+                  Packs
                 </TabsTrigger>
-                <TabsTrigger value="assignments" className="text-gray-200 data-[state=active]:bg-red-600 data-[state=active]:text-white hover:text-white hover:bg-gray-700 text-xs md:text-sm font-medium">
-                  🎯 Assignments
+                <TabsTrigger value="assignments" className="text-gray-200 data-[state=active]:bg-gradient-to-r data-[state=active]:from-red-700 data-[state=active]:to-purple-700 data-[state=active]:text-white hover:text-white hover:bg-gray-700/80 text-xs md:text-sm font-medium transition-all duration-200 rounded-md">
+                  Assignments
                 </TabsTrigger>
-                <TabsTrigger value="default-ads" className="text-gray-200 data-[state=active]:bg-red-600 data-[state=active]:text-white hover:text-white hover:bg-gray-700 text-xs md:text-sm font-medium">
-                  📢 Default Ads
+                <TabsTrigger value="default-ads" className="text-gray-200 data-[state=active]:bg-gradient-to-r data-[state=active]:from-red-700 data-[state=active]:to-purple-700 data-[state=active]:text-white hover:text-white hover:bg-gray-700/80 text-xs md:text-sm font-medium transition-all duration-200 rounded-md">
+                  Default Ads
                 </TabsTrigger>
-                <TabsTrigger value="branding" className="text-gray-200 data-[state=active]:bg-red-600 data-[state=active]:text-white hover:text-white hover:bg-gray-700 text-xs md:text-sm font-medium">
-                  🎨 Branding
+                <TabsTrigger value="branding" className="text-gray-200 data-[state=active]:bg-gradient-to-r data-[state=active]:from-red-700 data-[state=active]:to-purple-700 data-[state=active]:text-white hover:text-white hover:bg-gray-700/80 text-xs md:text-sm font-medium transition-all duration-200 rounded-md">
+                  Branding
                 </TabsTrigger>
-                <TabsTrigger value="analytics" className="text-gray-200 data-[state=active]:bg-red-600 data-[state=active]:text-white hover:text-white hover:bg-gray-700 text-xs md:text-sm font-medium">
-                  📊 Analytics
+                <TabsTrigger value="analytics" className="text-gray-200 data-[state=active]:bg-gradient-to-r data-[state=active]:from-red-700 data-[state=active]:to-purple-700 data-[state=active]:text-white hover:text-white hover:bg-gray-700/80 text-xs md:text-sm font-medium transition-all duration-200 rounded-md">
+                  Analytics
                 </TabsTrigger>
               </TabsList>
 
@@ -2344,7 +2344,7 @@ export default function Admin() {
                 <Card className="bg-gray-900/50 border-gray-700">
                   <CardHeader>
                     <CardTitle className="text-red-400 flex items-center gap-2">
-                      🎨 Custom Branding Management
+                      Custom Branding Management
                     </CardTitle>
                     <p className="text-gray-400 text-sm">
                       Centrally manage custom background skins and progress bar animations for Pro and Premium haunts. 
