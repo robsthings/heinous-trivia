@@ -802,7 +802,7 @@ export default function HauntAdmin() {
                 onClick={() => setLocation(`/analytics/${hauntId}`)}
                 variant="outline"
                 size="sm"
-                className="border-purple-500 text-purple-400 hover:bg-purple-500 hover:text-white bg-black/50"
+                className="bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-white border-red-600"
                 title="View detailed analytics and performance metrics"
               >
                 📊 Analytics
@@ -1081,7 +1081,7 @@ export default function HauntAdmin() {
                         onClick={() => setEditingQuestion(question)}
                         variant="outline"
                         size="sm"
-                        className="border-blue-600 text-blue-500 hover:bg-blue-600 hover:text-white text-xs px-2 py-1"
+                        className="bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-white border-red-600 text-xs px-2 py-1"
                       >
                         ✏️ Edit
                       </Button>
@@ -1093,7 +1093,7 @@ export default function HauntAdmin() {
                         }}
                         variant="outline"
                         size="sm"
-                        className="border-red-600 text-red-500 hover:bg-red-600 hover:text-white text-xs px-2 py-1"
+                        className="bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-white border-red-600 text-xs px-2 py-1"
                       >
                         🗑️
                       </Button>
@@ -1252,14 +1252,14 @@ export default function HauntAdmin() {
                       });
                     }
                   }}
-                  className="bg-green-600 hover:bg-green-700 text-white"
+                  className="bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-white border-red-600"
                 >
                   Save Question
                 </Button>
                 <Button
                   onClick={() => setEditingQuestion(null)}
                   variant="outline"
-                  className="border-gray-600 text-gray-400"
+                  className="bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-white border-red-600"
                 >
                   Cancel
                 </Button>

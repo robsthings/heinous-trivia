@@ -1532,7 +1532,7 @@ export default function Admin() {
                                     onClick={() => resetHauntPassword(haunt.id, haunt.name)}
                                     variant="outline"
                                     size="sm"
-                                    className="w-full border-red-600 text-red-400 hover:bg-red-600 hover:text-white"
+                                    className="w-full bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-white border-red-600"
                                   >
                                     🔑 Reset Access Code
                                   </Button>
