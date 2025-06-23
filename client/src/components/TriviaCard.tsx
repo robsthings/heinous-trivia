@@ -48,18 +48,18 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
   const answerLabels = ['A', 'B', 'C', 'D'];
 
   const getButtonClass = (index: number) => {
-    let baseClass = "w-full p-4 rounded-lg text-left font-medium transition-all duration-200 border-2 touch-manipulation";
+    let baseClass = "w-full p-4 rounded-lg text-left font-medium transition-all duration-200 touch-manipulation";
     
     if (gameState.showFeedback && gameState.selectedAnswer !== null) {
       if (index === currentQuestion.correctAnswer) {
-        baseClass += " border-green-500 bg-green-600 text-white";
+        baseClass += " bg-green-600 text-white shadow-lg";
       } else if (index === gameState.selectedAnswer) {
-        baseClass += " border-red-500 bg-red-600/20 text-white";
+        baseClass += " bg-red-600/70 text-white shadow-lg";
       } else {
-        baseClass += " border-gray-600 bg-gray-800 text-gray-300";
+        baseClass += " bg-gradient-to-r from-red-700 to-purple-700 text-gray-300 opacity-50";
       }
     } else {
-      baseClass += " border-gray-600 bg-gray-800 text-white hover:bg-gray-700";
+      baseClass += " bg-gradient-to-r from-red-700 to-purple-700 text-white hover:from-red-600 hover:to-purple-600 shadow-lg";
     }
     
     return baseClass;
@@ -80,7 +80,7 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
   return (
     <div className="max-w-2xl mx-auto">
       {/* Question Card */}
-      <div className="bg-gray-800 border border-gray-600 rounded-xl p-6 mb-6">
+      <div className="glass-card rounded-xl p-6 mb-6">
         <h2 className="text-white text-xl font-medium leading-relaxed mb-4">
           {currentQuestion.text}
         </h2>
@@ -111,7 +111,7 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
             disabled={gameState.selectedAnswer !== null}
           >
             <div className="flex items-center">
-              <span className="w-8 h-8 rounded-full bg-red-600 text-white flex items-center justify-center text-sm font-bold mr-4 flex-shrink-0">
+              <span className="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center text-sm font-bold mr-4 flex-shrink-0">
                 {answerLabels[index]}
               </span>
               <span className="text-base text-left break-words">{answer}</span>

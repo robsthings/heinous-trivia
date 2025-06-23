@@ -334,7 +334,15 @@ function Game() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900">
+    <div 
+      className="min-h-screen"
+      style={{
+        background: gameState.hauntConfig?.skinUrl 
+          ? `url(${gameState.hauntConfig.skinUrl}) center/cover`
+          : 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
+        minHeight: '100vh'
+      }}
+    >
       <GameHeader 
         gameState={gameState}
       />
