@@ -357,8 +357,6 @@ export default function Admin() {
     loadAllHaunts();
     loadExistingPacks();
     loadDefaultAds();
-    // Force select styling for development environment
-    forceSelectStyling();
   }, []);
 
   const loadAllHaunts = async () => {
