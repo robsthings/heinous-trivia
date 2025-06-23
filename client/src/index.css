@@ -944,6 +944,58 @@ div[data-radix-select-item]:hover {
   .font-nosifer {
     font-family: 'Nosifer', cursive;
   }
+
+  /* Select dropdown styling - must be in components layer to override base styles */
+  [data-radix-select-content] {
+    background-color: rgb(31, 41, 55) !important;
+    border-color: rgb(75, 85, 99) !important;
+    color: white !important;
+  }
+
+  [data-radix-select-item] {
+    color: white !important;
+    background-color: transparent !important;
+  }
+
+  [data-radix-select-item]:hover {
+    background-color: rgb(55, 65, 81) !important;
+    color: white !important;
+  }
+
+  [data-radix-select-item][data-highlighted] {
+    background-color: rgb(55, 65, 81) !important;
+    color: white !important;
+  }
+
+  [data-radix-collection-item] {
+    color: white !important;
+    background-color: transparent !important;
+  }
+
+  [data-radix-collection-item]:hover {
+    background-color: rgb(55, 65, 81) !important;
+  }
+
+  [role="listbox"] {
+    background-color: rgb(31, 41, 55) !important;
+    border-color: rgb(75, 85, 99) !important;
+    color: white !important;
+  }
+
+  [role="option"] {
+    color: white !important;
+    background-color: transparent !important;
+  }
+
+  [role="option"]:hover {
+    background-color: rgb(55, 65, 81) !important;
+  }
+
+  /* Force white text on all select content */
+  [data-radix-select-content] *,
+  [role="listbox"] * {
+    color: white !important;
+  }
 }
 
 @layer utilities {
