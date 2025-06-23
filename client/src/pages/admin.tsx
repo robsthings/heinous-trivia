@@ -1533,21 +1533,40 @@ export default function Admin() {
                                     <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
                                       <SelectValue />
                                     </SelectTrigger>
-                                    <SelectContent className="bg-gray-800 border-gray-600 text-white">
-                                      <SelectItem value="basic" className="text-white hover:bg-gray-700">
-                                        <div className="flex items-center gap-2">
+                                    <SelectContent 
+                                      className="bg-gray-800 border-gray-600 text-white"
+                                      style={{ 
+                                        backgroundColor: 'rgb(31, 41, 55)',
+                                        borderColor: 'rgb(75, 85, 99)',
+                                        color: 'white'
+                                      }}
+                                    >
+                                      <SelectItem 
+                                        value="basic" 
+                                        className="text-white hover:bg-gray-700"
+                                        style={{ color: 'white', backgroundColor: 'transparent' }}
+                                      >
+                                        <div className="flex items-center gap-2" style={{ color: 'white' }}>
                                           <Crown className="h-4 w-4" />
                                           Basic (5 questions, 3 ads)
                                         </div>
                                       </SelectItem>
-                                      <SelectItem value="pro" className="text-white hover:bg-gray-700">
-                                        <div className="flex items-center gap-2">
+                                      <SelectItem 
+                                        value="pro" 
+                                        className="text-white hover:bg-gray-700"
+                                        style={{ color: 'white', backgroundColor: 'transparent' }}
+                                      >
+                                        <div className="flex items-center gap-2" style={{ color: 'white' }}>
                                           <Zap className="h-4 w-4" />
                                           Pro (15 questions, 5 ads)
                                         </div>
                                       </SelectItem>
-                                      <SelectItem value="premium" className="text-white hover:bg-gray-700">
-                                        <div className="flex items-center gap-2">
+                                      <SelectItem 
+                                        value="premium" 
+                                        className="text-white hover:bg-gray-700"
+                                        style={{ color: 'white', backgroundColor: 'transparent' }}
+                                      >
+                                        <div className="flex items-center gap-2" style={{ color: 'white' }}>
                                           <Gem className="h-4 w-4" />
                                           Premium (50 questions, 10 ads)
                                         </div>
@@ -1668,10 +1687,35 @@ export default function Admin() {
                               <SelectTrigger className="bg-gray-800 border-gray-600 text-white">
                                 <SelectValue />
                               </SelectTrigger>
-                              <SelectContent className="bg-gray-800 border-gray-600">
-                                <SelectItem value="basic" className="text-white hover:bg-gray-700">Basic (5 questions, 3 ads)</SelectItem>
-                                <SelectItem value="pro" className="text-white hover:bg-gray-700">Pro (15 questions, 5 ads)</SelectItem>
-                                <SelectItem value="premium" className="text-white hover:bg-gray-700">Premium (50 questions, 10 ads)</SelectItem>
+                              <SelectContent 
+                                className="bg-gray-800 border-gray-600"
+                                style={{ 
+                                  backgroundColor: 'rgb(31, 41, 55)',
+                                  borderColor: 'rgb(75, 85, 99)',
+                                  color: 'white'
+                                }}
+                              >
+                                <SelectItem 
+                                  value="basic" 
+                                  className="text-white hover:bg-gray-700"
+                                  style={{ color: 'white', backgroundColor: 'transparent' }}
+                                >
+                                  Basic (5 questions, 3 ads)
+                                </SelectItem>
+                                <SelectItem 
+                                  value="pro" 
+                                  className="text-white hover:bg-gray-700"
+                                  style={{ color: 'white', backgroundColor: 'transparent' }}
+                                >
+                                  Pro (15 questions, 5 ads)
+                                </SelectItem>
+                                <SelectItem 
+                                  value="premium" 
+                                  className="text-white hover:bg-gray-700"
+                                  style={{ color: 'white', backgroundColor: 'transparent' }}
+                                >
+                                  Premium (50 questions, 10 ads)
+                                </SelectItem>
                               </SelectContent>
                             </Select>
                           </div>
