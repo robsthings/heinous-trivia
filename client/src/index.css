@@ -4,6 +4,62 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Development Environment CSS Override - MUST come after Tailwind */
+@layer utilities {
+  /* Force white text on ALL select dropdowns in development */
+  [data-radix-select-content] {
+    background-color: rgb(31, 41, 55) !important;
+    border: 1px solid rgb(75, 85, 99) !important;
+  }
+  
+  [data-radix-select-item] {
+    color: white !important;
+    background-color: transparent !important;
+  }
+  
+  [data-radix-select-item]:hover {
+    background-color: rgb(55, 65, 81) !important;
+    color: white !important;
+  }
+  
+  [data-radix-select-item][data-highlighted] {
+    background-color: rgb(55, 65, 81) !important;
+    color: white !important;
+  }
+}
+
+/* Nuclear CSS Override for Development Environment */
+[data-radix-select-content] * {
+  color: white !important;
+}
+
+[data-radix-select-item] span {
+  color: white !important;
+}
+
+[data-radix-select-item] div {
+  color: white !important;
+}
+
+[data-radix-select-item-text] {
+  color: white !important;
+}
+
+/* Override any possible theme-related CSS */
+.dark [data-radix-select-content],
+.light [data-radix-select-content],
+[data-theme="dark"] [data-radix-select-content],
+[data-theme="light"] [data-radix-select-content] {
+  background-color: rgb(31, 41, 55) !important;
+}
+
+.dark [data-radix-select-item],
+.light [data-radix-select-item],
+[data-theme="dark"] [data-radix-select-item],
+[data-theme="light"] [data-radix-select-item] {
+  color: white !important;
+}
+
 /* Essential utility classes for default styling */
 .min-h-screen { min-height: 100vh; }
 .w-full { width: 100%; }

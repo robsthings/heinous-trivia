@@ -17,6 +17,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { ExternalLink, Settings, GamepadIcon, Crown, Zap, Gem, Copy, Upload, Palette, TrendingUp, Users, Target, MousePointer, Calendar, BarChart3 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import type { HauntConfig, TriviaQuestion } from "@shared/schema";
+import { forceSelectStyling } from "@/lib/selectOverride";
 
 interface TriviaPack {
   id?: string;
@@ -363,6 +364,8 @@ export default function Admin() {
     loadAllHaunts();
     loadExistingPacks();
     loadDefaultAds();
+    // Force select styling for development environment
+    forceSelectStyling();
   }, []);
 
   const loadAllHaunts = async () => {
