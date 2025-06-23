@@ -1280,27 +1280,90 @@ export default function Admin() {
             <p className="text-center text-gray-300">Manage Haunts & Trivia Packs</p>
           </CardHeader>
           <CardContent>
-            <Tabs defaultValue="management" className="w-full">
+            <Tabs defaultValue="management" className="w-full" onValueChange={(value) => setActiveTab(value)}>
               <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-7 bg-gray-900/80 border border-gray-600 rounded-lg">
-                <TabsTrigger value="management" className="text-gray-200 data-[state=active]:bg-gradient-to-r data-[state=active]:from-red-700 data-[state=active]:to-purple-700 data-[state=active]:text-white hover:text-white hover:bg-gray-700/80 text-xs md:text-sm font-medium transition-all duration-200 rounded-md">
+                <TabsTrigger 
+                  value="management" 
+                  className="text-xs md:text-sm font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
+                  style={activeTab === 'management' ? {
+                    background: 'linear-gradient(to right, rgb(185, 28, 28), rgb(126, 34, 206))',
+                    color: 'white'
+                  } : {
+                    color: 'rgb(229, 231, 235)'
+                  }}
+                >
                   Management
                 </TabsTrigger>
-                <TabsTrigger value="haunts" className="text-gray-200 data-[state=active]:bg-gradient-to-r data-[state=active]:from-red-700 data-[state=active]:to-purple-700 data-[state=active]:text-white hover:text-white hover:bg-gray-700/80 text-xs md:text-sm font-medium transition-all duration-200 rounded-md">
+                <TabsTrigger 
+                  value="haunts" 
+                  className="text-xs md:text-sm font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
+                  style={activeTab === 'haunts' ? {
+                    background: 'linear-gradient(to right, rgb(185, 28, 28), rgb(126, 34, 206))',
+                    color: 'white'
+                  } : {
+                    color: 'rgb(229, 231, 235)'
+                  }}
+                >
                   Haunts
                 </TabsTrigger>
-                <TabsTrigger value="packs" className="text-gray-200 data-[state=active]:bg-gradient-to-r data-[state=active]:from-red-700 data-[state=active]:to-purple-700 data-[state=active]:text-white hover:text-white hover:bg-gray-700/80 text-xs md:text-sm font-medium transition-all duration-200 rounded-md">
+                <TabsTrigger 
+                  value="packs" 
+                  className="text-xs md:text-sm font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
+                  style={activeTab === 'packs' ? {
+                    background: 'linear-gradient(to right, rgb(185, 28, 28), rgb(126, 34, 206))',
+                    color: 'white'
+                  } : {
+                    color: 'rgb(229, 231, 235)'
+                  }}
+                >
                   Packs
                 </TabsTrigger>
-                <TabsTrigger value="assignments" className="text-gray-200 data-[state=active]:bg-gradient-to-r data-[state=active]:from-red-700 data-[state=active]:to-purple-700 data-[state=active]:text-white hover:text-white hover:bg-gray-700/80 text-xs md:text-sm font-medium transition-all duration-200 rounded-md">
+                <TabsTrigger 
+                  value="assignments" 
+                  className="text-xs md:text-sm font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
+                  style={activeTab === 'assignments' ? {
+                    background: 'linear-gradient(to right, rgb(185, 28, 28), rgb(126, 34, 206))',
+                    color: 'white'
+                  } : {
+                    color: 'rgb(229, 231, 235)'
+                  }}
+                >
                   Assignments
                 </TabsTrigger>
-                <TabsTrigger value="default-ads" className="text-gray-200 data-[state=active]:bg-gradient-to-r data-[state=active]:from-red-700 data-[state=active]:to-purple-700 data-[state=active]:text-white hover:text-white hover:bg-gray-700/80 text-xs md:text-sm font-medium transition-all duration-200 rounded-md">
+                <TabsTrigger 
+                  value="default-ads" 
+                  className="text-xs md:text-sm font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
+                  style={activeTab === 'default-ads' ? {
+                    background: 'linear-gradient(to right, rgb(185, 28, 28), rgb(126, 34, 206))',
+                    color: 'white'
+                  } : {
+                    color: 'rgb(229, 231, 235)'
+                  }}
+                >
                   Default Ads
                 </TabsTrigger>
-                <TabsTrigger value="branding" className="text-gray-200 data-[state=active]:bg-gradient-to-r data-[state=active]:from-red-700 data-[state=active]:to-purple-700 data-[state=active]:text-white hover:text-white hover:bg-gray-700/80 text-xs md:text-sm font-medium transition-all duration-200 rounded-md">
+                <TabsTrigger 
+                  value="branding" 
+                  className="text-xs md:text-sm font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
+                  style={activeTab === 'branding' ? {
+                    background: 'linear-gradient(to right, rgb(185, 28, 28), rgb(126, 34, 206))',
+                    color: 'white'
+                  } : {
+                    color: 'rgb(229, 231, 235)'
+                  }}
+                >
                   Branding
                 </TabsTrigger>
-                <TabsTrigger value="analytics" className="text-gray-200 data-[state=active]:bg-gradient-to-r data-[state=active]:from-red-700 data-[state=active]:to-purple-700 data-[state=active]:text-white hover:text-white hover:bg-gray-700/80 text-xs md:text-sm font-medium transition-all duration-200 rounded-md">
+                <TabsTrigger 
+                  value="analytics" 
+                  className="text-xs md:text-sm font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
+                  style={activeTab === 'analytics' ? {
+                    background: 'linear-gradient(to right, rgb(185, 28, 28), rgb(126, 34, 206))',
+                    color: 'white'
+                  } : {
+                    color: 'rgb(229, 231, 235)'
+                  }}
+                >
                   Analytics
                 </TabsTrigger>
               </TabsList>
