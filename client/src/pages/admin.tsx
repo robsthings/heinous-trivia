@@ -2537,49 +2537,52 @@ export default function Admin() {
                         </div>
                       </div>
 
-                      {/* Progress Bar Color Themes Section */}
-                      <div className="space-y-4">
-                        <h3 className="text-lg font-semibold text-white">Progress Bar Color Themes</h3>
-                        <div className="p-4 bg-gray-800 rounded-lg">
-                          <h4 className="text-white font-medium mb-3">Available Color Themes</h4>
-                          <p className="text-gray-400 text-xs mb-4">Select glowing color themes that complement your custom backgrounds</p>
-                          <div className="grid grid-cols-1 gap-3">
-                            {[
-                              { id: 'crimson', name: 'Crimson Glow', colors: 'from-red-600 to-red-400', shadow: 'shadow-red-500/50' },
-                              { id: 'blood', name: 'Blood Red', colors: 'from-red-800 to-red-600', shadow: 'shadow-red-600/50' },
-                              { id: 'electric', name: 'Electric Blue', colors: 'from-blue-500 to-cyan-400', shadow: 'shadow-blue-500/50' },
-                              { id: 'toxic', name: 'Toxic Green', colors: 'from-green-500 to-lime-400', shadow: 'shadow-green-500/50' },
-                              { id: 'purple', name: 'Mystic Purple', colors: 'from-purple-600 to-purple-400', shadow: 'shadow-purple-500/50' },
-                              { id: 'orange', name: 'Inferno Orange', colors: 'from-orange-600 to-orange-400', shadow: 'shadow-orange-500/50' },
-                              { id: 'pink', name: 'Neon Pink', colors: 'from-pink-500 to-rose-400', shadow: 'shadow-pink-500/50' },
-                              { id: 'gold', name: 'Golden Glow', colors: 'from-yellow-500 to-amber-400', shadow: 'shadow-yellow-500/50' }
-                            ].map((theme) => (
-                              <div key={theme.id} className="flex items-center justify-between p-3 bg-gray-700 rounded">
-                                <div className="flex items-center gap-3">
-                                  <span className="text-white text-sm">{theme.name}</span>
-                                  <div className={`w-20 h-3 bg-gradient-to-r ${theme.colors} rounded-full ${theme.shadow} shadow-lg animate-pulse`}></div>
-                                </div>
-                                <Button 
-                                  size="sm" 
-                                  variant="outline"
-                                  onClick={() => {
-                                    if (selectedHauntForBranding) {
-                                      assignBrandingToHaunt(selectedHauntForBranding, undefined, theme.id);
-                                    } else {
-                                      toast({
-                                        title: "Select Haunt",
-                                        description: "Please select a haunt first in the assignment section below",
-                                        variant: "destructive"
-                                      });
-                                    }
-                                  }}
-                                  disabled={isLoading}
-                                >
-                                  Assign
-                                </Button>
+
+                    </div>
+
+                    {/* Progress Bar Color Themes Section - Moved outside grid */}
+                    <div className="space-y-4">
+                      <h3 className="text-lg font-semibold text-white">Progress Bar Color Themes</h3>
+                      <div className="p-4 bg-gray-800 rounded-lg">
+                        <h4 className="text-white font-medium mb-3">Available Color Themes</h4>
+                        <p className="text-gray-400 text-xs mb-4">Select glowing color themes that complement your custom backgrounds</p>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                          {[
+                            { id: 'crimson', name: 'Crimson Glow', colors: 'from-red-600 to-red-400', shadow: 'shadow-red-500/50' },
+                            { id: 'blood', name: 'Blood Red', colors: 'from-red-800 to-red-600', shadow: 'shadow-red-600/50' },
+                            { id: 'electric', name: 'Electric Blue', colors: 'from-blue-500 to-cyan-400', shadow: 'shadow-blue-500/50' },
+                            { id: 'toxic', name: 'Toxic Green', colors: 'from-green-500 to-lime-400', shadow: 'shadow-green-500/50' },
+                            { id: 'purple', name: 'Mystic Purple', colors: 'from-purple-600 to-purple-400', shadow: 'shadow-purple-500/50' },
+                            { id: 'orange', name: 'Inferno Orange', colors: 'from-orange-600 to-orange-400', shadow: 'shadow-orange-500/50' },
+                            { id: 'pink', name: 'Neon Pink', colors: 'from-pink-500 to-rose-400', shadow: 'shadow-pink-500/50' },
+                            { id: 'gold', name: 'Golden Glow', colors: 'from-yellow-500 to-amber-400', shadow: 'shadow-yellow-500/50' }
+                          ].map((theme) => (
+                            <div key={theme.id} className="flex items-center justify-between p-3 bg-gray-700 rounded">
+                              <div className="flex items-center gap-3">
+                                <span className="text-white text-sm">{theme.name}</span>
+                                <div className={`w-20 h-3 bg-gradient-to-r ${theme.colors} rounded-full ${theme.shadow} shadow-lg animate-pulse`}></div>
                               </div>
-                            ))}
-                          </div>
+                              <Button 
+                                size="sm" 
+                                variant="outline"
+                                className="bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-white border-red-600"
+                                onClick={() => {
+                                  if (selectedHauntForBranding) {
+                                    assignBrandingToHaunt(selectedHauntForBranding, undefined, theme.id);
+                                  } else {
+                                    toast({
+                                      title: "Select Haunt",
+                                      description: "Please select a haunt first in the assignment section below",
+                                      variant: "destructive"
+                                    });
+                                  }
+                                }}
+                                disabled={isLoading}
+                              >
+                                Assign
+                              </Button>
+                            </div>
+                          ))}
                         </div>
                       </div>
                     </div>
