@@ -33,7 +33,7 @@ export function SimpleSelect({
       </button>
       
       {isOpen && (
-        <div className="absolute z-50 w-full mt-1 bg-gray-800 border border-gray-600 rounded shadow-lg">
+        <div className="absolute z-50 w-full mt-1 bg-gray-900 border border-gray-600 rounded shadow-lg">
           {options.map((option) => (
             <button
               key={option.value}
@@ -42,7 +42,12 @@ export function SimpleSelect({
                 onValueChange(option.value);
                 setIsOpen(false);
               }}
-              className="w-full px-3 py-2 text-left text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 first:rounded-t last:rounded-b"
+              className="w-full px-3 py-2 text-left text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 first:rounded-t last:rounded-b border-b border-gray-700 last:border-b-0"
+              style={{ 
+                backgroundColor: 'rgb(17, 24, 39)', 
+                color: 'white',
+                borderColor: 'rgb(55, 65, 81)'
+              }}
             >
               {option.label}
             </button>

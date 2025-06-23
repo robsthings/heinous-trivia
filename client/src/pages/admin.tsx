@@ -1494,25 +1494,37 @@ export default function Admin() {
                               <div className="flex flex-col gap-3 lg:w-64">
                                 
                                 {/* Active Toggle */}
-                                <div className="flex items-center justify-between bg-gray-700/50 p-2 rounded">
-                                  <Label className="text-white text-sm">Active</Label>
-                                  <Switch
-                                    checked={haunt.isActive !== false}
-                                    onCheckedChange={(checked) => 
-                                      updateHauntSubscription(haunt.id, { isActive: checked })
-                                    }
-                                  />
+                                <div className="flex items-center justify-between bg-gray-800/80 p-3 rounded border border-gray-600">
+                                  <Label className="text-white text-sm font-medium">Active</Label>
+                                  <div className="relative">
+                                    <Switch
+                                      checked={haunt.isActive !== false}
+                                      onCheckedChange={(checked) => 
+                                        updateHauntSubscription(haunt.id, { isActive: checked })
+                                      }
+                                      className="data-[state=checked]:bg-green-600 data-[state=unchecked]:bg-gray-500"
+                                    />
+                                    <span className="ml-2 text-xs text-gray-300">
+                                      {haunt.isActive !== false ? 'ON' : 'OFF'}
+                                    </span>
+                                  </div>
                                 </div>
 
                                 {/* Published Toggle */}
-                                <div className="flex items-center justify-between bg-gray-700/50 p-2 rounded">
-                                  <Label className="text-white text-sm">Published</Label>
-                                  <Switch
-                                    checked={haunt.isPublished !== false}
-                                    onCheckedChange={(checked) => 
-                                      updateHauntSubscription(haunt.id, { isPublished: checked })
-                                    }
-                                  />
+                                <div className="flex items-center justify-between bg-gray-800/80 p-3 rounded border border-gray-600">
+                                  <Label className="text-white text-sm font-medium">Published</Label>
+                                  <div className="relative">
+                                    <Switch
+                                      checked={haunt.isPublished !== false}
+                                      onCheckedChange={(checked) => 
+                                        updateHauntSubscription(haunt.id, { isPublished: checked })
+                                      }
+                                      className="data-[state=checked]:bg-blue-600 data-[state=unchecked]:bg-gray-500"
+                                    />
+                                    <span className="ml-2 text-xs text-gray-300">
+                                      {haunt.isPublished !== false ? 'ON' : 'OFF'}
+                                    </span>
+                                  </div>
                                 </div>
 
                                 {/* Tier Selection */}

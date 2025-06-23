@@ -1502,3 +1502,61 @@ div[class*="min-h-screen"] {
 .animate-dust-clouds {
   animation: dust-clouds 0.8s ease-out forwards;
 }
+
+/* Enhanced Switch styling for admin dashboard visibility */
+[data-state="checked"] {
+  background-color: rgb(34, 197, 94) !important; /* green-500 for ON state */
+  border: 2px solid rgb(34, 197, 94) !important;
+}
+
+[data-state="unchecked"] {
+  background-color: rgb(107, 114, 128) !important; /* gray-500 for OFF state */
+  border: 2px solid rgb(107, 114, 128) !important;
+}
+
+/* Switch root container */
+button[role="switch"] {
+  position: relative !important;
+  width: 44px !important;
+  height: 24px !important;
+  border-radius: 12px !important;
+  transition: all 0.2s ease !important;
+  cursor: pointer !important;
+}
+
+/* Switch thumb styling */
+button[role="switch"] span {
+  background-color: white !important;
+  width: 20px !important;
+  height: 20px !important;
+  border-radius: 50% !important;
+  transition: transform 0.2s ease !important;
+  display: block !important;
+  margin: 2px !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Checked state thumb position */
+button[role="switch"][data-state="checked"] span {
+  transform: translateX(20px) !important;
+}
+
+/* Unchecked state thumb position */
+button[role="switch"][data-state="unchecked"] span {
+  transform: translateX(0px) !important;
+}
+
+/* Focus states for accessibility */
+button[role="switch"]:focus {
+  outline: 2px solid rgb(239, 68, 68) !important;
+  outline-offset: 2px !important;
+}
+
+/* Hover effects */
+button[role="switch"]:hover[data-state="checked"] {
+  background-color: rgb(22, 163, 74) !important; /* darker green on hover */
+}
+
+button[role="switch"]:hover[data-state="unchecked"] {
+  background-color: rgb(75, 85, 99) !important; /* darker gray on hover */
+}
