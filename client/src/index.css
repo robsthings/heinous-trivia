@@ -305,6 +305,22 @@ div[class*="min-h-screen"] {
   transform: scale(1.02);
 }
 
+/* Force dark background for Select dropdowns */
+[data-radix-select-content] {
+  background-color: rgb(31, 41, 55) !important;
+  border-color: rgb(75, 85, 99) !important;
+  color: white !important;
+}
+
+[data-radix-select-item] {
+  color: white !important;
+  background-color: transparent !important;
+}
+
+[data-radix-select-item]:hover {
+  background-color: rgb(55, 65, 81) !important;
+}
+
 /* Font family definitions */
 .font-creepster { font-family: 'Creepster', cursive; }
 .font-nosifer { font-family: 'Nosifer', cursive; }

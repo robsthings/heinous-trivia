@@ -1533,7 +1533,7 @@ export default function Admin() {
                                     <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
                                       <SelectValue />
                                     </SelectTrigger>
-                                    <SelectContent className="bg-gray-800 border-gray-600">
+                                    <SelectContent className="bg-gray-800 border-gray-600 text-white">
                                       <SelectItem value="basic" className="text-white hover:bg-gray-700">
                                         <div className="flex items-center gap-2">
                                           <Crown className="h-4 w-4" />
