@@ -17,7 +17,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { ExternalLink, Settings, GamepadIcon, Crown, Zap, Gem, Copy, Upload, Palette, TrendingUp, Users, Target, MousePointer, Calendar, BarChart3 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import type { HauntConfig, TriviaQuestion } from "@shared/schema";
-import { forceSelectStyling } from "@/lib/selectOverride";
+
 
 interface TriviaPack {
   id?: string;
@@ -1520,55 +1520,18 @@ export default function Admin() {
                                 {/* Tier Selection */}
                                 <div className="space-y-1">
                                   <Label className="text-white text-sm">Subscription Tier</Label>
-                                  <Select 
+                                  <SimpleSelect 
                                     value={haunt.tier} 
                                     onValueChange={(value) => 
                                       updateHauntSubscription(haunt.id, { tier: value as 'basic' | 'pro' | 'premium' })
                                     }
-                                  >
-                                    <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
-                                      <SelectValue />
-                                    </SelectTrigger>
-                                    <SelectContent 
-                                      className="bg-gray-800 border-gray-600 text-white"
-                                      style={{ 
-                                        backgroundColor: 'rgb(31, 41, 55)',
-                                        borderColor: 'rgb(75, 85, 99)',
-                                        color: 'white'
-                                      }}
-                                    >
-                                      <SelectItem 
-                                        value="basic" 
-                                        className="text-white hover:bg-gray-700"
-                                        style={{ color: 'white', backgroundColor: 'transparent' }}
-                                      >
-                                        <div className="flex items-center gap-2" style={{ color: 'white' }}>
-                                          <Crown className="h-4 w-4" />
-                                          Basic (5 questions, 3 ads)
-                                        </div>
-                                      </SelectItem>
-                                      <SelectItem 
-                                        value="pro" 
-                                        className="text-white hover:bg-gray-700"
-                                        style={{ color: 'white', backgroundColor: 'transparent' }}
-                                      >
-                                        <div className="flex items-center gap-2" style={{ color: 'white' }}>
-                                          <Zap className="h-4 w-4" />
-                                          Pro (15 questions, 5 ads)
-                                        </div>
-                                      </SelectItem>
-                                      <SelectItem 
-                                        value="premium" 
-                                        className="text-white hover:bg-gray-700"
-                                        style={{ color: 'white', backgroundColor: 'transparent' }}
-                                      >
-                                        <div className="flex items-center gap-2" style={{ color: 'white' }}>
-                                          <Gem className="h-4 w-4" />
-                                          Premium (50 questions, 10 ads)
-                                        </div>
-                                      </SelectItem>
-                                    </SelectContent>
-                                  </Select>
+                                    options={[
+                                      { value: "basic", label: "Basic (5 questions, 3 ads)" },
+                                      { value: "pro", label: "Pro (15 questions, 5 ads)" },
+                                      { value: "premium", label: "Premium (50 questions, 10 ads)" }
+                                    ]}
+                                    placeholder="Select tier"
+                                  />
                                 </div>
 
                                 {/* Game Mode - Display Only */}
@@ -1833,16 +1796,16 @@ export default function Admin() {
               <div className="grid grid-cols-1 gap-4">
                 <div>
                   <Label htmlFor="tier" className="text-white">Subscription Tier</Label>
-                  <Select value={formData.tier} onValueChange={(value) => handleInputChange('tier', value)}>
-                    <SelectTrigger className="bg-gray-800 border-gray-600 text-white">
-                      <SelectValue placeholder="Select subscription tier" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-gray-800 border-gray-600">
-                      <SelectItem value="basic" className="text-white hover:bg-gray-700">Basic</SelectItem>
-                      <SelectItem value="pro" className="text-white hover:bg-gray-700">Pro</SelectItem>
-                      <SelectItem value="premium" className="text-white hover:bg-gray-700">Premium</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <SimpleSelect 
+                    value={formData.tier} 
+                    onValueChange={(value) => handleInputChange('tier', value)}
+                    options={[
+                      { value: "basic", label: "Basic" },
+                      { value: "pro", label: "Pro" },
+                      { value: "premium", label: "Premium" }
+                    ]}
+                    placeholder="Select subscription tier"
+                  />
                 </div>
               </div>
 
@@ -1940,16 +1903,16 @@ export default function Admin() {
 
                     <div>
                       <Label className="text-white">Access Control</Label>
-                      <Select value={packFormData.accessType} onValueChange={(value: 'all' | 'tier' | 'select') => handlePackInputChange('accessType', value)}>
-                        <SelectTrigger className="bg-gray-800 border-gray-600 text-white">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent className="bg-gray-800 border-gray-600">
-                          <SelectItem value="all">All Haunts</SelectItem>
-                          <SelectItem value="tier">By Tier</SelectItem>
-                          <SelectItem value="select">Select Haunts</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <SimpleSelect 
+                        value={packFormData.accessType} 
+                        onValueChange={(value: 'all' | 'tier' | 'select') => handlePackInputChange('accessType', value)}
+                        options={[
+                          { value: "all", label: "All Haunts" },
+                          { value: "tier", label: "By Tier" },
+                          { value: "select", label: "Select Haunts" }
+                        ]}
+                        placeholder="Select access type"
+                      />
                     </div>
 
                     {packFormData.accessType === 'tier' && (
@@ -2622,23 +2585,15 @@ export default function Admin() {
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
                           <Label className="text-white text-sm font-medium mb-2 block">Select Haunt</Label>
-                          <Select value={selectedHauntForBranding} onValueChange={setSelectedHauntForBranding}>
-                            <SelectTrigger className="bg-gray-700 border-gray-600 text-white">
-                              <SelectValue placeholder="Choose a Pro/Premium haunt" />
-                            </SelectTrigger>
-                            <SelectContent className="bg-gray-700 border-gray-600">
-                              {getProPremiumHaunts().map((haunt) => (
-                                <SelectItem key={haunt.id} value={haunt.id} className="text-white">
-                                  {haunt.name} ({haunt.tier.charAt(0).toUpperCase() + haunt.tier.slice(1)})
-                                </SelectItem>
-                              ))}
-                              {getProPremiumHaunts().length === 0 && (
-                                <SelectItem value="none" disabled className="text-gray-400">
-                                  No Pro/Premium haunts available
-                                </SelectItem>
-                              )}
-                            </SelectContent>
-                          </Select>
+                          <SimpleSelect 
+                            value={selectedHauntForBranding} 
+                            onValueChange={setSelectedHauntForBranding}
+                            options={getProPremiumHaunts().map((haunt) => ({
+                              value: haunt.id,
+                              label: `${haunt.name} (${haunt.tier.charAt(0).toUpperCase() + haunt.tier.slice(1)})`
+                            }))}
+                            placeholder="Choose a Pro/Premium haunt"
+                          />
                         </div>
                         <div>
                           <Label className="text-white text-sm font-medium mb-2 block">Action</Label>
