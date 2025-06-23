@@ -346,6 +346,9 @@ export default function Admin() {
   // Analytics state
   const [selectedAnalyticsHaunt, setSelectedAnalyticsHaunt] = useState("");
   const [analyticsTimeRange, setAnalyticsTimeRange] = useState<"7d" | "30d" | "90d">("30d");
+  
+  // Tab state for styling
+  const [activeTab, setActiveTab] = useState("management");
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
