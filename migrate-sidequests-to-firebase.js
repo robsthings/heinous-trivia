@@ -5,7 +5,7 @@
  * so they can be dynamically loaded instead of hardcoded
  */
 
-import { FirebaseService } from './server/firebase.js';
+import { FirebaseService } from './server/firebase.ts';
 
 // Define existing sidequests to migrate to Firebase
 const sidequests = [
