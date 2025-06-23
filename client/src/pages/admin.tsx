@@ -1263,7 +1263,7 @@ export default function Admin() {
                     });
                   }
                 }}
-                className="bg-green-600 hover:bg-green-700 text-lg px-8 py-3"
+                className="bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-lg px-8 py-3 text-white"
                 disabled={authStatus === 'authenticated'}
               >
                 {authStatus === 'authenticated' ? '✅ Already Signed In' : '🔐 Sign In to Firebase'}
@@ -1414,7 +1414,7 @@ export default function Admin() {
                                     <Button 
                                       size="sm" 
                                       variant="outline"
-                                      className="h-8 text-xs border-orange-600 text-orange-400 hover:bg-orange-600 hover:text-white flex-1"
+                                      className="h-8 text-xs bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-white border-red-600 flex-1"
                                       onClick={() => handleResetPassword(haunt.id, haunt.name)}
                                     >
                                       🔑 Reset Password
@@ -1514,7 +1514,7 @@ export default function Admin() {
                                     }}
                                     variant="outline"
                                     size="sm"
-                                    className="w-full border-orange-600 text-orange-400 hover:bg-orange-600 hover:text-white"
+                                    className="w-full bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-white border-red-600"
                                   >
                                     ✏️ Edit Profile
                                   </Button>
@@ -1523,7 +1523,7 @@ export default function Admin() {
                                     onClick={() => deleteHaunt(haunt.id, haunt.name)}
                                     variant="outline"
                                     size="sm"
-                                    className="w-full border-red-600 text-red-400 hover:bg-red-600 hover:text-white"
+                                    className="w-full bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-white border-red-600"
                                   >
                                     🗑️ Delete Haunt
                                   </Button>
