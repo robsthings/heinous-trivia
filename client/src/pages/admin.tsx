@@ -2558,9 +2558,9 @@ export default function Admin() {
                             { id: 'gold', name: 'Golden Glow', colors: 'from-yellow-500 to-amber-400', shadow: 'shadow-yellow-500/50' }
                           ].map((theme) => (
                             <div key={theme.id} className="flex items-center justify-between p-3 bg-gray-700 rounded">
-                              <div className="flex items-center gap-3">
-                                <span className="text-white text-sm">{theme.name}</span>
-                                <div className={`w-20 h-3 bg-gradient-to-r ${theme.colors} rounded-full ${theme.shadow} shadow-lg animate-pulse`}></div>
+                              <div className="flex flex-col gap-2 flex-1">
+                                <span className="text-white text-sm font-medium">{theme.name}</span>
+                                <div className={`w-24 h-4 bg-gradient-to-r ${theme.colors} rounded-full ${theme.shadow} shadow-lg animate-pulse`}></div>
                               </div>
                               <Button 
                                 size="sm" 
