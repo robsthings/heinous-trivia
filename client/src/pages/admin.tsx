@@ -363,9 +363,7 @@ export default function Admin() {
     try {
       // Authenticate before loading data
       if (!auth.currentUser) {
-        console.log('Attempting anonymous authentication...');
         await signInAnonymously(auth);
-        console.log('Authentication successful:', auth.currentUser);
       }
       
       console.log('Loading haunts with user:', auth.currentUser?.uid);
@@ -868,7 +866,6 @@ export default function Admin() {
       };
 
       // Save to Firebase
-      console.log('Attempting to save haunt:', hauntConfig);
       const docRef = doc(firestore, 'haunts', formData.id);
       await setDoc(docRef, hauntConfig);
       
@@ -1240,9 +1237,7 @@ export default function Admin() {
               <Button 
                 onClick={async () => {
                   try {
-                    console.log('Manual authentication attempt...');
                     await signInAnonymously(auth);
-                    console.log('Authentication successful!', auth.currentUser);
                     toast({
                       title: "Success!",
                       description: "Authentication successful",
