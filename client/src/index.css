@@ -14,4 +14,27 @@
   .font-eater {
     font-family: 'Eater', cursive;
   }
+  
+  /* Horror Theme Colors */
+  .bg-blood { background-color: #7f0000; }
+  .bg-void { background-color: #0b001a; }
+  .bg-shadow { background-color: #1a1a1a; }
+  .bg-flame { background-color: #ff5500; }
+  .bg-dark { background-color: #0d0d0d; }
+  .bg-ghost { background-color: #f2f2f2; }
+  .bg-spirit { background-color: #bb86fc; }
+  .bg-poison { background-color: #013220; }
+  .bg-crimson { background-color: #5c0a0a; }
+  .bg-correct { background-color: #013220; }
+  .bg-wrong { background-color: #5c0a0a; }
+  
+  .text-blood { color: #7f0000; }
+  .text-void { color: #0b001a; }
+  .text-shadow { color: #1a1a1a; }
+  .text-flame { color: #ff5500; }
+  .text-dark { color: #0d0d0d; }
+  .text-ghost { color: #f2f2f2; }
+  .text-spirit { color: #bb86fc; }
+  .text-poison { color: #013220; }
+  .text-crimson { color: #5c0a0a; }
 }
