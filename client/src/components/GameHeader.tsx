@@ -48,12 +48,17 @@ export function GameHeader({ gameState, isGroupMode = false, groupScore = 0 }: G
 
   return (
     <header style={{
-      background: 'rgba(31, 41, 55, 0.9)',
-      border: '1px solid rgba(75, 85, 99, 0.6)',
+      background: 'rgba(31, 41, 55, 0.7)',
+      backdropFilter: 'blur(16px)',
+      WebkitBackdropFilter: 'blur(16px)',
+      border: '1px solid rgba(75, 85, 99, 0.5)',
+      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
       margin: '16px',
       marginTop: '16px',
       padding: '16px',
-      borderRadius: '12px'
+      borderRadius: '12px',
+      position: 'relative',
+      overflow: 'hidden'
     }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', minWidth: 0, flex: 1 }}>

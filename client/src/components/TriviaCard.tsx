@@ -63,13 +63,16 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
 
   return (
     <div style={{
-      background: 'rgba(31, 41, 55, 0.9)',
-      backdropFilter: 'blur(12px)',
-      border: '1px solid rgba(75, 85, 99, 0.4)',
-      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
+      background: 'rgba(31, 41, 55, 0.7)',
+      backdropFilter: 'blur(16px)',
+      WebkitBackdropFilter: 'blur(16px)',
+      border: '1px solid rgba(75, 85, 99, 0.5)',
+      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
       borderRadius: '12px',
       padding: '24px',
-      marginTop: '16px'
+      marginTop: '16px',
+      position: 'relative',
+      overflow: 'hidden'
     }}>
       {/* Question Header */}
       <div style={{ textAlign: 'center', marginBottom: '32px' }}>
@@ -109,11 +112,16 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
             borderRadius: '8px',
             textAlign: 'left' as const,
             fontWeight: '500',
-            transition: 'all 0.2s ease',
+            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
             cursor: gameState.selectedAnswer !== null ? 'default' : 'pointer',
-            background: 'rgba(31, 41, 55, 0.5)',
-            border: '1px solid rgba(75, 85, 99, 0.6)',
-            color: '#ffffff'
+            background: 'rgba(31, 41, 55, 0.6)',
+            backdropFilter: 'blur(8px)',
+            WebkitBackdropFilter: 'blur(8px)',
+            border: '1px solid rgba(75, 85, 99, 0.4)',
+            boxShadow: '0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
+            color: '#ffffff',
+            transform: 'translateY(0)',
+            opacity: 1
           };
 
           if (gameState.showFeedback && gameState.selectedAnswer !== null) {
@@ -153,6 +161,20 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
                 onSelectAnswer(index);
               }}
               disabled={gameState.selectedAnswer !== null}
+              onMouseEnter={(e) => {
+                if (gameState.selectedAnswer === null) {
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)';
+                  e.currentTarget.style.background = 'rgba(55, 65, 81, 0.7)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (gameState.selectedAnswer === null) {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05)';
+                  e.currentTarget.style.background = 'rgba(31, 41, 55, 0.6)';
+                }
+              }}
             >
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <span style={{
@@ -241,13 +263,15 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
               fontSize: '16px'
             }}
             onClick={onNextQuestion}
-            onMouseOver={(e) => {
+            onMouseEnter={(e) => {
               e.currentTarget.style.background = 'linear-gradient(to right, #dc2626, #92400e)';
-              e.currentTarget.style.transform = 'scale(1.05)';
+              e.currentTarget.style.transform = 'scale(1.05) translateY(-1px)';
+              e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.4)';
             }}
-            onMouseOut={(e) => {
+            onMouseLeave={(e) => {
               e.currentTarget.style.background = 'linear-gradient(to right, #b91c1c, #7c2d12)';
-              e.currentTarget.style.transform = 'scale(1)';
+              e.currentTarget.style.transform = 'scale(1) translateY(0)';
+              e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.3)';
             }}
           >
             {gameState.questionsAnswered >= 20 ? 'View Results' : 'Next Question'}
