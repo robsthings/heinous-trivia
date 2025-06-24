@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .font-creepster {
+    font-family: 'Creepster', cursive;
+  }
+  
+  .font-nosifer {
+    font-family: 'Nosifer', cursive;
+  }
+  
+  .font-eater {
+    font-family: 'Eater', cursive;
+  }
+}
