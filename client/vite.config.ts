@@ -7,13 +7,7 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     port: 5173,
-    allowedHosts: [
-      'localhost',
-      '.replit.dev',
-      '.repl.co',
-      /\.replit\.dev$/,
-      /\.repl\.co$/,
-    ],
+    allowedHosts: "all",
   },
   resolve: {
     alias: {
