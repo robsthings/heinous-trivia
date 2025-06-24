@@ -1,29 +1,27 @@
-import type { Config } from 'tailwindcss'
-
-const config: Config = {
+module.exports = {
   content: [
     './index.html',
     './src/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
-      colors: {
-        blood: '#8A0303',
-        correct: '#013220', 
-        wrong: '#5c0a0a',
-        void: '#0b001a',
-        shadow: '#1a0f2e',
-        flame: '#ff4500',
-        ghost: '#e0e0e0',
-        spirit: '#b8b8b8',
-        poison: '#32cd32',
-        crimson: '#dc143c',
-        dark: '#000814',
-      },
       fontFamily: {
         creepster: ['"Creepster"', 'cursive'],
         nosifer: ['"Nosifer"', 'cursive'],
         eater: ['"Eater"', 'cursive'],
+      },
+      colors: {
+        blood: '#7f0000',
+        shadow: '#1a1a1a',
+        flame: '#ff5500',
+        void: '#0b001a',
+        dark: '#0d0d0d',
+        ghost: '#f2f2f2',
+        spirit: '#bb86fc',
+        poison: '#013220',
+        crimson: '#5c0a0a',
+        correct: '#013220',
+        wrong: '#5c0a0a',
       },
       animation: {
         'pulse-glow': 'pulse-glow 2s ease-in-out infinite alternate',
@@ -87,5 +85,3 @@ const config: Config = {
   },
   plugins: [],
 }
-
-export default config
