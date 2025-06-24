@@ -11,7 +11,7 @@ import { getStorage } from 'firebase-admin/storage';
 
 // Check if Firebase is properly configured
 const isFirebaseConfigured = () => {
-  return !!(process.env.FIREBASE_SERVICE_ACCOUNT_JSON);
+  return !!(process.env.FIREBASE_SERVICE_ACCOUNT_JSON || process.env.FIREBASE_PROJECT_ID);
 };
 
 // Initialize Firebase Admin SDK only if properly configured
@@ -23,14 +23,22 @@ let exportedFieldValue;
 if (isFirebaseConfigured()) {
   try {
     if (getApps().length === 0) {
-      const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_JSON!);
-      const credential = cert(serviceAccount);
+      if (process.env.FIREBASE_SERVICE_ACCOUNT_JSON) {
+        const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_JSON);
+        const credential = cert(serviceAccount);
 
-      firebaseApp = initializeApp({
-        credential: credential,
-        databaseURL: `https://${serviceAccount.project_id}-default-rtdb.firebaseio.com/`,
-        storageBucket: `${serviceAccount.project_id}.firebasestorage.app`
-      });
+        firebaseApp = initializeApp({
+          credential: credential,
+          databaseURL: `https://${serviceAccount.project_id}-default-rtdb.firebaseio.com/`,
+          storageBucket: `${serviceAccount.project_id}.firebasestorage.app`
+        });
+      } else {
+        // Initialize with project ID only for development
+        firebaseApp = initializeApp({
+          projectId: process.env.FIREBASE_PROJECT_ID || 'heinous-trivia',
+          storageBucket: `${process.env.FIREBASE_PROJECT_ID || 'heinous-trivia'}.firebasestorage.app`
+        });
+      }
     } else {
       firebaseApp = getApps()[0];
     }
