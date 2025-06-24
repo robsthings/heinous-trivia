@@ -75,8 +75,8 @@ export function Welcome() {
           />
         </div>
 
-        {/* Welcome Title */}
-        <h1 className="font-nosifer text-orange-500 text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-4 sm:mb-6 leading-tight animate-pulse">
+        {/* Welcome Title - TEST WITH SIMPLE CLASSES */}
+        <h1 className="text-center text-red-500 text-4xl bg-blue-500 p-4 border-4 border-yellow-400">
           Welcome Back
         </h1>
         
