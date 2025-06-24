@@ -4,6 +4,17 @@ import path from "path";
 
 export default defineConfig({
   plugins: [react()],
+  server: {
+    host: '0.0.0.0',
+    port: 5173,
+    allowedHosts: [
+      'localhost',
+      '.replit.dev',
+      '.repl.co',
+      /\.replit\.dev$/,
+      /\.repl\.co$/,
+    ],
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),
