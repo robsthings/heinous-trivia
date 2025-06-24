@@ -42,11 +42,11 @@ export function Welcome() {
         </div>
 
         {/* Dr. Heinous Character */}
-        <div className="mx-auto w-48 md:w-60 drop-shadow-xl mb-6">
+        <div className="mb-6">
           <img 
             src="/heinous/charming.png" 
             alt="Dr. Heinous" 
-            className="w-full h-full object-contain"
+            className="mx-auto w-48 md:w-64 lg:w-72 drop-shadow-xl"
             style={{ 
               imageRendering: 'pixelated'
             }}
