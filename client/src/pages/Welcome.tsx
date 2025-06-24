@@ -49,10 +49,9 @@ export function Welcome() {
   
   const tauntText = heinousTaunts[Math.floor(Math.random() * heinousTaunts.length)];
   
-  // Typewriter effect for speech bubble
+  // Typewriter effect for speech bubble (only runs once on mount, not on every tauntText change)
   useEffect(() => {
-    if (tauntText) {
-      setDisplayedText('');
+    if (tauntText && displayedText === '') {
       let currentIndex = 0;
       
       const typewriterInterval = setInterval(() => {
@@ -61,21 +60,29 @@ export function Welcome() {
           currentIndex++;
         } else {
           clearInterval(typewriterInterval);
+          // Stop cursor blinking after typing is complete
+          setTimeout(() => setShowCursor(false), 2000);
         }
-      }, 50); // 50ms per character
+      }, 80); // Slowed down to 80ms per character for more dramatic effect
 
       return () => clearInterval(typewriterInterval);
     }
-  }, [tauntText]);
+  }, [tauntText, displayedText]);
 
-  // Cursor blink effect
+  // Cursor blink effect (only while typing is active)
   useEffect(() => {
-    const cursorInterval = setInterval(() => {
-      setShowCursor(prev => !prev);
-    }, 530); // Standard cursor blink rate
+    let cursorInterval: NodeJS.Timeout;
+    
+    if (showCursor) {
+      cursorInterval = setInterval(() => {
+        setShowCursor(prev => prev);
+      }, 530); // Standard cursor blink rate
+    }
 
-    return () => clearInterval(cursorInterval);
-  }, []);
+    return () => {
+      if (cursorInterval) clearInterval(cursorInterval);
+    };
+  }, [showCursor]);
   
   // Force refresh trigger
 
