@@ -7,6 +7,7 @@ export function Welcome() {
   const [isReturning, setIsReturning] = useState<boolean>(false);
   const [displayedText, setDisplayedText] = useState<string>('');
   const [showCursor, setShowCursor] = useState<boolean>(true);
+  const [hasTyped, setHasTyped] = useState<boolean>(false);
 
   useEffect(() => {
     // Check if user is returning
@@ -49,24 +50,24 @@ export function Welcome() {
   
   const tauntText = heinousTaunts[Math.floor(Math.random() * heinousTaunts.length)];
   
-  // Typewriter effect for speech bubble
+  // Typewriter effect for speech bubble - only runs once
   useEffect(() => {
-    if (tauntText) {
-      setDisplayedText(''); // Reset text
+    if (tauntText && !hasTyped) {
+      setHasTyped(true);
       let currentIndex = 0;
       
       const typewriterInterval = setInterval(() => {
-        if (currentIndex < tauntText.length) {
-          setDisplayedText(tauntText.slice(0, currentIndex + 1));
-          currentIndex++;
-        } else {
+        currentIndex++;
+        setDisplayedText(tauntText.slice(0, currentIndex));
+        
+        if (currentIndex >= tauntText.length) {
           clearInterval(typewriterInterval);
         }
-      }, 80);
+      }, 100); // 100ms per character for readable speed
 
       return () => clearInterval(typewriterInterval);
     }
-  }, [tauntText]); // Only depend on tauntText, not displayedText
+  }, [tauntText, hasTyped]);
 
   // Cursor blink effect
   useEffect(() => {
