@@ -19,7 +19,7 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd client && npx vite --host 0.0.0.0 --port 5173 --config vite.config.ts"
+args = "cd client && npx vite --host 0.0.0.0 --port 5173 --config vite.dev.config.ts"
 waitForPort = 5173
 
 [[ports]]
