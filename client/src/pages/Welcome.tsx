@@ -92,16 +92,16 @@ export function Welcome() {
       <div className="min-h-screen flex flex-col items-center justify-center px-4 py-8">
         
         {/* Speech Bubble */}
-        <div className="mb-6 w-full max-w-xs">
+        <div className="mb-4 w-full max-w-xs sm:max-w-sm">
           <div 
-            className="bg-crimson border-2 border-blood rounded-lg px-4 py-3 relative animate-pulse-glow"
+            className="bg-crimson border-2 border-blood rounded-lg px-3 py-2 sm:px-4 sm:py-3 relative animate-pulse-glow"
             style={{
-              borderRadius: '20px 20px 5px 20px',
+              borderRadius: '15px 15px 5px 15px',
               background: '#DC143C',
-              boxShadow: '0 4px 15px rgba(220, 20, 60, 0.4)'
+              boxShadow: '0 3px 10px rgba(220, 20, 60, 0.3)'
             }}
           >
-            <p className="text-white text-sm text-center font-medium">
+            <p className="text-white text-xs sm:text-sm text-center font-medium">
               Back for more punishment?!
             </p>
             <div 
@@ -109,41 +109,41 @@ export function Welcome() {
               style={{
                 width: 0,
                 height: 0,
-                borderLeft: '10px solid transparent',
-                borderRight: '10px solid transparent',
-                borderTop: '10px solid #DC143C'
+                borderLeft: '8px solid transparent',
+                borderRight: '8px solid transparent',
+                borderTop: '8px solid #DC143C'
               }}
             />
           </div>
         </div>
 
         {/* Character Sprite */}
-        <div className="mb-8">
+        <div className="mb-4">
           {characterSprite ? (
             <img
               src={isFirstTime ? heinousSprites.talking : heinousSprites.charming}
               alt="Dr. Heinous"
-              className="w-32 h-32 object-contain"
+              className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 object-contain mx-auto"
             />
           ) : (
-            <div className="w-32 h-32 bg-red-600 rounded-full flex items-center justify-center">
-              <span className="text-4xl">👹</span>
+            <div className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 bg-red-600 rounded-full flex items-center justify-center mx-auto">
+              <span className="text-2xl sm:text-3xl md:text-4xl">👹</span>
             </div>
           )}
         </div>
 
         {/* Welcome Title */}
-        <h1 className="text-4xl md:text-5xl font-nosifer text-center mb-6 px-4 animate-pulse-glow"
+        <h1 className="text-2xl sm:text-3xl md:text-4xl font-nosifer text-center mb-4 px-4 animate-pulse-glow"
             style={{
               color: '#d86b29',
-              textShadow: '3px 3px 6px rgba(0,0,0,0.9), 0 0 20px rgba(216, 107, 41, 0.5)',
-              fontSize: 'clamp(2rem, 8vw, 3.5rem)'
+              textShadow: '2px 2px 4px rgba(0,0,0,0.9), 0 0 15px rgba(216, 107, 41, 0.4)',
+              fontSize: 'clamp(1.5rem, 6vw, 2.5rem)'
             }}>
           WELCOME BACK
         </h1>
         
         {/* Welcome Message */}
-        <p className="text-lg text-center mb-8 px-4 max-w-md leading-relaxed"
+        <p className="text-sm sm:text-base text-center mb-6 px-4 max-w-sm leading-relaxed"
            style={{ color: '#cccccc' }}>
           Ready for another spine-chilling round of trivia?
         </p>
@@ -158,11 +158,11 @@ export function Welcome() {
         {/* Play Button */}
         <button
           onClick={handleStartGame}
-          className="bg-gradient-to-r from-blood to-crimson hover:from-flame hover:to-blood text-white px-8 py-4 text-xl font-bold rounded-lg border-2 border-crimson shadow-2xl transform transition-all duration-300 hover:scale-105 hover:shadow-crimson/50 animate-pulse-glow"
+          className="bg-gradient-to-r from-blood to-crimson hover:from-flame hover:to-blood text-white px-6 py-3 sm:px-8 sm:py-4 text-lg sm:text-xl font-bold rounded-lg border-2 border-crimson shadow-xl transform transition-all duration-300 hover:scale-105 hover:shadow-crimson/50 animate-pulse-glow"
           style={{
             textTransform: 'uppercase',
             fontFamily: 'sans-serif',
-            boxShadow: '0 10px 25px rgba(220, 20, 60, 0.4), 0 0 20px rgba(220, 20, 60, 0.3)'
+            boxShadow: '0 8px 20px rgba(220, 20, 60, 0.3), 0 0 15px rgba(220, 20, 60, 0.2)'
           }}
         >
           PLAY AGAIN
