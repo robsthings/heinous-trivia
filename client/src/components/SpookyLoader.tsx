@@ -61,7 +61,13 @@ export function SpookyLoader({
   }, [message, showProgress, spookyMessages.length]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-purple-900 to-red-900">
+    <div style={{
+      minHeight: '100vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      background: 'linear-gradient(135deg, #1f2937 0%, #581c87 50%, #7f1d1d 100%)'
+    }}>
       {/* Floating orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {[...Array(6)].map((_, i) => (
@@ -84,15 +90,30 @@ export function SpookyLoader({
       </div>
 
       {/* Main loader */}
-      <div className="glass-card rounded-xl p-8 text-center max-w-md w-full mx-4 relative z-10">
+      <div className="glass-card" style={{
+        borderRadius: '0.75rem',
+        padding: '2rem',
+        textAlign: 'center',
+        maxWidth: '28rem',
+        width: '100%',
+        margin: '0 1rem',
+        position: 'relative',
+        zIndex: 10
+      }}>
         {/* Haunt Logo or Default Icons */}
-        <div className="mb-6 relative">
+        <div style={{ marginBottom: '1.5rem', position: 'relative' }}>
           {hauntConfig?.logoPath ? (
-            <div className="relative">
+            <div style={{ position: 'relative' }}>
               <img 
                 src={hauntConfig.logoPath} 
                 alt={hauntConfig.name || "Haunt Logo"}
-                className="w-24 h-24 mx-auto object-contain animate-pulse"
+                style={{
+                  width: '6rem',
+                  height: '6rem',
+                  margin: '0 auto',
+                  objectFit: 'contain',
+                  animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+                }}
               />
               <div className="absolute -inset-4 border border-red-500/20 rounded-full animate-pulse"></div>
               <div className="absolute -inset-8 border border-orange-500/10 rounded-full animate-ping"></div>
