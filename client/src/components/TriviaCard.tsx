@@ -110,7 +110,7 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
           lineHeight: '1.4', 
           marginBottom: '16px',
           marginTop: '1.5rem',
-          fontFamily: isDeSpookified ? 'Arial, sans-serif' : '"Nosifer", cursive',
+          fontFamily: isDeSpookified ? 'Arial, sans-serif' : '"Creepster", cursive',
           textTransform: isDeSpookified ? 'none' : 'uppercase',
           letterSpacing: isDeSpookified ? 'normal' : '0.03em'
         }}>
