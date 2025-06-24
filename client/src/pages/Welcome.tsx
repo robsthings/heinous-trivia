@@ -46,6 +46,8 @@ export function Welcome() {
       ];
   
   const tauntText = heinousTaunts[Math.floor(Math.random() * heinousTaunts.length)];
+  
+  // Force refresh trigger
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-cover bg-center px-4 text-center"
