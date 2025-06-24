@@ -180,7 +180,7 @@ export function NecromancersGambit() {
       <div className="max-w-6xl w-full">
         
         {/* Header */}
-        <div className="text-center mb-6">
+        <div className=" " style={{marginBottom: "1.5rem"}} style={{textAlign: "center"}}>
           <h1 className="text-4xl lg:text-6xl font-bold text-purple-400 mb-4 tracking-wider">
             NECROMANCER'S GAMBIT
           </h1>
@@ -190,12 +190,12 @@ export function NecromancersGambit() {
         </div>
 
         {gamePhase === "intro" && (
-          <div className="text-center bg-black/50 backdrop-blur-sm p-8 rounded-lg border border-purple-500/30">
-            <div className="mb-6">
+          <div className=" bg-black/50 backdrop-blur-sm p-8 rounded-lg border border-purple-500/30" style={{textAlign: "center"}}>
+            <div style={{marginBottom: "1.5rem"}}>
               <span className="text-8xl">💀</span>
             </div>
             <h2 className="text-2xl font-bold text-purple-400 mb-4">The Challenge Awaits</h2>
-            <p className="text-gray-300 mb-6 max-w-md mx-auto">
+            <p className="text-gray-300  max-w-md mx-auto" style={{marginBottom: "1.5rem"}}>
               Face the ancient necromancer in a battle of strategy and cunning. 
               Choose your cards wisely - each has unique powers that can turn the tide of battle.
               First to win 2 rounds claims victory!
@@ -212,16 +212,16 @@ export function NecromancersGambit() {
         {(gamePhase === "player-turn" || gamePhase === "battle") && (
           <div>
             {/* Score Display */}
-            <div className="flex justify-between items-center mb-6 bg-black/30 rounded-lg p-4">
-              <div className="text-center">
+            <div className="flex justify-between items-center  bg-black/30 rounded-lg p-4" style={{marginBottom: "1.5rem"}}>
+              <div style={{textAlign: "center"}}>
                 <div className="text-2xl font-bold text-blue-400">{playerScore}</div>
                 <div className="text-sm text-gray-400">Player Wins</div>
               </div>
-              <div className="text-center">
+              <div style={{textAlign: "center"}}>
                 <div className="text-xl text-purple-400">Round {round}</div>
                 <div className="text-sm text-gray-400">of 3</div>
               </div>
-              <div className="text-center">
+              <div style={{textAlign: "center"}}>
                 <div className="text-2xl font-bold text-red-400">{necromancerScore}</div>
                 <div className="text-sm text-gray-400">Necromancer Wins</div>
               </div>
@@ -229,22 +229,22 @@ export function NecromancersGambit() {
 
             {/* Battle Area */}
             {gamePhase === "battle" && playerSelectedCard && necromancerSelectedCard && (
-              <div className="mb-6 bg-gray-800/50 rounded-lg p-6 border border-gray-600">
-                <h3 className="text-xl font-bold text-center mb-4 text-purple-400">Battle in Progress</h3>
+              <div className=" bg-gray-800/50 rounded-lg p-6 border border-gray-600" style={{marginBottom: "1.5rem"}}>
+                <h3 className="text-xl font-bold  mb-4 text-purple-400" style={{textAlign: "center"}}>Battle in Progress</h3>
                 <div className="flex justify-between items-center">
-                  <div className="text-center bg-blue-900/30 rounded-lg p-4 border border-blue-500/30">
+                  <div className=" bg-blue-900/30 rounded-lg p-4 border border-blue-500/30" style={{textAlign: "center"}}>
                     <div className="text-3xl mb-2">{playerSelectedCard.icon}</div>
                     <div className="font-bold text-blue-400">{playerSelectedCard.name}</div>
                     <div className="text-lg text-white">Power: {playerSelectedCard.power}</div>
                     <div className="text-xs text-gray-400 mt-1">{playerSelectedCard.effect}</div>
                   </div>
                   
-                  <div className="text-center mx-4">
+                  <div className=" mx-4" style={{textAlign: "center"}}>
                     <div className="text-4xl animate-pulse">⚔️</div>
                     <div className="text-sm text-gray-400 mt-2">VS</div>
                   </div>
                   
-                  <div className="text-center bg-red-900/30 rounded-lg p-4 border border-red-500/30">
+                  <div className=" bg-red-900/30 rounded-lg p-4 border border-red-500/30" style={{textAlign: "center"}}>
                     <div className="text-3xl mb-2">{necromancerSelectedCard.icon}</div>
                     <div className="font-bold text-red-400">{necromancerSelectedCard.name}</div>
                     <div className="text-lg text-white">Power: {necromancerSelectedCard.power}</div>
@@ -254,21 +254,21 @@ export function NecromancersGambit() {
                 
                 {battleResult && (
                   <div className="mt-4 p-3 bg-yellow-900/30 rounded border border-yellow-500/30">
-                    <p className="text-center text-yellow-200">{battleResult}</p>
+                    <p className=" text-yellow-200" style={{textAlign: "center"}}>{battleResult}</p>
                   </div>
                 )}
               </div>
             )}
 
             {/* Necromancer's Reaction */}
-            <div className="mb-6 text-center bg-red-900/20 rounded-lg p-4 border border-red-500/30">
+            <div className="  bg-red-900/20 rounded-lg p-4 border border-red-500/30" style={{marginBottom: "1.5rem"}} style={{textAlign: "center"}}>
               <p className="text-red-300 italic">"{getNecromancerReaction()}"</p>
             </div>
 
             {/* Player's Hand */}
             {gamePhase === "player-turn" && (
               <div>
-                <h3 className="text-xl font-bold mb-4 text-center text-blue-400">Choose Your Card</h3>
+                <h3 className="text-xl font-bold mb-4  text-blue-400" style={{textAlign: "center"}}>Choose Your Card</h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {playerHand.map((card) => (
                     <button
@@ -294,7 +294,7 @@ export function NecromancersGambit() {
             {/* Necromancer's Hand (hidden) */}
             {necromancerHand.length > 0 && (
               <div className="mt-6">
-                <h3 className="text-xl font-bold mb-4 text-center text-red-400">Necromancer's Hand</h3>
+                <h3 className="text-xl font-bold mb-4  text-red-400" style={{textAlign: "center"}}>Necromancer's Hand</h3>
                 <div className="flex justify-center gap-2">
                   {necromancerHand.map((_, index) => (
                     <div
@@ -311,11 +311,11 @@ export function NecromancersGambit() {
         )}
 
         {(gamePhase === "victory" || gamePhase === "defeat") && (
-          <div className="text-center">
+          <div style={{textAlign: "center"}}>
             <div className={`bg-black/50 backdrop-blur-sm p-8 rounded-lg border mb-6 ${
               gamePhase === "victory" ? 'border-green-500/50 bg-green-900/20' : 'border-red-500/50 bg-red-900/20'
             }`}>
-              <div className="mb-6">
+              <div style={{marginBottom: "1.5rem"}}>
                 <span className="text-8xl">
                   {gamePhase === "victory" ? "👑" : "💀"}
                 </span>
@@ -333,7 +333,7 @@ export function NecromancersGambit() {
                   : "The necromancer's dark power has overwhelmed you..."}
               </p>
               
-              <div className="text-center mb-6 bg-gray-800/50 rounded-lg p-4">
+              <div className="  bg-gray-800/50 rounded-lg p-4" style={{marginBottom: "1.5rem"}} style={{textAlign: "center"}}>
                 <div className="text-lg font-bold text-purple-400 mb-2">Final Score</div>
                 <div className="flex justify-center gap-8">
                   <div>

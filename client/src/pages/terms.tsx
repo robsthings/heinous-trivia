@@ -8,7 +8,7 @@ export default function Terms() {
       <div className="max-w-4xl mx-auto space-y-6">
         
         {/* Header with back button */}
-        <div className="flex items-center gap-4 mb-6">
+        <div className="flex items-center gap-4 " style={{marginBottom: "1.5rem"}}>
           <Button
             onClick={() => window.history.back()}
             variant="outline"
@@ -21,10 +21,10 @@ export default function Terms() {
 
         <Card className="bg-black/80 border-red-600">
           <CardHeader>
-            <CardTitle className="text-3xl font-bold text-red-500 text-center">
+            <CardTitle className="text-3xl font-bold text-red-500 " style={{textAlign: "center"}}>
               📜 Terms of Use
             </CardTitle>
-            <p className="text-gray-300 text-center">
+            <p className="text-gray-300 " style={{textAlign: "center"}}>
               Rules and guidelines for using Heinous Trivia
             </p>
           </CardHeader>

@@ -669,13 +669,13 @@ export default function HauntAdmin() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-red-900 p-4 flex items-center justify-center">
         <Card className="bg-black/80 border-red-600 text-white max-w-md w-full">
-          <CardHeader className="text-center">
+          <CardHeader style={{textAlign: "center"}}>
             <CardTitle className="text-2xl font-bold text-red-500">
               🎃 Welcome to Your Haunt!
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
-            <p className="text-gray-300 text-center">
+            <p className="text-gray-300 " style={{textAlign: "center"}}>
               Set up your admin access code to secure your haunt dashboard. 
               This code will be required to access your admin panel.
             </p>
@@ -754,9 +754,9 @@ export default function HauntAdmin() {
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-red-900 p-4 flex items-center justify-center">
         <Card className="bg-black/80 border-red-600 text-white">
           <CardContent className="p-8">
-            <div className="text-center">
+            <div style={{textAlign: "center"}}>
               <h2 className="text-2xl font-bold text-red-500 mb-4">Haunt Not Found</h2>
-              <p className="text-gray-300 mb-6">The haunt "{hauntId}" could not be found.</p>
+              <p className="text-gray-300 " style={{marginBottom: "1.5rem"}}>The haunt "{hauntId}" could not be found.</p>
               <Button
                 onClick={() => window.location.href = '/'}
                 variant="outline"
@@ -776,7 +776,7 @@ export default function HauntAdmin() {
       <div className="max-w-6xl mx-auto space-y-6">
         
         {/* Header Section */}
-        <div className="text-center lg:text-left bg-black/60 rounded-xl p-6 border border-gray-700 shadow-lg">
+        <div className=" lg:text-left bg-black/60 rounded-xl p-6 border border-gray-700 shadow-lg" style={{textAlign: "center"}}>
           <h1 className="text-4xl font-bold text-white mb-2" style={{ color: hauntConfig.theme?.primaryColor || '#dc2626' }}>
             👹 {hauntConfig.name || hauntId}
           </h1>

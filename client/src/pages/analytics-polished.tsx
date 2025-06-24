@@ -38,7 +38,7 @@ export default function AnalyticsPolished() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
-        <div className="text-center text-white">Loading analytics...</div>
+        <div className=" text-white" style={{textAlign: "center"}}>Loading analytics...</div>
       </div>
     );
   }
@@ -46,7 +46,7 @@ export default function AnalyticsPolished() {
   if (error) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
-        <div className="text-center text-red-400">Error: {error.message}</div>
+        <div className=" text-red-400" style={{textAlign: "center"}}>Error: {error.message}</div>
       </div>
     );
   }
@@ -54,7 +54,7 @@ export default function AnalyticsPolished() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center text-white mb-8">
+        <div className=" text-white mb-8" style={{textAlign: "center"}}>
           <h1 className="text-3xl font-bold mb-4 bg-green-600 p-4 rounded">FIXED Analytics Dashboard</h1>
           <p className="text-gray-300">Haunt: {hauntId}</p>
           <p className="text-yellow-400 font-bold">Ad Engagement Working - 200%</p>

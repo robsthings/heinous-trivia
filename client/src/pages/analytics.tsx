@@ -157,7 +157,7 @@ export default function Analytics() {
               <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-500/30 border-t-blue-500"></div>
               <div className="absolute inset-0 rounded-full h-16 w-16 border-4 border-purple-500/20 border-r-purple-500 animate-spin" style={{animationDirection: 'reverse', animationDuration: '1.5s'}}></div>
             </div>
-            <div className="text-center space-y-2">
+            <div className=" space-y-2" style={{textAlign: "center"}}>
               <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
                 Analytics Dashboard
               </h1>
@@ -173,7 +173,7 @@ export default function Analytics() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800">
         <div className="max-w-7xl mx-auto px-6 py-12">
-          <div className="text-center text-white">
+          <div className=" text-white" style={{textAlign: "center"}}>
             <h1 className="text-3xl font-bold mb-4">Analytics Dashboard</h1>
             <p className="text-red-400">Error loading analytics data: {error.message}</p>
           </div>
@@ -460,7 +460,7 @@ export default function Analytics() {
                 <span className="ml-3 text-gray-300">Loading ad performance data...</span>
               </div>
             ) : !adsData || adsData.length === 0 ? (
-              <div className="text-center py-8">
+              <div className=" py-8" style={{textAlign: "center"}}>
                 <div className="bg-slate-800/50 rounded-lg p-6 border border-slate-700/50">
                   <MousePointerClickIcon className="w-12 h-12 text-gray-500 mx-auto mb-3" />
                   <p className="text-gray-400 text-lg">No ads found for this haunt</p>
@@ -473,10 +473,10 @@ export default function Analytics() {
                 <div className="grid grid-cols-12 gap-4 pb-3 border-b border-white/10 text-sm font-medium text-gray-300">
                   <div className="col-span-1">Preview</div>
                   <div className="col-span-4">Ad Details</div>
-                  <div className="col-span-2 text-center">Views</div>
-                  <div className="col-span-2 text-center">Clicks</div>
-                  <div className="col-span-2 text-center">CTR</div>
-                  <div className="col-span-1 text-center">Performance</div>
+                  <div className="col-span-2 " style={{textAlign: "center"}}>Views</div>
+                  <div className="col-span-2 " style={{textAlign: "center"}}>Clicks</div>
+                  <div className="col-span-2 " style={{textAlign: "center"}}>CTR</div>
+                  <div className="col-span-1 " style={{textAlign: "center"}}>Performance</div>
                 </div>
 
                 {/* Display ads with their performance metrics */}
@@ -528,19 +528,19 @@ export default function Analytics() {
                       </div>
 
                       {/* Views */}
-                      <div className="col-span-2 text-center">
+                      <div className="col-span-2 " style={{textAlign: "center"}}>
                         <div className="text-white font-semibold text-lg">{views}</div>
                         <div className="text-gray-400 text-xs">impressions</div>
                       </div>
 
                       {/* Clicks */}
-                      <div className="col-span-2 text-center">
+                      <div className="col-span-2 " style={{textAlign: "center"}}>
                         <div className="text-white font-semibold text-lg">{clicks}</div>
                         <div className="text-gray-400 text-xs">engagements</div>
                       </div>
 
                       {/* CTR */}
-                      <div className="col-span-2 text-center">
+                      <div className="col-span-2 " style={{textAlign: "center"}}>
                         <div className={`font-bold text-lg ${ctr > 0 ? 'text-green-400' : 'text-gray-400'}`}>
                           {ctr > 0 ? `${ctr.toFixed(1)}%` : '0%'}
                         </div>
@@ -548,7 +548,7 @@ export default function Analytics() {
                       </div>
 
                       {/* Performance Badge */}
-                      <div className="col-span-1 text-center">
+                      <div className="col-span-1 " style={{textAlign: "center"}}>
                         <Badge 
                           variant="outline" 
                           className={`text-xs ${
@@ -572,10 +572,10 @@ export default function Analytics() {
                 <div className="grid grid-cols-12 gap-4 pb-3 border-b border-white/10 text-sm font-medium text-gray-300">
                   <div className="col-span-1">Preview</div>
                   <div className="col-span-4">Ad Details</div>
-                  <div className="col-span-2 text-center">Views</div>
-                  <div className="col-span-2 text-center">Clicks</div>
-                  <div className="col-span-2 text-center">CTR</div>
-                  <div className="col-span-1 text-center">Performance</div>
+                  <div className="col-span-2 " style={{textAlign: "center"}}>Views</div>
+                  <div className="col-span-2 " style={{textAlign: "center"}}>Clicks</div>
+                  <div className="col-span-2 " style={{textAlign: "center"}}>CTR</div>
+                  <div className="col-span-1 " style={{textAlign: "center"}}>Performance</div>
                 </div>
 
                 {/* Ad Performance Rows */}
@@ -621,19 +621,19 @@ export default function Analytics() {
                       </div>
 
                       {/* Views */}
-                      <div className="col-span-2 text-center">
+                      <div className="col-span-2 " style={{textAlign: "center"}}>
                         <div className="text-white font-semibold text-lg">{ad.views}</div>
                         <div className="text-gray-400 text-xs">impressions</div>
                       </div>
 
                       {/* Clicks */}
-                      <div className="col-span-2 text-center">
+                      <div className="col-span-2 " style={{textAlign: "center"}}>
                         <div className="text-white font-semibold text-lg">{ad.clicks}</div>
                         <div className="text-gray-400 text-xs">engagements</div>
                       </div>
 
                       {/* CTR */}
-                      <div className="col-span-2 text-center">
+                      <div className="col-span-2 " style={{textAlign: "center"}}>
                         <div className={`font-bold text-lg ${
                           ad.ctr >= 100 ? 'text-green-400' : 
                           ad.ctr >= 50 ? 'text-yellow-400' : 
@@ -645,7 +645,7 @@ export default function Analytics() {
                       </div>
 
                       {/* Performance Badge */}
-                      <div className="col-span-1 text-center">
+                      <div className="col-span-1 " style={{textAlign: "center"}}>
                         {ad.ctr >= 100 ? (
                           <Badge className="bg-green-500/30 text-green-200 border-green-500/50 text-xs">
                             Excellent
@@ -667,7 +667,7 @@ export default function Analytics() {
                     </div>
                   ))
                 ) : (
-                  <div className="text-center py-6">
+                  <div className=" py-6" style={{textAlign: "center"}}>
                     <p className="text-gray-400">No ad performance data available</p>
                   </div>
                 )}
@@ -830,7 +830,7 @@ export default function Analytics() {
         </Card>
 
         {/* Footer */}
-        <div className="text-center py-6">
+        <div className=" py-6" style={{textAlign: "center"}}>
           <p className="text-sm text-gray-400">
             Analytics Dashboard • Pro/Premium Feature
           </p>

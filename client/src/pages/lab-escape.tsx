@@ -310,7 +310,7 @@ export function LabEscape() {
               className="w-32 h-32"
             />
             <div className="absolute -top-16 left-1/2 transform -translate-x-1/2">
-              <div className="bg-red-900 bg-opacity-95 border-2 border-red-400 rounded-lg p-3 text-white text-xs max-w-48 text-center">
+              <div className="bg-red-900 bg-opacity-95 border-2 border-red-400 rounded-lg p-3 text-white text-xs max-w-48 " style={{textAlign: "center"}}>
                 {gameState.chupacabraMessage}
               </div>
             </div>
@@ -337,18 +337,18 @@ export function LabEscape() {
               
               {/* Content */}
               <div className="relative z-10">
-                <h2 className="text-yellow-400 font-bold text-2xl mb-6 text-center tracking-wider drop-shadow-lg" style={{ fontFamily: 'Creepster, cursive' }}>
+                <h2 className="text-yellow-400 font-bold text-2xl   tracking-wider drop-shadow-lg" style={{marginBottom: "1.5rem"}} style={{textAlign: "center"}} style={{ fontFamily: 'Creepster, cursive' }}>
                   ⚡ RIDDLE OF THE LAB ⚡
                 </h2>
                 
-                <div className="bg-black bg-opacity-50 rounded-lg p-6 mb-6 border border-yellow-500/30">
-                  <p className="text-white text-lg mb-4 text-center leading-relaxed font-medium">
+                <div className="bg-black bg-opacity-50 rounded-lg p-6  border border-yellow-500/30" style={{marginBottom: "1.5rem"}}>
+                  <p className="text-white text-lg mb-4  leading-relaxed font-medium" style={{textAlign: "center"}}>
                     {gameState.currentRiddle.question}
                   </p>
                   
                   {gameState.currentRiddle.hint && (
                     <div className="border-t border-gray-600 pt-4">
-                      <p className="text-amber-300 text-sm italic text-center flex items-center justify-center gap-2">
+                      <p className="text-amber-300 text-sm italic  flex items-center justify-center gap-2" style={{textAlign: "center"}}>
                         <span className="text-yellow-400">💡</span>
                         <span>Hint: {gameState.currentRiddle.hint}</span>
                       </p>
@@ -362,7 +362,7 @@ export function LabEscape() {
                   onChange={(e) => setGameState(prev => ({ ...prev, userAnswer: e.target.value }))}
                   onKeyPress={handleKeyPress}
                   placeholder="Type your answer..."
-                  className="w-full p-4 bg-gray-800 border-2 border-gray-600 rounded-lg text-white text-lg focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 focus:outline-none mb-6 shadow-inner transition-all duration-200"
+                  className="w-full p-4 bg-gray-800 border-2 border-gray-600 rounded-lg text-white text-lg focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 focus:outline-none  shadow-inner transition-all duration-200" style={{marginBottom: "1.5rem"}}
                   autoFocus
                 />
                 
@@ -390,7 +390,7 @@ export function LabEscape() {
       {/* Instructions */}
       {!gameState.showInput && !gameState.gameWon && !gameState.gameFailed && (
         <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-30">
-          <div className="bg-black bg-opacity-80 border-2 border-yellow-600 rounded-lg p-4 text-center">
+          <div className="bg-black bg-opacity-80 border-2 border-yellow-600 rounded-lg p-4 " style={{textAlign: "center"}}>
             <div className="text-yellow-400 font-mono text-sm mb-2">
               ESCAPE THE LAB
             </div>

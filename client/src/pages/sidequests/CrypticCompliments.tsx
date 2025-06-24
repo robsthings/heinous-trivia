@@ -122,7 +122,7 @@ export function CrypticCompliments() {
       />
 
       {/* Content */}
-      <div className="relative z-10 w-full max-w-4xl mx-auto text-center">
+      <div className="relative z-10 w-full max-w-4xl mx-auto " style={{textAlign: "center"}}>
         {phase === "intro" && (
           <div className="animate-scale-in">
             {/* Title */}
@@ -172,7 +172,7 @@ export function CrypticCompliments() {
               {/* Compliment Text Overlay - positioned over the parchment */}
               {phase === "revealed" && isTextRevealed && (
                 <div className="absolute inset-0 flex items-center justify-center p-6">
-                  <div className="w-full text-center" style={{ maxWidth: '400px', marginTop: '5px' }}>
+                  <div className="w-full " style={{textAlign: "center"}} style={{ maxWidth: '400px', marginTop: '5px' }}>
                     <p className="compliment-text">
                       "{compliment}"
                     </p>

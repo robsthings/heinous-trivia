@@ -207,11 +207,11 @@ export function WackAChupacabra() {
           <div className="absolute inset-0 bg-green-500 bg-opacity-30" />
           
           {/* Game Over UI */}
-          <div className="relative z-10 text-center">
+          <div className="relative z-10 " style={{textAlign: "center"}}>
             <h2 className="text-4xl font-bold text-white mb-4 drop-shadow-lg">
               GAME OVER!
             </h2>
-            <p className="text-xl text-white mb-6 drop-shadow-lg">
+            <p className="text-xl text-white  drop-shadow-lg" style={{marginBottom: "1.5rem"}}>
               You hit the poison vial!
             </p>
             <p className="text-lg text-white mb-8 drop-shadow-lg">
@@ -252,8 +252,8 @@ export function WackAChupacabra() {
         {/* Game Start Screen */}
         {!gameState.isPlaying && !gameState.isGameOver && (
           <div className="flex-1 flex items-center justify-center">
-            <div className="text-center">
-              <h1 className="text-4xl font-bold text-white mb-6 drop-shadow-lg" style={{ fontFamily: 'Frijole, cursive' }}>
+            <div style={{textAlign: "center"}}>
+              <h1 className="text-4xl font-bold text-white  drop-shadow-lg" style={{marginBottom: "1.5rem"}} style={{ fontFamily: 'Frijole, cursive' }}>
                 WACK-A-CHUPACABRA
               </h1>
               <p className="text-lg text-white mb-8 drop-shadow-lg max-w-md">

@@ -40,7 +40,7 @@ export default function AnalyticsSimple() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center text-white">
+          <div className=" text-white" style={{textAlign: "center"}}>
             <h1 className="text-3xl font-bold mb-4">Analytics Dashboard</h1>
             <p>Loading analytics data...</p>
           </div>
@@ -53,7 +53,7 @@ export default function AnalyticsSimple() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center text-white">
+          <div className=" text-white" style={{textAlign: "center"}}>
             <h1 className="text-3xl font-bold mb-4">Analytics Dashboard</h1>
             <p className="text-red-400">Error loading analytics data: {error.message}</p>
           </div>
@@ -65,7 +65,7 @@ export default function AnalyticsSimple() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center text-white mb-8">
+        <div className=" text-white mb-8" style={{textAlign: "center"}}>
           <h1 className="text-3xl font-bold mb-4 bg-green-600 p-4 rounded">SIMPLIFIED Analytics Dashboard</h1>
           <p className="text-gray-300">Haunt: {hauntId}</p>
           <p className="text-yellow-400 font-bold">New Component - Ad Engagement Fixed</p>

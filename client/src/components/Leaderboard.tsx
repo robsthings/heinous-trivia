@@ -100,7 +100,7 @@ export function Leaderboard({ isVisible, leaderboard, onClose, hauntId, currentP
           overflowY: 'auto'
         }}>
           {isLoading ? (
-            <div className="text-center text-gray-400 py-6 sm:py-8">
+            <div className=" text-gray-400 py-6 sm:py-8" style={{textAlign: "center"}}>
               <div style={{
                 position: 'relative',
                 margin: '0 auto',
@@ -119,7 +119,7 @@ export function Leaderboard({ isVisible, leaderboard, onClose, hauntId, currentP
               <p className="text-xs mt-2 text-gray-500 animate-pulse">The dead are revealing their scores</p>
             </div>
           ) : leaderboard.length === 0 ? (
-            <div className="text-center text-gray-400 py-6 sm:py-8">
+            <div className=" text-gray-400 py-6 sm:py-8" style={{textAlign: "center"}}>
               <p className="text-sm sm:text-base">No scores recorded yet.</p>
               <p className="text-xs sm:text-sm mt-2">Be the first to join the Hall of Horror!</p>
             </div>
@@ -146,7 +146,7 @@ export function Leaderboard({ isVisible, leaderboard, onClose, hauntId, currentP
           )}
         </div>
 
-        <div className="text-center flex-shrink-0">
+        <div className=" flex-shrink-0" style={{textAlign: "center"}}>
           <button
             className="horror-button px-6 sm:px-8 py-3 rounded-lg font-medium text-white text-sm sm:text-base touch-manipulation"
             onClick={onClose}

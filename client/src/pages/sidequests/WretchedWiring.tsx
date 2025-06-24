@@ -131,11 +131,11 @@ export function WretchedWiring() {
       {/* Game Over Overlay */}
       {gameState.isGameOver && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
-          <div className="relative z-10 text-center bg-gray-800 p-8 rounded-xl border-2 border-red-500">
+          <div className="relative z-10  bg-gray-800 p-8 rounded-xl border-2 border-red-500" style={{textAlign: "center"}}>
             <h2 className="text-4xl font-bold text-red-400 mb-4 drop-shadow-lg">
               SYSTEM FAILURE!
             </h2>
-            <p className="text-xl text-white mb-6 drop-shadow-lg">
+            <p className="text-xl text-white  drop-shadow-lg" style={{marginBottom: "1.5rem"}}>
               The wiring overloaded and sparked out!
             </p>
             <p className="text-lg text-white mb-8 drop-shadow-lg">
@@ -162,11 +162,11 @@ export function WretchedWiring() {
       {/* Victory Overlay */}
       {gameState.isComplete && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
-          <div className="relative z-10 text-center bg-gray-800 p-8 rounded-xl border-2 border-green-500">
+          <div className="relative z-10  bg-gray-800 p-8 rounded-xl border-2 border-green-500" style={{textAlign: "center"}}>
             <h2 className="text-4xl font-bold text-green-400 mb-4 drop-shadow-lg">
               CIRCUIT COMPLETE!
             </h2>
-            <p className="text-xl text-white mb-6 drop-shadow-lg">
+            <p className="text-xl text-white  drop-shadow-lg" style={{marginBottom: "1.5rem"}}>
               You've successfully rewired the system!
             </p>
             <p className="text-lg text-white mb-8 drop-shadow-lg">
@@ -208,8 +208,8 @@ export function WretchedWiring() {
         {/* Game Start Screen */}
         {!gameState.isPlaying && !gameState.isGameOver && !gameState.isComplete && (
           <div className="flex-1 flex items-center justify-center">
-            <div className="text-center bg-gray-800 bg-opacity-90 p-8 rounded-xl border-2 border-blue-500">
-              <h1 className="text-4xl font-bold text-blue-400 mb-6 drop-shadow-lg" style={{ fontFamily: 'Courier, monospace' }}>
+            <div className=" bg-gray-800 bg-opacity-90 p-8 rounded-xl border-2 border-blue-500" style={{textAlign: "center"}}>
+              <h1 className="text-4xl font-bold text-blue-400  drop-shadow-lg" style={{marginBottom: "1.5rem"}} style={{ fontFamily: 'Courier, monospace' }}>
                 WRETCHED WIRING
               </h1>
               <p className="text-lg text-white mb-8 drop-shadow-lg max-w-md">
@@ -230,13 +230,13 @@ export function WretchedWiring() {
         {gameState.isPlaying && (
           <div className="flex-1 flex items-center justify-center p-6">
             <div className="bg-gray-800 bg-opacity-95 p-8 rounded-xl border-2 border-yellow-500 w-full max-w-4xl">
-              <h2 className="text-2xl font-bold text-yellow-400 mb-6 text-center">
+              <h2 className="text-2xl font-bold text-yellow-400  " style={{marginBottom: "1.5rem"}} style={{textAlign: "center"}}>
                 Puzzle {gameState.currentPuzzle}: Connect the Circuit
               </h2>
               
               {/* Wiring Board Placeholder */}
               <div className="relative bg-gray-900 border-2 border-gray-600 rounded-lg p-8 h-96">
-                <div className="text-center text-white text-xl mt-32">
+                <div className=" text-white text-xl mt-32" style={{textAlign: "center"}}>
                   🔌 Interactive Wiring Puzzle Interface 🔌
                   <br />
                   <span className="text-sm text-gray-400 mt-4 block">
@@ -246,7 +246,7 @@ export function WretchedWiring() {
               </div>
 
               {/* Instructions */}
-              <div className="mt-6 text-center">
+              <div className="mt-6 " style={{textAlign: "center"}}>
                 <p className="text-white mb-2">
                   <span className="text-red-400">Red wire</span> → Terminal A1 to B3
                 </p>

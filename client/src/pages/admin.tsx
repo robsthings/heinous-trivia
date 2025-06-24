@@ -71,16 +71,16 @@ function AnalyticsTab({
         <CardTitle className="text-red-400 flex items-center gap-2">
           <BarChart3 className="w-5 h-5" />
           Analytics Dashboard
-          <Badge variant="outline" className="text-purple-300 border-purple-300">
+          <Badge variant="outline" style={{ color: '#d8b4fe', borderColor: '#d8b4fe' }}>
             Pro/Premium Feature
           </Badge>
         </CardTitle>
-        <p className="text-gray-400">Track performance and player engagement for your haunts</p>
+        <p style={{ color: '#9ca3af' }}>Track performance and player engagement for your haunts</p>
       </CardHeader>
       <CardContent>
         {/* Haunt Selection */}
-        <div className="mb-6">
-          <Label className="text-white text-sm font-medium mb-2 block">Select Haunt for Analytics</Label>
+        <div style={{marginBottom: "1.5rem"}}>
+          <Label style={{ color: 'white', fontSize: '0.875rem', fontWeight: '500', marginBottom: '0.5rem', display: 'block' }}>Select Haunt for Analytics</Label>
           <SimpleSelect 
             value={selectedAnalyticsHaunt} 
             onValueChange={setSelectedAnalyticsHaunt}
@@ -96,14 +96,14 @@ function AnalyticsTab({
         </div>
 
         {!selectedAnalyticsHaunt && (
-          <div className="text-center py-8">
+          <div className=" py-8" style={{textAlign: "center"}}>
             <BarChart3 className="w-12 h-12 text-gray-500 mx-auto mb-4" />
             <p className="text-gray-400">Select a Pro or Premium haunt to view analytics</p>
           </div>
         )}
 
         {selectedAnalyticsHaunt && !isPaidTier && (
-          <div className="text-center py-8">
+          <div className=" py-8" style={{textAlign: "center"}}>
             <Crown className="w-12 h-12 text-yellow-500 mx-auto mb-4" />
             <p className="text-gray-400 mb-2">Analytics are only available for Pro and Premium haunts</p>
             <p className="text-sm text-gray-500">Upgrade your haunt subscription to access detailed performance metrics</p>
@@ -113,7 +113,7 @@ function AnalyticsTab({
         {selectedAnalyticsHaunt && isPaidTier && (
           <>
             {/* Time Range Selector */}
-            <div className="flex justify-center mb-6">
+            <div className="flex justify-center " style={{marginBottom: "1.5rem"}}>
               <Tabs value={analyticsTimeRange} onValueChange={(value) => setAnalyticsTimeRange(value as "7d" | "30d" | "90d")} className="w-auto">
                 <TabsList className="grid w-full grid-cols-3 bg-gray-800 border-gray-700">
                   <TabsTrigger value="7d" className="text-white data-[state=active]:bg-red-600">Last 7 Days</TabsTrigger>
@@ -124,7 +124,7 @@ function AnalyticsTab({
             </div>
 
             {analyticsLoading && (
-              <div className="text-center py-8">
+              <div className=" py-8" style={{textAlign: "center"}}>
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-500 mx-auto mb-4"></div>
                 <p className="text-gray-400">Loading analytics data...</p>
               </div>
@@ -271,7 +271,7 @@ function AnalyticsTab({
                 {/* No Data State */}
                 {analyticsData.totalGames === 0 && (
                   <Card className="bg-gray-800/50 border-gray-600">
-                    <CardContent className="text-center py-8">
+                    <CardContent className=" py-8" style={{textAlign: "center"}}>
                       <TrendingUp className="w-12 h-12 text-gray-500 mx-auto mb-4" />
                       <p className="text-gray-400 mb-2">No gameplay data found for this time period</p>
                       <p className="text-sm text-gray-500">
@@ -1229,7 +1229,7 @@ export default function Admin() {
         {/* Authentication Status Card */}
         <Card className="bg-yellow-900/80 border-yellow-600 text-white mb-4">
           <CardContent className="pt-6">
-            <div className="text-center">
+            <div style={{textAlign: "center"}}>
               <h3 className="text-xl font-bold mb-2">🔐 Authentication Status</h3>
               <p className="mb-4">Status: {authStatus === 'authenticated' ? '✅ Authenticated' : '❌ Not Authenticated'}</p>
               <p className="text-sm mb-4">User: {auth.currentUser?.uid || 'None'}</p>
@@ -1266,10 +1266,10 @@ export default function Admin() {
 
         <Card className="bg-black/80 border-red-600 text-white">
           <CardHeader>
-            <CardTitle className="text-3xl font-bold text-center text-red-500">
+            <CardTitle className="text-3xl font-bold  text-red-500" style={{textAlign: "center"}}>
               Heinous Trivia Uber Admin
             </CardTitle>
-            <p className="text-center text-gray-300">Manage Haunts & Trivia Packs</p>
+            <p className=" text-gray-300" style={{textAlign: "center"}}>Manage Haunts & Trivia Packs</p>
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="management" className="w-full" onValueChange={(value) => setActiveTab(value)}>
@@ -1381,7 +1381,7 @@ export default function Admin() {
                   </CardHeader>
                   <CardContent>
                     {allHaunts.length === 0 ? (
-                      <div className="text-center py-8">
+                      <div className=" py-8" style={{textAlign: "center"}}>
                         <p className="text-gray-400">No haunts found. Create your first haunt below!</p>
                       </div>
                     ) : (
@@ -2074,7 +2074,7 @@ export default function Admin() {
                   </CardHeader>
                   <CardContent>
                     {allHaunts.length === 0 ? (
-                      <p className="text-gray-400 text-center py-8">No haunts found</p>
+                      <p className="text-gray-400  py-8" style={{textAlign: "center"}}>No haunts found</p>
                     ) : (
                       <div className="space-y-4">
                         {allHaunts.map((haunt) => {
@@ -2528,7 +2528,7 @@ export default function Admin() {
                                 </div>
                               ))}
                               {customSkins.length === 0 && (
-                                <p className="text-gray-400 text-sm text-center py-4">
+                                <p className="text-gray-400 text-sm  py-4" style={{textAlign: "center"}}>
                                   No custom skins uploaded yet
                                 </p>
                               )}
@@ -2707,7 +2707,7 @@ export default function Admin() {
           </CardContent>
         </Card>
 
-        <div className="mt-6 text-center">
+        <div className="mt-6 " style={{textAlign: "center"}}>
           <Button
             onClick={() => {
               loadTriviaPacks();

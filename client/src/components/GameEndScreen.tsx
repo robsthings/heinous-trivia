@@ -98,12 +98,19 @@ export function GameEndScreen({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-95 flex items-center justify-center p-3 sm:p-4 z-50">
-      <div className="glass-card rounded-xl p-4 sm:p-6 max-w-sm sm:max-w-md w-full animate-fade-in max-h-[90vh] overflow-y-auto">
-        <div className="text-center">
+    <div style={{position: "fixed", top: 0, right: 0, bottom: 0, left: 0, backgroundColor: "rgba(0, 0, 0, 0.95)", display: "flex", alignItems: "center", justifyContent: "center", padding: "clamp(0.75rem, 3vw, 1rem)", zIndex: 50}}>
+      <div className="glass-card animate-fade-in" style={{
+        borderRadius: '0.75rem',
+        padding: 'clamp(1rem, 4vw, 1.5rem)',
+        maxWidth: 'clamp(24rem, 90vw, 28rem)',
+        width: '100%',
+        maxHeight: '90vh',
+        overflowY: 'auto'
+      }}>
+        <div style={{textAlign: "center"}}>
           {/* Haunt Logo */}
           {gameState.hauntConfig?.logoPath && (
-            <div className="mb-6">
+            <div style={{marginBottom: "1.5rem"}}>
               <img 
                 src={gameState.hauntConfig.logoPath} 
                 alt={gameState.hauntConfig.name || "Haunt Logo"}
@@ -161,13 +168,13 @@ export function GameEndScreen({
 
 
           {savedPlayerName ? (
-            <div className="mb-4 sm:mb-6 text-center">
+            <div className="mb-4 sm: " style={{marginBottom: "1.5rem"}} style={{textAlign: "center"}}>
               <div className="text-gray-300 text-xs sm:text-sm mb-2">Playing as:</div>
               <div className="text-white font-bold text-base sm:text-lg">{savedPlayerName}</div>
               <div className="text-gray-400 text-xs mt-1">Score will be saved automatically</div>
             </div>
           ) : (
-            <div className="mb-4 sm:mb-6">
+            <div className="mb-4 sm:" style={{marginBottom: "1.5rem"}}>
               <input
                 type="text"
                 placeholder="Enter your name for the leaderboard"

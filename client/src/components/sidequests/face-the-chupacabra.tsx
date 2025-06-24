@@ -141,10 +141,10 @@ export function FaceTheChupacabra() {
       {/* Dark overlay for better text readability */}
       <div className="absolute inset-0 bg-black/40"></div>
       
-      <div className="relative z-10 text-center max-w-lg w-full">
+      <div className="relative z-10  max-w-lg w-full" style={{textAlign: "center"}}>
         {gameState.phase === 'start' && (
           <div className="flex flex-col items-center justify-between min-h-screen pt-8 pb-20">
-            <div className="text-center">
+            <div style={{textAlign: "center"}}>
               <h1 className="text-5xl font-bold text-red-500 mb-4 drop-shadow-lg" style={{ fontFamily: 'Creepster, cursive' }}>
                 Face the Chupacabra
               </h1>
@@ -212,7 +212,7 @@ export function FaceTheChupacabra() {
             {gameState.showResult && (
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-8 mb-4">
-                  <div className="text-center">
+                  <div style={{textAlign: "center"}}>
                     <h3 className="text-lg font-bold mb-2">You</h3>
                     <img
                       src={CHOICES.find(c => c.value === gameState.playerChoice)?.image}
@@ -220,7 +220,7 @@ export function FaceTheChupacabra() {
                       className="w-20 h-20 mx-auto"
                     />
                   </div>
-                  <div className="text-center">
+                  <div style={{textAlign: "center"}}>
                     <h3 className="text-lg font-bold mb-2">Chupacabra</h3>
                     <img
                       src={CHOICES.find(c => c.value === gameState.chupacabraChoice)?.image}
@@ -271,7 +271,7 @@ export function FaceTheChupacabra() {
             <h2 className="text-4xl font-bold text-green-400 mb-4">🎉 ESCAPED! 🎉</h2>
             
             {/* All collected keys display */}
-            <div className="flex gap-4 justify-center mb-6">
+            <div className="flex gap-4 justify-center " style={{marginBottom: "1.5rem"}}>
               {[1, 2, 3].map((keyNum) => (
                 <img
                   key={keyNum}
@@ -290,7 +290,7 @@ export function FaceTheChupacabra() {
                 className="w-32 h-32 mx-auto animate-bounce"
               />
             </div>
-            <p className="text-xl text-gray-200 mb-6">
+            <p className="text-xl text-gray-200 " style={{marginBottom: "1.5rem"}}>
               You collected all 3 keys and escaped! The Chupacabra is defeated!
             </p>
             <div className="space-y-4">
@@ -333,7 +333,7 @@ export function FaceTheChupacabra() {
                   className="w-32 h-32 mx-auto animate-bounce"
                 />
               </div>
-              <p className="text-xl text-gray-200 mb-6">
+              <p className="text-xl text-gray-200 " style={{marginBottom: "1.5rem"}}>
                 The Chupacabra has defeated you! You remain trapped...
               </p>
               <div className="space-y-4">

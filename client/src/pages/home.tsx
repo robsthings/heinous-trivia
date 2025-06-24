@@ -8,7 +8,7 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-red-900">
       <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
         {/* Header */}
-        <div className="text-center mb-6 sm:mb-12">
+        <div className="  sm:mb-12" style={{marginBottom: "1.5rem"}} style={{textAlign: "center"}}>
           <h1 className="creepster text-4xl sm:text-6xl md:text-8xl text-red-500 mb-2 sm:mb-4 drop-shadow-lg leading-tight">
             HEINOUS TRIVIA
           </h1>
@@ -22,9 +22,9 @@ export default function Home() {
         </div>
 
         {/* How to Access */}
-        <div className="max-w-2xl mx-auto text-center">
+        <div className="max-w-2xl mx-auto " style={{textAlign: "center"}}>
           <div className="glass-card rounded-xl p-4 sm:p-6 md:p-8">
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-4 sm:mb-6">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-4 sm:" style={{marginBottom: "1.5rem"}}>
               How to Enter a Haunt
             </h2>
             <div className="space-y-3 sm:space-y-4 text-gray-300">

@@ -31,7 +31,7 @@ export function TestProgressPage() {
       <h1 className="text-white text-2xl mb-8">Progress Bar Theme Test</h1>
       
       {themes.map((theme) => (
-        <div key={theme} className="mb-6">
+        <div key={theme} style={{marginBottom: "1.5rem"}}>
           <h2 className="text-white text-lg mb-2 capitalize">{theme} Theme</h2>
           <CustomProgressBar 
             progress={75} 
@@ -41,7 +41,7 @@ export function TestProgressPage() {
         </div>
       ))}
 
-      <div className="mb-6">
+      <div style={{marginBottom: "1.5rem"}}>
         <h2 className="text-white text-lg mb-2">Default (Basic Tier)</h2>
         <CustomProgressBar 
           progress={50} 

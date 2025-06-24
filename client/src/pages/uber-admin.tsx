@@ -188,7 +188,7 @@ export default function UberAdmin() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center text-white mb-8">
+        <div className=" text-white mb-8" style={{textAlign: "center"}}>
           <h1 className="text-4xl font-bold mb-4">Global Analytics Dashboard</h1>
           <p className="text-lg text-gray-300">Platform-wide insights across all haunts</p>
           <Badge variant="outline" className="mt-2 text-red-400 border-red-400">
@@ -197,7 +197,7 @@ export default function UberAdmin() {
         </div>
 
         {/* Navigation */}
-        <div className="flex justify-center gap-4 mb-6">
+        <div className="flex justify-center gap-4 " style={{marginBottom: "1.5rem"}}>
           <Link href="/admin" className="text-purple-400 hover:text-purple-300 underline">
             Admin Panel
           </Link>
@@ -208,7 +208,7 @@ export default function UberAdmin() {
 
         {/* Main Tabs */}
         <Tabs defaultValue="analytics" className="w-full">
-          <div className="flex justify-center mb-6">
+          <div className="flex justify-center " style={{marginBottom: "1.5rem"}}>
             <TabsList className="grid w-full max-w-2xl grid-cols-2 bg-slate-800 border-slate-700">
               <TabsTrigger value="analytics" className="text-white data-[state=active]:bg-purple-600">
                 <TrendingUp className="w-4 h-4 mr-2" />
@@ -224,7 +224,7 @@ export default function UberAdmin() {
 
           <TabsContent value="analytics" className="mt-6">
             {/* Time Range Selector */}
-            <div className="flex justify-center mb-6">
+            <div className="flex justify-center " style={{marginBottom: "1.5rem"}}>
               <Tabs value={timeRange} onValueChange={(value) => setTimeRange(value as "7d" | "30d" | "90d")} className="w-auto">
                 <TabsList className="grid w-full grid-cols-3 bg-slate-800 border-slate-700">
                   <TabsTrigger value="7d" className="text-white data-[state=active]:bg-purple-600">Last 7 Days</TabsTrigger>

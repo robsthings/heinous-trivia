@@ -148,7 +148,7 @@ export function ChupacabraChallenge() {
       <div className="max-w-4xl w-full">
         
         {/* Header */}
-        <div className="text-center mb-8">
+        <div className=" mb-8" style={{textAlign: "center"}}>
           <h1 className="text-4xl lg:text-6xl font-bold text-red-400 mb-4 tracking-wider">
             CHUPACABRA CHALLENGE
           </h1>
@@ -161,8 +161,8 @@ export function ChupacabraChallenge() {
         <div className="relative">
           
           {gamePhase === "intro" && (
-            <div className="text-center bg-black/50 backdrop-blur-sm p-8 rounded-lg border border-red-500/30">
-              <div className="mb-6">
+            <div className=" bg-black/50 backdrop-blur-sm p-8 rounded-lg border border-red-500/30" style={{textAlign: "center"}}>
+              <div style={{marginBottom: "1.5rem"}}>
                 <img 
                   src="/chupacabra/sprite-chupacabra.png"
                   alt="Chupacabra"
@@ -170,7 +170,7 @@ export function ChupacabraChallenge() {
                 />
               </div>
               <h2 className="text-2xl font-bold text-red-400 mb-4">The Hunt Begins</h2>
-              <p className="text-gray-300 mb-6 max-w-md mx-auto">
+              <p className="text-gray-300  max-w-md mx-auto" style={{marginBottom: "1.5rem"}}>
                 The legendary Chupacabra stalks these cursed grounds. Choose your hiding spot wisely - 
                 some locations offer better concealment than others. Can you remain hidden for 30 seconds?
               </p>
@@ -184,8 +184,8 @@ export function ChupacabraChallenge() {
           )}
 
           {gamePhase === "hiding" && (
-            <div className="text-center">
-              <div className="bg-black/50 backdrop-blur-sm p-6 rounded-lg border border-red-500/30 mb-6">
+            <div style={{textAlign: "center"}}>
+              <div className="bg-black/50 backdrop-blur-sm p-6 rounded-lg border border-red-500/30 " style={{marginBottom: "1.5rem"}}>
                 <h2 className="text-2xl font-bold text-red-400 mb-4">Choose Your Hiding Spot</h2>
                 <p className="text-gray-300 mb-4">
                   Click on a location to hide. Each spot has different safety ratings...
@@ -212,7 +212,7 @@ export function ChupacabraChallenge() {
                     }}
                     title={`${spot.name} (Safety: ${spot.safetyRating}/5)`}
                   >
-                    <span className="block text-center">
+                    <span className="block " style={{textAlign: "center"}}>
                       {spot.name}
                     </span>
                     <div className="flex justify-center mt-1">
@@ -228,7 +228,7 @@ export function ChupacabraChallenge() {
 
           {(gamePhase === "hunting") && (
             <div className={`text-center ${heartbeat ? 'animate-pulse' : ''}`}>
-              <div className="bg-black/50 backdrop-blur-sm p-6 rounded-lg border border-red-500/30 mb-6">
+              <div className="bg-black/50 backdrop-blur-sm p-6 rounded-lg border border-red-500/30 " style={{marginBottom: "1.5rem"}}>
                 <div className="flex justify-between items-center mb-4">
                   <div className="text-left">
                     <div className="text-lg font-bold text-green-400">
@@ -308,11 +308,11 @@ export function ChupacabraChallenge() {
           )}
 
           {(gamePhase === "caught" || gamePhase === "survived") && (
-            <div className="text-center">
+            <div style={{textAlign: "center"}}>
               <div className={`bg-black/50 backdrop-blur-sm p-8 rounded-lg border mb-6 ${
                 gamePhase === "caught" ? 'border-red-500/50 bg-red-900/20' : 'border-green-500/50 bg-green-900/20'
               }`}>
-                <div className="mb-6">
+                <div style={{marginBottom: "1.5rem"}}>
                   <img 
                     src="/chupacabra/sprite-chupacabra.png"
                     alt="Chupacabra"
@@ -326,7 +326,7 @@ export function ChupacabraChallenge() {
                   {getResultMessage().title}
                 </h2>
                 
-                <p className="text-gray-300 mb-6 max-w-md mx-auto">
+                <p className="text-gray-300  max-w-md mx-auto" style={{marginBottom: "1.5rem"}}>
                   {getResultMessage().message}
                 </p>
                 

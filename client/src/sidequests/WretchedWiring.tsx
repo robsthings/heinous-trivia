@@ -394,7 +394,7 @@ export function WretchedWiring() {
               </button>
               <Link
                 href="/game"
-                className="px-4 py-2 sm:px-6 sm:py-3 bg-gray-600 hover:bg-gray-700 text-white font-bold rounded-lg transition-colors duration-200 shadow-lg inline-block text-center text-sm sm:text-base"
+                className="px-4 py-2 sm:px-6 sm:py-3 bg-gray-600 hover:bg-gray-700 text-white font-bold rounded-lg transition-colors duration-200 shadow-lg inline-block  text-sm sm:text-base" style={{textAlign: "center"}}
               >
                 Return to Game
               </Link>
@@ -406,8 +406,8 @@ export function WretchedWiring() {
       {/* Game Start Screen */}
       {!gameState.isPlaying && !gameState.showCertificate && (
         <div className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-80">
-          <div className="text-center bg-gray-800 bg-opacity-95 p-8 rounded-xl border-2 border-yellow-500 max-w-md">
-            <h1 className="text-4xl font-bold text-yellow-400 mb-6 drop-shadow-lg" style={{ fontFamily: 'Courier, monospace' }}>
+          <div className=" bg-gray-800 bg-opacity-95 p-8 rounded-xl border-2 border-yellow-500 max-w-md" style={{textAlign: "center"}}>
+            <h1 className="text-4xl font-bold text-yellow-400  drop-shadow-lg" style={{marginBottom: "1.5rem"}} style={{ fontFamily: 'Courier, monospace' }}>
               WRETCHED WIRING
             </h1>
             <p className="text-lg text-white mb-8 drop-shadow-lg">

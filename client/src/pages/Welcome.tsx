@@ -84,14 +84,14 @@ export function Welcome() {
       }}
     >
       <div 
-        className="min-h-screen flex flex-col items-center justify-center px-4 text-center"
+        className="min-h-screen flex flex-col items-center justify-center px-4 " style={{textAlign: "center"}}
         style={{
           background: 'linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(55,65,81,0.7), rgba(0,0,0,0.8))'
         }}
       >
         
         {/* Dr. Heinous Character with Speech Bubble */}
-        <div className="relative mb-6">
+        <div className="relative " style={{marginBottom: "1.5rem"}}>
           {/* Speech Bubble */}
           <div 
             className="absolute left-1/2 transform -translate-x-1/2"

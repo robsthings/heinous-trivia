@@ -245,9 +245,9 @@ function Game() {
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black flex items-center justify-center px-4">
         <Card className="bg-gray-900/50 border-gray-700 text-white max-w-md w-full">
           <CardHeader>
-            <CardTitle className="text-center text-red-400">Error</CardTitle>
+            <CardTitle className=" text-red-400" style={{textAlign: "center"}}>Error</CardTitle>
           </CardHeader>
-          <CardContent className="text-center space-y-4">
+          <CardContent className=" space-y-4" style={{textAlign: "center"}}>
             <p className="text-gray-300">{error}</p>
             <Link href="/">
               <Button variant="outline" className="bg-gray-800 border-gray-600 text-white hover:bg-gray-700">
@@ -265,7 +265,7 @@ function Game() {
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black flex items-center justify-center px-4">
         <Card className="bg-gray-900/50 border-gray-700 text-white max-w-md w-full">
           <CardHeader>
-            <CardTitle className="text-center text-red-400 flex items-center justify-center gap-2">
+            <CardTitle className=" text-red-400 flex items-center justify-center gap-2" style={{textAlign: "center"}}>
               <User className="h-6 w-6" />
               Enter Your Name
             </CardTitle>

@@ -214,7 +214,7 @@ export default function ChupacabraChallenge() {
       {/* Panic Mode Warning Text */}
       {isPanicMode && (
         <div className="fixed top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
-          <div className="text-center">
+          <div style={{textAlign: "center"}}>
             <h2 className="text-4xl md:text-6xl font-bold text-red-400 animate-bounce drop-shadow-lg">
               ⚠️ CONTAINMENT FAILING! ⚠️
             </h2>
@@ -227,7 +227,7 @@ export default function ChupacabraChallenge() {
       
       <div className="relative z-10 w-full max-w-4xl">
         {/* Title */}
-        <div className="text-center mb-6 sm:mb-8">
+        <div className="  sm:mb-8" style={{marginBottom: "1.5rem"}} style={{textAlign: "center"}}>
           <h1 
             className="text-3xl sm:text-4xl md:text-5xl font-bold text-orange-300 mb-4 drop-shadow-lg" 
             style={{ fontFamily: 'Frijole, cursive' }}
@@ -319,7 +319,7 @@ export default function ChupacabraChallenge() {
 
         {/* Game Complete Overlay */}
         {gameComplete && (
-          <div className="text-center mb-8">
+          <div className=" mb-8" style={{textAlign: "center"}}>
             <div className="bg-black/80 border border-red-500 rounded-lg p-6 sm:p-8 max-w-md mx-auto">
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-green-400 mb-4">
                 You've survived the Chupacabra Challenge!
@@ -327,7 +327,7 @@ export default function ChupacabraChallenge() {
               <p className="text-lg sm:text-xl text-red-200 mb-4">
                 All cryptid pairs matched in {attempts} attempts!
               </p>
-              <p className="text-base sm:text-lg text-red-300 mb-6">
+              <p className="text-base sm:text-lg text-red-300 " style={{marginBottom: "1.5rem"}}>
                 The Chupacabra is impressed by your memory skills.
               </p>
               
@@ -350,7 +350,7 @@ export default function ChupacabraChallenge() {
 
         {/* Game Failed Overlay */}
         {gameFailed && (
-          <div className="text-center mb-8">
+          <div className=" mb-8" style={{textAlign: "center"}}>
             <div className="bg-black/80 border border-red-500 rounded-lg p-6 sm:p-8 max-w-md mx-auto">
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-red-400 mb-4">
                 You failed the Chupacabra Challenge!
@@ -358,7 +358,7 @@ export default function ChupacabraChallenge() {
               <p className="text-lg sm:text-xl text-red-200 mb-4">
                 Time ran out! You matched {matchedPairs}/8 pairs in {attempts} attempts.
               </p>
-              <p className="text-base sm:text-lg text-red-300 mb-6">
+              <p className="text-base sm:text-lg text-red-300 " style={{marginBottom: "1.5rem"}}>
                 The Chupacabra escapes into the night...
               </p>
               

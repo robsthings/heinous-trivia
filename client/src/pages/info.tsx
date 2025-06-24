@@ -54,8 +54,8 @@ export default function Info() {
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-red-900/20 via-black to-purple-900/20"></div>
         <div className="relative max-w-6xl mx-auto px-4 py-12 sm:py-20">
-          <div className="text-center">
-            <h1 className="font-nosifer text-4xl sm:text-6xl lg:text-7xl text-red-500 mb-6 animate-pulse">
+          <div style={{textAlign: "center"}}>
+            <h1 className="font-nosifer text-4xl sm:text-6xl lg:text-7xl text-red-500  animate-pulse" style={{marginBottom: "1.5rem"}}>
               HEINOUS TRIVIA
             </h1>
             <h2 className="text-xl sm:text-2xl text-gray-300 mb-2 max-w-3xl mx-auto leading-relaxed">
@@ -76,7 +76,7 @@ export default function Info() {
       {/* Features Section */}
       <div className="bg-gray-900/50 py-16">
         <div className="max-w-6xl mx-auto px-4">
-          <h2 className="font-nosifer text-3xl sm:text-4xl text-orange-500 text-center mb-12">
+          <h2 className="font-nosifer text-3xl sm:text-4xl text-orange-500  mb-12" style={{textAlign: "center"}}>
             Unleash Terror Through Trivia
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
@@ -143,15 +143,15 @@ export default function Info() {
       {/* Pricing Section */}
       <div className="py-16">
         <div className="max-w-6xl mx-auto px-4">
-          <h2 className="font-nosifer text-3xl sm:text-4xl text-orange-500 text-center mb-12">
+          <h2 className="font-nosifer text-3xl sm:text-4xl text-orange-500  mb-12" style={{textAlign: "center"}}>
             Choose Your Level of Terror
           </h2>
 
           <div className="grid md:grid-cols-3 gap-8">
             {/* Basic Tier */}
-            <div className="bg-gradient-to-b from-gray-800 to-black border-2 border-gray-600 rounded-lg p-8 text-center">
+            <div className="bg-gradient-to-b from-gray-800 to-black border-2 border-gray-600 rounded-lg p-8 " style={{textAlign: "center"}}>
               <h3 className="font-nosifer text-2xl text-white mb-4">BASIC</h3>
-              <div className="text-4xl font-bold text-gray-300 mb-6">$99<span className="text-lg">/season</span></div>
+              <div className="text-4xl font-bold text-gray-300 " style={{marginBottom: "1.5rem"}}>$99<span className="text-lg">/season</span></div>
               <ul className="text-left space-y-3 mb-8 text-gray-300">
                 <li>✓ Up to 5 custom questions</li>
                 <li>✓ 3 branded ads maximum</li>
@@ -166,12 +166,12 @@ export default function Info() {
             </div>
 
             {/* Pro Tier - Updated to remove group mode */}
-            <div className="bg-gradient-to-b from-red-900 to-black border-2 border-red-500 rounded-lg p-8 text-center relative transform scale-105">
+            <div className="bg-gradient-to-b from-red-900 to-black border-2 border-red-500 rounded-lg p-8  relative transform scale-105" style={{textAlign: "center"}}>
               <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-4 py-1 rounded-full text-sm font-bold">
                 MOST POPULAR
               </div>
               <h3 className="font-nosifer text-2xl text-red-400 mb-4">PRO</h3>
-              <div className="text-4xl font-bold text-white mb-6">$199<span className="text-lg">/season</span></div>
+              <div className="text-4xl font-bold text-white " style={{marginBottom: "1.5rem"}}>$199<span className="text-lg">/season</span></div>
               <ul className="text-left space-y-3 mb-8 text-gray-300">
                 <li>✓ Up to 15 custom questions</li>
                 <li>✓ 5 branded ads maximum</li>
@@ -186,9 +186,9 @@ export default function Info() {
             </div>
 
             {/* Premium Tier */}
-            <div className="bg-gradient-to-b from-purple-900 to-black border-2 border-purple-500 rounded-lg p-8 text-center">
+            <div className="bg-gradient-to-b from-purple-900 to-black border-2 border-purple-500 rounded-lg p-8 " style={{textAlign: "center"}}>
               <h3 className="font-nosifer text-2xl text-purple-400 mb-4">PREMIUM</h3>
-              <div className="text-4xl font-bold text-white mb-6">$399<span className="text-lg">/season</span></div>
+              <div className="text-4xl font-bold text-white " style={{marginBottom: "1.5rem"}}>$399<span className="text-lg">/season</span></div>
               <ul className="text-left space-y-3 mb-8 text-gray-300">
                 <li>✓ Up to 50 custom questions</li>
                 <li>✓ 10 branded ads maximum</li>
@@ -216,8 +216,8 @@ export default function Info() {
 
       {/* CTA Section */}
       <div className="bg-gradient-to-r from-red-900 via-black to-red-900 py-16">
-        <div className="max-w-4xl mx-auto text-center px-4">
-          <h2 className="font-nosifer text-3xl sm:text-4xl text-white mb-6">
+        <div className="max-w-4xl mx-auto  px-4" style={{textAlign: "center"}}>
+          <h2 className="font-nosifer text-3xl sm:text-4xl text-white " style={{marginBottom: "1.5rem"}}>
             Ready to Terrify Your Audience?
           </h2>
           <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
@@ -234,7 +234,7 @@ export default function Info() {
           <p className="text-sm text-gray-400 mt-4">
             Let's build your haunted trivia experience — response within 24 hours.
           </p>
-          <ul className="text-sm text-gray-400 mt-4 space-y-1 max-w-xs mx-auto text-center">
+          <ul className="text-sm text-gray-400 mt-4 space-y-1 max-w-xs mx-auto " style={{textAlign: "center"}}>
             <li className="flex items-center justify-center gap-2">
               <span>✔️</span>
               <span>No tech skills needed</span>
@@ -294,7 +294,7 @@ export default function Info() {
               </a>
             </div>
           </div>
-          <div className="border-t border-gray-800 mt-6 pt-6 text-center">
+          <div className="border-t border-gray-800 mt-6 pt-6 " style={{textAlign: "center"}}>
             <p className="text-gray-500 text-sm">
               © 2025 Heinous Trivia. All rights reserved. Prepare to be terrified.
             </p>

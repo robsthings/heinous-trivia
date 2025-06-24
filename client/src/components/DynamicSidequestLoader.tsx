@@ -44,7 +44,7 @@ export function DynamicSidequestLoader({ sidequestId, className = "" }: DynamicS
   if (error) {
     return (
       <div className={`min-h-screen bg-black text-white flex items-center justify-center ${className}`}>
-        <div className="text-center">
+        <div style={{textAlign: "center"}}>
           <h1 className="text-4xl font-bold text-red-500 mb-4">Sidequest Unavailable</h1>
           <p className="text-xl mb-4">The supernatural forces are blocking this quest</p>
           <p className="text-gray-400">Error: {error.message}</p>
@@ -56,7 +56,7 @@ export function DynamicSidequestLoader({ sidequestId, className = "" }: DynamicS
   if (!sidequest) {
     return (
       <div className={`min-h-screen bg-black text-white flex items-center justify-center ${className}`}>
-        <div className="text-center">
+        <div style={{textAlign: "center"}}>
           <h1 className="text-4xl font-bold text-purple-500 mb-4">Quest Not Found</h1>
           <p className="text-xl">This sidequest has vanished into the void</p>
         </div>
@@ -70,7 +70,7 @@ export function DynamicSidequestLoader({ sidequestId, className = "" }: DynamicS
   if (!Component) {
     return (
       <div className={`min-h-screen bg-black text-white flex items-center justify-center ${className}`}>
-        <div className="text-center">
+        <div style={{textAlign: "center"}}>
           <h1 className="text-4xl font-bold text-yellow-500 mb-4">Quest Under Construction</h1>
           <p className="text-xl mb-4">{sidequest.name}</p>
           <p className="text-gray-400">{sidequest.description}</p>
@@ -133,7 +133,7 @@ export function SidequestList({ tier = 'Basic', onSelectSidequest, className = "
 
   return (
     <div className={`p-6 ${className}`}>
-      <h2 className="text-3xl font-bold text-purple-400 mb-6">Available Sidequests</h2>
+      <h2 className="text-3xl font-bold text-purple-400 " style={{marginBottom: "1.5rem"}}>Available Sidequests</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {sidequests.map((sidequest) => (
           <SidequestCard

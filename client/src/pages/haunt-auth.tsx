@@ -81,7 +81,7 @@ export default function HauntAuth() {
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-red-900 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-sm">
-          <CardHeader className="text-center">
+          <CardHeader style={{textAlign: "center"}}>
             <CardTitle className="text-red-400 text-2xl creepster">
               🎃 Haunt Admin Access
             </CardTitle>
@@ -135,7 +135,7 @@ export default function HauntAuth() {
             </form>
 
             <div className="mt-6 pt-6 border-t border-gray-600">
-              <p className="text-gray-400 text-xs text-center">
+              <p className="text-gray-400 text-xs " style={{textAlign: "center"}}>
                 Need access? Contact your haunt administrator for credentials.
               </p>
             </div>

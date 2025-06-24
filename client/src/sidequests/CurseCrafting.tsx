@@ -225,7 +225,7 @@ export function CurseCrafting() {
       {/* Ingredient Grid - Top of screen - Hidden during reveal */}
       <div className={`pt-8 px-4 transition-opacity duration-1000 ${gamePhase === 'revealing' ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl md:text-6xl font-bold text-center mb-8 drop-shadow-lg" style={{ fontFamily: 'Eater, cursive', color: '#39ff14' }}>
+          <h1 className="text-4xl md:text-6xl font-bold  mb-8 drop-shadow-lg" style={{textAlign: "center"}} style={{ fontFamily: 'Eater, cursive', color: '#39ff14' }}>
             CURSE CRAFTING
           </h1>
           
@@ -260,7 +260,7 @@ export function CurseCrafting() {
                       alt={ingredient.name}
                       className="w-12 h-12 sm:w-16 sm:h-16 mx-auto object-contain"
                     />
-                    <p className="text-xs text-center text-white mt-2 truncate">{ingredient.name}</p>
+                    <p className="text-xs  text-white mt-2 truncate" style={{textAlign: "center"}}>{ingredient.name}</p>
                   </div>
                   
                   {/* Selection indicator */}
@@ -365,7 +365,7 @@ export function CurseCrafting() {
             
             {/* Curse Text Overlay */}
             <div className="absolute inset-0 flex flex-col items-center justify-center px-16 py-20 sm:px-20 sm:py-24 z-20">
-              <div className="text-center space-y-2 max-w-56 sm:max-w-72">
+              <div className=" space-y-2 max-w-56 sm:max-w-72" style={{textAlign: "center"}}>
                 {/* Main Curse */}
                 <p className="text-base sm:text-lg font-bold text-gray-800 leading-snug font-serif">
                   {generatedCurse.curse}
