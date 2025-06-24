@@ -59,7 +59,7 @@ export function Leaderboard({ isVisible, leaderboard, onClose, hauntId, currentP
     <div className="fixed inset-0 bg-black bg-opacity-95 flex items-center justify-center p-3 sm:p-4 z-50">
       <div className="glass-card rounded-xl p-4 sm:p-6 max-w-sm sm:max-w-md w-full animate-fade-in max-h-[90vh] overflow-hidden flex flex-col">
         <div className="text-center mb-4 sm:mb-6">
-          <h2 className="font-creepster text-2xl sm:text-3xl text-orange-500 mb-2">Hall of Horror</h2>
+          <h2 className="creepster text-2xl sm:text-3xl text-orange-500 mb-2">Hall of Horror</h2>
           <p className="text-gray-300 text-sm sm:text-base">Top 10 Nightmare Navigators</p>
         </div>
 
@@ -74,7 +74,7 @@ export function Leaderboard({ isVisible, leaderboard, onClose, hauntId, currentP
                 {/* Pulsing aura effect */}
                 <div className="absolute inset-0 animate-pulse bg-orange-500/20 rounded-full blur-sm"></div>
               </div>
-              <p className="animate-pulse text-orange-400 font-creepster text-sm sm:text-base">Summoning the spirits...</p>
+              <p className="animate-pulse text-orange-400 creepster text-sm sm:text-base">Summoning the spirits...</p>
               <p className="text-xs mt-2 text-gray-500 animate-pulse">The dead are revealing their scores</p>
             </div>
           ) : leaderboard.length === 0 ? (

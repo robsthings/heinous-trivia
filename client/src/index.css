@@ -1,53 +1,47 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Basic CSS Reset and Base Styles */
+* {
+  box-sizing: border-box;
+}
 
-@layer utilities {
-  .font-creepster {
-    font-family: 'Creepster', cursive;
-  }
-  
-  .font-nosifer {
-    font-family: 'Nosifer', cursive;
-  }
-  
-  .font-eater {
-    font-family: 'Eater', cursive;
-  }
-  
-  /* Horror Theme Colors */
-  .bg-blood { background-color: #7f0000; }
-  .bg-void { background-color: #0b001a; }
-  .bg-shadow { background-color: #1a1a1a; }
-  .bg-flame { background-color: #ff5500; }
-  .bg-dark { background-color: #0d0d0d; }
-  .bg-ghost { background-color: #f2f2f2; }
-  .bg-spirit { background-color: #bb86fc; }
-  .bg-poison { background-color: #013220; }
-  .bg-crimson { background-color: #5c0a0a; }
-  .bg-correct { background-color: #013220; }
-  .bg-wrong { background-color: #5c0a0a; }
-  
-  .text-blood { color: #7f0000; }
-  .text-void { color: #0b001a; }
-  .text-shadow { color: #1a1a1a; }
-  .text-flame { color: #ff5500; }
-  .text-dark { color: #0d0d0d; }
-  .text-ghost { color: #f2f2f2; }
-  .text-spirit { color: #bb86fc; }
-  .text-poison { color: #013220; }
-  .text-crimson { color: #5c0a0a; }
-  
-  /* Special Effects */
-  .drop-shadow-glow {
-    filter: drop-shadow(0 0 10px rgba(255, 85, 0, 0.5));
-  }
-  
-  .text-shadow {
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-  }
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-  /* Animation keyframes for Welcome page */
+body {
+  line-height: 1.5;
+  color: #1f2937;
+  background-color: #ffffff;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: 600;
+}
+
+p {
+  margin: 0;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Animation keyframes for Welcome page */
   @keyframes speech-bubble-in {
     0% { 
       opacity: 0; 
@@ -91,8 +85,7 @@
     }
   }
 
-  @keyframes blink {
-    0%, 50% { opacity: 1; }
-    51%, 100% { opacity: 0; }
-  }
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
 }

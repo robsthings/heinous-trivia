@@ -127,7 +127,7 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
           
           {/* Header - Compact on mobile */}
           <div className="text-center py-2 flex-shrink-0">
-            <h3 className="font-nosifer text-base sm:text-xl lg:text-3xl text-orange-500 animate-pulse leading-tight">
+            <h3 className="nosifer text-base sm:text-xl lg:text-3xl text-orange-500 animate-pulse leading-tight">
               A Message from Our Sponsors
             </h3>
 

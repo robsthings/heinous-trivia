@@ -111,7 +111,7 @@ export function GameEndScreen({
               />
             </div>
           )}
-          <h2 className="font-creepster text-2xl sm:text-3xl text-orange-500 mb-2">Game Over</h2>
+          <h2 className="creepster text-2xl sm:text-3xl text-orange-500 mb-2">Game Over</h2>
           <p className="text-gray-300 mb-4 sm:mb-6 text-sm sm:text-base">Dr. Heinous is pleased with your performance...</p>
           
           <div className="bg-purple-900 rounded-lg p-4 sm:p-6 mb-4 sm:mb-6">
