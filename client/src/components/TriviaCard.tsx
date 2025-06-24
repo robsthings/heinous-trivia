@@ -144,7 +144,7 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
             borderRadius: '8px',
             textAlign: 'left' as const,
             fontWeight: '500',
-            transition: 'all 0.2s ease',
+            transition: 'all 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease',
             cursor: gameState.selectedAnswer !== null ? 'default' : 'pointer',
             background: 'rgba(55, 65, 81, 0.8)',
             border: '1px solid rgba(75, 85, 99, 0.6)',
@@ -191,11 +191,15 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
               onMouseEnter={(e) => {
                 if (gameState.selectedAnswer === null) {
                   e.currentTarget.style.background = 'rgba(75, 85, 99, 0.8)';
+                  e.currentTarget.style.transform = 'scale(1.02)';
+                  e.currentTarget.style.boxShadow = '0 0 8px rgba(255, 255, 255, 0.05)';
                 }
               }}
               onMouseLeave={(e) => {
                 if (gameState.selectedAnswer === null) {
                   e.currentTarget.style.background = 'rgba(55, 65, 81, 0.8)';
+                  e.currentTarget.style.transform = 'scale(1)';
+                  e.currentTarget.style.boxShadow = 'none';
                 }
               }}
             >
