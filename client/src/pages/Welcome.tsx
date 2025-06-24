@@ -50,13 +50,13 @@ export function Welcome() {
   // Force refresh trigger
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-cover bg-center px-4 text-center"
+    <div className="min-h-screen flex flex-col items-center justify-center bg-cover bg-center px-4 text-center gap-4"
          style={{ backgroundImage: "url('/backgrounds/lab-dark-blue.png')" }}>
       
       {/* Dr. Heinous Character with Speech Bubble */}
       <div className="relative">
         {/* Speech Bubble */}
-        <div className="absolute text-xs text-white bg-red-700 px-2 py-1 rounded shadow -translate-y-10 left-1/2 transform -translate-x-1/2">
+        <div className="absolute text-sm md:text-base text-white bg-red-700 px-3 py-2 rounded shadow drop-shadow left-1/2 transform -translate-x-1/2 font-semibold whitespace-nowrap mt-[-3rem]">
           {tauntText}
         </div>
         
@@ -69,25 +69,25 @@ export function Welcome() {
       </div>
 
       {/* Welcome Title */}
-      <h1 className="font-creepster text-center text-5xl md:text-6xl mt-6 text-orange-500">
+      <h1 className="font-creepster text-center text-5xl md:text-6xl text-orange-500">
         WELCOME BACK
       </h1>
       
       {/* Subtext */}
-      <p className="text-white text-sm md:text-base mt-2">
+      <p className="text-white text-sm md:text-base">
         Ready for another spine-chilling round of trivia?
       </p>
 
       {/* Play Again Button */}
       <button
         onClick={handleStartGame}
-        className="text-white font-eater text-lg px-6 py-2 rounded shadow mt-4 transition-colors bg-orange-500 hover:bg-green-900"
+        className="text-white font-eater text-lg px-6 py-2 rounded shadow transition-colors transform bg-orange-500 hover:bg-green-900 hover:scale-105"
       >
         PLAY AGAIN
       </button>
 
       {/* Haunt Label */}
-      <div className="text-xs mt-2 text-red-900 drop-shadow-md">
+      <div className="text-xs text-red-900 drop-shadow-md">
         Haunt: {hauntId}
       </div>
     </div>
