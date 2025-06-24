@@ -1,24 +1,8 @@
-import { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'wouter';
-import { heinousSprites } from '@/lib/characterLoader';
 
 export function Welcome() {
   const { hauntId } = useParams<{ hauntId: string }>();
   const [, setLocation] = useLocation();
-  const [currentCharacterIndex, setCurrentCharacterIndex] = useState(0);
-
-  // Character sprites for animation
-  const characters = Object.values(heinousSprites);
-  
-  useEffect(() => {
-    if (characters.length === 0) return;
-    
-    const interval = setInterval(() => {
-      setCurrentCharacterIndex((prev) => (prev + 1) % characters.length);
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, [characters.length]);
 
   const handleStartGame = () => {
     if (hauntId) {
@@ -58,18 +42,16 @@ export function Welcome() {
         </div>
 
         {/* Dr. Heinous Character */}
-        {characters.length > 0 && (
-          <div className="mx-auto w-48 md:w-60 drop-shadow-xl mb-6">
-            <img 
-              src={characters[currentCharacterIndex]} 
-              alt="Dr. Heinous" 
-              className="w-full h-full object-contain"
-              style={{ 
-                imageRendering: 'pixelated'
-              }}
-            />
-          </div>
-        )}
+        <div className="mx-auto w-48 md:w-60 drop-shadow-xl mb-6">
+          <img 
+            src="/heinous/charming.png" 
+            alt="Dr. Heinous" 
+            className="w-full h-full object-contain"
+            style={{ 
+              imageRendering: 'pixelated'
+            }}
+          />
+        </div>
 
         {/* Welcome Heading */}
         <h1 className="text-4xl md:text-5xl font-creepster text-orange-800 text-center drop-shadow mb-4">
