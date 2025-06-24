@@ -11,7 +11,7 @@ import { getStorage } from 'firebase-admin/storage';
 
 // Check if Firebase is properly configured
 const isFirebaseConfigured = () => {
-  return !!(process.env.FIREBASE_SERVICE_ACCOUNT_JSON || process.env.FIREBASE_PROJECT_ID);
+  return !!(process.env.FIREBASE_SERVICE_ACCOUNT_JSON);
 };
 
 // Initialize Firebase Admin SDK only if properly configured
@@ -23,36 +23,29 @@ let exportedFieldValue;
 if (isFirebaseConfigured()) {
   try {
     if (getApps().length === 0) {
-      if (process.env.FIREBASE_SERVICE_ACCOUNT_JSON) {
-        const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_JSON);
-        const credential = cert(serviceAccount);
+      const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_JSON!);
+      const credential = cert(serviceAccount);
 
-        firebaseApp = initializeApp({
-          credential: credential,
-          databaseURL: `https://${serviceAccount.project_id}-default-rtdb.firebaseio.com/`,
-          storageBucket: `${serviceAccount.project_id}.firebasestorage.app`
-        });
-      } else {
-        // Initialize with project ID only for development
-        firebaseApp = initializeApp({
-          projectId: 'heinous-trivia'
-        });
-      }
+      firebaseApp = initializeApp({
+        credential: credential,
+        databaseURL: `https://${serviceAccount.project_id}-default-rtdb.firebaseio.com/`,
+        storageBucket: `${serviceAccount.project_id}.firebasestorage.app`
+      });
     } else {
       firebaseApp = getApps()[0];
     }
     firestore = getFirestore(firebaseApp);
     storage = getStorage(firebaseApp);
     exportedFieldValue = FieldValue;
-    console.log('Firebase Admin SDK initialized successfully');
+    // Firebase Admin SDK initialized successfully
   } catch (error) {
-    console.warn('Firebase initialization failed - running without Firebase integration:', error.message);
+    // Firebase initialization failed - running without Firebase integration
     firestore = null;
     storage = null;
     exportedFieldValue = null;
   }
 } else {
-  console.log('Firebase not configured - running without Firebase integration');
+  // Firebase credentials not configured, running without Firebase integration
   firestore = null;
   storage = null;
   exportedFieldValue = null;

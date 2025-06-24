@@ -48,24 +48,21 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
   const answerLabels = ['A', 'B', 'C', 'D'];
 
   const getButtonClass = (index: number) => {
-    if (gameState.selectedAnswer === null) {
-      return "w-full p-4 text-left bg-gradient-to-r from-blood to-crimson hover:from-crimson hover:to-blood border border-spirit/30 rounded-lg transition-all duration-300 hover:scale-102 text-white shadow-lg";
+    let baseClass = "w-full p-4 rounded-lg text-left font-medium transition-all duration-200 touch-manipulation";
+    
+    if (gameState.showFeedback && gameState.selectedAnswer !== null) {
+      if (index === currentQuestion.correctAnswer) {
+        baseClass += " bg-green-600 text-white shadow-lg";
+      } else if (index === gameState.selectedAnswer) {
+        baseClass += " bg-red-600/70 text-white shadow-lg";
+      } else {
+        baseClass += " bg-gradient-to-r from-red-700 to-purple-700 text-gray-300 opacity-50";
+      }
+    } else {
+      baseClass += " bg-gradient-to-r from-red-700 to-purple-700 text-white hover:from-red-600 hover:to-purple-600 shadow-lg";
     }
     
-    const isCorrect = index === currentQuestion.correctAnswer;
-    const isSelected = index === gameState.selectedAnswer;
-    
-    if (isSelected) {
-      return isCorrect 
-        ? "w-full p-4 text-left bg-correct border border-green-400 rounded-lg text-white shadow-lg animate-pulse-glow"
-        : "w-full p-4 text-left bg-wrong border border-red-400 rounded-lg text-white shadow-lg animate-shake";
-    }
-    
-    if (isCorrect) {
-      return "w-full p-4 text-left bg-correct border border-green-400 rounded-lg text-white shadow-lg animate-pulse-glow";
-    }
-    
-    return "w-full p-4 text-left bg-void border border-gray-400 rounded-lg text-white shadow-lg opacity-60";
+    return baseClass;
   };
 
   const getDifficultyStars = (difficulty: number) => {
@@ -81,10 +78,10 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
   };
 
   return (
-    <div className="w-full transition-opacity duration-700 ease-in-out animate-fade-in">
+    <div className="w-full">
       {/* Question Header */}
       <div className="text-center mb-8 px-4">
-        <h2 className="text-white text-xl font-creepster leading-relaxed mb-4 animate-pulse-glow question-text">
+        <h2 className="text-white text-xl font-medium leading-relaxed mb-4">
           {currentQuestion.text}
         </h2>
         
@@ -103,7 +100,7 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
         {currentQuestion.answers?.map((answer, index) => (
           <button
             key={index}
-            className={getButtonClass(index)}
+            className={`w-full p-4 rounded-lg bg-gradient-to-r from-blood to-crimson text-white border border-crimson/30 transition-all duration-300 hover:scale-105 animate-pulse-glow ${getButtonClass(index)}`}
             onClick={() => {
               // Answer bounds check
               if (index < 0 || index >= currentQuestion.answers?.length) {
