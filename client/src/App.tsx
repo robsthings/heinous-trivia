@@ -91,10 +91,6 @@ function Router() {
 function App() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-void via-shadow to-dark text-white">
-      <div className="bg-correct text-blood p-6 text-3xl rounded-lg shadow-md">
-        🧪 Tailwind v4 Horror Theme is WORKING!
-      </div>
-
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <Toaster />
