@@ -128,23 +128,7 @@
 }
 
 
-.py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; }
-.rounded-full { border-radius: 9999px; }
-.touch-manipulation { touch-action: manipulation; }
-.border { border-width: 1px; }
-.border-red-500 { border-color: rgb(239 68 68); }
-.border-gray-600 { border-color: rgb(75 85 99); }
-.transition-all { transition-property: all; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
-.transition-transform { transition-property: transform; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
-.transition-opacity { transition-property: opacity; transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); transition-duration: 150ms; }
-.duration-300 { transition-duration: 300ms; }
-.duration-500 { transition-duration: 500ms; }
-.ease-in-out { transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
-.opacity-0 { opacity: 0; }
-.opacity-20 { opacity: 0.2; }
-.opacity-30 { opacity: 0.3; }
-.pointer-events-none { pointer-events: none; }
-.cursor-pointer { cursor: pointer; }
+
 
 /* Tab styling overrides for admin dashboard */
 .admin-tabs [data-state="active"] {
