@@ -101,6 +101,27 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
       marginTop: '16px',
       position: 'relative'
     }}>
+      {/* Haunt Logo Watermark */}
+      {gameState.hauntConfig?.logoPath && (
+        <div style={{
+          position: 'absolute',
+          bottom: '16px',
+          right: '16px',
+          opacity: '0.3',
+          filter: 'grayscale(100%)',
+          zIndex: 1
+        }}>
+          <img
+            src={gameState.hauntConfig.logoPath}
+            alt="Haunt Logo"
+            style={{
+              width: '48px',
+              height: '48px',
+              borderRadius: '50%'
+            }}
+          />
+        </div>
+      )}
       {/* Question Header */}
       <div style={{ textAlign: 'center', marginBottom: '32px' }}>
         <h2 style={{ 
