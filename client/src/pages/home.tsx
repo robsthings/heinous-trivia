@@ -9,7 +9,7 @@ export default function Home() {
       <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
         {/* Header */}
         <div className="text-center mb-6 sm:mb-12">
-          <h1 className="font-creepster text-4xl sm:text-6xl md:text-8xl text-red-500 mb-2 sm:mb-4 drop-shadow-lg leading-tight">
+          <h1 className="creepster text-4xl sm:text-6xl md:text-8xl text-red-500 mb-2 sm:mb-4 drop-shadow-lg leading-tight">
             HEINOUS TRIVIA
           </h1>
           <p className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-2 px-2">

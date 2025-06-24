@@ -20,13 +20,13 @@ export default function FontDebugTest() {
       {/* Tailwind Font Class Test */}
       <div className="space-y-4 p-4 border border-gray-600 rounded">
         <h2 className="text-xl text-yellow-400">Tailwind Font Class Tests:</h2>
-        <div className="font-creepster text-2xl text-red-500">
+        <div className="creepster text-2xl text-red-500">
           Creepster Tailwind Class: HORROR FONT TEST
         </div>
-        <div className="font-nosifer text-xl text-purple-500">
+        <div className="nosifer text-xl text-purple-500">
           Nosifer Tailwind Class: SCARY TEXT
         </div>
-        <div className="font-eater text-lg text-green-500">
+        <div className="eater text-lg text-green-500">
           Eater Tailwind Class: DISTURBING WORDS
         </div>
       </div>

@@ -82,7 +82,7 @@ export default function HauntAuth() {
       <div className="w-full max-w-md">
         <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-sm">
           <CardHeader className="text-center">
-            <CardTitle className="text-red-400 text-2xl font-creepster">
+            <CardTitle className="text-red-400 text-2xl creepster">
               🎃 Haunt Admin Access
             </CardTitle>
             <p className="text-gray-300 text-sm mt-2">
