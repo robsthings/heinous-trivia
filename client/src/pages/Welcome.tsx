@@ -69,7 +69,7 @@ export function Welcome() {
       </div>
 
       {/* Welcome Title */}
-      <h1 className="font-creepster text-flame text-center text-5xl md:text-6xl mt-6">
+      <h1 className="font-creepster text-center text-5xl md:text-6xl mt-6" style={{ color: '#ff5500' }}>
         WELCOME BACK
       </h1>
       
@@ -81,13 +81,16 @@ export function Welcome() {
       {/* Play Again Button */}
       <button
         onClick={handleStartGame}
-        className="bg-flame text-white font-eater text-lg px-6 py-2 rounded shadow hover:bg-poison mt-4"
+        className="text-white font-eater text-lg px-6 py-2 rounded shadow mt-4 transition-colors"
+        style={{ backgroundColor: '#ff5500' }}
+        onMouseEnter={(e) => e.target.style.backgroundColor = '#013220'}
+        onMouseLeave={(e) => e.target.style.backgroundColor = '#ff5500'}
       >
         PLAY AGAIN
       </button>
 
       {/* Haunt Label */}
-      <div className="text-crimson text-xs mt-2 text-shadow">
+      <div className="text-xs mt-2" style={{ color: '#5c0a0a', textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}>
         Haunt: {hauntId}
       </div>
     </div>
