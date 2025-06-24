@@ -94,10 +94,12 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
 
   return (
     <div style={{
-      background: '#18181b',
-      borderRadius: '8px',
-      boxShadow: 'inset 0 0 10px rgba(98, 0, 255, 0.3)',
-      padding: '24px',
+      background: 'rgba(0, 0, 0, 0.6)',
+      border: '1px solid rgba(255, 255, 255, 0.05)',
+      borderRadius: '12px',
+      boxShadow: '0 0 12px rgba(255, 0, 50, 0.1)',
+      backdropFilter: 'blur(6px)',
+      padding: '32px',
       marginTop: '16px',
       position: 'relative'
     }}>
