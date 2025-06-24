@@ -47,21 +47,7 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
 
   const answerLabels = ['A', 'B', 'C', 'D'];
 
-  const getButtonClass = (index: number) => {
-    let baseClass = "w-full p-4 rounded-lg text-left font-medium transition-all duration-200 touch-manipulation bg-gray-800/50 border border-gray-600 text-white hover:bg-gray-700/50";
-    
-    if (gameState.showFeedback && gameState.selectedAnswer !== null) {
-      if (index === currentQuestion.correctAnswer) {
-        baseClass = "w-full p-4 rounded-lg text-left font-medium transition-all duration-200 touch-manipulation bg-green-600 text-white shadow-lg border border-green-500";
-      } else if (index === gameState.selectedAnswer) {
-        baseClass = "w-full p-4 rounded-lg text-left font-medium transition-all duration-200 touch-manipulation bg-red-600/70 text-white shadow-lg border border-red-500";
-      } else {
-        baseClass = "w-full p-4 rounded-lg text-left font-medium transition-all duration-200 touch-manipulation bg-gray-800/30 text-gray-400 opacity-50 border border-gray-700";
-      }
-    }
-    
-    return baseClass;
-  };
+
 
   const getDifficultyStars = (difficulty: number) => {
     return Array.from({ length: 5 }, (_, i) => (
@@ -76,67 +62,162 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
   };
 
   return (
-    <div className="glass-card rounded-xl p-6 mt-4 animate-fade-in">
+    <div style={{
+      background: 'rgba(31, 41, 55, 0.9)',
+      backdropFilter: 'blur(12px)',
+      border: '1px solid rgba(75, 85, 99, 0.4)',
+      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
+      borderRadius: '12px',
+      padding: '24px',
+      marginTop: '16px'
+    }}>
       {/* Question Header */}
-      <div className="text-center mb-8">
-        <h2 className="text-white text-xl font-medium leading-relaxed mb-4">
+      <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+        <h2 style={{ 
+          color: '#ffffff', 
+          fontSize: '20px', 
+          fontWeight: '500', 
+          lineHeight: '1.6', 
+          marginBottom: '16px' 
+        }}>
           {currentQuestion.text}
         </h2>
         
-        <div className="flex items-center justify-center gap-3 mb-4">
-          <span className="bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', marginBottom: '16px' }}>
+          <span style={{
+            backgroundColor: '#7c3aed',
+            color: '#ffffff',
+            padding: '4px 12px',
+            borderRadius: '20px',
+            fontSize: '14px',
+            fontWeight: '500'
+          }}>
             {currentQuestion.category}
           </span>
-          <div className="flex space-x-1">
+          <div style={{ display: 'flex', gap: '4px' }}>
             {getDifficultyStars(currentQuestion.difficulty)}
           </div>
         </div>
       </div>
 
       {/* Answer Options */}
-      <div className="space-y-3">
-        {currentQuestion.answers?.map((answer, index) => (
-          <button
-            key={index}
-            className={getButtonClass(index)}
-            onClick={() => {
-              // Answer bounds check
-              if (index < 0 || index >= currentQuestion.answers?.length) {
-                return;
-              }
-              onSelectAnswer(index);
-            }}
-            disabled={gameState.selectedAnswer !== null}
-          >
-            <div className="flex items-center">
-              <span className="w-8 h-8 rounded-full bg-red-600 text-white flex items-center justify-center text-sm font-bold mr-4 flex-shrink-0">
-                {answerLabels[index]}
-              </span>
-              <span className="text-base text-left break-words">{answer}</span>
-            </div>
-          </button>
-        ))}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        {currentQuestion.answers?.map((answer, index) => {
+          let buttonStyle = {
+            width: '100%',
+            padding: '16px',
+            borderRadius: '8px',
+            textAlign: 'left' as const,
+            fontWeight: '500',
+            transition: 'all 0.2s ease',
+            cursor: gameState.selectedAnswer !== null ? 'default' : 'pointer',
+            background: 'rgba(31, 41, 55, 0.5)',
+            border: '1px solid rgba(75, 85, 99, 0.6)',
+            color: '#ffffff'
+          };
+
+          if (gameState.showFeedback && gameState.selectedAnswer !== null) {
+            if (index === currentQuestion.correctAnswer) {
+              buttonStyle = {
+                ...buttonStyle,
+                background: '#16a34a',
+                border: '1px solid #22c55e',
+                boxShadow: '0 4px 12px rgba(34, 197, 94, 0.3)'
+              };
+            } else if (index === gameState.selectedAnswer) {
+              buttonStyle = {
+                ...buttonStyle,
+                background: 'rgba(220, 38, 38, 0.7)',
+                border: '1px solid #ef4444',
+                boxShadow: '0 4px 12px rgba(239, 68, 68, 0.3)'
+              };
+            } else {
+              buttonStyle = {
+                ...buttonStyle,
+                background: 'rgba(31, 41, 55, 0.3)',
+                color: '#9ca3af',
+                opacity: 0.5,
+                border: '1px solid rgba(75, 85, 99, 0.3)'
+              };
+            }
+          }
+
+          return (
+            <button
+              key={index}
+              style={buttonStyle}
+              onClick={() => {
+                if (index < 0 || index >= currentQuestion.answers?.length) {
+                  return;
+                }
+                onSelectAnswer(index);
+              }}
+              disabled={gameState.selectedAnswer !== null}
+            >
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <span style={{
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: '50%',
+                  backgroundColor: '#dc2626',
+                  color: '#ffffff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  marginRight: '16px',
+                  flexShrink: 0
+                }}>
+                  {answerLabels[index]}
+                </span>
+                <span style={{ fontSize: '16px', textAlign: 'left', wordBreak: 'break-words' }}>
+                  {answer}
+                </span>
+              </div>
+            </button>
+          );
+        })}
       </div>
 
       {gameState.showFeedback && (
-        <div className={`mt-6 p-4 rounded-lg border animate-slide-up ${
-          gameState.isCorrect 
-            ? 'bg-green-600 border-green-500' 
-            : 'bg-red-600/90 border-red-500'
-        }`}>
-          <div className="flex items-start space-x-3">
-            <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
-              gameState.isCorrect ? 'bg-white text-green-600' : 'bg-white text-red-600'
-            }`}>
-              <span className="text-sm font-bold">
+        <div style={{
+          marginTop: '24px',
+          padding: '16px',
+          borderRadius: '8px',
+          border: gameState.isCorrect ? '1px solid #22c55e' : '1px solid #ef4444',
+          background: gameState.isCorrect ? '#16a34a' : 'rgba(220, 38, 38, 0.9)'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
+            <div style={{
+              width: '24px',
+              height: '24px',
+              borderRadius: '50%',
+              backgroundColor: '#ffffff',
+              color: gameState.isCorrect ? '#16a34a' : '#dc2626',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexShrink: 0,
+              marginTop: '2px'
+            }}>
+              <span style={{ fontSize: '14px', fontWeight: 'bold' }}>
                 {gameState.isCorrect ? '✓' : '✗'}
               </span>
             </div>
             <div>
-              <p className="font-medium text-white text-sm sm:text-base">
+              <p style={{ 
+                fontWeight: '500', 
+                color: '#ffffff', 
+                fontSize: '16px', 
+                marginBottom: '4px' 
+              }}>
                 {gameState.isCorrect ? 'Correct!' : 'Incorrect!'}
               </p>
-              <p className="text-gray-100 text-xs sm:text-sm mt-1">
+              <p style={{ 
+                color: '#f3f4f6', 
+                fontSize: '14px' 
+              }}>
                 {currentQuestion.explanation}
               </p>
             </div>
@@ -145,7 +226,7 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
       )}
 
       {gameState.showFeedback && (
-        <div className="mt-4 sm:mt-6 flex justify-center">
+        <div style={{ marginTop: '24px', display: 'flex', justifyContent: 'center' }}>
           <button
             className="horror-button px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-medium text-white hover:scale-105 transition-transform text-sm sm:text-base touch-manipulation"
             onClick={onNextQuestion}
