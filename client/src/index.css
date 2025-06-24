@@ -357,6 +357,19 @@
 /* Force body background for development */
 body {
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
+  font-family: 'Roboto', 'Creepster', cursive !important;
+}
+
+/* Force root container styling */
+#root {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
+  min-height: 100vh !important;
+}
+
+/* Nuclear force horror styling */
+* {
+  --tw-gradient-from: #991b1b !important;
+  --tw-gradient-to: #7e22ce !important;
 }
 
 /* Development override for all containers */
