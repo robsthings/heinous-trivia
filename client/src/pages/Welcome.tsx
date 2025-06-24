@@ -6,13 +6,14 @@ export function Welcome() {
 
   const handleStartGame = () => {
     if (hauntId) {
-      // Mark as visited
+      // Mark as visited for future welcome screen logic
       const visitKey = `visited_${hauntId}`;
       localStorage.setItem(visitKey, 'true');
       
       // Set session storage to track that user is coming from welcome
       sessionStorage.setItem('fromWelcome', 'true');
       
+      // Navigate to the game
       setLocation(`/game/${hauntId}`);
     }
   };
