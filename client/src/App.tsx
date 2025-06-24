@@ -35,6 +35,7 @@ import { WackAChupacabra } from "@/sidequests/WackAChupacabra";
 import { LabEscape } from "@/pages/lab-escape";
 import { FaceTheChupacabra } from "@/components/sidequests/face-the-chupacabra";
 import HauntTest from "@/pages/haunt-test";
+import TailwindTest from "@/components/TailwindTest";
 
 function Router() {
   return (
@@ -83,6 +84,7 @@ function Router() {
       <Route path="/sidequests/lab-escape" component={LabEscape} />
       <Route path="/sidequest/face-the-chupacabra" component={FaceTheChupacabra} />
       <Route path="/sidequests/face-the-chupacabra" component={FaceTheChupacabra} />
+      <Route path="/tailwind-test" component={TailwindTest} />
       <Route component={NotFound} />
     </Switch>
   );
