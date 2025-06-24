@@ -86,7 +86,7 @@ export function Footer({ showInstallButton = false }: FooterProps) {
             </span>
           </div>
           <a 
-            href="https://heinoustrivia.com" 
+            href="https://heinoustrivia.com/privacy" 
             style={{ color: '#9ca3af', fontSize: '14px', textDecoration: 'none' }}
             target="_blank"
             rel="noopener noreferrer"
@@ -97,7 +97,7 @@ export function Footer({ showInstallButton = false }: FooterProps) {
           </a>
           <span style={{ color: '#6b7280', fontSize: '12px' }}>|</span>
           <a 
-            href="https://heinoustrivia.com" 
+            href="https://heinoustrivia.com/terms" 
             style={{ color: '#9ca3af', fontSize: '14px', textDecoration: 'none' }}
             target="_blank"
             rel="noopener noreferrer"
