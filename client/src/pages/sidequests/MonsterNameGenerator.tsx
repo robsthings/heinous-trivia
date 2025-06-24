@@ -153,7 +153,7 @@ function MonsterNameGeneratorCore({ showHeinous = true }: MonsterNameGeneratorPr
       {/* Scanning text overlay */}
       {scanPhase === 'scanning' && (
         <div className="absolute inset-0 z-25 flex items-center justify-center pointer-events-none">
-          <div className=" px-4" style={{textAlign: "center"}}>
+          <div className=" px-4" className="text-center">
             <h2 className="text-blue-400 text-xl sm:text-2xl md:text-3xl font-bold animate-pulse mb-4">
               {currentScanText}
             </h2>
@@ -167,7 +167,7 @@ function MonsterNameGeneratorCore({ showHeinous = true }: MonsterNameGeneratorPr
           <div className="relative">
             {/* Speech bubble positioned above sprite */}
             <div className="absolute -top-20 sm:-top-24 left-1/2 transform -translate-x-1/2 bg-gray-900 border-2 border-red-600 rounded-lg px-3 py-2 w-48 sm:6 shadow-lg animate-fade-in z-10" style={{width: "1.25rem"}}>
-              <div className="text-red-400 text-xs sm:text-sm font-semibold " style={{textAlign: "center"}}>
+              <div className="text-red-400 text-xs sm:text-sm font-semibold " className="text-center">
                 Hold still. This won't hurt… much.
               </div>
               {/* Speech bubble tail pointing down */}
@@ -205,7 +205,7 @@ function MonsterNameGeneratorCore({ showHeinous = true }: MonsterNameGeneratorPr
           >
             {/* Monster name display - always two lines */}
             <div className="absolute inset-0 flex items-center justify-center">
-              <div className=" px-6" style={{textAlign: "center"}}>
+              <div className=" px-6" className="text-center">
                 <h1 className="text-lg sm:text-xl md:text-2xl font-nosifer text-red-500 leading-tight animate-fade-in">
                   {monsterName.split(' ').map((word, index) => (
                     <div key={index} className="block">

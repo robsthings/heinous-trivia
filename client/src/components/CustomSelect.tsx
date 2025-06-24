@@ -38,7 +38,7 @@ export function CustomSelect({ value, onValueChange, options, placeholder, class
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full  border border-gray-600 text-white px-3 py-2 rounded-md    hover:bg-gray-700 transition-colors" style={{justifyContent: "space-between"}} style={{alignItems: "center"}} style={{display: "flex"}} style={{backgroundColor: "#1f2937"}}
+        className="w-full  border border-gray-600 text-white px-3 py-2 rounded-md    hover:bg-gray-700 transition-colors" style={{justifyContent: "space-between"}} style={{alignItems: "center"}} style={{display: "flex"}} className="bg-gray-800"
       >
         <span className="  gap-2" style={{alignItems: "center"}} style={{display: "flex"}}>
           {selectedOption?.icon}
@@ -49,7 +49,7 @@ export function CustomSelect({ value, onValueChange, options, placeholder, class
 
       {/* Dropdown */}
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 mt-1  border border-gray-600 rounded-md shadow-lg z-50 overflow-hidden" style={{backgroundColor: "#1f2937"}}>
+        <div className="absolute top-full left-0 right-0 mt-1  border border-gray-600 rounded-md shadow-lg z-50 overflow-hidden" className="bg-gray-800">
           {options.map((option) => (
             <button
               key={option.value}

@@ -265,7 +265,7 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
           <div className="relative">
             {showHeinousMessage && (
               <div className="absolute -top-20 sm:-top-24 left-1/2 transform -translate-x-1/2 bg-gray-900 border-2 border-red-600 rounded-lg px-3 py-2 w-48 sm:w-56 shadow-lg animate-fade-in z-10">
-                <div className="text-red-400 text-xs sm:text-sm font-semibold " style={{textAlign: "center"}}>
+                <div className="text-red-400 text-xs sm:text-sm font-semibold " className="text-center">
                   {heinousMessage}
                 </div>
                 <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2">
@@ -307,16 +307,16 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
           >
             <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-30">
               <div className="bg-black/70 rounded-lg px-4 py-2 flex gap-4 text-white">
-                <div style={{textAlign: "center"}}>
+                <div className="text-center">
                   <div className="text-xs text-gray-300">SCORE</div>
                   <div className="text-xl font-bold text-green-400">{score}</div>
                 </div>
-                <div style={{textAlign: "center"}}>
+                <div className="text-center">
                   <div className="text-xs text-gray-300">TIME</div>
                   <div className="text-xl font-bold text-red-400">{timeLeft}s</div>
                 </div>
                 {chaosLevel > 1 && (
-                  <div style={{textAlign: "center"}}>
+                  <div className="text-center">
                     <div className="text-xs text-gray-300">CHAOS</div>
                     <div className={`text-xl font-bold ${
                       chaosLevel <= 3 ? 'text-yellow-400' :
@@ -376,12 +376,12 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
         )}
 
         {gamePhase === 'complete' && (
-          <div className=" animate-fade-in" style={{textAlign: "center"}}>
+          <div className=" animate-fade-in" className="text-center">
             <div className="bg-black/80 rounded-lg p-8 max-w-md mx-auto">
               <h1 className="text-3xl sm:text-4xl font-bold text-red-500 mb-4">
                 EXPERIMENT COMPLETE!
               </h1>
-              <div className="text-2xl font-bold text-green-400 " style={{marginBottom: "1.5rem"}}>
+              <div className="text-2xl font-bold text-green-400 " className="mb-6">
                 Final Score: {score}
               </div>
               <div className="text-gray-300 mb-4">
@@ -391,7 +391,7 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
               </div>
               
               {chaosLevel > 1 && (
-                <div className=" " style={{marginBottom: "1.5rem"}} style={{textAlign: "center"}}>
+                <div  className="mb-6" className="text-center">
                   <div className={`text-lg font-bold ${
                     chaosLevel <= 3 ? 'text-yellow-400' :
                     chaosLevel <= 6 ? 'text-orange-400' : 'text-red-400'

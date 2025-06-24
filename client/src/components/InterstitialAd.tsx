@@ -126,7 +126,7 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
         <div className="h-full flex -col  p-4 max-w-md mx-auto lg:max-w-4xl" style={{justifyContent: "space-between"}} style={{display: "flex"}}>
           
           {/* Header - Compact on mobile */}
-          <div className=" py-2 -shrink-0" style={{display: "flex"}} style={{textAlign: "center"}}>
+          <div className=" py-2 -shrink-0" style={{display: "flex"}} className="text-center">
             <h3 className="nosifer text-base sm:text-xl lg:text-3xl text-orange-500 animate-pulse leading-tight">
               A Message from Our Sponsors
             </h3>
@@ -200,7 +200,7 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
             </div>
             
             {/* Ad Text - Compact on mobile */}
-            <div className=" px-4 max-w-xs sm:max-w-sm lg:max-w-xl" style={{textAlign: "center"}}>
+            <div className=" px-4 max-w-xs sm:max-w-sm lg:max-w-xl" className="text-center">
               <h4 className="text-base sm:text-lg lg:text-2xl font-bold text-white mb-2 font-creepster line-clamp-2">
                 {currentAd.title}
               </h4>

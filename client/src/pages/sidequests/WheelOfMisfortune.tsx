@@ -166,7 +166,7 @@ export default function WheelOfMisfortune() {
       
       <div className="relative z-10 w-full max-w-6xl mx-auto px-4">
         {/* Title Banner */}
-        <div className=" mb-8" style={{textAlign: "center"}}>
+        <div className=" mb-8" className="text-center">
           <img
             src="/sidequests/wheel-of-misfortune/wheel-banner.png"
             alt="Wheel of Misfortune"
@@ -223,7 +223,7 @@ export default function WheelOfMisfortune() {
         </div>
 
         {/* Game Controls */}
-        <div className=" mt-8" style={{textAlign: "center"}}>
+        <div className=" mt-8" className="text-center">
           {!isSpinning && !showResult && !showPhysicalChallenge && (
             <button
               onClick={spinWheel}
@@ -243,7 +243,7 @@ export default function WheelOfMisfortune() {
         {/* Physical Challenge Sequence */}
         {eyeBlinking && (
           <div className="fixed inset-0 bg-black/80  items-center justify-center z-50" style={{display: "flex"}}>
-            <div style={{textAlign: "center"}}>
+            <div className="text-center">
               <div className="w-32 h-32 mx-auto mb-4 relative">
                 <img
                   src="/heinous/neutral.png"
@@ -258,7 +258,7 @@ export default function WheelOfMisfortune() {
 
         {showPhysicalChallenge && (
           <div className="fixed inset-0 bg-black/90  items-center justify-center z-50 p-4" style={{display: "flex"}}>
-            <div className="bg-red-900/80 border-2 border-red-500 rounded-lg p-8 max-w-md " style={{textAlign: "center"}}>
+            <div className="bg-red-900/80 border-2 border-red-500 rounded-lg p-8 max-w-md " className="text-center">
               <h3 className="text-2xl font-bold text-red-300 mb-4">Physical Challenge!</h3>
               <p className="text-xl text-red-200 " style={{marginBottom: "1.5rem"}}>{currentChallenge}</p>
               <button
@@ -275,7 +275,7 @@ export default function WheelOfMisfortune() {
         {showResult && selectedSlice && (
           <div className="fixed inset-0 bg-black/90  items-center justify-center z-50 p-4" style={{display: "flex"}}>
             <div 
-              className="bg-black/80 border-2 rounded-lg p-8 max-w-md " style={{textAlign: "center"}}
+              className="bg-black/80 border-2 rounded-lg p-8 max-w-md " className="text-center"
               style={{ borderColor: selectedSlice.color }}
             >
               <h3 
@@ -306,7 +306,7 @@ export default function WheelOfMisfortune() {
 
         {/* Dr. Heinous Reaction */}
         {selectedSlice && !showPhysicalChallenge && (
-          <div className=" mt-8" style={{textAlign: "center"}}>
+          <div className=" mt-8" className="text-center">
             <div className="bg-black/70 border border-red-500 rounded-lg p-4 max-w-md mx-auto">
               <p className="text-red-300 italic">"{selectedSlice.reactionLine}"</p>
             </div>

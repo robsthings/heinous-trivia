@@ -199,7 +199,7 @@ export function PhantomsPuzzle() {
       <div className="max-w-4xl w-full">
         
         {/* Header */}
-        <div className=" " style={{marginBottom: "1.5rem"}} style={{textAlign: "center"}}>
+        <div  className="mb-6" style={{textAlign: "center"}}>
           <h1 className="text-4xl lg:text-6xl font-bold text-blue-400 mb-4 tracking-wider">
             PHANTOM'S PUZZLE
           </h1>
@@ -210,11 +210,11 @@ export function PhantomsPuzzle() {
 
         {gamePhase === "intro" && (
           <div className=" bg-black/50 backdrop-blur-sm p-8 rounded-lg border border-blue-500/30" style={{textAlign: "center"}}>
-            <div style={{marginBottom: "1.5rem"}}>
+            <div className="mb-6">
               <span className="text-8xl">👻</span>
             </div>
             <h2 className="text-2xl font-bold text-blue-400 mb-4">The Phantom's Challenge</h2>
-            <p className="text-gray-300  max-w-md mx-auto" style={{marginBottom: "1.5rem"}}>
+            <p className="text-gray-300  max-w-md mx-auto" className="mb-6">
               The ethereal phantom will show you mystical patterns that grow increasingly complex. 
               Study each sequence carefully, then recreate it from memory. 
               Three mistakes and your mind belongs to the phantom!
@@ -231,7 +231,7 @@ export function PhantomsPuzzle() {
         {(gamePhase === "studying" || gamePhase === "inputting") && (
           <div>
             {/* Game Stats */}
-            <div className="flex  items-center  bg-black/30 rounded-lg p-4" style={{justifyContent: "space-between"}} style={{marginBottom: "1.5rem"}}>
+            <div className="flex  items-center  bg-black/30 rounded-lg p-4" style={{justifyContent: "space-between"}} className="mb-6">
               <div style={{textAlign: "center"}}>
                 <div className="text-2xl font-bold text-blue-400">{level}</div>
                 <div className="text-sm text-gray-400">Level</div>
@@ -249,7 +249,7 @@ export function PhantomsPuzzle() {
             </div>
 
             {/* Timer */}
-            <div className=" " style={{marginBottom: "1.5rem"}} style={{textAlign: "center"}}>
+            <div  className="mb-6" style={{textAlign: "center"}}>
               <div className={`text-4xl font-bold ${
                 (gamePhase === "studying" ? studyTimeLeft : inputTimeLeft) <= 3 ? 'text-red-400 animate-pulse' : 'text-blue-400'
               }`}>
@@ -261,13 +261,13 @@ export function PhantomsPuzzle() {
             </div>
 
             {/* Phantom Message */}
-            <div className="  bg-blue-900/20 rounded-lg p-4 border border-blue-500/30" style={{marginBottom: "1.5rem"}} style={{textAlign: "center"}}>
+            <div className="  bg-blue-900/20 rounded-lg p-4 border border-blue-500/30" className="mb-6" style={{textAlign: "center"}}>
               <p className="text-blue-300 italic">"{getPhantomReaction()}"</p>
             </div>
 
             {/* Pattern Display */}
             {gamePhase === "studying" && currentPattern && (
-              <div style={{marginBottom: "1.5rem"}}>
+              <div className="mb-6">
                 <h3 className="text-xl font-bold  mb-4 text-blue-400" style={{textAlign: "center"}}>Study This Pattern</h3>
                 <div className="flex justify-center gap-3 flex-wrap bg-gray-800/50 rounded-lg p-6 border border-gray-600">
                   {currentPattern.sequence.map((symbol, index) => (
@@ -288,7 +288,7 @@ export function PhantomsPuzzle() {
                 <h3 className="text-xl font-bold  mb-4 text-blue-400" style={{textAlign: "center"}}>Recreate the Pattern</h3>
                 
                 {/* User Input Display */}
-                <div className=" flex justify-center gap-3 flex-wrap bg-gray-800/50 rounded-lg p-6 border border-gray-600 min-h-[100px]" style={{marginBottom: "1.5rem"}}>
+                <div className=" flex justify-center gap-3 flex-wrap bg-gray-800/50 rounded-lg p-6 border border-gray-600 min-h-[100px]" className="mb-6">
                   {currentPattern.sequence.map((_, index) => (
                     <div
                       key={index}
@@ -335,7 +335,7 @@ export function PhantomsPuzzle() {
             <div className={`bg-black/50 backdrop-blur-sm p-8 rounded-lg border mb-6 ${
               gamePhase === "victory" ? 'border-green-500/50 bg-green-900/20' : 'border-red-500/50 bg-red-900/20'
             }`}>
-              <div style={{marginBottom: "1.5rem"}}>
+              <div className="mb-6">
                 <span className="text-8xl">
                   {gamePhase === "victory" ? "🧠" : "👻"}
                 </span>
@@ -353,7 +353,7 @@ export function PhantomsPuzzle() {
                   : "The phantom has overwhelmed your mental defenses..."}
               </p>
               
-              <div className="  bg-gray-800/50 rounded-lg p-4" style={{marginBottom: "1.5rem"}} style={{textAlign: "center"}}>
+              <div className="  bg-gray-800/50 rounded-lg p-4" className="mb-6" style={{textAlign: "center"}}>
                 <div className="text-lg font-bold text-blue-400 mb-2">Final Results</div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>

@@ -135,7 +135,7 @@ export function WretchedWiring() {
             <h2 className="text-4xl font-bold text-red-400 mb-4 drop-shadow-lg">
               SYSTEM FAILURE!
             </h2>
-            <p className="text-xl text-white  drop-shadow-lg" style={{marginBottom: "1.5rem"}}>
+            <p className="text-xl text-white  drop-shadow-lg" className="mb-6">
               The wiring overloaded and sparked out!
             </p>
             <p className="text-lg text-white mb-8 drop-shadow-lg">
@@ -166,7 +166,7 @@ export function WretchedWiring() {
             <h2 className="text-4xl font-bold text-green-400 mb-4 drop-shadow-lg">
               CIRCUIT COMPLETE!
             </h2>
-            <p className="text-xl text-white  drop-shadow-lg" style={{marginBottom: "1.5rem"}}>
+            <p className="text-xl text-white  drop-shadow-lg" className="mb-6">
               You've successfully rewired the system!
             </p>
             <p className="text-lg text-white mb-8 drop-shadow-lg">
@@ -209,7 +209,7 @@ export function WretchedWiring() {
         {!gameState.isPlaying && !gameState.isGameOver && !gameState.isComplete && (
           <div className="flex-1 flex items-center justify-center">
             <div className=" bg-gray-800 bg-opacity-90 p-8 rounded-xl border-2 border-blue-500" style={{textAlign: "center"}}>
-              <h1 className="text-4xl font-bold text-blue-400  drop-shadow-lg" style={{marginBottom: "1.5rem"}} style={{ fontFamily: 'Courier, monospace' }}>
+              <h1 className="text-4xl font-bold text-blue-400  drop-shadow-lg" className="mb-6" style={{ fontFamily: 'Courier, monospace' }}>
                 WRETCHED WIRING
               </h1>
               <p className="text-lg text-white mb-8 drop-shadow-lg max-w-md">
@@ -230,7 +230,7 @@ export function WretchedWiring() {
         {gameState.isPlaying && (
           <div className="flex-1 flex items-center justify-center p-6">
             <div className="bg-gray-800 bg-opacity-95 p-8 rounded-xl border-2 border-yellow-500 w-full max-w-4xl">
-              <h2 className="text-2xl font-bold text-yellow-400  " style={{marginBottom: "1.5rem"}} style={{textAlign: "center"}}>
+              <h2 className="text-2xl font-bold text-yellow-400  " className="mb-6" style={{textAlign: "center"}}>
                 Puzzle {gameState.currentPuzzle}: Connect the Circuit
               </h2>
               

@@ -117,7 +117,7 @@ export function FaceTheChupacabra() {
 
   const renderKeys = () => {
     return (
-      <div className=" gap-2 mb-4 justify-center" style={{display: "flex"}}>
+      <div className=" gap-2 mb-4 justify-center" className="flex-center">
         {[1, 2, 3].map((keyNum) => (
           <img
             key={keyNum}
@@ -135,16 +135,16 @@ export function FaceTheChupacabra() {
 
   return (
     <div 
-      className="min-h-screen bg-cover bg-center bg-no-repeat flex -col  justify-center p-4 text-white relative" style={{alignItems: "center"}} style={{display: "flex"}}
+      className="min-h-screen bg-cover bg-center bg-no-repeat flex -col  justify-center p-4 text-white relative" style={{alignItems: "center"}} className="flex-center"
       style={{ backgroundImage: `url(${getBackgroundImage()})` }}
     >
       {/* Dark overlay for better text readability */}
       <div className="absolute inset-0 bg-black/40"></div>
       
-      <div className="relative z-10  max-w-lg w-full" style={{textAlign: "center"}}>
+      <div className="relative z-10  max-w-lg w-full" className="text-center">
         {gameState.phase === 'start' && (
-          <div className="flex -col   min-h-screen pt-8 pb-20" style={{justifyContent: "space-between"}} style={{alignItems: "center"}} style={{display: "flex"}}>
-            <div style={{textAlign: "center"}}>
+          <div className="flex -col   min-h-screen pt-8 pb-20" style={{justifyContent: "space-between"}} style={{alignItems: "center"}} className="flex-center">
+            <div className="text-center">
               <h1 className="text-5xl font-bold text-red-500 mb-4 drop-shadow-lg" style={{ fontFamily: 'Creepster, cursive' }}>
                 Face the Chupacabra
               </h1>
@@ -166,7 +166,7 @@ export function FaceTheChupacabra() {
             <h2 className="text-3xl font-bold text-red-500 mb-4">Choose Your Weapon!</h2>
             
             {/* Collected keys display */}
-            <div className=" gap-3 justify-center mb-4" style={{display: "flex"}}>
+            <div className=" gap-3 justify-center mb-4" className="flex-center">
               {[1, 2, 3].map((keyNum) => (
                 <div key={keyNum} className="relative">
                   {keyNum <= gameState.playerKeys ? (
@@ -189,7 +189,7 @@ export function FaceTheChupacabra() {
                   <button
                     key={choice.value}
                     onClick={() => playRound(choice.value)}
-                    className="group relative /80 hover:bg-gray-700/80 p-4 rounded-lg transition-all hover:scale-105 border-2 border-gray-600 hover:border-red-500" style={{backgroundColor: "#1f2937"}}
+                    className="group relative /80 hover:bg-gray-700/80 p-4 rounded-lg transition-all hover:scale-105 border-2 border-gray-600 hover:border-red-500" className="bg-gray-800"
                     title={choice.value === 'scissors' ? 'Staby Staby' : choice.label}
                   >
                     <img
@@ -212,7 +212,7 @@ export function FaceTheChupacabra() {
             {gameState.showResult && (
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-8 mb-4">
-                  <div style={{textAlign: "center"}}>
+                  <div className="text-center">
                     <h3 className="text-lg font-bold mb-2">You</h3>
                     <img
                       src={CHOICES.find(c => c.value === gameState.playerChoice)?.image}
@@ -220,7 +220,7 @@ export function FaceTheChupacabra() {
                       className="w-20 h-20 mx-auto"
                     />
                   </div>
-                  <div style={{textAlign: "center"}}>
+                  <div className="text-center">
                     <h3 className="text-lg font-bold mb-2">Chupacabra</h3>
                     <img
                       src={CHOICES.find(c => c.value === gameState.chupacabraChoice)?.image}
@@ -234,7 +234,7 @@ export function FaceTheChupacabra() {
                   {gameState.lastResult === 'win' && (
                     <div className="text-green-400">
                       <div>You Won!</div>
-                      <div className=" justify-center mt-2" style={{display: "flex"}}>
+                      <div className=" justify-center mt-2" className="flex-center">
                         <img
                           src={`/sidequests/face-the-chupacabra/chupa-key-${gameState.playerKeys}.png`}
                           alt={`Key ${gameState.playerKeys}`}
@@ -260,7 +260,7 @@ export function FaceTheChupacabra() {
               </div>
             )}
             
-            <div className="text-sm " style={{color: "#d1d5db"}}>
+            <div className="text-sm " className="text-gray-300">
               Wins: {gameState.playerKeys}/3 | Losses: {gameState.playerLosses}/3
             </div>
           </div>
@@ -271,7 +271,7 @@ export function FaceTheChupacabra() {
             <h2 className="text-4xl font-bold text-green-400 mb-4">🎉 ESCAPED! 🎉</h2>
             
             {/* All collected keys display */}
-            <div className=" gap-4 justify-center " style={{display: "flex"}} style={{marginBottom: "1.5rem"}}>
+            <div className=" gap-4 justify-center " className="flex-center" className="mb-6">
               {[1, 2, 3].map((keyNum) => (
                 <img
                   key={keyNum}
@@ -290,7 +290,7 @@ export function FaceTheChupacabra() {
                 className="w-32 h-32 mx-auto animate-bounce"
               />
             </div>
-            <p className="text-xl text-gray-200 " style={{marginBottom: "1.5rem"}}>
+            <p className="text-xl text-gray-200 " className="mb-6">
               You collected all 3 keys and escaped! The Chupacabra is defeated!
             </p>
             <div className="space-y-4">
@@ -333,7 +333,7 @@ export function FaceTheChupacabra() {
                   className="w-32 h-32 mx-auto animate-bounce"
                 />
               </div>
-              <p className="text-xl text-gray-200 " style={{marginBottom: "1.5rem"}}>
+              <p className="text-xl text-gray-200 " className="mb-6">
                 The Chupacabra has defeated you! You remain trapped...
               </p>
               <div className="space-y-4">

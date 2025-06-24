@@ -162,7 +162,7 @@ export function ChupacabraChallenge() {
           
           {gamePhase === "intro" && (
             <div className=" bg-black/50 backdrop-blur-sm p-8 rounded-lg border border-red-500/30" style={{textAlign: "center"}}>
-              <div style={{marginBottom: "1.5rem"}}>
+              <div className="mb-6">
                 <img 
                   src="/chupacabra/sprite-chupacabra.png"
                   alt="Chupacabra"
@@ -170,7 +170,7 @@ export function ChupacabraChallenge() {
                 />
               </div>
               <h2 className="text-2xl font-bold text-red-400 mb-4">The Hunt Begins</h2>
-              <p className="text-gray-300  max-w-md mx-auto" style={{marginBottom: "1.5rem"}}>
+              <p className="text-gray-300  max-w-md mx-auto" className="mb-6">
                 The legendary Chupacabra stalks these cursed grounds. Choose your hiding spot wisely - 
                 some locations offer better concealment than others. Can you remain hidden for 30 seconds?
               </p>
@@ -185,7 +185,7 @@ export function ChupacabraChallenge() {
 
           {gamePhase === "hiding" && (
             <div style={{textAlign: "center"}}>
-              <div className="bg-black/50 backdrop-blur-sm p-6 rounded-lg border border-red-500/30 " style={{marginBottom: "1.5rem"}}>
+              <div className="bg-black/50 backdrop-blur-sm p-6 rounded-lg border border-red-500/30 " className="mb-6">
                 <h2 className="text-2xl font-bold text-red-400 mb-4">Choose Your Hiding Spot</h2>
                 <p className="text-gray-300 mb-4">
                   Click on a location to hide. Each spot has different safety ratings...
@@ -228,7 +228,7 @@ export function ChupacabraChallenge() {
 
           {(gamePhase === "hunting") && (
             <div className={`text-center ${heartbeat ? 'animate-pulse' : ''}`}>
-              <div className="bg-black/50 backdrop-blur-sm p-6 rounded-lg border border-red-500/30 " style={{marginBottom: "1.5rem"}}>
+              <div className="bg-black/50 backdrop-blur-sm p-6 rounded-lg border border-red-500/30 " className="mb-6">
                 <div className="flex  items-center mb-4" style={{justifyContent: "space-between"}}>
                   <div className="text-left">
                     <div className="text-lg font-bold text-green-400">
@@ -312,7 +312,7 @@ export function ChupacabraChallenge() {
               <div className={`bg-black/50 backdrop-blur-sm p-8 rounded-lg border mb-6 ${
                 gamePhase === "caught" ? 'border-red-500/50 bg-red-900/20' : 'border-green-500/50 bg-green-900/20'
               }`}>
-                <div style={{marginBottom: "1.5rem"}}>
+                <div className="mb-6">
                   <img 
                     src="/chupacabra/sprite-chupacabra.png"
                     alt="Chupacabra"
@@ -326,7 +326,7 @@ export function ChupacabraChallenge() {
                   {getResultMessage().title}
                 </h2>
                 
-                <p className="text-gray-300  max-w-md mx-auto" style={{marginBottom: "1.5rem"}}>
+                <p className="text-gray-300  max-w-md mx-auto" className="mb-6">
                   {getResultMessage().message}
                 </p>
                 

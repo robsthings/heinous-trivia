@@ -44,10 +44,10 @@ export function DynamicSidequestLoader({ sidequestId, className = "" }: DynamicS
   if (error) {
     return (
       <div className={`min-h-screen bg-black text-white flex items-center justify-center ${className}`}>
-        <div style={{textAlign: "center"}}>
+        <div className="text-center">
           <h1 className="text-4xl font-bold text-red-500 mb-4">Sidequest Unavailable</h1>
           <p className="text-xl mb-4">The supernatural forces are blocking this quest</p>
-          <p className="" style={{color: "#9ca3af"}}>Error: {error.message}</p>
+          <p className="text-gray-400">Error: {error.message}</p>
         </div>
       </div>
     );
@@ -56,7 +56,7 @@ export function DynamicSidequestLoader({ sidequestId, className = "" }: DynamicS
   if (!sidequest) {
     return (
       <div className={`min-h-screen bg-black text-white flex items-center justify-center ${className}`}>
-        <div style={{textAlign: "center"}}>
+        <div className="text-center">
           <h1 className="text-4xl font-bold text-purple-500 mb-4">Quest Not Found</h1>
           <p className="text-xl">This sidequest has vanished into the void</p>
         </div>
@@ -70,10 +70,10 @@ export function DynamicSidequestLoader({ sidequestId, className = "" }: DynamicS
   if (!Component) {
     return (
       <div className={`min-h-screen bg-black text-white flex items-center justify-center ${className}`}>
-        <div style={{textAlign: "center"}}>
+        <div className="text-center">
           <h1 className="text-4xl font-bold text-yello00 mb-4" style={{width: "1.25rem"}}>Quest Under Construction</h1>
           <p className="text-xl mb-4">{sidequest.name}</p>
-          <p className="" style={{color: "#9ca3af"}}>{sidequest.description}</p>
+          <p className="text-gray-400">{sidequest.description}</p>
           <p className="text-sm  mt-4" style={{color: "#6b7280"}}>Component type: {sidequest.componentType}</p>
         </div>
       </div>
@@ -117,7 +117,7 @@ export function SidequestList({ tier = 'Basic', onSelectSidequest, className = "
     return (
       <div className={`p-6 text-center ${className}`}>
         <h2 className="text-2xl font-bold text-red-500 mb-4">Failed to Load Quests</h2>
-        <p className="" style={{color: "#9ca3af"}}>Error: {error.message}</p>
+        <p className="text-gray-400">Error: {error.message}</p>
       </div>
     );
   }
@@ -126,14 +126,14 @@ export function SidequestList({ tier = 'Basic', onSelectSidequest, className = "
     return (
       <div className={`p-6 text-center ${className}`}>
         <h2 className="text-2xl font-bold text-purple-500 mb-4">No Quests Available</h2>
-        <p className="" style={{color: "#9ca3af"}}>Check back later for new supernatural challenges</p>
+        <p className="text-gray-400">Check back later for new supernatural challenges</p>
       </div>
     );
   }
 
   return (
     <div className={`p-6 ${className}`}>
-      <h2 className="text-3xl font-bold text-purple-400 " style={{marginBottom: "1.5rem"}}>Available Sidequests</h2>
+      <h2 className="text-3xl font-bold text-purple-400 " className="mb-6">Available Sidequests</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {sidequests.map((sidequest) => (
           <SidequestCard
@@ -188,15 +188,15 @@ function SidequestCard({ sidequest, onSelect }: SidequestCardProps) {
         </span>
       </div>
       
-      <p className=" mb-4 text-sm leading-relaxed" style={{color: "#d1d5db"}}>
+      <p className=" mb-4 text-sm leading-relaxed" className="text-gray-300">
         {sidequest.description}
       </p>
       
-      <div className="  " style={{justifyContent: "space-between"}} style={{alignItems: "center"}} style={{display: "flex"}}>
+      <div  style={{justifyContent: "space-between"}} style={{alignItems: "center"}} style={{display: "flex"}}>
         <span className={`font-semibold ${getDifficultyColor(sidequest.difficulty)}`}>
           {sidequest.difficulty}
         </span>
-        <span className=" text-sm" style={{color: "#9ca3af"}}>
+        <span className=" text-sm" className="text-gray-400">
           {sidequest.estimatedTime}
         </span>
       </div>

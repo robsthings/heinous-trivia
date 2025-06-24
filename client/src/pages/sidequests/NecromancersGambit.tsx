@@ -180,7 +180,7 @@ export function NecromancersGambit() {
       <div className="max-w-6xl w-full">
         
         {/* Header */}
-        <div className=" " style={{marginBottom: "1.5rem"}} style={{textAlign: "center"}}>
+        <div  className="mb-6" style={{textAlign: "center"}}>
           <h1 className="text-4xl lg:text-6xl font-bold text-purple-400 mb-4 tracking-wider">
             NECROMANCER'S GAMBIT
           </h1>
@@ -191,11 +191,11 @@ export function NecromancersGambit() {
 
         {gamePhase === "intro" && (
           <div className=" bg-black/50 backdrop-blur-sm p-8 rounded-lg border border-purple-500/30" style={{textAlign: "center"}}>
-            <div style={{marginBottom: "1.5rem"}}>
+            <div className="mb-6">
               <span className="text-8xl">💀</span>
             </div>
             <h2 className="text-2xl font-bold text-purple-400 mb-4">The Challenge Awaits</h2>
-            <p className="text-gray-300  max-w-md mx-auto" style={{marginBottom: "1.5rem"}}>
+            <p className="text-gray-300  max-w-md mx-auto" className="mb-6">
               Face the ancient necromancer in a battle of strategy and cunning. 
               Choose your cards wisely - each has unique powers that can turn the tide of battle.
               First to win 2 rounds claims victory!
@@ -212,7 +212,7 @@ export function NecromancersGambit() {
         {(gamePhase === "player-turn" || gamePhase === "battle") && (
           <div>
             {/* Score Display */}
-            <div className="flex  items-center  bg-black/30 rounded-lg p-4" style={{justifyContent: "space-between"}} style={{marginBottom: "1.5rem"}}>
+            <div className="flex  items-center  bg-black/30 rounded-lg p-4" style={{justifyContent: "space-between"}} className="mb-6">
               <div style={{textAlign: "center"}}>
                 <div className="text-2xl font-bold text-blue-400">{playerScore}</div>
                 <div className="text-sm text-gray-400">Player Wins</div>
@@ -229,7 +229,7 @@ export function NecromancersGambit() {
 
             {/* Battle Area */}
             {gamePhase === "battle" && playerSelectedCard && necromancerSelectedCard && (
-              <div className=" bg-gray-800/50 rounded-lg p-6 border border-gray-600" style={{marginBottom: "1.5rem"}}>
+              <div className=" bg-gray-800/50 rounded-lg p-6 border border-gray-600" className="mb-6">
                 <h3 className="text-xl font-bold  mb-4 text-purple-400" style={{textAlign: "center"}}>Battle in Progress</h3>
                 <div className="flex  items-center" style={{justifyContent: "space-between"}}>
                   <div className=" bg-blue-900/30 rounded-lg p-4 border border-blue-500/30" style={{textAlign: "center"}}>
@@ -261,7 +261,7 @@ export function NecromancersGambit() {
             )}
 
             {/* Necromancer's Reaction */}
-            <div className="  bg-red-900/20 rounded-lg p-4 border border-red-500/30" style={{marginBottom: "1.5rem"}} style={{textAlign: "center"}}>
+            <div className="  bg-red-900/20 rounded-lg p-4 border border-red-500/30" className="mb-6" style={{textAlign: "center"}}>
               <p className="text-red-300 italic">"{getNecromancerReaction()}"</p>
             </div>
 
@@ -315,7 +315,7 @@ export function NecromancersGambit() {
             <div className={`bg-black/50 backdrop-blur-sm p-8 rounded-lg border mb-6 ${
               gamePhase === "victory" ? 'border-green-500/50 bg-green-900/20' : 'border-red-500/50 bg-red-900/20'
             }`}>
-              <div style={{marginBottom: "1.5rem"}}>
+              <div className="mb-6">
                 <span className="text-8xl">
                   {gamePhase === "victory" ? "👑" : "💀"}
                 </span>
@@ -333,7 +333,7 @@ export function NecromancersGambit() {
                   : "The necromancer's dark power has overwhelmed you..."}
               </p>
               
-              <div className="  bg-gray-800/50 rounded-lg p-4" style={{marginBottom: "1.5rem"}} style={{textAlign: "center"}}>
+              <div className="  bg-gray-800/50 rounded-lg p-4" className="mb-6" style={{textAlign: "center"}}>
                 <div className="text-lg font-bold text-purple-400 mb-2">Final Score</div>
                 <div className="flex justify-center gap-8">
                   <div>

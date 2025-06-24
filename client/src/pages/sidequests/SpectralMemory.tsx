@@ -223,7 +223,7 @@ export function SpectralMemory() {
       <div className="max-w-4xl w-full">
         
         {/* Header */}
-        <div className=" " style={{marginBottom: "1.5rem"}} style={{textAlign: "center"}}>
+        <div  className="mb-6" style={{textAlign: "center"}}>
           <h1 className="text-4xl lg:text-6xl font-bold text-purple-400 mb-4 tracking-wider">
             SPECTRAL MEMORY
           </h1>
@@ -234,11 +234,11 @@ export function SpectralMemory() {
 
         {gamePhase === "intro" && (
           <div className=" bg-black/50 backdrop-blur-sm p-8 rounded-lg border border-purple-500/30" style={{textAlign: "center"}}>
-            <div style={{marginBottom: "1.5rem"}}>
+            <div className="mb-6">
               <span className="text-8xl">🔮</span>
             </div>
             <h2 className="text-2xl font-bold text-purple-400 mb-4">The Spectral Test</h2>
-            <p className="text-gray-300  max-w-md mx-auto" style={{marginBottom: "1.5rem"}}>
+            <p className="text-gray-300  max-w-md mx-auto" className="mb-6">
               The spirits have scattered their symbols across the ethereal plane. 
               Match all pairs within 60 seconds, but beware - supernatural interference 
               will test your concentration and memory!
@@ -255,7 +255,7 @@ export function SpectralMemory() {
         {gamePhase === "playing" && (
           <div>
             {/* Game Stats */}
-            <div className="flex  items-center  bg-black/30 rounded-lg p-4" style={{justifyContent: "space-between"}} style={{marginBottom: "1.5rem"}}>
+            <div className="flex  items-center  bg-black/30 rounded-lg p-4" style={{justifyContent: "space-between"}} className="mb-6">
               <div style={{textAlign: "center"}}>
                 <div className="text-2xl font-bold text-blue-400">{matches}</div>
                 <div className="text-sm text-gray-400">Pairs Found</div>
@@ -273,7 +273,7 @@ export function SpectralMemory() {
             </div>
 
             {/* Spectral Messages */}
-            <div className="  bg-purple-900/20 rounded-lg p-4 border border-purple-500/30" style={{marginBottom: "1.5rem"}} style={{textAlign: "center"}}>
+            <div className="  bg-purple-900/20 rounded-lg p-4 border border-purple-500/30" className="mb-6" style={{textAlign: "center"}}>
               <p className={`text-purple-300 italic ${spectralEvent ? 'animate-pulse' : ''}`}>
                 "{getSpectralMessage()}"
               </p>
@@ -311,7 +311,7 @@ export function SpectralMemory() {
             <div className={`bg-black/50 backdrop-blur-sm p-8 rounded-lg border mb-6 ${
               gamePhase === "victory" ? 'border-green-500/50 bg-green-900/20' : 'border-red-500/50 bg-red-900/20'
             }`}>
-              <div style={{marginBottom: "1.5rem"}}>
+              <div className="mb-6">
                 <span className="text-8xl">
                   {gamePhase === "victory" ? "🌟" : "💀"}
                 </span>
@@ -329,7 +329,7 @@ export function SpectralMemory() {
                   : "The spirits have claimed victory this time..."}
               </p>
               
-              <div className="  bg-gray-800/50 rounded-lg p-4" style={{marginBottom: "1.5rem"}} style={{textAlign: "center"}}>
+              <div className="  bg-gray-800/50 rounded-lg p-4" className="mb-6" style={{textAlign: "center"}}>
                 <div className="text-lg font-bold text-purple-400 mb-2">Final Score</div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>

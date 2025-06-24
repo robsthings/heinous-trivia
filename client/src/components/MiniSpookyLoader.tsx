@@ -28,12 +28,12 @@ export function MiniSpookyLoader({
       </div>
       
       {/* Loading text */}
-      <p className=" animate-pulse font-medium" style={{color: "#d1d5db"}}>
+      <p className=" animate-pulse font-medium" className="text-gray-300">
         {message}
       </p>
       
       {/* Mini loading dots */}
-      <div className=" gap-1 mt-2" style={{display: "flex"}}>
+      <div className=" gap-1 mt-2" className="flex-center">
         {[...Array(3)].map((_, i) => (
           <div
             key={i}
