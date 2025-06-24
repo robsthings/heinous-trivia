@@ -53,17 +53,22 @@ export function Welcome() {
   // Typewriter effect for speech bubble - only runs once
   useEffect(() => {
     if (tauntText && !hasTyped) {
+      console.log("Starting typewriter with:", tauntText);
       setHasTyped(true);
+      setDisplayedText(''); // Start with empty text
       let currentIndex = 0;
       
       const typewriterInterval = setInterval(() => {
         currentIndex++;
-        setDisplayedText(tauntText.slice(0, currentIndex));
+        const newText = tauntText.slice(0, currentIndex);
+        console.log("Typing:", newText);
+        setDisplayedText(newText);
         
         if (currentIndex >= tauntText.length) {
           clearInterval(typewriterInterval);
+          console.log("Typewriter complete");
         }
-      }, 100); // 100ms per character for readable speed
+      }, 100);
 
       return () => clearInterval(typewriterInterval);
     }
@@ -118,7 +123,7 @@ export function Welcome() {
                 fontWeight: '600'
               }}
             >
-              {displayedText}
+              {displayedText || 'Loading...'}
               <span style={{ 
                 opacity: showCursor ? 1 : 0,
                 marginLeft: '1px',
