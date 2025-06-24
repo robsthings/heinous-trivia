@@ -56,13 +56,9 @@ export function Welcome() {
       {/* Dr. Heinous Character with Speech Bubble */}
       <div className="relative">
         {/* Speech Bubble */}
-        <div className="absolute text-sm md:text-base text-white px-3 py-2 rounded shadow left-1/2 transform -translate-x-1/2 font-semibold whitespace-nowrap" 
-             style={{ 
-               backgroundColor: '#b91c1c', 
-               top: '-3rem',
-               textShadow: '1px 1px 2px rgba(0,0,0,0.8)'
-             }}>
+        <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-white text-black px-4 py-2 rounded-xl shadow-lg font-semibold text-sm border-2 border-gray-300">
           {tauntText}
+          <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-8 border-transparent border-t-white"></div>
         </div>
         
         {/* Character Image */}
@@ -74,7 +70,7 @@ export function Welcome() {
       </div>
 
       {/* Welcome Title */}
-      <h1 className="text-center text-5xl md:text-6xl" style={{ fontFamily: 'Creepster, cursive', color: '#ff6600' }}>
+      <h1 className="font-creepster text-center text-5xl md:text-6xl text-orange-500">
         WELCOME BACK
       </h1>
       
@@ -86,19 +82,13 @@ export function Welcome() {
       {/* Play Again Button */}
       <button
         onClick={handleStartGame}
-        className="text-white text-lg px-6 py-2 rounded shadow transition-all transform hover:scale-105"
-        style={{ 
-          fontFamily: 'Eater, cursive', 
-          backgroundColor: '#ff6600',
-        }}
-        onMouseEnter={(e) => e.target.style.backgroundColor = '#059669'}
-        onMouseLeave={(e) => e.target.style.backgroundColor = '#ff6600'}
+        className="font-eater text-white text-lg px-6 py-2 rounded shadow bg-orange-500 hover:bg-green-900 transition-all transform hover:scale-105"
       >
         PLAY AGAIN
       </button>
 
       {/* Haunt Label */}
-      <div className="text-xs" style={{ color: '#7f1d1d', textShadow: '1px 1px 2px rgba(0,0,0,0.8)' }}>
+      <div className="text-crimson text-xs">
         Haunt: {hauntId}
       </div>
     </div>
