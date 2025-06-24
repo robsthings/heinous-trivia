@@ -59,15 +59,18 @@ export function Welcome() {
       let currentIndex = 0;
       
       const typewriterInterval = setInterval(() => {
-        currentIndex++;
-        const newText = tauntText.slice(0, currentIndex);
-        console.log("Typing:", newText);
-        setDisplayedText(newText);
-        
-        if (currentIndex >= tauntText.length) {
-          clearInterval(typewriterInterval);
-          console.log("Typewriter complete");
-        }
+        setDisplayedText(prev => {
+          const newText = tauntText.slice(0, currentIndex + 1);
+          console.log("Typing:", newText);
+          currentIndex++;
+          
+          if (currentIndex >= tauntText.length) {
+            clearInterval(typewriterInterval);
+            console.log("Typewriter complete");
+          }
+          
+          return newText;
+        });
       }, 100);
 
       return () => clearInterval(typewriterInterval);
@@ -123,7 +126,7 @@ export function Welcome() {
                 fontWeight: '600'
               }}
             >
-              {displayedText || 'Loading...'}
+              {displayedText}
               <span style={{ 
                 opacity: showCursor ? 1 : 0,
                 marginLeft: '1px',
