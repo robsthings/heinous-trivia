@@ -18,17 +18,15 @@ export function Welcome() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-void to-shadow flex items-center justify-center text-white relative overflow-hidden">
-      {/* Laboratory Background Elements */}
-      <div 
-        className="absolute inset-0 opacity-20"
-        style={{
-          backgroundImage: "url('/laboratory-bg.png')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
-      />
+    <div 
+      className="min-h-screen flex items-center justify-center text-white relative overflow-hidden"
+      style={{
+        backgroundImage: "url('/backgrounds/lab-dark-blue.png')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
       
       <div className="relative z-10 text-center max-w-2xl mx-auto px-4">
         
