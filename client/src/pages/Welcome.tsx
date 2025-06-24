@@ -5,6 +5,7 @@ export function Welcome() {
   const [, setLocation] = useLocation();
 
   const handleStartGame = () => {
+    console.log('Play Again clicked, hauntId:', hauntId);
     if (hauntId) {
       // Mark as visited for future welcome screen logic
       const visitKey = `visited_${hauntId}`;
@@ -13,8 +14,11 @@ export function Welcome() {
       // Set session storage to track that user is coming from welcome
       sessionStorage.setItem('fromWelcome', 'true');
       
+      console.log('Navigating to:', `/game/${hauntId}`);
       // Navigate to the game
       setLocation(`/game/${hauntId}`);
+    } else {
+      console.error('No hauntId found for navigation');
     }
   };
 
