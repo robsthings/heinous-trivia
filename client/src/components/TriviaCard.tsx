@@ -206,7 +206,7 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
 
           return (
             <button
-              key={index}
+              key={`${gameState.currentQuestionIndex}-${index}`}
               style={buttonStyle}
               onClick={() => {
                 if (index < 0 || index >= currentQuestion.answers?.length) {
@@ -215,6 +215,13 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
                 onSelectAnswer(index);
               }}
               disabled={gameState.selectedAnswer !== null}
+              ref={(el) => {
+                // Force reset styles on new question
+                if (el) {
+                  el.style.removeProperty('background');
+                  el.style.removeProperty('transform');
+                }
+              }}
               onMouseEnter={(e) => {
                 if (gameState.selectedAnswer === null) {
                   e.currentTarget.style.setProperty('background', 'rgba(33, 33, 33, 0.95)', 'important');
