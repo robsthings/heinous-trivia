@@ -2,14 +2,14 @@ export default function TailwindTest() {
   return (
     <div className="min-h-screen p-8 space-y-6 bg-dark">
       {/* Horror Theme Color Test */}
-      <h1 className="text-4xl text-blood" style={{ fontFamily: '"Creepster", cursive' }}>Tailwind V4 horror theme is working!</h1>
+      <h1 className="text-4xl font-creepster text-blood">Tailwind V4 horror theme is working!</h1>
       
       {/* Font Test */}
       <div className="space-y-4 bg-void p-6 rounded">
         <h2 className="text-white text-xl mb-4">Font Tests:</h2>
-        <div className="text-blood text-3xl" style={{ fontFamily: '"Creepster", cursive' }}>Creepster Font - Horror Title</div>
-        <div className="text-crimson text-2xl" style={{ fontFamily: '"Nosifer", cursive' }}>Nosifer Font - Scary Text</div>
-        <div className="text-flame text-xl" style={{ fontFamily: '"Eater", cursive' }}>Eater Font - Disturbing Words</div>
+        <div className="font-creepster text-blood text-3xl">Creepster Font - Horror Title</div>
+        <div className="font-nosifer text-crimson text-2xl">Nosifer Font - Scary Text</div>
+        <div className="font-eater text-flame text-xl">Eater Font - Disturbing Words</div>
       </div>
       
       {/* Color Palette Test */}
@@ -31,13 +31,13 @@ export default function TailwindTest() {
       
       {/* Animation Test */}
       <div className="bg-blood text-white p-6 animate-pulse-glow rounded">
-        <h2 className="text-2xl" style={{ fontFamily: '"Creepster", cursive' }}>Animation Test: Pulse Glow Effect</h2>
+        <h2 className="font-creepster text-2xl">Animation Test: Pulse Glow Effect</h2>
       </div>
       
       {/* Integration Test */}
       <div className="bg-void border-2 border-blood p-6 rounded">
-        <h2 className="text-flame text-2xl mb-2" style={{ fontFamily: '"Nosifer", cursive' }}>Complete Integration Test</h2>
-        <p className="text-ghost" style={{ fontFamily: '"Eater", cursive' }}>All fonts, colors, and animations working together!</p>
+        <h2 className="font-nosifer text-flame text-2xl mb-2">Complete Integration Test</h2>
+        <p className="font-eater text-ghost">All fonts, colors, and animations working together!</p>
       </div>
     </div>
   );
