@@ -4,32 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-  /* Force generation of custom horror classes */
-  .bg-blood { background-color: hsl(0 84% 27%); }
-  .bg-crimson { background-color: hsl(348 83% 47%); }
-  .bg-void { background-color: hsl(0 0% 4%); }
-  .bg-shadow { background-color: hsl(248 39% 27%); }
-  .bg-dark { background-color: hsl(0 0% 10%); }
-  .bg-flame { background-color: hsl(14 100% 59%); }
-  .text-spirit { color: hsl(0 0% 100%); }
-  
-  /* Direct gradient classes */
-  .bg-gradient-to-r.from-blood.to-crimson {
-    background: linear-gradient(to right, hsl(0 84% 27%), hsl(348 83% 47%)) !important;
-  }
-  
-  .bg-gradient-to-r.from-flame.to-blood {
-    background: linear-gradient(to right, hsl(14 100% 59%), hsl(0 84% 27%)) !important;
-  }
-  
-  .bg-gradient-to-br.from-void.via-shadow.to-dark {
-    background: linear-gradient(to bottom right, hsl(0 0% 4%), hsl(248 39% 27%), hsl(0 0% 10%)) !important;
-  }
-  
-  .border-spirit { border-color: hsl(0 0% 100%); }
-}
-
 @layer base {
   :root {
     --background: 222.2 84% 4.9%;
