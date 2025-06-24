@@ -211,16 +211,14 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
               disabled={gameState.selectedAnswer !== null}
               onMouseEnter={(e) => {
                 if (gameState.selectedAnswer === null) {
-                  e.currentTarget.style.background = 'rgba(75, 85, 99, 0.8)';
+                  e.currentTarget.style.background = 'rgba(33, 33, 33, 0.95)';
                   e.currentTarget.style.transform = 'scale(1.02)';
-                  e.currentTarget.style.boxShadow = '0 0 8px rgba(255, 255, 255, 0.05)';
                 }
               }}
               onMouseLeave={(e) => {
                 if (gameState.selectedAnswer === null) {
-                  e.currentTarget.style.background = 'rgba(55, 65, 81, 0.8)';
+                  e.currentTarget.style.background = 'rgba(33, 33, 33, 0.85)';
                   e.currentTarget.style.transform = 'scale(1)';
-                  e.currentTarget.style.boxShadow = 'none';
                 }
               }}
             >
