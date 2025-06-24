@@ -35,8 +35,7 @@ if (isFirebaseConfigured()) {
       } else {
         // Initialize with project ID only for development
         firebaseApp = initializeApp({
-          projectId: process.env.FIREBASE_PROJECT_ID || 'heinous-trivia',
-          storageBucket: `${process.env.FIREBASE_PROJECT_ID || 'heinous-trivia'}.firebasestorage.app`
+          projectId: 'heinous-trivia'
         });
       }
     } else {
@@ -45,15 +44,15 @@ if (isFirebaseConfigured()) {
     firestore = getFirestore(firebaseApp);
     storage = getStorage(firebaseApp);
     exportedFieldValue = FieldValue;
-    // Firebase Admin SDK initialized successfully
+    console.log('Firebase Admin SDK initialized successfully');
   } catch (error) {
-    // Firebase initialization failed - running without Firebase integration
+    console.warn('Firebase initialization failed - running without Firebase integration:', error.message);
     firestore = null;
     storage = null;
     exportedFieldValue = null;
   }
 } else {
-  // Firebase credentials not configured, running without Firebase integration
+  console.log('Firebase not configured - running without Firebase integration');
   firestore = null;
   storage = null;
   exportedFieldValue = null;
