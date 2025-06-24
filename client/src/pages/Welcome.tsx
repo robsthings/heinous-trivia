@@ -92,16 +92,17 @@ export function Welcome() {
       <div className="min-h-screen flex flex-col items-center justify-center px-4 py-8">
         
         {/* Speech Bubble */}
-        <div className="mb-3 w-full max-w-xs">
+        <div className="mb-2 w-full max-w-xs">
           <div 
-            className="bg-crimson border border-blood rounded-lg px-3 py-2 relative animate-pulse-glow"
+            className="bg-crimson border border-blood rounded px-2 py-1 relative animate-pulse-glow"
             style={{
-              borderRadius: '12px 12px 4px 12px',
+              borderRadius: '8px 8px 2px 8px',
               background: '#DC143C',
-              boxShadow: '0 2px 8px rgba(220, 20, 60, 0.3)'
+              boxShadow: '0 1px 4px rgba(220, 20, 60, 0.2)'
             }}
           >
-            <p className="text-white text-xs text-center font-medium">
+            <p className="text-white text-center font-medium"
+               style={{ fontSize: '0.625rem' }}>
               Back for more punishment?!
             </p>
             <div 
@@ -109,42 +110,43 @@ export function Welcome() {
               style={{
                 width: 0,
                 height: 0,
-                borderLeft: '6px solid transparent',
-                borderRight: '6px solid transparent',
-                borderTop: '6px solid #DC143C'
+                borderLeft: '4px solid transparent',
+                borderRight: '4px solid transparent',
+                borderTop: '4px solid #DC143C'
               }}
             />
           </div>
         </div>
 
         {/* Character Sprite */}
-        <div className="mb-4">
+        <div className="mb-3">
           {characterSprite ? (
             <img
               src={isFirstTime ? heinousSprites.talking : heinousSprites.charming}
               alt="Dr. Heinous"
-              className="w-16 h-16 sm:w-20 sm:h-20 object-contain mx-auto"
+              className="w-12 h-12 object-contain mx-auto"
+              style={{ maxWidth: '48px', maxHeight: '48px' }}
             />
           ) : (
-            <div className="w-16 h-16 sm:w-20 sm:h-20 bg-red-600 rounded-full flex items-center justify-center mx-auto">
-              <span className="text-xl sm:text-2xl">👹</span>
+            <div className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center mx-auto">
+              <span className="text-lg">👹</span>
             </div>
           )}
         </div>
 
         {/* Welcome Title */}
-        <h1 className="text-xl sm:text-2xl font-nosifer text-center mb-3 px-4 animate-pulse-glow"
+        <h1 className="text-lg font-nosifer text-center mb-2 px-4 animate-pulse-glow"
             style={{
               color: '#d86b29',
               textShadow: '2px 2px 4px rgba(0,0,0,0.9), 0 0 15px rgba(216, 107, 41, 0.4)',
-              fontSize: 'clamp(1.25rem, 5vw, 1.75rem)'
+              fontSize: '1.125rem'
             }}>
           WELCOME BACK
         </h1>
         
         {/* Welcome Message */}
-        <p className="text-sm text-center mb-4 px-4 max-w-xs leading-relaxed"
-           style={{ color: '#cccccc' }}>
+        <p className="text-xs text-center mb-3 px-4 max-w-xs leading-relaxed"
+           style={{ color: '#cccccc', fontSize: '0.75rem' }}>
           Ready for another spine-chilling round of trivia?
         </p>
 
@@ -158,11 +160,12 @@ export function Welcome() {
         {/* Play Button */}
         <button
           onClick={handleStartGame}
-          className="bg-gradient-to-r from-blood to-crimson hover:from-flame hover:to-blood text-white px-4 py-2 text-sm font-bold rounded-lg border-2 border-crimson shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-crimson/50 animate-pulse-glow"
+          className="bg-gradient-to-r from-blood to-crimson hover:from-flame hover:to-blood text-white px-3 py-1 text-xs font-bold rounded border border-crimson shadow transform transition-all duration-300 hover:scale-105 hover:shadow-crimson/50 animate-pulse-glow"
           style={{
             textTransform: 'uppercase',
             fontFamily: 'sans-serif',
-            boxShadow: '0 4px 12px rgba(220, 20, 60, 0.3), 0 0 10px rgba(220, 20, 60, 0.2)'
+            fontSize: '0.75rem',
+            boxShadow: '0 2px 8px rgba(220, 20, 60, 0.2)'
           }}
         >
           PLAY AGAIN
