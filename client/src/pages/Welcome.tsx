@@ -119,19 +119,32 @@ export function Welcome() {
         </div>
 
         {/* Character Sprite */}
-        <div className="mb-3">
-          {characterSprite ? (
-            <img
-              src={isFirstTime ? heinousSprites.talking : heinousSprites.charming}
-              alt="Dr. Heinous"
-              className="w-12 h-12 object-contain mx-auto"
-              style={{ maxWidth: '48px', maxHeight: '48px' }}
-            />
-          ) : (
-            <div className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center mx-auto">
+        <div className="mb-3 flex justify-center">
+          <div 
+            className="overflow-hidden flex items-center justify-center"
+            style={{ 
+              width: '48px', 
+              height: '48px',
+              maxWidth: '48px',
+              maxHeight: '48px'
+            }}
+          >
+            {characterSprite ? (
+              <img
+                src={isFirstTime ? heinousSprites.talking : heinousSprites.charming}
+                alt="Dr. Heinous"
+                className="object-contain"
+                style={{ 
+                  width: '100%',
+                  height: '100%',
+                  maxWidth: '48px',
+                  maxHeight: '48px'
+                }}
+              />
+            ) : (
               <span className="text-lg">👹</span>
-            </div>
-          )}
+            )}
+          </div>
         </div>
 
         {/* Welcome Title */}
