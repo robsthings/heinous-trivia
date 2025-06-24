@@ -48,18 +48,16 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
   const answerLabels = ['A', 'B', 'C', 'D'];
 
   const getButtonClass = (index: number) => {
-    let baseClass = "w-full p-4 rounded-lg text-left font-medium transition-all duration-200 touch-manipulation";
+    let baseClass = "w-full p-4 rounded-lg text-left font-medium transition-all duration-200 touch-manipulation bg-gray-800/50 border border-gray-600 text-white hover:bg-gray-700/50";
     
     if (gameState.showFeedback && gameState.selectedAnswer !== null) {
       if (index === currentQuestion.correctAnswer) {
-        baseClass += " bg-green-600 text-white shadow-lg";
+        baseClass = "w-full p-4 rounded-lg text-left font-medium transition-all duration-200 touch-manipulation bg-green-600 text-white shadow-lg border border-green-500";
       } else if (index === gameState.selectedAnswer) {
-        baseClass += " bg-red-600/70 text-white shadow-lg";
+        baseClass = "w-full p-4 rounded-lg text-left font-medium transition-all duration-200 touch-manipulation bg-red-600/70 text-white shadow-lg border border-red-500";
       } else {
-        baseClass += " bg-gradient-to-r from-red-700 to-purple-700 text-gray-300 opacity-50";
+        baseClass = "w-full p-4 rounded-lg text-left font-medium transition-all duration-200 touch-manipulation bg-gray-800/30 text-gray-400 opacity-50 border border-gray-700";
       }
-    } else {
-      baseClass += " bg-gradient-to-r from-red-700 to-purple-700 text-white hover:from-red-600 hover:to-purple-600 shadow-lg";
     }
     
     return baseClass;
@@ -78,9 +76,9 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
   };
 
   return (
-    <div className="w-full">
+    <div className="glass-card rounded-xl p-6 mt-4 animate-fade-in">
       {/* Question Header */}
-      <div className="text-center mb-8 px-4">
+      <div className="text-center mb-8">
         <h2 className="text-white text-xl font-medium leading-relaxed mb-4">
           {currentQuestion.text}
         </h2>
@@ -95,12 +93,12 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
         </div>
       </div>
 
-      {/* Answer Options - Full Width */}
-      <div className="space-y-3 px-4">
+      {/* Answer Options */}
+      <div className="space-y-3">
         {currentQuestion.answers?.map((answer, index) => (
           <button
             key={index}
-            className={`w-full p-4 rounded-lg bg-gradient-to-r from-blood to-crimson text-white border border-crimson/30 transition-all duration-300 hover:scale-105 animate-pulse-glow ${getButtonClass(index)}`}
+            className={getButtonClass(index)}
             onClick={() => {
               // Answer bounds check
               if (index < 0 || index >= currentQuestion.answers?.length) {
@@ -111,7 +109,7 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
             disabled={gameState.selectedAnswer !== null}
           >
             <div className="flex items-center">
-              <span className="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center text-sm font-bold mr-4 flex-shrink-0">
+              <span className="w-8 h-8 rounded-full bg-red-600 text-white flex items-center justify-center text-sm font-bold mr-4 flex-shrink-0">
                 {answerLabels[index]}
               </span>
               <span className="text-base text-left break-words">{answer}</span>
