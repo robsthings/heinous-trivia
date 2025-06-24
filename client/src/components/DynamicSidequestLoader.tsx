@@ -47,7 +47,7 @@ export function DynamicSidequestLoader({ sidequestId, className = "" }: DynamicS
         <div style={{textAlign: "center"}}>
           <h1 className="text-4xl font-bold text-red-500 mb-4">Sidequest Unavailable</h1>
           <p className="text-xl mb-4">The supernatural forces are blocking this quest</p>
-          <p className="text-gray-400">Error: {error.message}</p>
+          <p className="" style={{color: "#9ca3af"}}>Error: {error.message}</p>
         </div>
       </div>
     );
@@ -71,10 +71,10 @@ export function DynamicSidequestLoader({ sidequestId, className = "" }: DynamicS
     return (
       <div className={`min-h-screen bg-black text-white flex items-center justify-center ${className}`}>
         <div style={{textAlign: "center"}}>
-          <h1 className="text-4xl font-bold text-yellow-500 mb-4">Quest Under Construction</h1>
+          <h1 className="text-4xl font-bold text-yello00 mb-4" style={{width: "1.25rem"}}>Quest Under Construction</h1>
           <p className="text-xl mb-4">{sidequest.name}</p>
-          <p className="text-gray-400">{sidequest.description}</p>
-          <p className="text-sm text-gray-500 mt-4">Component type: {sidequest.componentType}</p>
+          <p className="" style={{color: "#9ca3af"}}>{sidequest.description}</p>
+          <p className="text-sm  mt-4" style={{color: "#6b7280"}}>Component type: {sidequest.componentType}</p>
         </div>
       </div>
     );
@@ -117,7 +117,7 @@ export function SidequestList({ tier = 'Basic', onSelectSidequest, className = "
     return (
       <div className={`p-6 text-center ${className}`}>
         <h2 className="text-2xl font-bold text-red-500 mb-4">Failed to Load Quests</h2>
-        <p className="text-gray-400">Error: {error.message}</p>
+        <p className="" style={{color: "#9ca3af"}}>Error: {error.message}</p>
       </div>
     );
   }
@@ -126,7 +126,7 @@ export function SidequestList({ tier = 'Basic', onSelectSidequest, className = "
     return (
       <div className={`p-6 text-center ${className}`}>
         <h2 className="text-2xl font-bold text-purple-500 mb-4">No Quests Available</h2>
-        <p className="text-gray-400">Check back later for new supernatural challenges</p>
+        <p className="" style={{color: "#9ca3af"}}>Check back later for new supernatural challenges</p>
       </div>
     );
   }
@@ -181,22 +181,22 @@ function SidequestCard({ sidequest, onSelect }: SidequestCardProps) {
       className="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-purple-500 cursor-pointer transition-all duration-300 hover:transform hover:scale-105"
       onClick={onSelect}
     >
-      <div className="flex justify-between items-start mb-3">
+      <div className="  items-start mb-3" style={{justifyContent: "space-between"}} style={{display: "flex"}}>
         <h3 className="text-xl font-bold text-white">{sidequest.name}</h3>
         <span className={`px-2 py-1 rounded text-xs font-bold ${getTierColor(sidequest.requiredTier)}`}>
           {sidequest.requiredTier}
         </span>
       </div>
       
-      <p className="text-gray-300 mb-4 text-sm leading-relaxed">
+      <p className=" mb-4 text-sm leading-relaxed" style={{color: "#d1d5db"}}>
         {sidequest.description}
       </p>
       
-      <div className="flex justify-between items-center">
+      <div className="  " style={{justifyContent: "space-between"}} style={{alignItems: "center"}} style={{display: "flex"}}>
         <span className={`font-semibold ${getDifficultyColor(sidequest.difficulty)}`}>
           {sidequest.difficulty}
         </span>
-        <span className="text-gray-400 text-sm">
+        <span className=" text-sm" style={{color: "#9ca3af"}}>
           {sidequest.estimatedTime}
         </span>
       </div>

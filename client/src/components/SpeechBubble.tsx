@@ -75,9 +75,9 @@ export function SpeechBubble({ messages, isVisible, className = "" }: SpeechBubb
   return (
     <div className={`relative ${className}`}>
       {/* Speech bubble */}
-      <div className="relative bg-gray-900 border-2 border-red-600 rounded-lg px-4 py-3 max-w-xs sm:max-w-sm md:max-w-md shadow-lg">
+      <div className="relative  border-2 border-red-600 rounded-lg px-4 py-3 max-w-xs sm:max-w-sm md:max-w-md shadow-lg" style={{backgroundColor: "#111827"}}>
         {/* Bubble content */}
-        <div className="text-red-400 text-sm sm:text-base font-semibold min-h-[1.5em] flex items-center">
+        <div className="text-red-400 text-sm sm:text-base font-semibold min-h-[1.5em]  " style={{alignItems: "center"}} style={{display: "flex"}}>
           {displayedText}
           <span className={`inline-block w-0.5 h-4 bg-red-400 ml-1 ${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity duration-100`} />
         </div>

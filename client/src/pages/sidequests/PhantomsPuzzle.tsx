@@ -231,7 +231,7 @@ export function PhantomsPuzzle() {
         {(gamePhase === "studying" || gamePhase === "inputting") && (
           <div>
             {/* Game Stats */}
-            <div className="flex justify-between items-center  bg-black/30 rounded-lg p-4" style={{marginBottom: "1.5rem"}}>
+            <div className="flex  items-center  bg-black/30 rounded-lg p-4" style={{justifyContent: "space-between"}} style={{marginBottom: "1.5rem"}}>
               <div style={{textAlign: "center"}}>
                 <div className="text-2xl font-bold text-blue-400">{level}</div>
                 <div className="text-sm text-gray-400">Level</div>

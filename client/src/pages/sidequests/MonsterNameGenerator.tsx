@@ -166,7 +166,7 @@ function MonsterNameGeneratorCore({ showHeinous = true }: MonsterNameGeneratorPr
         <div className="absolute left-4 sm:left-8 z-20" style={{ top: 'calc(50% - 2rem)' }}>
           <div className="relative">
             {/* Speech bubble positioned above sprite */}
-            <div className="absolute -top-20 sm:-top-24 left-1/2 transform -translate-x-1/2 bg-gray-900 border-2 border-red-600 rounded-lg px-3 py-2 w-48 sm:w-56 shadow-lg animate-fade-in z-10">
+            <div className="absolute -top-20 sm:-top-24 left-1/2 transform -translate-x-1/2 bg-gray-900 border-2 border-red-600 rounded-lg px-3 py-2 w-48 sm:6 shadow-lg animate-fade-in z-10" style={{width: "1.25rem"}}>
               <div className="text-red-400 text-xs sm:text-sm font-semibold " style={{textAlign: "center"}}>
                 Hold still. This won't hurt… much.
               </div>

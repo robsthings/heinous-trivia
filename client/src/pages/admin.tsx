@@ -66,10 +66,10 @@ function AnalyticsTab({
   const isPaidTier = selectedHaunt?.tier === 'pro' || selectedHaunt?.tier === 'premium';
 
   return (
-    <Card className="bg-gray-900/50 border-gray-700">
+    <Card style={{ backgroundColor: 'rgba(17, 24, 39, 0.5)', borderColor: '#374151' }}>
       <CardHeader>
-        <CardTitle className="text-red-400 flex items-center gap-2">
-          <BarChart3 className="w-5 h-5" />
+        <CardTitle style={{ color: '#f87171', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <BarChart3 style={{ width: '1.25rem', height: '1.25rem' }} />
           Analytics Dashboard
           <Badge variant="outline" style={{ color: '#d8b4fe', borderColor: '#d8b4fe' }}>
             Pro/Premium Feature

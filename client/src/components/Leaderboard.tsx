@@ -110,7 +110,7 @@ export function Leaderboard({ isVisible, leaderboard, onClose, hauntId, currentP
               }}>
                 {/* Spinning skull animation */}
                 <div className="absolute inset-0 animate-spin">
-                  <div className="w-12 h-12 sm:w-16 sm:h-16 text-orange-500 text-2xl sm:text-4xl flex items-center justify-center">💀</div>
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 text-orange-500 text-2xl sm:text-4xl   justify-center" style={{alignItems: "center"}} style={{display: "flex"}}>💀</div>
                 </div>
                 {/* Pulsing aura effect */}
                 <div className="absolute inset-0 animate-pulse bg-orange-500/20 rounded-full blur-sm"></div>
@@ -127,26 +127,26 @@ export function Leaderboard({ isVisible, leaderboard, onClose, hauntId, currentP
             leaderboard.slice(0, 10).map((entry, index) => (
               <div
                 key={`${entry.name}-${entry.date}`}
-                className="flex items-center justify-between p-2 sm:p-3 bg-gray-800 rounded-lg border border-purple-900"
+                className="   p-2 sm:p-3 bg-gray-800 rounded-lg border border-purple-900" style={{justifyContent: "space-between"}} style={{alignItems: "center"}} style={{display: "flex"}}
               >
-                <div className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1">
+                <div className="flex  space-x-2 sm:space-x-3 min-w-0 -1" style={{alignItems: "center"}} style={{display: "flex"}}>
                   <div className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold flex-shrink-0 ${getRankColor(index)}`}>
                     <span>{index + 1}</span>
                   </div>
-                  <div className="text-left min-w-0 flex-1">
+                  <div className="text-left min-w-0 -1" style={{display: "flex"}}>
                     <span className="font-medium text-white block text-sm sm:text-base truncate">{getDisplayName(entry.name)}</span>
                     <span className="text-xs text-gray-400">
                       {entry.correctAnswers}/{entry.questionsAnswered} correct
                     </span>
                   </div>
                 </div>
-                <div className="text-orange-500 font-bold text-sm sm:text-base flex-shrink-0 ml-2">{entry.score}</div>
+                <div className="text-orange-500 font-bold text-sm sm:text-base -shrink-0 ml-2" style={{display: "flex"}}>{entry.score}</div>
               </div>
             ))
           )}
         </div>
 
-        <div className=" flex-shrink-0" style={{textAlign: "center"}}>
+        <div className=" -shrink-0" style={{display: "flex"}} style={{textAlign: "center"}}>
           <button
             className="horror-button px-6 sm:px-8 py-3 rounded-lg font-medium text-white text-sm sm:text-base touch-manipulation"
             onClick={onClose}

@@ -28,7 +28,7 @@ export function PWAInstallButton() {
   return (
     <button
       onClick={handleInstallClick}
-      className="text-xs text-gray-400 hover:text-orange-400 transition-colors"
+      className="text-xs  hover:text-orange-400 transition-colors" style={{color: "#9ca3af"}}
       title="Install app to home screen"
     >
       📱 Install App

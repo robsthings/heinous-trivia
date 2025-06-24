@@ -229,7 +229,7 @@ export function ChupacabraChallenge() {
           {(gamePhase === "hunting") && (
             <div className={`text-center ${heartbeat ? 'animate-pulse' : ''}`}>
               <div className="bg-black/50 backdrop-blur-sm p-6 rounded-lg border border-red-500/30 " style={{marginBottom: "1.5rem"}}>
-                <div className="flex justify-between items-center mb-4">
+                <div className="flex  items-center mb-4" style={{justifyContent: "space-between"}}>
                   <div className="text-left">
                     <div className="text-lg font-bold text-green-400">
                       Hidden: {currentHidingSpot?.name}

@@ -99,7 +99,7 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
   // Transition Component with logo
   if (showTransition) {
     return (
-      <div className="fixed inset-0 bg-black z-50 overflow-hidden flex items-center justify-center">
+      <div className="fixed inset-0 bg-black z-50 overflow-hidden   justify-center" style={{alignItems: "center"}} style={{display: "flex"}}>
         <div className="relative">
           {logoSrc ? (
             <img
@@ -123,10 +123,10 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
          } : {}}>
       <div className="w-full h-full">
         {/* Mobile-First Responsive Layout */}
-        <div className="h-full flex flex-col justify-between p-4 max-w-md mx-auto lg:max-w-4xl">
+        <div className="h-full flex -col  p-4 max-w-md mx-auto lg:max-w-4xl" style={{justifyContent: "space-between"}} style={{display: "flex"}}>
           
           {/* Header - Compact on mobile */}
-          <div className=" py-2 flex-shrink-0" style={{textAlign: "center"}}>
+          <div className=" py-2 -shrink-0" style={{display: "flex"}} style={{textAlign: "center"}}>
             <h3 className="nosifer text-base sm:text-xl lg:text-3xl text-orange-500 animate-pulse leading-tight">
               A Message from Our Sponsors
             </h3>
@@ -134,7 +134,7 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
           </div>
           
           {/* Main Content - Centered and Responsive */}
-          <div className="flex-1 flex flex-col justify-center items-center space-y-4 min-h-0">
+          <div className="flex-1 flex -col justify-center  space-y-4 min-h-0" style={{alignItems: "center"}} style={{display: "flex"}}>
             
             {/* Ad Image - Direct display */}
             <div className="w-full px-4">
@@ -211,7 +211,7 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
           </div>
           
           {/* Action Buttons - Always visible at bottom */}
-          <div className="space-y-3 w-full max-w-xs sm:max-w-sm mx-auto flex-shrink-0 pt-4">
+          <div className="space-y-3 w-full max-w-xs sm:max-w-sm mx-auto -shrink-0 pt-4" style={{display: "flex"}}>
             {/* Only show Learn More button if valid link exists */}
             {hasValidLink && (
               <button

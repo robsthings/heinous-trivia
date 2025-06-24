@@ -193,7 +193,7 @@ export function WretchedWiring() {
       {/* Game UI */}
       <div className="relative z-10 h-screen flex flex-col">
         {/* Header */}
-        <div className="flex justify-between items-center p-6">
+        <div className="flex  items-center p-6" style={{justifyContent: "space-between"}}>
           <div className="text-2xl font-bold text-white drop-shadow-lg">
             Score: {gameState.score}
           </div>

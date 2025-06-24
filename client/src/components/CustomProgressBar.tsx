@@ -87,7 +87,7 @@ export function CustomProgressBar({ progress, hauntConfig, className = "" }: Cus
         </div>
         
         {/* Progress text overlay with enhanced readability */}
-        <div className="absolute inset-0 flex items-center justify-center text-xs font-bold text-white drop-shadow-lg">
+        <div className="absolute inset-0   justify-center text-xs font-bold text-white drop-shadow-lg" style={{alignItems: "center"}} style={{display: "flex"}}>
           {Math.round(progress)}%
         </div>
       </div>
@@ -101,7 +101,7 @@ export function CustomProgressBar({ progress, hauntConfig, className = "" }: Cus
         className="h-full bg-gradient-to-r from-red-600 to-orange-500 transition-all duration-300 ease-out rounded-full"
         style={{ width: `${Math.max(0, Math.min(100, progress))}%` }}
       />
-      <div className="absolute inset-0 flex items-center justify-center text-xs font-bold text-white drop-shadow-lg">
+      <div className="absolute inset-0   justify-center text-xs font-bold text-white drop-shadow-lg" style={{alignItems: "center"}} style={{display: "flex"}}>
         {Math.round(progress)}%
       </div>
     </div>

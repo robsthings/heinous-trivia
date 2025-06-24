@@ -169,9 +169,9 @@ export function GameEndScreen({
 
           {savedPlayerName ? (
             <div className="mb-4 sm: " style={{marginBottom: "1.5rem"}} style={{textAlign: "center"}}>
-              <div className="text-gray-300 text-xs sm:text-sm mb-2">Playing as:</div>
+              <div className=" text-xs sm:text-sm mb-2" style={{color: "#d1d5db"}}>Playing as:</div>
               <div className="text-white font-bold text-base sm:text-lg">{savedPlayerName}</div>
-              <div className="text-gray-400 text-xs mt-1">Score will be saved automatically</div>
+              <div className=" text-xs mt-1" style={{color: "#9ca3af"}}>Score will be saved automatically</div>
             </div>
           ) : (
             <div className="mb-4 sm:" style={{marginBottom: "1.5rem"}}>
@@ -221,7 +221,7 @@ export function GameEndScreen({
             )}
             
             <button
-              className="w-full py-3 sm:py-4 rounded-lg font-medium text-gray-300 border border-gray-600 hover:bg-gray-800 transition-colors text-sm sm:text-base touch-manipulation"
+              className="w-full py-3 sm:py-4 rounded-lg font-medium  border border-gray-600 hover:bg-gray-800 transition-colors text-sm sm:text-base touch-manipulation" style={{color: "#d1d5db"}}
               onClick={handlePlayAgain}
             >
               Play Again
@@ -229,7 +229,7 @@ export function GameEndScreen({
             
             {!scoreSaved && (
               <button
-                className="w-full py-3 sm:py-4 rounded-lg font-medium text-gray-300 border border-gray-600 hover:bg-gray-800 transition-colors text-sm sm:text-base touch-manipulation"
+                className="w-full py-3 sm:py-4 rounded-lg font-medium  border border-gray-600 hover:bg-gray-800 transition-colors text-sm sm:text-base touch-manipulation" style={{color: "#d1d5db"}}
                 onClick={onViewLeaderboard}
               >
                 View Leaderboard Only

@@ -112,7 +112,7 @@ export function CrypticCompliments() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-900 via-black to-purple-900 flex flex-col items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-purple-900 via-black to-purple-900 flex flex-col  justify-center p-4 relative overflow-hidden" style={{alignItems: "center"}}>
       {/* Background */}
       <div 
         className="absolute inset-0 bg-cover bg-center opacity-30"
@@ -171,7 +171,7 @@ export function CrypticCompliments() {
               
               {/* Compliment Text Overlay - positioned over the parchment */}
               {phase === "revealed" && isTextRevealed && (
-                <div className="absolute inset-0 flex items-center justify-center p-6">
+                <div className="absolute inset-0 flex  justify-center p-6" style={{alignItems: "center"}}>
                   <div className="w-full " style={{textAlign: "center"}} style={{ maxWidth: '400px', marginTop: '5px' }}>
                     <p className="compliment-text">
                       "{compliment}"
@@ -221,10 +221,10 @@ export function CrypticCompliments() {
 
             {/* Action Buttons */}
             {phase === "revealed" && isTextRevealed && (
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center  animate-fade-in" style={{alignItems: "center"}}>
                 <button
                   onClick={takeScreenshot}
-                  className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-bold transition-all duration-200 flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-105"
+                  className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-bold transition-all duration-200 flex  gap-2 shadow-lg hover:shadow-xl transform hover:scale-105" style={{alignItems: "center"}}
                 >
                   📸 Screenshot My Compliment
                 </button>

@@ -153,7 +153,7 @@ export default function WheelOfMisfortune() {
 
   return (
     <div 
-      className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden"
+      className="min-h-screen flex -col items-center justify-center relative overflow-hidden" style={{display: "flex"}}
       style={{
         backgroundImage: 'url(/sidequests/wheel-of-misfortune/wheel-bg.png)',
         backgroundSize: 'cover',
@@ -175,7 +175,7 @@ export default function WheelOfMisfortune() {
         </div>
 
         {/* Main Game Area */}
-        <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-16">
+        <div className="flex flex-col lg:-row items-center justify-center gap-8 lg:gap-16" style={{display: "flex"}}>
           {/* Dr. Heinous Presenter */}
           <div className="order-2 lg:order-1">
             {eyeBlinking ? (
@@ -242,7 +242,7 @@ export default function WheelOfMisfortune() {
 
         {/* Physical Challenge Sequence */}
         {eyeBlinking && (
-          <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
+          <div className="fixed inset-0 bg-black/80  items-center justify-center z-50" style={{display: "flex"}}>
             <div style={{textAlign: "center"}}>
               <div className="w-32 h-32 mx-auto mb-4 relative">
                 <img
@@ -257,7 +257,7 @@ export default function WheelOfMisfortune() {
         )}
 
         {showPhysicalChallenge && (
-          <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4">
+          <div className="fixed inset-0 bg-black/90  items-center justify-center z-50 p-4" style={{display: "flex"}}>
             <div className="bg-red-900/80 border-2 border-red-500 rounded-lg p-8 max-w-md " style={{textAlign: "center"}}>
               <h3 className="text-2xl font-bold text-red-300 mb-4">Physical Challenge!</h3>
               <p className="text-xl text-red-200 " style={{marginBottom: "1.5rem"}}>{currentChallenge}</p>
@@ -273,7 +273,7 @@ export default function WheelOfMisfortune() {
 
         {/* Result Display */}
         {showResult && selectedSlice && (
-          <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4">
+          <div className="fixed inset-0 bg-black/90  items-center justify-center z-50 p-4" style={{display: "flex"}}>
             <div 
               className="bg-black/80 border-2 rounded-lg p-8 max-w-md " style={{textAlign: "center"}}
               style={{ borderColor: selectedSlice.color }}
@@ -287,7 +287,7 @@ export default function WheelOfMisfortune() {
               <p className="text-xl text-red-200 mb-4">{selectedSlice.description}</p>
               <p className="text-lg text-red-300  italic" style={{marginBottom: "1.5rem"}}>"{selectedSlice.reactionLine}"</p>
               
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex flex-col sm:-row gap-4 justify-center" style={{display: "flex"}}>
                 <button
                   onClick={playAgain}
                   className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200"

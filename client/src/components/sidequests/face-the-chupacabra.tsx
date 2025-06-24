@@ -117,7 +117,7 @@ export function FaceTheChupacabra() {
 
   const renderKeys = () => {
     return (
-      <div className="flex gap-2 mb-4 justify-center">
+      <div className=" gap-2 mb-4 justify-center" style={{display: "flex"}}>
         {[1, 2, 3].map((keyNum) => (
           <img
             key={keyNum}
@@ -135,7 +135,7 @@ export function FaceTheChupacabra() {
 
   return (
     <div 
-      className="min-h-screen bg-cover bg-center bg-no-repeat flex flex-col items-center justify-center p-4 text-white relative"
+      className="min-h-screen bg-cover bg-center bg-no-repeat flex -col  justify-center p-4 text-white relative" style={{alignItems: "center"}} style={{display: "flex"}}
       style={{ backgroundImage: `url(${getBackgroundImage()})` }}
     >
       {/* Dark overlay for better text readability */}
@@ -143,7 +143,7 @@ export function FaceTheChupacabra() {
       
       <div className="relative z-10  max-w-lg w-full" style={{textAlign: "center"}}>
         {gameState.phase === 'start' && (
-          <div className="flex flex-col items-center justify-between min-h-screen pt-8 pb-20">
+          <div className="flex -col   min-h-screen pt-8 pb-20" style={{justifyContent: "space-between"}} style={{alignItems: "center"}} style={{display: "flex"}}>
             <div style={{textAlign: "center"}}>
               <h1 className="text-5xl font-bold text-red-500 mb-4 drop-shadow-lg" style={{ fontFamily: 'Creepster, cursive' }}>
                 Face the Chupacabra
@@ -166,7 +166,7 @@ export function FaceTheChupacabra() {
             <h2 className="text-3xl font-bold text-red-500 mb-4">Choose Your Weapon!</h2>
             
             {/* Collected keys display */}
-            <div className="flex gap-3 justify-center mb-4">
+            <div className=" gap-3 justify-center mb-4" style={{display: "flex"}}>
               {[1, 2, 3].map((keyNum) => (
                 <div key={keyNum} className="relative">
                   {keyNum <= gameState.playerKeys ? (
@@ -189,7 +189,7 @@ export function FaceTheChupacabra() {
                   <button
                     key={choice.value}
                     onClick={() => playRound(choice.value)}
-                    className="group relative bg-gray-800/80 hover:bg-gray-700/80 p-4 rounded-lg transition-all hover:scale-105 border-2 border-gray-600 hover:border-red-500"
+                    className="group relative /80 hover:bg-gray-700/80 p-4 rounded-lg transition-all hover:scale-105 border-2 border-gray-600 hover:border-red-500" style={{backgroundColor: "#1f2937"}}
                     title={choice.value === 'scissors' ? 'Staby Staby' : choice.label}
                   >
                     <img
@@ -234,7 +234,7 @@ export function FaceTheChupacabra() {
                   {gameState.lastResult === 'win' && (
                     <div className="text-green-400">
                       <div>You Won!</div>
-                      <div className="flex justify-center mt-2">
+                      <div className=" justify-center mt-2" style={{display: "flex"}}>
                         <img
                           src={`/sidequests/face-the-chupacabra/chupa-key-${gameState.playerKeys}.png`}
                           alt={`Key ${gameState.playerKeys}`}
@@ -260,7 +260,7 @@ export function FaceTheChupacabra() {
               </div>
             )}
             
-            <div className="text-sm text-gray-300">
+            <div className="text-sm " style={{color: "#d1d5db"}}>
               Wins: {gameState.playerKeys}/3 | Losses: {gameState.playerLosses}/3
             </div>
           </div>
@@ -271,7 +271,7 @@ export function FaceTheChupacabra() {
             <h2 className="text-4xl font-bold text-green-400 mb-4">🎉 ESCAPED! 🎉</h2>
             
             {/* All collected keys display */}
-            <div className="flex gap-4 justify-center " style={{marginBottom: "1.5rem"}}>
+            <div className=" gap-4 justify-center " style={{display: "flex"}} style={{marginBottom: "1.5rem"}}>
               {[1, 2, 3].map((keyNum) => (
                 <img
                   key={keyNum}

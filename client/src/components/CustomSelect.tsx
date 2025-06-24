@@ -38,9 +38,9 @@ export function CustomSelect({ value, onValueChange, options, placeholder, class
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full bg-gray-800 border border-gray-600 text-white px-3 py-2 rounded-md flex items-center justify-between hover:bg-gray-700 transition-colors"
+        className="w-full  border border-gray-600 text-white px-3 py-2 rounded-md    hover:bg-gray-700 transition-colors" style={{justifyContent: "space-between"}} style={{alignItems: "center"}} style={{display: "flex"}} style={{backgroundColor: "#1f2937"}}
       >
-        <span className="flex items-center gap-2">
+        <span className="  gap-2" style={{alignItems: "center"}} style={{display: "flex"}}>
           {selectedOption?.icon}
           {selectedOption?.label || placeholder}
         </span>
@@ -49,7 +49,7 @@ export function CustomSelect({ value, onValueChange, options, placeholder, class
 
       {/* Dropdown */}
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 mt-1 bg-gray-800 border border-gray-600 rounded-md shadow-lg z-50 overflow-hidden">
+        <div className="absolute top-full left-0 right-0 mt-1  border border-gray-600 rounded-md shadow-lg z-50 overflow-hidden" style={{backgroundColor: "#1f2937"}}>
           {options.map((option) => (
             <button
               key={option.value}
@@ -58,7 +58,7 @@ export function CustomSelect({ value, onValueChange, options, placeholder, class
                 onValueChange(option.value);
                 setIsOpen(false);
               }}
-              className="w-full px-3 py-2 text-left text-white hover:bg-gray-700 transition-colors flex items-center gap-2"
+              className="w-full px-3 py-2 text-left text-white hover:bg-gray-700 transition-colors   gap-2" style={{alignItems: "center"}} style={{display: "flex"}}
             >
               {option.icon}
               {option.label}
