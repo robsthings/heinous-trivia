@@ -31,18 +31,13 @@ export default function FontDebugTest() {
         </div>
       </div>
 
-      {/* Font Family CSS Variables Check */}
+      {/* Font Availability Check */}
       <div className="space-y-4 p-4 border border-gray-600 rounded">
         <h2 className="text-xl text-yellow-400">Font Availability Check:</h2>
         <div className="text-sm font-mono">
-          <div>document.fonts.ready status will show in console</div>
-          <div>Check browser DevTools > Network > Fonts for loading status</div>
+          <div>Check browser DevTools Network tab for font loading status</div>
+          <div>Console will show font availability results</div>
         </div>
-      </div>
-
-      {/* JavaScript Font Check */}
-      <div className="text-sm text-gray-400">
-        Font loading status will appear in browser console
       </div>
     </div>
   );
