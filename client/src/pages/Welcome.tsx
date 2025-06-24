@@ -7,7 +7,6 @@ export function Welcome() {
   const [isReturning, setIsReturning] = useState<boolean>(false);
   const [displayedText, setDisplayedText] = useState<string>('');
   const [showCursor, setShowCursor] = useState<boolean>(true);
-  const [hasTyped, setHasTyped] = useState<boolean>(false);
 
   useEffect(() => {
     // Check if user is returning
@@ -31,51 +30,37 @@ export function Welcome() {
     }
   };
 
-  // Dynamic taunt logic
-  const heinousTaunts = isReturning
-    ? [
-        "Back for more punishment?",
-        "Didn't get enough last time?", 
-        "You again? Brave soul.",
-        "Ready for round two?",
-        "Think you can do better this time?"
-      ]
-    : [
-        "Fresh meat!",
-        "Welcome to your doom!",
-        "A new victim approaches...",
-        "Dare ye enter my domain?",
-        "Let the horror begin!"
-      ];
-  
-  const tauntText = heinousTaunts[Math.floor(Math.random() * heinousTaunts.length)];
-  
-  // Typewriter effect for speech bubble - only runs once
+  // Initialize typewriter effect once on mount
   useEffect(() => {
-    if (tauntText && !hasTyped) {
-      console.log("Starting typewriter with:", tauntText);
-      setHasTyped(true);
-      setDisplayedText(''); // Start with empty text
-      let currentIndex = 0;
+    const heinousTaunts = isReturning
+      ? ["Back for more punishment?"]
+      : [
+          "A new victim approaches...",
+          "Fresh meat!",
+          "Welcome to your doom!",
+          "You dare challenge me?",
+          "Prepare for heinous horrors!",
+          "Another soul for my collection...",
+          "The darkness welcomes you!",
+          "Dare ye enter my domain?",
+          "Let the horror begin!"
+        ];
+    
+    const selectedTaunt = heinousTaunts[Math.floor(Math.random() * heinousTaunts.length)];
+    let currentIndex = 0;
+    
+    const typewriterInterval = setInterval(() => {
+      currentIndex++;
+      const newText = selectedTaunt.slice(0, currentIndex);
+      setDisplayedText(newText);
       
-      const typewriterInterval = setInterval(() => {
-        setDisplayedText(prev => {
-          const newText = tauntText.slice(0, currentIndex + 1);
-          console.log("Typing:", newText);
-          currentIndex++;
-          
-          if (currentIndex >= tauntText.length) {
-            clearInterval(typewriterInterval);
-            console.log("Typewriter complete");
-          }
-          
-          return newText;
-        });
-      }, 100);
+      if (currentIndex >= selectedTaunt.length) {
+        clearInterval(typewriterInterval);
+      }
+    }, 100);
 
-      return () => clearInterval(typewriterInterval);
-    }
-  }, [tauntText, hasTyped]);
+    return () => clearInterval(typewriterInterval);
+  }, [isReturning]);
 
   // Cursor blink effect
   useEffect(() => {
@@ -126,7 +111,7 @@ export function Welcome() {
                 fontWeight: '600'
               }}
             >
-              {displayedText}
+              {displayedText || '\u00A0'}
               <span style={{ 
                 opacity: showCursor ? 1 : 0,
                 marginLeft: '1px',
