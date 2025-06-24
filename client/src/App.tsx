@@ -81,7 +81,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <div style={{
         minHeight: '100vh',
-        background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)'
+        background: 'linear-gradient(to bottom, #1c0b2e, #2e003e, #000000)'
       }}>
         <Router />
       </div>

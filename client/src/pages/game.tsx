@@ -230,7 +230,13 @@ function Game() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black flex items-center justify-center">
+      <div style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(to bottom, #1c0b2e, #2e003e, #000000)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
         <SpookyLoader 
           message="Loading your trivia experience..." 
           showProgress={true}
@@ -299,7 +305,7 @@ function Game() {
   if (gameState.gameComplete || gameState.showEndScreen) {
     return (
       <div 
-        className={`game-container min-h-screen ${gameState.hauntConfig?.skinUrl ? '' : 'bg-gradient-dark'}`}
+        className="game-container min-h-screen"
         style={{
           background: gameState.hauntConfig?.skinUrl 
             ? `url(${gameState.hauntConfig.skinUrl}) center/cover`
