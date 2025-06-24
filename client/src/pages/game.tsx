@@ -309,7 +309,7 @@ function Game() {
         style={{
           background: gameState.hauntConfig?.skinUrl 
             ? `url(${gameState.hauntConfig.skinUrl}) center/cover`
-            : 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
+            : 'linear-gradient(to bottom, #1c0b2e, #2e003e, #000000)',
           minHeight: '100vh'
         }}
       >
@@ -345,7 +345,7 @@ function Game() {
       style={{
         background: gameState.hauntConfig?.skinUrl 
           ? `url(${gameState.hauntConfig.skinUrl}) center/cover`
-          : 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
+          : 'linear-gradient(to bottom, #1c0b2e, #2e003e, #000000)',
         minHeight: '100vh'
       }}
     >
