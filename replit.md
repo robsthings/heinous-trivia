@@ -106,6 +106,9 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 4. Method fetches ads from `/api/ads/${haunt}`
 5. Game state updates with loaded data
 
+## Recent Changes
+- June 24, 2025: **FULL-STACK DEVELOPMENT SETUP RESTORED** - Fixed host blocking by updating vite.dev.config.ts with explicit Replit domain allowlist, added API proxy configuration to route /api calls from frontend (port 5173) to Express backend (port 5000), started both Vite and Express servers for complete development environment
+
 ## Changelog
 - June 24, 2025: **HORROR THEME STYLING COMPLETELY RESTORED** - Fixed Tailwind configuration hierarchy by removing conflicting root config, updating PostCSS to reference client/tailwind.config.ts, corrected content paths for proper class scanning, eliminated redundant CSS overrides, updated App and TriviaCard components to use authentic horror classes (from-void via-shadow to-dark, from-blood to-crimson, font-creepster, animate-pulse-glow) - both development and deployment environments now display identical horror styling with custom colors, fonts, and animations
 - June 23, 2025: **TAILWIND CONFIGURATION UNIFIED FOR CONSISTENT STYLING** - Fixed preview/deployed version styling mismatch by updating root tailwind.config.ts with complete horror theme configuration from client/tailwind.config.ts, added all custom horror colors (blood, shadow, flame, void, dark, ghost, spirit, poison, crimson), restored Creepster/Nosifer/Eater fonts, included all custom animations (pulse-glow, shake, fade-in, lightning-flash, glitch-lines, sprite animations), enhanced content paths for comprehensive component coverage, added explicit inline styling to TriviaCard answer buttons and App wrapper to force horror theme display bypassing any cache issues - preview now matches deployed spooky styling with dark blue gradients, red-to-purple answer buttons, white circular labels, and glass card effects
