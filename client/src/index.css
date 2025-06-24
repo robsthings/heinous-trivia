@@ -4,6 +4,25 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  /* Force generation of custom horror classes */
+  .bg-blood { background-color: hsl(0 84% 27%); }
+  .bg-crimson { background-color: hsl(348 83% 47%); }
+  .bg-void { background-color: hsl(0 0% 4%); }
+  .bg-shadow { background-color: hsl(248 39% 27%); }
+  .bg-dark { background-color: hsl(0 0% 10%); }
+  .bg-flame { background-color: hsl(14 100% 59%); }
+  .text-spirit { color: hsl(0 0% 100%); }
+  .from-blood { --tw-gradient-from: hsl(0 84% 27%); }
+  .to-crimson { --tw-gradient-to: hsl(348 83% 47%); }
+  .from-void { --tw-gradient-from: hsl(0 0% 4%); }
+  .via-shadow { --tw-gradient-via: hsl(248 39% 27%); }
+  .to-dark { --tw-gradient-to: hsl(0 0% 10%); }
+  .from-flame { --tw-gradient-from: hsl(14 100% 59%); }
+  .to-blood { --tw-gradient-to: hsl(0 84% 27%); }
+  .border-spirit { border-color: hsl(0 0% 100%); }
+}
+
 @layer base {
   :root {
     --background: 222.2 84% 4.9%;

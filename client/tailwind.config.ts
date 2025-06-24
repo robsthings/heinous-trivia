@@ -101,10 +101,10 @@ export default {
         },
         "pulse-glow": {
           "0%, 100%": {
-            boxShadow: "0 0 20px hsl(var(--blood) / 0.5)"
+            boxShadow: "0 0 20px hsl(0 84% 27% / 0.5)"
           },
           "50%": {
-            boxShadow: "0 0 40px hsl(var(--blood) / 0.8)"
+            boxShadow: "0 0 40px hsl(0 84% 27% / 0.8)"
           }
         },
         "shake": {
