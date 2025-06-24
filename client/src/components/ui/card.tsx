@@ -33,6 +33,13 @@ const CardTitle = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HT
 )
 CardTitle.displayName = "CardTitle"
 
+const CardDescription = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(
+  ({ style, ...props }, ref) => (
+    <p ref={ref} style={{ fontSize: '14px', color: '#9ca3af', ...style }} {...props} />
+  )
+)
+CardDescription.displayName = "CardDescription"
+
 const CardContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ style, ...props }, ref) => (
     <div ref={ref} style={{ padding: '24px', paddingTop: '0', ...style }} {...props} />
@@ -40,4 +47,4 @@ const CardContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDi
 )
 CardContent.displayName = "CardContent"
 
-export { Card, CardHeader, CardTitle, CardContent }
+export { Card, CardHeader, CardTitle, CardDescription, CardContent }

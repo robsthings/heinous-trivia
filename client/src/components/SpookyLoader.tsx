@@ -135,7 +135,13 @@ export function SpookyLoader({
                 borderRadius: '50%',
                 animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
               }}></div>
-              <div className="absolute -inset-8 border border-orange-500/10 rounded-full animate-ping"></div>
+              <div style={{
+                position: 'absolute',
+                top: '-2rem', right: '-2rem', bottom: '-2rem', left: '-2rem',
+                border: '1px solid rgba(251, 146, 60, 0.1)',
+                borderRadius: '50%',
+                animation: 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite'
+              }}></div>
             </div>
           ) : (
             <div>
@@ -200,9 +206,7 @@ export function SpookyLoader({
               <div 
                 style={{
                   fontSize: '1.5rem',
-                  animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
-                }}
-                style={{ 
+                  animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                   animationDelay: `${i * 0.2}s`,
                   animationDuration: `${1 + Math.random()}s`
                 }}
@@ -220,9 +224,9 @@ export function SpookyLoader({
                   backgroundColor: '#fb923c',
                   borderRadius: '50%',
                   animation: 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
-                  opacity: 0.75
+                  opacity: 0.75,
+                  animationDelay: `${i * 0.3}s`
                 }}
-                style={{ animationDelay: `${i * 0.3}s` }}
               />
             </div>
           ))}

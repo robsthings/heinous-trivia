@@ -91,10 +91,23 @@ export function Leaderboard({ isVisible, leaderboard, onClose, hauntId, currentP
           }}>Top 10 Nightmare Navigators</p>
         </div>
 
-        <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6 flex-1 overflow-y-auto">
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 'clamp(0.5rem, 2vw, 0.75rem)',
+          marginBottom: 'clamp(1rem, 4vw, 1.5rem)',
+          flex: '1',
+          overflowY: 'auto'
+        }}>
           {isLoading ? (
             <div className="text-center text-gray-400 py-6 sm:py-8">
-              <div className="relative mx-auto mb-3 sm:mb-4 w-12 h-12 sm:w-16 sm:h-16">
+              <div style={{
+                position: 'relative',
+                margin: '0 auto',
+                marginBottom: 'clamp(0.75rem, 3vw, 1rem)',
+                width: 'clamp(3rem, 8vw, 4rem)',
+                height: 'clamp(3rem, 8vw, 4rem)'
+              }}>
                 {/* Spinning skull animation */}
                 <div className="absolute inset-0 animate-spin">
                   <div className="w-12 h-12 sm:w-16 sm:h-16 text-orange-500 text-2xl sm:text-4xl flex items-center justify-center">💀</div>
