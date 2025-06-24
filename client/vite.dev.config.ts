@@ -8,9 +8,12 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 5173,
     strictPort: false,
-    disableHostCheck: true,
-    allowedHosts: "all",
-    origin: 'http://localhost:5173'
+    allowedHosts: [
+      "localhost",
+      ".replit.dev",
+      "e7e1ab62-01cc-4aba-97d3-1a8f1e8fdf98-00-27ck2q6bfkqpp.worf.replit.dev",
+      /.*\.replit\.dev$/
+    ]
   },
   resolve: {
     alias: {
