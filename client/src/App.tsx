@@ -90,11 +90,7 @@ function Router() {
 
 function App() {
   return (
-    <div style={{
-      background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
-      minHeight: '100vh',
-      color: '#ffffff'
-    }}>
+    <div className="min-h-screen bg-gradient-to-br from-void via-shadow to-dark text-spirit font-creepster">
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <Toaster />
