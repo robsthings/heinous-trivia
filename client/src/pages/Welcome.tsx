@@ -186,8 +186,8 @@ export function Welcome() {
 
         {/* Haunt Info */}
         <div className="mt-6 text-center">
-          <p className="text-sm text-gray-500">
-            Haunt: <span className="text-orange-400 font-semibold">{currentHauntId}</span>
+          <p className="text-sm text-orange-500 underline">
+            Haunt: {currentHauntId}
           </p>
         </div>
       </div>
