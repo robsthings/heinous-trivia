@@ -105,13 +105,14 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
       <div style={{ textAlign: 'center', marginBottom: '32px' }}>
         <h2 style={{ 
           color: '#ffffff', 
-          fontSize: '20px', 
+          fontSize: '1.25rem', 
           fontWeight: '500', 
-          lineHeight: '1.6', 
+          lineHeight: '1.4', 
           marginBottom: '16px',
-          fontFamily: isDeSpookified ? 'Arial, sans-serif' : '"Creepster", cursive',
+          marginTop: '1.5rem',
+          fontFamily: isDeSpookified ? 'Arial, sans-serif' : '"Nosifer", cursive',
           textTransform: isDeSpookified ? 'none' : 'uppercase',
-          letterSpacing: isDeSpookified ? 'normal' : '1px'
+          letterSpacing: isDeSpookified ? 'normal' : '0.03em'
         }}>
           {currentQuestion.text}
         </h2>
