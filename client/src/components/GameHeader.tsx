@@ -47,43 +47,85 @@ export function GameHeader({ gameState, isGroupMode = false, groupScore = 0 }: G
   const progress = totalQuestions > 0 ? (questionsAnswered / totalQuestions) * 100 : 0;
 
   return (
-    <header className="bg-gray-800 border border-gray-600 mx-4 mt-4 p-4 rounded-xl">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1">
+    <header style={{
+      background: 'rgba(31, 41, 55, 0.9)',
+      border: '1px solid rgba(75, 85, 99, 0.6)',
+      margin: '16px',
+      marginTop: '16px',
+      padding: '16px',
+      borderRadius: '12px'
+    }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', minWidth: 0, flex: 1 }}>
           {hauntConfig && (
             <img
               src={hauntConfig.logoPath}
               alt={`${hauntConfig.name} Logo`}
-              className={`${hauntConfig.tier === 'premium' ? 'w-14 h-14 sm:w-16 sm:h-16' : 'w-10 h-10 sm:w-12 sm:h-12'} rounded-full border-2 flex-shrink-0`}
-              style={{ borderColor: primaryColor }}
+              style={{
+                width: hauntConfig.tier === 'premium' ? '64px' : '48px',
+                height: hauntConfig.tier === 'premium' ? '64px' : '48px',
+                borderRadius: '50%',
+                border: `2px solid ${primaryColor}`,
+                flexShrink: 0
+              }}
             />
           )}
-          <div className="min-w-0 flex-1">
-            <h1 className="text-white text-xl font-semibold truncate">
+          <div style={{ minWidth: 0, flex: 1 }}>
+            <h1 style={{
+              color: '#ffffff',
+              fontSize: '20px',
+              fontWeight: '600',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap'
+            }}>
               {hauntConfig?.name || 'Loading...'}
             </h1>
-            <p className="text-gray-400 text-sm">Horror Trivia Challenge</p>
+            <p style={{ color: '#9ca3af', fontSize: '14px' }}>Horror Trivia Challenge</p>
           </div>
         </div>
-        <div className="text-right flex-shrink-0 ml-2">
-          <div className="text-2xl font-bold text-white">
+        <div style={{ textAlign: 'right', flexShrink: 0, marginLeft: '8px' }}>
+          <div style={{
+            fontSize: '24px',
+            fontWeight: 'bold',
+            color: '#ffffff'
+          }}>
             {isGroupMode ? groupScore : score}
           </div>
-          <div className="text-sm text-gray-400">Score</div>
+          <div style={{ fontSize: '14px', color: '#9ca3af' }}>Score</div>
         </div>
       </div>
 
-      <div className="mt-3 sm:mt-4">
-        <div className="flex justify-between text-xs sm:text-sm text-gray-300 mb-2">
-          <span className="truncate mr-2">
+      <div style={{ marginTop: '16px' }}>
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          fontSize: '14px',
+          color: '#d1d5db',
+          marginBottom: '8px'
+        }}>
+          <span style={{
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            marginRight: '8px'
+          }}>
             Q {currentQuestionDisplay}/{totalQuestions} • {correctAnswers}/{questionsAnswered} correct
           </span>
-          <span className="flex-shrink-0">{Math.round(progress)}%</span>
+          <span style={{ flexShrink: 0 }}>{Math.round(progress)}%</span>
         </div>
-        <div className="w-full bg-gray-700 rounded-full h-3">
+        <div style={{
+          width: '100%',
+          backgroundColor: '#374151',
+          borderRadius: '9999px',
+          height: '12px'
+        }}>
           <div
-            className="h-3 rounded-full transition-all duration-300 bg-gradient-to-r from-red-500 to-orange-500"
-            style={{ 
+            style={{
+              height: '12px',
+              borderRadius: '9999px',
+              transition: 'all 0.3s ease',
+              background: getProgressBarGradient(hauntConfig),
               width: `${progress}%`
             }}
           />
