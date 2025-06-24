@@ -110,6 +110,32 @@
   animation: lightning-flash 2s infinite !important;
 }
 
+/* Keyframe Animations */
+@keyframes pulse-glow {
+  0%, 100% { 
+    transform: scale(1); 
+    box-shadow: 0 0 20px rgba(220, 38, 38, 0.5);
+  }
+  50% { 
+    transform: scale(1.02); 
+    box-shadow: 0 0 30px rgba(220, 38, 38, 0.8);
+  }
+}
+
+@keyframes glitch-lines {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-2px); }
+  40% { transform: translateX(2px); }
+  60% { transform: translateX(-1px); }
+  80% { transform: translateX(1px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes lightning-flash {
+  0%, 90%, 100% { opacity: 0; }
+  5%, 10% { opacity: 1; }
+}
+
 /* Progress Bar Color Theme Gradients */
 .bg-gradient-to-r.from-red-600.to-red-400 {
   background: linear-gradient(to right, #dc2626, #f87171);

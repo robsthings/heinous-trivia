@@ -78,14 +78,14 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
   };
 
   return (
-    <div className="max-w-2xl mx-auto">
-      {/* Question Card */}
-      <div className="glass-card rounded-xl p-6 mb-6">
+    <div className="w-full">
+      {/* Question Header */}
+      <div className="text-center mb-8 px-4">
         <h2 className="text-white text-xl font-medium leading-relaxed mb-4">
           {currentQuestion.text}
         </h2>
         
-        <div className="flex items-center gap-3 mb-4">
+        <div className="flex items-center justify-center gap-3 mb-4">
           <span className="bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-medium">
             {currentQuestion.category}
           </span>
@@ -95,12 +95,12 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
         </div>
       </div>
 
-      {/* Answer Options */}
-      <div className="space-y-3">
+      {/* Answer Options - Full Width */}
+      <div className="space-y-3 px-4">
         {currentQuestion.answers?.map((answer, index) => (
           <button
             key={index}
-            className={getButtonClass(index)}
+            className={`w-full p-4 rounded-lg transition-all duration-200 hover:scale-105 ${getButtonClass(index)}`}
             style={{
               background: gameState.selectedAnswer === null 
                 ? 'linear-gradient(to right, #b91c1c, #7e22ce)' 
