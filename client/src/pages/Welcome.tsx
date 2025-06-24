@@ -50,52 +50,137 @@ export function Welcome() {
   // Force refresh trigger
 
   return (
-    <div className="min-h-screen bg-[url('/backgrounds/lab-dark-blue.png')] bg-cover bg-center bg-no-repeat bg-fixed">
-      <div className="min-h-screen bg-gradient-to-b from-black/60 via-gray-900/70 to-black/80 flex flex-col items-center justify-center px-4 text-center gap-4">
+    <div 
+      className="min-h-screen w-full overflow-hidden relative"
+      style={{
+        backgroundImage: 'url("/backgrounds/lab-dark-blue.png")',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
+      <div 
+        className="min-h-screen flex flex-col items-center justify-center px-4 text-center"
+        style={{
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(55,65,81,0.7), rgba(0,0,0,0.8))'
+        }}
+      >
         
         {/* Dr. Heinous Character with Speech Bubble */}
-        <div className="relative">
+        <div className="relative mb-6">
           {/* Speech Bubble */}
-          <div className="absolute -top-16 left-1/2 transform -translate-x-1/2 bg-gray-900 border-2 border-red-600 rounded-lg px-4 py-3 animate-speech-bubble-in">
-            <span className="text-red-400 text-sm sm:text-base font-semibold">
+          <div 
+            className="absolute left-1/2 transform -translate-x-1/2"
+            style={{
+              top: '-4rem',
+              backgroundColor: '#111827',
+              border: '2px solid #dc2626',
+              borderRadius: '0.5rem',
+              padding: '0.75rem 1rem',
+              animation: 'speech-bubble-in 0.8s ease-out'
+            }}
+          >
+            <span 
+              style={{
+                color: '#f87171',
+                fontSize: '0.875rem',
+                fontWeight: '600'
+              }}
+            >
               {tauntText}
             </span>
-            {/* Dual triangle tail */}
-            <div className="absolute top-full left-1/2 transform -translate-x-1/2">
-              <div className="w-0 h-0 border-l-4 border-r-4 border-t-6 border-transparent border-t-red-600"></div>
-              <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-3 border-r-3 border-t-5 border-transparent border-t-gray-900"></div>
-            </div>
+            {/* Triangle tail */}
+            <div 
+              className="absolute top-full left-1/2 transform -translate-x-1/2"
+              style={{
+                width: 0,
+                height: 0,
+                borderLeft: '8px solid transparent',
+                borderRight: '8px solid transparent',
+                borderTop: '8px solid #dc2626'
+              }}
+            />
           </div>
           
           {/* Character Image */}
           <img 
             src="/heinous/charming.png" 
             alt="Dr. Heinous" 
-            className="object-contain drop-shadow-2xl animate-sprite-glitch-in"
+            className="object-contain"
+            style={{
+              width: '16rem',
+              height: 'auto',
+              filter: 'drop-shadow(0 25px 25px rgb(0 0 0 / 0.15))',
+              animation: 'sprite-glitch-in 1.5s ease-out'
+            }}
           />
         </div>
 
-        {/* Welcome Title - TEST WITH SIMPLE CLASSES */}
-        <h1 className="text-center text-red-500 text-4xl bg-blue-500 p-4 border-4 border-yellow-400">
+        {/* Welcome Title */}
+        <h1 
+          style={{
+            fontFamily: '"Nosifer", cursive',
+            color: '#f97316',
+            fontSize: 'clamp(1.5rem, 8vw, 4rem)',
+            marginBottom: '1.5rem',
+            lineHeight: '1.2',
+            animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+          }}
+        >
           Welcome Back
         </h1>
         
         {/* Subtext */}
-        <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 sm:mb-8 leading-relaxed text-gray-400">
+        <p 
+          style={{
+            color: '#9ca3af',
+            fontSize: 'clamp(1rem, 4vw, 1.5rem)',
+            marginBottom: '2rem',
+            lineHeight: '1.6'
+          }}
+        >
           Ready for another spine-chilling round of trivia?
         </p>
 
         {/* Play Again Button */}
         <button
           onClick={handleStartGame}
-          className="font-creepster bg-gradient-to-r from-red-600 to-red-800 hover:from-red-500 hover:to-red-700 border-2 border-red-400 shadow-lg hover:shadow-red-500/50 transform hover:scale-105 transition-all duration-300 h-11 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg md:text-xl min-w-[200px] sm:min-w-[250px] text-white rounded"
+          style={{
+            fontFamily: '"Creepster", cursive',
+            background: 'linear-gradient(to right, #dc2626, #991b1b)',
+            color: 'white',
+            border: '2px solid #f87171',
+            borderRadius: '0.375rem',
+            padding: '0.75rem 2rem',
+            fontSize: 'clamp(1rem, 3vw, 1.25rem)',
+            minWidth: '12rem',
+            cursor: 'pointer',
+            transition: 'all 0.3s ease',
+            boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.05)'
+          }}
+          onMouseEnter={(e) => {
+            e.target.style.background = 'linear-gradient(to right, #ef4444, #dc2626)';
+            e.target.style.transform = 'scale(1.05)';
+            e.target.style.boxShadow = '0 20px 25px -5px rgb(239 68 68 / 0.5), 0 8px 10px -6px rgb(239 68 68 / 0.5)';
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.background = 'linear-gradient(to right, #dc2626, #991b1b)';
+            e.target.style.transform = 'scale(1)';
+            e.target.style.boxShadow = '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.05)';
+          }}
         >
           PLAY AGAIN
         </button>
 
         {/* Haunt Label */}
-        <div className="text-xs sm:text-sm text-gray-500 mt-4">
-          Haunt: <span className="text-orange-400 font-semibold">{hauntId}</span>
+        <div 
+          style={{
+            color: '#6b7280',
+            fontSize: '0.75rem',
+            marginTop: '1rem'
+          }}
+        >
+          Haunt: <span style={{ color: '#fb923c', fontWeight: '600' }}>{hauntId}</span>
         </div>
       </div>
     </div>
