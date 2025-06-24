@@ -66,10 +66,10 @@ export function Welcome() {
         
         {/* Speech Bubble */}
         <div className="mb-2">
-          <div className="bg-blood text-white rounded px-3 py-1 text-xs font-bold drop-shadow mb-2 inline-block relative">
+          <div className="bg-poison text-white rounded-full px-4 py-1 text-sm font-bold drop-shadow mb-2 inline-block relative">
             {tauntText}
             {/* Speech bubble pointer */}
-            <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-blood"></div>
+            <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-poison"></div>
           </div>
         </div>
 
@@ -88,7 +88,7 @@ export function Welcome() {
         </div>
 
         {/* Welcome Heading */}
-        <h1 className="text-4xl md:text-5xl font-creepster text-orange-800 text-center drop-shadow mb-4">
+        <h1 className="text-4xl md:text-5xl font-creepster text-flame text-center drop-shadow-glow mb-4">
           WELCOME BACK
         </h1>
         
@@ -106,7 +106,7 @@ export function Welcome() {
         </button>
 
         {/* Dynamic Haunt Footer */}
-        <div className="text-sm text-orange-500 text-center underline mt-6">
+        <div className="text-sm text-flame text-center mt-6">
           Haunt: {hauntId}
         </div>
       </div>
