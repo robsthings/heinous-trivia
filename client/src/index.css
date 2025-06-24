@@ -1,5 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&family=Eater&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Custom styles come after Tailwind */
+/* Custom horror theme colors for Tailwind v4 */
+@layer utilities {
+  .bg-blood { background-color: #8B0000; }
+  .bg-shadow { background-color: #0D0D0D; }
+  .bg-flame { background-color: #FF4500; }
+  .bg-void { background-color: #0B0014; }
+  .bg-dark { background-color: #1a1a1a; }
+  .bg-ghost { background-color: #E0E0E0; }
+  .bg-spirit { background-color: #3F51B5; }
+  .bg-poison { background-color: #228B22; }
+  .bg-crimson { background-color: #DC143C; }
+  
+  .text-blood { color: #8B0000; }
+  .text-shadow { color: #0D0D0D; }
+  .text-flame { color: #FF4500; }
+  .text-void { color: #0B0014; }
+  .text-dark { color: #1a1a1a; }
+  .text-ghost { color: #E0E0E0; }
+  .text-spirit { color: #3F51B5; }
+  .text-poison { color: #228B22; }
+  .text-crimson { color: #DC143C; }
+  
+  .from-blood { --tw-gradient-from: #8B0000; }
+  .from-shadow { --tw-gradient-from: #0D0D0D; }
+  .from-flame { --tw-gradient-from: #FF4500; }
+  .from-void { --tw-gradient-from: #0B0014; }
+  .from-dark { --tw-gradient-from: #1a1a1a; }
+  .from-crimson { --tw-gradient-from: #DC143C; }
+  
+  .to-blood { --tw-gradient-to: #8B0000; }
+  .to-shadow { --tw-gradient-to: #0D0D0D; }
+  .to-flame { --tw-gradient-to: #FF4500; }
+  .to-void { --tw-gradient-to: #0B0014; }
+  .to-dark { --tw-gradient-to: #1a1a1a; }
+  .to-crimson { --tw-gradient-to: #DC143C; }
+  
+  .via-shadow { --tw-gradient-via: #0D0D0D; }
+  .via-void { --tw-gradient-via: #0B0014; }
+  
+  .font-creepster { font-family: 'Creepster', cursive; }
+  .font-nosifer { font-family: 'Nosifer', cursive; }
+  .font-eater { font-family: 'Eater', cursive; }
+  
+  .animate-pulse-glow {
+    animation: pulse-glow 2s infinite;
+  }
+  
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 0px #DC143C; }
+    50% { box-shadow: 0 0 12px #DC143C; }
+  }
+}
