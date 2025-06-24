@@ -228,10 +228,29 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
       {gameState.showFeedback && (
         <div style={{ marginTop: '24px', display: 'flex', justifyContent: 'center' }}>
           <button
-            className="horror-button px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-medium text-white hover:scale-105 transition-transform text-sm sm:text-base touch-manipulation"
+            style={{
+              padding: '12px 24px',
+              background: 'linear-gradient(to right, #b91c1c, #7c2d12)',
+              color: '#ffffff',
+              borderRadius: '8px',
+              fontWeight: '500',
+              border: 'none',
+              cursor: 'pointer',
+              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+              transition: 'all 0.2s ease',
+              fontSize: '16px'
+            }}
             onClick={onNextQuestion}
+            onMouseOver={(e) => {
+              e.currentTarget.style.background = 'linear-gradient(to right, #dc2626, #92400e)';
+              e.currentTarget.style.transform = 'scale(1.05)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.background = 'linear-gradient(to right, #b91c1c, #7c2d12)';
+              e.currentTarget.style.transform = 'scale(1)';
+            }}
           >
-            Next Question
+            {gameState.questionsAnswered >= 20 ? 'View Results' : 'Next Question'}
           </button>
         </div>
       )}
