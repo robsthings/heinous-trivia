@@ -11,12 +11,12 @@ export function Welcome() {
       const visitKey = `visited_${hauntId}`;
       localStorage.setItem(visitKey, 'true');
       
-      // Set session storage to track that user is coming from welcome
-      sessionStorage.setItem('fromWelcome', 'true');
+      // Set session storage to track that user is coming from welcome (corrected key)
+      sessionStorage.setItem('fromWelcomeScreen', 'true');
       
       console.log('Navigating to:', `/game/${hauntId}`);
       // Navigate to the game
-      setLocation(`/game/${hauntId}`);
+      window.location.href = `/game/${hauntId}`;
     } else {
       console.error('No hauntId found for navigation');
     }
