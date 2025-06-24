@@ -3,4 +3,4 @@ export default {
     '@tailwindcss/postcss': { config: './tailwind.config.ts' },
     autoprefixer: {},
   },
-}
+};
