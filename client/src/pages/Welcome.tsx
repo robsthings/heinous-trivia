@@ -54,22 +54,20 @@ export function Welcome() {
       {/* Dr. Heinous Character with Speech Bubble */}
       <div className="relative">
         {/* Speech Bubble */}
-        <div className="absolute -top-8 left-1/2 transform -translate-x-1/2">
-          <div className="text-xs bg-red-700 text-white px-2 py-1 rounded shadow-lg">
-            {tauntText}
-          </div>
+        <div className="absolute text-xs text-white bg-red-700 px-2 py-1 rounded shadow -translate-y-10 left-1/2 transform -translate-x-1/2">
+          {tauntText}
         </div>
         
         {/* Character Image */}
         <img 
           src="/heinous/charming.png" 
           alt="Dr. Heinous" 
-          className="max-w-[300px] md:max-w-[400px] w-full h-auto"
+          className="max-w-[300px] md:max-w-[520px] w-full h-auto"
         />
       </div>
 
       {/* Welcome Title */}
-      <h1 className="text-4xl md:text-6xl text-flame text-center font-creepster mt-6">
+      <h1 className="font-creepster text-flame text-center text-5xl md:text-6xl mt-6">
         WELCOME BACK
       </h1>
       
@@ -87,7 +85,7 @@ export function Welcome() {
       </button>
 
       {/* Haunt Label */}
-      <div className="text-xs text-crimson mt-2">
+      <div className="text-crimson text-xs mt-2 text-shadow">
         Haunt: {hauntId}
       </div>
     </div>
