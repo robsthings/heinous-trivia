@@ -63,16 +63,15 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
 
   return (
     <div style={{
-      background: 'rgba(31, 41, 55, 0.7)',
+      background: 'rgba(31, 41, 55, 0.85)',
       backdropFilter: 'blur(16px)',
       WebkitBackdropFilter: 'blur(16px)',
-      border: '1px solid rgba(75, 85, 99, 0.5)',
-      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+      border: '1px solid rgba(75, 85, 99, 0.6)',
+      boxShadow: '0 8px 32px rgba(0, 0, 0, 0.5)',
       borderRadius: '12px',
       padding: '24px',
       marginTop: '16px',
-      position: 'relative',
-      overflow: 'hidden'
+      position: 'relative'
     }}>
       {/* Question Header */}
       <div style={{ textAlign: 'center', marginBottom: '32px' }}>
@@ -81,7 +80,10 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
           fontSize: '20px', 
           fontWeight: '500', 
           lineHeight: '1.6', 
-          marginBottom: '16px' 
+          marginBottom: '16px',
+          fontFamily: '"Creepster", cursive',
+          textTransform: 'uppercase',
+          letterSpacing: '1px'
         }}>
           {currentQuestion.text}
         </h2>
@@ -112,40 +114,35 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
             borderRadius: '8px',
             textAlign: 'left' as const,
             fontWeight: '500',
-            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+            transition: 'all 0.2s ease',
             cursor: gameState.selectedAnswer !== null ? 'default' : 'pointer',
-            background: 'rgba(31, 41, 55, 0.6)',
-            backdropFilter: 'blur(8px)',
-            WebkitBackdropFilter: 'blur(8px)',
-            border: '1px solid rgba(75, 85, 99, 0.4)',
-            boxShadow: '0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
+            background: 'rgba(55, 65, 81, 0.8)',
+            border: '1px solid rgba(75, 85, 99, 0.6)',
             color: '#ffffff',
-            transform: 'translateY(0)',
-            opacity: 1
+            transform: 'translateY(0)'
           };
 
           if (gameState.showFeedback && gameState.selectedAnswer !== null) {
             if (index === currentQuestion.correctAnswer) {
               buttonStyle = {
                 ...buttonStyle,
-                background: '#16a34a',
-                border: '1px solid #22c55e',
-                boxShadow: '0 4px 12px rgba(34, 197, 94, 0.3)'
+                background: '#15803d',
+                border: '1px solid #16a34a',
+                color: '#ffffff'
               };
             } else if (index === gameState.selectedAnswer) {
               buttonStyle = {
                 ...buttonStyle,
-                background: 'rgba(220, 38, 38, 0.7)',
-                border: '1px solid #ef4444',
-                boxShadow: '0 4px 12px rgba(239, 68, 68, 0.3)'
+                background: '#991b1b',
+                border: '1px solid #dc2626',
+                color: '#ffffff'
               };
             } else {
               buttonStyle = {
                 ...buttonStyle,
-                background: 'rgba(31, 41, 55, 0.3)',
+                background: 'rgba(55, 65, 81, 0.4)',
                 color: '#9ca3af',
-                opacity: 0.5,
-                border: '1px solid rgba(75, 85, 99, 0.3)'
+                border: '1px solid rgba(75, 85, 99, 0.4)'
               };
             }
           }
@@ -163,16 +160,12 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
               disabled={gameState.selectedAnswer !== null}
               onMouseEnter={(e) => {
                 if (gameState.selectedAnswer === null) {
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)';
-                  e.currentTarget.style.background = 'rgba(55, 65, 81, 0.7)';
+                  e.currentTarget.style.background = 'rgba(75, 85, 99, 0.8)';
                 }
               }}
               onMouseLeave={(e) => {
                 if (gameState.selectedAnswer === null) {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05)';
-                  e.currentTarget.style.background = 'rgba(31, 41, 55, 0.6)';
+                  e.currentTarget.style.background = 'rgba(55, 65, 81, 0.8)';
                 }
               }}
             >
@@ -207,8 +200,8 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
           marginTop: '24px',
           padding: '16px',
           borderRadius: '8px',
-          border: gameState.isCorrect ? '1px solid #22c55e' : '1px solid #ef4444',
-          background: gameState.isCorrect ? '#16a34a' : 'rgba(220, 38, 38, 0.9)'
+          background: gameState.isCorrect ? '#15803d' : '#991b1b',
+          border: gameState.isCorrect ? '1px solid #16a34a' : '1px solid #dc2626'
         }}>
           <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
             <div style={{
@@ -232,13 +225,15 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
                 fontWeight: '500', 
                 color: '#ffffff', 
                 fontSize: '16px', 
-                marginBottom: '4px' 
+                marginBottom: '4px',
+                fontFamily: '"Creepster", cursive'
               }}>
                 {gameState.isCorrect ? 'Correct!' : 'Incorrect!'}
               </p>
               <p style={{ 
                 color: '#f3f4f6', 
-                fontSize: '14px' 
+                fontSize: '14px',
+                fontFamily: '"Nosifer", cursive'
               }}>
                 {currentQuestion.explanation}
               </p>
@@ -252,26 +247,24 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
           <button
             style={{
               padding: '12px 24px',
-              background: 'linear-gradient(to right, #b91c1c, #7c2d12)',
+              background: '#991b1b',
               color: '#ffffff',
               borderRadius: '8px',
               fontWeight: '500',
-              border: 'none',
+              border: '1px solid #dc2626',
               cursor: 'pointer',
-              boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
               transition: 'all 0.2s ease',
-              fontSize: '16px'
+              fontSize: '16px',
+              fontFamily: '"Creepster", cursive',
+              textTransform: 'uppercase',
+              letterSpacing: '1px'
             }}
             onClick={onNextQuestion}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'linear-gradient(to right, #dc2626, #92400e)';
-              e.currentTarget.style.transform = 'scale(1.05) translateY(-1px)';
-              e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.4)';
+              e.currentTarget.style.background = '#dc2626';
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'linear-gradient(to right, #b91c1c, #7c2d12)';
-              e.currentTarget.style.transform = 'scale(1) translateY(0)';
-              e.currentTarget.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.3)';
+              e.currentTarget.style.background = '#991b1b';
             }}
           >
             {gameState.questionsAnswered >= 20 ? 'View Results' : 'Next Question'}
