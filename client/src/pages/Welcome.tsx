@@ -146,13 +146,12 @@ export function Welcome() {
 
         {/* Welcome Title */}
         <h1 
+          className="font-nosifer text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-4 sm:mb-6 leading-tight text-orange-500 animate-pulse"
           style={{
-            fontFamily: '"Nosifer", cursive',
-            color: '#f97316',
-            fontSize: 'clamp(1.5rem, 8vw, 4rem)',
-            marginBottom: '1.5rem',
-            lineHeight: '1.2',
-            animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+            animationDelay: '0s',
+            animationDuration: '3s',
+            animationFillMode: 'forwards',
+            opacity: 1
           }}
         >
           Welcome Back
