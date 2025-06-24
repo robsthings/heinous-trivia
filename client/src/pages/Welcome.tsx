@@ -92,24 +92,26 @@ export function Welcome() {
       <div className="min-h-screen flex flex-col items-center justify-center px-4 py-8">
         
         {/* Speech Bubble */}
-        <div className="mb-4 w-full max-w-xs">
+        <div className="mb-6 w-full max-w-xs">
           <div 
-            className="bg-red-800 border-2 border-red-600 rounded-lg px-4 py-3 relative"
+            className="bg-crimson border-2 border-blood rounded-lg px-4 py-3 relative animate-pulse-glow"
             style={{
-              borderRadius: '20px 20px 5px 20px'
+              borderRadius: '20px 20px 5px 20px',
+              background: '#DC143C',
+              boxShadow: '0 4px 15px rgba(220, 20, 60, 0.4)'
             }}
           >
             <p className="text-white text-sm text-center font-medium">
-              {isFirstTime ? firstTimeMessages[1] : returningUserMessages[0]}
+              Back for more punishment?!
             </p>
             <div 
               className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full"
               style={{
                 width: 0,
                 height: 0,
-                borderLeft: '8px solid transparent',
-                borderRight: '8px solid transparent',
-                borderTop: '8px solid #991b1b'
+                borderLeft: '10px solid transparent',
+                borderRight: '10px solid transparent',
+                borderTop: '10px solid #DC143C'
               }}
             />
           </div>
@@ -131,21 +133,19 @@ export function Welcome() {
         </div>
 
         {/* Welcome Title */}
-        <h1 
-          className="text-2xl font-bold text-center mb-6 px-4"
-          style={{
-            fontFamily: 'Creepster, cursive',
-            color: '#fb923c',
-            textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
-            fontSize: 'clamp(1.5rem, 5vw, 2rem)'
-          }}
-        >
-          {welcomeTitle}
+        <h1 className="text-4xl md:text-5xl font-nosifer text-center mb-6 px-4 animate-pulse-glow"
+            style={{
+              color: '#d86b29',
+              textShadow: '3px 3px 6px rgba(0,0,0,0.9), 0 0 20px rgba(216, 107, 41, 0.5)',
+              fontSize: 'clamp(2rem, 8vw, 3.5rem)'
+            }}>
+          WELCOME BACK
         </h1>
         
         {/* Welcome Message */}
-        <p className="text-gray-300 text-center mb-6 px-4 max-w-sm leading-relaxed">
-          {welcomeMessage}
+        <p className="text-lg text-center mb-8 px-4 max-w-md leading-relaxed"
+           style={{ color: '#cccccc' }}>
+          Ready for another spine-chilling round of trivia?
         </p>
 
         {/* Warning for first-time users */}
@@ -158,12 +158,14 @@ export function Welcome() {
         {/* Play Button */}
         <button
           onClick={handleStartGame}
-          className="bg-red-600 text-white px-8 py-3 text-lg font-bold rounded-lg border-2 border-red-500 shadow-lg"
+          className="bg-gradient-to-r from-blood to-crimson hover:from-flame hover:to-blood text-white px-8 py-4 text-xl font-bold rounded-lg border-2 border-crimson shadow-2xl transform transition-all duration-300 hover:scale-105 hover:shadow-crimson/50 animate-pulse-glow"
           style={{
-            fontFamily: 'Creepster, cursive'
+            textTransform: 'uppercase',
+            fontFamily: 'sans-serif',
+            boxShadow: '0 10px 25px rgba(220, 20, 60, 0.4), 0 0 20px rgba(220, 20, 60, 0.3)'
           }}
         >
-          {buttonText}
+          PLAY AGAIN
         </button>
 
         {/* Haunt Info */}
