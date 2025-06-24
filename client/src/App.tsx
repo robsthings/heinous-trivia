@@ -91,6 +91,10 @@ function Router() {
 function App() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-void via-shadow to-dark text-white">
+      {/* Tailwind Horror Colors Test */}
+      <div className="bg-blood text-white p-4 text-2xl font-creepster text-center">
+        🔥 TAILWIND TEST — Is this styled?
+      </div>
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <Toaster />
