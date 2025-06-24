@@ -4,12 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  background-color: #0b001a;
-  color: white;
-  font-family: 'Creepster', cursive;
-}
-
 /* Custom horror theme colors for Tailwind v4 */
 @layer utilities {
   .bg-blood { background-color: #8A0303; }
