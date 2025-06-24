@@ -68,8 +68,16 @@ export function Welcome() {
         />
       </div>
 
-      {/* Welcome Title - TAILWIND TEST */}
-      <h1 className="font-creepster text-center text-5xl md:text-6xl text-orange-500 bg-red-500 p-4 border-4 border-yellow-400">
+      {/* Welcome Title - INLINE STYLE TEST */}
+      <h1 style={{ 
+        fontFamily: 'Creepster, cursive', 
+        textAlign: 'center', 
+        fontSize: '3rem', 
+        color: '#ff5500',
+        backgroundColor: '#ef4444',
+        padding: '1rem',
+        border: '4px solid #eab308'
+      }}>
         WELCOME BACK
       </h1>
       
