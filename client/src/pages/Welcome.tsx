@@ -69,20 +69,14 @@ export function Welcome() {
     }
   }, [tauntText, displayedText]);
 
-  // Cursor blink effect (only while typing is active)
+  // Cursor blink effect
   useEffect(() => {
-    let cursorInterval: NodeJS.Timeout;
-    
-    if (showCursor) {
-      cursorInterval = setInterval(() => {
-        setShowCursor(prev => prev);
-      }, 530); // Standard cursor blink rate
-    }
+    const cursorInterval = setInterval(() => {
+      setShowCursor(prev => !prev);
+    }, 530); // Standard cursor blink rate
 
-    return () => {
-      if (cursorInterval) clearInterval(cursorInterval);
-    };
-  }, [showCursor]);
+    return () => clearInterval(cursorInterval);
+  }, []);
   
   // Force refresh trigger
 
@@ -125,12 +119,11 @@ export function Welcome() {
               }}
             >
               {displayedText}
-              {showCursor && (
-                <span style={{ 
-                  animation: 'blink 1s infinite',
-                  marginLeft: '1px'
-                }}>|</span>
-              )}
+              <span style={{ 
+                opacity: showCursor ? 1 : 0,
+                marginLeft: '1px',
+                transition: 'opacity 0.1s ease'
+              }}>|</span>
             </span>
             {/* Triangle tail */}
             <div 
