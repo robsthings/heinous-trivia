@@ -3,8 +3,9 @@ import type { Config } from "tailwindcss";
 export default {
   darkMode: ["class"],
   content: [
-    "./client/index.html",
-    "./client/src/**/*.{js,ts,jsx,tsx}"
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./public/**/*.html"
   ],
   theme: {
     extend: {
@@ -14,6 +15,53 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       colors: {
+        // Horror Theme Colors
+        blood: {
+          DEFAULT: "#8B0000", // Dark red
+          light: "#DC143C",   // Crimson
+          dark: "#4B0000"     // Very dark red
+        },
+        shadow: {
+          DEFAULT: "#2D1B69", // Dark purple
+          light: "#4A148C",   // Purple
+          dark: "#1A0F3A"     // Very dark purple  
+        },
+        flame: {
+          DEFAULT: "#FF4500", // Orange red
+          light: "#FF6347",   // Tomato
+          dark: "#8B2500"     // Dark orange red
+        },
+        void: {
+          DEFAULT: "#0B1426", // Very dark blue
+          light: "#1E3A8A",   // Blue
+          dark: "#030712"     // Almost black
+        },
+        dark: {
+          DEFAULT: "#1A1A2E", // Dark blue gray
+          light: "#16213E",   // Lighter dark blue
+          dark: "#0F0F23"     // Very dark blue
+        },
+        ghost: {
+          DEFAULT: "#F8F8FF", // Ghost white
+          light: "#FFFFFF",   // Pure white
+          dark: "#E6E6FA"     // Lavender
+        },
+        spirit: {
+          DEFAULT: "#98FB98", // Pale green
+          light: "#F0FFF0",   // Honeydew
+          dark: "#228B22"     // Forest green
+        },
+        poison: {
+          DEFAULT: "#32CD32", // Lime green
+          light: "#7FFF00",   // Chartreuse
+          dark: "#006400"     // Dark green
+        },
+        crimson: {
+          DEFAULT: "#DC143C", // Crimson
+          light: "#FF1493",   // Deep pink
+          dark: "#8B0000"     // Dark red
+        },
+        // Standard shadcn colors
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
@@ -64,16 +112,6 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
-        // Horror theme colors
-        blood: "hsl(0 84% 27%)", /* #8B0000 */
-        shadow: "hsl(248 39% 27%)", /* #2D1B69 */
-        flame: "hsl(14 100% 59%)", /* #FF6B35 */
-        void: "hsl(0 0% 4%)", /* #0A0A0A */
-        dark: "hsl(0 0% 10%)", /* #1A1A1A */
-        ghost: "hsl(0 0% 87%)", /* #E0E0E0 */
-        spirit: "hsl(0 0% 100%)", /* #FFFFFF */
-        poison: "hsl(120 100% 27%)", /* #228B22 */
-        crimson: "hsl(348 83% 47%)", /* #DC143C */
       },
       fontFamily: {
         creepster: ['Creepster', 'cursive'],
@@ -317,18 +355,22 @@ export default {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "pulse-glow": "pulse-glow 2s ease-in-out infinite",
-        "shake": "shake 0.5s ease-in-out",
-        "fade-in": "fade-in 0.5s ease-in",
+        "shake": "shake 0.5s ease-in-out infinite",
+        "fade-in": "fade-in 0.5s ease-out",
         "slide-up": "slide-up 0.3s ease-out",
-        "scale-in": "scale-in 0.6s ease-out",
-        "lightning-flash": "lightning-flash 2s infinite",
-        "glitch-lines": "glitch-lines 1.5s infinite",
-        "sprite-slide-bounce-in": "sprite-slide-bounce-in 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards",
-        "sprite-glitch-in": "sprite-glitch-in 2s ease-out forwards",
+        "scale-in": "scale-in 0.4s ease-out",
+        "lightning-flash": "lightning-flash 3s ease-in-out infinite",
+        "glitch-lines": "glitch-lines 2s ease-in-out infinite",
+        "sprite-slide-bounce-in": "sprite-slide-bounce-in 1.2s ease-out",
+        "sprite-glitch-in": "sprite-glitch-in 2s ease-in-out",
         "sprite-idle-twitch": "sprite-idle-twitch 4s ease-in-out infinite",
-        "speech-bubble-in": "speech-bubble-in 0.8s ease-out forwards"
+        "speech-bubble-in": "speech-bubble-in 0.3s ease-out"
       },
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+      }
     },
   },
-  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
+  plugins: [require("tailwindcss-animate")],
 } satisfies Config;

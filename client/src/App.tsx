@@ -90,7 +90,13 @@ function Router() {
 
 function App() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-void via-shadow to-dark text-spirit font-creepster">
+    <div 
+      className="min-h-screen bg-gradient-to-br from-void via-shadow to-dark text-white font-creepster"
+      style={{
+        background: 'linear-gradient(to bottom right, #0B1426, #2D1B69, #1A1A2E)',
+        fontFamily: 'Creepster, cursive'
+      }}
+    >
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <Toaster />
