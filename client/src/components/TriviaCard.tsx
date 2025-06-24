@@ -118,12 +118,13 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
         
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', marginBottom: '16px' }}>
           <span style={{
-            backgroundColor: '#7c3aed',
-            color: '#ffffff',
-            padding: '4px 12px',
-            borderRadius: '20px',
-            fontSize: '14px',
-            fontWeight: '500'
+            background: '#7e22ce',
+            color: '#fff',
+            padding: '0.25rem 0.75rem',
+            borderRadius: '999px',
+            fontWeight: 'bold',
+            boxShadow: '0 0 6px rgba(126, 34, 206, 0.4)',
+            fontSize: '14px'
           }}>
             {currentQuestion.category}
           </span>
