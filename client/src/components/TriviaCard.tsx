@@ -100,21 +100,7 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
         {currentQuestion.answers?.map((answer, index) => (
           <button
             key={index}
-            className={`w-full p-4 rounded-lg transition-all duration-200 hover:scale-105 ${getButtonClass(index)}`}
-            style={{
-              background: gameState.selectedAnswer === null 
-                ? 'linear-gradient(to right, #b91c1c, #7e22ce)' 
-                : getButtonClass(index).includes('correct') 
-                  ? 'linear-gradient(to right, #16a34a, #15803d)'
-                  : getButtonClass(index).includes('incorrect')
-                    ? 'linear-gradient(to right, #dc2626, #991b1b)'
-                    : 'linear-gradient(to right, #b91c1c, #7e22ce)',
-              color: '#ffffff',
-              border: '2px solid rgba(255, 255, 255, 0.2)',
-              backdropFilter: 'blur(8px)',
-              fontFamily: "'Roboto', sans-serif",
-              fontWeight: '500'
-            }}
+            className={`w-full p-4 rounded-lg bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-white border-2 border-white/20 backdrop-blur-sm font-medium transition-all duration-200 hover:scale-105 ${getButtonClass(index)}`}
             onClick={() => {
               // Answer bounds check
               if (index < 0 || index >= currentQuestion.answers?.length) {
