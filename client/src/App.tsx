@@ -36,6 +36,7 @@ import { LabEscape } from "@/pages/lab-escape";
 import { FaceTheChupacabra } from "@/components/sidequests/face-the-chupacabra";
 import HauntTest from "@/pages/haunt-test";
 import TailwindTest from "@/components/TailwindTest";
+import FontDebugTest from "@/components/FontDebugTest";
 
 function Router() {
   return (
@@ -85,6 +86,7 @@ function Router() {
       <Route path="/sidequest/face-the-chupacabra" component={FaceTheChupacabra} />
       <Route path="/sidequests/face-the-chupacabra" component={FaceTheChupacabra} />
       <Route path="/tailwind-test" component={TailwindTest} />
+      <Route path="/font-debug" component={FontDebugTest} />
       <Route component={NotFound} />
     </Switch>
   );
