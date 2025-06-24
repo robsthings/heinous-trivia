@@ -9,3 +9,26 @@ body {
   color: white;
   font-family: 'Creepster', cursive;
 }
+
+/* Custom horror theme colors for Tailwind v4 */
+@layer utilities {
+  .bg-blood { background-color: #8A0303; }
+  .bg-correct { background-color: #013220; }
+  .bg-wrong { background-color: #5c0a0a; }
+  .bg-void { background-color: #0b001a; }
+  
+  .text-blood { color: #8A0303; }
+  .text-correct { color: #013220; }
+  .text-wrong { color: #5c0a0a; }
+  .text-void { color: #0b001a; }
+  
+  .from-blood { --tw-gradient-from: #8A0303 var(--tw-gradient-from-position); }
+  .from-correct { --tw-gradient-from: #013220 var(--tw-gradient-from-position); }
+  .from-wrong { --tw-gradient-from: #5c0a0a var(--tw-gradient-from-position); }
+  .from-void { --tw-gradient-from: #0b001a var(--tw-gradient-from-position); }
+  
+  .to-blood { --tw-gradient-to: #8A0303 var(--tw-gradient-to-position); }
+  .to-correct { --tw-gradient-to: #013220 var(--tw-gradient-to-position); }
+  .to-wrong { --tw-gradient-to: #5c0a0a var(--tw-gradient-to-position); }
+  .to-void { --tw-gradient-to: #0b001a var(--tw-gradient-to-position); }
+}
