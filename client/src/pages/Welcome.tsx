@@ -68,8 +68,8 @@ export function Welcome() {
         />
       </div>
 
-      {/* Welcome Title */}
-      <h1 className="font-creepster text-center text-5xl md:text-6xl text-orange-500">
+      {/* Welcome Title - TAILWIND TEST */}
+      <h1 className="font-creepster text-center text-5xl md:text-6xl text-orange-500 bg-red-500 p-4 border-4 border-yellow-400">
         WELCOME BACK
       </h1>
       

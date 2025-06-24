@@ -1,6 +1,8 @@
 @tailwind base;
-@tailwind components;
+@tailwind components; 
 @tailwind utilities;
+
+/* Force Tailwind refresh */
 
 @layer utilities {
   .font-creepster {
