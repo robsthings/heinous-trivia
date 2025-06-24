@@ -53,7 +53,7 @@ export function Welcome() {
 
   return (
     <div 
-      className="min-h-screen flex items-center justify-center text-white relative overflow-hidden"
+      className="min-h-screen flex flex-col items-center justify-center text-white relative"
       style={{
         backgroundImage: "url('/backgrounds/lab-dark-blue.png')",
         backgroundSize: 'cover',
@@ -62,53 +62,44 @@ export function Welcome() {
       }}
     >
       
-      <div className="relative z-10 text-center max-w-2xl mx-auto px-4">
-        
-        {/* Speech Bubble */}
-        <div className="mb-2">
-          <div className="bg-poison text-white rounded-full px-4 py-1 text-sm font-bold drop-shadow mb-2 inline-block relative">
-            {tauntText}
-            {/* Speech bubble pointer */}
-            <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-poison"></div>
-          </div>
+      {/* Speech Bubble positioned above character */}
+      <div className="relative mb-2">
+        <div className="bg-crimson text-white rounded px-3 py-1 text-xs border border-red-600 inline-block">
+          {tauntText}
+          <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-crimson"></div>
         </div>
+      </div>
 
-        {/* Dr. Heinous Character */}
-        <div className="mb-6 flex justify-center">
-          <img 
-            src="/heinous/charming.png" 
-            alt="Dr. Heinous" 
-            className="w-48 md:w-64 lg:w-72 drop-shadow-xl"
-            style={{ 
-              imageRendering: 'pixelated',
-              width: '192px',
-              maxWidth: '288px'
-            }}
-          />
-        </div>
+      {/* Dr. Heinous Character */}
+      <div className="mb-6">
+        <img 
+          src="/heinous/charming.png" 
+          alt="Dr. Heinous" 
+          className="w-64 h-auto"
+        />
+      </div>
 
-        {/* Welcome Heading */}
-        <h1 className="text-4xl md:text-5xl font-creepster text-flame text-center drop-shadow-glow mb-4">
-          WELCOME BACK
-        </h1>
-        
-        {/* Subtext */}
-        <p className="text-lg text-ghost mt-4 mb-6 text-center">
-          Ready for another spine-chilling round of trivia?
-        </p>
+      {/* Welcome Heading with exact orange color */}
+      <h1 className="font-creepster text-6xl mb-4" style={{ color: '#D2691E' }}>
+        WELCOME BACK
+      </h1>
+      
+      {/* Subtext */}
+      <p className="text-lg text-gray-300 mb-6 text-center">
+        Ready for another spine-chilling round of trivia?
+      </p>
 
-        {/* Play Again Button */}
-        <button
-          onClick={handleStartGame}
-          className="bg-blood hover:bg-crimson text-white font-bold px-6 py-3 rounded-md shadow-md transition hover:scale-105"
-        >
-          PLAY AGAIN
-        </button>
+      {/* Play Again Button */}
+      <button
+        onClick={handleStartGame}
+        className="bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-3 rounded shadow-lg transition-colors"
+      >
+        PLAY AGAIN
+      </button>
 
-        {/* Dynamic Haunt Footer */}
-        <div className="text-sm text-flame text-center mt-6">
-          Haunt: {hauntId}
-        </div>
+      {/* Haunt Footer */}
+      <div className="text-sm text-orange-400 mt-4">
+        Haunt: <span className="underline">{hauntId}</span>
       </div>
     </div>
   );
