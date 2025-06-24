@@ -42,13 +42,15 @@ export function Welcome() {
         </div>
 
         {/* Dr. Heinous Character */}
-        <div className="mb-6">
+        <div className="mb-6 flex justify-center">
           <img 
             src="/heinous/charming.png" 
             alt="Dr. Heinous" 
-            className="mx-auto w-48 md:w-64 lg:w-72 drop-shadow-xl"
+            className="w-48 md:w-64 lg:w-72 drop-shadow-xl"
             style={{ 
-              imageRendering: 'pixelated'
+              imageRendering: 'pixelated',
+              maxWidth: '288px',
+              width: '192px'
             }}
           />
         </div>
