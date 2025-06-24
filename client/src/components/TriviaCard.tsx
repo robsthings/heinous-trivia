@@ -264,7 +264,8 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
               <p style={{ 
                 color: '#f3f4f6', 
                 fontSize: '14px',
-                fontFamily: '"Nosifer", cursive'
+                fontFamily: 'Arial, sans-serif',
+                lineHeight: '1.5'
               }}>
                 {currentQuestion.explanation}
               </p>
