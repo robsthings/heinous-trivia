@@ -48,21 +48,24 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
   const answerLabels = ['A', 'B', 'C', 'D'];
 
   const getButtonClass = (index: number) => {
-    let baseClass = "w-full p-4 rounded-lg text-left font-medium transition-all duration-200 touch-manipulation";
-    
-    if (gameState.showFeedback && gameState.selectedAnswer !== null) {
-      if (index === currentQuestion.correctAnswer) {
-        baseClass += " bg-correct text-white border-green-600 animate-pulse-glow";
-      } else if (index === gameState.selectedAnswer) {
-        baseClass += " bg-wrong text-white border-red-700 animate-shake";
-      } else {
-        baseClass += " bg-void hover:bg-blood text-gray-300 opacity-50";
-      }
-    } else {
-      baseClass += " bg-gradient-to-r from-blood to-crimson text-white hover:from-blood/80 hover:to-crimson/80 shadow-lg animate-pulse-glow";
+    if (gameState.selectedAnswer === null) {
+      return "w-full p-4 text-left bg-gradient-to-r from-blood to-crimson hover:from-crimson hover:to-blood border border-spirit/30 rounded-lg transition-all duration-300 hover:scale-102 text-white shadow-lg";
     }
     
-    return baseClass;
+    const isCorrect = index === currentQuestion.correctAnswer;
+    const isSelected = index === gameState.selectedAnswer;
+    
+    if (isSelected) {
+      return isCorrect 
+        ? "w-full p-4 text-left bg-correct border border-green-400 rounded-lg text-white shadow-lg animate-pulse-glow"
+        : "w-full p-4 text-left bg-wrong border border-red-400 rounded-lg text-white shadow-lg animate-shake";
+    }
+    
+    if (isCorrect) {
+      return "w-full p-4 text-left bg-correct border border-green-400 rounded-lg text-white shadow-lg animate-pulse-glow";
+    }
+    
+    return "w-full p-4 text-left bg-void border border-gray-400 rounded-lg text-white shadow-lg opacity-60";
   };
 
   const getDifficultyStars = (difficulty: number) => {
