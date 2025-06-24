@@ -56,10 +56,10 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
       } else if (index === gameState.selectedAnswer) {
         baseClass += " bg-red-600/70 text-white shadow-lg";
       } else {
-        baseClass += " bg-gradient-to-r from-red-700 to-purple-700 text-gray-300 opacity-50";
+        baseClass += " bg-gradient-to-r from-blood to-crimson text-gray-300 opacity-50";
       }
     } else {
-      baseClass += " bg-gradient-to-r from-red-700 to-purple-700 text-white hover:from-red-600 hover:to-purple-600 shadow-lg";
+      baseClass += " bg-gradient-to-r from-blood to-crimson text-white hover:from-blood/80 hover:to-crimson/80 shadow-lg animate-pulse-glow";
     }
     
     return baseClass;
@@ -81,7 +81,7 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
     <div className="w-full">
       {/* Question Header */}
       <div className="text-center mb-8 px-4">
-        <h2 className="text-white text-xl font-medium leading-relaxed mb-4">
+        <h2 className="text-white text-xl font-creepster leading-relaxed mb-4 animate-pulse-glow">
           {currentQuestion.text}
         </h2>
         
@@ -100,7 +100,7 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
         {currentQuestion.answers?.map((answer, index) => (
           <button
             key={index}
-            className={`w-full p-4 rounded-lg bg-gradient-to-r from-blood to-crimson text-white border border-crimson/30 transition-all duration-300 hover:scale-105 animate-pulse-glow ${getButtonClass(index)}`}
+            className={getButtonClass(index)}
             onClick={() => {
               // Answer bounds check
               if (index < 0 || index >= currentQuestion.answers?.length) {
