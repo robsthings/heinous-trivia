@@ -165,12 +165,18 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
             borderRadius: '8px',
             textAlign: 'left' as const,
             fontWeight: '500',
-            transition: 'all 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease',
+            transition: 'transform 150ms ease, background 150ms ease',
             cursor: gameState.selectedAnswer !== null ? 'default' : 'pointer',
-            background: 'rgba(55, 65, 81, 0.8)',
-            border: '1px solid rgba(75, 85, 99, 0.6)',
+            background: 'rgba(33, 33, 33, 0.85)',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
             color: '#ffffff',
-            transform: 'translateY(0)'
+            display: 'flex',
+            alignItems: 'center',
+            gap: '12px',
+            fontSize: '16px',
+            fontFamily: 'system-ui, -apple-system, sans-serif',
+            boxShadow: '0 0 8px rgba(0, 0, 0, 0.4)',
+            transform: 'scale(1)'
           };
 
           if (gameState.showFeedback && gameState.selectedAnswer !== null) {
@@ -222,27 +228,22 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
                 }
               }}
             >
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <span style={{
-                  width: '32px',
-                  height: '32px',
-                  borderRadius: '50%',
-                  backgroundColor: '#dc2626',
-                  color: '#ffffff',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '14px',
-                  fontWeight: 'bold',
-                  marginRight: '16px',
-                  flexShrink: 0
-                }}>
-                  {answerLabels[index]}
-                </span>
-                <span style={{ fontSize: '16px', textAlign: 'left', wordBreak: 'break-words' }}>
-                  {answer}
-                </span>
-              </div>
+              <span style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '32px',
+                height: '32px',
+                borderRadius: '50%',
+                backgroundColor: '#ffffff',
+                color: '#000000',
+                fontWeight: 'bold',
+                fontSize: '16px',
+                fontFamily: '"Creepster", cursive'
+              }}>
+                {['A', 'B', 'C', 'D'][index]}
+              </span>
+              <span>{answer}</span>
             </button>
           );
         })}
