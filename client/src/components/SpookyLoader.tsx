@@ -108,7 +108,12 @@ export function SpookyLoader({
         </div>
 
         {/* Loading text */}
-        <h2 className="creepster text-2xl text-orange-500 mb-4 animate-pulse">
+        <h2 className="creepster" style={{
+          fontSize: '1.5rem',
+          color: '#f97316',
+          marginBottom: '1rem',
+          animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+        }}>
           {spookyMessages[currentMessage]}{dots}
         </h2>
 

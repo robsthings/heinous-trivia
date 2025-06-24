@@ -69,7 +69,7 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
     
     return (
       <div className="glass-card rounded-xl p-6 mt-4 animate-fade-in">
-        <div className="text-center text-gray-300">
+        <div style={{ textAlign: 'center', color: '#d1d5db' }}>
           <p>Loading next question...</p>
         </div>
       </div>
