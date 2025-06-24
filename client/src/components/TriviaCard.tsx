@@ -52,11 +52,11 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
     
     if (gameState.showFeedback && gameState.selectedAnswer !== null) {
       if (index === currentQuestion.correctAnswer) {
-        baseClass += " bg-green-600 text-white shadow-lg";
+        baseClass += " bg-correct text-white border-green-600 animate-pulse-glow";
       } else if (index === gameState.selectedAnswer) {
-        baseClass += " bg-red-600/70 text-white shadow-lg";
+        baseClass += " bg-wrong text-white border-red-700 animate-shake";
       } else {
-        baseClass += " bg-gradient-to-r from-blood to-crimson text-gray-300 opacity-50";
+        baseClass += " bg-void hover:bg-blood text-gray-300 opacity-50";
       }
     } else {
       baseClass += " bg-gradient-to-r from-blood to-crimson text-white hover:from-blood/80 hover:to-crimson/80 shadow-lg animate-pulse-glow";
@@ -78,10 +78,10 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full transition-opacity duration-700 ease-in-out animate-fade-in">
       {/* Question Header */}
       <div className="text-center mb-8 px-4">
-        <h2 className="text-white text-xl font-creepster leading-relaxed mb-4 animate-pulse-glow">
+        <h2 className="text-white text-xl font-creepster leading-relaxed mb-4 animate-pulse-glow question-text">
           {currentQuestion.text}
         </h2>
         

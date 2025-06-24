@@ -4,6 +4,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  h1, .question-text {
+    font-family: 'Creepster', cursive;
+    color: #E0E0E0;
+  }
+
+  button {
+    font-family: 'Roboto', sans-serif;
+  }
+}
+
 @layer base {
   :root {
     --background: 222.2 84% 4.9%;

@@ -107,6 +107,7 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 5. Game state updates with loaded data
 
 ## Recent Changes
+- June 24, 2025: **HORROR THEME STYLING GUIDE IMPLEMENTED** - Added correct/wrong colors (#013220/#5c0a0a) to Tailwind config, updated TriviaCard answer buttons to use bg-correct/bg-wrong with animate-pulse-glow/animate-shake effects, applied question-text class with Creepster font, added transition-opacity animate-fade-in wrapper, fixed CSS compilation by using direct font-family declarations instead of @apply directives
 - June 24, 2025: **FULL-STACK DEVELOPMENT SETUP RESTORED** - Fixed host blocking by updating vite.dev.config.ts with explicit Replit domain allowlist, added API proxy configuration to route /api calls from frontend (port 5173) to Express backend (port 5000), started both Vite and Express servers for complete development environment
 
 ## Changelog
