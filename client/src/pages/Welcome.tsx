@@ -56,9 +56,9 @@ export function Welcome() {
       {/* Dr. Heinous Character with Speech Bubble */}
       <div className="relative">
         {/* Speech Bubble */}
-        <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 bg-white text-black px-4 py-2 rounded-xl shadow-lg font-semibold text-sm border-2 border-gray-300">
+        <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 border-2 border-red-700 rounded-md bg-black/80 text-white px-3 py-1 text-sm drop-shadow-md">
           {tauntText}
-          <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-8 border-transparent border-t-white"></div>
+          <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-8 border-transparent border-t-red-700"></div>
         </div>
         
         {/* Character Image */}
@@ -70,25 +70,25 @@ export function Welcome() {
       </div>
 
       {/* Welcome Title */}
-      <h1 className="font-creepster text-center text-5xl md:text-6xl text-orange-500">
+      <h1 className="font-nosifer text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl mb-4 sm:mb-6 leading-tight text-orange-500 animate-pulse">
         WELCOME BACK
       </h1>
       
       {/* Subtext */}
-      <p className="text-white text-sm md:text-base">
+      <p className="text-white text-opacity-80 text-sm sm:text-base md:text-lg">
         Ready for another spine-chilling round of trivia?
       </p>
 
       {/* Play Again Button */}
       <button
         onClick={handleStartGame}
-        className="font-eater text-white text-lg px-6 py-2 rounded shadow bg-orange-500 hover:bg-green-900 transition-all transform hover:scale-105"
+        className="bg-orange-500 text-white font-eater text-lg px-6 py-2 rounded shadow-lg hover:bg-green-900 transition-transform transform hover:scale-105"
       >
         PLAY AGAIN
       </button>
 
       {/* Haunt Label */}
-      <div className="text-crimson text-xs">
+      <div className="text-xs font-nosifer text-red-900 drop-shadow mt-4">
         Haunt: {hauntId}
       </div>
     </div>
