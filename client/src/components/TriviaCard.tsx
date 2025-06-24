@@ -100,7 +100,7 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
         {currentQuestion.answers?.map((answer, index) => (
           <button
             key={index}
-            className={`w-full p-4 rounded-lg bg-gradient-to-r from-blood to-crimson hover:from-flame hover:to-blood text-white border-2 border-white/20 backdrop-blur-sm font-medium transition-all duration-200 hover:scale-105 animate-pulse-glow ${getButtonClass(index)}`}
+            className={`answer-button w-full ${getButtonClass(index)}`}
             style={{
               background: gameState.selectedAnswer === null 
                 ? 'linear-gradient(to right, #8B0000, #DC143C)' 
@@ -119,11 +119,11 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
             }}
             disabled={gameState.selectedAnswer !== null}
           >
-            <div className="flex items-center">
-              <span className="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center text-sm font-bold mr-4 flex-shrink-0">
+            <div className="flex items-center w-full">
+              <span className="answer-label mr-4 flex-shrink-0">
                 {answerLabels[index]}
               </span>
-              <span className="text-base text-left break-words">{answer}</span>
+              <span className="text-base text-left break-words flex-1">{answer}</span>
             </div>
           </button>
         ))}
