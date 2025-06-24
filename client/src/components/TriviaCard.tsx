@@ -115,8 +115,8 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
             src={gameState.hauntConfig.logoPath}
             alt="Haunt Logo"
             style={{
-              width: '48px',
-              height: '48px',
+              width: '96px',
+              height: '96px',
               borderRadius: '50%'
             }}
           />
