@@ -118,10 +118,13 @@ export function Welcome() {
                 transition: 'opacity 0.1s ease'
               }}>|</span>
             </span>
-            {/* Triangle tail */}
+            {/* Triangle tail - centered */}
             <div 
-              className="absolute top-full left-1/2 transform -translate-x-1/2"
               style={{
+                position: 'absolute',
+                bottom: '-8px',
+                left: '50%',
+                transform: 'translateX(-50%)',
                 width: 0,
                 height: 0,
                 borderLeft: '8px solid transparent',
