@@ -217,14 +217,14 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
               disabled={gameState.selectedAnswer !== null}
               onMouseEnter={(e) => {
                 if (gameState.selectedAnswer === null) {
-                  e.currentTarget.style.background = 'rgba(33, 33, 33, 0.95)';
-                  e.currentTarget.style.transform = 'scale(1.02)';
+                  e.currentTarget.style.setProperty('background', 'rgba(33, 33, 33, 0.95)', 'important');
+                  e.currentTarget.style.setProperty('transform', 'scale(1.02)', 'important');
                 }
               }}
               onMouseLeave={(e) => {
                 if (gameState.selectedAnswer === null) {
-                  e.currentTarget.style.background = 'rgba(33, 33, 33, 0.85)';
-                  e.currentTarget.style.transform = 'scale(1)';
+                  e.currentTarget.style.setProperty('background', 'rgba(33, 33, 33, 0.85)', 'important');
+                  e.currentTarget.style.setProperty('transform', 'scale(1)', 'important');
                 }
               }}
             >
@@ -235,8 +235,8 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
                 width: '32px',
                 height: '32px',
                 borderRadius: '50%',
-                backgroundColor: '#ffffff',
-                color: '#000000',
+                backgroundColor: '#dc2626',
+                color: '#ffffff',
                 fontWeight: 'bold',
                 fontSize: '16px',
                 fontFamily: '"Creepster", cursive'
