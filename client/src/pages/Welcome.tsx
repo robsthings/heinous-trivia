@@ -5,6 +5,8 @@ export function Welcome() {
   const { hauntId } = useParams<{ hauntId: string }>();
   const [, setLocation] = useLocation();
   const [isReturning, setIsReturning] = useState<boolean>(false);
+  const [displayedText, setDisplayedText] = useState<string>('');
+  const [showCursor, setShowCursor] = useState<boolean>(true);
 
   useEffect(() => {
     // Check if user is returning
@@ -47,6 +49,34 @@ export function Welcome() {
   
   const tauntText = heinousTaunts[Math.floor(Math.random() * heinousTaunts.length)];
   
+  // Typewriter effect for speech bubble
+  useEffect(() => {
+    if (tauntText) {
+      setDisplayedText('');
+      let currentIndex = 0;
+      
+      const typewriterInterval = setInterval(() => {
+        if (currentIndex < tauntText.length) {
+          setDisplayedText(tauntText.slice(0, currentIndex + 1));
+          currentIndex++;
+        } else {
+          clearInterval(typewriterInterval);
+        }
+      }, 50); // 50ms per character
+
+      return () => clearInterval(typewriterInterval);
+    }
+  }, [tauntText]);
+
+  // Cursor blink effect
+  useEffect(() => {
+    const cursorInterval = setInterval(() => {
+      setShowCursor(prev => !prev);
+    }, 530); // Standard cursor blink rate
+
+    return () => clearInterval(cursorInterval);
+  }, []);
+  
   // Force refresh trigger
 
   return (
@@ -87,7 +117,13 @@ export function Welcome() {
                 fontWeight: '600'
               }}
             >
-              {tauntText}
+              {displayedText}
+              {showCursor && (
+                <span style={{ 
+                  animation: 'blink 1s infinite',
+                  marginLeft: '1px'
+                }}>|</span>
+              )}
             </span>
             {/* Triangle tail */}
             <div 

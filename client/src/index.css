@@ -90,4 +90,9 @@
       filter: brightness(1) contrast(1) hue-rotate(0deg); 
     }
   }
+
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
 }
