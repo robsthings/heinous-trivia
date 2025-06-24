@@ -107,8 +107,8 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 5. Game state updates with loaded data
 
 ## Recent Changes
+- June 24, 2025: **EXPRESS+VITE HYBRID SERVER CONFIGURATION** - Reverted to Express+Vite hybrid mode on port 5000, updated TriviaCard styling with horror theme colors (bg-correct #013220, bg-wrong #5c0a0a, bg-void #0b001a), applied animate-pulse-glow for correct answers and animate-shake for wrong answers, maintained Creepster font on question headers with transition-opacity duration-700 ease-in-out, configured Firebase with correct project ID "heinous-trivia" from .firebaserc
 - June 24, 2025: **HORROR THEME STYLING GUIDE IMPLEMENTED** - Added correct/wrong colors (#013220/#5c0a0a) to Tailwind config, updated TriviaCard answer buttons to use bg-correct/bg-wrong with animate-pulse-glow/animate-shake effects, applied question-text class with Creepster font, added transition-opacity animate-fade-in wrapper, fixed CSS compilation by using direct font-family declarations instead of @apply directives
-- June 24, 2025: **FULL-STACK DEVELOPMENT SETUP RESTORED** - Fixed host blocking by updating vite.dev.config.ts with explicit Replit domain allowlist, added API proxy configuration to route /api calls from frontend (port 5173) to Express backend (port 5000), started both Vite and Express servers for complete development environment
 
 ## Changelog
 - June 24, 2025: **HORROR THEME STYLING COMPLETELY RESTORED** - Fixed Tailwind configuration hierarchy by removing conflicting root config, updating PostCSS to reference client/tailwind.config.ts, corrected content paths for proper class scanning, eliminated redundant CSS overrides, updated App and TriviaCard components to use authentic horror classes (from-void via-shadow to-dark, from-blood to-crimson, font-creepster, animate-pulse-glow) - both development and deployment environments now display identical horror styling with custom colors, fonts, and animations
