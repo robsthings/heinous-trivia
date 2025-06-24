@@ -69,12 +69,18 @@ export function SpookyLoader({
       background: 'linear-gradient(135deg, #1f2937 0%, #581c87 50%, #7f1d1d 100%)'
     }}>
       {/* Floating orbs */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div style={{
+        position: 'absolute',
+        top: 0, right: 0, bottom: 0, left: 0,
+        overflow: 'hidden',
+        pointerEvents: 'none'
+      }}>
         {[...Array(6)].map((_, i) => (
           <div
             key={i}
-            className="absolute animate-bounce"
             style={{
+              position: 'absolute',
+              animation: 'bounce 1s infinite',
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
               animationDelay: `${i * 0.5}s`,
@@ -82,8 +88,15 @@ export function SpookyLoader({
             }}
           >
             <div 
-              className="w-2 h-2 bg-orange-500 rounded-full opacity-70 animate-pulse"
-              style={{ animationDelay: `${i * 0.3}s` }}
+              style={{
+                width: '0.5rem',
+                height: '0.5rem',
+                backgroundColor: '#f97316',
+                borderRadius: '50%',
+                opacity: 0.7,
+                animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                animationDelay: `${i * 0.3}s`
+              }}
             />
           </div>
         ))}

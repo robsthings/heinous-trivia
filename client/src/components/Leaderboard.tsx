@@ -56,11 +56,39 @@ export function Leaderboard({ isVisible, leaderboard, onClose, hauntId, currentP
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-95 flex items-center justify-center p-3 sm:p-4 z-50">
-      <div className="glass-card rounded-xl p-4 sm:p-6 max-w-sm sm:max-w-md w-full animate-fade-in max-h-[90vh] overflow-hidden flex flex-col">
-        <div className="text-center mb-4 sm:mb-6">
-          <h2 className="creepster text-2xl sm:text-3xl text-orange-500 mb-2">Hall of Horror</h2>
-          <p className="text-gray-300 text-sm sm:text-base">Top 10 Nightmare Navigators</p>
+    <div style={{
+      position: 'fixed',
+      top: 0, right: 0, bottom: 0, left: 0,
+      backgroundColor: 'rgba(0, 0, 0, 0.95)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 'clamp(0.75rem, 3vw, 1rem)',
+      zIndex: 50
+    }}>
+      <div className="glass-card animate-fade-in" style={{
+        borderRadius: '0.75rem',
+        padding: 'clamp(1rem, 4vw, 1.5rem)',
+        maxWidth: 'clamp(24rem, 90vw, 28rem)',
+        width: '100%',
+        maxHeight: '90vh',
+        overflow: 'hidden',
+        display: 'flex',
+        flexDirection: 'column'
+      }}>
+        <div style={{
+          textAlign: 'center',
+          marginBottom: 'clamp(1rem, 4vw, 1.5rem)'
+        }}>
+          <h2 className="creepster" style={{
+            fontSize: 'clamp(1.5rem, 4vw, 1.875rem)',
+            color: '#f97316',
+            marginBottom: '0.5rem'
+          }}>Hall of Horror</h2>
+          <p style={{
+            color: '#d1d5db',
+            fontSize: 'clamp(0.875rem, 3vw, 1rem)'
+          }}>Top 10 Nightmare Navigators</p>
         </div>
 
         <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6 flex-1 overflow-y-auto">

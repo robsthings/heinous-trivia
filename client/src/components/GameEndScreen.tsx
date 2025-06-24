@@ -107,7 +107,12 @@ export function GameEndScreen({
               <img 
                 src={gameState.hauntConfig.logoPath} 
                 alt={gameState.hauntConfig.name || "Haunt Logo"}
-                className="w-24 h-24 mx-auto object-contain"
+                style={{
+                  width: '6rem',
+                  height: '6rem',
+                  margin: '0 auto',
+                  objectFit: 'contain'
+                }}
               />
             </div>
           )}
@@ -122,10 +127,27 @@ export function GameEndScreen({
             fontSize: 'clamp(0.875rem, 3vw, 1rem)'
           }}>Dr. Heinous is pleased with your performance...</p>
           
-          <div className="bg-purple-900 rounded-lg p-4 sm:p-6 mb-4 sm:mb-6">
-            <div className="text-3xl sm:text-4xl font-bold text-orange-500 mb-2">{gameState.score}</div>
-            <div className="text-white text-sm sm:text-base">Final Score</div>
-            <div className="text-xs sm:text-sm text-gray-300 mt-2">
+          <div style={{
+            backgroundColor: '#581c87',
+            borderRadius: '0.5rem',
+            padding: 'clamp(1rem, 4vw, 1.5rem)',
+            marginBottom: 'clamp(1rem, 4vw, 1.5rem)'
+          }}>
+            <div style={{
+              fontSize: 'clamp(1.875rem, 5vw, 2.25rem)',
+              fontWeight: 'bold',
+              color: '#f97316',
+              marginBottom: '0.5rem'
+            }}>{gameState.score}</div>
+            <div style={{
+              color: 'white',
+              fontSize: 'clamp(0.875rem, 3vw, 1rem)'
+            }}>Final Score</div>
+            <div style={{
+              fontSize: 'clamp(0.75rem, 2.5vw, 0.875rem)',
+              color: '#d1d5db',
+              marginTop: '0.5rem'
+            }}>
               <span>{gameState.correctAnswers}</span> of{" "}
               <span>{gameState.questionsAnswered}</span> correct
             </div>
