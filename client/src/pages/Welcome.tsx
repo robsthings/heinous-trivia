@@ -135,12 +135,10 @@ export function Welcome() {
           <img 
             src="/heinous/charming.png" 
             alt="Dr. Heinous" 
-            className="object-contain"
+            className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-64 lg:h-64 xl:w-72 xl:h-72 object-contain drop-shadow-2xl max-w-full animate-sprite-glitch-in"
             style={{
-              width: '16rem',
-              height: 'auto',
-              filter: 'drop-shadow(0 25px 25px rgb(0 0 0 / 0.15))',
-              animation: 'sprite-glitch-in 1.5s ease-out'
+              filter: 'drop-shadow(rgba(255, 107, 53, 0.5) 0px 0px 15px)',
+              animationDelay: '0.2s'
             }}
           />
         </div>
