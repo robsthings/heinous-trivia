@@ -1,4 +1,3 @@
-import { Link } from "wouter";
 import { PWAInstallButton } from "./PWAInstallButton";
 import { useState, useEffect } from "react";
 
@@ -7,10 +6,8 @@ interface FooterProps {
 }
 
 export function Footer({ showInstallButton = false }: FooterProps) {
-  // DeSpookify Mode state management with localStorage persistence
   const [isDeSpookified, setIsDeSpookified] = useState(false);
 
-  // Load DeSpookify preference from localStorage on mount
   useEffect(() => {
     const saved = localStorage.getItem('heinous-despookify-mode');
     if (saved === 'true') {
@@ -19,7 +16,6 @@ export function Footer({ showInstallButton = false }: FooterProps) {
     }
   }, []);
 
-  // Toggle DeSpookify Mode and update localStorage + document class
   const toggleDeSpookify = () => {
     const newValue = !isDeSpookified;
     setIsDeSpookified(newValue);
@@ -30,43 +26,89 @@ export function Footer({ showInstallButton = false }: FooterProps) {
     } else {
       document.documentElement.classList.remove('despookify-mode');
     }
+
+    // Dispatch custom event to notify other components
+    document.dispatchEvent(new CustomEvent('despookify-toggle'));
   };
 
   return (
-    <footer className="mt-auto py-4 border-t border-gray-700 bg-black/50">
-      <div className="max-w-4xl mx-auto px-4">
-        <div className="text-center text-sm text-gray-400 space-y-2">
-          <div className="flex items-center justify-center gap-4 flex-wrap">
-            <div>
-              <Link href="/privacy" className="hover:text-red-400 transition-colors">
-                Privacy Policy
-              </Link>
-              {" | "}
-              <Link href="/terms" className="hover:text-red-400 transition-colors">
-                Terms of Use
-              </Link>
-            </div>
-            
-            {/* DeSpookify Mode Toggle */}
-            <div className="flex items-center">
-              <button
-                onClick={toggleDeSpookify}
-                className="flex items-center gap-2 text-xs text-gray-400 hover:text-orange-400 transition-colors"
-                title={`${isDeSpookified ? 'Enable' : 'Disable'} spooky fonts for question text`}
-              >
-                🕸️ DeSpookify Mode: {isDeSpookified ? 'ON' : 'OFF'}
-              </button>
-            </div>
-
-            {showInstallButton && (
-              <div className="flex items-center">
-                <PWAInstallButton />
-              </div>
-            )}
+    <footer style={{
+      position: 'fixed',
+      bottom: 0,
+      left: 0,
+      right: 0,
+      background: '#111827',
+      borderTop: '1px solid #374151',
+      padding: '12px 16px',
+      zIndex: 10
+    }}>
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        maxWidth: '768px',
+        margin: '0 auto',
+        flexWrap: 'wrap',
+        gap: '8px'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
+          {showInstallButton && <PWAInstallButton />}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span style={{ color: '#9ca3af', fontSize: '14px' }}>DeSpookify Mode:</span>
+            <button
+              onClick={toggleDeSpookify}
+              style={{
+                background: isDeSpookified ? '#16a34a' : '#374151',
+                border: '1px solid',
+                borderColor: isDeSpookified ? '#22c55e' : '#4b5563',
+                borderRadius: '12px',
+                width: '44px',
+                height: '24px',
+                position: 'relative',
+                transition: 'all 0.2s ease',
+                cursor: 'pointer'
+              }}
+            >
+              <div style={{
+                background: '#ffffff',
+                borderRadius: '50%',
+                width: '18px',
+                height: '18px',
+                position: 'absolute',
+                top: '2px',
+                left: isDeSpookified ? '22px' : '2px',
+                transition: 'left 0.2s ease',
+                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)'
+              }} />
+            </button>
+            <span style={{ color: isDeSpookified ? '#22c55e' : '#9ca3af', fontSize: '12px', fontWeight: '500' }}>
+              {isDeSpookified ? 'ON' : 'OFF'}
+            </span>
           </div>
-          <div className="text-xs text-gray-500">
-            © 2025 Heinous Trivia. All rights reserved.
-          </div>
+          <a 
+            href="https://heinoustrivia.com" 
+            style={{ color: '#9ca3af', fontSize: '14px', textDecoration: 'none' }}
+            target="_blank"
+            rel="noopener noreferrer"
+            onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'}
+            onMouseLeave={(e) => e.currentTarget.style.color = '#9ca3af'}
+          >
+            Privacy Policy
+          </a>
+          <span style={{ color: '#6b7280', fontSize: '12px' }}>|</span>
+          <a 
+            href="https://heinoustrivia.com" 
+            style={{ color: '#9ca3af', fontSize: '14px', textDecoration: 'none' }}
+            target="_blank"
+            rel="noopener noreferrer"
+            onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'}
+            onMouseLeave={(e) => e.currentTarget.style.color = '#9ca3af'}
+          >
+            Terms of Use
+          </a>
+        </div>
+        <div style={{ color: '#6b7280', fontSize: '12px' }}>
+          © 2025 Heinous Trivia. All rights reserved.
         </div>
       </div>
     </footer>

@@ -10,6 +10,37 @@ interface TriviaCardProps {
 
 export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: TriviaCardProps) {
   const currentQuestion = gameState.questions[gameState.currentQuestionIndex];
+  const [isDeSpookified, setIsDeSpookified] = useState(false);
+
+  // Check for DeSpookify mode on mount and when localStorage changes
+  useEffect(() => {
+    const checkDeSpookify = () => {
+      const saved = localStorage.getItem('heinous-despookify-mode');
+      setIsDeSpookified(saved === 'true');
+    };
+
+    checkDeSpookify();
+    
+    // Listen for changes to despookify mode
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'heinous-despookify-mode') {
+        checkDeSpookify();
+      }
+    };
+
+    // Listen for custom events when toggle is clicked
+    const handleDeSpookifyToggle = () => {
+      checkDeSpookify();
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    document.addEventListener('despookify-toggle', handleDeSpookifyToggle);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      document.removeEventListener('despookify-toggle', handleDeSpookifyToggle);
+    };
+  }, []);
   
   // Get theme colors from haunt config
   const primaryColor = gameState.hauntConfig?.theme?.primaryColor || '#8B0000';
@@ -81,9 +112,9 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
           fontWeight: '500', 
           lineHeight: '1.6', 
           marginBottom: '16px',
-          fontFamily: '"Creepster", cursive',
-          textTransform: 'uppercase',
-          letterSpacing: '1px'
+          fontFamily: isDeSpookified ? 'Arial, sans-serif' : '"Creepster", cursive',
+          textTransform: isDeSpookified ? 'none' : 'uppercase',
+          letterSpacing: isDeSpookified ? 'normal' : '1px'
         }}>
           {currentQuestion.text}
         </h2>

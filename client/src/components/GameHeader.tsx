@@ -77,12 +77,15 @@ export function GameHeader({ gameState, isGroupMode = false, groupScore = 0 }: G
           )}
           <div style={{ minWidth: 0, flex: 1 }}>
             <h1 style={{
-              color: '#ffffff',
+              color: '#ff5500',
               fontSize: '20px',
               fontWeight: '600',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap'
+              whiteSpace: 'nowrap',
+              fontFamily: '"Creepster", cursive',
+              textTransform: 'uppercase',
+              letterSpacing: '1px'
             }}>
               {hauntConfig?.name || 'Loading...'}
             </h1>
