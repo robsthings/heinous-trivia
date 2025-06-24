@@ -128,15 +128,44 @@ export function SpookyLoader({
                   animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
                 }}
               />
-              <div className="absolute -inset-4 border border-red-500/20 rounded-full animate-pulse"></div>
+              <div style={{
+                position: 'absolute',
+                top: '-1rem', right: '-1rem', bottom: '-1rem', left: '-1rem',
+                border: '1px solid rgba(239, 68, 68, 0.2)',
+                borderRadius: '50%',
+                animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+              }}></div>
               <div className="absolute -inset-8 border border-orange-500/10 rounded-full animate-ping"></div>
             </div>
           ) : (
             <div>
-              <div className="text-6xl animate-pulse transform hover:scale-110 transition-transform duration-300">💀</div>
-              <div className="absolute inset-0 text-6xl animate-ping opacity-30">👻</div>
-              <div className="absolute -inset-4 border border-red-500/20 rounded-full animate-pulse"></div>
-              <div className="absolute -inset-8 border border-orange-500/10 rounded-full animate-ping"></div>
+              <div style={{
+                fontSize: '4rem',
+                animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                transition: 'transform 0.3s ease',
+                cursor: 'pointer'
+              }}>💀</div>
+              <div style={{
+                position: 'absolute',
+                top: 0, right: 0, bottom: 0, left: 0,
+                fontSize: '4rem',
+                animation: 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
+                opacity: 0.3
+              }}>👻</div>
+              <div style={{
+                position: 'absolute',
+                top: '-1rem', right: '-1rem', bottom: '-1rem', left: '-1rem',
+                border: '1px solid rgba(239, 68, 68, 0.2)',
+                borderRadius: '50%',
+                animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+              }}></div>
+              <div style={{
+                position: 'absolute',
+                top: '-2rem', right: '-2rem', bottom: '-2rem', left: '-2rem',
+                border: '1px solid rgba(251, 146, 60, 0.1)',
+                borderRadius: '50%',
+                animation: 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite'
+              }}></div>
             </div>
           )}
         </div>
@@ -156,15 +185,23 @@ export function SpookyLoader({
         <CustomProgressBar
           progress={showProgress ? progress : 60}
           hauntConfig={hauntConfig}
-          className="mb-4"
+          style={{ marginBottom: '1rem' }}
         />
 
         {/* Flickering candles */}
-        <div className="flex justify-center gap-4 mt-4">
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          gap: '1rem',
+          marginTop: '1rem'
+        }}>
           {[...Array(3)].map((_, i) => (
-            <div key={i} className="relative">
+            <div key={i} style={{ position: 'relative' }}>
               <div 
-                className="text-2xl animate-pulse"
+                style={{
+                  fontSize: '1.5rem',
+                  animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+                }}
                 style={{ 
                   animationDelay: `${i * 0.2}s`,
                   animationDuration: `${1 + Math.random()}s`
@@ -173,7 +210,18 @@ export function SpookyLoader({
                 🕯️
               </div>
               <div 
-                className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-orange-400 rounded-full animate-ping opacity-75"
+                style={{
+                  position: 'absolute',
+                  top: '-0.25rem',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  width: '0.25rem',
+                  height: '0.25rem',
+                  backgroundColor: '#fb923c',
+                  borderRadius: '50%',
+                  animation: 'ping 1s cubic-bezier(0, 0, 0.2, 1) infinite',
+                  opacity: 0.75
+                }}
                 style={{ animationDelay: `${i * 0.3}s` }}
               />
             </div>
@@ -181,22 +229,55 @@ export function SpookyLoader({
         </div>
 
         {/* Creepy subtitle */}
-        <p className="text-gray-400 text-sm mt-4 animate-pulse">
+        <p style={{
+          color: '#9ca3af',
+          fontSize: '0.875rem',
+          marginTop: '1rem',
+          animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+        }}>
           Preparing your descent into madness...
         </p>
       </div>
 
       {/* Corner spiders */}
-      <div className="absolute top-4 left-4 text-2xl animate-bounce" style={{ animationDelay: '1s' }}>
+      <div style={{
+        position: 'absolute',
+        top: '1rem',
+        left: '1rem',
+        fontSize: '1.5rem',
+        animation: 'bounce 1s infinite',
+        animationDelay: '1s'
+      }}>
         🕷️
       </div>
-      <div className="absolute top-4 right-4 text-2xl animate-bounce" style={{ animationDelay: '1.5s' }}>
+      <div style={{
+        position: 'absolute',
+        top: '1rem',
+        right: '1rem',
+        fontSize: '1.5rem',
+        animation: 'bounce 1s infinite',
+        animationDelay: '1.5s'
+      }}>
         🕸️
       </div>
-      <div className="absolute bottom-4 left-4 text-2xl animate-bounce" style={{ animationDelay: '2s' }}>
+      <div style={{
+        position: 'absolute',
+        bottom: '1rem',
+        left: '1rem',
+        fontSize: '1.5rem',
+        animation: 'bounce 1s infinite',
+        animationDelay: '2s'
+      }}>
         🦇
       </div>
-      <div className="absolute bottom-4 right-4 text-2xl animate-bounce" style={{ animationDelay: '0.5s' }}>
+      <div style={{
+        position: 'absolute',
+        bottom: '1rem',
+        right: '1rem',
+        fontSize: '1.5rem',
+        animation: 'bounce 1s infinite',
+        animationDelay: '0.5s'
+      }}>
         👁️
       </div>
     </div>
