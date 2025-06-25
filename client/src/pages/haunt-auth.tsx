@@ -94,13 +94,53 @@ export default function HauntAuth() {
       const validation = await validateResponse.json();
       
       if (!validation.authorized) {
-        toast({
-          title: "Email Not Authorized",
-          description: `The email ${email} is not authorized to access this haunt. Contact the haunt owner to add your email to the authorized list.`,
-          variant: "destructive"
-        });
-        setIsLoading(false);
-        return;
+        // Check if this haunt has ANY authorized emails
+        const listResponse = await fetch(`/api/haunt/${hauntId}/email-auth/list`);
+        if (listResponse.ok) {
+          const emailList = await listResponse.json();
+          
+          if (emailList.emails && emailList.emails.length === 0) {
+            // No emails authorized yet - allow first-time setup
+            const initResponse = await fetch(`/api/haunt/${hauntId}/email-auth/initialize`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email: email.toLowerCase() })
+            });
+            
+            if (initResponse.ok) {
+              toast({
+                title: "Haunt Initialized",
+                description: `${email} has been set as the primary admin for this haunt.`,
+              });
+              // Continue with email link sending
+            } else {
+              toast({
+                title: "Initialization Failed",
+                description: "Unable to initialize haunt. Please try again.",
+                variant: "destructive"
+              });
+              setIsLoading(false);
+              return;
+            }
+          } else {
+            // Haunt already has authorized emails
+            toast({
+              title: "Email Not Authorized",
+              description: `The email ${email} is not authorized to access this haunt. Contact the haunt owner to add your email to the authorized list.`,
+              variant: "destructive"
+            });
+            setIsLoading(false);
+            return;
+          }
+        } else {
+          toast({
+            title: "Authorization Check Failed",
+            description: "Unable to verify email authorization. Please try again.",
+            variant: "destructive"
+          });
+          setIsLoading(false);
+          return;
+        }
       }
       
       const result = await EmailAuthService.sendEmailLink(email, hauntId);
@@ -199,8 +239,8 @@ export default function HauntAuth() {
             </p>
             <div className="bg-blue-900/20 border border-blue-600/30 rounded-lg p-3 mt-4">
               <p className="text-blue-200 text-sm">
-                <strong>First Time Setup:</strong> To add your email to the authorized list, 
-                contact the system administrator or use the main admin panel.
+                <strong>First Time Setup:</strong> If this is your haunt and no emails are authorized yet, 
+                you can initialize this haunt with your email address.
               </p>
             </div>
           </CardHeader>
