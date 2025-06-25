@@ -99,7 +99,10 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
   // Transition Component with logo
   if (showTransition) {
     return (
-      <div className="fixed inset-0 bg-black z-50 overflow-hidden   justify-center" style={{alignItems: "center"}} style={{display: "flex"}}>
+      <div 
+        className="fixed inset-0 bg-black z-50 overflow-hidden" 
+        style={{display: "flex", alignItems: "center", justifyContent: "center"}}
+      >
         <div className="relative">
           {logoSrc ? (
             <img
@@ -207,7 +210,13 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
                     
                     ctx.fillStyle = '#d4af37';
                     ctx.font = '28px Arial';
-                    ctx.fillText('Heinous Trivia Sponsor', 400, 250);
+                    ctx.fillText(currentAd.description || 'Heinous Trivia Sponsor', 400, 250);
+                    
+                    if (currentAd.link && currentAd.link !== '#') {
+                      ctx.fillStyle = '#00d4ff';
+                      ctx.font = '20px Arial';
+                      ctx.fillText('Visit our website for more info', 400, 300);
+                    }
                   }
                   
                   e.currentTarget.src = canvas.toDataURL();
@@ -216,7 +225,7 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
             </div>
           </div>
           
-          {/* Subtitle Text */}
+          {/* Ad Title and Description */}
           <div className="text-center max-w-2xl">
             <h4 
               style={{
@@ -228,7 +237,7 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
                 letterSpacing: '1px'
               }}
             >
-              Can you see the potential?
+              {currentAd.title}
             </h4>
             <p 
               style={{
@@ -238,7 +247,7 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
                 textAlign: 'center'
               }}
             >
-              Bonus, customers keep the game if they save it to their phone and your after session ads keep showing!
+              {currentAd.description}
             </p>
           </div>
         </div>
