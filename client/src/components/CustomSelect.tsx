@@ -33,18 +33,45 @@ export function CustomSelect({ value, onValueChange, options, placeholder, class
   const selectedOption = options.find(option => option.value === value);
 
   return (
-    <div ref={selectRef} className={`relative ${className}`}>
+    <div ref={selectRef} style={{ position: 'relative' }} className={className}>
       {/* Trigger */}
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full  border border-gray-600 text-white px-3 py-2 rounded-md    hover:bg-gray-700 transition-colors" style={{justifyContent: "space-between"}} style={{alignItems: "center"}} style={{display: "flex"}} className="bg-gray-800"
+        style={{
+          width: '100%',
+          backgroundColor: '#1f2937',
+          border: '1px solid #4b5563',
+          color: '#ffffff',
+          padding: '0.5rem 0.75rem',
+          borderRadius: '0.375rem',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          cursor: 'pointer',
+          transition: 'background-color 0.2s ease'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.backgroundColor = '#374151';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.backgroundColor = '#1f2937';
+        }}
       >
-        <span className="  gap-2" style={{alignItems: "center"}} style={{display: "flex"}}>
+        <span style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem'
+        }}>
           {selectedOption?.icon}
           {selectedOption?.label || placeholder}
         </span>
-        <ChevronDown className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+        <ChevronDown style={{
+          height: '1rem',
+          width: '1rem',
+          transition: 'transform 0.2s ease',
+          transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)'
+        }} />
       </button>
 
       {/* Dropdown */}

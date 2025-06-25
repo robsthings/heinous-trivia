@@ -460,19 +460,50 @@ export default function Info() {
           >
             Book Your Free Demo Now
           </a>
-          <p className="text-sm text-gray-400 mt-4">
+          <p style={{
+            fontSize: '0.875rem',
+            color: '#9ca3af',
+            marginTop: '1rem'
+          }}>
             Let's build your haunted trivia experience — response within 24 hours.
           </p>
-          <ul className="text-sm text-gray-400 mt-4 space-y-1 max-w-xs mx-auto " style={{textAlign: "center"}}>
-            <li className="flex items-center justify-center gap-2">
+          <ul style={{
+            fontSize: '0.875rem',
+            color: '#9ca3af',
+            marginTop: '1rem',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.25rem',
+            maxWidth: '20rem',
+            margin: '1rem auto 0 auto',
+            textAlign: "center",
+            listStyle: 'none',
+            padding: 0
+          }}>
+            <li style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '0.5rem'
+            }}>
               <span>✔️</span>
               <span>No tech skills needed</span>
             </li>
-            <li className="flex items-center justify-center gap-2">
+            <li style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '0.5rem'
+            }}>
               <span>✔️</span>
               <span>Custom preview</span>
             </li>
-            <li className="flex items-center justify-center gap-2">
+            <li style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '0.5rem'
+            }}>
               <span>✔️</span>
               <span>Simple Pricing</span>
             </li>
