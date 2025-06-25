@@ -715,8 +715,8 @@ export default function HauntAdmin() {
                   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                   if (!emailRegex.test(newAccessCode.trim())) {
                     toast({
-                      title: "Invalid Code",
-                      description: "Access code must be at least 6 characters long",
+                      title: "Invalid Email",
+                      description: "Please enter a valid email address.",
                       variant: "destructive"
                     });
                     return;
@@ -724,25 +724,24 @@ export default function HauntAdmin() {
 
                   setIsSaving(true);
                   try {
-                    // Use server API to update auth code
-                    const response = await fetch(`/api/haunt/${hauntId}/config`, {
-                      method: 'PUT',
+                    // Initialize haunt with first authorized email
+                    const response = await fetch(`/api/haunt/${hauntId}/email-auth/initialize`, {
+                      method: 'POST',
                       headers: { 'Content-Type': 'application/json' },
-                      body: JSON.stringify({ authCode: newAccessCode })
+                      body: JSON.stringify({ email: newAccessCode.trim() })
                     });
                     
                     if (!response.ok) {
-                      throw new Error('Failed to update auth code');
+                      throw new Error('Failed to initialize email auth');
                     }
-                    
-                    localStorage.setItem(`heinous-admin-${hauntId}`, newAccessCode);
-                    setIsFirstTimeSetup(false);
-                    setIsAuthenticated(true);
                     
                     toast({
                       title: "Setup Complete!",
-                      description: "Your admin dashboard is now secured.",
+                      description: "Email authentication configured. Use the login page to access your dashboard.",
                     });
+                    
+                    // Redirect to auth page
+                    setLocation(`/haunt-auth/${hauntId}`);
                   } catch (error) {
                     console.error('Failed to set email auth:', error);
                     toast({
@@ -754,7 +753,7 @@ export default function HauntAdmin() {
                     setIsSaving(false);
                   }
                 }}
-                className="w-full bg-red-600 hover:bg-red-700 text-white"t-white"
+                className="w-full bg-red-600 hover:bg-red-700 text-white"
                 disabled={isSaving || !newAccessCode.trim()}
               >
                 {isSaving ? "Setting Up..." : "Configure Email Access"}

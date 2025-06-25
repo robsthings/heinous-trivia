@@ -60,17 +60,6 @@ export default function HauntAuth() {
       return;
     }
 
-    // Basic email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      toast({
-        title: "Invalid Email",
-        description: "Please enter a valid email address",
-        variant: "destructive"
-      });
-      return;
-    }
-
     setIsLoading(true);
     try {
       const result = await EmailAuthService.sendEmailLink(email, hauntId);
@@ -78,7 +67,7 @@ export default function HauntAuth() {
       if (result.success) {
         setEmailSent(true);
         toast({
-          title: "Email Sent",
+          title: "Email Sent!",
           description: "Check your email for the authentication link",
         });
       } else {
@@ -89,10 +78,10 @@ export default function HauntAuth() {
         });
       }
     } catch (error) {
-      console.error('Email link error:', error);
+      console.error('Failed to send email link:', error);
       toast({
-        title: "Authentication Error",
-        description: "Unable to send authentication email. Please try again.",
+        title: "Error",
+        description: "Something went wrong. Please try again.",
         variant: "destructive"
       });
     } finally {
@@ -104,83 +93,62 @@ export default function HauntAuth() {
   if (isCompleting) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-red-900 flex items-center justify-center p-4">
-        <div className="w-full max-w-md">
-          <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-sm">
-            <CardContent className="pt-8 pb-6">
-              <div style={{textAlign: "center"}}>
-                <div className="animate-spin w-8 h-8 border-4 border-red-500 border-t-transparent rounded-full mx-auto mb-4"></div>
-                <h3 className="text-red-400 text-lg font-bold mb-2">Completing Authentication</h3>
-                <p className="text-gray-300 text-sm">Verifying your access...</p>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+        <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-sm max-w-md w-full">
+          <CardContent className="p-8 text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-400 mx-auto mb-4"></div>
+            <h3 className="text-white text-lg font-medium mb-2">Completing Authentication</h3>
+            <p className="text-gray-400 text-sm">Please wait while we verify your credentials...</p>
+          </CardContent>
+        </Card>
       </div>
     );
   }
 
-  // Show email sent confirmation
+  // Show success state after email sent
   if (emailSent) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-red-900 flex items-center justify-center p-4">
-        <div className="w-full max-w-md">
-          <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-sm">
-            <CardHeader style={{textAlign: "center"}}>
-              <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <CheckCircle className="w-8 h-8 text-green-400" />
-              </div>
-              <CardTitle className="text-green-400 text-xl font-bold">
-                Email Sent!
-              </CardTitle>
-              <p className="text-gray-300 text-sm mt-2">
-                Check your email for the authentication link
-              </p>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="bg-gray-800/50 p-4 rounded-lg border border-gray-600">
-                  <p className="text-gray-300 text-sm mb-2">
-                    <strong>Next steps:</strong>
-                  </p>
-                  <ol className="text-gray-400 text-sm space-y-1 list-decimal list-inside">
-                    <li>Open the email sent to <strong className="text-white">{email}</strong></li>
-                    <li>Click the authentication link</li>
-                    <li>You'll be redirected to your admin dashboard</li>
-                  </ol>
-                </div>
-                
-                <Button 
-                  onClick={() => {
-                    setEmailSent(false);
-                    setEmail("");
-                  }}
-                  variant="outline"
-                  className="w-full bg-gray-800 border-gray-600 text-white hover:bg-gray-700"
-                >
-                  Send Different Email
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+        <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-sm max-w-md w-full">
+          <CardHeader className="text-center">
+            <CheckCircle className="w-16 h-16 text-green-400 mx-auto mb-4" />
+            <CardTitle className="text-red-400 text-2xl">Check Your Email</CardTitle>
+          </CardHeader>
+          <CardContent className="text-center space-y-4">
+            <p className="text-gray-300">
+              We've sent an authentication link to <strong className="text-white">{email}</strong>
+            </p>
+            <p className="text-gray-400 text-sm">
+              Click the link in your email to access your haunt admin dashboard. 
+              The link will expire in 1 hour.
+            </p>
+            <div className="pt-4">
+              <Button
+                onClick={() => {
+                  setEmailSent(false);
+                  setEmail("");
+                }}
+                variant="outline"
+                className="border-gray-600 text-gray-400 hover:bg-gray-700"
+              >
+                Send Different Email
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     );
   }
 
-  // Show email input form
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-red-900 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-sm">
-          <CardHeader style={{textAlign: "center"}}>
-            <div className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Mail className="w-8 h-8 text-red-400" />
-            </div>
+          <CardHeader className="text-center">
             <CardTitle className="text-red-400 text-2xl font-bold">
-              Admin Access
+              🎃 Haunt Admin Access
             </CardTitle>
             <p className="text-gray-300 text-sm mt-2">
-              Enter your email to receive an authentication link
+              Enter your email to receive a secure authentication link
             </p>
           </CardHeader>
           <CardContent>
@@ -193,67 +161,52 @@ export default function HauntAuth() {
                   id="hauntId"
                   type="text"
                   value={hauntId}
-                  disabled
-                  className="bg-gray-800 border-gray-600 text-gray-400"
+                  readOnly
+                  className="bg-gray-800 border-gray-600 text-white mt-2 opacity-75"
                 />
+                <p className="text-gray-400 text-xs mt-1">
+                  The unique identifier for your haunt
+                </p>
               </div>
 
               <div>
                 <Label htmlFor="email" className="text-white">
-                  Email Address
+                  Admin Email
                 </Label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="admin@yourhaunt.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="bg-gray-800 border-gray-600 text-white placeholder-gray-400"
+                  placeholder="admin@yourhaunt.com"
+                  className="bg-gray-800 border-gray-600 text-white mt-2"
+                  disabled={isLoading}
                   required
                 />
-              </div>
-
-              <Button 
-                type="submit"
-                disabled={isLoading || !email.trim()}
-                className="w-full bg-red-600 hover:bg-red-700 text-white flex items-center justify-center gap-2"
-              >
-                {isLoading ? (
-                  <>
-                    <div className="animate-spin w-4 h-4 border-2 border-white border-t-transparent rounded-full"></div>
-                    Sending Email...
-                  </>
-                ) : (
-                  <>
-                    Send Authentication Link
-                    <ArrowRight className="w-4 h-4" />
-                  </>
-                )}
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-  );
-                  The secret code you set up for this haunt
+                <p className="text-gray-400 text-xs mt-1">
+                  Enter the email address authorized for this haunt
                 </p>
               </div>
 
               <Button 
                 type="submit" 
                 className="w-full bg-red-600 hover:bg-red-700 text-white"
-                disabled={isLoading}
+                disabled={isLoading || !email.trim()}
               >
-                {isLoading ? "Verifying..." : "Access Admin Dashboard"}
+                {isLoading ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    Sending Email...
+                  </>
+                ) : (
+                  <>
+                    <Mail className="w-4 h-4 mr-2" />
+                    Send Authentication Link
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </>
+                )}
               </Button>
             </form>
-
-            <div className="mt-6 pt-6 border-t border-gray-600">
-              <p className="text-gray-400 text-xs " style={{textAlign: "center"}}>
-                Need access? Contact your haunt administrator for credentials.
-              </p>
-            </div>
           </CardContent>
         </Card>
       </div>
