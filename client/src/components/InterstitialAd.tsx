@@ -136,28 +136,38 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
           )}
         </div>
         
-        {/* CSS Animation for Batman-style logo transition */}
+        {/* CSS Animation for Batman-style logo transition with dramatic 3D zoom */}
         <style jsx>{`
           @keyframes batman-logo-transition {
             0% {
-              transform: scale(0.3) rotate(0deg);
+              transform: scale(0.2) rotate(0deg);
               opacity: 0;
+              filter: blur(4px);
             }
-            25% {
-              transform: scale(1.2) rotate(180deg);
+            20% {
+              transform: scale(2.5) rotate(180deg);
               opacity: 1;
+              filter: blur(0px);
             }
-            50% {
-              transform: scale(1) rotate(360deg);
+            40% {
+              transform: scale(4.5) rotate(360deg);
               opacity: 1;
+              filter: blur(0px);
             }
-            75% {
-              transform: scale(1.3) rotate(540deg);
+            60% {
+              transform: scale(6) rotate(540deg);
               opacity: 1;
+              filter: blur(0px);
+            }
+            80% {
+              transform: scale(3) rotate(640deg);
+              opacity: 1;
+              filter: blur(1px);
             }
             100% {
               transform: scale(0.1) rotate(720deg);
               opacity: 0;
+              filter: blur(6px);
             }
           }
         `}</style>
