@@ -2561,9 +2561,9 @@ export default function Admin() {
                               <div className="flex items-center gap-3 flex-1">
                                 <div className="flex flex-col gap-1">
                                   <span className="text-white text-sm font-medium">{theme.name}</span>
-                                  <div className="w-24 h-3 rounded-full bg-gray-600 overflow-hidden">
+                                  <div className="w-32 h-4 rounded-full bg-gray-600 overflow-hidden border border-gray-500">
                                     <div 
-                                      className="w-full h-full"
+                                      className="w-full h-full rounded-full"
                                       style={{
                                         background: theme.id === 'crimson' ? 'linear-gradient(90deg, #dc2626, #f87171)' :
                                                    theme.id === 'blood' ? 'linear-gradient(90deg, #991b1b, #dc2626)' :
@@ -2574,7 +2574,17 @@ export default function Admin() {
                                                    theme.id === 'pink' ? 'linear-gradient(90deg, #ec4899, #fb7185)' :
                                                    theme.id === 'gold' ? 'linear-gradient(90deg, #eab308, #f59e0b)' :
                                                    'linear-gradient(90deg, #dc2626, #f87171)',
-                                        boxShadow: '0 0 10px rgba(255, 255, 255, 0.3)',
+                                        boxShadow: `0 0 15px ${
+                                          theme.id === 'crimson' ? 'rgba(220, 38, 38, 0.6)' :
+                                          theme.id === 'blood' ? 'rgba(153, 27, 27, 0.6)' :
+                                          theme.id === 'electric' ? 'rgba(59, 130, 246, 0.6)' :
+                                          theme.id === 'toxic' ? 'rgba(16, 185, 129, 0.6)' :
+                                          theme.id === 'purple' ? 'rgba(147, 51, 234, 0.6)' :
+                                          theme.id === 'orange' ? 'rgba(234, 88, 12, 0.6)' :
+                                          theme.id === 'pink' ? 'rgba(236, 72, 153, 0.6)' :
+                                          theme.id === 'gold' ? 'rgba(234, 179, 8, 0.6)' :
+                                          'rgba(220, 38, 38, 0.6)'
+                                        }`,
                                         animation: 'pulse 2s ease-in-out infinite'
                                       }}
                                     />
