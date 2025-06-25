@@ -114,125 +114,207 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
   }
 
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden bg-gradient-to-br from-gray-900 via-purple-900 to-black"
-         style={gameState.hauntConfig?.skinUrl ? {
-           backgroundImage: `url(${gameState.hauntConfig.skinUrl})`,
-           backgroundSize: 'cover',
-           backgroundPosition: 'center',
-           backgroundRepeat: 'no-repeat'
-         } : {}}>
-      <div className="w-full h-full">
-        {/* Mobile-First Responsive Layout */}
-        <div className="h-full flex -col  p-4 max-w-md mx-auto lg:max-w-4xl" style={{justifyContent: "space-between"}} style={{display: "flex"}}>
+    <div 
+      className="fixed inset-0 z-50 overflow-hidden"
+      style={{
+        background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 25%, #0f3460 75%, #533483 100%)',
+        ...gameState.hauntConfig?.skinUrl ? {
+          backgroundImage: `linear-gradient(135deg, rgba(26,26,46,0.9) 0%, rgba(22,33,62,0.9) 25%, rgba(15,52,96,0.9) 75%, rgba(83,52,131,0.9) 100%), url(${gameState.hauntConfig.skinUrl})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        } : {}
+      }}
+    >
+      <div className="w-full h-full flex flex-col">
+        
+        {/* Header */}
+        <div className="text-center py-6 px-4">
+          <h3 
+            style={{
+              fontFamily: '"Creepster", cursive',
+              fontSize: 'clamp(1.5rem, 4vw, 3rem)',
+              color: '#d4af37',
+              textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
+              letterSpacing: '2px',
+              textTransform: 'uppercase'
+            }}
+          >
+            A Message from Our Sponsors
+          </h3>
+        </div>
+        
+        {/* Main Content */}
+        <div className="flex-1 flex flex-col items-center justify-center px-4 space-y-6">
           
-          {/* Header - Compact on mobile */}
-          <div className=" py-2 -shrink-0" style={{display: "flex"}} className="text-center">
-            <h3 className="nosifer text-base sm:text-xl lg:text-3xl text-orange-500 animate-pulse leading-tight">
-              A Message from Our Sponsors
-            </h3>
-
-          </div>
-          
-          {/* Main Content - Centered and Responsive */}
-          <div className="flex-1 flex -col justify-center  space-y-4 min-h-0" style={{alignItems: "center"}} style={{display: "flex"}}>
-            
-            {/* Ad Image - Direct display */}
-            <div className="w-full px-4">
+          {/* Ad Image Container */}
+          <div className="w-full max-w-3xl">
+            <div
+              style={{
+                background: 'linear-gradient(145deg, #1e3c72 0%, #2a5298 100%)',
+                border: '3px solid #00d4ff',
+                borderRadius: '12px',
+                padding: '8px',
+                boxShadow: '0 0 20px rgba(0, 212, 255, 0.3), inset 0 0 20px rgba(0, 212, 255, 0.1)',
+                position: 'relative'
+              }}
+            >
+              {/* Electric border effect */}
+              <div
+                style={{
+                  position: 'absolute',
+                  top: '0',
+                  left: '0',
+                  right: '0',
+                  bottom: '0',
+                  borderRadius: '9px',
+                  background: 'linear-gradient(90deg, transparent, #00d4ff, transparent)',
+                  opacity: '0.6',
+                  animation: 'electric-flow 2s linear infinite'
+                }}
+              />
+              
               <img
                 src={currentAd.image || currentAd.imageUrl}
                 alt={currentAd.title}
-                className="w-full max-h-[70vh] h-auto object-contain rounded-lg shadow-2xl border-2 border-red-600"
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  maxHeight: '60vh',
+                  objectFit: 'contain',
+                  borderRadius: '6px',
+                  position: 'relative',
+                  zIndex: 1
+                }}
                 onError={(e) => {
-                  // Create a better fallback image with haunt branding
                   const canvas = document.createElement('canvas');
                   canvas.width = 800;
                   canvas.height = 400;
                   const ctx = canvas.getContext('2d');
                   
                   if (ctx) {
-                    // Dark horror-themed background
-                    ctx.fillStyle = '#1a1a1a';
+                    ctx.fillStyle = '#1a1a2e';
                     ctx.fillRect(0, 0, 800, 400);
                     
-                    // Red accent border
-                    ctx.strokeStyle = '#8B0000';
-                    ctx.lineWidth = 8;
-                    ctx.strokeRect(4, 4, 792, 392);
+                    ctx.strokeStyle = '#00d4ff';
+                    ctx.lineWidth = 6;
+                    ctx.strokeRect(3, 3, 794, 394);
                     
-                    // Title text
                     ctx.fillStyle = '#ffffff';
-                    ctx.font = 'bold 36px Arial';
+                    ctx.font = 'bold 48px Arial';
                     ctx.textAlign = 'center';
-                    ctx.fillText(currentAd.title || 'Advertisement', 400, 180);
+                    ctx.fillText(currentAd.title || 'Advertisement', 400, 200);
                     
-                    // Subtitle
-                    ctx.fillStyle = '#cccccc';
-                    ctx.font = '24px Arial';
-                    ctx.fillText('Heinous Trivia Sponsor', 400, 220);
-                    
-                    // Description if available
-                    if (currentAd.description) {
-                      ctx.fillStyle = '#aaaaaa';
-                      ctx.font = '18px Arial';
-                      const words = currentAd.description.split(' ');
-                      let line = '';
-                      let y = 260;
-                      
-                      for (let n = 0; n < words.length; n++) {
-                        const testLine = line + words[n] + ' ';
-                        const metrics = ctx.measureText(testLine);
-                        const testWidth = metrics.width;
-                        if (testWidth > 600 && n > 0) {
-                          ctx.fillText(line, 400, y);
-                          line = words[n] + ' ';
-                          y += 25;
-                        } else {
-                          line = testLine;
-                        }
-                      }
-                      ctx.fillText(line, 400, y);
-                    }
+                    ctx.fillStyle = '#d4af37';
+                    ctx.font = '28px Arial';
+                    ctx.fillText('Heinous Trivia Sponsor', 400, 250);
                   }
                   
                   e.currentTarget.src = canvas.toDataURL();
                 }}
               />
             </div>
-            
-            {/* Ad Text - Compact on mobile */}
-            <div className=" px-4 max-w-xs sm:max-w-sm lg:max-w-xl" className="text-center">
-              <h4 className="text-base sm:text-lg lg:text-2xl font-bold text-white mb-2 font-creepster line-clamp-2">
-                {currentAd.title}
-              </h4>
-              <p className="text-gray-300 text-xs sm:text-sm lg:text-base leading-relaxed line-clamp-3">
-                {currentAd.description}
-              </p>
-            </div>
           </div>
           
-          {/* Action Buttons - Always visible at bottom */}
-          <div className="space-y-3 w-full max-w-xs sm:max-w-sm mx-auto -shrink-0 pt-4" style={{display: "flex"}}>
-            {/* Only show Learn More button if valid link exists */}
+          {/* Subtitle Text */}
+          <div className="text-center max-w-2xl">
+            <h4 
+              style={{
+                fontFamily: '"Creepster", cursive',
+                fontSize: 'clamp(1.25rem, 3vw, 2rem)',
+                color: '#00d4ff',
+                textShadow: '0 0 10px rgba(0, 212, 255, 0.5)',
+                marginBottom: '1rem',
+                letterSpacing: '1px'
+              }}
+            >
+              Can you see the potential?
+            </h4>
+            <p 
+              style={{
+                color: '#e5e7eb',
+                fontSize: 'clamp(0.875rem, 2vw, 1.125rem)',
+                lineHeight: '1.6',
+                textAlign: 'center'
+              }}
+            >
+              Bonus, customers keep the game if they save it to their phone and your after session ads keep showing!
+            </p>
+          </div>
+        </div>
+        
+        {/* Action Buttons */}
+        <div className="px-4 pb-8 flex flex-col items-center space-y-4">
+          <div className="w-full max-w-md space-y-3">
             {hasValidLink && (
               <button
-                className="w-full py-3 sm:py-4 bg-red-700 hover:bg-red-600 text-white rounded-lg font-medium transition-colors text-sm sm:text-base select-none"
                 onClick={handleVisitAd}
-                style={{ touchAction: 'manipulation' }}
+                style={{
+                  width: '100%',
+                  padding: '16px 24px',
+                  backgroundColor: '#dc2626',
+                  color: '#ffffff',
+                  borderRadius: '8px',
+                  border: 'none',
+                  fontSize: '1.125rem',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  boxShadow: '0 4px 8px rgba(220, 38, 38, 0.3)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = '#b91c1c';
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 6px 12px rgba(220, 38, 38, 0.4)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = '#dc2626';
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 4px 8px rgba(220, 38, 38, 0.3)';
+                }}
               >
                 Learn More
               </button>
             )}
             <button
-              className="w-full py-3 sm:py-4 rounded-lg font-medium text-gray-300 border-2 border-gray-600 hover:bg-gray-800 transition-colors text-sm sm:text-base select-none"
               onClick={onClose}
-              style={{ touchAction: 'manipulation' }}
+              style={{
+                width: '100%',
+                padding: '16px 24px',
+                backgroundColor: 'transparent',
+                color: '#9ca3af',
+                borderRadius: '8px',
+                border: '2px solid #4b5563',
+                fontSize: '1.125rem',
+                fontWeight: '500',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#374151';
+                e.currentTarget.style.color = '#ffffff';
+                e.currentTarget.style.borderColor = '#6b7280';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'transparent';
+                e.currentTarget.style.color = '#9ca3af';
+                e.currentTarget.style.borderColor = '#4b5563';
+              }}
             >
               Continue Playing
             </button>
           </div>
-          
         </div>
+        
       </div>
+      
+      {/* CSS Animation for electric border */}
+      <style jsx>{`
+        @keyframes electric-flow {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+      `}</style>
     </div>
   );
 }
