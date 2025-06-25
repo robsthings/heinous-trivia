@@ -235,20 +235,55 @@ function MonsterNameGeneratorCore({ showHeinous = true }: MonsterNameGeneratorPr
         {/* Action buttons - responsive layout */}
         {scanPhase === 'complete' && (
           <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col gap-2 sm:gap-3 animate-fade-in w-full max-w-xs px-4">
-            <Button
+            <button
               onClick={handleScreenshot}
-              className="bg-purple-700 hover:bg-purple-600 text-white px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-semibold w-full"
+              style={{
+                backgroundColor: '#7c3aed',
+                color: '#ffffff',
+                padding: 'clamp(0.5rem, 2vw, 0.75rem) clamp(1rem, 3vw, 1.5rem)',
+                fontSize: 'clamp(0.75rem, 2vw, 0.875rem)',
+                fontWeight: '600',
+                width: '100%',
+                border: 'none',
+                borderRadius: '0.375rem',
+                cursor: 'pointer',
+                transition: 'background-color 0.2s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#6d28d9';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = '#7c3aed';
+              }}
             >
               📸 Save Your Monster Card
-            </Button>
+            </button>
             
-            <Button
+            <button
               onClick={startScan}
-              variant="outline"
-              className="border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm font-semibold w-full"
+              style={{
+                backgroundColor: 'transparent',
+                border: '1px solid #f97316',
+                color: '#f97316',
+                padding: 'clamp(0.5rem, 2vw, 0.75rem) clamp(1rem, 3vw, 1.5rem)',
+                fontSize: 'clamp(0.75rem, 2vw, 0.875rem)',
+                fontWeight: '600',
+                width: '100%',
+                borderRadius: '0.375rem',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#f97316';
+                e.currentTarget.style.color = '#ffffff';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'transparent';
+                e.currentTarget.style.color = '#f97316';
+              }}
             >
               🔁 Generate Another
-            </Button>
+            </button>
 
             <Button
               onClick={handleReturnToGame}

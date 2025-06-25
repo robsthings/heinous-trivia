@@ -242,7 +242,13 @@ export function WretchedWiring() {
         {gameState.isPlaying && (
           <div className="flex-1 flex items-center justify-center p-6">
             <div className="bg-gray-800 bg-opacity-95 p-8 rounded-xl border-2 border-yellow-500 w-full max-w-4xl">
-              <h2 className="text-2xl font-bold text-yellow-400  " className="mb-6" style={{textAlign: "center"}}>
+              <h2 style={{
+                fontSize: '1.5rem',
+                fontWeight: 'bold',
+                color: '#facc15',
+                marginBottom: '1.5rem',
+                textAlign: 'center'
+              }}>
                 Puzzle {gameState.currentPuzzle}: Connect the Circuit
               </h2>
               

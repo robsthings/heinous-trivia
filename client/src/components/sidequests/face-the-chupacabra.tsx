@@ -189,7 +189,25 @@ export function FaceTheChupacabra() {
                   <button
                     key={choice.value}
                     onClick={() => playRound(choice.value)}
-                    className="group relative /80 hover:bg-gray-700/80 p-4 rounded-lg transition-all hover:scale-105 border-2 border-gray-600 hover:border-red-500" className="bg-gray-800"
+                    style={{
+                  position: 'relative',
+                  backgroundColor: 'rgba(31, 41, 55, 0.8)',
+                  padding: '1rem',
+                  borderRadius: '0.5rem',
+                  transition: 'all 0.2s ease',
+                  border: '2px solid #4b5563',
+                  cursor: 'pointer'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = 'rgba(55, 65, 81, 0.8)';
+                  e.currentTarget.style.transform = 'scale(1.05)';
+                  e.currentTarget.style.borderColor = '#ef4444';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'rgba(31, 41, 55, 0.8)';
+                  e.currentTarget.style.transform = 'scale(1)';
+                  e.currentTarget.style.borderColor = '#4b5563';
+                }}
                     title={choice.value === 'scissors' ? 'Staby Staby' : choice.label}
                   >
                     <img
