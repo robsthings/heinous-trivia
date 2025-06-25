@@ -157,13 +157,28 @@ export function CrypticCompliments() {
             }}>CRYPTIC COMPLIMENTS</h1>
             
             {/* Dr. Heinous with Gift */}
-            <div className="mb-8">
-              <div className="relative inline-block">
+            <div style={{ marginBottom: '2rem' }}>
+              <div style={{
+                position: 'relative',
+                display: 'inline-block'
+              }}>
                 <img 
                   src="/heinous/gift.png"
                   alt="Dr. Heinous offering a gift" 
-                  className="w-64 h-64 mx-auto cursor-pointer hover:scale-105 transition-transform duration-300"
+                  style={{
+                    width: '16rem',
+                    height: '16rem',
+                    margin: '0 auto',
+                    cursor: 'pointer',
+                    transition: 'transform 0.3s ease'
+                  }}
                   onClick={startParchmentUnfurling}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'scale(1.05)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'scale(1)';
+                  }}
                 />
                 {/* Soft pulsing glow */}
                 <div className="absolute inset-0 bg-yellow-400 opacity-20 rounded-full blur-xl animate-pulse pointer-events-none"></div>

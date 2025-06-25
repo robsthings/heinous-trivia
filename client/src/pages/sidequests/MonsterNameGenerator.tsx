@@ -113,8 +113,11 @@ function MonsterNameGeneratorCore({ showHeinous = true }: MonsterNameGeneratorPr
 
   return (
     <div 
-      className="min-h-screen w-full relative overflow-hidden"
       style={{
+        minHeight: '100vh',
+        width: '100%',
+        position: 'relative',
+        overflow: 'hidden',
         backgroundImage: 'url(/sidequests/monster-name-generator/monster-library-bg.png)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
@@ -122,11 +125,22 @@ function MonsterNameGeneratorCore({ showHeinous = true }: MonsterNameGeneratorPr
       }}
     >
       {/* Dark overlay for better contrast */}
-      <div className="absolute inset-0 bg-black/40" />
+      <div style={{
+        position: 'absolute',
+        top: 0, right: 0, bottom: 0, left: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.4)'
+      }} />
       
       {/* Flash effect for screenshots */}
       {isFlashing && (
-        <div className="absolute inset-0 bg-white opacity-80 z-50 pointer-events-none" />
+        <div style={{
+          position: 'absolute',
+          top: 0, right: 0, bottom: 0, left: 0,
+          backgroundColor: '#ffffff',
+          opacity: 0.8,
+          zIndex: 50,
+          pointerEvents: 'none'
+        }} />
       )}
 
       {/* Full-screen scan line animation */}

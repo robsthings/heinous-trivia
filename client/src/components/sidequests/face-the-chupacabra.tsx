@@ -260,7 +260,10 @@ export function FaceTheChupacabra() {
               </div>
             )}
             
-            <div className="text-sm " className="text-gray-300">
+            <div style={{
+              fontSize: '0.875rem',
+              color: '#d1d5db'
+            }}>
               Wins: {gameState.playerKeys}/3 | Losses: {gameState.playerLosses}/3
             </div>
           </div>
@@ -271,14 +274,24 @@ export function FaceTheChupacabra() {
             <h2 className="text-4xl font-bold text-green-400 mb-4">🎉 ESCAPED! 🎉</h2>
             
             {/* All collected keys display */}
-            <div className=" gap-4 justify-center " className="flex-center" className="mb-6">
+            <div style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: '1rem',
+              marginBottom: '1.5rem'
+            }}>
               {[1, 2, 3].map((keyNum) => (
                 <img
                   key={keyNum}
                   src={`/sidequests/face-the-chupacabra/chupa-key-${keyNum}.png`}
                   alt={`Victory Key ${keyNum}`}
-                  className="w-10 h-26 animate-bounce"
-                  style={{ animationDelay: `${keyNum * 0.3}s` }}
+                  style={{
+                    width: '2.5rem',
+                    height: '6.5rem',
+                    animation: 'bounce 1s infinite',
+                    animationDelay: `${keyNum * 0.3}s`
+                  }}
                 />
               ))}
             </div>

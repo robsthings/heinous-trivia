@@ -121,11 +121,23 @@ export function WretchedWiring() {
   }, [gameState.isPlaying, gameState.isComplete, gameState.timeRemaining]);
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-gray-900">
+    <div style={{
+      position: 'relative',
+      minHeight: '100vh',
+      overflow: 'hidden',
+      backgroundColor: '#111827'
+    }}>
       {/* Background */}
       <div 
-        className="fixed inset-0 bg-cover bg-center bg-no-repeat opacity-80"
-        style={{ backgroundImage: 'url(/sidequests/wretched-wiring/wiring-bg.png)' }}
+        style={{
+          position: 'fixed',
+          top: 0, right: 0, bottom: 0, left: 0,
+          backgroundImage: 'url(/sidequests/wretched-wiring/wiring-bg.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          opacity: 0.8
+        }}
       />
 
       {/* Game Over Overlay */}
