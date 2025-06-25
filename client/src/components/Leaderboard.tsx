@@ -45,13 +45,13 @@ export function Leaderboard({ isVisible, leaderboard, onClose, hauntId, currentP
   const getRankColor = (index: number) => {
     switch (index) {
       case 0:
-        return "bg-red-900";
+        return "#7f1d1d"; // bg-red-900
       case 1:
-        return "bg-purple-900";
+        return "#581c87"; // bg-purple-900
       case 2:
-        return "bg-purple-900";
+        return "#581c87"; // bg-purple-900
       default:
-        return "bg-gray-600";
+        return "#4b5563"; // bg-gray-600
     }
   };
 
@@ -66,8 +66,13 @@ export function Leaderboard({ isVisible, leaderboard, onClose, hauntId, currentP
       padding: 'clamp(0.75rem, 3vw, 1rem)',
       zIndex: 50
     }}>
-      <div className="glass-card animate-fade-in" style={{
+      <div style={{
+        background: 'rgba(0, 0, 0, 0.6)',
+        border: '1px solid rgba(255, 255, 255, 0.05)',
         borderRadius: '0.75rem',
+        boxShadow: '0 0 12px rgba(255, 0, 50, 0.1)',
+        backdropFilter: 'blur(6px)',
+        animation: 'fade-in 0.5s ease-out',
         padding: 'clamp(1rem, 4vw, 1.5rem)',
         maxWidth: 'clamp(24rem, 90vw, 28rem)',
         width: '100%',
@@ -80,9 +85,10 @@ export function Leaderboard({ isVisible, leaderboard, onClose, hauntId, currentP
           textAlign: 'center',
           marginBottom: 'clamp(1rem, 4vw, 1.5rem)'
         }}>
-          <h2 className="creepster" style={{
+          <h2 style={{
             fontSize: 'clamp(1.5rem, 4vw, 1.875rem)',
             color: '#f97316',
+            fontFamily: '"Creepster", cursive',
             marginBottom: '0.5rem'
           }}>Hall of Horror</h2>
           <p style={{

@@ -100,10 +100,18 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
   if (showTransition) {
     return (
       <div 
-        className="fixed inset-0 bg-black z-50 overflow-hidden" 
-        style={{display: "flex", alignItems: "center", justifyContent: "center"}}
+        style={{
+          position: 'fixed',
+          top: 0, right: 0, bottom: 0, left: 0,
+          backgroundColor: '#000000',
+          zIndex: 50,
+          overflow: 'hidden',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
       >
-        <div className="relative">
+        <div style={{ position: 'relative' }}>
           {logoSrc ? (
             <img
               src={logoSrc}

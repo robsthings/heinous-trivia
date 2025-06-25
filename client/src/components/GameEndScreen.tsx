@@ -174,32 +174,82 @@ export function GameEndScreen({
 
 
           {savedPlayerName ? (
-            <div className="mb-4 sm: " className="mb-6" className="text-center">
-              <div className=" text-xs sm:text-sm mb-2" className="text-gray-300">Playing as:</div>
-              <div className="text-white font-bold text-base sm:text-lg">{savedPlayerName}</div>
-              <div className=" text-xs mt-1" className="text-gray-400">Score will be saved automatically</div>
+            <div style={{
+              marginBottom: 'clamp(1rem, 4vw, 1.5rem)',
+              textAlign: 'center'
+            }}>
+              <div style={{
+                fontSize: 'clamp(0.75rem, 2.5vw, 0.875rem)',
+                color: '#d1d5db',
+                marginBottom: '0.5rem'
+              }}>Playing as:</div>
+              <div style={{
+                color: '#ffffff',
+                fontWeight: 'bold',
+                fontSize: 'clamp(1rem, 3vw, 1.125rem)'
+              }}>{savedPlayerName}</div>
+              <div style={{
+                fontSize: '0.75rem',
+                marginTop: '0.25rem',
+                color: '#9ca3af'
+              }}>Score will be saved automatically</div>
             </div>
           ) : (
-            <div className="mb-4 sm:" className="mb-6">
+            <div style={{
+              marginBottom: 'clamp(1rem, 4vw, 1.5rem)'
+            }}>
               <input
                 type="text"
                 placeholder="Enter your name for the leaderboard"
-                className="w-full p-3 rounded-lg bg-gray-800 border border-red-900 text-white placeholder-gray-500 focus:outline-none focus:border-orange-500 text-sm sm:text-base"
+                style={{
+                  width: '100%',
+                  padding: '0.75rem',
+                  borderRadius: '0.5rem',
+                  backgroundColor: '#1f2937',
+                  border: '1px solid #7f1d1d',
+                  color: '#ffffff',
+                  fontSize: 'clamp(0.875rem, 3vw, 1rem)',
+                  outline: 'none'
+                }}
                 value={playerName}
                 onChange={(e) => setPlayerName(e.target.value)}
                 maxLength={20}
+                onFocus={(e) => e.target.style.borderColor = '#f97316'}
+                onBlur={(e) => e.target.style.borderColor = '#7f1d1d'}
               />
             </div>
           )}
 
-          <div className="space-y-2 sm:space-y-3">
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 'clamp(0.5rem, 2vw, 0.75rem)'
+          }}>
             {!scoreSaved && !savedPlayerName && (
               <button
-                className={`horror-button w-full py-3 sm:py-4 rounded-lg font-medium text-white text-sm sm:text-base touch-manipulation ${
-                  isSaving || !playerName.trim() ? 'opacity-50 cursor-not-allowed' : ''
-                }`}
+                style={{
+                  width: '100%',
+                  padding: 'clamp(0.75rem, 3vw, 1rem)',
+                  borderRadius: '0.5rem',
+                  fontWeight: '500',
+                  color: '#ffffff',
+                  fontSize: 'clamp(0.875rem, 3vw, 1rem)',
+                  background: 'linear-gradient(to right, #991b1b, #7c3aed)',
+                  border: '1px solid #dc2626',
+                  cursor: isSaving || !playerName.trim() ? 'not-allowed' : 'pointer',
+                  opacity: isSaving || !playerName.trim() ? 0.5 : 1,
+                  transition: 'all 0.2s ease'
+                }}
                 onClick={handleSaveAndViewLeaderboard}
                 disabled={isSaving || !playerName.trim()}
+                onMouseEnter={(e) => {
+                  if (!isSaving && playerName.trim()) {
+                    e.currentTarget.style.transform = 'scale(1.02)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'scale(1)';
+                }}
               >
                 {isSaving ? 'Saving...' : 'Save Score & View Leaderboard'}
               </button>
@@ -207,11 +257,29 @@ export function GameEndScreen({
             
             {!scoreSaved && savedPlayerName && (
               <button
-                className={`horror-button w-full py-3 sm:py-4 rounded-lg font-medium text-white text-sm sm:text-base touch-manipulation ${
-                  isSaving ? 'opacity-50 cursor-not-allowed' : ''
-                }`}
+                style={{
+                  width: '100%',
+                  padding: 'clamp(0.75rem, 3vw, 1rem)',
+                  borderRadius: '0.5rem',
+                  fontWeight: '500',
+                  color: '#ffffff',
+                  fontSize: 'clamp(0.875rem, 3vw, 1rem)',
+                  background: 'linear-gradient(to right, #991b1b, #7c3aed)',
+                  border: '1px solid #dc2626',
+                  cursor: isSaving ? 'not-allowed' : 'pointer',
+                  opacity: isSaving ? 0.5 : 1,
+                  transition: 'all 0.2s ease'
+                }}
                 onClick={handleSaveAndViewLeaderboard}
                 disabled={isSaving}
+                onMouseEnter={(e) => {
+                  if (!isSaving) {
+                    e.currentTarget.style.transform = 'scale(1.02)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'scale(1)';
+                }}
               >
                 {isSaving ? 'Saving...' : 'Save Score & View Leaderboard'}
               </button>
@@ -219,24 +287,75 @@ export function GameEndScreen({
 
             {scoreSaved && (
               <button
-                className="horror-button w-full py-3 sm:py-4 rounded-lg font-medium text-white text-sm sm:text-base touch-manipulation"
+                style={{
+                  width: '100%',
+                  padding: 'clamp(0.75rem, 3vw, 1rem)',
+                  borderRadius: '0.5rem',
+                  fontWeight: '500',
+                  color: '#ffffff',
+                  fontSize: 'clamp(0.875rem, 3vw, 1rem)',
+                  background: 'linear-gradient(to right, #991b1b, #7c3aed)',
+                  border: '1px solid #dc2626',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease'
+                }}
                 onClick={onViewLeaderboard}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'scale(1.02)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'scale(1)';
+                }}
               >
                 View Full Leaderboard
               </button>
             )}
             
             <button
-              className="w-full py-3 sm:py-4 rounded-lg font-medium  border border-gray-600 hover:bg-gray-800 transition-colors text-sm sm:text-base touch-manipulation" className="text-gray-300"
+              style={{
+                width: '100%',
+                padding: 'clamp(0.75rem, 3vw, 1rem)',
+                borderRadius: '0.5rem',
+                fontWeight: '500',
+                color: '#d1d5db',
+                fontSize: 'clamp(0.875rem, 3vw, 1rem)',
+                background: 'transparent',
+                border: '1px solid #4b5563',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease'
+              }}
               onClick={handlePlayAgain}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#1f2937';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'transparent';
+              }}
             >
               Play Again
             </button>
             
             {!scoreSaved && (
               <button
-                className="w-full py-3 sm:py-4 rounded-lg font-medium  border border-gray-600 hover:bg-gray-800 transition-colors text-sm sm:text-base touch-manipulation" className="text-gray-300"
+                style={{
+                  width: '100%',
+                  padding: 'clamp(0.75rem, 3vw, 1rem)',
+                  borderRadius: '0.5rem',
+                  fontWeight: '500',
+                  color: '#d1d5db',
+                  fontSize: 'clamp(0.875rem, 3vw, 1rem)',
+                  background: 'transparent',
+                  border: '1px solid #4b5563',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease'
+                }}
                 onClick={onViewLeaderboard}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = '#1f2937';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                }}
               >
                 View Leaderboard Only
               </button>
