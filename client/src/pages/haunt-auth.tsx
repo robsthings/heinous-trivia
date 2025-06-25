@@ -202,6 +202,9 @@ export default function HauntAuth() {
               Click the link in your email to access your haunt admin dashboard. 
               The link will expire in 1 hour.
             </p>
+            <p className="text-gray-500 text-xs mt-2">
+              Don't see the email? Check your spam or junk folder.
+            </p>
             <div className="bg-green-900/20 border border-green-600/30 rounded-lg p-3 mt-4">
               <p className="text-green-200 text-sm">
                 <strong>Ready:</strong> Your domain is configured in Firebase. 
