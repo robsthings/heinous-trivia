@@ -694,11 +694,12 @@ export default function HauntAdmin() {
       justifyContent: 'center'
     }}>
         <Card style={{
-          background: 'rgba(0, 0, 0, 0.8)',
+          background: 'rgba(0, 0, 0, 0.7)',
           border: '1px solid #dc2626',
           color: '#ffffff',
           maxWidth: '28rem',
-          width: '100%'
+          width: '100%',
+          backdropFilter: 'blur(8px)'
         }}>
           <CardHeader style={{textAlign: "center"}}>
             <CardTitle className="text-2xl font-bold text-red-500">
@@ -789,9 +790,10 @@ export default function HauntAdmin() {
         justifyContent: 'center'
       }}>
         <Card style={{
-          background: 'rgba(0, 0, 0, 0.8)',
+          background: 'rgba(0, 0, 0, 0.7)',
           border: '1px solid #dc2626',
-          color: '#ffffff'
+          color: '#ffffff',
+          backdropFilter: 'blur(8px)'
         }}>
           <CardContent className="p-8">
             <div style={{textAlign: "center"}}>
@@ -828,11 +830,12 @@ export default function HauntAdmin() {
         {/* Header Section */}
         <div style={{
           textAlign: 'center',
-          background: 'rgba(0, 0, 0, 0.6)',
+          background: 'rgba(0, 0, 0, 0.4)',
           borderRadius: '0.75rem',
           padding: '1.5rem',
-          border: '1px solid #374151',
-          boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+          border: '1px solid #6b7280',
+          boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+          backdropFilter: 'blur(8px)'
         }}>
           <h1 style={{
             fontSize: '2.25rem',
@@ -904,9 +907,10 @@ export default function HauntAdmin() {
             
             {/* Haunt Branding Section */}
             <Card style={{
-              background: 'rgba(0, 0, 0, 0.6)',
-              border: '1px solid #4b5563',
-              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+              background: 'rgba(0, 0, 0, 0.4)',
+              border: '1px solid #6b7280',
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+              backdropFilter: 'blur(8px)'
             }}>
               <CardHeader style={{ paddingBottom: '1rem' }}>
                 <CardTitle style={{
@@ -1040,9 +1044,10 @@ export default function HauntAdmin() {
 
             {/* Ad Management Section */}
             <Card style={{
-              background: 'rgba(0, 0, 0, 0.6)',
-              border: '1px solid #4b5563',
-              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+              background: 'rgba(0, 0, 0, 0.4)',
+              border: '1px solid #6b7280',
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+              backdropFilter: 'blur(8px)'
             }}>
               <CardHeader style={{ paddingBottom: '1rem' }}>
                 <CardTitle style={{
@@ -1161,9 +1166,10 @@ export default function HauntAdmin() {
 
         {/* Custom Trivia Section - Full Width */}
         <Card style={{
-          background: 'rgba(0, 0, 0, 0.6)',
-          border: '1px solid #4b5563',
-          boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+          background: 'rgba(0, 0, 0, 0.4)',
+          border: '1px solid #6b7280',
+          boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+          backdropFilter: 'blur(8px)'
         }}>
           <CardHeader style={{ paddingBottom: '1rem' }}>
             <CardTitle style={{
