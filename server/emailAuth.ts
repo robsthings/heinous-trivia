@@ -118,10 +118,15 @@ export class ServerEmailAuthService {
 
       const hauntData = hauntDoc.data();
       
-      // Only allow initialization if no auth method is set
-      if (hauntData?.authCode || (hauntData?.authorizedEmails && hauntData.authorizedEmails.length > 0)) {
-        console.error('Haunt already has authentication configured:', hauntId);
+      // Only allow initialization if no email authorization is set
+      if (hauntData?.authorizedEmails && hauntData.authorizedEmails.length > 0) {
+        console.error('Haunt already has email authentication configured:', hauntId);
         return false;
+      }
+      
+      // Allow initialization even if old authCode exists (migration from old system)
+      if (hauntData?.authCode) {
+        console.log('Migrating haunt from access code to email authentication:', hauntId);
       }
 
       // Set first authorized email

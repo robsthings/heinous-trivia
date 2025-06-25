@@ -34,6 +34,9 @@ export class EmailAuthService {
       };
 
       console.log('Sending email link with settings:', actionCodeSettings);
+      console.log('Firebase Auth object:', auth);
+      console.log('Auth current user:', auth.currentUser);
+      
       await sendSignInLinkToEmail(auth, email, actionCodeSettings);
       
       // Save email and hauntId to localStorage for completing sign-in

@@ -100,23 +100,23 @@ export default function HauntAuth() {
           const emailList = await listResponse.json();
           
           if (emailList.emails && emailList.emails.length === 0) {
-            // No emails authorized yet - allow first-time setup
-            const initResponse = await fetch(`/api/haunt/${hauntId}/email-auth/initialize`, {
+            // No emails authorized yet - add this email directly
+            const addResponse = await fetch(`/api/haunt/${hauntId}/email-auth/add`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ email: email.toLowerCase() })
             });
             
-            if (initResponse.ok) {
+            if (addResponse.ok) {
               toast({
-                title: "Haunt Initialized",
-                description: `${email} has been set as the primary admin for this haunt.`,
+                title: "Email Authorized",
+                description: `${email} has been added as an authorized admin for this haunt.`,
               });
               // Continue with email link sending
             } else {
               toast({
-                title: "Initialization Failed",
-                description: "Unable to initialize haunt. Please try again.",
+                title: "Authorization Failed",
+                description: "Unable to authorize email. Please try again.",
                 variant: "destructive"
               });
               setIsLoading(false);
