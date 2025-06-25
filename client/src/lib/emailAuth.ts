@@ -23,18 +23,24 @@ export class EmailAuthService {
    */
   static async sendEmailLink(email: string, hauntId: string): Promise<EmailAuthResult> {
     try {
+      // Get the current domain for the redirect URL
+      const currentDomain = window.location.origin;
+      console.log('Current domain for email link:', currentDomain);
+      
       const actionCodeSettings = {
         // URL you want to redirect back to. The domain must be in the authorized domains list.
-        url: `${window.location.origin}/haunt-auth/${hauntId}`,
+        url: `${currentDomain}/haunt-auth/${hauntId}`,
         handleCodeInApp: true,
       };
 
+      console.log('Sending email link with settings:', actionCodeSettings);
       await sendSignInLinkToEmail(auth, email, actionCodeSettings);
       
       // Save email and hauntId to localStorage for completing sign-in
       localStorage.setItem('emailForSignIn', email);
       localStorage.setItem('hauntIdForSignIn', hauntId);
       
+      console.log('Email link sent successfully to:', email);
       return { success: true };
     } catch (error: any) {
       console.error('Failed to send email link:', error);

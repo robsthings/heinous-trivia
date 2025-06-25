@@ -162,6 +162,12 @@ export default function HauntAuth() {
               Click the link in your email to access your haunt admin dashboard. 
               The link will expire in 1 hour.
             </p>
+            <div className="bg-yellow-900/20 border border-yellow-600/30 rounded-lg p-3 mt-4">
+              <p className="text-yellow-200 text-sm">
+                <strong>Note:</strong> If the email link redirects to Firebase instead of this page, 
+                the Replit domain needs to be added to Firebase's authorized domains list.
+              </p>
+            </div>
             <div className="pt-4">
               <Button
                 onClick={() => {
