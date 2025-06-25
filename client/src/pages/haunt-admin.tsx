@@ -898,7 +898,7 @@ export default function HauntAdmin() {
         {/* Main Content Grid */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(1, minmax(0, 1fr))',
+          gridTemplateColumns: window.innerWidth >= 1280 ? 'repeat(2, minmax(0, 1fr))' : 'repeat(1, minmax(0, 1fr))',
           gap: '1.5rem'
         }}>
           
@@ -927,42 +927,92 @@ export default function HauntAdmin() {
               </CardHeader>
               <CardContent style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: window.innerWidth >= 640 ? 'repeat(3, minmax(0, 1fr))' : 'repeat(1, minmax(0, 1fr))',
+                  gap: '1rem'
+                }}>
                   <div>
-                    <Label htmlFor="primaryColor" className="text-white text-sm font-medium mb-2 block">Primary Color</Label>
+                    <Label htmlFor="primaryColor" style={{
+                      color: '#ffffff',
+                      fontSize: '0.875rem',
+                      fontWeight: '500',
+                      marginBottom: '0.5rem',
+                      display: 'block'
+                    }}>Primary Color</Label>
                     <Input
                       id="primaryColor"
                       type="color"
                       value={formData.primaryColor}
                       onChange={(e) => setFormData(prev => ({ ...prev, primaryColor: e.target.value }))}
-                      className="h-11 bg-gray-800 border-gray-600 cursor-pointer"
+                      style={{
+                        height: '2.75rem',
+                        background: '#1f2937',
+                        border: '1px solid #4b5563',
+                        cursor: 'pointer',
+                        width: '100%'
+                      }}
                     />
                   </div>
                   <div>
-                    <Label htmlFor="secondaryColor" className="text-white text-sm font-medium mb-2 block">Secondary Color</Label>
+                    <Label htmlFor="secondaryColor" style={{
+                      color: '#ffffff',
+                      fontSize: '0.875rem',
+                      fontWeight: '500',
+                      marginBottom: '0.5rem',
+                      display: 'block'
+                    }}>Secondary Color</Label>
                     <Input
                       id="secondaryColor"
                       type="color"
                       value={formData.secondaryColor}
                       onChange={(e) => setFormData(prev => ({ ...prev, secondaryColor: e.target.value }))}
-                      className="h-11 bg-gray-800 border-gray-600 cursor-pointer"
+                      style={{
+                        height: '2.75rem',
+                        background: '#1f2937',
+                        border: '1px solid #4b5563',
+                        cursor: 'pointer',
+                        width: '100%'
+                      }}
                     />
                   </div>
                   <div>
-                    <Label htmlFor="accentColor" className="text-white text-sm font-medium mb-2 block">Accent Color</Label>
+                    <Label htmlFor="accentColor" style={{
+                      color: '#ffffff',
+                      fontSize: '0.875rem',
+                      fontWeight: '500',
+                      marginBottom: '0.5rem',
+                      display: 'block'
+                    }}>Accent Color</Label>
                     <Input
                       id="accentColor"
                       type="color"
                       value={formData.accentColor}
                       onChange={(e) => setFormData(prev => ({ ...prev, accentColor: e.target.value }))}
-                      className="h-11 bg-gray-800 border-gray-600 cursor-pointer"
+                      style={{
+                        height: '2.75rem',
+                        background: '#1f2937',
+                        border: '1px solid #4b5563',
+                        cursor: 'pointer',
+                        width: '100%'
+                      }}
                     />
                   </div>
                 </div>
 
                 <div>
-                  <Label htmlFor="logoUpload" className="text-white text-sm font-medium mb-2 block">Logo Upload</Label>
-                  <p className="text-gray-400 text-xs mb-2">Recommended size: 600x300 PNG</p>
+                  <Label htmlFor="logoUpload" style={{
+                    color: '#ffffff',
+                    fontSize: '0.875rem',
+                    fontWeight: '500',
+                    marginBottom: '0.5rem',
+                    display: 'block'
+                  }}>Logo Upload</Label>
+                  <p style={{
+                    color: '#9ca3af',
+                    fontSize: '0.75rem',
+                    marginBottom: '0.5rem'
+                  }}>Recommended size: 600x300 PNG</p>
                   <Input
                     id="logoUpload"
                     type="file"
