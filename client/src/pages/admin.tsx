@@ -2561,27 +2561,31 @@ export default function Admin() {
                               <div className="flex flex-col gap-2 flex-1">
                                 <span className="text-white text-sm font-medium">{theme.name}</span>
                                 <div 
-                                  className="w-32 h-5 rounded-full shadow-lg"
+                                  className="w-32 h-5 rounded-full border border-gray-600 shadow-lg"
                                   style={{
-                                    background: theme.id === 'crimson' ? 'linear-gradient(to right, #dc2626, #f87171)' :
-                                               theme.id === 'blood' ? 'linear-gradient(to right, #991b1b, #dc2626)' :
-                                               theme.id === 'electric' ? 'linear-gradient(to right, #3b82f6, #22d3ee)' :
-                                               theme.id === 'toxic' ? 'linear-gradient(to right, #10b981, #84cc16)' :
-                                               theme.id === 'purple' ? 'linear-gradient(to right, #9333ea, #a855f7)' :
-                                               theme.id === 'orange' ? 'linear-gradient(to right, #ea580c, #fb923c)' :
-                                               theme.id === 'pink' ? 'linear-gradient(to right, #ec4899, #fb7185)' :
-                                               theme.id === 'gold' ? 'linear-gradient(to right, #eab308, #f59e0b)' :
-                                               'linear-gradient(to right, #dc2626, #f87171)',
-                                    boxShadow: theme.id === 'crimson' ? '0 0 20px rgba(220, 38, 38, 0.5)' :
-                                              theme.id === 'blood' ? '0 0 20px rgba(153, 27, 27, 0.5)' :
-                                              theme.id === 'electric' ? '0 0 20px rgba(59, 130, 246, 0.5)' :
-                                              theme.id === 'toxic' ? '0 0 20px rgba(16, 185, 129, 0.5)' :
-                                              theme.id === 'purple' ? '0 0 20px rgba(147, 51, 234, 0.5)' :
-                                              theme.id === 'orange' ? '0 0 20px rgba(234, 88, 12, 0.5)' :
-                                              theme.id === 'pink' ? '0 0 20px rgba(236, 72, 153, 0.5)' :
-                                              theme.id === 'gold' ? '0 0 20px rgba(234, 179, 8, 0.5)' :
-                                              '0 0 20px rgba(220, 38, 38, 0.5)',
-                                    animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+                                    background: `linear-gradient(90deg, ${
+                                      theme.id === 'crimson' ? '#dc2626, #f87171' :
+                                      theme.id === 'blood' ? '#991b1b, #dc2626' :
+                                      theme.id === 'electric' ? '#3b82f6, #22d3ee' :
+                                      theme.id === 'toxic' ? '#10b981, #84cc16' :
+                                      theme.id === 'purple' ? '#9333ea, #a855f7' :
+                                      theme.id === 'orange' ? '#ea580c, #fb923c' :
+                                      theme.id === 'pink' ? '#ec4899, #fb7185' :
+                                      theme.id === 'gold' ? '#eab308, #f59e0b' :
+                                      '#dc2626, #f87171'
+                                    })`,
+                                    boxShadow: `0 0 15px ${
+                                      theme.id === 'crimson' ? 'rgba(220, 38, 38, 0.5)' :
+                                      theme.id === 'blood' ? 'rgba(153, 27, 27, 0.5)' :
+                                      theme.id === 'electric' ? 'rgba(59, 130, 246, 0.5)' :
+                                      theme.id === 'toxic' ? 'rgba(16, 185, 129, 0.5)' :
+                                      theme.id === 'purple' ? 'rgba(147, 51, 234, 0.5)' :
+                                      theme.id === 'orange' ? 'rgba(234, 88, 12, 0.5)' :
+                                      theme.id === 'pink' ? 'rgba(236, 72, 153, 0.5)' :
+                                      theme.id === 'gold' ? 'rgba(234, 179, 8, 0.5)' :
+                                      'rgba(220, 38, 38, 0.5)'
+                                    }`,
+                                    animation: 'pulse 2s ease-in-out infinite'
                                   }}
                                 />
                               </div>
