@@ -16,6 +16,29 @@ To fix this issue, you need to add the Replit domain to Firebase's authorized do
    - `localhost` (for local development)
    - Any custom domains you plan to use
 
+## Troubleshooting Email Delivery Issues
+
+If emails are not being received, check these Firebase settings:
+
+### 1. Email/Password Authentication Enabled
+- Go to Firebase Console > Authentication > Sign-in method
+- Ensure "Email/Password" is enabled
+- Check that "Email link (passwordless sign-in)" is enabled
+
+### 2. Email Templates
+- Go to Firebase Console > Authentication > Templates
+- Verify the "Email address sign-in" template is configured
+- Check that the sender email is properly set
+
+### 3. Domain Configuration  
+- Ensure all domains are added to authorized domains list
+- Current domains should include: localhost, your-replit-domain.dev
+
+### 4. SMTP Configuration
+- Firebase uses its own SMTP for email delivery
+- No additional SMTP configuration should be needed
+- If emails still don't arrive, check spam/junk folders
+
 ## Current Email Link Flow
 
 The email link contains these parameters:
