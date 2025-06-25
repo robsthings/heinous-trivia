@@ -1971,6 +1971,54 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Send authentication link via email
+  app.post("/api/haunt/:hauntId/email-auth/send", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      const { email } = req.body;
+      
+      if (!email) {
+        return res.status(400).json({ error: "Email is required" });
+      }
+      
+      console.log(`Generating auth link for ${email} to access haunt ${hauntId}`);
+      
+      // Get haunt name for better messaging
+      const hauntConfig = await FirebaseService.getHauntConfig(hauntId);
+      const hauntName = hauntConfig?.name || hauntId;
+      
+      // Import Firebase admin functions for generating email links
+      const { getAuth } = require('firebase-admin/auth');
+      const adminAuth = getAuth();
+      
+      // Generate authentication link
+      const actionCodeSettings = {
+        url: `${req.get('origin') || 'http://localhost:5000'}/haunt-auth/${hauntId}?email=${encodeURIComponent(email)}`,
+        handleCodeInApp: true,
+      };
+      
+      const authLink = await adminAuth.generateSignInWithEmailLink(email, actionCodeSettings);
+      
+      console.log(`Generated Firebase auth link for ${email}: ${authLink.substring(0, 50)}...`);
+      
+      // Return the authentication link for the admin to share
+      res.json({ 
+        success: true, 
+        message: `Authentication link generated for ${email}`,
+        authLink: authLink,
+        hauntName: hauntName,
+        instructions: `Share this link with ${email} to grant them admin access to "${hauntName}". The link will authenticate them automatically when clicked.`
+      });
+      
+    } catch (error) {
+      console.error("Error generating auth link:", error);
+      res.status(500).json({ 
+        error: error.message || "Failed to generate authentication link",
+        details: "Check Firebase admin configuration and email format"
+      });
+    }
+  });
+
   // Uber admin routes
   app.get("/api/uber/haunts", async (req, res) => {
     try {

@@ -1306,10 +1306,19 @@ export default function Admin() {
         throw new Error(error.error || 'Failed to send authentication link');
       }
 
+      const result = await response.json();
+      
+      // Show success with the authentication link
+      const linkPreview = result.authLink ? result.authLink.substring(0, 60) + '...' : 'Generated successfully';
+      
       toast({
-        title: "Authentication Link Sent",
-        description: `Email sent to ${email} for "${hauntName}" admin access`,
+        title: "Authentication Link Generated",
+        description: `Link created for ${email} to access "${hauntName}". Copy the link from the console or server response.`,
       });
+      
+      // Log the full link for easy copying
+      console.log('Full Authentication Link:', result.authLink);
+      console.log('Instructions:', result.instructions);
     } catch (error) {
       console.error('Failed to send auth link:', error);
       toast({
