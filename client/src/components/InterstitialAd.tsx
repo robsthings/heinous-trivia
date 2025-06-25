@@ -96,7 +96,7 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
   // Check if we have a valid link
   const hasValidLink = currentAd.link && currentAd.link !== '#' && currentAd.link.startsWith('http');
 
-  // Transition Component with logo
+  // Transition Component with logo animation
   if (showTransition) {
     return (
       <div 
@@ -108,10 +108,59 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
             <img
               src={logoSrc}
               alt="Haunt Logo"
-              className="w-32 h-32 object-contain animate-logo-transition"
+              style={{
+                width: '8rem',
+                height: '8rem',
+                objectFit: 'contain',
+                animation: 'batman-logo-transition 1.8s ease-in-out'
+              }}
             />
-          ) : null}
+          ) : (
+            <div
+              style={{
+                width: '8rem',
+                height: '8rem',
+                backgroundColor: '#dc2626',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'white',
+                fontSize: '2rem',
+                fontWeight: 'bold',
+                animation: 'batman-logo-transition 1.8s ease-in-out'
+              }}
+            >
+              HT
+            </div>
+          )}
         </div>
+        
+        {/* CSS Animation for Batman-style logo transition */}
+        <style jsx>{`
+          @keyframes batman-logo-transition {
+            0% {
+              transform: scale(0.3) rotate(0deg);
+              opacity: 0;
+            }
+            25% {
+              transform: scale(1.2) rotate(180deg);
+              opacity: 1;
+            }
+            50% {
+              transform: scale(1) rotate(360deg);
+              opacity: 1;
+            }
+            75% {
+              transform: scale(1.3) rotate(540deg);
+              opacity: 1;
+            }
+            100% {
+              transform: scale(0.1) rotate(720deg);
+              opacity: 0;
+            }
+          }
+        `}</style>
       </div>
     );
   }
