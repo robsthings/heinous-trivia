@@ -2560,7 +2560,30 @@ export default function Admin() {
                             <div key={theme.id} className="flex items-center justify-between p-3 bg-gray-700 rounded">
                               <div className="flex flex-col gap-2 flex-1">
                                 <span className="text-white text-sm font-medium">{theme.name}</span>
-                                <div className={`w-24 h-4 bg-gradient-to-r ${theme.colors} rounded-full ${theme.shadow} shadow-lg animate-pulse`}></div>
+                                <div 
+                                  className="w-32 h-5 rounded-full shadow-lg"
+                                  style={{
+                                    background: theme.id === 'crimson' ? 'linear-gradient(to right, #dc2626, #f87171)' :
+                                               theme.id === 'blood' ? 'linear-gradient(to right, #991b1b, #dc2626)' :
+                                               theme.id === 'electric' ? 'linear-gradient(to right, #3b82f6, #22d3ee)' :
+                                               theme.id === 'toxic' ? 'linear-gradient(to right, #10b981, #84cc16)' :
+                                               theme.id === 'purple' ? 'linear-gradient(to right, #9333ea, #a855f7)' :
+                                               theme.id === 'orange' ? 'linear-gradient(to right, #ea580c, #fb923c)' :
+                                               theme.id === 'pink' ? 'linear-gradient(to right, #ec4899, #fb7185)' :
+                                               theme.id === 'gold' ? 'linear-gradient(to right, #eab308, #f59e0b)' :
+                                               'linear-gradient(to right, #dc2626, #f87171)',
+                                    boxShadow: theme.id === 'crimson' ? '0 0 20px rgba(220, 38, 38, 0.5)' :
+                                              theme.id === 'blood' ? '0 0 20px rgba(153, 27, 27, 0.5)' :
+                                              theme.id === 'electric' ? '0 0 20px rgba(59, 130, 246, 0.5)' :
+                                              theme.id === 'toxic' ? '0 0 20px rgba(16, 185, 129, 0.5)' :
+                                              theme.id === 'purple' ? '0 0 20px rgba(147, 51, 234, 0.5)' :
+                                              theme.id === 'orange' ? '0 0 20px rgba(234, 88, 12, 0.5)' :
+                                              theme.id === 'pink' ? '0 0 20px rgba(236, 72, 153, 0.5)' :
+                                              theme.id === 'gold' ? '0 0 20px rgba(234, 179, 8, 0.5)' :
+                                              '0 0 20px rgba(220, 38, 38, 0.5)',
+                                    animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+                                  }}
+                                />
                               </div>
                               <Button 
                                 size="sm" 
