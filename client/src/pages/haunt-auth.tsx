@@ -94,27 +94,13 @@ export default function HauntAuth() {
       const validation = await validateResponse.json();
       
       if (!validation.authorized) {
-        // Auto-authorize the email for easier setup
-        const addResponse = await fetch(`/api/haunt/${hauntId}/email-auth/add`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email: email.toLowerCase() })
-        });
-        
-        if (!addResponse.ok) {
-          toast({
-            title: "Authorization Failed",
-            description: `Unable to authorize ${email} for this haunt. Please try again.`,
-            variant: "destructive"
-          });
-          setIsLoading(false);
-          return;
-        }
-        
         toast({
-          title: "Email Authorized",
-          description: `${email} has been added to the authorized list for this haunt.`,
+          title: "Email Not Authorized",
+          description: `The email ${email} is not authorized to access this haunt. Contact the haunt owner to add your email to the authorized list.`,
+          variant: "destructive"
         });
+        setIsLoading(false);
+        return;
       }
       
       const result = await EmailAuthService.sendEmailLink(email, hauntId);
@@ -211,6 +197,12 @@ export default function HauntAuth() {
             <p className="text-gray-300 text-sm mt-2">
               Enter your authorized email to receive a secure authentication link
             </p>
+            <div className="bg-blue-900/20 border border-blue-600/30 rounded-lg p-3 mt-4">
+              <p className="text-blue-200 text-sm">
+                <strong>First Time Setup:</strong> To add your email to the authorized list, 
+                contact the system administrator or use the main admin panel.
+              </p>
+            </div>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSendEmailLink} className="space-y-6">
@@ -245,7 +237,7 @@ export default function HauntAuth() {
                   required
                 />
                 <p className="text-gray-400 text-xs mt-1">
-                  Enter your email address to get authorized access
+                  Only authorized emails can access this haunt's admin panel
                 </p>
               </div>
 
