@@ -13,6 +13,7 @@ import HauntAuth from "@/pages/haunt-auth";
 import Analytics from "@/pages/analytics";
 import AnalyticsTest from "@/pages/analytics-test";
 import AnalyticsSimple from "@/pages/analytics-simple";
+import AnalyticsProduction from "@/pages/analytics-production";
 import UberAdmin from "@/pages/uber-admin";
 import Privacy from "@/pages/privacy";
 import Terms from "@/pages/terms";
@@ -48,9 +49,10 @@ function Router() {
       <Route path="/admin" component={Admin} />
       <Route path="/haunt-auth/:hauntId" component={HauntAuth} />
       <Route path="/haunt-admin/:hauntId" component={HauntAdmin} />
-      <Route path="/analytics/:hauntId" component={Analytics} />
+      <Route path="/analytics/:hauntId" component={AnalyticsProduction} />
       <Route path="/analytics-test/:hauntId" component={AnalyticsTest} />
       <Route path="/analytics-simple/:hauntId" component={AnalyticsSimple} />
+      <Route path="/analytics-original/:hauntId" component={Analytics} />
       <Route path="/uber-admin" component={UberAdmin} />
       <Route path="/privacy" component={Privacy} />
       <Route path="/terms" component={Terms} />
