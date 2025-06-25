@@ -1123,7 +1123,14 @@ export default function Admin() {
   // Email Management Functions for Firebase Authentication
   const handleManageEmails = async (hauntId: string, hauntName: string) => {
     try {
+      console.log('Managing emails for haunt:', hauntId, hauntName);
       setIsLoading(true);
+      
+      // Show immediate feedback
+      toast({
+        title: "Loading Emails",
+        description: `Fetching authorized emails for ${hauntName}...`,
+      });
       
       // Fetch current authorized emails
       const response = await fetch(`/api/haunt/${hauntId}/email-auth/emails`, {
@@ -1132,33 +1139,74 @@ export default function Admin() {
         }
       });
 
+      console.log('Email fetch response:', response.status, response.ok);
+
       if (!response.ok) {
-        throw new Error('Failed to fetch authorized emails');
+        const errorText = await response.text();
+        console.error('Failed to fetch emails:', errorText);
+        throw new Error(`Failed to fetch authorized emails: ${response.status}`);
       }
 
       const data = await response.json();
+      console.log('Email data received:', data);
       const currentEmails = data.emails || [];
       
       const emailList = currentEmails.length > 0 
         ? `Current authorized emails:\n${currentEmails.map((email: string) => `• ${email}`).join('\n')}`
         : 'No authorized emails found.';
       
+      console.log('Showing email management dialog');
+      
+      // Test if prompt is working
+      const testPrompt = confirm(`Email management for "${hauntName}"\n\n${emailList}\n\nDo you want to continue?`);
+      console.log('Test prompt result:', testPrompt);
+      
+      if (!testPrompt) {
+        toast({
+          title: "Cancelled",
+          description: "Email management cancelled",
+        });
+        return;
+      }
+      
       const action = prompt(
         `Manage authorized emails for "${hauntName}"\n\n${emailList}\n\nChoose action:\n1. Add email\n2. Remove email\n3. Cancel\n\nEnter 1, 2, or 3:`
       );
       
+      console.log('User selected action:', action);
+      
       if (action === '1') {
         const newEmail = prompt('Enter email address to authorize:');
+        console.log('Adding email:', newEmail);
         if (newEmail && newEmail.includes('@')) {
           await addAuthorizedEmail(hauntId, newEmail, hauntName);
+        } else if (newEmail) {
+          toast({
+            title: "Invalid Email",
+            description: "Please enter a valid email address",
+            variant: "destructive"
+          });
         }
       } else if (action === '2' && currentEmails.length > 0) {
         const emailToRemove = prompt(
           `Enter email to remove:\n${currentEmails.map((email: string, i: number) => `${i + 1}. ${email}`).join('\n')}`
         );
+        console.log('Removing email:', emailToRemove);
         if (emailToRemove && currentEmails.includes(emailToRemove)) {
           await removeAuthorizedEmail(hauntId, emailToRemove, hauntName);
+        } else if (emailToRemove && !currentEmails.includes(emailToRemove)) {
+          toast({
+            title: "Email Not Found",
+            description: "The specified email is not in the authorized list",
+            variant: "destructive"
+          });
         }
+      } else if (action === '2' && currentEmails.length === 0) {
+        toast({
+          title: "No Emails to Remove",
+          description: "There are no authorized emails to remove",
+          variant: "destructive"
+        });
       }
       
     } catch (error) {
@@ -1552,9 +1600,20 @@ export default function Admin() {
                                       size="sm" 
                                       variant="outline"
                                       className="h-8 text-xs bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-white border-red-600 flex-1"
-                                      onClick={() => handleManageEmails(haunt.id, haunt.name)}
+                                      onClick={() => {
+                                        console.log('Manage Emails button clicked for:', haunt.id, haunt.name);
+                                        handleManageEmails(haunt.id, haunt.name).catch(error => {
+                                          console.error('Error in handleManageEmails:', error);
+                                          toast({
+                                            title: "Button Error",
+                                            description: "Failed to execute email management function",
+                                            variant: "destructive"
+                                          });
+                                        });
+                                      }}
+                                      disabled={isLoading}
                                     >
-                                      📧 Manage Emails
+                                      {isLoading ? "Loading..." : "📧 Manage Emails"}
                                     </Button>
                                   </div>
                                 </div>
@@ -1660,21 +1719,33 @@ export default function Admin() {
                                   </Button>
                                   
                                   <Button
-                                    onClick={() => handleManageEmails(haunt.id, haunt.name)}
+                                    onClick={() => {
+                                      console.log('Manage Emails button clicked (section 2) for:', haunt.id, haunt.name);
+                                      handleManageEmails(haunt.id, haunt.name).catch(error => {
+                                        console.error('Error in handleManageEmails (section 2):', error);
+                                      });
+                                    }}
                                     variant="outline"
                                     size="sm"
                                     className="w-full bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-white border-red-600"
+                                    disabled={isLoading}
                                   >
-                                    📧 Manage Emails
+                                    {isLoading ? "Loading..." : "📧 Manage Emails"}
                                   </Button>
                                   
                                   <Button
-                                    onClick={() => handleSendAuthLink(haunt.id, haunt.name)}
+                                    onClick={() => {
+                                      console.log('Send Auth Link button clicked for:', haunt.id, haunt.name);
+                                      handleSendAuthLink(haunt.id, haunt.name).catch(error => {
+                                        console.error('Error in handleSendAuthLink:', error);
+                                      });
+                                    }}
                                     variant="outline"
                                     size="sm"
                                     className="w-full bg-gradient-to-r from-blue-700 to-green-700 hover:from-blue-600 hover:to-green-600 text-white border-blue-600"
+                                    disabled={isLoading}
                                   >
-                                    🔗 Send Auth Link
+                                    {isLoading ? "Sending..." : "🔗 Send Auth Link"}
                                   </Button>
                                 </div>
 
