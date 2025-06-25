@@ -87,7 +87,17 @@ export function CustomProgressBar({ progress, hauntConfig, className = "" }: Cus
         </div>
         
         {/* Progress text overlay with enhanced readability */}
-        <div className="absolute inset-0   justify-center text-xs font-bold text-white drop-shadow-lg" style={{alignItems: "center"}} className="flex-center">
+        <div style={{
+          position: 'absolute',
+          top: 0, right: 0, bottom: 0, left: 0,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          fontSize: '0.75rem',
+          fontWeight: 'bold',
+          color: '#ffffff',
+          filter: 'drop-shadow(0 1px 2px rgb(0 0 0 / 0.1)) drop-shadow(0 1px 1px rgb(0 0 0 / 0.06))'
+        }}>
           {Math.round(progress)}%
         </div>
       </div>
@@ -101,7 +111,17 @@ export function CustomProgressBar({ progress, hauntConfig, className = "" }: Cus
         className="h-full bg-gradient-to-r from-red-600 to-orange-500 transition-all duration-300 ease-out rounded-full"
         style={{ width: `${Math.max(0, Math.min(100, progress))}%` }}
       />
-      <div className="absolute inset-0   justify-center text-xs font-bold text-white drop-shadow-lg" style={{alignItems: "center"}} className="flex-center">
+      <div style={{
+        position: 'absolute',
+        top: 0, right: 0, bottom: 0, left: 0,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        fontSize: '0.75rem',
+        fontWeight: 'bold',
+        color: '#ffffff',
+        filter: 'drop-shadow(0 1px 2px rgb(0 0 0 / 0.1)) drop-shadow(0 1px 1px rgb(0 0 0 / 0.06))'
+      }}>
         {Math.round(progress)}%
       </div>
     </div>

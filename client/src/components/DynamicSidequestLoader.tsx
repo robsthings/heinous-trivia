@@ -35,7 +35,11 @@ export function DynamicSidequestLoader({ sidequestId, className = "" }: DynamicS
 
   if (isLoading) {
     return (
-      <div className={`min-h-screen bg-black text-white ${className}`}>
+      <div style={{
+        minHeight: '100vh',
+        backgroundColor: '#000000',
+        color: '#ffffff'
+      }} className={className}>
         <SpookyLoader message="Loading sidequest from the supernatural realm..." />
       </div>
     );
@@ -43,11 +47,26 @@ export function DynamicSidequestLoader({ sidequestId, className = "" }: DynamicS
 
   if (error) {
     return (
-      <div className={`min-h-screen bg-black text-white flex items-center justify-center ${className}`}>
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-red-500 mb-4">Sidequest Unavailable</h1>
-          <p className="text-xl mb-4">The supernatural forces are blocking this quest</p>
-          <p className="text-gray-400">Error: {error.message}</p>
+      <div style={{
+        minHeight: '100vh',
+        backgroundColor: '#000000',
+        color: '#ffffff',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }} className={className}>
+        <div style={{ textAlign: 'center' }}>
+          <h1 style={{
+            fontSize: '2.25rem',
+            fontWeight: 'bold',
+            color: '#ef4444',
+            marginBottom: '1rem'
+          }}>Sidequest Unavailable</h1>
+          <p style={{
+            fontSize: '1.25rem',
+            marginBottom: '1rem'
+          }}>The supernatural forces are blocking this quest</p>
+          <p style={{ color: '#9ca3af' }}>Error: {error.message}</p>
         </div>
       </div>
     );

@@ -73,19 +73,63 @@ export function SpeechBubble({ messages, isVisible, className = "" }: SpeechBubb
   if (!isVisible || messages.length === 0) return null;
 
   return (
-    <div className={`relative ${className}`}>
+    <div style={{ position: 'relative' }} className={className}>
       {/* Speech bubble */}
-      <div className="relative  border-2 border-red-600 rounded-lg px-4 py-3 max-w-xs sm:max-w-sm md:max-w-md shadow-lg" style={{backgroundColor: "#111827"}}>
+      <div style={{
+        position: 'relative',
+        backgroundColor: "#111827",
+        border: '2px solid #dc2626',
+        borderRadius: '0.5rem',
+        padding: '0.75rem 1rem',
+        maxWidth: 'clamp(20rem, 50vw, 28rem)',
+        boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+      }}>
         {/* Bubble content */}
-        <div className="text-red-400 text-sm sm:text-base font-semibold min-h-[1.5em]  " style={{alignItems: "center"}} className="flex-center">
+        <div style={{
+          color: '#f87171',
+          fontSize: 'clamp(0.875rem, 2vw, 1rem)',
+          fontWeight: '600',
+          minHeight: '1.5em',
+          display: 'flex',
+          alignItems: 'center'
+        }}>
           {displayedText}
-          <span className={`inline-block w-0.5 h-4 bg-red-400 ml-1 ${showCursor ? 'opacity-100' : 'opacity-0'} transition-opacity duration-100`} />
+          <span style={{
+            display: 'inline-block',
+            width: '2px',
+            height: '1rem',
+            backgroundColor: '#f87171',
+            marginLeft: '0.25rem',
+            opacity: showCursor ? 1 : 0,
+            transition: 'opacity 0.1s ease'
+          }} />
         </div>
         
         {/* Speech bubble tail pointing down */}
-        <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2">
-          <div className="w-0 h-0 border-l-[8px] border-r-[8px] border-t-[8px] border-l-transparent border-r-transparent border-t-red-600"></div>
-          <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-gray-900"></div>
+        <div style={{
+          position: 'absolute',
+          bottom: '-8px',
+          left: '50%',
+          transform: 'translateX(-50%)'
+        }}>
+          <div style={{
+            width: 0,
+            height: 0,
+            borderLeft: '8px solid transparent',
+            borderRight: '8px solid transparent',
+            borderTop: '8px solid #dc2626'
+          }}></div>
+          <div style={{
+            position: 'absolute',
+            top: '-4px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: 0,
+            height: 0,
+            borderLeft: '6px solid transparent',
+            borderRight: '6px solid transparent',
+            borderTop: '6px solid #111827'
+          }}></div>
         </div>
       </div>
     </div>
