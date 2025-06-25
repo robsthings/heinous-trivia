@@ -9,6 +9,7 @@ import type { Express } from "express";
 import express from "express";
 import { createServer, type Server } from "http";
 import { FirebaseService, firestore, FieldValue } from "./firebase";
+import { ServerEmailAuthService } from "./emailAuth";
 import { hauntConfigSchema, leaderboardEntrySchema } from "@shared/schema";
 import path from "path";
 import multer from "multer";

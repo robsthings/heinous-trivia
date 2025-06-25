@@ -29,7 +29,8 @@ export const hauntConfigs = pgTable("haunt_configs", {
   tier: text("tier").notNull(),
   isActive: boolean("is_active").notNull().default(true),
   isPublished: boolean("is_published").notNull().default(true),
-  authCode: text("auth_code"),
+  authCode: text("auth_code"), // Legacy: keep for backward compatibility
+  authorizedEmails: text("authorized_emails").array(), // New: array of authorized admin emails
   themeData: text("theme_data").notNull(),
   skinUrl: text("skin_url"), // Pro/Premium only: custom background image
   progressBarTheme: text("progress_bar_theme"), // Pro/Premium only: progress bar color theme
@@ -161,7 +162,8 @@ export const hauntConfigSchema = z.object({
   tier: z.enum(["basic", "pro", "premium"]),
   isActive: z.boolean().default(true),
   isPublished: z.boolean().default(true),
-  authCode: z.string().optional(),
+  authCode: z.string().optional(), // Legacy: keep for backward compatibility
+  authorizedEmails: z.array(z.string().email()).optional(), // New: authorized admin emails
   theme: z.object({
     primaryColor: z.string(),
     secondaryColor: z.string(),

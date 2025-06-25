@@ -224,16 +224,11 @@ export default function HauntAdmin() {
 
         const data = await response.json() as HauntConfig;
         
-        // Check if this is first-time setup
-        if (!data.authCode) {
-          setIsFirstTimeSetup(true);
-          setIsLoading(false);
-          return;
-        }
-
-        // Check for access code in localStorage
-        const savedCode = localStorage.getItem(`heinous-admin-${hauntId}`);
-        if (savedCode === data.authCode) {
+        // Import EmailAuthService dynamically to avoid circular dependencies
+        const { EmailAuthService } = await import('@/lib/emailAuth');
+        
+        // Check if user is authenticated via email link
+        if (EmailAuthService.isAuthenticated(hauntId)) {
           setIsAuthenticated(true);
           setHauntConfig(data);
           setFormData({
@@ -245,8 +240,30 @@ export default function HauntAdmin() {
             accentColor: data.theme?.accentColor || "#FF6B35"
           });
         } else {
-          // Redirect to auth page
-          setLocation(`/haunt-auth/${hauntId}`);
+          // Check legacy access code system as fallback
+          const savedCode = localStorage.getItem(`heinous-admin-${hauntId}`);
+          if (data.authCode && savedCode === data.authCode) {
+            setIsAuthenticated(true);
+            setHauntConfig(data);
+            setFormData({
+              mode: data.mode || "individual",
+              triviaFile: data.triviaFile || "",
+              adFile: data.adFile || "",
+              primaryColor: data.theme?.primaryColor || "#8B0000",
+              secondaryColor: data.theme?.secondaryColor || "#2D1B69",
+              accentColor: data.theme?.accentColor || "#FF6B35"
+            });
+          } else {
+            // Check if this is first-time setup (no auth method configured)
+            if (!data.authCode && (!data.authorizedEmails || data.authorizedEmails.length === 0)) {
+              setIsFirstTimeSetup(true);
+              setIsLoading(false);
+              return;
+            }
+            
+            // Redirect to auth page
+            setLocation(`/haunt-auth/${hauntId}`);
+          }
         }
       } catch (error) {
         console.error('Authentication check failed:', error);
