@@ -52,8 +52,47 @@ export default function Info() {
     <div style={{
       minHeight: '100vh',
       backgroundColor: '#000000',
-      color: '#ffffff'
+      color: '#ffffff',
+      position: 'relative'
     }}>
+      {/* Close Button */}
+      <button
+        onClick={() => window.close()}
+        style={{
+          position: 'fixed',
+          top: '1rem',
+          right: '1rem',
+          width: '2.5rem',
+          height: '2.5rem',
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          border: '2px solid #dc2626',
+          borderRadius: '50%',
+          color: '#dc2626',
+          fontSize: '1.25rem',
+          fontWeight: 'bold',
+          cursor: 'pointer',
+          zIndex: 1000,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          transition: 'all 0.2s ease',
+          backdropFilter: 'blur(8px)'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.backgroundColor = '#dc2626';
+          e.currentTarget.style.color = 'white';
+          e.currentTarget.style.transform = 'scale(1.1)';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+          e.currentTarget.style.color = '#dc2626';
+          e.currentTarget.style.transform = 'scale(1)';
+        }}
+        title="Close window"
+      >
+        ×
+      </button>
+      
       {/* Hero Section */}
       <div style={{
         position: 'relative',
