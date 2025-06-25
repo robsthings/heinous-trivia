@@ -101,8 +101,8 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
       borderRadius: '12px',
       boxShadow: '0 0 12px rgba(255, 0, 50, 0.1)',
       backdropFilter: 'blur(6px)',
-      padding: '32px',
-      marginTop: '16px',
+      padding: 'clamp(16px, 4vw, 32px)',
+      marginTop: 'clamp(8px, 2vw, 16px)',
       position: 'relative'
     }}>
       {/* Haunt Logo Watermark */}
@@ -130,11 +130,11 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
       <div style={{ textAlign: 'center', marginBottom: '32px' }}>
         <h2 style={{ 
           color: '#ffffff', 
-          fontSize: '1.25rem', 
+          fontSize: 'clamp(1rem, 3vw, 1.5rem)', 
           fontWeight: '500', 
           lineHeight: '1.4', 
-          marginBottom: '16px',
-          marginTop: '1.5rem',
+          marginBottom: 'clamp(12px, 2vw, 16px)',
+          marginTop: 'clamp(12px, 3vw, 24px)',
           fontFamily: isDeSpookified ? 'Arial, sans-serif' : '"Creepster", cursive',
           textTransform: isDeSpookified ? 'none' : 'uppercase',
           letterSpacing: isDeSpookified ? 'normal' : '0.03em'
@@ -165,7 +165,7 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
         {currentQuestion.answers?.map((answer, index) => {
           let buttonStyle = {
             width: '100%',
-            padding: '16px',
+            padding: 'clamp(12px, 2.5vw, 16px)',
             borderRadius: '8px',
             textAlign: 'left' as const,
             fontWeight: '500',

@@ -54,7 +54,7 @@ export function Footer({ showInstallButton = false }: FooterProps) {
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
           {showInstallButton && <PWAInstallButton />}
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ color: '#9ca3af', fontSize: '14px' }}>DeSpookify Mode:</span>
+            <span style={{ color: '#9ca3af', fontSize: 'clamp(12px, 2vw, 14px)' }}>DeSpookify Mode:</span>
             <button
               onClick={toggleDeSpookify}
               style={{
@@ -87,7 +87,7 @@ export function Footer({ showInstallButton = false }: FooterProps) {
           </div>
           <a 
             href="https://heinoustrivia.com/privacy" 
-            style={{ color: '#9ca3af', fontSize: '14px', textDecoration: 'none' }}
+            style={{ color: '#9ca3af', fontSize: 'clamp(12px, 2vw, 14px)', textDecoration: 'none' }}
             target="_blank"
             rel="noopener noreferrer"
             onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'}
@@ -98,7 +98,7 @@ export function Footer({ showInstallButton = false }: FooterProps) {
           <span style={{ color: '#6b7280', fontSize: '12px' }}>|</span>
           <a 
             href="https://heinoustrivia.com/terms" 
-            style={{ color: '#9ca3af', fontSize: '14px', textDecoration: 'none' }}
+            style={{ color: '#9ca3af', fontSize: 'clamp(12px, 2vw, 14px)', textDecoration: 'none' }}
             target="_blank"
             rel="noopener noreferrer"
             onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'}
@@ -107,7 +107,7 @@ export function Footer({ showInstallButton = false }: FooterProps) {
             Terms of Use
           </a>
         </div>
-        <div style={{ color: '#6b7280', fontSize: '12px' }}>
+        <div style={{ color: '#6b7280', fontSize: 'clamp(10px, 1.5vw, 12px)' }}>
           © 2025 Heinous Trivia. All rights reserved.
         </div>
       </div>

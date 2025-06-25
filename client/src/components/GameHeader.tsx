@@ -54,9 +54,9 @@ export function GameHeader({ gameState, isGroupMode = false, groupScore = 0 }: G
       border: '1px solid rgba(75, 85, 99, 0.5)',
       borderBottom: '2px solid #7f1d1d',
       boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 2px 4px rgba(255, 0, 0, 0.2)',
-      margin: '16px',
-      marginTop: '16px',
-      padding: '16px',
+      margin: 'clamp(8px, 2vw, 16px)',
+      marginTop: 'clamp(8px, 2vw, 16px)',
+      padding: 'clamp(12px, 2.5vw, 16px)',
       borderRadius: '12px',
       position: 'relative',
       overflow: 'hidden'
@@ -79,7 +79,7 @@ export function GameHeader({ gameState, isGroupMode = false, groupScore = 0 }: G
           <div style={{ minWidth: 0, flex: 1 }}>
             <h1 style={{
               color: '#ff5500',
-              fontSize: '20px',
+              fontSize: 'clamp(16px, 3vw, 20px)',
               fontWeight: '600',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
@@ -90,18 +90,18 @@ export function GameHeader({ gameState, isGroupMode = false, groupScore = 0 }: G
             }}>
               {hauntConfig?.name || 'Loading...'}
             </h1>
-            <p style={{ color: '#9ca3af', fontSize: '14px' }}>Horror Trivia Challenge</p>
+            <p style={{ color: '#9ca3af', fontSize: 'clamp(12px, 2vw, 14px)' }}>Horror Trivia Challenge</p>
           </div>
         </div>
         <div style={{ textAlign: 'right', flexShrink: 0, marginLeft: '8px' }}>
           <div style={{
-            fontSize: '24px',
+            fontSize: 'clamp(20px, 4vw, 24px)',
             fontWeight: 'bold',
             color: '#ffffff'
           }}>
             {isGroupMode ? groupScore : score}
           </div>
-          <div style={{ fontSize: '14px', color: '#9ca3af' }}>Score</div>
+          <div style={{ fontSize: 'clamp(12px, 2vw, 14px)', color: '#9ca3af' }}>Score</div>
         </div>
       </div>
 
@@ -109,9 +109,9 @@ export function GameHeader({ gameState, isGroupMode = false, groupScore = 0 }: G
         <div style={{
           display: 'flex',
           justifyContent: 'space-between',
-          fontSize: '14px',
+          fontSize: 'clamp(12px, 2vw, 14px)',
           color: '#d1d5db',
-          marginBottom: '8px'
+          marginBottom: 'clamp(6px, 1vw, 8px)'
         }}>
           <span style={{
             overflow: 'hidden',
