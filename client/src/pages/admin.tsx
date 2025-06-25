@@ -1558,26 +1558,69 @@ export default function Admin() {
                   </CardHeader>
                   <CardContent>
                     {allHaunts.length === 0 ? (
-                      <div className=" py-8" style={{textAlign: "center"}}>
-                        <p className="text-gray-400">No haunts found. Create your first haunt below!</p>
+                      <div style={{
+                        padding: '2rem 0',
+                        textAlign: 'center'
+                      }}>
+                        <p style={{ color: '#9ca3af' }}>No haunts found. Create your first haunt below!</p>
                       </div>
                     ) : (
-                      <div className="grid gap-4">
+                      <div style={{
+                        display: 'grid',
+                        gap: '1rem'
+                      }}>
                         {allHaunts.map((haunt) => (
-                          <Card key={haunt.id} className="bg-gray-800/30 border-gray-600 hover:bg-gray-800/50 transition-colors">
-                            <CardContent className="p-6">
-                              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                          <Card key={haunt.id} style={{
+                            background: 'rgba(31, 41, 55, 0.3)',
+                            border: '1px solid #4b5563',
+                            transition: 'background-color 0.2s',
+                            borderRadius: '0.5rem'
+                          }}>
+                            <CardContent style={{ padding: '1.5rem' }}>
+                              <div style={{
+                                display: 'flex',
+                                flexDirection: window.innerWidth >= 1024 ? 'row' : 'column',
+                                alignItems: window.innerWidth >= 1024 ? 'center' : 'stretch',
+                                justifyContent: 'space-between',
+                                gap: '1rem'
+                              }}>
                                 
                                 {/* Haunt Info */}
-                                <div className="flex-1">
-                                  <div className="flex items-center gap-3 mb-3">
-                                    <h3 className="text-white font-bold text-xl">{haunt.name}</h3>
-                                    <Badge className={`flex items-center gap-1 px-3 py-1 ${getTierColor(haunt.tier)}`}>
+                                <div style={{ flex: 1 }}>
+                                  <div style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '0.75rem',
+                                    marginBottom: '0.75rem'
+                                  }}>
+                                    <h3 style={{
+                                      color: '#ffffff',
+                                      fontWeight: 'bold',
+                                      fontSize: '1.25rem'
+                                    }}>{haunt.name}</h3>
+                                    <Badge style={{
+                                      display: 'flex',
+                                      alignItems: 'center',
+                                      gap: '0.25rem',
+                                      padding: '0.25rem 0.75rem',
+                                      background: haunt.tier === 'premium' ? 'linear-gradient(to right, #9333ea, #ec4899)' :
+                                                haunt.tier === 'pro' ? 'linear-gradient(to right, #2563eb, #06b6d4)' :
+                                                'rgba(75, 85, 99, 0.5)',
+                                      color: '#ffffff',
+                                      border: 'none',
+                                      borderRadius: '0.375rem',
+                                      fontSize: '0.75rem'
+                                    }}>
                                       {getTierIcon(haunt.tier)}
                                       {haunt.tier?.toUpperCase()}
                                     </Badge>
                                   </div>
-                                  <p className="text-gray-300 text-sm mb-4 leading-relaxed">{haunt.description || 'No description available'}</p>
+                                  <p style={{
+                                    color: '#d1d5db',
+                                    fontSize: '0.875rem',
+                                    marginBottom: '1rem',
+                                    lineHeight: '1.5'
+                                  }}>{haunt.description || 'No description available'}</p>
                                 
                                 {/* Quick Links */}
                                 <div className="space-y-2">
@@ -1674,45 +1717,87 @@ export default function Admin() {
                               </div>
 
                               {/* Subscription Controls */}
-                              <div className="flex flex-col gap-3 lg:w-64">
+                              <div style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: '0.75rem',
+                                width: window.innerWidth >= 1024 ? '16rem' : '100%'
+                              }}>
                                 
                                 {/* Active Toggle */}
-                                <div className="flex items-center justify-between bg-gray-800/80 p-3 rounded border border-gray-600">
-                                  <Label className="text-white text-sm font-medium">Active</Label>
-                                  <div className="relative">
+                                <div style={{
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'space-between',
+                                  background: 'rgba(31, 41, 55, 0.8)',
+                                  padding: '0.75rem',
+                                  borderRadius: '0.375rem',
+                                  border: '1px solid #4b5563'
+                                }}>
+                                  <Label style={{
+                                    color: '#ffffff',
+                                    fontSize: '0.875rem',
+                                    fontWeight: '500'
+                                  }}>Active</Label>
+                                  <div style={{ position: 'relative' }}>
                                     <Switch
                                       checked={haunt.isActive !== false}
                                       onCheckedChange={(checked) => 
                                         updateHauntSubscription(haunt.id, { isActive: checked })
                                       }
-                                      className="data-[state=checked]:bg-green-600 data-[state=unchecked]:bg-gray-500"
                                     />
-                                    <span className="ml-2 text-xs text-gray-300">
+                                    <span style={{
+                                      marginLeft: '0.5rem',
+                                      fontSize: '0.75rem',
+                                      color: '#d1d5db'
+                                    }}>
                                       {haunt.isActive !== false ? 'ON' : 'OFF'}
                                     </span>
                                   </div>
                                 </div>
 
                                 {/* Published Toggle */}
-                                <div className="flex items-center justify-between bg-gray-800/80 p-3 rounded border border-gray-600">
-                                  <Label className="text-white text-sm font-medium">Published</Label>
-                                  <div className="relative">
+                                <div style={{
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'space-between',
+                                  background: 'rgba(31, 41, 55, 0.8)',
+                                  padding: '0.75rem',
+                                  borderRadius: '0.375rem',
+                                  border: '1px solid #4b5563'
+                                }}>
+                                  <Label style={{
+                                    color: '#ffffff',
+                                    fontSize: '0.875rem',
+                                    fontWeight: '500'
+                                  }}>Published</Label>
+                                  <div style={{ position: 'relative' }}>
                                     <Switch
                                       checked={haunt.isPublished !== false}
                                       onCheckedChange={(checked) => 
                                         updateHauntSubscription(haunt.id, { isPublished: checked })
                                       }
-                                      className="data-[state=checked]:bg-blue-600 data-[state=unchecked]:bg-gray-500"
                                     />
-                                    <span className="ml-2 text-xs text-gray-300">
+                                    <span style={{
+                                      marginLeft: '0.5rem',
+                                      fontSize: '0.75rem',
+                                      color: '#d1d5db'
+                                    }}>
                                       {haunt.isPublished !== false ? 'ON' : 'OFF'}
                                     </span>
                                   </div>
                                 </div>
 
                                 {/* Tier Selection */}
-                                <div className="space-y-1">
-                                  <Label className="text-white text-sm">Subscription Tier</Label>
+                                <div style={{
+                                  display: 'flex',
+                                  flexDirection: 'column',
+                                  gap: '0.25rem'
+                                }}>
+                                  <Label style={{
+                                    color: '#ffffff',
+                                    fontSize: '0.875rem'
+                                  }}>Subscription Tier</Label>
                                   <SimpleSelect 
                                     value={haunt.tier} 
                                     onValueChange={(value) => 
