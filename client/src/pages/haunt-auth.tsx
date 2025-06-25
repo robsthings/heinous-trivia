@@ -162,10 +162,10 @@ export default function HauntAuth() {
               Click the link in your email to access your haunt admin dashboard. 
               The link will expire in 1 hour.
             </p>
-            <div className="bg-yellow-900/20 border border-yellow-600/30 rounded-lg p-3 mt-4">
-              <p className="text-yellow-200 text-sm">
-                <strong>Note:</strong> If the email link redirects to Firebase instead of this page, 
-                the Replit domain needs to be added to Firebase's authorized domains list.
+            <div className="bg-green-900/20 border border-green-600/30 rounded-lg p-3 mt-4">
+              <p className="text-green-200 text-sm">
+                <strong>Ready:</strong> Your domain is configured in Firebase. 
+                The email link should redirect properly to complete authentication.
               </p>
             </div>
             <div className="pt-4">
@@ -195,7 +195,7 @@ export default function HauntAuth() {
               🎃 Haunt Admin Access
             </CardTitle>
             <p className="text-gray-300 text-sm mt-2">
-              Enter your email to receive a secure authentication link
+              Enter your authorized email to receive a secure authentication link
             </p>
           </CardHeader>
           <CardContent>
@@ -231,7 +231,7 @@ export default function HauntAuth() {
                   required
                 />
                 <p className="text-gray-400 text-xs mt-1">
-                  Enter the email address authorized for this haunt
+                  Use: admin@heinoustrivia.com (authorized for testing)
                 </p>
               </div>
 
