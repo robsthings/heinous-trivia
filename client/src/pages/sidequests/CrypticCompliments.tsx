@@ -112,21 +112,49 @@ export function CrypticCompliments() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-900 via-black to-purple-900 flex flex-col  justify-center p-4 relative overflow-hidden" style={{alignItems: "center"}}>
+    <div style={{
+      minHeight: '100vh',
+      background: 'linear-gradient(to bottom, #581c87, #000000, #581c87)',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '1rem',
+      position: 'relative',
+      overflow: 'hidden'
+    }}>
       {/* Background */}
       <div 
-        className="absolute inset-0 bg-cover bg-center opacity-30"
         style={{
-          backgroundImage: "url('/sidequests/cryptic-compliments/compliments-bg.png')"
+          position: 'absolute',
+          top: 0, right: 0, bottom: 0, left: 0,
+          backgroundImage: "url('/sidequests/cryptic-compliments/compliments-bg.png')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          opacity: 0.3
         }}
       />
 
       {/* Content */}
-      <div className="relative z-10 w-full max-w-4xl mx-auto " style={{textAlign: "center"}}>
+      <div style={{
+        position: 'relative',
+        zIndex: 10,
+        width: '100%',
+        maxWidth: '56rem',
+        margin: '0 auto',
+        textAlign: 'center'
+      }}>
         {phase === "intro" && (
-          <div className="animate-scale-in">
+          <div style={{
+            animation: 'scale-in 0.5s ease-out'
+          }}>
             {/* Title */}
-            <h1 className="text-4xl font-nosifer text-purple-200 mb-8">CRYPTIC COMPLIMENTS</h1>
+            <h1 style={{
+              fontSize: '2.25rem',
+              fontFamily: '"Nosifer", cursive',
+              color: '#e9d5ff',
+              marginBottom: '2rem'
+            }}>CRYPTIC COMPLIMENTS</h1>
             
             {/* Dr. Heinous with Gift */}
             <div className="mb-8">

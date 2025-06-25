@@ -333,19 +333,64 @@ export function FaceTheChupacabra() {
                   className="w-32 h-32 mx-auto animate-bounce"
                 />
               </div>
-              <p className="text-xl text-gray-200 " className="mb-6">
+              <p style={{
+                fontSize: '1.25rem',
+                color: '#e5e7eb',
+                marginBottom: '1.5rem'
+              }}>
                 The Chupacabra has defeated you! You remain trapped...
               </p>
-              <div className="space-y-4">
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '1rem'
+              }}>
                 <button
                   onClick={resetGame}
-                  className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition-all hover:scale-105 shadow-lg"
+                  style={{
+                    backgroundColor: '#dc2626',
+                    color: '#ffffff',
+                    fontWeight: 'bold',
+                    padding: '0.75rem 1.5rem',
+                    borderRadius: '0.5rem',
+                    border: 'none',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = '#b91c1c';
+                    e.currentTarget.style.transform = 'scale(1.05)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = '#dc2626';
+                    e.currentTarget.style.transform = 'scale(1)';
+                  }}
                 >
                   Try Again
                 </button>
                 <Link
                   href="/game/headquarters"
-                  className="block bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg transition-all hover:scale-105 shadow-lg"
+                  style={{
+                    display: 'block',
+                    backgroundColor: '#4b5563',
+                    color: '#ffffff',
+                    fontWeight: 'bold',
+                    padding: '0.75rem 1.5rem',
+                    borderRadius: '0.5rem',
+                    textDecoration: 'none',
+                    textAlign: 'center',
+                    transition: 'all 0.2s ease',
+                    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = '#374151';
+                    e.currentTarget.style.transform = 'scale(1.05)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = '#4b5563';
+                    e.currentTarget.style.transform = 'scale(1)';
+                  }}
                 >
                   Return to Main Game
                 </Link>
