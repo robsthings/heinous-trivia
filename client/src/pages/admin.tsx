@@ -2543,10 +2543,26 @@ export default function Admin() {
                     {/* Progress Bar Color Themes Section - Moved outside grid */}
                     <div className="space-y-4">
                       <h3 className="text-lg font-semibold text-white">Progress Bar Color Themes</h3>
-                      <div className="p-4 bg-gray-800 rounded-lg">
-                        <h4 className="text-white font-medium mb-3">Available Color Themes</h4>
-                        <p className="text-gray-400 text-xs mb-4">Select glowing color themes that complement your custom backgrounds</p>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                      <div style={{
+                        padding: '16px',
+                        backgroundColor: '#1f2937',
+                        borderRadius: '8px'
+                      }}>
+                        <h4 style={{
+                          color: 'white',
+                          fontWeight: '500',
+                          marginBottom: '12px'
+                        }}>Available Color Themes</h4>
+                        <p style={{
+                          color: '#9ca3af',
+                          fontSize: '12px',
+                          marginBottom: '16px'
+                        }}>Select glowing color themes that complement your custom backgrounds</p>
+                        <div style={{
+                          display: 'grid',
+                          gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                          gap: '12px'
+                        }}>
                           {[
                             { id: 'crimson', name: 'Crimson Glow', colors: 'from-red-600 to-red-400', shadow: 'shadow-red-500/50' },
                             { id: 'blood', name: 'Blood Red', colors: 'from-red-800 to-red-600', shadow: 'shadow-red-600/50' },
@@ -2557,14 +2573,46 @@ export default function Admin() {
                             { id: 'pink', name: 'Neon Pink', colors: 'from-pink-500 to-rose-400', shadow: 'shadow-pink-500/50' },
                             { id: 'gold', name: 'Golden Glow', colors: 'from-yellow-500 to-amber-400', shadow: 'shadow-yellow-500/50' }
                           ].map((theme) => (
-                            <div key={theme.id} className="flex items-center justify-between p-3 bg-gray-700 rounded">
-                              <div className="flex items-center gap-3 flex-1">
-                                <div className="flex flex-col gap-1">
-                                  <span className="text-white text-sm font-medium">{theme.name}</span>
-                                  <div className="w-32 h-4 rounded-full bg-gray-600 overflow-hidden border border-gray-500">
+                            <div key={theme.id} style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'space-between',
+                              padding: '12px',
+                              backgroundColor: '#374151',
+                              borderRadius: '6px',
+                              marginBottom: '8px'
+                            }}>
+                              <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '12px',
+                                flex: '1'
+                              }}>
+                                <div style={{
+                                  display: 'flex',
+                                  flexDirection: 'column',
+                                  gap: '4px'
+                                }}>
+                                  <span style={{
+                                    color: 'white',
+                                    fontSize: '14px',
+                                    fontWeight: '500'
+                                  }}>{theme.name}</span>
+                                  <div 
+                                    style={{
+                                      width: '128px',
+                                      height: '16px',
+                                      borderRadius: '9999px',
+                                      backgroundColor: '#4b5563',
+                                      overflow: 'hidden',
+                                      border: '1px solid #6b7280'
+                                    }}
+                                  >
                                     <div 
-                                      className="w-full h-full rounded-full"
                                       style={{
+                                        width: '100%',
+                                        height: '100%',
+                                        borderRadius: '9999px',
                                         background: theme.id === 'crimson' ? 'linear-gradient(90deg, #dc2626, #f87171)' :
                                                    theme.id === 'blood' ? 'linear-gradient(90deg, #991b1b, #dc2626)' :
                                                    theme.id === 'electric' ? 'linear-gradient(90deg, #3b82f6, #22d3ee)' :
@@ -2591,10 +2639,28 @@ export default function Admin() {
                                   </div>
                                 </div>
                               </div>
-                              <Button 
-                                size="sm" 
-                                variant="outline"
-                                className="bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-white border-red-600"
+                              <button 
+                                style={{
+                                  padding: '8px 16px',
+                                  fontSize: '14px',
+                                  background: 'linear-gradient(to right, #b91c1c, #7e22ce)',
+                                  color: 'white',
+                                  border: '1px solid #dc2626',
+                                  borderRadius: '6px',
+                                  cursor: isLoading ? 'not-allowed' : 'pointer',
+                                  opacity: isLoading ? 0.6 : 1,
+                                  transition: 'all 0.2s ease'
+                                }}
+                                onMouseEnter={(e) => {
+                                  if (!isLoading) {
+                                    e.target.style.background = 'linear-gradient(to right, #dc2626, #9333ea)';
+                                  }
+                                }}
+                                onMouseLeave={(e) => {
+                                  if (!isLoading) {
+                                    e.target.style.background = 'linear-gradient(to right, #b91c1c, #7e22ce)';
+                                  }
+                                }}
                                 onClick={() => {
                                   if (selectedHauntForBranding) {
                                     assignBrandingToHaunt(selectedHauntForBranding, undefined, theme.id);
@@ -2609,7 +2675,7 @@ export default function Admin() {
                                 disabled={isLoading}
                               >
                                 Assign
-                              </Button>
+                              </button>
                             </div>
                           ))}
                         </div>
