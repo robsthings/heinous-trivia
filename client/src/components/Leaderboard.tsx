@@ -106,7 +106,11 @@ export function Leaderboard({ isVisible, leaderboard, onClose, hauntId, currentP
           overflowY: 'auto'
         }}>
           {isLoading ? (
-            <div className=" text-gray-400 py-6 sm:py-8" className="text-center">
+            <div style={{
+              color: '#9ca3af',
+              padding: 'clamp(1.5rem, 6vw, 2rem) 0',
+              textAlign: 'center'
+            }}>
               <div style={{
                 position: 'relative',
                 margin: '0 auto',
@@ -115,47 +119,155 @@ export function Leaderboard({ isVisible, leaderboard, onClose, hauntId, currentP
                 height: 'clamp(3rem, 8vw, 4rem)'
               }}>
                 {/* Spinning skull animation */}
-                <div className="absolute inset-0 animate-spin">
-                  <div className="w-12 h-12 sm:w-16 sm:h-16 text-orange-500 text-2xl sm:text-4xl   justify-center" style={{alignItems: "center"}} style={{display: "flex"}}>💀</div>
+                <div style={{
+                  position: 'absolute',
+                  top: 0, right: 0, bottom: 0, left: 0,
+                  animation: 'spin 1s linear infinite'
+                }}>
+                  <div style={{
+                    width: 'clamp(3rem, 8vw, 4rem)',
+                    height: 'clamp(3rem, 8vw, 4rem)',
+                    color: '#f97316',
+                    fontSize: 'clamp(1.5rem, 6vw, 2.25rem)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>💀</div>
                 </div>
                 {/* Pulsing aura effect */}
-                <div className="absolute inset-0 animate-pulse bg-orange-500/20 rounded-full blur-sm"></div>
+                <div style={{
+                  position: 'absolute',
+                  top: 0, right: 0, bottom: 0, left: 0,
+                  animation: 'pulse 2s infinite',
+                  backgroundColor: 'rgba(249, 115, 22, 0.2)',
+                  borderRadius: '50%',
+                  filter: 'blur(4px)'
+                }}></div>
               </div>
-              <p className="animate-pulse text-orange-400 creepster text-sm sm:text-base">Summoning the spirits...</p>
-              <p className="text-xs mt-2 text-gray-500 animate-pulse">The dead are revealing their scores</p>
+              <p style={{
+                animation: 'pulse 2s infinite',
+                color: '#fb923c',
+                fontFamily: '"Creepster", cursive',
+                fontSize: 'clamp(0.875rem, 3vw, 1rem)'
+              }}>Summoning the spirits...</p>
+              <p style={{
+                fontSize: '0.75rem',
+                marginTop: '0.5rem',
+                color: '#6b7280',
+                animation: 'pulse 2s infinite'
+              }}>The dead are revealing their scores</p>
             </div>
           ) : leaderboard.length === 0 ? (
-            <div className=" text-gray-400 py-6 sm:py-8" className="text-center">
-              <p className="text-sm sm:text-base">No scores recorded yet.</p>
-              <p className="text-xs sm:text-sm mt-2">Be the first to join the Hall of Horror!</p>
+            <div style={{
+              color: '#9ca3af',
+              padding: 'clamp(1.5rem, 6vw, 2rem) 0',
+              textAlign: 'center'
+            }}>
+              <p style={{
+                fontSize: 'clamp(0.875rem, 3vw, 1rem)'
+              }}>No scores recorded yet.</p>
+              <p style={{
+                fontSize: 'clamp(0.75rem, 2.5vw, 0.875rem)',
+                marginTop: '0.5rem'
+              }}>Be the first to join the Hall of Horror!</p>
             </div>
           ) : (
             leaderboard.slice(0, 10).map((entry, index) => (
               <div
                 key={`${entry.name}-${entry.date}`}
-                className="   p-2 sm:p-3 bg-gray-800 rounded-lg border border-purple-900" style={{justifyContent: "space-between"}} style={{alignItems: "center"}} style={{display: "flex"}}
+                style={{
+                  padding: 'clamp(0.5rem, 2vw, 0.75rem)',
+                  backgroundColor: '#1f2937',
+                  borderRadius: '0.5rem',
+                  border: '1px solid #581c87',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between'
+                }}
               >
-                <div className="flex  space-x-2 sm:space-x-3 min-w-0 -1" style={{alignItems: "center"}} style={{display: "flex"}}>
-                  <div className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold flex-shrink-0 ${getRankColor(index)}`}>
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 'clamp(0.5rem, 2vw, 0.75rem)',
+                  minWidth: 0,
+                  flex: 1
+                }}>
+                  <div style={{
+                    width: 'clamp(1.5rem, 4vw, 2rem)',
+                    height: 'clamp(1.5rem, 4vw, 2rem)',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: 'clamp(0.75rem, 2.5vw, 0.875rem)',
+                    fontWeight: 'bold',
+                    flexShrink: 0,
+                    backgroundColor: getRankColor(index)
+                  }}>
                     <span>{index + 1}</span>
                   </div>
-                  <div className="text-left min-w-0 -1" style={{display: "flex"}}>
-                    <span className="font-medium text-white block text-sm sm:text-base truncate">{getDisplayName(entry.name)}</span>
-                    <span className="text-xs text-gray-400">
+                  <div style={{
+                    textAlign: 'left',
+                    minWidth: 0,
+                    flex: 1,
+                    display: 'flex',
+                    flexDirection: 'column'
+                  }}>
+                    <span style={{
+                      fontWeight: '500',
+                      color: '#ffffff',
+                      display: 'block',
+                      fontSize: 'clamp(0.875rem, 3vw, 1rem)',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap'
+                    }}>{getDisplayName(entry.name)}</span>
+                    <span style={{
+                      fontSize: '0.75rem',
+                      color: '#9ca3af'
+                    }}>
                       {entry.correctAnswers}/{entry.questionsAnswered} correct
                     </span>
                   </div>
                 </div>
-                <div className="text-orange-500 font-bold text-sm sm:text-base -shrink-0 ml-2" style={{display: "flex"}}>{entry.score}</div>
+                <div style={{
+                  color: '#f97316',
+                  fontWeight: 'bold',
+                  fontSize: 'clamp(0.875rem, 3vw, 1rem)',
+                  flexShrink: 0,
+                  marginLeft: '0.5rem',
+                  display: 'flex'
+                }}>{entry.score}</div>
               </div>
             ))
           )}
         </div>
 
-        <div className=" -shrink-0" style={{display: "flex"}} className="text-center">
+        <div style={{
+          flexShrink: 0,
+          display: 'flex',
+          textAlign: 'center'
+        }}>
           <button
-            className="horror-button px-6 sm:px-8 py-3 rounded-lg font-medium text-white text-sm sm:text-base touch-manipulation"
+            style={{
+              padding: 'clamp(0.75rem, 3vw, 1rem) clamp(1.5rem, 6vw, 2rem)',
+              borderRadius: '0.5rem',
+              fontWeight: '500',
+              color: '#ffffff',
+              fontSize: 'clamp(0.875rem, 3vw, 1rem)',
+              background: 'linear-gradient(to right, #991b1b, #7c3aed)',
+              border: '1px solid #dc2626',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease',
+              width: '100%'
+            }}
             onClick={onClose}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'scale(1.02)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'scale(1)';
+            }}
           >
             Back to Game
           </button>

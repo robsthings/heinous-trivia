@@ -185,8 +185,11 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
 
   return (
     <div 
-      className="fixed inset-0 z-50 overflow-hidden"
       style={{
+        position: 'fixed',
+        top: 0, right: 0, bottom: 0, left: 0,
+        zIndex: 50,
+        overflow: 'hidden',
         background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 25%, #0f3460 75%, #533483 100%)',
         ...gameState.hauntConfig?.skinUrl ? {
           backgroundImage: `linear-gradient(135deg, rgba(26,26,46,0.9) 0%, rgba(22,33,62,0.9) 25%, rgba(15,52,96,0.9) 75%, rgba(83,52,131,0.9) 100%), url(${gameState.hauntConfig.skinUrl})`,
@@ -196,10 +199,18 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
         } : {}
       }}
     >
-      <div className="w-full h-full flex flex-col">
+      <div style={{
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column'
+      }}>
         
         {/* Header */}
-        <div className="text-center py-6 px-4">
+        <div style={{
+          textAlign: 'center',
+          padding: '1.5rem 1rem'
+        }}>
           <h3 
             style={{
               fontFamily: '"Creepster", cursive',
@@ -215,10 +226,21 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
         </div>
         
         {/* Main Content */}
-        <div className="flex-1 flex flex-col items-center justify-center px-4 space-y-6">
+        <div style={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '0 1rem',
+          gap: '1.5rem'
+        }}>
           
           {/* Ad Image Container */}
-          <div className="w-full max-w-3xl">
+          <div style={{
+            width: '100%',
+            maxWidth: '48rem'
+          }}>
             <div
               style={{
                 background: 'linear-gradient(145deg, #1e3c72 0%, #2a5298 100%)',
