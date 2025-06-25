@@ -39,7 +39,7 @@ export function Footer({ showInstallButton = false }: FooterProps) {
       right: 0,
       background: '#111827',
       borderTop: '1px solid #374151',
-      padding: '12px 16px',
+      padding: 'clamp(8px, 2vw, 12px) clamp(12px, 2.5vw, 16px)',
       zIndex: 10
     }}>
       <div style={{

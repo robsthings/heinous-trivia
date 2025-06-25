@@ -177,7 +177,7 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
             display: 'flex',
             alignItems: 'center',
             gap: '12px',
-            fontSize: '16px',
+            fontSize: 'clamp(14px, 2.5vw, 16px)',
             fontFamily: 'system-ui, -apple-system, sans-serif',
             boxShadow: '0 0 8px rgba(0, 0, 0, 0.4)',
             transform: 'scale(1)'
@@ -249,7 +249,7 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
                 backgroundColor: '#dc2626',
                 color: '#ffffff',
                 fontWeight: 'bold',
-                fontSize: '16px',
+                fontSize: 'clamp(14px, 2.5vw, 16px)',
                 fontFamily: '"Creepster", cursive'
               }}>
                 {['A', 'B', 'C', 'D'][index]}
@@ -289,7 +289,7 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
               <p style={{ 
                 fontWeight: '500', 
                 color: '#ffffff', 
-                fontSize: '16px', 
+                fontSize: 'clamp(14px, 2.5vw, 16px)', 
                 marginBottom: '4px',
                 fontFamily: '"Creepster", cursive'
               }}>
@@ -297,7 +297,7 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
               </p>
               <p style={{ 
                 color: '#f3f4f6', 
-                fontSize: '14px',
+                fontSize: 'clamp(12px, 2vw, 14px)',
                 fontFamily: 'Arial, sans-serif',
                 lineHeight: '1.5'
               }}>
@@ -320,7 +320,7 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
               border: '1px solid #dc2626',
               cursor: 'pointer',
               transition: 'all 0.2s ease',
-              fontSize: '16px',
+              fontSize: 'clamp(14px, 2.5vw, 16px)',
               fontFamily: '"Creepster", cursive',
               textTransform: 'uppercase',
               letterSpacing: '1px'
