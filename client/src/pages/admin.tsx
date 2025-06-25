@@ -447,35 +447,6 @@ export default function Admin() {
     }
   };
 
-  const resetHauntPassword = async (hauntId: string, hauntName: string) => {
-    const confirmed = window.confirm(
-      `Are you sure you want to reset the access code for "${hauntName}"?\n\nThis will:\n- Remove their current access code\n- Force them to set up a new one\n- Log them out of their admin panel\n\nThis action cannot be undone.`
-    );
-    
-    if (!confirmed) return;
-
-    try {
-      const hauntRef = doc(firestore, 'haunts', hauntId);
-      await updateDoc(hauntRef, { 
-        authCode: null,
-        authCodeResetAt: new Date().toISOString(),
-        authCodeResetBy: 'uber-admin'
-      });
-
-      toast({
-        title: "Access Code Reset",
-        description: `The access code for "${hauntName}" has been reset. They will need to set up a new code when they next visit their admin panel.`,
-      });
-    } catch (error) {
-      console.error('Failed to reset access code:', error);
-      toast({
-        title: "Error",
-        description: "Failed to reset access code. Please try again.",
-        variant: "destructive"
-      });
-    }
-  };
-
   const deleteHaunt = async (hauntId: string, hauntName: string) => {
     const confirmed = window.confirm(
       `🚨 DANGER: Delete "${hauntName}" permanently?\n\nThis will:\n- Delete the haunt configuration\n- Delete all custom questions\n- Delete all uploaded ads\n- Delete all leaderboard data\n- Make the game URL unusable\n\nThis action CANNOT BE UNDONE!\n\nType "DELETE" to confirm this permanent deletion.`
@@ -1149,55 +1120,159 @@ export default function Admin() {
     loadBrandingAssets();
   }, []);
 
-  const handleResetPassword = async (hauntId: string, hauntName: string) => {
-    const newPassword = prompt(`Enter new password for "${hauntName}":`);
-    
-    if (!newPassword) {
-      return; // User cancelled
-    }
+  // Email Management Functions for Firebase Authentication
+  const handleManageEmails = async (hauntId: string, hauntName: string) => {
+    try {
+      setIsLoading(true);
+      
+      // Fetch current authorized emails
+      const response = await fetch(`/api/haunt/${hauntId}/email-auth/emails`, {
+        headers: {
+          'Authorization': `Bearer ${auth.currentUser?.uid || 'uber-admin'}`
+        }
+      });
 
-    if (newPassword.length < 6) {
+      if (!response.ok) {
+        throw new Error('Failed to fetch authorized emails');
+      }
+
+      const data = await response.json();
+      const currentEmails = data.emails || [];
+      
+      const emailList = currentEmails.length > 0 
+        ? `Current authorized emails:\n${currentEmails.map((email: string) => `• ${email}`).join('\n')}`
+        : 'No authorized emails found.';
+      
+      const action = prompt(
+        `Manage authorized emails for "${hauntName}"\n\n${emailList}\n\nChoose action:\n1. Add email\n2. Remove email\n3. Cancel\n\nEnter 1, 2, or 3:`
+      );
+      
+      if (action === '1') {
+        const newEmail = prompt('Enter email address to authorize:');
+        if (newEmail && newEmail.includes('@')) {
+          await addAuthorizedEmail(hauntId, newEmail, hauntName);
+        }
+      } else if (action === '2' && currentEmails.length > 0) {
+        const emailToRemove = prompt(
+          `Enter email to remove:\n${currentEmails.map((email: string, i: number) => `${i + 1}. ${email}`).join('\n')}`
+        );
+        if (emailToRemove && currentEmails.includes(emailToRemove)) {
+          await removeAuthorizedEmail(hauntId, emailToRemove, hauntName);
+        }
+      }
+      
+    } catch (error) {
+      console.error('Email management failed:', error);
       toast({
-        title: "Invalid Password",
-        description: "Password must be at least 6 characters long",
+        title: "Email Management Failed",
+        description: error instanceof Error ? error.message : "Failed to manage emails",
         variant: "destructive"
       });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const addAuthorizedEmail = async (hauntId: string, email: string, hauntName: string) => {
+    try {
+      const response = await fetch(`/api/haunt/${hauntId}/email-auth/add`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${auth.currentUser?.uid || 'uber-admin'}`
+        },
+        body: JSON.stringify({ email })
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to add email');
+      }
+
+      toast({
+        title: "Email Added",
+        description: `${email} can now access "${hauntName}" admin dashboard`,
+      });
+    } catch (error) {
+      console.error('Failed to add email:', error);
+      toast({
+        title: "Add Email Failed",
+        description: error instanceof Error ? error.message : "Failed to add email",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const removeAuthorizedEmail = async (hauntId: string, email: string, hauntName: string) => {
+    try {
+      const response = await fetch(`/api/haunt/${hauntId}/email-auth/remove`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${auth.currentUser?.uid || 'uber-admin'}`
+        },
+        body: JSON.stringify({ email })
+      });
+
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Failed to remove email');
+      }
+
+      toast({
+        title: "Email Removed",
+        description: `${email} can no longer access "${hauntName}" admin dashboard`,
+      });
+    } catch (error) {
+      console.error('Failed to remove email:', error);
+      toast({
+        title: "Remove Email Failed",
+        description: error instanceof Error ? error.message : "Failed to remove email",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const handleSendAuthLink = async (hauntId: string, hauntName: string) => {
+    const email = prompt(`Send authentication link for "${hauntName}"\n\nEnter email address:`);
+    
+    if (!email || !email.includes('@')) {
+      if (email) {
+        toast({
+          title: "Invalid Email",
+          description: "Please enter a valid email address",
+          variant: "destructive"
+        });
+      }
       return;
     }
 
     try {
       setIsLoading(true);
       
-      // Make API call to reset password
-      const response = await fetch('/api/admin/reset-password', {
+      const response = await fetch(`/api/haunt/${hauntId}/email-auth/send`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${auth.currentUser?.uid || 'uber-admin'}`
         },
-        body: JSON.stringify({
-          hauntId,
-          newPassword
-        })
+        body: JSON.stringify({ email })
       });
 
       if (!response.ok) {
         const error = await response.json();
-        throw new Error(error.error || 'Failed to reset password');
+        throw new Error(error.error || 'Failed to send authentication link');
       }
 
-      const result = await response.json();
-      
       toast({
-        title: "Password Reset Successful",
-        description: `Password for "${hauntName}" has been updated successfully`,
+        title: "Authentication Link Sent",
+        description: `Email sent to ${email} for "${hauntName}" admin access`,
       });
-
     } catch (error) {
-      console.error('Password reset failed:', error);
+      console.error('Failed to send auth link:', error);
       toast({
-        title: "Password Reset Failed",
-        description: error instanceof Error ? error.message : "Failed to reset password",
+        title: "Send Link Failed",
+        description: error instanceof Error ? error.message : "Failed to send authentication link",
         variant: "destructive"
       });
     } finally {
@@ -1471,15 +1546,15 @@ export default function Admin() {
                                   </div>
                                   */}
 
-                                  {/* Reset Password */}
+                                  {/* Email Authentication Management */}
                                   <div className="flex items-center gap-2">
                                     <Button 
                                       size="sm" 
                                       variant="outline"
                                       className="h-8 text-xs bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-white border-red-600 flex-1"
-                                      onClick={() => handleResetPassword(haunt.id, haunt.name)}
+                                      onClick={() => handleManageEmails(haunt.id, haunt.name)}
                                     >
-                                      🔑 Reset Password
+                                      📧 Manage Emails
                                     </Button>
                                   </div>
                                 </div>
@@ -1585,12 +1660,21 @@ export default function Admin() {
                                   </Button>
                                   
                                   <Button
-                                    onClick={() => resetHauntPassword(haunt.id, haunt.name)}
+                                    onClick={() => handleManageEmails(haunt.id, haunt.name)}
                                     variant="outline"
                                     size="sm"
                                     className="w-full bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-white border-red-600"
                                   >
-                                    🔑 Reset Access Code
+                                    📧 Manage Emails
+                                  </Button>
+                                  
+                                  <Button
+                                    onClick={() => handleSendAuthLink(haunt.id, haunt.name)}
+                                    variant="outline"
+                                    size="sm"
+                                    className="w-full bg-gradient-to-r from-blue-700 to-green-700 hover:from-blue-600 hover:to-green-600 text-white border-blue-600"
+                                  >
+                                    🔗 Send Auth Link
                                   </Button>
                                 </div>
 
