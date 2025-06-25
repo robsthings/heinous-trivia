@@ -236,53 +236,6 @@ export default function HauntAuth() {
       </div>
     </div>
   );
-    }
-  };
-
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-red-900 flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-sm">
-          <CardHeader style={{textAlign: "center"}}>
-            <CardTitle className="text-red-400 text-2xl creepster">
-              🎃 Haunt Admin Access
-            </CardTitle>
-            <p className="text-gray-300 text-sm mt-2">
-              Enter your haunt credentials to access the admin dashboard
-            </p>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <Label htmlFor="hauntId" className="text-white">
-                  Haunt ID
-                </Label>
-                <Input
-                  id="hauntId"
-                  type="text"
-                  value={hauntId}
-                  readOnly
-                  className="bg-gray-800 border-gray-600 text-white mt-2 opacity-75"
-                />
-                <p className="text-gray-400 text-xs mt-1">
-                  The unique identifier for your haunt
-                </p>
-              </div>
-
-              <div>
-                <Label htmlFor="accessCode" className="text-white">
-                  Access Code
-                </Label>
-                <Input
-                  id="accessCode"
-                  type="password"
-                  value={accessCode}
-                  onChange={(e) => setAccessCode(e.target.value)}
-                  placeholder="Enter your access code"
-                  className="bg-gray-800 border-gray-600 text-white mt-2"
-                  disabled={isLoading}
-                />
-                <p className="text-gray-400 text-xs mt-1">
                   The secret code you set up for this haunt
                 </p>
               </div>

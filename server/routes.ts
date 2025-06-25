@@ -1862,6 +1862,101 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Email authentication routes
+  app.post("/api/haunt/:hauntId/email-auth/add", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      const { email } = req.body;
+      
+      if (!email) {
+        return res.status(400).json({ error: "Email is required" });
+      }
+      
+      const success = await ServerEmailAuthService.addAuthorizedEmail(hauntId, email);
+      
+      if (success) {
+        res.json({ success: true, message: "Email authorized successfully" });
+      } else {
+        res.status(500).json({ error: "Failed to authorize email" });
+      }
+    } catch (error) {
+      console.error("Error adding authorized email:", error);
+      res.status(500).json({ error: "Failed to authorize email" });
+    }
+  });
+
+  app.post("/api/haunt/:hauntId/email-auth/remove", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      const { email } = req.body;
+      
+      if (!email) {
+        return res.status(400).json({ error: "Email is required" });
+      }
+      
+      const success = await ServerEmailAuthService.removeAuthorizedEmail(hauntId, email);
+      
+      if (success) {
+        res.json({ success: true, message: "Email authorization removed" });
+      } else {
+        res.status(500).json({ error: "Failed to remove email authorization" });
+      }
+    } catch (error) {
+      console.error("Error removing authorized email:", error);
+      res.status(500).json({ error: "Failed to remove email authorization" });
+    }
+  });
+
+  app.get("/api/haunt/:hauntId/email-auth/list", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      const emails = await ServerEmailAuthService.getAuthorizedEmails(hauntId);
+      res.json({ emails });
+    } catch (error) {
+      console.error("Error listing authorized emails:", error);
+      res.status(500).json({ error: "Failed to list authorized emails" });
+    }
+  });
+
+  app.post("/api/haunt/:hauntId/email-auth/validate", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      const { email } = req.body;
+      
+      if (!email) {
+        return res.status(400).json({ error: "Email is required" });
+      }
+      
+      const isAuthorized = await ServerEmailAuthService.isEmailAuthorized(hauntId, email);
+      res.json({ authorized: isAuthorized });
+    } catch (error) {
+      console.error("Error validating email:", error);
+      res.status(500).json({ error: "Failed to validate email" });
+    }
+  });
+
+  app.post("/api/haunt/:hauntId/email-auth/initialize", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      const { email } = req.body;
+      
+      if (!email) {
+        return res.status(400).json({ error: "Email is required" });
+      }
+      
+      const success = await ServerEmailAuthService.initializeHauntAuth(hauntId, email);
+      
+      if (success) {
+        res.json({ success: true, message: "Haunt authentication initialized" });
+      } else {
+        res.status(400).json({ error: "Haunt already has authentication configured" });
+      }
+    } catch (error) {
+      console.error("Error initializing haunt auth:", error);
+      res.status(500).json({ error: "Failed to initialize authentication" });
+    }
+  });
+
   // Uber admin routes
   app.get("/api/uber/haunts", async (req, res) => {
     try {

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRoute, useLocation, Link } from "wouter";
+import { EmailAuthService } from "@/lib/emailAuth";
 
 // Tawk.to type declarations
 declare global {
@@ -693,27 +694,26 @@ export default function HauntAdmin() {
           </CardHeader>
           <CardContent className="space-y-6">
             <p className="text-gray-300 " style={{textAlign: "center"}}>
-              Set up your admin access code to secure your haunt dashboard. 
-              This code will be required to access your admin panel.
+              Set up your admin email to receive secure authentication links for dashboard access.
             </p>
             
             <div className="space-y-4">
               <div>
-                <Label htmlFor="accessCode" className="text-white">Create Access Code</Label>
+                <Label htmlFor="adminEmail" className="text-white">Admin Email Address</Label>
                 <Input
-                  id="accessCode"
-                  type="password"
+                  id="adminEmail"
+                  type="email"
                   value={newAccessCode}
                   onChange={(e) => setNewAccessCode(e.target.value)}
-                  placeholder="Enter a secure access code (min 6 characters)"
+                  placeholder="admin@yourhaunt.com"
                   className="bg-gray-800 border-gray-600 text-white"
-                  minLength={6}
                 />
               </div>
               
               <Button
                 onClick={async () => {
-                  if (!newAccessCode || newAccessCode.length < 6) {
+                  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                  if (!emailRegex.test(newAccessCode.trim())) {
                     toast({
                       title: "Invalid Code",
                       description: "Access code must be at least 6 characters long",
@@ -744,20 +744,20 @@ export default function HauntAdmin() {
                       description: "Your admin dashboard is now secured.",
                     });
                   } catch (error) {
-                    console.error('Failed to set access code:', error);
+                    console.error('Failed to set email auth:', error);
                     toast({
                       title: "Setup Failed",
-                      description: "Unable to set access code. Please try again.",
+                      description: "Unable to configure email authentication. Please try again.",
                       variant: "destructive"
                     });
                   } finally {
                     setIsSaving(false);
                   }
                 }}
-                className="w-full bg-red-600 hover:bg-red-700 text-white"
-                disabled={isSaving || !newAccessCode || newAccessCode.length < 6}
+                className="w-full bg-red-600 hover:bg-red-700 text-white"t-white"
+                disabled={isSaving || !newAccessCode.trim()}
               >
-                {isSaving ? "Setting Up..." : "Secure My Dashboard"}
+                {isSaving ? "Setting Up..." : "Configure Email Access"}
               </Button>
             </div>
           </CardContent>
