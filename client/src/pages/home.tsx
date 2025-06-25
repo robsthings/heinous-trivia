@@ -5,17 +5,45 @@ import { Footer } from "@/components/Footer";
 export default function Home() {
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-red-900">
-      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
+    <div style={{
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #111827 0%, #000000 50%, #7f1d1d 100%)'
+    }}>
+      <div style={{
+        maxWidth: '1280px',
+        margin: '0 auto',
+        padding: 'clamp(1rem, 3vw, 2rem) clamp(0.75rem, 2vw, 1rem)'
+      }}>
         {/* Header */}
-        <div className="  sm:mb-12" style={{marginBottom: "1.5rem"}} style={{textAlign: "center"}}>
-          <h1 className="creepster text-4xl sm:text-6xl md:text-8xl text-red-500 mb-2 sm:mb-4 drop-shadow-lg leading-tight">
+        <div style={{
+          marginBottom: "clamp(1.5rem, 4vw, 3rem)",
+          textAlign: "center"
+        }}>
+          <h1 style={{
+            fontFamily: '"Creepster", cursive',
+            fontSize: 'clamp(2.25rem, 8vw, 5rem)',
+            color: '#ef4444',
+            marginBottom: 'clamp(0.5rem, 2vw, 1rem)',
+            filter: 'drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1))',
+            lineHeight: '1.1'
+          }}>
             HEINOUS TRIVIA
           </h1>
-          <p className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-2 px-2">
+          <p style={{
+            fontSize: 'clamp(1.125rem, 4vw, 1.5rem)',
+            color: '#d1d5db',
+            marginBottom: '0.5rem',
+            padding: '0 0.5rem'
+          }}>
             Welcome to Dr. Heinous's Chamber of Knowledge
           </p>
-          <p className="text-sm sm:text-base text-gray-400 max-w-2xl mx-auto px-4">
+          <p style={{
+            fontSize: 'clamp(0.875rem, 2.5vw, 1rem)',
+            color: '#9ca3af',
+            maxWidth: '42rem',
+            margin: '0 auto',
+            padding: '0 1rem'
+          }}>
             Choose your haunt and test your wits against the most diabolical trivia questions 
             ever assembled. Each location offers unique challenges and terrifying rewards.
           </p>

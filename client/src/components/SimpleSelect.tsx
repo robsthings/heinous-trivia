@@ -20,14 +20,43 @@ export function SimpleSelect({
   const selectedOption = options.find(opt => opt.value === value);
   
   return (
-    <div className={`relative ${className}`}>
+    <div style={{ position: 'relative' }} className={className}>
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full  border border-gray-600 rounded px-3 py-2 text-left text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-red-500" className="bg-gray-800"
+        style={{
+          width: '100%',
+          backgroundColor: '#1f2937',
+          border: '1px solid #4b5563',
+          borderRadius: '0.25rem',
+          padding: '0.5rem 0.75rem',
+          textAlign: 'left',
+          color: '#ffffff',
+          cursor: 'pointer',
+          transition: 'background-color 0.2s ease',
+          position: 'relative'
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.backgroundColor = '#374151';
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.backgroundColor = '#1f2937';
+        }}
+        onFocus={(e) => {
+          e.currentTarget.style.outline = '2px solid #ef4444';
+          e.currentTarget.style.outlineOffset = '2px';
+        }}
+        onBlur={(e) => {
+          e.currentTarget.style.outline = 'none';
+        }}
       >
         <span>{selectedOption?.label || placeholder}</span>
-        <span className="absolute right-3 top-1/2 transform -translate-y-1/2">
+        <span style={{
+          position: 'absolute',
+          right: '0.75rem',
+          top: '50%',
+          transform: 'translateY(-50%)'
+        }}>
           {isOpen ? '▲' : '▼'}
         </span>
       </button>
