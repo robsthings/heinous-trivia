@@ -1349,16 +1349,35 @@ export default function Admin() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-red-900 p-4">
-      <div className="max-w-4xl mx-auto">
+    <div style={{
+      minHeight: '100vh',
+      background: 'linear-gradient(to bottom right, #111827, #581c87, #991b1b)',
+      padding: '1rem'
+    }}>
+      <div style={{
+        maxWidth: '56rem',
+        margin: '0 auto'
+      }}>
         
         {/* Authentication Status Card */}
-        <Card className="bg-yellow-900/80 border-yellow-600 text-white mb-4">
-          <CardContent className="pt-6">
+        <Card style={{
+          background: 'rgba(146, 64, 14, 0.8)',
+          border: '1px solid #ca8a04',
+          color: '#ffffff',
+          marginBottom: '1rem'
+        }}>
+          <CardContent style={{ paddingTop: '1.5rem' }}>
             <div style={{textAlign: "center"}}>
-              <h3 className="text-xl font-bold mb-2">🔐 Authentication Status</h3>
-              <p className="mb-4">Status: {authStatus === 'authenticated' ? '✅ Authenticated' : '❌ Not Authenticated'}</p>
-              <p className="text-sm mb-4">User: {auth.currentUser?.uid || 'None'}</p>
+              <h3 style={{
+                fontSize: '1.25rem',
+                fontWeight: 'bold',
+                marginBottom: '0.5rem'
+              }}>🔐 Authentication Status</h3>
+              <p style={{ marginBottom: '1rem' }}>Status: {authStatus === 'authenticated' ? '✅ Authenticated' : '❌ Not Authenticated'}</p>
+              <p style={{
+                fontSize: '0.875rem',
+                marginBottom: '1rem'
+              }}>User: {auth.currentUser?.uid || 'None'}</p>
               
               <Button 
                 onClick={async () => {
@@ -1381,7 +1400,16 @@ export default function Admin() {
                     });
                   }
                 }}
-                className="bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-lg px-8 py-3 text-white"
+                style={{
+                  background: 'linear-gradient(to right, #b91c1c, #7c3aed)',
+                  fontSize: '1.125rem',
+                  padding: '0.75rem 2rem',
+                  color: '#ffffff',
+                  border: 'none',
+                  borderRadius: '0.5rem',
+                  cursor: authStatus === 'authenticated' ? 'not-allowed' : 'pointer',
+                  opacity: authStatus === 'authenticated' ? 0.6 : 1
+                }}
                 disabled={authStatus === 'authenticated'}
               >
                 {authStatus === 'authenticated' ? '✅ Already Signed In' : '🔐 Sign In to Firebase'}
@@ -1390,12 +1418,24 @@ export default function Admin() {
           </CardContent>
         </Card>
 
-        <Card className="bg-black/80 border-red-600 text-white">
+        <Card style={{
+          background: 'rgba(0, 0, 0, 0.8)',
+          border: '1px solid #dc2626',
+          color: '#ffffff'
+        }}>
           <CardHeader>
-            <CardTitle className="text-3xl font-bold  text-red-500" style={{textAlign: "center"}}>
-              Heinous Trivia Uber Admin
+            <CardTitle style={{
+              fontSize: '1.875rem',
+              fontWeight: 'bold',
+              color: '#ef4444',
+              textAlign: 'center'
+            }}>
+              🎃 Heinous Trivia Uber Admin
             </CardTitle>
-            <p className=" text-gray-300" style={{textAlign: "center"}}>Manage Haunts & Trivia Packs</p>
+            <p style={{
+              color: '#d1d5db',
+              textAlign: 'center'
+            }}>Manage Haunts & Trivia Packs</p>
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="management" className="w-full" onValueChange={(value) => setActiveTab(value)}>
@@ -1494,16 +1534,27 @@ export default function Admin() {
               </TabsList>
 
               {/* Haunt Management Tab */}
-              <TabsContent value="management" className="space-y-6">
-                <Card className="bg-gray-900/50 border-gray-700">
+              <TabsContent value="management" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                <Card style={{
+                  background: 'rgba(17, 24, 39, 0.5)',
+                  border: '1px solid #374151'
+                }}>
                   <CardHeader>
-                    <CardTitle className="text-red-400 flex items-center gap-2">
+                    <CardTitle style={{
+                      color: '#f87171',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem'
+                    }}>
                       🏚️ All Participating Haunts
-                      <Badge variant="outline" className="text-gray-300">
+                      <Badge variant="outline" style={{
+                        color: '#d1d5db',
+                        borderColor: '#d1d5db'
+                      }}>
                         {allHaunts.length} haunts
                       </Badge>
                     </CardTitle>
-                    <p className="text-gray-400">Manage subscription levels and access for all haunts</p>
+                    <p style={{ color: '#9ca3af' }}>Manage subscription levels and access for all haunts</p>
                   </CardHeader>
                   <CardContent>
                     {allHaunts.length === 0 ? (
