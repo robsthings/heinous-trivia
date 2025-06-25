@@ -335,6 +335,35 @@ export function GameEndScreen({
               Play Again
             </button>
             
+            <button
+              style={{
+                width: '100%',
+                padding: 'clamp(0.75rem, 3vw, 1rem)',
+                borderRadius: '0.5rem',
+                fontWeight: '500',
+                color: '#ffffff',
+                fontSize: 'clamp(0.875rem, 3vw, 1rem)',
+                background: 'linear-gradient(to right, #6b46c1, #7c3aed)',
+                border: '1px solid #8b5cf6',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease'
+              }}
+              onClick={() => {
+                // Placeholder for future sidequest serving implementation
+                alert('Sidequest summoning coming soon! Dr. Heinous is preparing his supernatural challenges...');
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'linear-gradient(to right, #7c3aed, #8b5cf6)';
+                e.currentTarget.style.transform = 'scale(1.02)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'linear-gradient(to right, #6b46c1, #7c3aed)';
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
+            >
+              🔮 Summon Sidequest
+            </button>
+            
             {!scoreSaved && (
               <button
                 style={{

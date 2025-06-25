@@ -423,9 +423,29 @@ export function WretchedWiring() {
             <div className="mt-4">
               <Link
                 href="/game"
-                className="text-gray-400 hover:text-white underline"
+                style={{
+                  display: 'inline-block',
+                  background: 'linear-gradient(to right, #374151, #4b5563)',
+                  color: '#ffffff',
+                  padding: '0.75rem 1.5rem',
+                  borderRadius: '0.5rem',
+                  fontWeight: 'bold',
+                  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                  transform: 'scale(1)',
+                  transition: 'all 0.2s ease',
+                  border: '1px solid #6b7280',
+                  textDecoration: 'none'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'linear-gradient(to right, #4b5563, #6b7280)';
+                  e.currentTarget.style.transform = 'scale(1.05)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'linear-gradient(to right, #374151, #4b5563)';
+                  e.currentTarget.style.transform = 'scale(1)';
+                }}
               >
-                ← Back to Game
+                ← Return to Game
               </Link>
             </div>
           </div>
