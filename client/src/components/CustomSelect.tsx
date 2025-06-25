@@ -76,7 +76,19 @@ export function CustomSelect({ value, onValueChange, options, placeholder, class
 
       {/* Dropdown */}
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 mt-1  border border-gray-600 rounded-md shadow-lg z-50 overflow-hidden" className="bg-gray-800">
+        <div style={{
+          position: 'absolute',
+          top: '100%',
+          left: 0,
+          right: 0,
+          marginTop: '0.25rem',
+          backgroundColor: '#1f2937',
+          border: '1px solid #4b5563',
+          borderRadius: '0.375rem',
+          boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+          zIndex: 50,
+          overflow: 'hidden'
+        }}>
           {options.map((option) => (
             <button
               key={option.value}
@@ -85,7 +97,25 @@ export function CustomSelect({ value, onValueChange, options, placeholder, class
                 onValueChange(option.value);
                 setIsOpen(false);
               }}
-              className="w-full px-3 py-2 text-left text-white hover:bg-gray-700 transition-colors   gap-2" style={{alignItems: "center"}} style={{display: "flex"}}
+              style={{
+                width: '100%',
+                padding: '0.5rem 0.75rem',
+                textAlign: 'left',
+                color: '#ffffff',
+                backgroundColor: 'transparent',
+                border: 'none',
+                cursor: 'pointer',
+                transition: 'background-color 0.2s ease',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#374151';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'transparent';
+              }}
             >
               {option.icon}
               {option.label}

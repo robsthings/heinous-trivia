@@ -33,7 +33,16 @@ export function SimpleSelect({
       </button>
       
       {isOpen && (
-        <div className="absolute z-50 w-full mt-1  border border-gray-600 rounded shadow-lg" style={{backgroundColor: "#111827"}}>
+        <div style={{
+          position: 'absolute',
+          zIndex: 50,
+          width: '100%',
+          marginTop: '0.25rem',
+          backgroundColor: "#111827",
+          border: '1px solid #4b5563',
+          borderRadius: '0.25rem',
+          boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+        }}>
           {options.map((option) => (
             <button
               key={option.value}

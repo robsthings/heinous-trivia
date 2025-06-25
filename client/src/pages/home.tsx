@@ -22,8 +22,17 @@ export default function Home() {
         </div>
 
         {/* How to Access */}
-        <div className="max-w-2xl mx-auto " style={{textAlign: "center"}}>
-          <div className="glass-card rounded-xl p-4 sm:p-6 md:p-8">
+        <div style={{
+          maxWidth: '42rem',
+          margin: '0 auto',
+          textAlign: "center"
+        }}>
+          <div style={{
+            backgroundColor: 'rgba(0, 0, 0, 0.4)',
+            backdropFilter: 'blur(10px)',
+            borderRadius: '0.75rem',
+            padding: 'clamp(1rem, 4vw, 2rem)'
+          }}>
             <h2 style={{
               fontSize: 'clamp(1.25rem, 4vw, 1.875rem)',
               fontWeight: 'bold',
