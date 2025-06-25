@@ -1907,6 +1907,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get authorized emails for a haunt (both /emails and /list for compatibility)
+  app.get("/api/haunt/:hauntId/email-auth/emails", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      console.log(`Getting authorized emails for haunt: ${hauntId}`);
+      const emails = await ServerEmailAuthService.getAuthorizedEmails(hauntId);
+      console.log(`Found ${emails.length} authorized emails for ${hauntId}`);
+      res.json({ emails });
+    } catch (error) {
+      console.error("Error fetching authorized emails:", error);
+      res.status(500).json({ error: "Failed to fetch emails" });
+    }
+  });
+
   app.get("/api/haunt/:hauntId/email-auth/list", async (req, res) => {
     try {
       const { hauntId } = req.params;

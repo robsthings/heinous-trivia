@@ -1157,17 +1157,11 @@ export default function Admin() {
       
       console.log('Showing email management dialog');
       
-      // Test if prompt is working
-      const testPrompt = confirm(`Email management for "${hauntName}"\n\n${emailList}\n\nDo you want to continue?`);
-      console.log('Test prompt result:', testPrompt);
-      
-      if (!testPrompt) {
-        toast({
-          title: "Cancelled",
-          description: "Email management cancelled",
-        });
-        return;
-      }
+      // Show success message for loading emails
+      toast({
+        title: "Emails Loaded",
+        description: `Found ${currentEmails.length} authorized emails for ${hauntName}`,
+      });
       
       const action = prompt(
         `Manage authorized emails for "${hauntName}"\n\n${emailList}\n\nChoose action:\n1. Add email\n2. Remove email\n3. Cancel\n\nEnter 1, 2, or 3:`
