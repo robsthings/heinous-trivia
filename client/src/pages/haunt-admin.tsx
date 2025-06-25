@@ -685,8 +685,21 @@ export default function HauntAdmin() {
   // First-time setup screen
   if (isFirstTimeSetup) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-red-900 p-4 flex items-center justify-center">
-        <Card className="bg-black/80 border-red-600 text-white max-w-md w-full">
+      <div style={{
+      minHeight: '100vh',
+      background: 'linear-gradient(to bottom right, #111827, #581c87, #7f1d1d)',
+      padding: '1rem',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }}>
+        <Card style={{
+          background: 'rgba(0, 0, 0, 0.8)',
+          border: '1px solid #dc2626',
+          color: '#ffffff',
+          maxWidth: '28rem',
+          width: '100%'
+        }}>
           <CardHeader style={{textAlign: "center"}}>
             <CardTitle className="text-2xl font-bold text-red-500">
               🎃 Welcome to Your Haunt!
@@ -767,8 +780,19 @@ export default function HauntAdmin() {
 
   if (!hauntConfig) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-red-900 p-4 flex items-center justify-center">
-        <Card className="bg-black/80 border-red-600 text-white">
+      <div style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(to bottom right, #111827, #581c87, #7f1d1d)',
+        padding: '1rem',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
+        <Card style={{
+          background: 'rgba(0, 0, 0, 0.8)',
+          border: '1px solid #dc2626',
+          color: '#ffffff'
+        }}>
           <CardContent className="p-8">
             <div style={{textAlign: "center"}}>
               <h2 className="text-2xl font-bold text-red-500 mb-4">Haunt Not Found</h2>
@@ -788,20 +812,61 @@ export default function HauntAdmin() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-red-900 p-4">
-      <div className="max-w-6xl mx-auto space-y-6">
+    <div style={{
+      minHeight: '100vh',
+      background: 'linear-gradient(to bottom right, #111827, #581c87, #7f1d1d)',
+      padding: '1rem'
+    }}>
+      <div style={{
+        maxWidth: '72rem',
+        margin: '0 auto',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1.5rem'
+      }}>
         
         {/* Header Section */}
-        <div className=" lg:text-left bg-black/60 rounded-xl p-6 border border-gray-700 shadow-lg" style={{textAlign: "center"}}>
-          <h1 className="text-4xl font-bold text-white mb-2" style={{ color: hauntConfig.theme?.primaryColor || '#dc2626' }}>
+        <div style={{
+          textAlign: 'center',
+          background: 'rgba(0, 0, 0, 0.6)',
+          borderRadius: '0.75rem',
+          padding: '1.5rem',
+          border: '1px solid #374151',
+          boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+        }}>
+          <h1 style={{
+            fontSize: '2.25rem',
+            lineHeight: '2.5rem',
+            fontWeight: '700',
+            color: hauntConfig.theme?.primaryColor || '#dc2626',
+            marginBottom: '0.5rem'
+          }}>
             👹 {hauntConfig.name || hauntId}
           </h1>
-          <p className="text-gray-300 text-lg mb-4">
+          <p style={{
+            color: '#d1d5db',
+            fontSize: '1.125rem',
+            lineHeight: '1.75rem',
+            marginBottom: '1rem'
+          }}>
             Manage your haunt configuration, trivia questions, and advertisements
           </p>
-          <div className="flex flex-wrap gap-2 justify-center lg:justify-start items-center">
-            <span className="px-3 py-1 bg-gray-800/80 text-gray-300 rounded-full text-sm border border-gray-600">
-              Tier: <span className="text-white font-semibold capitalize">{hauntConfig.tier}</span>
+          <div style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '0.5rem',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}>
+            <span style={{
+              padding: '0.25rem 0.75rem',
+              background: 'rgba(31, 41, 55, 0.8)',
+              color: '#d1d5db',
+              borderRadius: '9999px',
+              fontSize: '0.875rem',
+              border: '1px solid #4b5563'
+            }}>
+              Tier: <span style={{ color: '#ffffff', fontWeight: '600', textTransform: 'capitalize' }}>{hauntConfig.tier}</span>
             </span>
             <Button
               onClick={unbreakMe}
@@ -828,19 +893,35 @@ export default function HauntAdmin() {
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(1, minmax(0, 1fr))',
+          gap: '1.5rem'
+        }}>
           
           {/* Left Column */}
-          <div className="space-y-6">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
             
             {/* Haunt Branding Section */}
-            <Card className="bg-black/60 border-gray-600 shadow-lg">
-              <CardHeader className="pb-4">
-                <CardTitle className="text-xl font-semibold text-white flex items-center gap-2" style={{ color: hauntConfig.theme?.primaryColor || '#dc2626' }}>
+            <Card style={{
+              background: 'rgba(0, 0, 0, 0.6)',
+              border: '1px solid #4b5563',
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+            }}>
+              <CardHeader style={{ paddingBottom: '1rem' }}>
+                <CardTitle style={{
+                  fontSize: '1.25rem',
+                  lineHeight: '1.75rem',
+                  fontWeight: '600',
+                  color: hauntConfig.theme?.primaryColor || '#dc2626',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem'
+                }}>
                   🎨 Haunt Branding
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div>
@@ -955,12 +1036,24 @@ export default function HauntAdmin() {
           </div>
 
           {/* Right Column */}
-          <div className="space-y-6">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
 
             {/* Ad Management Section */}
-            <Card className="bg-black/60 border-gray-600 shadow-lg">
-              <CardHeader className="pb-4">
-                <CardTitle className="text-xl font-semibold text-white flex items-center gap-2" style={{ color: hauntConfig.theme?.primaryColor || '#dc2626' }}>
+            <Card style={{
+              background: 'rgba(0, 0, 0, 0.6)',
+              border: '1px solid #4b5563',
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+            }}>
+              <CardHeader style={{ paddingBottom: '1rem' }}>
+                <CardTitle style={{
+                  fontSize: '1.25rem',
+                  lineHeight: '1.75rem',
+                  fontWeight: '600',
+                  color: hauntConfig.theme?.primaryColor || '#dc2626',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem'
+                }}>
                   📢 Ad Management
                 </CardTitle>
                 <p className="text-gray-400 text-sm mt-2">
@@ -1067,9 +1160,21 @@ export default function HauntAdmin() {
         </div>
 
         {/* Custom Trivia Section - Full Width */}
-        <Card className="bg-black/60 border-gray-600 shadow-lg">
-          <CardHeader className="pb-4">
-            <CardTitle className="text-xl font-semibold text-white flex items-center gap-2" style={{ color: hauntConfig.theme?.primaryColor || '#dc2626' }}>
+        <Card style={{
+          background: 'rgba(0, 0, 0, 0.6)',
+          border: '1px solid #4b5563',
+          boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+        }}>
+          <CardHeader style={{ paddingBottom: '1rem' }}>
+            <CardTitle style={{
+              fontSize: '1.25rem',
+              lineHeight: '1.75rem',
+              fontWeight: '600',
+              color: hauntConfig.theme?.primaryColor || '#dc2626',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem'
+            }}>
               📝 Custom Trivia Questions
             </CardTitle>
             <p className="text-gray-400 text-sm mt-2">
