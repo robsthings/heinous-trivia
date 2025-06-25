@@ -80,6 +80,29 @@ export default function HauntAuth() {
 
     setIsLoading(true);
     try {
+      // First validate that the email is authorized for this haunt
+      const validateResponse = await fetch(`/api/haunt/${hauntId}/email-auth/validate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.toLowerCase() })
+      });
+      
+      if (!validateResponse.ok) {
+        throw new Error('Failed to validate email authorization');
+      }
+      
+      const validation = await validateResponse.json();
+      
+      if (!validation.authorized) {
+        toast({
+          title: "Email Not Authorized",
+          description: `The email ${email} is not authorized to access this haunt. Contact the haunt owner to add your email.`,
+          variant: "destructive"
+        });
+        setIsLoading(false);
+        return;
+      }
+      
       const result = await EmailAuthService.sendEmailLink(email, hauntId);
       
       if (result.success) {
