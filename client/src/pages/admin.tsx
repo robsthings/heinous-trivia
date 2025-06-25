@@ -96,8 +96,16 @@ function AnalyticsTab({
         </div>
 
         {!selectedAnalyticsHaunt && (
-          <div className=" py-8" style={{textAlign: "center"}}>
-            <BarChart3 className="w-12 h-12 text-gray-500 mx-auto mb-4" />
+          <div style={{
+            padding: '2rem 0',
+            textAlign: 'center'
+          }}>
+            <BarChart3 style={{
+              width: '3rem',
+              height: '3rem',
+              color: '#6b7280',
+              margin: '0 auto 1rem auto'
+            }} />
             <p className="text-gray-400">Select a Pro or Premium haunt to view analytics</p>
           </div>
         )}
@@ -197,22 +205,62 @@ function AnalyticsTab({
                     <CardHeader className="pb-3">
                       <CardTitle className="text-white text-sm">Performance Metrics</CardTitle>
                     </CardHeader>
-                    <CardContent className="space-y-3">
-                      <div className="flex justify-between">
-                        <span className="text-gray-400 text-sm">Average Score</span>
-                        <span className="text-white font-semibold">{analyticsData.competitiveMetrics?.averageScore || 0}</span>
+                    <CardContent style={{
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '0.75rem'
+                    }}>
+                      <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between'
+                      }}>
+                        <span style={{
+                          color: '#9ca3af',
+                          fontSize: '0.875rem'
+                        }}>Average Score</span>
+                        <span style={{
+                          color: '#ffffff',
+                          fontWeight: '600'
+                        }}>{analyticsData.competitiveMetrics?.averageScore || 0}</span>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-400 text-sm">Top Score</span>
-                        <span className="text-white font-semibold">{analyticsData.competitiveMetrics?.topScore || 0}</span>
+                      <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between'
+                      }}>
+                        <span style={{
+                          color: '#9ca3af',
+                          fontSize: '0.875rem'
+                        }}>Top Score</span>
+                        <span style={{
+                          color: '#ffffff',
+                          fontWeight: '600'
+                        }}>{analyticsData.competitiveMetrics?.topScore || 0}</span>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-400 text-sm">Completion Rate</span>
-                        <span className="text-white font-semibold">{analyticsData.competitiveMetrics?.participationRate || 0}%</span>
+                      <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between'
+                      }}>
+                        <span style={{
+                          color: '#9ca3af',
+                          fontSize: '0.875rem'
+                        }}>Completion Rate</span>
+                        <span style={{
+                          color: '#ffffff',
+                          fontWeight: '600'
+                        }}>{analyticsData.competitiveMetrics?.participationRate || 0}%</span>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-gray-400 text-sm">Avg Group Size</span>
-                        <span className="text-white font-semibold">{analyticsData.averageGroupSize || 1}</span>
+                      <div style={{
+                        display: 'flex',
+                        justifyContent: 'space-between'
+                      }}>
+                        <span style={{
+                          color: '#9ca3af',
+                          fontSize: '0.875rem'
+                        }}>Avg Group Size</span>
+                        <span style={{
+                          color: '#ffffff',
+                          fontWeight: '600'
+                        }}>{analyticsData.averageGroupSize || 1}</span>
                       </div>
                     </CardContent>
                   </Card>
@@ -270,11 +318,28 @@ function AnalyticsTab({
 
                 {/* No Data State */}
                 {analyticsData.totalGames === 0 && (
-                  <Card className="bg-gray-800/50 border-gray-600">
-                    <CardContent className=" py-8" style={{textAlign: "center"}}>
-                      <TrendingUp className="w-12 h-12 text-gray-500 mx-auto mb-4" />
-                      <p className="text-gray-400 mb-2">No gameplay data found for this time period</p>
-                      <p className="text-sm text-gray-500">
+                  <Card style={{
+                    background: 'rgba(31, 41, 55, 0.5)',
+                    border: '1px solid #4b5563'
+                  }}>
+                    <CardContent style={{
+                      padding: '2rem 0',
+                      textAlign: 'center'
+                    }}>
+                      <TrendingUp style={{
+                        width: '3rem',
+                        height: '3rem',
+                        color: '#6b7280',
+                        margin: '0 auto 1rem auto'
+                      }} />
+                      <p style={{
+                        color: '#9ca3af',
+                        marginBottom: '0.5rem'
+                      }}>No gameplay data found for this time period</p>
+                      <p style={{
+                        fontSize: '0.875rem',
+                        color: '#6b7280'
+                      }}>
                         Data will appear here once players start using your haunt's trivia game
                       </p>
                     </CardContent>
@@ -1623,48 +1688,96 @@ export default function Admin() {
                                   }}>{haunt.description || 'No description available'}</p>
                                 
                                 {/* Quick Links */}
-                                <div className="space-y-2">
+                                <div style={{
+                                  display: 'flex',
+                                  flexDirection: 'column',
+                                  gap: '0.5rem'
+                                }}>
                                   {/* Game Link */}
-                                  <div className="flex items-center gap-2">
+                                  <div style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '0.5rem'
+                                  }}>
                                     <Button 
                                       size="sm" 
                                       variant="outline"
-                                      className="h-8 text-xs border-blue-600 text-blue-400 hover:bg-blue-600 hover:text-white flex-1"
+                                      style={{
+                                        height: '2rem',
+                                        fontSize: '0.75rem',
+                                        border: '1px solid #2563eb',
+                                        color: '#60a5fa',
+                                        backgroundColor: 'transparent',
+                                        flex: 1,
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '0.25rem',
+                                        padding: '0 0.5rem'
+                                      }}
                                       onClick={() => window.open(`${window.location.origin}/welcome/${haunt.id}`, '_blank')}
                                     >
-                                      <GamepadIcon className="h-3 w-3 mr-1" />
+                                      <GamepadIcon style={{ height: '0.75rem', width: '0.75rem' }} />
                                       Game: /welcome/{haunt.id}
-                                      <ExternalLink className="h-3 w-3 ml-1" />
+                                      <ExternalLink style={{ height: '0.75rem', width: '0.75rem' }} />
                                     </Button>
                                     <Button 
                                       size="sm" 
                                       variant="ghost"
-                                      className="h-8 w-8 p-0 text-blue-400 hover:bg-blue-600 hover:text-white"
+                                      style={{
+                                        height: '2rem',
+                                        width: '2rem',
+                                        padding: 0,
+                                        color: '#60a5fa',
+                                        backgroundColor: 'transparent',
+                                        border: 'none'
+                                      }}
                                       onClick={() => copyToClipboard(`${window.location.origin}/welcome/${haunt.id}`, "Game URL")}
                                     >
-                                      <Copy className="h-3 w-3" />
+                                      <Copy style={{ height: '0.75rem', width: '0.75rem' }} />
                                     </Button>
                                   </div>
 
                                   {/* Admin Link */}
-                                  <div className="flex items-center gap-2">
+                                  <div style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '0.5rem'
+                                  }}>
                                     <Button 
                                       size="sm" 
                                       variant="outline"
-                                      className="h-8 text-xs border-purple-600 text-purple-400 hover:bg-purple-600 hover:text-white flex-1"
+                                      style={{
+                                        height: '2rem',
+                                        fontSize: '0.75rem',
+                                        border: '1px solid #9333ea',
+                                        color: '#a855f7',
+                                        backgroundColor: 'transparent',
+                                        flex: 1,
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '0.25rem',
+                                        padding: '0 0.5rem'
+                                      }}
                                       onClick={() => window.open(`${window.location.origin}/haunt-admin/${haunt.id}`, '_blank')}
                                     >
-                                      <Settings className="h-3 w-3 mr-1" />
+                                      <Settings style={{ height: '0.75rem', width: '0.75rem' }} />
                                       Admin: /haunt-admin/{haunt.id}
-                                      <ExternalLink className="h-3 w-3 ml-1" />
+                                      <ExternalLink style={{ height: '0.75rem', width: '0.75rem' }} />
                                     </Button>
                                     <Button 
                                       size="sm" 
                                       variant="ghost"
-                                      className="h-8 w-8 p-0 text-purple-400 hover:bg-purple-600 hover:text-white"
+                                      style={{
+                                        height: '2rem',
+                                        width: '2rem',
+                                        padding: 0,
+                                        color: '#a855f7',
+                                        backgroundColor: 'transparent',
+                                        border: 'none'
+                                      }}
                                       onClick={() => copyToClipboard(`${window.location.origin}/haunt-admin/${haunt.id}`, "Admin URL")}
                                     >
-                                      <Copy className="h-3 w-3" />
+                                      <Copy style={{ height: '0.75rem', width: '0.75rem' }} />
                                     </Button>
                                   </div>
 
@@ -1692,11 +1805,24 @@ export default function Admin() {
                                   */}
 
                                   {/* Email Authentication Management */}
-                                  <div className="flex items-center gap-2">
+                                  <div style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '0.5rem'
+                                  }}>
                                     <Button 
                                       size="sm" 
                                       variant="outline"
-                                      className="h-8 text-xs bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-white border-red-600 flex-1"
+                                      style={{
+                                        height: '2rem',
+                                        fontSize: '0.75rem',
+                                        background: 'linear-gradient(to right, #b91c1c, #7c3aed)',
+                                        color: '#ffffff',
+                                        border: '1px solid #dc2626',
+                                        flex: 1,
+                                        opacity: isLoading ? 0.6 : 1,
+                                        cursor: isLoading ? 'not-allowed' : 'pointer'
+                                      }}
                                       onClick={() => {
                                         console.log('Manage Emails button clicked for:', haunt.id, haunt.name);
                                         handleManageEmails(haunt.id, haunt.name).catch(error => {
@@ -1813,12 +1939,26 @@ export default function Admin() {
                                 </div>
 
                                 {/* Game Mode - Display Only */}
-                                <div className="bg-gray-700/30 p-2 rounded">
-                                  <Label className="text-white text-sm">Game Mode</Label>
-                                  <p className="text-gray-300 text-sm mt-1">
+                                <div style={{
+                                  background: 'rgba(55, 65, 81, 0.3)',
+                                  padding: '0.5rem',
+                                  borderRadius: '0.375rem'
+                                }}>
+                                  <Label style={{
+                                    color: '#ffffff',
+                                    fontSize: '0.875rem'
+                                  }}>Game Mode</Label>
+                                  <p style={{
+                                    color: '#d1d5db',
+                                    fontSize: '0.875rem',
+                                    marginTop: '0.25rem'
+                                  }}>
                                     {haunt.mode === 'queue' ? 'Group Mode' : 'Individual Play'}
                                   </p>
-                                  <p className="text-gray-500 text-xs">
+                                  <p style={{
+                                    color: '#6b7280',
+                                    fontSize: '0.75rem'
+                                  }}>
                                     Controlled by haunt owner
                                   </p>
                                 </div>
