@@ -84,8 +84,10 @@ export function TriviaCard({ gameState, onSelectAnswer, onNextQuestion }: Trivia
     return Array.from({ length: 5 }, (_, i) => (
       <div
         key={i}
-        className="w-2 h-2 rounded-full"
         style={{ 
+          width: '0.5rem',
+          height: '0.5rem',
+          borderRadius: '50%',
           backgroundColor: i < difficulty ? accentColor : '#4B5563' 
         }}
       />

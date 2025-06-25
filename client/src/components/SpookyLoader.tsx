@@ -103,8 +103,12 @@ export function SpookyLoader({
       </div>
 
       {/* Main loader */}
-      <div className="glass-card" style={{
+      <div style={{
+        background: 'rgba(0, 0, 0, 0.6)',
+        border: '1px solid rgba(255, 255, 255, 0.05)',
         borderRadius: '0.75rem',
+        boxShadow: '0 0 12px rgba(255, 0, 50, 0.1)',
+        backdropFilter: 'blur(6px)',
         padding: '2rem',
         textAlign: 'center',
         maxWidth: '28rem',
@@ -177,11 +181,12 @@ export function SpookyLoader({
         </div>
 
         {/* Loading text */}
-        <h2 className="creepster" style={{
+        <h2 style={{
           fontSize: '1.5rem',
           color: '#f97316',
           marginBottom: '1rem',
-          animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+          animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          fontFamily: '"Creepster", cursive'
         }}>
           {spookyMessages[currentMessage]}{dots}
         </h2>

@@ -99,18 +99,23 @@ export function GameEndScreen({
 
   return (
     <div style={{position: "fixed", top: 0, right: 0, bottom: 0, left: 0, backgroundColor: "rgba(0, 0, 0, 0.95)", display: "flex", alignItems: "center", justifyContent: "center", padding: "clamp(0.75rem, 3vw, 1rem)", zIndex: 50}}>
-      <div className="glass-card animate-fade-in" style={{
+      <div style={{
+        background: 'rgba(0, 0, 0, 0.6)',
+        border: '1px solid rgba(255, 255, 255, 0.05)',
         borderRadius: '0.75rem',
+        boxShadow: '0 0 12px rgba(255, 0, 50, 0.1)',
+        backdropFilter: 'blur(6px)',
         padding: 'clamp(1rem, 4vw, 1.5rem)',
         maxWidth: 'clamp(24rem, 90vw, 28rem)',
         width: '100%',
         maxHeight: '90vh',
-        overflowY: 'auto'
+        overflowY: 'auto',
+        animation: 'fade-in 0.5s ease-out'
       }}>
-        <div className="text-center">
+        <div style={{ textAlign: 'center' }}>
           {/* Haunt Logo */}
           {gameState.hauntConfig?.logoPath && (
-            <div className="mb-6">
+            <div style={{ marginBottom: '1.5rem' }}>
               <img 
                 src={gameState.hauntConfig.logoPath} 
                 alt={gameState.hauntConfig.name || "Haunt Logo"}
@@ -123,10 +128,11 @@ export function GameEndScreen({
               />
             </div>
           )}
-          <h2 className="creepster" style={{
+          <h2 style={{
             fontSize: 'clamp(1.5rem, 4vw, 1.875rem)',
             color: '#f97316',
-            marginBottom: '0.5rem'
+            marginBottom: '0.5rem',
+            fontFamily: '"Creepster", cursive'
           }}>Game Over</h2>
           <p style={{
             color: '#d1d5db',
