@@ -176,7 +176,16 @@ export function NecromancersGambit() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-900 via-gray-900 to-black text-white flex flex-col items-center justify-center p-4">
+    <div style={{
+      minHeight: '100vh',
+      background: 'linear-gradient(to bottom, #581c87, #374151, #000000)',
+      color: '#ffffff',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '1rem'
+    }}>
       <div className="max-w-6xl w-full">
         
         {/* Header */}
@@ -229,7 +238,13 @@ export function NecromancersGambit() {
 
             {/* Battle Area */}
             {gamePhase === "battle" && playerSelectedCard && necromancerSelectedCard && (
-              <div className=" bg-gray-800/50 rounded-lg p-6 border border-gray-600" className="mb-6">
+              <div style={{
+              backgroundColor: 'rgba(31, 41, 55, 0.5)',
+              borderRadius: '0.5rem',
+              padding: '1.5rem',
+              border: '1px solid #4b5563',
+              marginBottom: '1.5rem'
+            }}>
                 <h3 className="text-xl font-bold  mb-4 text-purple-400" style={{textAlign: "center"}}>Battle in Progress</h3>
                 <div className="flex  items-center" style={{justifyContent: "space-between"}}>
                   <div className=" bg-blue-900/30 rounded-lg p-4 border border-blue-500/30" style={{textAlign: "center"}}>

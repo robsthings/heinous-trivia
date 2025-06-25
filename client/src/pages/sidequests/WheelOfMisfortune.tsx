@@ -153,8 +153,14 @@ export default function WheelOfMisfortune() {
 
   return (
     <div 
-      className="min-h-screen flex -col items-center justify-center relative overflow-hidden" style={{display: "flex"}}
       style={{
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'relative',
+        overflow: 'hidden',
         backgroundImage: 'url(/sidequests/wheel-of-misfortune/wheel-bg.png)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
