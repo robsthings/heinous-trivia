@@ -536,7 +536,7 @@ export default function Info() {
         <div className="max-w-6xl mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-4 md:mb-0">
-              <h3 className="font-nosifer text-xl text-red-500">HEINOUS TRIVIA</h3>
+              <h3 style={{ fontFamily: '"Creepster", cursive', fontSize: '1.25rem', color: '#ef4444' }}>HEINOUS TRIVIA</h3>
               <p className="text-gray-400 text-sm">Taking Over The World - One Queue Line at a Time!</p>
             </div>
             <div className="flex space-x-6 text-sm">
