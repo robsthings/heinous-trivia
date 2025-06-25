@@ -80,7 +80,7 @@ function AnalyticsTab({
       <CardContent>
         {/* Haunt Selection */}
         <div style={{marginBottom: "1.5rem"}}>
-          <Label style={{ color: 'white', fontSize: '0.875rem', fontWeight: '500', marginBottom: '0.5rem', display: 'block' }}>Select Haunt for Analytics</Label>
+          <Label style={{ color: 'white', fontSize: 'clamp(0.75rem, 2vw, 0.875rem)', fontWeight: '500', marginBottom: '0.5rem', display: 'block' }}>Select Haunt for Analytics</Label>
           <SimpleSelect 
             value={selectedAnalyticsHaunt} 
             onValueChange={setSelectedAnalyticsHaunt}
@@ -97,7 +97,7 @@ function AnalyticsTab({
 
         {!selectedAnalyticsHaunt && (
           <div style={{
-            padding: '2rem 0',
+            padding: 'clamp(1rem, 4vw, 2rem) 0',
             textAlign: 'center'
           }}>
             <BarChart3 style={{
@@ -200,7 +200,11 @@ function AnalyticsTab({
                 </div>
 
                 {/* Additional Metrics */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(clamp(200px, 30vw, 300px), 1fr))',
+                  gap: 'clamp(0.75rem, 2vw, 1rem)'
+                }}>
                   <Card className="bg-gray-800/50 border-gray-600">
                     <CardHeader className="pb-3">
                       <CardTitle className="text-white text-sm">Performance Metrics</CardTitle>
@@ -216,11 +220,12 @@ function AnalyticsTab({
                       }}>
                         <span style={{
                           color: '#9ca3af',
-                          fontSize: '0.875rem'
+                          fontSize: 'clamp(0.75rem, 2vw, 0.875rem)'
                         }}>Average Score</span>
                         <span style={{
                           color: '#ffffff',
-                          fontWeight: '600'
+                          fontWeight: '600',
+                          fontSize: 'clamp(0.875rem, 2.5vw, 1rem)'
                         }}>{analyticsData.competitiveMetrics?.averageScore || 0}</span>
                       </div>
                       <div style={{
@@ -1509,91 +1514,119 @@ export default function Admin() {
               <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-7 bg-gray-900/80 border border-gray-600 rounded-lg" style={{ gap: 'clamp(2px, 1vw, 4px)' }}>
                 <TabsTrigger 
                   value="management" 
-                  className="text-xs md:text-sm font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
-                  style={activeTab === 'management' ? {
-                    background: 'linear-gradient(to right, rgb(185, 28, 28), rgb(126, 34, 206))',
-                    color: 'white'
-                  } : {
-                    color: 'white',
-                    backgroundColor: 'rgba(75, 85, 99, 0.3)'
+                  className="font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
+                  style={{
+                    fontSize: 'clamp(0.65rem, 1.8vw, 0.875rem)', 
+                    padding: 'clamp(0.25rem, 1vw, 0.5rem) clamp(0.5rem, 2vw, 1rem)',
+                    ...(activeTab === 'management' ? {
+                      background: 'linear-gradient(to right, rgb(185, 28, 28), rgb(126, 34, 206))',
+                      color: 'white'
+                    } : {
+                      color: 'white',
+                      backgroundColor: 'rgba(75, 85, 99, 0.3)'
+                    })
                   }}
                 >
                   Management
                 </TabsTrigger>
                 <TabsTrigger 
                   value="haunts" 
-                  className="text-xs md:text-sm font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
-                  style={activeTab === 'haunts' ? {
-                    background: 'linear-gradient(to right, rgb(185, 28, 28), rgb(126, 34, 206))',
-                    color: 'white'
-                  } : {
-                    color: 'white',
-                    backgroundColor: 'rgba(75, 85, 99, 0.3)'
+                  className="font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
+                  style={{
+                    fontSize: 'clamp(0.65rem, 1.8vw, 0.875rem)', 
+                    padding: 'clamp(0.25rem, 1vw, 0.5rem) clamp(0.5rem, 2vw, 1rem)',
+                    ...(activeTab === 'haunts' ? {
+                      background: 'linear-gradient(to right, rgb(185, 28, 28), rgb(126, 34, 206))',
+                      color: 'white'
+                    } : {
+                      color: 'white',
+                      backgroundColor: 'rgba(75, 85, 99, 0.3)'
+                    })
                   }}
                 >
                   Haunts
                 </TabsTrigger>
                 <TabsTrigger 
                   value="packs" 
-                  className="text-xs md:text-sm font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
-                  style={activeTab === 'packs' ? {
-                    background: 'linear-gradient(to right, rgb(185, 28, 28), rgb(126, 34, 206))',
-                    color: 'white'
-                  } : {
-                    color: 'white',
-                    backgroundColor: 'rgba(75, 85, 99, 0.3)'
+                  className="font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
+                  style={{
+                    fontSize: 'clamp(0.65rem, 1.8vw, 0.875rem)', 
+                    padding: 'clamp(0.25rem, 1vw, 0.5rem) clamp(0.5rem, 2vw, 1rem)',
+                    ...(activeTab === 'packs' ? {
+                      background: 'linear-gradient(to right, rgb(185, 28, 28), rgb(126, 34, 206))',
+                      color: 'white'
+                    } : {
+                      color: 'white',
+                      backgroundColor: 'rgba(75, 85, 99, 0.3)'
+                    })
                   }}
                 >
                   Packs
                 </TabsTrigger>
                 <TabsTrigger 
                   value="assignments" 
-                  className="text-xs md:text-sm font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
-                  style={activeTab === 'assignments' ? {
-                    background: 'linear-gradient(to right, rgb(185, 28, 28), rgb(126, 34, 206))',
-                    color: 'white'
-                  } : {
-                    color: 'white',
-                    backgroundColor: 'rgba(75, 85, 99, 0.3)'
+                  className="font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
+                  style={{
+                    fontSize: 'clamp(0.65rem, 1.8vw, 0.875rem)', 
+                    padding: 'clamp(0.25rem, 1vw, 0.5rem) clamp(0.5rem, 2vw, 1rem)',
+                    ...(activeTab === 'assignments' ? {
+                      background: 'linear-gradient(to right, rgb(185, 28, 28), rgb(126, 34, 206))',
+                      color: 'white'
+                    } : {
+                      color: 'white',
+                      backgroundColor: 'rgba(75, 85, 99, 0.3)'
+                    })
                   }}
                 >
                   Assignments
                 </TabsTrigger>
                 <TabsTrigger 
                   value="default-ads" 
-                  className="text-xs md:text-sm font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
-                  style={activeTab === 'default-ads' ? {
-                    background: 'linear-gradient(to right, rgb(185, 28, 28), rgb(126, 34, 206))',
-                    color: 'white'
-                  } : {
-                    color: 'white',
-                    backgroundColor: 'rgba(75, 85, 99, 0.3)'
+                  className="font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
+                  style={{
+                    fontSize: 'clamp(0.65rem, 1.8vw, 0.875rem)', 
+                    padding: 'clamp(0.25rem, 1vw, 0.5rem) clamp(0.5rem, 2vw, 1rem)',
+                    ...(activeTab === 'default-ads' ? {
+                      background: 'linear-gradient(to right, rgb(185, 28, 28), rgb(126, 34, 206))',
+                      color: 'white'
+                    } : {
+                      color: 'white',
+                      backgroundColor: 'rgba(75, 85, 99, 0.3)'
+                    })
                   }}
                 >
                   Default Ads
                 </TabsTrigger>
                 <TabsTrigger 
                   value="branding" 
-                  className="text-xs md:text-sm font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
-                  style={activeTab === 'branding' ? {
-                    background: 'linear-gradient(to right, rgb(185, 28, 28), rgb(126, 34, 206))',
-                    color: 'white'
-                  } : {
-                    color: 'white',
-                    backgroundColor: 'rgba(75, 85, 99, 0.3)'
+                  className="font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
+                  style={{
+                    fontSize: 'clamp(0.65rem, 1.8vw, 0.875rem)', 
+                    padding: 'clamp(0.25rem, 1vw, 0.5rem) clamp(0.5rem, 2vw, 1rem)',
+                    ...(activeTab === 'branding' ? {
+                      background: 'linear-gradient(to right, rgb(185, 28, 28), rgb(126, 34, 206))',
+                      color: 'white'
+                    } : {
+                      color: 'white',
+                      backgroundColor: 'rgba(75, 85, 99, 0.3)'
+                    })
                   }}
                 >
                   Branding
                 </TabsTrigger>
                 <TabsTrigger 
                   value="analytics" 
-                  className="text-xs md:text-sm font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
-                  style={activeTab === 'analytics' ? {
-                    background: 'linear-gradient(to right, rgb(185, 28, 28), rgb(126, 34, 206))',
-                    color: 'white'
-                  } : {
-                    color: 'white',
-                    backgroundColor: 'rgba(75, 85, 99, 0.3)'
+                  className="font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
+                  style={{
+                    fontSize: 'clamp(0.65rem, 1.8vw, 0.875rem)', 
+                    padding: 'clamp(0.25rem, 1vw, 0.5rem) clamp(0.5rem, 2vw, 1rem)',
+                    ...(activeTab === 'analytics' ? {
+                      background: 'linear-gradient(to right, rgb(185, 28, 28), rgb(126, 34, 206))',
+                      color: 'white'
+                    } : {
+                      color: 'white',
+                      backgroundColor: 'rgba(75, 85, 99, 0.3)'
+                    })
                   }}
                 >
                   Analytics
