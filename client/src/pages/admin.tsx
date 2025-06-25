@@ -1417,11 +1417,12 @@ export default function Admin() {
     <div style={{
       minHeight: '100vh',
       background: 'linear-gradient(to bottom right, #111827, #581c87, #991b1b)',
-      padding: '1rem'
+      padding: 'clamp(0.5rem, 2vw, 1rem)'
     }}>
       <div style={{
         maxWidth: '56rem',
-        margin: '0 auto'
+        margin: '0 auto',
+        width: '100%'
       }}>
         
         {/* Authentication Status Card */}
@@ -1434,13 +1435,13 @@ export default function Admin() {
           <CardContent style={{ paddingTop: '1.5rem' }}>
             <div style={{textAlign: "center"}}>
               <h3 style={{
-                fontSize: '1.25rem',
+                fontSize: 'clamp(1rem, 3vw, 1.25rem)',
                 fontWeight: 'bold',
                 marginBottom: '0.5rem'
               }}>🔐 Authentication Status</h3>
               <p style={{ marginBottom: '1rem' }}>Status: {authStatus === 'authenticated' ? '✅ Authenticated' : '❌ Not Authenticated'}</p>
               <p style={{
-                fontSize: '0.875rem',
+                fontSize: 'clamp(0.75rem, 2vw, 0.875rem)',
                 marginBottom: '1rem'
               }}>User: {auth.currentUser?.uid || 'None'}</p>
               
@@ -1467,8 +1468,8 @@ export default function Admin() {
                 }}
                 style={{
                   background: 'linear-gradient(to right, #b91c1c, #7c3aed)',
-                  fontSize: '1.125rem',
-                  padding: '0.75rem 2rem',
+                  fontSize: 'clamp(0.875rem, 2.5vw, 1.125rem)',
+                  padding: 'clamp(0.5rem, 2vw, 0.75rem) clamp(1rem, 4vw, 2rem)',
                   color: '#ffffff',
                   border: 'none',
                   borderRadius: '0.5rem',
@@ -1490,7 +1491,7 @@ export default function Admin() {
         }}>
           <CardHeader>
             <CardTitle style={{
-              fontSize: '1.875rem',
+              fontSize: 'clamp(1.25rem, 4vw, 1.875rem)',
               fontWeight: 'bold',
               color: '#ef4444',
               textAlign: 'center'
@@ -1499,12 +1500,13 @@ export default function Admin() {
             </CardTitle>
             <p style={{
               color: '#d1d5db',
-              textAlign: 'center'
+              textAlign: 'center',
+              fontSize: 'clamp(0.875rem, 2.5vw, 1rem)'
             }}>Manage Haunts & Trivia Packs</p>
           </CardHeader>
           <CardContent>
             <Tabs defaultValue="management" className="w-full" onValueChange={(value) => setActiveTab(value)}>
-              <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-7 bg-gray-900/80 border border-gray-600 rounded-lg">
+              <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-7 bg-gray-900/80 border border-gray-600 rounded-lg" style={{ gap: 'clamp(2px, 1vw, 4px)' }}>
                 <TabsTrigger 
                   value="management" 
                   className="text-xs md:text-sm font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
