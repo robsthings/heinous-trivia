@@ -306,7 +306,13 @@ export default function Info() {
             gap: '2rem'
           }}>
             {/* Basic Tier */}
-            <div className="bg-gradient-to-b from-gray-800 to-black border-2 border-gray-600 rounded-lg p-8 " style={{textAlign: "center"}}>
+            <div style={{
+              background: 'linear-gradient(to bottom, #374151 0%, #000000 100%)',
+              border: '2px solid #4b5563',
+              borderRadius: '0.5rem',
+              padding: '2rem',
+              textAlign: "center"
+            }}>
               <h3 className="font-nosifer text-2xl text-white mb-4">BASIC</h3>
               <div className="text-4xl font-bold text-gray-300 " style={{marginBottom: "1.5rem"}}>$99<span className="text-lg">/season</span></div>
               <ul className="text-left space-y-3 mb-8 text-gray-300">
@@ -323,7 +329,15 @@ export default function Info() {
             </div>
 
             {/* Pro Tier - Updated to remove group mode */}
-            <div className="bg-gradient-to-b from-red-900 to-black border-2 border-red-500 rounded-lg p-8  relative transform scale-105" style={{textAlign: "center"}}>
+            <div style={{
+              background: 'linear-gradient(to bottom, #7f1d1d 0%, #000000 100%)',
+              border: '2px solid #ef4444',
+              borderRadius: '0.5rem',
+              padding: '2rem',
+              position: 'relative',
+              transform: 'scale(1.05)',
+              textAlign: "center"
+            }}>
               <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-4 py-1 rounded-full text-sm font-bold">
                 MOST POPULAR
               </div>
@@ -343,7 +357,13 @@ export default function Info() {
             </div>
 
             {/* Premium Tier */}
-            <div className="bg-gradient-to-b from-purple-900 to-black border-2 border-purple-500 rounded-lg p-8 " style={{textAlign: "center"}}>
+            <div style={{
+              background: 'linear-gradient(to bottom, #581c87 0%, #000000 100%)',
+              border: '2px solid #a855f7',
+              borderRadius: '0.5rem',
+              padding: '2rem',
+              textAlign: "center"
+            }}>
               <h3 className="font-nosifer text-2xl text-purple-400 mb-4">PREMIUM</h3>
               <div className="text-4xl font-bold text-white " style={{marginBottom: "1.5rem"}}>$399<span className="text-lg">/season</span></div>
               <ul className="text-left space-y-3 mb-8 text-gray-300">
