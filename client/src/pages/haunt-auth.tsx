@@ -21,17 +21,35 @@ export default function HauntAuth() {
   // Handle redirect flow on component mount
   useEffect(() => {
     const handleEmailLinkRedirect = async () => {
+      console.log('Checking for email link redirect...');
+      console.log('URL search params:', window.location.search);
+      console.log('Full URL:', window.location.href);
+      
       // Check if this is a redirect from email link
-      if (window.location.search.includes('apiKey') || window.location.search.includes('oobCode')) {
+      const urlParams = new URLSearchParams(window.location.search);
+      const hasEmailLinkParams = urlParams.has('apiKey') || urlParams.has('oobCode') || urlParams.has('mode');
+      
+      console.log('Has email link params:', hasEmailLinkParams);
+      
+      if (hasEmailLinkParams) {
+        console.log('Processing email link authentication...');
         setIsCompleting(true);
         
+        // Add a small delay to ensure UI updates
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
         const result = await EmailAuthService.completeEmailSignIn(hauntId);
+        
+        console.log('Authentication result:', result);
         
         if (result.success) {
           toast({
             title: "Authentication Successful",
             description: "Welcome to your haunt admin dashboard!",
           });
+          
+          // Clear URL parameters and redirect
+          window.history.replaceState({}, document.title, `/haunt-auth/${hauntId}`);
           setLocation(`/haunt-admin/${hauntId}`);
         } else {
           toast({

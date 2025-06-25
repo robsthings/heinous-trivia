@@ -50,14 +50,21 @@ export class EmailAuthService {
    */
   static async completeEmailSignIn(hauntId?: string): Promise<EmailAuthResult> {
     try {
+      console.log('Starting email sign-in completion for haunt:', hauntId);
+      console.log('Current URL:', window.location.href);
+      
       // Check if this is an email link sign-in
       if (!isSignInWithEmailLink(auth, window.location.href)) {
+        console.log('Not a valid sign-in link');
         return { success: false, error: 'Invalid authentication link' };
       }
 
       // Get email from localStorage or prompt user
       let email = localStorage.getItem('emailForSignIn');
       const storedHauntId = localStorage.getItem('hauntIdForSignIn');
+      
+      console.log('Stored email:', email);
+      console.log('Stored haunt ID:', storedHauntId);
       
       if (!email) {
         email = window.prompt('Please provide your email for confirmation');
@@ -73,11 +80,15 @@ export class EmailAuthService {
         return { success: false, error: 'Haunt ID is required for authentication' };
       }
 
+      console.log('Completing Firebase sign-in...');
       // Complete the sign-in
       const result = await signInWithEmailLink(auth, email, window.location.href);
+      console.log('Firebase sign-in successful:', result.user?.email);
       
       // Validate user has access to this haunt
+      console.log('Validating haunt access...');
       const hasAccess = await this.validateHauntAccess(email, targetHauntId);
+      console.log('Haunt access validation result:', hasAccess);
       
       if (!hasAccess) {
         // Sign out the user since they don't have access
@@ -96,6 +107,7 @@ export class EmailAuthService {
       localStorage.setItem(`heinous-email-auth-${targetHauntId}`, email);
       localStorage.setItem(`heinous-email-auth-timestamp-${targetHauntId}`, Date.now().toString());
 
+      console.log('Authentication session stored successfully');
       return { success: true, user: result.user };
     } catch (error: any) {
       console.error('Failed to complete email sign-in:', error);
@@ -111,20 +123,24 @@ export class EmailAuthService {
    */
   static async validateHauntAccess(email: string, hauntId: string): Promise<boolean> {
     try {
-      // Check Firebase for haunt configuration
-      const hauntRef = doc(firestore, 'haunts', hauntId);
-      const hauntSnap = await getDoc(hauntRef);
+      console.log('Validating haunt access for email:', email, 'haunt:', hauntId);
+      
+      // Use server API for validation to ensure consistency
+      const response = await fetch(`/api/haunt/${hauntId}/email-auth/validate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.toLowerCase() })
+      });
 
-      if (!hauntSnap.exists()) {
-        console.error('Haunt not found:', hauntId);
+      if (!response.ok) {
+        console.error('Server validation failed:', response.status);
         return false;
       }
 
-      const hauntData = hauntSnap.data();
-      const authorizedEmails = hauntData.authorizedEmails || [];
-
-      // Check if email is in authorized list
-      return authorizedEmails.includes(email.toLowerCase());
+      const result = await response.json();
+      console.log('Server validation result:', result);
+      
+      return result.authorized === true;
     } catch (error) {
       console.error('Failed to validate haunt access:', error);
       return false;
