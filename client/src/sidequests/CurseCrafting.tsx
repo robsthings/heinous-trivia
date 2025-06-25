@@ -238,15 +238,30 @@ export function CurseCrafting() {
               return (
                 <div
                   key={ingredient.id}
-                  className={`relative cursor-pointer transition-all duration-300 transform ${
-                    isDragging ? 'scale-110 rotate-3' : 'hover:scale-105'
-                  } ${
-                    isInCauldron 
-                      ? 'opacity-50 grayscale pointer-events-none' 
-                      : isSelected 
-                        ? 'ring-2 ring-purple-400 bg-purple-900/30' 
-                        : 'hover:ring-2 hover:ring-green-400'
-                  }`}
+                  style={{
+                    position: 'relative',
+                    cursor: isInCauldron ? 'default' : 'pointer',
+                    transition: 'all 0.3s ease',
+                    transform: isDragging ? 'scale(1.1) rotate(3deg)' : 'scale(1)',
+                    opacity: isInCauldron ? 0.5 : 1,
+                    filter: isInCauldron ? 'grayscale(1)' : 'none',
+                    pointerEvents: isInCauldron ? 'none' : 'auto',
+                    border: isSelected ? '2px solid #c084fc' : 'none',
+                    backgroundColor: isSelected ? 'rgba(88, 28, 135, 0.3)' : 'transparent',
+                    borderRadius: '0.5rem'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isInCauldron && !isSelected) {
+                      e.currentTarget.style.border = '2px solid #4ade80';
+                      e.currentTarget.style.transform = 'scale(1.05)';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isInCauldron && !isSelected) {
+                      e.currentTarget.style.border = 'none';
+                      e.currentTarget.style.transform = 'scale(1)';
+                    }
+                  }}
                   draggable={isSelected && !isInCauldron}
                   onClick={() => handleIngredientClick(ingredient)}
                   onDragStart={(e) => isSelected && handleDragStart(e, ingredient)}

@@ -42,11 +42,29 @@ export function SimpleSelect({
                 onValueChange(option.value);
                 setIsOpen(false);
               }}
-              className="w-full px-3 py-2 text-left text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 first:rounded-t last:rounded-b border-b border-gray-700 last:border-b-0"
               style={{ 
-                backgroundColor: 'rgb(17, 24, 39)', 
-                color: 'white',
-                borderColor: 'rgb(55, 65, 81)'
+                width: '100%',
+                padding: '0.5rem 0.75rem',
+                textAlign: 'left',
+                color: '#ffffff',
+                backgroundColor: 'rgb(17, 24, 39)',
+                border: 'none',
+                borderBottom: '1px solid rgb(55, 65, 81)',
+                cursor: 'pointer',
+                transition: 'background-color 0.2s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#374151';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgb(17, 24, 39)';
+              }}
+              onFocus={(e) => {
+                e.currentTarget.style.backgroundColor = '#374151';
+                e.currentTarget.style.outline = 'none';
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgb(17, 24, 39)';
               }}
             >
               {option.label}

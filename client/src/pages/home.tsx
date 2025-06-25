@@ -24,7 +24,12 @@ export default function Home() {
         {/* How to Access */}
         <div className="max-w-2xl mx-auto " style={{textAlign: "center"}}>
           <div className="glass-card rounded-xl p-4 sm:p-6 md:p-8">
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-4 sm:" style={{marginBottom: "1.5rem"}}>
+            <h2 style={{
+              fontSize: 'clamp(1.25rem, 4vw, 1.875rem)',
+              fontWeight: 'bold',
+              color: '#ffffff',
+              marginBottom: "1.5rem"
+            }}>
               How to Enter a Haunt
             </h2>
             <div className="space-y-3 sm:space-y-4 text-gray-300">
