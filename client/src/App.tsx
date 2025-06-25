@@ -20,6 +20,7 @@ import UploadGuidelines from "@/pages/upload-guidelines";
 import Info from "@/pages/info";
 import NotFound from "@/pages/not-found";
 import { TestProgressPage } from "@/pages/test-progress";
+import { TestProgressThemesPage } from "@/pages/test-progress-themes";
 import { MonsterNameGenerator } from "@/pages/sidequests/MonsterNameGenerator";
 import { GloryGrab } from "@/pages/sidequests/GloryGrab";
 import { CrypticCompliments } from "@/pages/sidequests/CrypticCompliments";
