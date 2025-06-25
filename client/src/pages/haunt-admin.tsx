@@ -1177,16 +1177,27 @@ export default function HauntAdmin() {
             }}>
               📝 Custom Trivia Questions
             </CardTitle>
-            <p className="text-gray-400 text-sm mt-2">
-              Create custom questions specific to your haunt. Your <span className="text-white font-medium capitalize">{hauntConfig.tier}</span> tier allows up to{" "}
-              <span className="text-white font-medium">{getQuestionLimit(hauntConfig.tier)}</span> custom questions.
+            <p style={{
+              color: '#9ca3af',
+              fontSize: '0.875rem',
+              marginTop: '0.5rem'
+            }}>
+              Create custom questions specific to your haunt. Your <span style={{ color: '#ffffff', fontWeight: '500', textTransform: 'capitalize' }}>{hauntConfig.tier}</span> tier allows up to{" "}
+              <span style={{ color: '#ffffff', fontWeight: '500' }}>{getQuestionLimit(hauntConfig.tier)}</span> custom questions.
             </p>
-            <div className="mt-3">
+            <div style={{ marginTop: '0.75rem' }}>
               <Link 
                 href="/upload-guidelines" 
-                className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 underline"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.25rem',
+                  fontSize: '0.875rem',
+                  color: '#60a5fa',
+                  textDecoration: 'underline'
+                }}
               >
-                <ExternalLink className="w-3 h-3" />
+                <ExternalLink style={{ width: '0.75rem', height: '0.75rem' }} />
                 Review our Upload Guidelines
               </Link>
             </div>
