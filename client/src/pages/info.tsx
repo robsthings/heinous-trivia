@@ -49,50 +49,137 @@ export default function Info() {
     loadTawkTo();
   }, []);
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div style={{
+      minHeight: '100vh',
+      backgroundColor: '#000000',
+      color: '#ffffff'
+    }}>
       {/* Hero Section */}
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-red-900/20 via-black to-purple-900/20"></div>
-        <div className="relative max-w-6xl mx-auto px-4 py-12 sm:py-20">
+      <div style={{
+        position: 'relative',
+        overflow: 'hidden'
+      }}>
+        <div style={{
+          position: 'absolute',
+          top: 0, right: 0, bottom: 0, left: 0,
+          background: 'linear-gradient(135deg, rgba(127, 29, 29, 0.2) 0%, #000000 50%, rgba(88, 28, 135, 0.2) 100%)'
+        }}></div>
+        <div style={{
+          position: 'relative',
+          maxWidth: '72rem',
+          margin: '0 auto',
+          padding: 'clamp(3rem, 8vw, 5rem) 1rem'
+        }}>
           <div style={{textAlign: "center"}}>
-            <h1 className="font-nosifer text-4xl sm:text-6xl lg:text-7xl text-red-500  animate-pulse" style={{marginBottom: "1.5rem"}}>
+            <h1 style={{
+              fontFamily: '"Nosifer", cursive',
+              fontSize: 'clamp(2.25rem, 8vw, 4.5rem)',
+              color: '#ef4444',
+              animation: 'pulse 2s infinite',
+              marginBottom: "1.5rem"
+            }}>
               HEINOUS TRIVIA
             </h1>
-            <h2 className="text-xl sm:text-2xl text-gray-300 mb-2 max-w-3xl mx-auto leading-relaxed">
+            <h2 style={{
+              fontSize: 'clamp(1.25rem, 4vw, 1.5rem)',
+              color: '#d1d5db',
+              marginBottom: '0.5rem',
+              maxWidth: '48rem',
+              margin: '0 auto 0.5rem auto',
+              lineHeight: '1.6'
+            }}>
               Turn Your Haunted Attraction Into a Game Guests Won't Forget
             </h2>
-            <p className="text-lg sm:text-xl text-gray-400 mb-8 max-w-3xl mx-auto leading-relaxed">
+            <p style={{
+              fontSize: 'clamp(1.125rem, 3vw, 1.25rem)',
+              color: '#9ca3af',
+              marginBottom: '2rem',
+              maxWidth: '48rem',
+              margin: '0 auto 2rem auto',
+              lineHeight: '1.6'
+            }}>
               A fully branded, scream-worthy trivia experience — built for lines, lobbies, and loyalty.
             </p>
             <img 
               src="/image (25).png" 
               alt="Heinous Trivia Horror Experience"
-              className="w-full max-w-2xl mx-auto rounded-lg shadow-2xl border-2 border-red-600"
+              style={{
+                width: '100%',
+                maxWidth: '42rem',
+                margin: '0 auto',
+                borderRadius: '0.5rem',
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+                border: '2px solid #dc2626'
+              }}
             />
           </div>
         </div>
       </div>
 
       {/* Features Section */}
-      <div className="bg-gray-900/50 py-16">
-        <div className="max-w-6xl mx-auto px-4">
-          <h2 className="font-nosifer text-3xl sm:text-4xl text-orange-500  mb-12" style={{textAlign: "center"}}>
+      <div style={{
+        backgroundColor: 'rgba(17, 24, 39, 0.5)',
+        padding: '4rem 0'
+      }}>
+        <div style={{
+          maxWidth: '72rem',
+          margin: '0 auto',
+          padding: '0 1rem'
+        }}>
+          <h2 style={{
+            fontFamily: '"Nosifer", cursive',
+            fontSize: 'clamp(1.875rem, 6vw, 2.25rem)',
+            color: '#f97316',
+            marginBottom: '3rem',
+            textAlign: "center"
+          }}>
             Unleash Terror Through Trivia
           </h2>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gap: '2rem'
+          }}>
             {/* For Your Guests */}
-            <div className="bg-black/60 border border-red-600 rounded-lg p-6">
-              <h3 className="text-xl font-bold text-red-400 mb-4">👻 For Your Guests</h3>
-              <ul className="space-y-3 text-gray-300">
-                <li className="flex items-start gap-2">
+            <div style={{
+              backgroundColor: 'rgba(0, 0, 0, 0.6)',
+              border: '1px solid #dc2626',
+              borderRadius: '0.5rem',
+              padding: '1.5rem'
+            }}>
+              <h3 style={{
+                fontSize: '1.25rem',
+                fontWeight: 'bold',
+                color: '#f87171',
+                marginBottom: '1rem'
+              }}>👻 For Your Guests</h3>
+              <ul style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.75rem',
+                color: '#d1d5db'
+              }}>
+                <li style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: '0.5rem'
+                }}>
                   <span>🎮</span>
                   <span>Mobile gameplay on any device</span>
                 </li>
-                <li className="flex items-start gap-2">
+                <li style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: '0.5rem'
+                }}>
                   <span>🧠</span>
                   <span>Custom trivia that fits your brand</span>
                 </li>
-                <li className="flex items-start gap-2">
+                <li style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: '0.5rem'
+                }}>
                   <span>🏆</span>
                   <span>Leaderboards + multiplayer = guests stay engaged</span>
                 </li>
@@ -100,18 +187,45 @@ export default function Info() {
             </div>
 
             {/* For You */}
-            <div className="bg-black/60 border border-red-600 rounded-lg p-6">
-              <h3 className="text-xl font-bold text-red-400 mb-4">🧙‍♂️ For You</h3>
-              <ul className="space-y-3 text-gray-300">
-                <li className="flex items-start gap-2">
+            <div style={{
+              backgroundColor: 'rgba(0, 0, 0, 0.6)',
+              border: '1px solid #dc2626',
+              borderRadius: '0.5rem',
+              padding: '1.5rem'
+            }}>
+              <h3 style={{
+                fontSize: '1.25rem',
+                fontWeight: 'bold',
+                color: '#f87171',
+                marginBottom: '1rem'
+              }}>🧙‍♂️ For You</h3>
+              <ul style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.75rem',
+                color: '#d1d5db'
+              }}>
+                <li style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: '0.5rem'
+                }}>
                   <span>📈</span>
                   <span>Live analytics on player activity</span>
                 </li>
-                <li className="flex items-start gap-2">
+                <li style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: '0.5rem'
+                }}>
                   <span>🎨</span>
                   <span>Complete theme control (logos, colors, ads)</span>
                 </li>
-                <li className="flex items-start gap-2">
+                <li style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: '0.5rem'
+                }}>
                   <span>⚙️</span>
                   <span>Easy setup – no devs, no hassle</span>
                 </li>
@@ -119,18 +233,45 @@ export default function Info() {
             </div>
 
             {/* Add-On Revenue */}
-            <div className="bg-black/60 border border-red-600 rounded-lg p-6">
-              <h3 className="text-xl font-bold text-red-400 mb-4">🧳 Add-On Revenue</h3>
-              <ul className="space-y-3 text-gray-300">
-                <li className="flex items-start gap-2">
+            <div style={{
+              backgroundColor: 'rgba(0, 0, 0, 0.6)',
+              border: '1px solid #dc2626',
+              borderRadius: '0.5rem',
+              padding: '1.5rem'
+            }}>
+              <h3 style={{
+                fontSize: '1.25rem',
+                fontWeight: 'bold',
+                color: '#f87171',
+                marginBottom: '1rem'
+              }}>🧳 Add-On Revenue</h3>
+              <ul style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.75rem',
+                color: '#d1d5db'
+              }}>
+                <li style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: '0.5rem'
+                }}>
                   <span>💰</span>
                   <span>In-game ad slots (for your merch or sponsors)</span>
                 </li>
-                <li className="flex items-start gap-2">
+                <li style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: '0.5rem'
+                }}>
                   <span>🔁</span>
                   <span>Return play incentives</span>
                 </li>
-                <li className="flex items-start gap-2">
+                <li style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: '0.5rem'
+                }}>
                   <span>🎟️</span>
                   <span>Event-based upgrades (holiday themes, seasonal packs)</span>
                 </li>
@@ -141,13 +282,29 @@ export default function Info() {
       </div>
 
       {/* Pricing Section */}
-      <div className="py-16">
-        <div className="max-w-6xl mx-auto px-4">
-          <h2 className="font-nosifer text-3xl sm:text-4xl text-orange-500  mb-12" style={{textAlign: "center"}}>
+      <div style={{
+        padding: '4rem 0'
+      }}>
+        <div style={{
+          maxWidth: '72rem',
+          margin: '0 auto',
+          padding: '0 1rem'
+        }}>
+          <h2 style={{
+            fontFamily: '"Nosifer", cursive',
+            fontSize: 'clamp(1.875rem, 6vw, 2.25rem)',
+            color: '#f97316',
+            marginBottom: '3rem',
+            textAlign: "center"
+          }}>
             Choose Your Level of Terror
           </h2>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gap: '2rem'
+          }}>
             {/* Basic Tier */}
             <div className="bg-gradient-to-b from-gray-800 to-black border-2 border-gray-600 rounded-lg p-8 " style={{textAlign: "center"}}>
               <h3 className="font-nosifer text-2xl text-white mb-4">BASIC</h3>
@@ -206,28 +363,80 @@ export default function Info() {
           </div>
           
           {/* Introductory Pricing Sticker */}
-          <div className="flex justify-center mt-8">
-            <div className="bg-gradient-to-r from-yellow-500 to-orange-500 text-black px-4 py-2 rounded-lg transform -rotate-6 shadow-lg">
-              <span className="font-bold text-sm">🎃 Introductory Pricing!</span>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            marginTop: '2rem'
+          }}>
+            <div style={{
+              background: 'linear-gradient(to right, #eab308 0%, #f97316 100%)',
+              color: '#000000',
+              padding: '0.5rem 1rem',
+              borderRadius: '0.5rem',
+              transform: 'rotate(-6deg)',
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+            }}>
+              <span style={{
+                fontWeight: 'bold',
+                fontSize: '0.875rem'
+              }}>🎃 Introductory Pricing!</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* CTA Section */}
-      <div className="bg-gradient-to-r from-red-900 via-black to-red-900 py-16">
-        <div className="max-w-4xl mx-auto  px-4" style={{textAlign: "center"}}>
-          <h2 className="font-nosifer text-3xl sm:text-4xl text-white " style={{marginBottom: "1.5rem"}}>
+      <div style={{
+        background: 'linear-gradient(to right, #7f1d1d 0%, #000000 50%, #7f1d1d 100%)',
+        padding: '4rem 0'
+      }}>
+        <div style={{
+          maxWidth: '64rem',
+          margin: '0 auto',
+          padding: '0 1rem',
+          textAlign: "center"
+        }}>
+          <h2 style={{
+            fontFamily: '"Nosifer", cursive',
+            fontSize: 'clamp(1.875rem, 6vw, 2.25rem)',
+            color: '#ffffff',
+            marginBottom: "1.5rem"
+          }}>
             Ready to Terrify Your Audience?
           </h2>
-          <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+          <p style={{
+            fontSize: '1.25rem',
+            color: '#d1d5db',
+            marginBottom: '2rem',
+            maxWidth: '42rem',
+            margin: '0 auto 2rem auto'
+          }}>
             Join the ranks of entertainment venues that have transformed their customer experience with Heinous Trivia
           </p>
           <a
             href="mailto:ResirWrecked@yahoo.com?subject=Heinous Trivia Inquiry"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block bg-red-600 hover:bg-red-700 text-white font-bold text-xl px-12 py-4 rounded-lg shadow-2xl transform hover:scale-105 transition-all duration-200"
+            style={{
+              display: 'inline-block',
+              backgroundColor: '#dc2626',
+              color: '#ffffff',
+              fontWeight: 'bold',
+              fontSize: '1.25rem',
+              padding: '1rem 3rem',
+              borderRadius: '0.5rem',
+              boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+              textDecoration: 'none',
+              transition: 'all 0.2s ease'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.backgroundColor = '#b91c1c';
+              e.currentTarget.style.transform = 'scale(1.05)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.backgroundColor = '#dc2626';
+              e.currentTarget.style.transform = 'scale(1)';
+            }}
           >
             Book Your Free Demo Now
           </a>

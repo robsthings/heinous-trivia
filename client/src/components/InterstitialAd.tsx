@@ -315,7 +315,10 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
           </div>
           
           {/* Ad Title and Description */}
-          <div className="text-center max-w-2xl">
+          <div style={{
+            textAlign: 'center',
+            maxWidth: '42rem'
+          }}>
             <h4 
               style={{
                 fontFamily: '"Creepster", cursive',
@@ -342,8 +345,20 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
         </div>
         
         {/* Action Buttons */}
-        <div className="px-4 pb-8 flex flex-col items-center space-y-4">
-          <div className="w-full max-w-md space-y-3">
+        <div style={{
+          padding: '0 1rem 2rem 1rem',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '1rem'
+        }}>
+          <div style={{
+            width: '100%',
+            maxWidth: '28rem',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '0.75rem'
+          }}>
             {hasValidLink && (
               <button
                 onClick={handleVisitAd}
