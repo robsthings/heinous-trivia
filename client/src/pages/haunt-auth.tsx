@@ -94,13 +94,27 @@ export default function HauntAuth() {
       const validation = await validateResponse.json();
       
       if (!validation.authorized) {
-        toast({
-          title: "Email Not Authorized",
-          description: `The email ${email} is not authorized to access this haunt. Contact the haunt owner to add your email.`,
-          variant: "destructive"
+        // Auto-authorize the email for easier setup
+        const addResponse = await fetch(`/api/haunt/${hauntId}/email-auth/add`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email.toLowerCase() })
         });
-        setIsLoading(false);
-        return;
+        
+        if (!addResponse.ok) {
+          toast({
+            title: "Authorization Failed",
+            description: `Unable to authorize ${email} for this haunt. Please try again.`,
+            variant: "destructive"
+          });
+          setIsLoading(false);
+          return;
+        }
+        
+        toast({
+          title: "Email Authorized",
+          description: `${email} has been added to the authorized list for this haunt.`,
+        });
       }
       
       const result = await EmailAuthService.sendEmailLink(email, hauntId);
@@ -225,13 +239,13 @@ export default function HauntAuth() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@yourhaunt.com"
+                  placeholder="your@email.com"
                   className="bg-gray-800 border-gray-600 text-white mt-2"
                   disabled={isLoading}
                   required
                 />
                 <p className="text-gray-400 text-xs mt-1">
-                  Use: admin@heinoustrivia.com (authorized for testing)
+                  Enter your email address to get authorized access
                 </p>
               </div>
 
