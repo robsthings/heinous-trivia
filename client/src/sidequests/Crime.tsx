@@ -253,7 +253,7 @@ export function Crime() {
         minHeight: '100vh',
         backgroundImage: 'url("/sidequests/crime/game-board.png")',
         backgroundSize: gameState.phase === 'gameplay' || gameState.phase === 'reshuffling' ? '150%' : 'cover',
-        backgroundPosition: gameState.phase === 'gameplay' || gameState.phase === 'reshuffling' ? 'left center' : 'center',
+        backgroundPosition: gameState.phase === 'gameplay' || gameState.phase === 'reshuffling' ? 'right center' : 'center',
         display: 'flex',
         flexDirection: 'column' as const,
         alignItems: 'center' as const,
@@ -286,7 +286,7 @@ export function Crime() {
           }
           100% { 
             backgroundSize: 150%; 
-            backgroundPosition: left center; 
+            backgroundPosition: right center; 
           }
         }
         
