@@ -620,94 +620,67 @@ export function LabEscape() {
           </div>
         )}
 
-        {/* Failure Phase Content */}
-        {gameState.gamePhase === 'failure' && (
+        {/* Failure Phase Buttons - Fixed at Bottom */}
+        {gameState.gamePhase === 'failure' && gameState.failAnimationPhase === 'complete' && (
           <div style={{
-            textAlign: 'center',
-            background: 'rgba(0, 0, 0, 0.8)',
-            border: '3px solid #ef4444',
-            borderRadius: '1rem',
-            padding: 'clamp(2rem, 5vw, 4rem)',
-            maxWidth: '90%',
-            backdropFilter: 'blur(15px)',
-            boxShadow: '0 0 40px rgba(239, 68, 68, 0.3)',
-            position: 'relative',
+            position: 'fixed',
+            bottom: '2rem',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            display: 'flex',
+            flexDirection: window.innerWidth < 640 ? 'column' : 'row',
+            gap: '1rem',
+            justifyContent: 'center',
             zIndex: '10000'
           }}>
-            <h2 style={{
-              fontSize: 'clamp(2rem, 5vw, 3rem)',
-              color: '#ef4444',
-              marginBottom: '1.5rem',
-              fontFamily: 'Creepster, cursive',
-              textShadow: '0 0 20px rgba(239, 68, 68, 0.8)'
-            }}>
-              💀 TRAPPED FOREVER! 💀
-            </h2>
-            <p style={{
-              fontSize: 'clamp(1rem, 3vw, 1.25rem)',
-              color: '#ffffff',
-              marginBottom: '2rem',
-              lineHeight: '1.6'
-            }}>
-              {gameState.message}
-            </p>
-            {gameState.failAnimationPhase === 'complete' && (
-              <div style={{
-                display: 'flex',
-                flexDirection: window.innerWidth < 640 ? 'column' : 'row',
-                gap: '1rem',
-                justifyContent: 'center'
-              }}>
-                <button
-                onClick={resetGame}
-                style={{
-                  padding: '1rem 2rem',
-                  fontSize: 'clamp(1rem, 3vw, 1.125rem)',
-                  fontWeight: 'bold',
-                  background: 'linear-gradient(to right, #a855f7, #7c3aed)',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '0.5rem',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'scale(1.05)';
-                  e.currentTarget.style.boxShadow = '0 0 20px rgba(168, 85, 247, 0.4)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'scale(1)';
-                  e.currentTarget.style.boxShadow = 'none';
-                }}
-              >
-                TRY AGAIN
-              </button>
-              <button
-                onClick={navigateToGame}
-                style={{
-                  padding: '1rem 2rem',
-                  fontSize: 'clamp(1rem, 3vw, 1.125rem)',
-                  fontWeight: 'bold',
-                  background: 'linear-gradient(to right, #ff6b35, #dc2626)',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '0.5rem',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'scale(1.05)';
-                  e.currentTarget.style.boxShadow = '0 0 20px rgba(255, 107, 53, 0.4)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'scale(1)';
-                  e.currentTarget.style.boxShadow = 'none';
-                }}
-              >
-                RETURN TO GAME
-              </button>
-            </div>
-            )}
+            <button
+            onClick={resetGame}
+            style={{
+              padding: '1rem 2rem',
+              fontSize: 'clamp(1rem, 3vw, 1.125rem)',
+              fontWeight: 'bold',
+              background: 'linear-gradient(to right, #a855f7, #7c3aed)',
+              color: 'white',
+              border: 'none',
+              borderRadius: '0.5rem',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'scale(1.05)';
+              e.currentTarget.style.boxShadow = '0 0 20px rgba(168, 85, 247, 0.4)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'scale(1)';
+              e.currentTarget.style.boxShadow = 'none';
+            }}
+          >
+            TRY AGAIN
+          </button>
+          <button
+            onClick={navigateToGame}
+            style={{
+              padding: '1rem 2rem',
+              fontSize: 'clamp(1rem, 3vw, 1.125rem)',
+              fontWeight: 'bold',
+              background: 'linear-gradient(to right, #ff6b35, #dc2626)',
+              color: 'white',
+              border: 'none',
+              borderRadius: '0.5rem',
+              cursor: 'pointer',
+              transition: 'all 0.3s ease'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'scale(1.05)';
+              e.currentTarget.style.boxShadow = '0 0 20px rgba(255, 107, 53, 0.4)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'scale(1)';
+              e.currentTarget.style.boxShadow = 'none';
+            }}
+          >
+            RETURN TO GAME
+          </button>
           </div>
         )}
       </div>
