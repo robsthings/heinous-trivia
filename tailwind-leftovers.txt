@@ -1,0 +1,1510 @@
+client/src/components/sidequests/face-the-chupacabra.tsx:      <div className=" gap-2 mb-4 justify-center" className="flex-center">
+client/src/components/sidequests/face-the-chupacabra.tsx:      className="min-h-screen bg-cover bg-center bg-no-repeat flex -col  justify-center p-4 text-white relative" style={{alignItems: "center"}} className="flex-center"
+client/src/components/sidequests/face-the-chupacabra.tsx:      <div className="absolute inset-0 bg-black/40"></div>
+client/src/components/sidequests/face-the-chupacabra.tsx:      <div className="relative z-10  max-w-lg w-full" className="text-center">
+client/src/components/sidequests/face-the-chupacabra.tsx:            <div className="text-center">
+client/src/components/sidequests/face-the-chupacabra.tsx:              <h1 className="text-5xl font-bold text-red-500 mb-4 drop-shadow-lg" style={{ fontFamily: 'Creepster, cursive' }}>
+client/src/components/sidequests/face-the-chupacabra.tsx:              <p className="text-xl text-gray-200">
+client/src/components/sidequests/face-the-chupacabra.tsx:              className="bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-xl transition-all hover:scale-105 shadow-lg"
+client/src/components/sidequests/face-the-chupacabra.tsx:            <h2 className="text-3xl font-bold text-red-500 mb-4">Choose Your Weapon!</h2>
+client/src/components/sidequests/face-the-chupacabra.tsx:            <div className=" gap-3 justify-center mb-4" className="flex-center">
+client/src/components/sidequests/face-the-chupacabra.tsx:                    <div className="w-8 h-20 border-2 border-dashed border-gray-600 rounded opacity-30"></div>
+client/src/components/sidequests/face-the-chupacabra.tsx:              <div className="grid grid-cols-3 gap-4">
+client/src/components/sidequests/face-the-chupacabra.tsx:                    <div className="text-sm font-medium">{choice.label}</div>
+client/src/components/sidequests/face-the-chupacabra.tsx:                      <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-black/90 text-red-400 px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+client/src/components/sidequests/face-the-chupacabra.tsx:                <div className="grid grid-cols-2 gap-8 mb-4">
+client/src/components/sidequests/face-the-chupacabra.tsx:                  <div className="text-center">
+client/src/components/sidequests/face-the-chupacabra.tsx:                    <h3 className="text-lg font-bold mb-2">You</h3>
+client/src/components/sidequests/face-the-chupacabra.tsx:                  <div className="text-center">
+client/src/components/sidequests/face-the-chupacabra.tsx:                    <h3 className="text-lg font-bold mb-2">Chupacabra</h3>
+client/src/components/sidequests/face-the-chupacabra.tsx:                <div className="text-2xl font-bold">
+client/src/components/sidequests/face-the-chupacabra.tsx:                    <div className="text-green-400">
+client/src/components/sidequests/face-the-chupacabra.tsx:                    <div className="text-red-400">
+client/src/components/sidequests/face-the-chupacabra.tsx:                    <div className="text-yellow-400">It's a Tie!</div>
+client/src/components/sidequests/face-the-chupacabra.tsx:            <h2 className="text-4xl font-bold text-green-400 mb-4">🎉 ESCAPED! 🎉</h2>
+client/src/components/sidequests/face-the-chupacabra.tsx:            <p className="text-xl text-gray-200 " className="mb-6">
+client/src/components/sidequests/face-the-chupacabra.tsx:                className="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition-all hover:scale-105 shadow-lg"
+client/src/components/sidequests/face-the-chupacabra.tsx:                className="block bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg transition-all hover:scale-105 shadow-lg"
+client/src/components/sidequests/face-the-chupacabra.tsx:              className="fixed inset-0 w-full h-full bg-cover bg-center bg-no-repeat animate-slide-down z-0"
+client/src/components/sidequests/face-the-chupacabra.tsx:              <h2 className="text-4xl font-bold text-red-500 mb-4">💀 GAME OVER 💀</h2>
+client/src/components/RootRedirector.tsx:    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black   justify-center" style={{alignItems: "center"}} className="flex-center">
+client/src/components/RootRedirector.tsx:      <div className="text-center">
+client/src/components/RootRedirector.tsx:        <div className="animate-spin w-12 h-12 border-4 border-red-500 border-t-transparent rounded-full mx-auto mb-4"></div>
+client/src/components/RootRedirector.tsx:        <p className="text-gray-400 creepster text-lg">
+client/src/components/CustomProgressBar.tsx:        className={`relative w-full h-4 rounded-full overflow-hidden ${className}`}
+client/src/components/CustomProgressBar.tsx:          className="h-full transition-all duration-300 ease-out rounded-full"
+client/src/components/CustomProgressBar.tsx:            className="absolute inset-0 rounded-full opacity-30"
+client/src/components/CustomProgressBar.tsx:    <div className={`relative w-full h-4 bg-gray-800 rounded-full overflow-hidden ${className}`}>
+client/src/components/CustomProgressBar.tsx:        className="h-full bg-gradient-to-r from-red-600 to-orange-500 transition-all duration-300 ease-out rounded-full"
+client/src/components/TriviaCard.tsx:      <div className="glass-card rounded-xl p-6 mt-4 animate-fade-in">
+client/src/components/GameEndScreen.tsx:              <div className="text-orange-400 text-sm font-bold mt-2">
+client/src/components/DynamicSidequestLoader.tsx:      <div className={`min-h-screen bg-black text-white flex items-center justify-center ${className}`}>
+client/src/components/DynamicSidequestLoader.tsx:        <div className="text-center">
+client/src/components/DynamicSidequestLoader.tsx:          <h1 className="text-4xl font-bold text-purple-500 mb-4">Quest Not Found</h1>
+client/src/components/DynamicSidequestLoader.tsx:          <p className="text-xl">This sidequest has vanished into the void</p>
+client/src/components/DynamicSidequestLoader.tsx:      <div className={`min-h-screen bg-black text-white flex items-center justify-center ${className}`}>
+client/src/components/DynamicSidequestLoader.tsx:        <div className="text-center">
+client/src/components/DynamicSidequestLoader.tsx:          <h1 className="text-4xl font-bold text-yello00 mb-4" style={{width: "1.25rem"}}>Quest Under Construction</h1>
+client/src/components/DynamicSidequestLoader.tsx:          <p className="text-xl mb-4">{sidequest.name}</p>
+client/src/components/DynamicSidequestLoader.tsx:          <p className="text-gray-400">{sidequest.description}</p>
+client/src/components/DynamicSidequestLoader.tsx:          <p className="text-sm  mt-4" style={{color: "#6b7280"}}>Component type: {sidequest.componentType}</p>
+client/src/components/DynamicSidequestLoader.tsx:    <div className={`min-h-screen bg-black text-white ${className}`}>
+client/src/components/DynamicSidequestLoader.tsx:      <div className={`p-6 ${className}`}>
+client/src/components/DynamicSidequestLoader.tsx:      <div className={`p-6 text-center ${className}`}>
+client/src/components/DynamicSidequestLoader.tsx:        <h2 className="text-2xl font-bold text-red-500 mb-4">Failed to Load Quests</h2>
+client/src/components/DynamicSidequestLoader.tsx:        <p className="text-gray-400">Error: {error.message}</p>
+client/src/components/DynamicSidequestLoader.tsx:      <div className={`p-6 text-center ${className}`}>
+client/src/components/DynamicSidequestLoader.tsx:        <h2 className="text-2xl font-bold text-purple-500 mb-4">No Quests Available</h2>
+client/src/components/DynamicSidequestLoader.tsx:        <p className="text-gray-400">Check back later for new supernatural challenges</p>
+client/src/components/DynamicSidequestLoader.tsx:    <div className={`p-6 ${className}`}>
+client/src/components/DynamicSidequestLoader.tsx:      <h2 className="text-3xl font-bold text-purple-400 " className="mb-6">Available Sidequests</h2>
+client/src/components/DynamicSidequestLoader.tsx:      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+client/src/components/DynamicSidequestLoader.tsx:      className="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-purple-500 cursor-pointer transition-all duration-300 hover:transform hover:scale-105"
+client/src/components/DynamicSidequestLoader.tsx:        <h3 className="text-xl font-bold text-white">{sidequest.name}</h3>
+client/src/components/DynamicSidequestLoader.tsx:        <span className={`px-2 py-1 rounded text-xs font-bold ${getTierColor(sidequest.requiredTier)}`}>
+client/src/components/DynamicSidequestLoader.tsx:      <p className=" mb-4 text-sm leading-relaxed" className="text-gray-300">
+client/src/components/DynamicSidequestLoader.tsx:        <span className=" text-sm" className="text-gray-400">
+client/src/pages/sidequests/SpectralMemory.tsx:    <div className="min-h-screen bg-gradient-to-b from-indigo-900 via-purple-900 to-black text-white flex flex-col items-center justify-center p-4">
+client/src/pages/sidequests/SpectralMemory.tsx:          <h1 className="text-4xl lg:text-6xl font-bold text-purple-400 mb-4 tracking-wider">
+client/src/pages/sidequests/SpectralMemory.tsx:          <p className="text-lg text-gray-300">
+client/src/pages/sidequests/SpectralMemory.tsx:          <div className=" bg-black/50 backdrop-blur-sm p-8 rounded-lg border border-purple-500/30" style={{textAlign: "center"}}>
+client/src/pages/sidequests/SpectralMemory.tsx:              <span className="text-8xl">🔮</span>
+client/src/pages/sidequests/SpectralMemory.tsx:            <h2 className="text-2xl font-bold text-purple-400 mb-4">The Spectral Test</h2>
+client/src/pages/sidequests/SpectralMemory.tsx:            <p className="text-gray-300  max-w-md mx-auto" className="mb-6">
+client/src/pages/sidequests/SpectralMemory.tsx:              className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 text-lg"
+client/src/pages/sidequests/SpectralMemory.tsx:            <div className="flex  items-center  bg-black/30 rounded-lg p-4" style={{justifyContent: "space-between"}} className="mb-6">
+client/src/pages/sidequests/SpectralMemory.tsx:                <div className="text-2xl font-bold text-blue-400">{matches}</div>
+client/src/pages/sidequests/SpectralMemory.tsx:                <div className="text-sm text-gray-400">Pairs Found</div>
+client/src/pages/sidequests/SpectralMemory.tsx:                <div className="text-xl text-purple-400">{moves}</div>
+client/src/pages/sidequests/SpectralMemory.tsx:                <div className="text-sm text-gray-400">Moves</div>
+client/src/pages/sidequests/SpectralMemory.tsx:                <div className={`text-2xl font-bold ${timeLeft <= 10 ? 'text-red-400 animate-pulse' : 'text-green-400'}`}>
+client/src/pages/sidequests/SpectralMemory.tsx:                <div className="text-sm text-gray-400">Remaining</div>
+client/src/pages/sidequests/SpectralMemory.tsx:            <div className="  bg-purple-900/20 rounded-lg p-4 border border-purple-500/30" className="mb-6" style={{textAlign: "center"}}>
+client/src/pages/sidequests/SpectralMemory.tsx:              <p className={`text-purple-300 italic ${spectralEvent ? 'animate-pulse' : ''}`}>
+client/src/pages/sidequests/SpectralMemory.tsx:            <div className={`grid grid-cols-4 gap-4 max-w-md mx-auto transition-all duration-500 ${
+client/src/pages/sidequests/SpectralMemory.tsx:            <div className={`bg-black/50 backdrop-blur-sm p-8 rounded-lg border mb-6 ${
+client/src/pages/sidequests/SpectralMemory.tsx:                <span className="text-8xl">
+client/src/pages/sidequests/SpectralMemory.tsx:              <h2 className={`text-3xl font-bold mb-4 ${
+client/src/pages/sidequests/SpectralMemory.tsx:              <p className="text-gray-300 mb-4">
+client/src/pages/sidequests/SpectralMemory.tsx:              <div className="  bg-gray-800/50 rounded-lg p-4" className="mb-6" style={{textAlign: "center"}}>
+client/src/pages/sidequests/SpectralMemory.tsx:                <div className="text-lg font-bold text-purple-400 mb-2">Final Score</div>
+client/src/pages/sidequests/SpectralMemory.tsx:                <div className="grid grid-cols-2 gap-4">
+client/src/pages/sidequests/SpectralMemory.tsx:                    <div className="text-2xl font-bold text-blue-400">{matches}/6</div>
+client/src/pages/sidequests/SpectralMemory.tsx:                    <div className="text-sm text-gray-400">Pairs Found</div>
+client/src/pages/sidequests/SpectralMemory.tsx:                    <div className="text-2xl font-bold text-yellow-400">{moves}</div>
+client/src/pages/sidequests/SpectralMemory.tsx:                    <div className="text-sm text-gray-400">Total Moves</div>
+client/src/pages/sidequests/SpectralMemory.tsx:              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+client/src/pages/sidequests/SpectralMemory.tsx:                  className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3"
+client/src/pages/sidequests/SpectralMemory.tsx:                  <Button className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 w-full">
+client/src/pages/sidequests/PhantomsPuzzle.tsx:    <div className="min-h-screen bg-gradient-to-b from-blue-900 via-indigo-900 to-black text-white flex flex-col items-center justify-center p-4">
+client/src/pages/sidequests/PhantomsPuzzle.tsx:          <h1 className="text-4xl lg:text-6xl font-bold text-blue-400 mb-4 tracking-wider">
+client/src/pages/sidequests/PhantomsPuzzle.tsx:          <p className="text-lg text-gray-300">
+client/src/pages/sidequests/PhantomsPuzzle.tsx:          <div className=" bg-black/50 backdrop-blur-sm p-8 rounded-lg border border-blue-500/30" style={{textAlign: "center"}}>
+client/src/pages/sidequests/PhantomsPuzzle.tsx:              <span className="text-8xl">👻</span>
+client/src/pages/sidequests/PhantomsPuzzle.tsx:            <h2 className="text-2xl font-bold text-blue-400 mb-4">The Phantom's Challenge</h2>
+client/src/pages/sidequests/PhantomsPuzzle.tsx:            <p className="text-gray-300  max-w-md mx-auto" className="mb-6">
+client/src/pages/sidequests/PhantomsPuzzle.tsx:              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg"
+client/src/pages/sidequests/PhantomsPuzzle.tsx:            <div className="flex  items-center  bg-black/30 rounded-lg p-4" style={{justifyContent: "space-between"}} className="mb-6">
+client/src/pages/sidequests/PhantomsPuzzle.tsx:                <div className="text-2xl font-bold text-blue-400">{level}</div>
+client/src/pages/sidequests/PhantomsPuzzle.tsx:                <div className="text-sm text-gray-400">Level</div>
+client/src/pages/sidequests/PhantomsPuzzle.tsx:                <div className="text-xl text-purple-400">{score}</div>
+client/src/pages/sidequests/PhantomsPuzzle.tsx:                <div className="text-sm text-gray-400">Score</div>
+client/src/pages/sidequests/PhantomsPuzzle.tsx:                <div className={`text-2xl font-bold ${mistakes >= 2 ? 'text-red-400' : mistakes >= 1 ? 'text-yellow-400' : 'text-green-400'}`}>
+client/src/pages/sidequests/PhantomsPuzzle.tsx:                <div className="text-sm text-gray-400">Lives Left</div>
+client/src/pages/sidequests/PhantomsPuzzle.tsx:              <div className={`text-4xl font-bold ${
+client/src/pages/sidequests/PhantomsPuzzle.tsx:              <div className="text-sm text-gray-400">
+client/src/pages/sidequests/PhantomsPuzzle.tsx:            <div className="  bg-blue-900/20 rounded-lg p-4 border border-blue-500/30" className="mb-6" style={{textAlign: "center"}}>
+client/src/pages/sidequests/PhantomsPuzzle.tsx:              <p className="text-blue-300 italic">"{getPhantomReaction()}"</p>
+client/src/pages/sidequests/PhantomsPuzzle.tsx:                <h3 className="text-xl font-bold  mb-4 text-blue-400" style={{textAlign: "center"}}>Study This Pattern</h3>
+client/src/pages/sidequests/PhantomsPuzzle.tsx:                <div className="flex justify-center gap-3 flex-wrap bg-gray-800/50 rounded-lg p-6 border border-gray-600">
+client/src/pages/sidequests/PhantomsPuzzle.tsx:                      className="w-16 h-16 bg-blue-600/30 rounded-lg flex items-center justify-center text-3xl border border-blue-400/50"
+client/src/pages/sidequests/PhantomsPuzzle.tsx:                <h3 className="text-xl font-bold  mb-4 text-blue-400" style={{textAlign: "center"}}>Recreate the Pattern</h3>
+client/src/pages/sidequests/PhantomsPuzzle.tsx:                <div className=" flex justify-center gap-3 flex-wrap bg-gray-800/50 rounded-lg p-6 border border-gray-600 min-h-[100px]" className="mb-6">
+client/src/pages/sidequests/PhantomsPuzzle.tsx:                      className={`w-16 h-16 rounded-lg flex items-center justify-center text-3xl border-2 ${
+client/src/pages/sidequests/PhantomsPuzzle.tsx:                <div className="grid grid-cols-3 gap-4 max-w-md mx-auto mb-4">
+client/src/pages/sidequests/PhantomsPuzzle.tsx:                      className="w-16 h-16 bg-blue-600/30 hover:bg-blue-500/50 rounded-lg flex items-center justify-center text-3xl border border-blue-400/50 transition-all hover:scale-110"
+client/src/pages/sidequests/PhantomsPuzzle.tsx:                    className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2"
+client/src/pages/sidequests/PhantomsPuzzle.tsx:            <div className={`bg-black/50 backdrop-blur-sm p-8 rounded-lg border mb-6 ${
+client/src/pages/sidequests/PhantomsPuzzle.tsx:                <span className="text-8xl">
+client/src/pages/sidequests/PhantomsPuzzle.tsx:              <h2 className={`text-3xl font-bold mb-4 ${
+client/src/pages/sidequests/PhantomsPuzzle.tsx:              <p className="text-gray-300 mb-4">
+client/src/pages/sidequests/PhantomsPuzzle.tsx:              <div className="  bg-gray-800/50 rounded-lg p-4" className="mb-6" style={{textAlign: "center"}}>
+client/src/pages/sidequests/PhantomsPuzzle.tsx:                <div className="text-lg font-bold text-blue-400 mb-2">Final Results</div>
+client/src/pages/sidequests/PhantomsPuzzle.tsx:                <div className="grid grid-cols-2 gap-4">
+client/src/pages/sidequests/PhantomsPuzzle.tsx:                    <div className="text-2xl font-bold text-purple-400">{score}</div>
+client/src/pages/sidequests/PhantomsPuzzle.tsx:                    <div className="text-sm text-gray-400">Total Score</div>
+client/src/pages/sidequests/PhantomsPuzzle.tsx:                    <div className="text-2xl font-bold text-yellow-400">{level}</div>
+client/src/pages/sidequests/PhantomsPuzzle.tsx:                    <div className="text-sm text-gray-400">Levels Completed</div>
+client/src/pages/sidequests/PhantomsPuzzle.tsx:              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+client/src/pages/sidequests/PhantomsPuzzle.tsx:                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3"
+client/src/pages/sidequests/PhantomsPuzzle.tsx:                  <Button className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 w-full">
+client/src/pages/sidequests/ChupacabraChallenge.tsx:    <div className="min-h-screen bg-gradient-to-b from-purple-900 via-indigo-900 to-black text-white flex flex-col items-center justify-center p-4">
+client/src/pages/sidequests/ChupacabraChallenge.tsx:          <h1 className="text-4xl lg:text-6xl font-bold text-red-400 mb-4 tracking-wider">
+client/src/pages/sidequests/ChupacabraChallenge.tsx:          <p className="text-lg text-gray-300">
+client/src/pages/sidequests/ChupacabraChallenge.tsx:            <div className=" bg-black/50 backdrop-blur-sm p-8 rounded-lg border border-red-500/30" style={{textAlign: "center"}}>
+client/src/pages/sidequests/ChupacabraChallenge.tsx:              <h2 className="text-2xl font-bold text-red-400 mb-4">The Hunt Begins</h2>
+client/src/pages/sidequests/ChupacabraChallenge.tsx:              <p className="text-gray-300  max-w-md mx-auto" className="mb-6">
+client/src/pages/sidequests/ChupacabraChallenge.tsx:                className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 text-lg"
+client/src/pages/sidequests/ChupacabraChallenge.tsx:              <div className="bg-black/50 backdrop-blur-sm p-6 rounded-lg border border-red-500/30 " className="mb-6">
+client/src/pages/sidequests/ChupacabraChallenge.tsx:                <h2 className="text-2xl font-bold text-red-400 mb-4">Choose Your Hiding Spot</h2>
+client/src/pages/sidequests/ChupacabraChallenge.tsx:                <p className="text-gray-300 mb-4">
+client/src/pages/sidequests/ChupacabraChallenge.tsx:              <div className="relative bg-gray-800 rounded-lg h-96 overflow-hidden border-2 border-gray-600">
+client/src/pages/sidequests/ChupacabraChallenge.tsx:                  className="absolute inset-0 bg-cover bg-center opacity-60"
+client/src/pages/sidequests/ChupacabraChallenge.tsx:                    className="absolute transform -translate-x-1/2 -translate-y-1/2 bg-green-600/70 hover:bg-green-500 border-2 border-green-400 rounded-lg p-2 text-xs font-bold transition-all hover:scale-110"
+client/src/pages/sidequests/ChupacabraChallenge.tsx:                        <span key={i} className="text-yellow-400">★</span>
+client/src/pages/sidequests/ChupacabraChallenge.tsx:            <div className={`text-center ${heartbeat ? 'animate-pulse' : ''}`}>
+client/src/pages/sidequests/ChupacabraChallenge.tsx:              <div className="bg-black/50 backdrop-blur-sm p-6 rounded-lg border border-red-500/30 " className="mb-6">
+client/src/pages/sidequests/ChupacabraChallenge.tsx:                  <div className="text-left">
+client/src/pages/sidequests/ChupacabraChallenge.tsx:                    <div className="text-lg font-bold text-green-400">
+client/src/pages/sidequests/ChupacabraChallenge.tsx:                    <div className="text-sm text-gray-400">
+client/src/pages/sidequests/ChupacabraChallenge.tsx:                        <span key={i} className="text-yellow-400">★</span>
+client/src/pages/sidequests/ChupacabraChallenge.tsx:                  <div className="text-right">
+client/src/pages/sidequests/ChupacabraChallenge.tsx:                    <div className="text-2xl font-bold text-blue-400">
+client/src/pages/sidequests/ChupacabraChallenge.tsx:                    <div className="text-sm text-gray-400">remaining</div>
+client/src/pages/sidequests/ChupacabraChallenge.tsx:                  <div className="text-sm text-gray-400 mb-2">Detection Risk</div>
+client/src/pages/sidequests/ChupacabraChallenge.tsx:                  <div className="w-full bg-gray-700 rounded-full h-3">
+client/src/pages/sidequests/ChupacabraChallenge.tsx:                      className={`h-3 rounded-full transition-all duration-500 ${
+client/src/pages/sidequests/ChupacabraChallenge.tsx:                <p className={`text-center ${detectionRisk > 70 ? 'text-red-400' : 'text-gray-300'}`}>
+client/src/pages/sidequests/ChupacabraChallenge.tsx:              <div className="relative bg-gray-800 rounded-lg h-96 overflow-hidden border-2 border-gray-600">
+client/src/pages/sidequests/ChupacabraChallenge.tsx:                  className="absolute inset-0 bg-cover bg-center opacity-40"
+client/src/pages/sidequests/ChupacabraChallenge.tsx:                    className="absolute transform -translate-x-1/2 -translate-y-1/2 bg-green-600/50 border-2 border-green-400 rounded-lg"
+client/src/pages/sidequests/ChupacabraChallenge.tsx:                      <span className="text-xs font-bold">YOU</span>
+client/src/pages/sidequests/ChupacabraChallenge.tsx:              <div className={`bg-black/50 backdrop-blur-sm p-8 rounded-lg border mb-6 ${
+client/src/pages/sidequests/ChupacabraChallenge.tsx:                <h2 className={`text-3xl font-bold mb-4 ${
+client/src/pages/sidequests/ChupacabraChallenge.tsx:                <p className="text-gray-300  max-w-md mx-auto" className="mb-6">
+client/src/pages/sidequests/ChupacabraChallenge.tsx:                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+client/src/pages/sidequests/ChupacabraChallenge.tsx:                    className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3"
+client/src/pages/sidequests/ChupacabraChallenge.tsx:                    <Button className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 w-full">
+client/src/pages/sidequests/GloryGrab.tsx:      <div className="absolute inset-0 bg-black/30" />
+client/src/pages/sidequests/GloryGrab.tsx:              <div className="absolute -top-20 sm:-top-24 left-1/2 transform -translate-x-1/2 bg-gray-900 border-2 border-red-600 rounded-lg px-3 py-2 w-48 sm:w-56 shadow-lg animate-fade-in z-10">
+client/src/pages/sidequests/GloryGrab.tsx:                <div className="text-red-400 text-xs sm:text-sm font-semibold " className="text-center">
+client/src/pages/sidequests/GloryGrab.tsx:                <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2">
+client/src/pages/sidequests/GloryGrab.tsx:                  <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-red-600"></div>
+client/src/pages/sidequests/GloryGrab.tsx:                  <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[4px] border-r-[4px] border-t-[4px] border-l-transparent border-r-transparent border-t-gray-900"></div>
+client/src/pages/sidequests/GloryGrab.tsx:              className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 object-contain drop-shadow-2xl animate-sprite-idle-twitch"
+client/src/pages/sidequests/GloryGrab.tsx:      <div className="relative z-10 flex items-center justify-center min-h-screen p-4">
+client/src/pages/sidequests/GloryGrab.tsx:            <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-30">
+client/src/pages/sidequests/GloryGrab.tsx:              <div className="bg-black/70 rounded-lg px-4 py-2 flex gap-4 text-white">
+client/src/pages/sidequests/GloryGrab.tsx:                <div className="text-center">
+client/src/pages/sidequests/GloryGrab.tsx:                  <div className="text-xs text-gray-300">SCORE</div>
+client/src/pages/sidequests/GloryGrab.tsx:                  <div className="text-xl font-bold text-green-400">{score}</div>
+client/src/pages/sidequests/GloryGrab.tsx:                <div className="text-center">
+client/src/pages/sidequests/GloryGrab.tsx:                  <div className="text-xs text-gray-300">TIME</div>
+client/src/pages/sidequests/GloryGrab.tsx:                  <div className="text-xl font-bold text-red-400">{timeLeft}s</div>
+client/src/pages/sidequests/GloryGrab.tsx:                  <div className="text-center">
+client/src/pages/sidequests/GloryGrab.tsx:                    <div className="text-xs text-gray-300">CHAOS</div>
+client/src/pages/sidequests/GloryGrab.tsx:                    <div className={`text-xl font-bold ${
+client/src/pages/sidequests/GloryGrab.tsx:                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-red-500 text-4xl font-bold animate-pulse">
+client/src/pages/sidequests/GloryGrab.tsx:                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+client/src/pages/sidequests/GloryGrab.tsx:                    className="h-1.5 bg-red-500 rounded"
+client/src/pages/sidequests/GloryGrab.tsx:          <div className=" animate-fade-in" className="text-center">
+client/src/pages/sidequests/GloryGrab.tsx:            <div className="bg-black/80 rounded-lg p-8 max-w-md mx-auto">
+client/src/pages/sidequests/GloryGrab.tsx:              <h1 className="text-3xl sm:text-4xl font-bold text-red-500 mb-4">
+client/src/pages/sidequests/GloryGrab.tsx:              <div className="text-2xl font-bold text-green-400 " className="mb-6">
+client/src/pages/sidequests/GloryGrab.tsx:              <div className="text-gray-300 mb-4">
+client/src/pages/sidequests/GloryGrab.tsx:                <div  className="mb-6" className="text-center">
+client/src/pages/sidequests/GloryGrab.tsx:                  <div className={`text-lg font-bold ${
+client/src/pages/sidequests/GloryGrab.tsx:                  <div className="text-sm text-gray-400 mt-1">
+client/src/pages/sidequests/GloryGrab.tsx:              <div className="flex flex-col gap-3">
+client/src/pages/sidequests/GloryGrab.tsx:                  className="bg-green-700 hover:bg-green-600 text-white px-6 py-3 text-sm font-semibold w-full"
+client/src/pages/sidequests/GloryGrab.tsx:                  className="text-gray-400 hover:text-white px-6 py-3 text-sm w-full"
+client/src/pages/sidequests/BansheesWail.tsx:    <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden p-4 bg-gradient-to-b from-purple-900 via-indigo-900 to-black">
+client/src/pages/sidequests/BansheesWail.tsx:        <div className=" mb-8" className="text-center">
+client/src/pages/sidequests/BansheesWail.tsx:          <h1 className="text-4xl md:text-6xl font-bold text-purple-300 mb-4 drop-shadow-lg">
+client/src/pages/sidequests/BansheesWail.tsx:          <p className="text-lg md:text-xl text-purple-200 drop-shadow-md">
+client/src/pages/sidequests/BansheesWail.tsx:          <div className=" mb-8" className="text-center">
+client/src/pages/sidequests/BansheesWail.tsx:            <div className="bg-black/80 border border-purple-500 rounded-lg p-6 md:p-8 max-w-md mx-auto">
+client/src/pages/sidequests/BansheesWail.tsx:              <h2 className="text-2xl md:text-3xl font-bold text-purple-400 mb-4">
+client/src/pages/sidequests/BansheesWail.tsx:              <p className="text-base md:text-lg text-purple-200 mb-4">
+client/src/pages/sidequests/BansheesWail.tsx:              <div className="text-sm md:text-base text-purple-300  space-y-2" className="mb-6">
+client/src/pages/sidequests/BansheesWail.tsx:                className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200"
+client/src/pages/sidequests/BansheesWail.tsx:            <div className="flex flex-wrap justify-center gap-4 md:gap-8  " className="mb-6" className="text-center">
+client/src/pages/sidequests/BansheesWail.tsx:              <div className="text-purple-200">
+client/src/pages/sidequests/BansheesWail.tsx:                <span className="text-lg md:text-xl font-bold">Score: {score}</span>
+client/src/pages/sidequests/BansheesWail.tsx:              <div className="text-purple-200">
+client/src/pages/sidequests/BansheesWail.tsx:                <span className="text-lg md:text-xl font-bold">Combo: {combo}</span>
+client/src/pages/sidequests/BansheesWail.tsx:              <div className="text-purple-200">
+client/src/pages/sidequests/BansheesWail.tsx:                <span className="text-lg md:text-xl font-bold">Lives: {lives}</span>
+client/src/pages/sidequests/BansheesWail.tsx:              <div className="text-purple-200">
+client/src/pages/sidequests/BansheesWail.tsx:                <span className="text-lg md:text-xl font-bold">Time: {timeLeft}s</span>
+client/src/pages/sidequests/BansheesWail.tsx:            <div  className="mb-6" className="text-center">
+client/src/pages/sidequests/BansheesWail.tsx:              <p className="text-base md:text-lg text-purple-300 animate-pulse">
+client/src/pages/sidequests/BansheesWail.tsx:            <div className="relative w-full h-20 md:h-24 bg-black/50 border-2 border-purple-500 rounded-lg  overflow-hidden" className="mb-6">
+client/src/pages/sidequests/BansheesWail.tsx:              <div className="absolute right-0 top-0 bottom-0 w-16 md:w-20 bg-purple-500/30 border-l-2 border-purple-400 flex items-center justify-center">
+client/src/pages/sidequests/BansheesWail.tsx:                <span className="text-purple-300 font-bold text-sm md:text-base">HIT</span>
+client/src/pages/sidequests/BansheesWail.tsx:                  className={`absolute top-1/2 transform -translate-y-1/2 w-8 h-8 md:w-10 md:h-10 rounded-full transition-all duration-100 ${
+client/src/pages/sidequests/BansheesWail.tsx:            <div className="text-center">
+client/src/pages/sidequests/BansheesWail.tsx:                className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-8 md:py-6 md:px-12 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200 text-lg md:text-xl"
+client/src/pages/sidequests/BansheesWail.tsx:          <div className=" mb-8" className="text-center">
+client/src/pages/sidequests/BansheesWail.tsx:            <div className="bg-black/80 border border-green-500 rounded-lg p-6 md:p-8 max-w-md mx-auto">
+client/src/pages/sidequests/BansheesWail.tsx:              <h2 className="text-3xl md:text-4xl font-bold text-green-400 mb-4">
+client/src/pages/sidequests/BansheesWail.tsx:              <p className="text-lg md:text-xl text-green-200 mb-4">
+client/src/pages/sidequests/BansheesWail.tsx:              <div className="text-base md:text-lg text-green-300  space-y-2" className="mb-6">
+client/src/pages/sidequests/BansheesWail.tsx:              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+client/src/pages/sidequests/BansheesWail.tsx:                  className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200"
+client/src/pages/sidequests/BansheesWail.tsx:                  <Button className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200">
+client/src/pages/sidequests/BansheesWail.tsx:          <div className=" mb-8" className="text-center">
+client/src/pages/sidequests/BansheesWail.tsx:            <div className="bg-black/80 border border-red-500 rounded-lg p-6 md:p-8 max-w-md mx-auto">
+client/src/pages/sidequests/BansheesWail.tsx:              <h2 className="text-3xl md:text-4xl font-bold text-red-400 mb-4">
+client/src/pages/sidequests/BansheesWail.tsx:              <p className="text-lg md:text-xl text-red-200 mb-4">
+client/src/pages/sidequests/BansheesWail.tsx:              <div className="text-base md:text-lg text-red-300  space-y-2" className="mb-6">
+client/src/pages/sidequests/BansheesWail.tsx:              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+client/src/pages/sidequests/BansheesWail.tsx:                  className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200"
+client/src/pages/sidequests/BansheesWail.tsx:                  <Button className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200">
+client/src/pages/sidequests/CrypticCompliments.tsx:                <div className="absolute inset-0 bg-yellow-400 opacity-20 rounded-full blur-xl animate-pulse pointer-events-none"></div>
+client/src/pages/sidequests/CrypticCompliments.tsx:                <div className="bg-gray-900 border-2 border-purple-400 rounded-lg p-4 max-w-md mx-auto relative">
+client/src/pages/sidequests/CrypticCompliments.tsx:                  <p className="text-purple-100 text-lg font-creepster">
+client/src/pages/sidequests/CrypticCompliments.tsx:                  <div className="absolute bottom-[-10px] left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[10px] border-r-[10px] border-t-[10px] border-l-transparent border-r-transparent border-t-purple-400"></div>
+client/src/pages/sidequests/CrypticCompliments.tsx:            <div className="text-purple-200 text-xl">
+client/src/pages/sidequests/CrypticCompliments.tsx:                <div className="absolute inset-0 flex  justify-center p-6" style={{alignItems: "center"}}>
+client/src/pages/sidequests/CrypticCompliments.tsx:                <p className="text-purple-200 text-lg font-creepster mt-4">
+client/src/pages/sidequests/CrypticCompliments.tsx:              <div className="flex flex-col sm:flex-row gap-4 justify-center  animate-fade-in" style={{alignItems: "center"}}>
+client/src/pages/sidequests/CrypticCompliments.tsx:                  className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-bold transition-all duration-200 flex  gap-2 shadow-lg hover:shadow-xl transform hover:scale-105" style={{alignItems: "center"}}
+client/src/pages/sidequests/CrypticCompliments.tsx:                  className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-bold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+client/src/pages/sidequests/CrypticCompliments.tsx:                  className="bg-purple-800 hover:bg-purple-900 text-white px-6 py-3 rounded-lg font-bold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 no-underline"
+client/src/pages/sidequests/WretchedWiring.tsx:        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
+client/src/pages/sidequests/WretchedWiring.tsx:          <div className="relative z-10  bg-gray-800 p-8 rounded-xl border-2 border-red-500" style={{textAlign: "center"}}>
+client/src/pages/sidequests/WretchedWiring.tsx:            <h2 className="text-4xl font-bold text-red-400 mb-4 drop-shadow-lg">
+client/src/pages/sidequests/WretchedWiring.tsx:            <p className="text-xl text-white  drop-shadow-lg" className="mb-6">
+client/src/pages/sidequests/WretchedWiring.tsx:            <p className="text-lg text-white mb-8 drop-shadow-lg">
+client/src/pages/sidequests/WretchedWiring.tsx:                className="px-8 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg transition-colors duration-200 shadow-lg"
+client/src/pages/sidequests/WretchedWiring.tsx:                className="block px-8 py-3 bg-gray-600 hover:bg-gray-700 text-white font-bold rounded-lg transition-colors duration-200 shadow-lg"
+client/src/pages/sidequests/WretchedWiring.tsx:        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
+client/src/pages/sidequests/WretchedWiring.tsx:          <div className="relative z-10  bg-gray-800 p-8 rounded-xl border-2 border-green-500" style={{textAlign: "center"}}>
+client/src/pages/sidequests/WretchedWiring.tsx:            <h2 className="text-4xl font-bold text-green-400 mb-4 drop-shadow-lg">
+client/src/pages/sidequests/WretchedWiring.tsx:            <p className="text-xl text-white  drop-shadow-lg" className="mb-6">
+client/src/pages/sidequests/WretchedWiring.tsx:            <p className="text-lg text-white mb-8 drop-shadow-lg">
+client/src/pages/sidequests/WretchedWiring.tsx:                className="px-8 py-3 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition-colors duration-200 shadow-lg"
+client/src/pages/sidequests/WretchedWiring.tsx:                className="block px-8 py-3 bg-gray-600 hover:bg-gray-700 text-white font-bold rounded-lg transition-colors duration-200 shadow-lg"
+client/src/pages/sidequests/WretchedWiring.tsx:        <div className="flex  items-center p-6" style={{justifyContent: "space-between"}}>
+client/src/pages/sidequests/WretchedWiring.tsx:          <div className="text-2xl font-bold text-white drop-shadow-lg">
+client/src/pages/sidequests/WretchedWiring.tsx:          <div className="text-lg text-white drop-shadow-lg" style={{ fontFamily: 'Courier, monospace' }}>
+client/src/pages/sidequests/WretchedWiring.tsx:          <div className="text-xl font-bold text-white drop-shadow-lg">
+client/src/pages/sidequests/WretchedWiring.tsx:            <div className=" bg-gray-800 bg-opacity-90 p-8 rounded-xl border-2 border-blue-500" style={{textAlign: "center"}}>
+client/src/pages/sidequests/WretchedWiring.tsx:              <h1 className="text-4xl font-bold text-blue-400  drop-shadow-lg" className="mb-6" style={{ fontFamily: 'Courier, monospace' }}>
+client/src/pages/sidequests/WretchedWiring.tsx:              <p className="text-lg text-white mb-8 drop-shadow-lg max-w-md">
+client/src/pages/sidequests/WretchedWiring.tsx:                className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors duration-200 shadow-lg text-xl"
+client/src/pages/sidequests/WretchedWiring.tsx:          <div className="flex-1 flex items-center justify-center p-6">
+client/src/pages/sidequests/WretchedWiring.tsx:            <div className="bg-gray-800 bg-opacity-95 p-8 rounded-xl border-2 border-yellow-500 w-full max-w-4xl">
+client/src/pages/sidequests/WretchedWiring.tsx:              <div className="relative bg-gray-900 border-2 border-gray-600 rounded-lg p-8 h-96">
+client/src/pages/sidequests/WretchedWiring.tsx:                <div className=" text-white text-xl mt-32" style={{textAlign: "center"}}>
+client/src/pages/sidequests/WretchedWiring.tsx:                  <span className="text-sm text-gray-400 mt-4 block">
+client/src/pages/sidequests/WretchedWiring.tsx:                <p className="text-white mb-2">
+client/src/pages/sidequests/WretchedWiring.tsx:                  <span className="text-red-400">Red wire</span> → Terminal A1 to B3
+client/src/pages/sidequests/WretchedWiring.tsx:                <p className="text-white mb-2">
+client/src/pages/sidequests/WretchedWiring.tsx:                  <span className="text-blue-400">Blue wire</span> → Terminal A2 to B1
+client/src/pages/sidequests/WretchedWiring.tsx:                <p className="text-white mb-2">
+client/src/pages/sidequests/WretchedWiring.tsx:                  <span className="text-green-400">Green wire</span> → Terminal A3 to B4
+client/src/pages/sidequests/WretchedWiring.tsx:                <p className="text-white">
+client/src/pages/sidequests/WretchedWiring.tsx:                  <span className="text-yellow-400">Yellow wire</span> → Terminal A4 to B2
+client/src/pages/sidequests/WretchedWiring.tsx:          <div className="absolute bottom-6 left-6">
+client/src/pages/sidequests/WretchedWiring.tsx:              className="px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white font-bold rounded-lg transition-colors duration-200 shadow-lg"
+client/src/pages/sidequests/MonsterNameGenerator.tsx:            className="absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-blue-400 to-transparent opacity-80 transition-all duration-75"
+client/src/pages/sidequests/MonsterNameGenerator.tsx:            className="absolute left-0 right-0 h-0.5 bg-blue-300 transition-all duration-75"
+client/src/pages/sidequests/MonsterNameGenerator.tsx:          <div className=" px-4" className="text-center">
+client/src/pages/sidequests/MonsterNameGenerator.tsx:            <h2 className="text-blue-400 text-xl sm:text-2xl md:text-3xl font-bold animate-pulse mb-4">
+client/src/pages/sidequests/MonsterNameGenerator.tsx:            <div className="absolute -top-20 sm:-top-24 left-1/2 transform -translate-x-1/2 bg-gray-900 border-2 border-red-600 rounded-lg px-3 py-2 w-48 sm:6 shadow-lg animate-fade-in z-10" style={{width: "1.25rem"}}>
+client/src/pages/sidequests/MonsterNameGenerator.tsx:              <div className="text-red-400 text-xs sm:text-sm font-semibold " className="text-center">
+client/src/pages/sidequests/MonsterNameGenerator.tsx:              <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2">
+client/src/pages/sidequests/MonsterNameGenerator.tsx:                <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-red-600"></div>
+client/src/pages/sidequests/MonsterNameGenerator.tsx:                <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[4px] border-r-[4px] border-t-[4px] border-l-transparent border-r-transparent border-t-gray-900"></div>
+client/src/pages/sidequests/MonsterNameGenerator.tsx:              className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 object-contain drop-shadow-2xl animate-sprite-idle-twitch"
+client/src/pages/sidequests/MonsterNameGenerator.tsx:      <div className="relative z-10 flex items-center justify-center min-h-screen p-4">
+client/src/pages/sidequests/MonsterNameGenerator.tsx:              <div className=" px-6" className="text-center">
+client/src/pages/sidequests/MonsterNameGenerator.tsx:                <h1 className="text-lg sm:text-xl md:text-2xl font-nosifer text-red-500 leading-tight animate-fade-in">
+client/src/pages/sidequests/MonsterNameGenerator.tsx:          <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col gap-2 sm:gap-3 animate-fade-in w-full max-w-xs px-4">
+client/src/pages/sidequests/MonsterNameGenerator.tsx:              className="text-gray-400 hover:text-white px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm w-full"
+client/src/pages/sidequests/NecromancersGambit.tsx:          <h1 className="text-4xl lg:text-6xl font-bold text-purple-400 mb-4 tracking-wider">
+client/src/pages/sidequests/NecromancersGambit.tsx:          <p className="text-lg text-gray-300">
+client/src/pages/sidequests/NecromancersGambit.tsx:          <div className=" bg-black/50 backdrop-blur-sm p-8 rounded-lg border border-purple-500/30" style={{textAlign: "center"}}>
+client/src/pages/sidequests/NecromancersGambit.tsx:              <span className="text-8xl">💀</span>
+client/src/pages/sidequests/NecromancersGambit.tsx:            <h2 className="text-2xl font-bold text-purple-400 mb-4">The Challenge Awaits</h2>
+client/src/pages/sidequests/NecromancersGambit.tsx:            <p className="text-gray-300  max-w-md mx-auto" className="mb-6">
+client/src/pages/sidequests/NecromancersGambit.tsx:              className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 text-lg"
+client/src/pages/sidequests/NecromancersGambit.tsx:            <div className="flex  items-center  bg-black/30 rounded-lg p-4" style={{justifyContent: "space-between"}} className="mb-6">
+client/src/pages/sidequests/NecromancersGambit.tsx:                <div className="text-2xl font-bold text-blue-400">{playerScore}</div>
+client/src/pages/sidequests/NecromancersGambit.tsx:                <div className="text-sm text-gray-400">Player Wins</div>
+client/src/pages/sidequests/NecromancersGambit.tsx:                <div className="text-xl text-purple-400">Round {round}</div>
+client/src/pages/sidequests/NecromancersGambit.tsx:                <div className="text-sm text-gray-400">of 3</div>
+client/src/pages/sidequests/NecromancersGambit.tsx:                <div className="text-2xl font-bold text-red-400">{necromancerScore}</div>
+client/src/pages/sidequests/NecromancersGambit.tsx:                <div className="text-sm text-gray-400">Necromancer Wins</div>
+client/src/pages/sidequests/NecromancersGambit.tsx:                <h3 className="text-xl font-bold  mb-4 text-purple-400" style={{textAlign: "center"}}>Battle in Progress</h3>
+client/src/pages/sidequests/NecromancersGambit.tsx:                  <div className=" bg-blue-900/30 rounded-lg p-4 border border-blue-500/30" style={{textAlign: "center"}}>
+client/src/pages/sidequests/NecromancersGambit.tsx:                    <div className="text-3xl mb-2">{playerSelectedCard.icon}</div>
+client/src/pages/sidequests/NecromancersGambit.tsx:                    <div className="font-bold text-blue-400">{playerSelectedCard.name}</div>
+client/src/pages/sidequests/NecromancersGambit.tsx:                    <div className="text-lg text-white">Power: {playerSelectedCard.power}</div>
+client/src/pages/sidequests/NecromancersGambit.tsx:                    <div className="text-xs text-gray-400 mt-1">{playerSelectedCard.effect}</div>
+client/src/pages/sidequests/NecromancersGambit.tsx:                    <div className="text-4xl animate-pulse">⚔️</div>
+client/src/pages/sidequests/NecromancersGambit.tsx:                    <div className="text-sm text-gray-400 mt-2">VS</div>
+client/src/pages/sidequests/NecromancersGambit.tsx:                  <div className=" bg-red-900/30 rounded-lg p-4 border border-red-500/30" style={{textAlign: "center"}}>
+client/src/pages/sidequests/NecromancersGambit.tsx:                    <div className="text-3xl mb-2">{necromancerSelectedCard.icon}</div>
+client/src/pages/sidequests/NecromancersGambit.tsx:                    <div className="font-bold text-red-400">{necromancerSelectedCard.name}</div>
+client/src/pages/sidequests/NecromancersGambit.tsx:                    <div className="text-lg text-white">Power: {necromancerSelectedCard.power}</div>
+client/src/pages/sidequests/NecromancersGambit.tsx:                    <div className="text-xs text-gray-400 mt-1">{necromancerSelectedCard.effect}</div>
+client/src/pages/sidequests/NecromancersGambit.tsx:                  <div className="mt-4 p-3 bg-yellow-900/30 rounded border border-yellow-500/30">
+client/src/pages/sidequests/NecromancersGambit.tsx:                    <p className=" text-yellow-200" style={{textAlign: "center"}}>{battleResult}</p>
+client/src/pages/sidequests/NecromancersGambit.tsx:            <div className="  bg-red-900/20 rounded-lg p-4 border border-red-500/30" className="mb-6" style={{textAlign: "center"}}>
+client/src/pages/sidequests/NecromancersGambit.tsx:              <p className="text-red-300 italic">"{getNecromancerReaction()}"</p>
+client/src/pages/sidequests/NecromancersGambit.tsx:                <h3 className="text-xl font-bold mb-4  text-blue-400" style={{textAlign: "center"}}>Choose Your Card</h3>
+client/src/pages/sidequests/NecromancersGambit.tsx:                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+client/src/pages/sidequests/NecromancersGambit.tsx:                      className="bg-blue-900/30 hover:bg-blue-800/50 rounded-lg p-4 border border-blue-500/30 transition-all hover:scale-105 text-left"
+client/src/pages/sidequests/NecromancersGambit.tsx:                        <span className="text-2xl mr-3">{card.icon}</span>
+client/src/pages/sidequests/NecromancersGambit.tsx:                          <div className="font-bold text-blue-400">{card.name}</div>
+client/src/pages/sidequests/NecromancersGambit.tsx:                          <div className="text-lg text-white">Power: {card.power}</div>
+client/src/pages/sidequests/NecromancersGambit.tsx:                      <div className="text-sm text-gray-300 mb-2">{card.description}</div>
+client/src/pages/sidequests/NecromancersGambit.tsx:                      <div className="text-xs text-blue-300">{card.effect}</div>
+client/src/pages/sidequests/NecromancersGambit.tsx:                <h3 className="text-xl font-bold mb-4  text-red-400" style={{textAlign: "center"}}>Necromancer's Hand</h3>
+client/src/pages/sidequests/NecromancersGambit.tsx:                <div className="flex justify-center gap-2">
+client/src/pages/sidequests/NecromancersGambit.tsx:                      className="w-16 h-20 bg-red-900/30 rounded border border-red-500/30 flex items-center justify-center"
+client/src/pages/sidequests/NecromancersGambit.tsx:                      <span className="text-2xl">🂠</span>
+client/src/pages/sidequests/NecromancersGambit.tsx:            <div className={`bg-black/50 backdrop-blur-sm p-8 rounded-lg border mb-6 ${
+client/src/pages/sidequests/NecromancersGambit.tsx:                <span className="text-8xl">
+client/src/pages/sidequests/NecromancersGambit.tsx:              <h2 className={`text-3xl font-bold mb-4 ${
+client/src/pages/sidequests/NecromancersGambit.tsx:              <p className="text-gray-300 mb-4">
+client/src/pages/sidequests/NecromancersGambit.tsx:              <div className="  bg-gray-800/50 rounded-lg p-4" className="mb-6" style={{textAlign: "center"}}>
+client/src/pages/sidequests/NecromancersGambit.tsx:                <div className="text-lg font-bold text-purple-400 mb-2">Final Score</div>
+client/src/pages/sidequests/NecromancersGambit.tsx:                <div className="flex justify-center gap-8">
+client/src/pages/sidequests/NecromancersGambit.tsx:                    <div className="text-2xl font-bold text-blue-400">{playerScore}</div>
+client/src/pages/sidequests/NecromancersGambit.tsx:                    <div className="text-sm text-gray-400">Player</div>
+client/src/pages/sidequests/NecromancersGambit.tsx:                    <div className="text-2xl font-bold text-red-400">{necromancerScore}</div>
+client/src/pages/sidequests/NecromancersGambit.tsx:                    <div className="text-sm text-gray-400">Necromancer</div>
+client/src/pages/sidequests/NecromancersGambit.tsx:              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+client/src/pages/sidequests/NecromancersGambit.tsx:                  className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3"
+client/src/pages/sidequests/NecromancersGambit.tsx:                  <Button className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 w-full">
+client/src/pages/sidequests/NecromancersGambit.tsx:              <div className="mt-6 bg-gray-800/30 rounded-lg p-4 border border-gray-600">
+client/src/pages/sidequests/NecromancersGambit.tsx:                <h3 className="text-lg font-bold text-purple-400 mb-3">Battle History</h3>
+client/src/pages/sidequests/NecromancersGambit.tsx:                    <div key={index} className="text-sm text-gray-300 p-2 bg-gray-700/30 rounded">
+client/src/pages/not-found.tsx:    <div className="min-h-screen w-full flex items-center justify-center bg-gray-50">
+client/src/pages/not-found.tsx:          <div className="flex mb-4 gap-2">
+client/src/pages/not-found.tsx:            <AlertCircle className="h-8 w-8 text-red-500" />
+client/src/pages/not-found.tsx:            <h1 className="text-2xl font-bold text-gray-900">404 Page Not Found</h1>
+client/src/pages/not-found.tsx:          <p className="mt-4 text-sm text-gray-600">
+client/src/pages/haunt-test.tsx:    <div className="min-h-screen bg-black text-white p-8">
+client/src/pages/haunt-test.tsx:        <h1 className="text-3xl font-bold mb-8 text-red-500">Haunt URL Testing System</h1>
+client/src/pages/haunt-test.tsx:          <label className="block text-sm font-medium mb-2">Test Haunt ID:</label>
+client/src/pages/haunt-test.tsx:            className="bg-gray-800 border border-gray-600 rounded px-3 py-2 w-64"
+client/src/pages/haunt-test.tsx:          <div className="mt-2 text-sm">
+client/src/pages/haunt-test.tsx:        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+client/src/pages/haunt-test.tsx:            <h2 className="text-xl font-bold mb-4">Generated URLs</h2>
+client/src/pages/haunt-test.tsx:              <div className="bg-gray-800 p-4 rounded">
+client/src/pages/haunt-test.tsx:                <h3 className="font-semibold text-green-400">Query Parameter (Development)</h3>
+client/src/pages/haunt-test.tsx:                <a href={urls.query} className="text-blue-400 hover:underline break-all">
+client/src/pages/haunt-test.tsx:              <div className="bg-gray-800 p-4 rounded">
+client/src/pages/haunt-test.tsx:                <h3 className="font-semibold text-yellow-400">Hash Parameter (Production Fallback)</h3>
+client/src/pages/haunt-test.tsx:                <a href={urls.hash} className="text-blue-400 hover:underline break-all">
+client/src/pages/haunt-test.tsx:              <div className="bg-gray-800 p-4 rounded">
+client/src/pages/haunt-test.tsx:                <h3 className="font-semibold text-purple-400">Path-based (Production Alternative)</h3>
+client/src/pages/haunt-test.tsx:                <a href={urls.path} className="text-blue-400 hover:underline break-all">
+client/src/pages/haunt-test.tsx:              <div className="bg-gray-800 p-4 rounded">
+client/src/pages/haunt-test.tsx:                <h3 className="font-semibold text-orange-400">Direct Hash (Simplest)</h3>
+client/src/pages/haunt-test.tsx:                <a href={urls.direct} className="text-blue-400 hover:underline break-all">
+client/src/pages/haunt-test.tsx:            <h2 className="text-xl font-bold mb-4">Current Detection</h2>
+client/src/pages/haunt-test.tsx:            <div className="bg-gray-800 p-4 rounded mb-4">
+client/src/pages/haunt-test.tsx:              <div className="text-sm text-gray-400 mb-2">Current URL:</div>
+client/src/pages/haunt-test.tsx:              className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded mb-4"
+client/src/pages/haunt-test.tsx:            <div className="bg-gray-800 p-4 rounded">
+client/src/pages/haunt-test.tsx:              <div className="text-sm text-gray-400 mb-2">Detected Haunt ID:</div>
+client/src/pages/haunt-test.tsx:              <div className="text-lg font-bold text-green-400">
+client/src/pages/haunt-test.tsx:              <div className="space-y-2 text-sm">
+client/src/pages/haunt-test.tsx:                  <a href="/#haunt=Sorcererslair" className="text-blue-400 hover:underline">
+client/src/pages/haunt-test.tsx:                  <a href="/#Sorcererslair" className="text-blue-400 hover:underline">
+client/src/pages/haunt-test.tsx:                  <a href="/h/Sorcererslair" className="text-blue-400 hover:underline">
+client/src/pages/haunt-test.tsx:          <h2 className="text-xl font-bold mb-4">Firebase Isolation Test</h2>
+client/src/pages/haunt-test.tsx:          <div className="bg-gray-800 p-4 rounded">
+client/src/pages/haunt-test.tsx:            <p className="text-gray-300">
+client/src/pages/haunt-test.tsx:              <a href="/h/headquarters" className="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-sm">
+client/src/pages/haunt-test.tsx:              <a href="/h/Sorcererslair" className="bg-purple-600 hover:bg-purple-700 px-3 py-1 rounded text-sm">
+client/src/pages/haunt-test.tsx:              <a href="/h/testhaunt" className="bg-green-600 hover:bg-green-700 px-3 py-1 rounded text-sm">
+client/src/pages/analytics-simple.tsx:      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
+client/src/pages/analytics-simple.tsx:          <div className=" text-white" style={{textAlign: "center"}}>
+client/src/pages/analytics-simple.tsx:            <h1 className="text-3xl font-bold mb-4">Analytics Dashboard</h1>
+client/src/pages/analytics-simple.tsx:      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
+client/src/pages/analytics-simple.tsx:          <div className=" text-white" style={{textAlign: "center"}}>
+client/src/pages/analytics-simple.tsx:            <h1 className="text-3xl font-bold mb-4">Analytics Dashboard</h1>
+client/src/pages/analytics-simple.tsx:            <p className="text-red-400">Error loading analytics data: {error.message}</p>
+client/src/pages/analytics-simple.tsx:    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
+client/src/pages/analytics-simple.tsx:        <div className=" text-white mb-8" style={{textAlign: "center"}}>
+client/src/pages/analytics-simple.tsx:          <h1 className="text-3xl font-bold mb-4 bg-green-600 p-4 rounded">SIMPLIFIED Analytics Dashboard</h1>
+client/src/pages/analytics-simple.tsx:          <p className="text-gray-300">Haunt: {hauntId}</p>
+client/src/pages/analytics-simple.tsx:          <p className="text-yellow-400 font-bold">New Component - Ad Engagement Fixed</p>
+client/src/pages/analytics-simple.tsx:        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+client/src/pages/analytics-simple.tsx:          <Card className="bg-slate-800/50 border-slate-700">
+client/src/pages/analytics-simple.tsx:              <CardTitle className="text-sm font-medium text-gray-300">Total Games</CardTitle>
+client/src/pages/analytics-simple.tsx:              <Trophy className="h-4 w-4 text-blue-400" />
+client/src/pages/analytics-simple.tsx:              <div className="text-2xl font-bold text-white">{analyticsData?.totalGames || 0}</div>
+client/src/pages/analytics-simple.tsx:              <p className="text-xs text-gray-400">Games completed</p>
+client/src/pages/analytics-simple.tsx:          <Card className="bg-slate-800/50 border-slate-700">
+client/src/pages/analytics-simple.tsx:              <CardTitle className="text-sm font-medium text-gray-300">Unique Players</CardTitle>
+client/src/pages/analytics-simple.tsx:              <Users className="h-4 w-4 text-green-400" />
+client/src/pages/analytics-simple.tsx:              <div className="text-2xl font-bold text-white">{analyticsData?.uniquePlayers || 0}</div>
+client/src/pages/analytics-simple.tsx:              <p className="text-xs text-gray-400">Individual players</p>
+client/src/pages/analytics-simple.tsx:          <Card className="bg-slate-800/50 border-slate-700">
+client/src/pages/analytics-simple.tsx:              <CardTitle className="text-sm font-medium text-gray-300">Average Score</CardTitle>
+client/src/pages/analytics-simple.tsx:              <Target className="h-4 w-4 text-orange-400" />
+client/src/pages/analytics-simple.tsx:              <div className="text-2xl font-bold text-white">{analyticsData?.averageScore || 0}</div>
+client/src/pages/analytics-simple.tsx:              <p className="text-xs text-gray-400">Points per game</p>
+client/src/pages/analytics-simple.tsx:          <Card className="bg-slate-800/50 border-slate-700">
+client/src/pages/analytics-simple.tsx:              <CardTitle className="text-sm font-medium text-gray-300">Return Rate</CardTitle>
+client/src/pages/analytics-simple.tsx:              <TrendingUp className="h-4 w-4 text-purple-400" />
+client/src/pages/analytics-simple.tsx:              <div className="text-2xl font-bold text-white">{analyticsData?.returnPlayerRate || 0}%</div>
+client/src/pages/analytics-simple.tsx:              <p className="text-xs text-gray-400">Player retention</p>
+client/src/pages/analytics-simple.tsx:        <div className="grid grid-cols-1 gap-6">
+client/src/pages/analytics-simple.tsx:          <Card className="bg-slate-800/50 border-slate-700">
+client/src/pages/analytics-simple.tsx:              <CardTitle className="text-white flex items-center gap-2">
+client/src/pages/analytics-simple.tsx:                <MousePointer className="h-5 w-5 text-yellow-400" />
+client/src/pages/analytics-simple.tsx:                <div className="flex items-center justify-between p-4 bg-slate-700/30 rounded-lg">
+client/src/pages/analytics-simple.tsx:                  <div className="flex items-center gap-3">
+client/src/pages/analytics-simple.tsx:                    <MousePointer className="h-5 w-5 text-yellow-400" />
+client/src/pages/analytics-simple.tsx:                    <span className="text-gray-300">Ad Click-Through Rate</span>
+client/src/pages/analytics-simple.tsx:                  <span className="text-white font-bold text-4xl bg-yellow-400 text-black px-4 py-2 rounded">
+client/src/pages/analytics-simple.tsx:        <div className="mt-8 p-4 bg-slate-800/30 rounded-lg">
+client/src/pages/analytics-simple.tsx:          <h3 className="text-white font-medium mb-2">Debug Information</h3>
+client/src/pages/analytics-simple.tsx:          <pre className="text-gray-300 text-sm overflow-x-auto">
+client/src/pages/analytics-polished.tsx:      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
+client/src/pages/analytics-polished.tsx:        <div className=" text-white" style={{textAlign: "center"}}>Loading analytics...</div>
+client/src/pages/analytics-polished.tsx:      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
+client/src/pages/analytics-polished.tsx:        <div className=" text-red-400" style={{textAlign: "center"}}>Error: {error.message}</div>
+client/src/pages/analytics-polished.tsx:    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
+client/src/pages/analytics-polished.tsx:        <div className=" text-white mb-8" style={{textAlign: "center"}}>
+client/src/pages/analytics-polished.tsx:          <h1 className="text-3xl font-bold mb-4 bg-green-600 p-4 rounded">FIXED Analytics Dashboard</h1>
+client/src/pages/analytics-polished.tsx:          <p className="text-gray-300">Haunt: {hauntId}</p>
+client/src/pages/analytics-polished.tsx:          <p className="text-yellow-400 font-bold">Ad Engagement Working - 200%</p>
+client/src/pages/analytics-polished.tsx:        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+client/src/pages/analytics-polished.tsx:          <Card className="bg-slate-800/50 border-slate-700">
+client/src/pages/analytics-polished.tsx:              <CardTitle className="text-sm font-medium text-white">Total Games</CardTitle>
+client/src/pages/analytics-polished.tsx:              <Trophy className="h-4 w-4 text-orange-500" />
+client/src/pages/analytics-polished.tsx:              <div className="text-2xl font-bold text-white">{analyticsData?.totalGames || 0}</div>
+client/src/pages/analytics-polished.tsx:              <p className="text-xs text-gray-400">Games completed</p>
+client/src/pages/analytics-polished.tsx:          <Card className="bg-slate-800/50 border-slate-700">
+client/src/pages/analytics-polished.tsx:              <CardTitle className="text-sm font-medium text-white">Unique Players</CardTitle>
+client/src/pages/analytics-polished.tsx:              <Users className="h-4 w-4 text-green-500" />
+client/src/pages/analytics-polished.tsx:              <div className="text-2xl font-bold text-white">{analyticsData?.uniquePlayers || 0}</div>
+client/src/pages/analytics-polished.tsx:              <p className="text-xs text-gray-400">Individual players</p>
+client/src/pages/analytics-polished.tsx:          <Card className="bg-slate-800/50 border-slate-700">
+client/src/pages/analytics-polished.tsx:              <CardTitle className="text-sm font-medium text-white">Average Score</CardTitle>
+client/src/pages/analytics-polished.tsx:              <Target className="h-4 w-4 text-purple-500" />
+client/src/pages/analytics-polished.tsx:              <div className="text-2xl font-bold text-white">{analyticsData?.averageScore || 0}</div>
+client/src/pages/analytics-polished.tsx:              <p className="text-xs text-gray-400">Points per game</p>
+client/src/pages/analytics-polished.tsx:          <Card className="bg-yellow-500 border-yellow-400">
+client/src/pages/analytics-polished.tsx:              <CardTitle className="text-sm font-medium text-black">Ad Engagement</CardTitle>
+client/src/pages/analytics-polished.tsx:              <MousePointer className="h-4 w-4 text-black" />
+client/src/pages/analytics-polished.tsx:              <div className="text-2xl font-bold text-black">{analyticsData?.adClickThrough || 0}%</div>
+client/src/pages/analytics-polished.tsx:              <p className="text-xs text-black">Click-through rate</p>
+client/src/pages/analytics-polished.tsx:        <Card className="bg-slate-800/50 border-slate-700 mb-8">
+client/src/pages/analytics-polished.tsx:            <CardTitle className="text-white">Debug - Raw API Data</CardTitle>
+client/src/pages/analytics-polished.tsx:            <pre className="text-green-400 text-sm overflow-x-auto">
+client/src/pages/analytics.tsx:      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800">
+client/src/pages/analytics.tsx:              <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-500/30 border-t-blue-500"></div>
+client/src/pages/analytics.tsx:              <div className="absolute inset-0 rounded-full h-16 w-16 border-4 border-purple-500/20 border-r-purple-500 animate-spin" style={{animationDirection: 'reverse', animationDuration: '1.5s'}}></div>
+client/src/pages/analytics.tsx:              <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+client/src/pages/analytics.tsx:              <p className="text-gray-300 text-lg">Loading comprehensive analytics data...</p>
+client/src/pages/analytics.tsx:      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800">
+client/src/pages/analytics.tsx:          <div className=" text-white" style={{textAlign: "center"}}>
+client/src/pages/analytics.tsx:            <h1 className="text-3xl font-bold mb-4">Analytics Dashboard</h1>
+client/src/pages/analytics.tsx:            <p className="text-red-400">Error loading analytics data: {error.message}</p>
+client/src/pages/analytics.tsx:      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800">
+client/src/pages/analytics.tsx:          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 shadow-2xl">
+client/src/pages/analytics.tsx:            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+client/src/pages/analytics.tsx:              <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+client/src/pages/analytics.tsx:                <Badge variant="outline" className="bg-blue-500/20 text-blue-300 border-blue-500/30 px-3 py-1">
+client/src/pages/analytics.tsx:                <Badge variant="outline" className="bg-green-500/20 text-green-300 border-green-500/30 px-3 py-1">
+client/src/pages/analytics.tsx:                <Badge variant="outline" className="bg-purple-500/20 text-purple-300 border-purple-500/30 px-3 py-1">
+client/src/pages/analytics.tsx:                  className="bg-emerald-500/20 border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/30"
+client/src/pages/analytics.tsx:            <div className="flex items-center space-x-2 bg-white/5 rounded-xl p-2 border border-white/10">
+client/src/pages/analytics.tsx:                  className={`px-6 py-3 rounded-lg text-sm font-semibold transition-all duration-200 ${
+client/src/pages/analytics.tsx:        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+client/src/pages/analytics.tsx:          <Card className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 border-blue-500/20 backdrop-blur-sm">
+client/src/pages/analytics.tsx:              <CardTitle className="text-sm font-medium text-blue-200">Total Games</CardTitle>
+client/src/pages/analytics.tsx:              <div className="bg-blue-500/20 p-2 rounded-lg">
+client/src/pages/analytics.tsx:                <CalendarIcon className="h-5 w-5 text-blue-400" />
+client/src/pages/analytics.tsx:              <div className="text-3xl font-bold text-white">{analyticsData?.totalGames || 0}</div>
+client/src/pages/analytics.tsx:              <p className="text-xs text-blue-300 mt-1">Games completed</p>
+client/src/pages/analytics.tsx:          <Card className="bg-gradient-to-br from-green-500/10 to-green-600/5 border-green-500/20 backdrop-blur-sm">
+client/src/pages/analytics.tsx:              <CardTitle className="text-sm font-medium text-green-200">Unique Players</CardTitle>
+client/src/pages/analytics.tsx:              <div className="bg-green-500/20 p-2 rounded-lg">
+client/src/pages/analytics.tsx:                <UsersIcon className="h-5 w-5 text-green-400" />
+client/src/pages/analytics.tsx:              <div className="text-3xl font-bold text-white">{analyticsData?.uniquePlayers || 0}</div>
+client/src/pages/analytics.tsx:              <p className="text-xs text-green-300 mt-1">Individual players</p>
+client/src/pages/analytics.tsx:          <Card className="bg-gradient-to-br from-yellow-500/10 to-yellow-600/5 border-yellow-500/20 backdrop-blur-sm">
+client/src/pages/analytics.tsx:              <CardTitle className="text-sm font-medium text-yellow-200">Completion Rate</CardTitle>
+client/src/pages/analytics.tsx:              <div className="bg-yellow-500/20 p-2 rounded-lg">
+client/src/pages/analytics.tsx:                <AwardIcon className="h-5 w-5 text-yellow-400" />
+client/src/pages/analytics.tsx:              <div className="text-3xl font-bold text-white">{analyticsData?.completionRate || 0}%</div>
+client/src/pages/analytics.tsx:              <p className="text-xs text-yellow-300 mt-1">Games finished</p>
+client/src/pages/analytics.tsx:          <Card className="bg-gradient-to-br from-purple-500/20 to-pink-500/10 border-purple-500/30 backdrop-blur-sm ring-2 ring-purple-500/50">
+client/src/pages/analytics.tsx:                  <CardTitle className="text-sm font-medium text-purple-200 cursor-help">Ad Engagement</CardTitle>
+client/src/pages/analytics.tsx:              <div className="bg-purple-500/30 p-2 rounded-lg">
+client/src/pages/analytics.tsx:                <MousePointerClickIcon className="h-5 w-5 text-purple-400" />
+client/src/pages/analytics.tsx:              <div className="text-3xl font-bold text-white">{analyticsData?.adClickThrough || 0}%</div>
+client/src/pages/analytics.tsx:              <p className="text-xs text-purple-300 mt-1">Click-through rate</p>
+client/src/pages/analytics.tsx:        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+client/src/pages/analytics.tsx:          <Card className="bg-white/5 backdrop-blur-sm border-white/10">
+client/src/pages/analytics.tsx:              <CardTitle className="text-xl font-semibold text-white flex items-center">
+client/src/pages/analytics.tsx:                <GroupIcon className="w-5 h-5 mr-2 text-blue-400" />
+client/src/pages/analytics.tsx:              <CardDescription className="text-gray-300">
+client/src/pages/analytics.tsx:              <div className="grid grid-cols-2 gap-4">
+client/src/pages/analytics.tsx:                    <span className="text-sm text-gray-300">Total Players</span>
+client/src/pages/analytics.tsx:                    <span className="text-lg font-semibold text-white">{analyticsData?.uniquePlayers || 0}</span>
+client/src/pages/analytics.tsx:                    <span className="text-sm text-gray-300">Return Players</span>
+client/src/pages/analytics.tsx:                    <span className="text-lg font-semibold text-white">{analyticsData?.uniquePlayers || 0}</span>
+client/src/pages/analytics.tsx:                    <span className="text-sm text-gray-300">Return Rate</span>
+client/src/pages/analytics.tsx:                    <span className="text-lg font-semibold text-green-400">{analyticsData?.returnPlayerRate || 0}%</span>
+client/src/pages/analytics.tsx:                    <span className="text-sm text-gray-300">Completion Rate</span>
+client/src/pages/analytics.tsx:                    <span className="text-lg font-semibold text-green-400">{analyticsData?.completionRate || 0}%</span>
+client/src/pages/analytics.tsx:                <div className="flex justify-between text-sm">
+client/src/pages/analytics.tsx:                  <span className="text-gray-300">Return Rate</span>
+client/src/pages/analytics.tsx:                  <span className="text-white">{analyticsData?.returnPlayerRate || 0}%</span>
+client/src/pages/analytics.tsx:                <div className="flex justify-between text-sm">
+client/src/pages/analytics.tsx:                  <span className="text-gray-300">Completion Rate</span>
+client/src/pages/analytics.tsx:                  <span className="text-white">{analyticsData?.completionRate || 0}%</span>
+client/src/pages/analytics.tsx:          <Card className="bg-white/5 backdrop-blur-sm border-white/10">
+client/src/pages/analytics.tsx:              <CardTitle className="text-xl font-semibold text-white flex items-center">
+client/src/pages/analytics.tsx:                <TrendingUpIcon className="w-5 h-5 mr-2 text-green-400" />
+client/src/pages/analytics.tsx:              <CardDescription className="text-gray-300">
+client/src/pages/analytics.tsx:              <div className="grid grid-cols-1 gap-4">
+client/src/pages/analytics.tsx:                <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10">
+client/src/pages/analytics.tsx:                    <ActivityIcon className="w-5 h-5 text-blue-400" />
+client/src/pages/analytics.tsx:                    <span className="text-gray-300">Avg. Session Time</span>
+client/src/pages/analytics.tsx:                  <span className="text-white font-semibold">{analyticsData?.avgSessionTime || 0} min</span>
+client/src/pages/analytics.tsx:                <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10">
+client/src/pages/analytics.tsx:                    <CalendarIcon className="w-5 h-5 text-purple-400" />
+client/src/pages/analytics.tsx:                    <span className="text-gray-300">Daily Average</span>
+client/src/pages/analytics.tsx:                  <span className="text-white font-semibold">{analyticsData?.dailyAverage || 0} games</span>
+client/src/pages/analytics.tsx:                <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10">
+client/src/pages/analytics.tsx:                    <TargetIcon className="w-5 h-5 text-yellow-400" />
+client/src/pages/analytics.tsx:                    <span className="text-gray-300">Peak Activity</span>
+client/src/pages/analytics.tsx:                  <span className="text-white font-semibold">{analyticsData?.peakActivity || 'No data'}</span>
+client/src/pages/analytics.tsx:                <div className="flex items-center justify-between p-3 bg-gradient-to-r from-purple-500/20 to-pink-500/10 rounded-lg border border-purple-500/30">
+client/src/pages/analytics.tsx:                    <MousePointerClickIcon className="w-5 h-5 text-purple-400" />
+client/src/pages/analytics.tsx:                    <span className="text-purple-200">Ad Engagement</span>
+client/src/pages/analytics.tsx:                    <span className="text-white font-bold text-lg">{analyticsData?.adClickThrough || 0}%</span>
+client/src/pages/analytics.tsx:                    <Badge className={`text-xs ${
+client/src/pages/analytics.tsx:        <Card className="bg-white/5 backdrop-blur-sm border-white/10">
+client/src/pages/analytics.tsx:            <CardTitle className="text-xl font-semibold text-white flex items-center">
+client/src/pages/analytics.tsx:              <MousePointerClickIcon className="w-5 h-5 mr-2 text-purple-400" />
+client/src/pages/analytics.tsx:            <CardDescription className="text-gray-300">
+client/src/pages/analytics.tsx:                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500"></div>
+client/src/pages/analytics.tsx:                <span className="ml-3 text-gray-300">Loading ad performance data...</span>
+client/src/pages/analytics.tsx:                <div className="bg-slate-800/50 rounded-lg p-6 border border-slate-700/50">
+client/src/pages/analytics.tsx:                  <MousePointerClickIcon className="w-12 h-12 text-gray-500 mx-auto mb-3" />
+client/src/pages/analytics.tsx:                  <p className="text-gray-400 text-lg">No ads found for this haunt</p>
+client/src/pages/analytics.tsx:                  <p className="text-gray-500 text-sm mt-1">Upload ads through the haunt admin panel to see performance metrics here</p>
+client/src/pages/analytics.tsx:                <div className="grid grid-cols-12 gap-4 pb-3 border-b border-white/10 text-sm font-medium text-gray-300">
+client/src/pages/analytics.tsx:                    <div key={ad.id || index} className="grid grid-cols-12 gap-4 py-4 border-b border-white/5 hover:bg-white/5 rounded-lg transition-colors">
+client/src/pages/analytics.tsx:                        <div className="w-12 h-12 rounded-lg overflow-hidden bg-slate-800 border border-slate-700">
+client/src/pages/analytics.tsx:                          <div className="w-full h-full flex items-center justify-center text-gray-500" style={{display: ad.imageUrl ? 'none' : 'flex'}}>
+client/src/pages/analytics.tsx:                        <h4 className="text-white font-medium truncate">{ad.title || 'Untitled Ad'}</h4>
+client/src/pages/analytics.tsx:                        <p className="text-gray-400 text-sm truncate">{ad.description || 'No description'}</p>
+client/src/pages/analytics.tsx:                            className="text-blue-400 text-xs hover:text-blue-300 truncate block"
+client/src/pages/analytics.tsx:                        <div className="text-white font-semibold text-lg">{views}</div>
+client/src/pages/analytics.tsx:                        <div className="text-gray-400 text-xs">impressions</div>
+client/src/pages/analytics.tsx:                        <div className="text-white font-semibold text-lg">{clicks}</div>
+client/src/pages/analytics.tsx:                        <div className="text-gray-400 text-xs">engagements</div>
+client/src/pages/analytics.tsx:                        <div className={`font-bold text-lg ${ctr > 0 ? 'text-green-400' : 'text-gray-400'}`}>
+client/src/pages/analytics.tsx:                        <div className="text-gray-400 text-xs">click rate</div>
+client/src/pages/analytics.tsx:                          className={`text-xs ${
+client/src/pages/analytics.tsx:                <div className="grid grid-cols-12 gap-4 pb-3 border-b border-white/10 text-sm font-medium text-gray-300">
+client/src/pages/analytics.tsx:                    <div key={index} className="grid grid-cols-12 gap-4 py-4 border-b border-white/5 hover:bg-white/5 rounded-lg transition-colors">
+client/src/pages/analytics.tsx:                        <div className="w-12 h-12 rounded-lg overflow-hidden bg-slate-800 border border-slate-700">
+client/src/pages/analytics.tsx:                          <div className="w-full h-full flex items-center justify-center text-gray-500" style={{display: ad.imageUrl ? 'none' : 'flex'}}>
+client/src/pages/analytics.tsx:                        <h4 className="text-white font-medium truncate">{ad.title || 'Untitled Ad'}</h4>
+client/src/pages/analytics.tsx:                        <p className="text-gray-400 text-sm truncate">{ad.description || 'No description'}</p>
+client/src/pages/analytics.tsx:                            className="text-blue-400 text-xs hover:text-blue-300 truncate block"
+client/src/pages/analytics.tsx:                        <div className="text-white font-semibold text-lg">{ad.views}</div>
+client/src/pages/analytics.tsx:                        <div className="text-gray-400 text-xs">impressions</div>
+client/src/pages/analytics.tsx:                        <div className="text-white font-semibold text-lg">{ad.clicks}</div>
+client/src/pages/analytics.tsx:                        <div className="text-gray-400 text-xs">engagements</div>
+client/src/pages/analytics.tsx:                        <div className={`font-bold text-lg ${
+client/src/pages/analytics.tsx:                        <div className="text-gray-400 text-xs">click rate</div>
+client/src/pages/analytics.tsx:                          <Badge className="bg-green-500/30 text-green-200 border-green-500/50 text-xs">
+client/src/pages/analytics.tsx:                          <Badge className="bg-yellow-500/30 text-yellow-200 border-yellow-500/50 text-xs">
+client/src/pages/analytics.tsx:                          <Badge className="bg-blue-500/30 text-blue-200 border-blue-500/50 text-xs">
+client/src/pages/analytics.tsx:                          <Badge variant="outline" className="bg-gray-500/20 text-gray-400 border-gray-500/30 text-xs">
+client/src/pages/analytics.tsx:                    <p className="text-gray-400">No ad performance data available</p>
+client/src/pages/analytics.tsx:                  <div className="mt-6 pt-4 border-t border-white/10">
+client/src/pages/analytics.tsx:                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+client/src/pages/analytics.tsx:                      <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+client/src/pages/analytics.tsx:                        <div className="text-2xl font-bold text-white">
+client/src/pages/analytics.tsx:                        <div className="text-gray-300 text-sm">Total Ad Views</div>
+client/src/pages/analytics.tsx:                      <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+client/src/pages/analytics.tsx:                        <div className="text-2xl font-bold text-white">
+client/src/pages/analytics.tsx:                        <div className="text-gray-300 text-sm">Total Ad Clicks</div>
+client/src/pages/analytics.tsx:                      <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+client/src/pages/analytics.tsx:                        <div className="text-2xl font-bold text-purple-400">
+client/src/pages/analytics.tsx:                            <div className="text-gray-300 text-sm cursor-help">Average CTR</div>
+client/src/pages/analytics.tsx:        <Card className="bg-gradient-to-br from-purple-500/10 to-pink-500/5 border-purple-500/20 backdrop-blur-sm">
+client/src/pages/analytics.tsx:            <CardTitle className="text-xl font-semibold text-white flex items-center">
+client/src/pages/analytics.tsx:              <MousePointerClickIcon className="w-5 h-5 mr-2 text-purple-400" />
+client/src/pages/analytics.tsx:            <CardDescription className="text-gray-300">
+client/src/pages/analytics.tsx:            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+client/src/pages/analytics.tsx:              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+client/src/pages/analytics.tsx:                  <div className="bg-blue-500/20 p-2 rounded-lg">
+client/src/pages/analytics.tsx:                    <PieChartIcon className="w-5 h-5 text-blue-400" />
+client/src/pages/analytics.tsx:                  <Badge variant="outline" className="bg-blue-500/20 text-blue-300 border-blue-500/30 text-xs">
+client/src/pages/analytics.tsx:                <div className="text-2xl font-bold text-white">{adsData?.length || 0}</div>
+client/src/pages/analytics.tsx:                <div className="text-gray-300 text-sm">Total Ads Uploaded</div>
+client/src/pages/analytics.tsx:              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+client/src/pages/analytics.tsx:                  <div className="bg-green-500/20 p-2 rounded-lg">
+client/src/pages/analytics.tsx:                    <TrendingUpIcon className="w-5 h-5 text-green-400" />
+client/src/pages/analytics.tsx:                  <Badge variant="outline" className="bg-green-500/20 text-green-300 border-green-500/30 text-xs">
+client/src/pages/analytics.tsx:                <div className="text-2xl font-bold text-white">
+client/src/pages/analytics.tsx:                <div className="text-gray-300 text-sm">Total Impressions</div>
+client/src/pages/analytics.tsx:              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+client/src/pages/analytics.tsx:                  <div className="bg-yellow-500/20 p-2 rounded-lg">
+client/src/pages/analytics.tsx:                    <MousePointerClickIcon className="w-5 h-5 text-yellow-400" />
+client/src/pages/analytics.tsx:                  <Badge variant="outline" className="bg-yellow-500/20 text-yellow-300 border-yellow-500/30 text-xs">
+client/src/pages/analytics.tsx:                <div className="text-2xl font-bold text-white">
+client/src/pages/analytics.tsx:                <div className="text-gray-300 text-sm">Total Engagements</div>
+client/src/pages/analytics.tsx:              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
+client/src/pages/analytics.tsx:                  <div className="bg-purple-500/20 p-2 rounded-lg">
+client/src/pages/analytics.tsx:                    <AwardIcon className="w-5 h-5 text-purple-400" />
+client/src/pages/analytics.tsx:                  <Badge className={`text-xs ${
+client/src/pages/analytics.tsx:                <div className="text-2xl font-bold text-white">{analyticsData?.adClickThrough || 0}%</div>
+client/src/pages/analytics.tsx:                <div className="text-gray-300 text-sm">Overall CTR</div>
+client/src/pages/analytics.tsx:            <div className="mt-6 pt-6 border-t border-white/10">
+client/src/pages/analytics.tsx:              <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/10 rounded-lg p-6 border border-purple-500/30">
+client/src/pages/analytics.tsx:                <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+client/src/pages/analytics.tsx:                    <h3 className="text-lg font-semibold text-white">Ready to optimize your ad performance?</h3>
+client/src/pages/analytics.tsx:                    <p className="text-gray-300 text-sm">
+client/src/pages/analytics.tsx:                  <div className="flex flex-col sm:flex-row gap-3">
+client/src/pages/analytics.tsx:                      className="bg-purple-500 hover:bg-purple-600 text-white border-0"
+client/src/pages/analytics.tsx:                      className="bg-white/5 border-white/20 text-white hover:bg-white/10"
+client/src/pages/analytics.tsx:          <p className="text-sm text-gray-400">
+client/src/pages/upload-guidelines.tsx:    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-red-900 p-4">
+client/src/pages/upload-guidelines.tsx:        <div className="flex items-center gap-4 " style={{marginBottom: "1.5rem"}}>
+client/src/pages/upload-guidelines.tsx:            className="border-red-600 text-red-400 hover:bg-red-600 hover:text-white"
+client/src/pages/upload-guidelines.tsx:        <Card className="bg-black/80 border-red-600">
+client/src/pages/upload-guidelines.tsx:            <CardTitle className="text-3xl font-bold text-red-500 " style={{textAlign: "center"}}>
+client/src/pages/upload-guidelines.tsx:            <p className="text-gray-300 " style={{textAlign: "center"}}>
+client/src/pages/upload-guidelines.tsx:            <div className="text-gray-300 space-y-6">
+client/src/pages/upload-guidelines.tsx:                <h2 className="text-xl font-semibold text-white mb-3 flex items-center gap-2">
+client/src/pages/upload-guidelines.tsx:                  <CheckCircle className="w-5 h-5 text-green-500" />
+client/src/pages/upload-guidelines.tsx:                <h2 className="text-xl font-semibold text-white mb-3 flex items-center gap-2">
+client/src/pages/upload-guidelines.tsx:                  <CheckCircle className="w-5 h-5 text-green-500" />
+client/src/pages/upload-guidelines.tsx:                <h2 className="text-xl font-semibold text-white mb-3 flex items-center gap-2">
+client/src/pages/upload-guidelines.tsx:                  <XCircle className="w-5 h-5 text-red-500" />
+client/src/pages/upload-guidelines.tsx:                <h2 className="text-xl font-semibold text-white mb-3 flex items-center gap-2">
+client/src/pages/upload-guidelines.tsx:                  <AlertTriangle className="w-5 h-5 text-yellow-500" />
+client/src/pages/upload-guidelines.tsx:                <div className="bg-gray-800/50 p-4 rounded-lg">
+client/src/pages/upload-guidelines.tsx:                  <h3 className="font-semibold text-white mb-2">Images</h3>
+client/src/pages/upload-guidelines.tsx:                  <ul className="space-y-1 text-sm">
+client/src/pages/upload-guidelines.tsx:                  <h3 className="font-semibold text-white mb-2 mt-4">Questions</h3>
+client/src/pages/upload-guidelines.tsx:                  <ul className="space-y-1 text-sm">
+client/src/pages/upload-guidelines.tsx:                <h2 className="text-xl font-semibold text-white mb-3">Content Review Process</h2>
+client/src/pages/upload-guidelines.tsx:                <div className="bg-blue-900/30 p-4 rounded-lg mt-4">
+client/src/pages/upload-guidelines.tsx:                  <h3 className="font-semibold text-blue-300 mb-2">Need Help?</h3>
+client/src/pages/upload-guidelines.tsx:                  <p className="text-sm">If you're unsure whether your content meets these guidelines, contact the platform administrator before uploading. We're here to help you create engaging, appropriate content for your haunt!</p>
+client/src/pages/upload-guidelines.tsx:                <h2 className="text-xl font-semibold text-white mb-3">Copyright and Fair Use</h2>
+client/src/pages/upload-guidelines.tsx:              <div className="text-sm text-gray-400 mt-8 pt-4 border-t border-gray-600">
+client/src/pages/privacy.tsx:    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-red-900 p-4">
+client/src/pages/privacy.tsx:        <div className="flex items-center gap-4 " style={{marginBottom: "1.5rem"}}>
+client/src/pages/privacy.tsx:            className="border-red-600 text-red-400 hover:bg-red-600 hover:text-white"
+client/src/pages/privacy.tsx:        <Card className="bg-black/80 border-red-600">
+client/src/pages/privacy.tsx:            <CardTitle className="text-3xl font-bold text-red-500 " style={{textAlign: "center"}}>
+client/src/pages/privacy.tsx:            <p className="text-gray-300 " style={{textAlign: "center"}}>
+client/src/pages/privacy.tsx:            <div className="text-gray-300 space-y-6">
+client/src/pages/privacy.tsx:                <h2 className="text-xl font-semibold text-white mb-3">Information We Collect</h2>
+client/src/pages/privacy.tsx:                <h2 className="text-xl font-semibold text-white mb-3">How We Use Your Information</h2>
+client/src/pages/privacy.tsx:                <h2 className="text-xl font-semibold text-white mb-3">Data Storage and Security</h2>
+client/src/pages/privacy.tsx:                <h2 className="text-xl font-semibold text-white mb-3">Data Retention and Analytics</h2>
+client/src/pages/privacy.tsx:                <h2 className="text-xl font-semibold text-white mb-3">Third-Party Services</h2>
+client/src/pages/privacy.tsx:                <h2 className="text-xl font-semibold text-white mb-3">Contact</h2>
+client/src/pages/privacy.tsx:              <div className="text-sm text-gray-400 mt-8 pt-4 border-t border-gray-600">
+client/src/pages/terms.tsx:    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-red-900 p-4">
+client/src/pages/terms.tsx:        <div className="flex items-center gap-4 " style={{marginBottom: "1.5rem"}}>
+client/src/pages/terms.tsx:            className="border-red-600 text-red-400 hover:bg-red-600 hover:text-white"
+client/src/pages/terms.tsx:        <Card className="bg-black/80 border-red-600">
+client/src/pages/terms.tsx:            <CardTitle className="text-3xl font-bold text-red-500 " style={{textAlign: "center"}}>
+client/src/pages/terms.tsx:            <p className="text-gray-300 " style={{textAlign: "center"}}>
+client/src/pages/terms.tsx:            <div className="text-gray-300 space-y-6">
+client/src/pages/terms.tsx:                <h2 className="text-xl font-semibold text-white mb-3">Acceptance of Terms</h2>
+client/src/pages/terms.tsx:                <h2 className="text-xl font-semibold text-white mb-3">Platform Use</h2>
+client/src/pages/terms.tsx:                <h2 className="text-xl font-semibold text-white mb-3">Prohibited Activities</h2>
+client/src/pages/terms.tsx:                <h2 className="text-xl font-semibold text-white mb-3">Content Guidelines</h2>
+client/src/pages/terms.tsx:                <h2 className="text-xl font-semibold text-white mb-3">Intellectual Property</h2>
+client/src/pages/terms.tsx:                <h2 className="text-xl font-semibold text-white mb-3">Limitation of Liability</h2>
+client/src/pages/terms.tsx:                <h2 className="text-xl font-semibold text-white mb-3">Termination</h2>
+client/src/pages/terms.tsx:                <h2 className="text-xl font-semibold text-white mb-3">Changes to Terms</h2>
+client/src/pages/terms.tsx:              <div className="text-sm text-gray-400 mt-8 pt-4 border-t border-gray-600">
+client/src/pages/uber-admin.tsx:      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
+client/src/pages/uber-admin.tsx:          <div className="text-white text-xl">Loading analytics...</div>
+client/src/pages/uber-admin.tsx:      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
+client/src/pages/uber-admin.tsx:          <div className="text-white text-xl">Failed to load analytics data</div>
+client/src/pages/uber-admin.tsx:    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
+client/src/pages/uber-admin.tsx:        <div className=" text-white mb-8" style={{textAlign: "center"}}>
+client/src/pages/uber-admin.tsx:          <h1 className="text-4xl font-bold mb-4">Global Analytics Dashboard</h1>
+client/src/pages/uber-admin.tsx:          <p className="text-lg text-gray-300">Platform-wide insights across all haunts</p>
+client/src/pages/uber-admin.tsx:          <Badge variant="outline" className="mt-2 text-red-400 border-red-400">
+client/src/pages/uber-admin.tsx:        <div className="flex justify-center gap-4 " style={{marginBottom: "1.5rem"}}>
+client/src/pages/uber-admin.tsx:          <Link href="/admin" className="text-purple-400 hover:text-purple-300 underline">
+client/src/pages/uber-admin.tsx:          <Link href="/analytics" className="text-purple-400 hover:text-purple-300 underline">
+client/src/pages/uber-admin.tsx:            <TabsList className="grid w-full max-w-2xl grid-cols-2 bg-slate-800 border-slate-700">
+client/src/pages/uber-admin.tsx:              <TabsTrigger value="analytics" className="text-white data-[state=active]:bg-purple-600">
+client/src/pages/uber-admin.tsx:              <TabsTrigger value="haunts" className="text-white data-[state=active]:bg-purple-600">
+client/src/pages/uber-admin.tsx:                <TabsList className="grid w-full grid-cols-3 bg-slate-800 border-slate-700">
+client/src/pages/uber-admin.tsx:                  <TabsTrigger value="7d" className="text-white data-[state=active]:bg-purple-600">Last 7 Days</TabsTrigger>
+client/src/pages/uber-admin.tsx:                  <TabsTrigger value="30d" className="text-white data-[state=active]:bg-purple-600">Last 30 Days</TabsTrigger>
+client/src/pages/uber-admin.tsx:                  <TabsTrigger value="90d" className="text-white data-[state=active]:bg-purple-600">Last 90 Days</TabsTrigger>
+client/src/pages/uber-admin.tsx:            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+client/src/pages/uber-admin.tsx:              <Card className="bg-slate-800 border-slate-700">
+client/src/pages/uber-admin.tsx:                  <CardTitle className="text-sm font-medium text-gray-300">Total Haunts</CardTitle>
+client/src/pages/uber-admin.tsx:                  <Building className="h-4 w-4 text-purple-400" />
+client/src/pages/uber-admin.tsx:                  <div className="text-2xl font-bold text-white">{analytics.totalHaunts}</div>
+client/src/pages/uber-admin.tsx:                  <p className="text-xs text-gray-400">
+client/src/pages/uber-admin.tsx:              <Card className="bg-slate-800 border-slate-700">
+client/src/pages/uber-admin.tsx:                  <CardTitle className="text-sm font-medium text-gray-300">Total Games</CardTitle>
+client/src/pages/uber-admin.tsx:                  <Gamepad2 className="h-4 w-4 text-purple-400" />
+client/src/pages/uber-admin.tsx:                  <div className="text-2xl font-bold text-white">{totalGames.toLocaleString()}</div>
+client/src/pages/uber-admin.tsx:                  <p className="text-xs text-gray-400">
+client/src/pages/uber-admin.tsx:              <Card className="bg-slate-800 border-slate-700">
+client/src/pages/uber-admin.tsx:                  <CardTitle className="text-sm font-medium text-gray-300">Total Players</CardTitle>
+client/src/pages/uber-admin.tsx:                  <Users className="h-4 w-4 text-purple-400" />
+client/src/pages/uber-admin.tsx:                  <div className="text-2xl font-bold text-white">{totalPlayers.toLocaleString()}</div>
+client/src/pages/uber-admin.tsx:                  <p className="text-xs text-gray-400">
+client/src/pages/uber-admin.tsx:              <Card className="bg-slate-800 border-slate-700">
+client/src/pages/uber-admin.tsx:                  <CardTitle className="text-sm font-medium text-gray-300">Avg Return Rate</CardTitle>
+client/src/pages/uber-admin.tsx:                  <TrendingUp className="h-4 w-4 text-purple-400" />
+client/src/pages/uber-admin.tsx:                  <div className="text-2xl font-bold text-white">{avgReturnRate.toFixed(1)}%</div>
+client/src/pages/uber-admin.tsx:                  <p className="text-xs text-gray-400">
+client/src/pages/uber-admin.tsx:            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+client/src/pages/uber-admin.tsx:              <Card className="bg-slate-800 border-slate-700">
+client/src/pages/uber-admin.tsx:                  <CardTitle className="text-white">Subscription Tier Distribution</CardTitle>
+client/src/pages/uber-admin.tsx:              <Card className="bg-slate-800 border-slate-700">
+client/src/pages/uber-admin.tsx:                  <CardTitle className="text-white">Top Performing Haunts</CardTitle>
+client/src/pages/uber-admin.tsx:            <Card className="bg-slate-800 border-slate-700">
+client/src/pages/uber-admin.tsx:                <CardTitle className="text-white">Detailed Haunt Performance</CardTitle>
+client/src/pages/uber-admin.tsx:                  <table className="w-full text-sm text-gray-300">
+client/src/pages/uber-admin.tsx:                      <tr className="border-b border-slate-700">
+client/src/pages/uber-admin.tsx:                        <th className="text-left p-3">Haunt</th>
+client/src/pages/uber-admin.tsx:                        <th className="text-left p-3">Tier</th>
+client/src/pages/uber-admin.tsx:                        <th className="text-right p-3">Games</th>
+client/src/pages/uber-admin.tsx:                        <th className="text-right p-3">Players</th>
+client/src/pages/uber-admin.tsx:                        <th className="text-right p-3">Return Rate</th>
+client/src/pages/uber-admin.tsx:                        <th className="text-right p-3">Ad CTR</th>
+client/src/pages/uber-admin.tsx:                        <th className="text-right p-3">Avg Score</th>
+client/src/pages/uber-admin.tsx:                        <tr key={haunt.hauntId} className="border-b border-slate-700 hover:bg-slate-700/50">
+client/src/pages/uber-admin.tsx:                          <td className="p-3">
+client/src/pages/uber-admin.tsx:                              <div className="font-medium text-white">{haunt.name}</div>
+client/src/pages/uber-admin.tsx:                              <div className="text-xs text-gray-400">{haunt.hauntId}</div>
+client/src/pages/uber-admin.tsx:                          <td className="p-3">
+client/src/pages/uber-admin.tsx:                          <td className="p-3 text-right">{haunt.totalGames.toLocaleString()}</td>
+client/src/pages/uber-admin.tsx:                          <td className="p-3 text-right">{haunt.uniquePlayers.toLocaleString()}</td>
+client/src/pages/uber-admin.tsx:                          <td className="p-3 text-right">{haunt.returnPlayerRate.toFixed(1)}%</td>
+client/src/pages/uber-admin.tsx:                          <td className="p-3 text-right">{haunt.adClickThrough.toFixed(1)}%</td>
+client/src/pages/uber-admin.tsx:                          <td className="p-3 text-right">{haunt.competitiveMetrics.averageScore.toFixed(0)}</td>
+client/src/pages/uber-admin.tsx:            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+client/src/pages/uber-admin.tsx:              <Card className="bg-slate-800 border-slate-700">
+client/src/pages/uber-admin.tsx:                  <CardTitle className="text-white flex items-center gap-2">
+client/src/pages/uber-admin.tsx:                      <div className="text-gray-400 text-sm">Loading haunts...</div>
+client/src/pages/uber-admin.tsx:                            <span className="text-xs opacity-70">{hauntId}</span>
+client/src/pages/uber-admin.tsx:                  <Card className="bg-slate-800 border-slate-700">
+client/src/pages/uber-admin.tsx:                      <CardTitle className="text-white flex items-center gap-2">
+client/src/pages/uber-admin.tsx:                        <Label className="text-white font-medium">Background Image URL</Label>
+client/src/pages/uber-admin.tsx:                          className="bg-slate-700 border-slate-600 text-white"
+client/src/pages/uber-admin.tsx:                        <div className="text-xs text-gray-400">
+client/src/pages/uber-admin.tsx:                        <Label className="text-white font-medium">Progress Bar Theme</Label>
+client/src/pages/uber-admin.tsx:                          <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+client/src/pages/uber-admin.tsx:                          <SelectContent className="bg-slate-700 border-slate-600">
+client/src/pages/uber-admin.tsx:                            <SelectItem value="default" className="text-white hover:bg-slate-600">
+client/src/pages/uber-admin.tsx:                            <SelectItem value="lightning" className="text-white hover:bg-slate-600">
+client/src/pages/uber-admin.tsx:                            <SelectItem value="blood" className="text-white hover:bg-slate-600">
+client/src/pages/uber-admin.tsx:                            <SelectItem value="chains" className="text-white hover:bg-slate-600">
+client/src/pages/uber-admin.tsx:                        <Label className="text-white font-medium">Theme Preview</Label>
+client/src/pages/uber-admin.tsx:                        <div className="p-4 bg-slate-700 rounded-lg border border-slate-600">
+client/src/pages/uber-admin.tsx:                          <div className="text-sm text-gray-300 mb-2">Progress Bar Preview:</div>
+client/src/pages/uber-admin.tsx:                          <div className="w-full h-6 bg-slate-600 rounded-full overflow-hidden">
+client/src/pages/test-progress.tsx:    <div className="min-h-screen bg-gray-900 p-8">
+client/src/pages/test-progress.tsx:      <h1 className="text-white text-2xl mb-8">Progress Bar Theme Test</h1>
+client/src/pages/test-progress.tsx:          <h2 className="text-white text-lg mb-2 capitalize">{theme} Theme</h2>
+client/src/pages/test-progress.tsx:        <h2 className="text-white text-lg mb-2">Default (Basic Tier)</h2>
+client/src/pages/lab-escape.tsx:                className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors duration-200 shadow-lg"
+client/src/pages/lab-escape.tsx:                className="px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white font-bold rounded-lg transition-colors duration-200 shadow-lg inline-block"
+client/src/pages/lab-escape.tsx:        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+client/src/pages/lab-escape.tsx:              className="absolute top-0 left-0 w-full h-full object-cover pointer-events-none opacity-80"
+client/src/pages/lab-escape.tsx:            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
+client/src/pages/lab-escape.tsx:                className="px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold rounded-lg transition-all duration-200 shadow-lg transform hover:scale-105 inline-block"
+client/src/pages/lab-escape.tsx:            className="absolute top-1/2 left-8 transform -translate-y-1/2 w-48 h-auto cursor-pointer transition-all duration-200 hover:brightness-110"
+client/src/pages/lab-escape.tsx:            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-full w-48 h-auto cursor-pointer transition-all duration-200 hover:brightness-110"
+client/src/pages/lab-escape.tsx:            className="absolute top-1/2 right-8 transform -translate-y-1/2 w-48 h-auto cursor-pointer transition-all duration-200 hover:brightness-110"
+client/src/pages/lab-escape.tsx:      <div className="absolute top-4 left-4 z-30">
+client/src/pages/lab-escape.tsx:        <div className="bg-black bg-opacity-80 border-2 border-yellow-600 rounded-lg p-4">
+client/src/pages/lab-escape.tsx:          <div className="text-yellow-400 font-mono text-sm">
+client/src/pages/lab-escape.tsx:          <div className="text-white font-mono">
+client/src/pages/lab-escape.tsx:          <div className="text-white font-mono">
+client/src/pages/lab-escape.tsx:        <div className="fixed bottom-8 right-8 z-40 animate-bounce">
+client/src/pages/lab-escape.tsx:            <div className="absolute -top-16 left-1/2 transform -translate-x-1/2">
+client/src/pages/lab-escape.tsx:              <div className="bg-red-900 bg-opacity-95 border-2 border-red-400 rounded-lg p-3 text-white text-xs max-w-48 " style={{textAlign: "center"}}>
+client/src/pages/lab-escape.tsx:        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 backdrop-blur-sm">
+client/src/pages/lab-escape.tsx:          <div className="relative max-w-lg mx-4 animate-in fade-in zoom-in duration-500">
+client/src/pages/lab-escape.tsx:            <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-yellow-500 to-purple-600 rounded-xl blur opacity-75 animate-pulse"></div>
+client/src/pages/lab-escape.tsx:            <div className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-black border-4 border-yellow-500 rounded-xl p-8 shadow-2xl">
+client/src/pages/lab-escape.tsx:              <div className="absolute inset-0 overflow-hidden rounded-xl">
+client/src/pages/lab-escape.tsx:                <div className="absolute top-2 left-4 w-1 h-1 bg-yellow-400 rounded-full animate-ping"></div>
+client/src/pages/lab-escape.tsx:                <div className="absolute top-8 right-6 w-1 h-1 bg-purple-400 rounded-full animate-ping" style={{ animationDelay: '0.5s' }}></div>
+client/src/pages/lab-escape.tsx:                <div className="absolute bottom-6 left-8 w-1 h-1 bg-green-400 rounded-full animate-ping" style={{ animationDelay: '1s' }}></div>
+client/src/pages/lab-escape.tsx:                <div className="absolute bottom-4 right-4 w-1 h-1 bg-red-400 rounded-full animate-ping" style={{ animationDelay: '1.5s' }}></div>
+client/src/pages/lab-escape.tsx:                <h2 className="text-yellow-400 font-bold text-2xl   tracking-wider drop-shadow-lg" style={{marginBottom: "1.5rem"}} style={{textAlign: "center"}} style={{ fontFamily: 'Creepster, cursive' }}>
+client/src/pages/lab-escape.tsx:                <div className="bg-black bg-opacity-50 rounded-lg p-6  border border-yellow-500/30" style={{marginBottom: "1.5rem"}}>
+client/src/pages/lab-escape.tsx:                  <p className="text-white text-lg mb-4  leading-relaxed font-medium" style={{textAlign: "center"}}>
+client/src/pages/lab-escape.tsx:                    <div className="border-t border-gray-600 pt-4">
+client/src/pages/lab-escape.tsx:                      <p className="text-amber-300 text-sm italic  flex items-center justify-center gap-2" style={{textAlign: "center"}}>
+client/src/pages/lab-escape.tsx:                        <span className="text-yellow-400">💡</span>
+client/src/pages/lab-escape.tsx:                  className="w-full p-4 bg-gray-800 border-2 border-gray-600 rounded-lg text-white text-lg focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 focus:outline-none  shadow-inner transition-all duration-200" style={{marginBottom: "1.5rem"}}
+client/src/pages/lab-escape.tsx:                <div className="flex gap-4 justify-center">
+client/src/pages/lab-escape.tsx:                    className="px-8 py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 disabled:from-gray-600 disabled:to-gray-700 text-white font-bold rounded-lg transition-all duration-200 shadow-lg hover:shadow-green-500/25 transform hover:scale-105 disabled:hover:scale-100"
+client/src/pages/lab-escape.tsx:                    className="px-8 py-3 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold rounded-lg transition-all duration-200 shadow-lg hover:shadow-red-500/25 transform hover:scale-105"
+client/src/pages/lab-escape.tsx:        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-30">
+client/src/pages/lab-escape.tsx:          <div className="bg-black bg-opacity-80 border-2 border-yellow-600 rounded-lg p-4 " style={{textAlign: "center"}}>
+client/src/pages/lab-escape.tsx:            <div className="text-yellow-400 font-mono text-sm mb-2">
+client/src/pages/lab-escape.tsx:            <div className="text-white text-xs">
+client/src/pages/ChupacabraChallenge.tsx:      className={`min-h-screen flex flex-col items-center justify-center relative overflow-hidden p-2 ${
+client/src/pages/ChupacabraChallenge.tsx:        <div className="absolute inset-0 bg-red-500/20 animate-ping pointer-events-none" />
+client/src/pages/ChupacabraChallenge.tsx:        <div className="fixed top-4 left-4 md:top-1/2 md:left-4 md:-translate-y-1/2 z-40">
+client/src/pages/ChupacabraChallenge.tsx:                className={`w-full transition-all duration-1000 ease-linear shadow-lg border-2 rounded-full ${
+client/src/pages/ChupacabraChallenge.tsx:                <div className={`absolute inset-0 rounded-full ${
+client/src/pages/ChupacabraChallenge.tsx:            <div className={`mt-2 font-bold text-xs md:text-sm text-center transition-colors duration-300 ${
+client/src/pages/ChupacabraChallenge.tsx:        <div className="fixed top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
+client/src/pages/ChupacabraChallenge.tsx:            <h2 className="text-4xl md:text-6xl font-bold text-red-400 animate-bounce drop-shadow-lg">
+client/src/pages/ChupacabraChallenge.tsx:            <p className="text-xl md:text-2xl text-red-300 animate-pulse mt-2">
+client/src/pages/ChupacabraChallenge.tsx:            className="text-3xl sm:text-4xl md:text-5xl font-bold text-orange-300 mb-4 drop-shadow-lg" 
+client/src/pages/ChupacabraChallenge.tsx:          <p className="text-lg sm:text-xl text-red-200 drop-shadow-md">
+client/src/pages/ChupacabraChallenge.tsx:          <div className="mt-4 flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center">
+client/src/pages/ChupacabraChallenge.tsx:            <p className="text-base sm:text-lg text-red-200">
+client/src/pages/ChupacabraChallenge.tsx:            <p className="text-base sm:text-lg text-red-200">
+client/src/pages/ChupacabraChallenge.tsx:          <div className={`grid grid-cols-4 gap-1 sm:gap-3 max-w-sm sm:max-w-lg md:max-w-2xl mx-auto mb-8 px-2 ${
+client/src/pages/ChupacabraChallenge.tsx:                    className="absolute inset-0 w-full h-full rounded-lg overflow-hidden backface-hidden border-2 border-red-600 hover:border-red-400 transition-colors duration-300"
+client/src/pages/ChupacabraChallenge.tsx:            <div className="bg-black/80 border border-red-500 rounded-lg p-6 sm:p-8 max-w-md mx-auto">
+client/src/pages/ChupacabraChallenge.tsx:              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-green-400 mb-4">
+client/src/pages/ChupacabraChallenge.tsx:              <p className="text-lg sm:text-xl text-red-200 mb-4">
+client/src/pages/ChupacabraChallenge.tsx:              <p className="text-base sm:text-lg text-red-300 " style={{marginBottom: "1.5rem"}}>
+client/src/pages/ChupacabraChallenge.tsx:              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+client/src/pages/ChupacabraChallenge.tsx:                  className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200"
+client/src/pages/ChupacabraChallenge.tsx:                  <button className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200">
+client/src/pages/ChupacabraChallenge.tsx:            <div className="bg-black/80 border border-red-500 rounded-lg p-6 sm:p-8 max-w-md mx-auto">
+client/src/pages/ChupacabraChallenge.tsx:              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-red-400 mb-4">
+client/src/pages/ChupacabraChallenge.tsx:              <p className="text-lg sm:text-xl text-red-200 mb-4">
+client/src/pages/ChupacabraChallenge.tsx:              <p className="text-base sm:text-lg text-red-300 " style={{marginBottom: "1.5rem"}}>
+client/src/pages/ChupacabraChallenge.tsx:              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+client/src/pages/ChupacabraChallenge.tsx:                  className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200"
+client/src/pages/ChupacabraChallenge.tsx:                  <button className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200">
+client/src/pages/ChupacabraChallenge.tsx:          <div className="fixed bottom-4 right-4 z-50">
+client/src/pages/game.tsx:      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black flex items-center justify-center px-4">
+client/src/pages/game.tsx:        <Card className="bg-gray-900/50 border-gray-700 text-white max-w-md w-full">
+client/src/pages/game.tsx:            <CardTitle className=" text-red-400" style={{textAlign: "center"}}>Error</CardTitle>
+client/src/pages/game.tsx:            <p className="text-gray-300">{error}</p>
+client/src/pages/game.tsx:              <Button variant="outline" className="bg-gray-800 border-gray-600 text-white hover:bg-gray-700">
+client/src/pages/game.tsx:      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black flex items-center justify-center px-4">
+client/src/pages/game.tsx:        <Card className="bg-gray-900/50 border-gray-700 text-white max-w-md w-full">
+client/src/pages/game.tsx:            <CardTitle className=" text-red-400 flex items-center justify-center gap-2" style={{textAlign: "center"}}>
+client/src/pages/game.tsx:              className="bg-gray-800 border-gray-600 text-white placeholder-gray-400"
+client/src/pages/game.tsx:              className="w-full bg-red-600 hover:bg-red-700"
+client/src/pages/haunt-auth.tsx:      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-red-900 flex items-center justify-center p-4">
+client/src/pages/haunt-auth.tsx:        <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-sm max-w-md w-full">
+client/src/pages/haunt-auth.tsx:          <CardContent className="p-8 text-center">
+client/src/pages/haunt-auth.tsx:            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-400 mx-auto mb-4"></div>
+client/src/pages/haunt-auth.tsx:            <h3 className="text-white text-lg font-medium mb-2">Completing Authentication</h3>
+client/src/pages/haunt-auth.tsx:            <p className="text-gray-400 text-sm">Please wait while we verify your credentials...</p>
+client/src/pages/haunt-auth.tsx:      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-red-900 flex items-center justify-center p-4">
+client/src/pages/haunt-auth.tsx:        <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-sm max-w-md w-full">
+client/src/pages/haunt-auth.tsx:          <CardHeader className="text-center">
+client/src/pages/haunt-auth.tsx:            <CheckCircle className="w-16 h-16 text-green-400 mx-auto mb-4" />
+client/src/pages/haunt-auth.tsx:            <CardTitle className="text-red-400 text-2xl">Check Your Email</CardTitle>
+client/src/pages/haunt-auth.tsx:          <CardContent className="text-center space-y-4">
+client/src/pages/haunt-auth.tsx:            <p className="text-gray-300">
+client/src/pages/haunt-auth.tsx:              We've sent an authentication link to <strong className="text-white">{email}</strong>
+client/src/pages/haunt-auth.tsx:            <p className="text-gray-400 text-sm">
+client/src/pages/haunt-auth.tsx:            <p className="text-gray-500 text-xs mt-2">
+client/src/pages/haunt-auth.tsx:            <div className="bg-green-900/20 border border-green-600/30 rounded-lg p-3 mt-4">
+client/src/pages/haunt-auth.tsx:              <p className="text-green-200 text-sm">
+client/src/pages/haunt-auth.tsx:                className="border-gray-600 text-gray-400 hover:bg-gray-700"
+client/src/pages/haunt-auth.tsx:    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-red-900 flex items-center justify-center p-4">
+client/src/pages/haunt-auth.tsx:        <Card className="bg-gray-900/50 border-gray-700 backdrop-blur-sm">
+client/src/pages/haunt-auth.tsx:          <CardHeader className="text-center">
+client/src/pages/haunt-auth.tsx:            <CardTitle className="text-red-400 text-2xl font-bold">
+client/src/pages/haunt-auth.tsx:            <p className="text-gray-300 text-sm mt-2">
+client/src/pages/haunt-auth.tsx:            <div className="bg-blue-900/20 border border-blue-600/30 rounded-lg p-3 mt-4">
+client/src/pages/haunt-auth.tsx:              <p className="text-blue-200 text-sm">
+client/src/pages/haunt-auth.tsx:                <Label htmlFor="hauntId" className="text-white">
+client/src/pages/haunt-auth.tsx:                  className="bg-gray-800 border-gray-600 text-white mt-2 opacity-75"
+client/src/pages/haunt-auth.tsx:                <p className="text-gray-400 text-xs mt-1">
+client/src/pages/haunt-auth.tsx:                <Label htmlFor="email" className="text-white">
+client/src/pages/haunt-auth.tsx:                  className="bg-gray-800 border-gray-600 text-white mt-2"
+client/src/pages/haunt-auth.tsx:                <p className="text-gray-400 text-xs mt-1">
+client/src/pages/haunt-auth.tsx:                className="w-full bg-red-600 hover:bg-red-700 text-white"
+client/src/pages/haunt-auth.tsx:                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+client/src/pages/haunt-admin.tsx:            <CardTitle className="text-2xl font-bold text-red-500">
+client/src/pages/haunt-admin.tsx:            <p className="text-gray-300 " style={{textAlign: "center"}}>
+client/src/pages/haunt-admin.tsx:                <Label htmlFor="adminEmail" className="text-white">Admin Email Address</Label>
+client/src/pages/haunt-admin.tsx:                  className="bg-gray-800 border-gray-600 text-white"
+client/src/pages/haunt-admin.tsx:                className="w-full bg-red-600 hover:bg-red-700 text-white"
+client/src/pages/haunt-admin.tsx:          <CardContent className="p-8">
+client/src/pages/haunt-admin.tsx:              <h2 className="text-2xl font-bold text-red-500 mb-4">Haunt Not Found</h2>
+client/src/pages/haunt-admin.tsx:              <p className="text-gray-300 " style={{marginBottom: "1.5rem"}}>The haunt "{hauntId}" could not be found.</p>
+client/src/pages/haunt-admin.tsx:                className="border-red-600 text-red-500 hover:bg-red-600 hover:text-white"
+client/src/pages/haunt-admin.tsx:              className="border-red-500 text-red-400 hover:bg-red-500 hover:text-white bg-black/50"
+client/src/pages/haunt-admin.tsx:                className="bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-white border-red-600"
+client/src/pages/haunt-admin.tsx:                    className="bg-gray-800 border-gray-600 text-white file:bg-red-600 file:text-white file:border-0 file:rounded-md file:px-3 file:py-2 file:mr-3 file:cursor-pointer"
+client/src/pages/haunt-admin.tsx:                    <p className="text-green-400 text-xs mt-2 flex items-center gap-1">
+client/src/pages/haunt-admin.tsx:                  <div className="mt-6 p-4 bg-purple-900/20 border border-purple-500 rounded-lg">
+client/src/pages/haunt-admin.tsx:                    <h4 className="text-purple-300 font-medium mb-3 flex items-center gap-2">
+client/src/pages/haunt-admin.tsx:                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+client/src/pages/haunt-admin.tsx:                        <Label className="text-purple-200 text-sm mb-2 block">Custom Background Skin</Label>
+client/src/pages/haunt-admin.tsx:                          <div className="text-green-400 text-sm flex items-center gap-2">
+client/src/pages/haunt-admin.tsx:                              className="text-blue-400 hover:text-blue-300 underline"
+client/src/pages/haunt-admin.tsx:                          <div className="text-gray-400 text-sm">Default horror theme active</div>
+client/src/pages/haunt-admin.tsx:                        <Label className="text-purple-200 text-sm mb-2 block">Custom Progress Bar</Label>
+client/src/pages/haunt-admin.tsx:                          <div className="text-green-400 text-sm flex items-center gap-2">
+client/src/pages/haunt-admin.tsx:                              className="text-blue-400 hover:text-blue-300 underline"
+client/src/pages/haunt-admin.tsx:                          <div className="text-gray-400 text-sm">Default progress bar active</div>
+client/src/pages/haunt-admin.tsx:                    <p className="text-purple-300 text-xs mt-3">
+client/src/pages/haunt-admin.tsx:                <p className="text-gray-400 text-sm mt-2">
+client/src/pages/haunt-admin.tsx:                  Your <span className="text-white font-medium capitalize">{hauntConfig.tier}</span> tier allows up to{" "}
+client/src/pages/haunt-admin.tsx:                  <span className="text-white font-medium">{getAdLimit(hauntConfig.tier)}</span> ads. Recommended size: 800x400 PNG.
+client/src/pages/haunt-admin.tsx:                    className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 underline"
+client/src/pages/haunt-admin.tsx:                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+client/src/pages/haunt-admin.tsx:                            <div className="relative aspect-[2/1] bg-gray-800 border-2 border-gray-600 rounded-lg overflow-hidden hover:border-gray-500 transition-colors">
+client/src/pages/haunt-admin.tsx:                                <div className="w-full h-full flex items-center justify-center bg-gray-800">
+client/src/pages/haunt-admin.tsx:                                  <span className="text-gray-500 text-sm">No Image</span>
+client/src/pages/haunt-admin.tsx:                              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-3 z-10">
+client/src/pages/haunt-admin.tsx:                                  className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-md text-sm font-medium shadow-lg transition-colors"
+client/src/pages/haunt-admin.tsx:                                  className="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-md text-sm font-medium shadow-lg transition-colors"
+client/src/pages/haunt-admin.tsx:                              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+client/src/pages/haunt-admin.tsx:                                <h4 className="text-white font-medium text-sm truncate">{ad.title}</h4>
+client/src/pages/haunt-admin.tsx:                                  <p className="text-gray-300 text-xs truncate mt-1">{ad.description}</p>
+client/src/pages/haunt-admin.tsx:                              className="aspect-[2/1] bg-gray-800/50 border-2 border-dashed border-gray-600 rounded-lg flex flex-col items-center justify-center hover:border-gray-500 hover:bg-gray-800/70 transition-colors cursor-pointer group"
+client/src/pages/haunt-admin.tsx:                              <div className="text-4xl text-gray-500 group-hover:text-gray-400 mb-2">+</div>
+client/src/pages/haunt-admin.tsx:                              <span className="text-gray-500 group-hover:text-gray-400 text-sm font-medium">Add Ad</span>
+client/src/pages/haunt-admin.tsx:                              <span className="text-gray-600 text-xs mt-1">Slot {index + 1}</span>
+client/src/pages/haunt-admin.tsx:                  <div className="flex items-center justify-between text-sm">
+client/src/pages/haunt-admin.tsx:                    <span className="text-gray-400">
+client/src/pages/haunt-admin.tsx:                    <span className="text-gray-500">
+client/src/pages/haunt-admin.tsx:                <div key={question.id || index} className="border border-gray-600 rounded-lg p-4 bg-gray-800/30">
+client/src/pages/haunt-admin.tsx:                    <h4 className="text-white font-medium">Question #{index + 1}</h4>
+client/src/pages/haunt-admin.tsx:                    <div className="flex gap-2">
+client/src/pages/haunt-admin.tsx:                        className="bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-white border-red-600 text-xs px-2 py-1"
+client/src/pages/haunt-admin.tsx:                        className="bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-white border-red-600 text-xs px-2 py-1"
+client/src/pages/haunt-admin.tsx:                      <p className="text-white text-sm font-medium">Question:</p>
+client/src/pages/haunt-admin.tsx:                      <p className="text-gray-300 text-sm">{question.question}</p>
+client/src/pages/haunt-admin.tsx:                      <p className="text-white text-sm font-medium">Choices:</p>
+client/src/pages/haunt-admin.tsx:                      <ul className="text-gray-300 text-sm ml-3 space-y-1">
+client/src/pages/haunt-admin.tsx:                          <li key={choiceIndex} className={choice === question.correct ? "text-green-400 font-medium" : ""}>
+client/src/pages/haunt-admin.tsx:                  className="w-full border-red-600 text-red-500 hover:bg-red-600 hover:text-white"
+client/src/pages/haunt-admin.tsx:        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
+client/src/pages/haunt-admin.tsx:            className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 text-lg font-semibold w-full sm:w-auto shadow-lg"
+client/src/pages/haunt-admin.tsx:            className="border-green-600 text-green-500 hover:bg-green-600 hover:text-white w-full sm:w-auto"
+client/src/pages/haunt-admin.tsx:            className="border-red-600 text-red-500 hover:bg-red-600 hover:text-white w-full sm:w-auto"
+client/src/pages/haunt-admin.tsx:        <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+client/src/pages/haunt-admin.tsx:          <Card className="bg-gray-900 border-gray-600 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+client/src/pages/haunt-admin.tsx:              <CardTitle className="text-white">
+client/src/pages/haunt-admin.tsx:                <Label className="text-white">Question *</Label>
+client/src/pages/haunt-admin.tsx:                  className="bg-gray-800 border-gray-600 text-white"
+client/src/pages/haunt-admin.tsx:                <Label className="text-white">Answer Choices *</Label>
+client/src/pages/haunt-admin.tsx:                  <div key={index} className="flex gap-2 items-center">
+client/src/pages/haunt-admin.tsx:                      className="bg-gray-800 border-gray-600 text-white"
+client/src/pages/haunt-admin.tsx:                      className="border-gray-600"
+client/src/pages/haunt-admin.tsx:                    <Label className="text-white text-sm">Correct</Label>
+client/src/pages/haunt-admin.tsx:                <Label className="text-white">Explanation (Optional)</Label>
+client/src/pages/haunt-admin.tsx:                  className="bg-gray-800 border-gray-600 text-white"
+client/src/pages/haunt-admin.tsx:                <p className="text-gray-400 text-xs mt-1">
+client/src/pages/haunt-admin.tsx:              <div className="flex gap-3 pt-4">
+client/src/pages/haunt-admin.tsx:                  className="bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-white border-red-600"
+client/src/pages/haunt-admin.tsx:                  className="bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-white border-red-600"
+client/src/pages/haunt-admin.tsx:        <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+client/src/pages/haunt-admin.tsx:          <Card className="bg-black/90 border-red-600 text-white max-w-md w-full">
+client/src/pages/haunt-admin.tsx:              <CardTitle className="text-xl font-bold text-red-500">Edit Ad</CardTitle>
+client/src/pages/haunt-admin.tsx:                <Label className="text-white text-sm font-medium mb-2 block">Title</Label>
+client/src/pages/haunt-admin.tsx:                  className="bg-gray-800 border-gray-600 text-white"
+client/src/pages/haunt-admin.tsx:                <Label className="text-white text-sm font-medium mb-2 block">Description</Label>
+client/src/pages/haunt-admin.tsx:                  className="bg-gray-800 border-gray-600 text-white"
+client/src/pages/haunt-admin.tsx:                <Label className="text-white text-sm font-medium mb-2 block">Link (optional)</Label>
+client/src/pages/haunt-admin.tsx:                  className="bg-gray-800 border-gray-600 text-white"
+client/src/pages/haunt-admin.tsx:                  <Label className="text-white text-sm font-medium mb-2 block">Current Image</Label>
+client/src/pages/haunt-admin.tsx:                    className="w-full max-w-xs h-24 object-cover rounded border border-gray-600"
+client/src/pages/haunt-admin.tsx:              <div className="flex gap-2">
+client/src/pages/haunt-admin.tsx:                  className="bg-green-600 hover:bg-green-700 text-white"
+client/src/pages/haunt-admin.tsx:                  className="border-gray-600 text-gray-400"
+client/src/pages/haunt-admin.tsx:        <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+client/src/pages/haunt-admin.tsx:          <Card className="bg-black/90 border-red-600 text-white max-w-md w-full">
+client/src/pages/haunt-admin.tsx:              <CardTitle className="text-xl font-bold text-red-500">Add New Ad</CardTitle>
+client/src/pages/haunt-admin.tsx:                <Label className="text-white text-sm font-medium mb-2 block">Title</Label>
+client/src/pages/haunt-admin.tsx:                  className="bg-gray-800 border-gray-600 text-white"
+client/src/pages/haunt-admin.tsx:                <Label className="text-white text-sm font-medium mb-2 block">Description</Label>
+client/src/pages/haunt-admin.tsx:                  className="bg-gray-800 border-gray-600 text-white"
+client/src/pages/haunt-admin.tsx:                <Label className="text-white text-sm font-medium mb-2 block">Link (optional)</Label>
+client/src/pages/haunt-admin.tsx:                  className="bg-gray-800 border-gray-600 text-white"
+client/src/pages/haunt-admin.tsx:                <Label className="text-white text-sm font-medium mb-2 block">Image</Label>
+client/src/pages/haunt-admin.tsx:                  className="bg-gray-800 border-gray-600 text-white file:bg-red-600 file:text-white file:border-0 file:rounded-md file:px-3 file:py-2 file:mr-3 file:cursor-pointer"
+client/src/pages/haunt-admin.tsx:              <div className="flex gap-2">
+client/src/pages/haunt-admin.tsx:                  className="bg-green-600 hover:bg-green-700 text-white"
+client/src/pages/haunt-admin.tsx:                  className="border-gray-600 text-gray-400"
+client/src/pages/haunt-admin.tsx:        <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
+client/src/pages/haunt-admin.tsx:          <Card className="bg-gray-900 border-gray-600 w-full max-w-md">
+client/src/pages/haunt-admin.tsx:              <CardTitle className="text-white">Edit Ad</CardTitle>
+client/src/pages/haunt-admin.tsx:                <Label className="text-white text-sm font-medium mb-2 block">Title</Label>
+client/src/pages/haunt-admin.tsx:                  className="bg-gray-800 border-gray-600 text-white"
+client/src/pages/haunt-admin.tsx:                <Label className="text-white text-sm font-medium mb-2 block">Description</Label>
+client/src/pages/haunt-admin.tsx:                  className="bg-gray-800 border-gray-600 text-white"
+client/src/pages/haunt-admin.tsx:                <Label className="text-white text-sm font-medium mb-2 block">Link (optional)</Label>
+client/src/pages/haunt-admin.tsx:                  className="bg-gray-800 border-gray-600 text-white"
+client/src/pages/haunt-admin.tsx:                <Label className="text-white text-sm font-medium mb-2 block">Replace Image (optional)</Label>
+client/src/pages/haunt-admin.tsx:                  className="bg-gray-800 border-gray-600 text-white file:bg-blue-600 file:text-white file:border-0 file:rounded-md file:px-3 file:py-2 file:mr-3 file:cursor-pointer"
+client/src/pages/haunt-admin.tsx:                <p className="text-gray-400 text-xs mt-1">Leave empty to keep current image</p>
+client/src/pages/haunt-admin.tsx:              <div className="flex gap-2">
+client/src/pages/haunt-admin.tsx:                  className="bg-blue-600 hover:bg-blue-700 text-white"
+client/src/pages/haunt-admin.tsx:                  className="border-gray-600 text-gray-400"
+client/src/pages/home.tsx:            <div className="space-y-3 sm:space-y-4 text-gray-300">
+client/src/pages/home.tsx:              <p className="text-base sm:text-lg">
+client/src/pages/home.tsx:              <p className="text-sm sm:text-base">
+client/src/pages/home.tsx:              <div className="mt-6 sm:mt-8 p-3 sm:p-4 bg-red-900/30 border border-red-600/50 rounded-lg">
+client/src/pages/home.tsx:                <h3 className="text-lg sm:text-xl font-semibold text-red-400 mb-2 sm:mb-3">
+client/src/pages/home.tsx:                <p className="text-xs sm:text-sm text-gray-300">
+client/src/pages/info.tsx:              <h3 className="font-nosifer text-2xl text-white mb-4">BASIC</h3>
+client/src/pages/info.tsx:              <div className="text-4xl font-bold text-gray-300 " style={{marginBottom: "1.5rem"}}>$99<span className="text-lg">/season</span></div>
+client/src/pages/info.tsx:              <ul className="text-left space-y-3 mb-8 text-gray-300">
+client/src/pages/info.tsx:              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-4 py-1 rounded-full text-sm font-bold">
+client/src/pages/info.tsx:              <h3 className="font-nosifer text-2xl text-red-400 mb-4">PRO</h3>
+client/src/pages/info.tsx:              <div className="text-4xl font-bold text-white " style={{marginBottom: "1.5rem"}}>$199<span className="text-lg">/season</span></div>
+client/src/pages/info.tsx:              <ul className="text-left space-y-3 mb-8 text-gray-300">
+client/src/pages/info.tsx:              <h3 className="font-nosifer text-2xl text-purple-400 mb-4">PREMIUM</h3>
+client/src/pages/info.tsx:              <div className="text-4xl font-bold text-white " style={{marginBottom: "1.5rem"}}>$399<span className="text-lg">/season</span></div>
+client/src/pages/info.tsx:              <ul className="text-left space-y-3 mb-8 text-gray-300">
+client/src/pages/info.tsx:          <div className="flex flex-wrap justify-center gap-4 mt-8 pt-6 border-t border-gray-800">
+client/src/pages/info.tsx:            <div className="flex items-center gap-2 bg-green-900/30 border border-green-600 rounded-lg px-3 py-2">
+client/src/pages/info.tsx:              <span className="text-green-400">🔒</span>
+client/src/pages/info.tsx:              <span className="text-xs text-green-300 font-medium">HTTPS Encrypted</span>
+client/src/pages/info.tsx:            <div className="flex items-center gap-2 bg-blue-900/30 border border-blue-600 rounded-lg px-3 py-2">
+client/src/pages/info.tsx:              <span className="text-blue-400">🛡️</span>
+client/src/pages/info.tsx:              <span className="text-xs text-blue-300 font-medium">Firebase Secured</span>
+client/src/pages/info.tsx:            <div className="flex items-center gap-2 bg-purple-900/30 border border-purple-600 rounded-lg px-3 py-2">
+client/src/pages/info.tsx:              <span className="text-purple-400">📱</span>
+client/src/pages/info.tsx:              <span className="text-xs text-purple-300 font-medium">PWA Compliant</span>
+client/src/pages/info.tsx:            <div className="flex items-center gap-2 bg-orange-900/30 border border-orange-600 rounded-lg px-3 py-2">
+client/src/pages/info.tsx:              <span className="text-orange-400">⚡</span>
+client/src/pages/info.tsx:              <span className="text-xs text-orange-300 font-medium">99.9% Uptime</span>
+client/src/pages/info.tsx:      <footer className="bg-black border-t border-gray-800 py-8">
+client/src/pages/info.tsx:              <p className="text-gray-400 text-sm">Taking Over The World - One Queue Line at a Time!</p>
+client/src/pages/info.tsx:            <div className="flex space-x-6 text-sm">
+client/src/pages/info.tsx:              <Link href="/privacy" className="text-gray-400 hover:text-white transition-colors">
+client/src/pages/info.tsx:              <Link href="/terms" className="text-gray-400 hover:text-white transition-colors">
+client/src/pages/info.tsx:                className="text-gray-400 hover:text-white transition-colors"
+client/src/pages/info.tsx:          <div className="border-t border-gray-800 mt-6 pt-6 " style={{textAlign: "center"}}>
+client/src/pages/info.tsx:            <p className="text-gray-500 text-sm">
+client/src/pages/admin.tsx:            <p className="text-gray-400">Select a Pro or Premium haunt to view analytics</p>
+client/src/pages/admin.tsx:            <Crown className="w-12 h-12 text-yellow-500 mx-auto mb-4" />
+client/src/pages/admin.tsx:            <p className="text-gray-400 mb-2">Analytics are only available for Pro and Premium haunts</p>
+client/src/pages/admin.tsx:            <p className="text-sm text-gray-500">Upgrade your haunt subscription to access detailed performance metrics</p>
+client/src/pages/admin.tsx:                <TabsList className="grid w-full grid-cols-3 bg-gray-800 border-gray-700">
+client/src/pages/admin.tsx:                  <TabsTrigger value="7d" className="text-white data-[state=active]:bg-red-600">Last 7 Days</TabsTrigger>
+client/src/pages/admin.tsx:                  <TabsTrigger value="30d" className="text-white data-[state=active]:bg-red-600">Last 30 Days</TabsTrigger>
+client/src/pages/admin.tsx:                  <TabsTrigger value="90d" className="text-white data-[state=active]:bg-red-600">Last 90 Days</TabsTrigger>
+client/src/pages/admin.tsx:                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-500 mx-auto mb-4"></div>
+client/src/pages/admin.tsx:                <p className="text-gray-400">Loading analytics data...</p>
+client/src/pages/admin.tsx:                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+client/src/pages/admin.tsx:                  <Card className="bg-gray-800/50 border-gray-600">
+client/src/pages/admin.tsx:                    <CardContent className="p-4">
+client/src/pages/admin.tsx:                      <div className="flex items-center gap-3">
+client/src/pages/admin.tsx:                        <div className="p-2 bg-blue-600/20 rounded-lg">
+client/src/pages/admin.tsx:                          <GamepadIcon className="w-5 h-5 text-blue-400" />
+client/src/pages/admin.tsx:                          <p className="text-gray-400 text-sm">Total Games</p>
+client/src/pages/admin.tsx:                          <p className="text-white text-2xl font-bold">{analyticsData.totalGames || 0}</p>
+client/src/pages/admin.tsx:                  <Card className="bg-gray-800/50 border-gray-600">
+client/src/pages/admin.tsx:                    <CardContent className="p-4">
+client/src/pages/admin.tsx:                      <div className="flex items-center gap-3">
+client/src/pages/admin.tsx:                        <div className="p-2 bg-green-600/20 rounded-lg">
+client/src/pages/admin.tsx:                          <Users className="w-5 h-5 text-green-400" />
+client/src/pages/admin.tsx:                          <p className="text-gray-400 text-sm">Unique Players</p>
+client/src/pages/admin.tsx:                          <p className="text-white text-2xl font-bold">{analyticsData.uniquePlayers || 0}</p>
+client/src/pages/admin.tsx:                  <Card className="bg-gray-800/50 border-gray-600">
+client/src/pages/admin.tsx:                    <CardContent className="p-4">
+client/src/pages/admin.tsx:                      <div className="flex items-center gap-3">
+client/src/pages/admin.tsx:                        <div className="p-2 bg-purple-600/20 rounded-lg">
+client/src/pages/admin.tsx:                          <Target className="w-5 h-5 text-purple-400" />
+client/src/pages/admin.tsx:                          <p className="text-gray-400 text-sm">Return Rate</p>
+client/src/pages/admin.tsx:                          <p className="text-white text-2xl font-bold">{analyticsData.returnPlayerRate || 0}%</p>
+client/src/pages/admin.tsx:                  <Card className="bg-gray-800/50 border-gray-600">
+client/src/pages/admin.tsx:                    <CardContent className="p-4">
+client/src/pages/admin.tsx:                      <div className="flex items-center gap-3">
+client/src/pages/admin.tsx:                        <div className="p-2 bg-yellow-600/20 rounded-lg">
+client/src/pages/admin.tsx:                          <MousePointer className="w-5 h-5 text-yellow-400" />
+client/src/pages/admin.tsx:                          <p className="text-gray-400 text-sm">Ad Click Rate</p>
+client/src/pages/admin.tsx:                          <p className="text-white text-2xl font-bold">{analyticsData.adClickThrough || 0}%</p>
+client/src/pages/admin.tsx:                  <Card className="bg-gray-800/50 border-gray-600">
+client/src/pages/admin.tsx:                      <CardTitle className="text-white text-sm">Performance Metrics</CardTitle>
+client/src/pages/admin.tsx:                  <Card className="bg-gray-800/50 border-gray-600 md:col-span-2">
+client/src/pages/admin.tsx:                      <CardTitle className="text-white text-sm">Best Performing Questions</CardTitle>
+client/src/pages/admin.tsx:                            <div key={index} className="flex justify-between items-center p-2 bg-gray-700/50 rounded">
+client/src/pages/admin.tsx:                                <p className="text-white text-sm truncate">{question.question}</p>
+client/src/pages/admin.tsx:                                <p className="text-gray-400 text-xs">{question.pack}</p>
+client/src/pages/admin.tsx:                              <Badge variant="outline" className="text-green-400 border-green-400">
+client/src/pages/admin.tsx:                        <p className="text-gray-400 text-sm">No question performance data available yet</p>
+client/src/pages/admin.tsx:                  <Card className="bg-gray-800/50 border-gray-600">
+client/src/pages/admin.tsx:                      <CardTitle className="text-white text-sm flex items-center gap-2">
+client/src/pages/admin.tsx:                            <span className="text-gray-400 text-sm">{new Date(day.date).toLocaleDateString()}</span>
+client/src/pages/admin.tsx:                            <div className="flex items-center gap-4">
+client/src/pages/admin.tsx:                              <span className="text-white text-sm">{day.games} games</span>
+client/src/pages/admin.tsx:                              <span className="text-gray-400 text-sm">{day.players} players</span>
+client/src/pages/admin.tsx:              <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-7 bg-gray-900/80 border border-gray-600 rounded-lg" style={{ gap: 'clamp(2px, 1vw, 4px)' }}>
+client/src/pages/admin.tsx:                  className="font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
+client/src/pages/admin.tsx:                  className="font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
+client/src/pages/admin.tsx:                  className="font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
+client/src/pages/admin.tsx:                  className="font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
+client/src/pages/admin.tsx:                  className="font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
+client/src/pages/admin.tsx:                  className="font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
+client/src/pages/admin.tsx:                  className="font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
+client/src/pages/admin.tsx:                                  <div className="flex items-center gap-2">
+client/src/pages/admin.tsx:                                      className="h-8 text-xs border-green-600 text-green-400 hover:bg-green-600 hover:text-white flex-1"
+client/src/pages/admin.tsx:                                      className="h-8 w-8 p-0 text-green-400 hover:bg-green-600 hover:text-white"
+client/src/pages/admin.tsx:                                    className="w-full bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-white border-red-600"
+client/src/pages/admin.tsx:                                    className="w-full bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-white border-red-600"
+client/src/pages/admin.tsx:                                    className="w-full bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-white border-red-600"
+client/src/pages/admin.tsx:                                    className="w-full bg-gradient-to-r from-blue-700 to-green-700 hover:from-blue-600 hover:to-green-600 text-white border-blue-600"
+client/src/pages/admin.tsx:                  <Card className="bg-gray-900/50 border-orange-600 shadow-lg mt-6">
+client/src/pages/admin.tsx:                      <CardTitle className="text-orange-400 flex items-center gap-2">
+client/src/pages/admin.tsx:                      <p className="text-gray-300 text-sm">
+client/src/pages/admin.tsx:                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+client/src/pages/admin.tsx:                          <h3 className="text-white font-medium">Basic Information</h3>
+client/src/pages/admin.tsx:                            <Label htmlFor="edit-name" className="text-white">Haunt Name</Label>
+client/src/pages/admin.tsx:                              className="bg-gray-800 border-gray-600 text-white"
+client/src/pages/admin.tsx:                            <Label htmlFor="edit-description" className="text-white">Description</Label>
+client/src/pages/admin.tsx:                              className="bg-gray-800 border-gray-600 text-white"
+client/src/pages/admin.tsx:                            <Label htmlFor="edit-tier" className="text-white">Subscription Tier</Label>
+client/src/pages/admin.tsx:                      <div className="flex gap-4 mt-6 pt-4 border-t border-gray-700">
+client/src/pages/admin.tsx:                          className="bg-orange-600 hover:bg-orange-700 text-white"
+client/src/pages/admin.tsx:                          className="border-gray-600 text-gray-400 hover:bg-gray-700"
+client/src/pages/admin.tsx:                <h3 className="text-xl font-bold text-red-400 mb-4">Add New Haunt</h3>
+client/src/pages/admin.tsx:              <div className="grid grid-cols-2 gap-4">
+client/src/pages/admin.tsx:                  <Label htmlFor="id" className="text-white">Haunt ID *</Label>
+client/src/pages/admin.tsx:                    className="bg-gray-800 border-gray-600 text-white"
+client/src/pages/admin.tsx:                  <Label htmlFor="name" className="text-white">Haunt Name *</Label>
+client/src/pages/admin.tsx:                    className="bg-gray-800 border-gray-600 text-white"
+client/src/pages/admin.tsx:                <Label htmlFor="description" className="text-white">Description</Label>
+client/src/pages/admin.tsx:                  className="bg-gray-800 border-gray-600 text-white"
+client/src/pages/admin.tsx:              <div className="grid grid-cols-1 gap-4">
+client/src/pages/admin.tsx:                  <Label htmlFor="logoPath" className="text-white">Logo Path</Label>
+client/src/pages/admin.tsx:                    className="bg-gray-800 border-gray-600 text-white"
+client/src/pages/admin.tsx:              <div className="grid grid-cols-2 gap-4">
+client/src/pages/admin.tsx:                  <Label htmlFor="triviaFile" className="text-white">Trivia File</Label>
+client/src/pages/admin.tsx:                    className="bg-gray-800 border-gray-600 text-white"
+client/src/pages/admin.tsx:                  <Label htmlFor="adFile" className="text-white">Ad File</Label>
+client/src/pages/admin.tsx:                    className="bg-gray-800 border-gray-600 text-white"
+client/src/pages/admin.tsx:              <div className="grid grid-cols-1 gap-4">
+client/src/pages/admin.tsx:                  <Label htmlFor="tier" className="text-white">Subscription Tier</Label>
+client/src/pages/admin.tsx:                className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3"
+client/src/pages/admin.tsx:                  <h3 className="text-xl font-bold text-red-400 mb-4">Create Trivia Pack</h3>
+client/src/pages/admin.tsx:                    <div className="grid grid-cols-2 gap-4">
+client/src/pages/admin.tsx:                        <Label htmlFor="packName" className="text-white">Pack Name *</Label>
+client/src/pages/admin.tsx:                          className="bg-gray-800 border-gray-600 text-white"
+client/src/pages/admin.tsx:                        <Label htmlFor="packDescription" className="text-white">Description</Label>
+client/src/pages/admin.tsx:                          className="bg-gray-800 border-gray-600 text-white"
+client/src/pages/admin.tsx:                      <Label className="text-white">Questions *</Label>
+client/src/pages/admin.tsx:                        <div className="border border-gray-600 rounded-lg p-4 bg-gray-800/30">
+client/src/pages/admin.tsx:                          <h4 className="text-white font-medium mb-3 flex items-center gap-2">
+client/src/pages/admin.tsx:                          <p className="text-gray-400 text-sm mb-3">
+client/src/pages/admin.tsx:                              className="bg-gray-800 border-gray-600 text-white file:bg-red-600 file:text-white file:border-none file:rounded file:px-3 file:py-1"
+client/src/pages/admin.tsx:                            <div className="text-xs text-gray-400 bg-gray-900/50 p-3 rounded">
+client/src/pages/admin.tsx:                              <p className="font-medium text-white mb-1">CSV Format Required:</p>
+client/src/pages/admin.tsx:                                className="inline-block mt-2 text-blue-400 hover:text-blue-300 underline"
+client/src/pages/admin.tsx:                        <div className="border border-gray-600 rounded-lg p-4 bg-gray-800/30">
+client/src/pages/admin.tsx:                          <h4 className="text-white font-medium mb-3">Or Enter JSON Manually</h4>
+client/src/pages/admin.tsx:                            className="bg-gray-800 border-gray-600 text-white min-h-32"
+client/src/pages/admin.tsx:                      <Label className="text-white">Access Control</Label>
+client/src/pages/admin.tsx:                        <Label className="text-white">Allowed Tiers</Label>
+client/src/pages/admin.tsx:                        <div className="flex gap-4 mt-2">
+client/src/pages/admin.tsx:                            <label key={tier} className="flex items-center gap-2 text-white">
+client/src/pages/admin.tsx:                        <Label htmlFor="allowedHaunts" className="text-white">Allowed Haunt IDs (comma-separated)</Label>
+client/src/pages/admin.tsx:                          className="bg-gray-800 border-gray-600 text-white"
+client/src/pages/admin.tsx:                      className="w-full bg-red-600 hover:bg-red-700 text-white"
+client/src/pages/admin.tsx:                      <h4 className="text-lg font-bold text-red-400 mb-4">Existing Trivia Packs</h4>
+client/src/pages/admin.tsx:                          <Card key={pack.id} className="bg-gray-800 border-gray-600">
+client/src/pages/admin.tsx:                            <CardContent className="p-4">
+client/src/pages/admin.tsx:                                  <h5 className="font-bold text-white">{pack.name}</h5>
+client/src/pages/admin.tsx:                                  <p className="text-gray-300 text-sm">{pack.description}</p>
+client/src/pages/admin.tsx:                                  <p className="text-gray-400 text-xs mt-1">
+client/src/pages/admin.tsx:                                <div className="flex gap-2">
+client/src/pages/admin.tsx:                                    className="border-blue-600 text-blue-400 hover:bg-blue-600 hover:text-white"
+client/src/pages/admin.tsx:                                    className="border-red-600 text-red-400 hover:bg-red-600 hover:text-white"
+client/src/pages/admin.tsx:                                    className="text-gray-400 hover:text-white"
+client/src/pages/admin.tsx:                <Card className="bg-gray-900/50 border-gray-700">
+client/src/pages/admin.tsx:                    <CardTitle className="text-purple-400 flex items-center gap-2">
+client/src/pages/admin.tsx:                    <p className="text-gray-300 text-sm">
+client/src/pages/admin.tsx:                      <p className="text-gray-400  py-8" style={{textAlign: "center"}}>No haunts found</p>
+client/src/pages/admin.tsx:                            <Card key={haunt.id} className="bg-gray-800 border-gray-600">
+client/src/pages/admin.tsx:                              <CardContent className="p-4">
+client/src/pages/admin.tsx:                                    <h4 className="font-bold text-white flex items-center gap-2">
+client/src/pages/admin.tsx:                                        <Badge variant="destructive" className="text-xs">
+client/src/pages/admin.tsx:                                    <p className="text-gray-400 text-sm">{haunt.description || 'No description'}</p>
+client/src/pages/admin.tsx:                                    <h5 className="text-sm font-medium text-gray-300 mb-2">
+client/src/pages/admin.tsx:                                      <p className="text-gray-500 text-sm italic">
+client/src/pages/admin.tsx:                                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+client/src/pages/admin.tsx:                                          <div key={pack.id} className="bg-gray-700/50 p-2 rounded">
+client/src/pages/admin.tsx:                                                <p className="text-white text-sm font-medium">{pack.name}</p>
+client/src/pages/admin.tsx:                                                <p className="text-gray-400 text-xs">
+client/src/pages/admin.tsx:                                              <div className="flex gap-1">
+client/src/pages/admin.tsx:                                                  className="text-gray-400 hover:text-white"
+client/src/pages/admin.tsx:                                                  className="text-red-400 hover:text-red-300 hover:bg-red-900/30"
+client/src/pages/admin.tsx:                                  <div className="pt-2 border-t border-gray-600">
+client/src/pages/admin.tsx:                                    <p className="text-xs text-gray-500">
+client/src/pages/admin.tsx:                    <div className="mt-6 p-4 bg-blue-900/20 border border-blue-700 rounded-lg">
+client/src/pages/admin.tsx:                      <h4 className="text-blue-400 font-medium mb-2">💡 Managing Pack Access</h4>
+client/src/pages/admin.tsx:                      <ul className="text-sm text-gray-300 space-y-1">
+client/src/pages/admin.tsx:                <Card className="bg-gray-900/50 border-gray-700">
+client/src/pages/admin.tsx:                    <CardTitle className="text-red-400 flex items-center gap-2">
+client/src/pages/admin.tsx:                      <Badge variant="outline" className="text-gray-300">
+client/src/pages/admin.tsx:                    <p className="text-gray-400">
+client/src/pages/admin.tsx:                        <h3 className="text-white font-medium">Current Default Ads</h3>
+client/src/pages/admin.tsx:                        <div className="grid gap-4">
+client/src/pages/admin.tsx:                            <div key={ad.id} className="bg-gray-800/50 p-4 rounded-lg border border-gray-600">
+client/src/pages/admin.tsx:                              <div className="flex items-center gap-4">
+client/src/pages/admin.tsx:                                  <h4 className="text-white font-medium">{ad.title}</h4>
+client/src/pages/admin.tsx:                                  <p className="text-gray-400 text-sm">{ad.description}</p>
+client/src/pages/admin.tsx:                                    <a href={ad.link} target="_blank" rel="noopener noreferrer" className="text-blue-400 text-xs">
+client/src/pages/admin.tsx:                      <h3 className="text-white font-medium">Upload New Default Ads</h3>
+client/src/pages/admin.tsx:                      <p className="text-gray-400 text-sm">
+client/src/pages/admin.tsx:                        <div key={adFile.id} className="bg-gray-800/30 p-4 rounded-lg border border-gray-600">
+client/src/pages/admin.tsx:                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+client/src/pages/admin.tsx:                              <Label className="text-white text-sm">Ad Image *</Label>
+client/src/pages/admin.tsx:                                className="bg-gray-700 border-gray-600 text-white"
+client/src/pages/admin.tsx:                              <Label className="text-white text-sm">Ad Title</Label>
+client/src/pages/admin.tsx:                                className="bg-gray-700 border-gray-600 text-white"
+client/src/pages/admin.tsx:                              <Label className="text-white text-sm">Description</Label>
+client/src/pages/admin.tsx:                                className="bg-gray-700 border-gray-600 text-white"
+client/src/pages/admin.tsx:                              <Label className="text-white text-sm">Link (Optional)</Label>
+client/src/pages/admin.tsx:                                className="bg-gray-700 border-gray-600 text-white"
+client/src/pages/admin.tsx:                            className="mt-2 text-red-400 hover:text-red-300"
+client/src/pages/admin.tsx:                      <div className="flex gap-3">
+client/src/pages/admin.tsx:                          className="border-blue-600 text-blue-400 hover:bg-blue-600 hover:text-white"
+client/src/pages/admin.tsx:                            className="bg-green-600 hover:bg-green-700 text-white"
+client/src/pages/admin.tsx:                    <div className="p-4 bg-blue-900/20 border border-blue-700 rounded-lg">
+client/src/pages/admin.tsx:                      <h4 className="text-blue-400 font-medium mb-2">💡 How Default Ads Work</h4>
+client/src/pages/admin.tsx:                      <ul className="text-sm text-gray-300 space-y-1">
+client/src/pages/admin.tsx:                <Card className="bg-gray-900/50 border-gray-700">
+client/src/pages/admin.tsx:                    <CardTitle className="text-red-400 flex items-center gap-2">
+client/src/pages/admin.tsx:                    <p className="text-gray-400 text-sm">
+client/src/pages/admin.tsx:                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+client/src/pages/admin.tsx:                        <h3 className="text-lg font-semibold text-white">Background Skins</h3>
+client/src/pages/admin.tsx:                          <div className="p-4 bg-gray-800 rounded-lg">
+client/src/pages/admin.tsx:                            <Label className="text-white text-sm font-medium mb-2 block">Upload New Background Skin</Label>
+client/src/pages/admin.tsx:                            <p className="text-gray-400 text-xs mb-3">Recommended: 1920x1080 JPG/PNG, or animated GIF</p>
+client/src/pages/admin.tsx:                              className="bg-gray-700 border-gray-600 text-white file:bg-red-600 file:text-white file:border-0 file:rounded-md file:px-3 file:py-2 file:mr-3 file:cursor-pointer"
+client/src/pages/admin.tsx:                              className="mt-3 bg-red-600 hover:bg-red-700"
+client/src/pages/admin.tsx:                          <div className="p-4 bg-gray-800 rounded-lg">
+client/src/pages/admin.tsx:                            <h4 className="text-white font-medium mb-3">Available Skins</h4>
+client/src/pages/admin.tsx:                              <div className="flex items-center justify-between p-3 bg-gray-700 rounded">
+client/src/pages/admin.tsx:                                <span className="text-white">Default Horror Theme</span>
+client/src/pages/admin.tsx:                                <div key={skin.id} className="flex items-center justify-between p-3 bg-gray-700 rounded">
+client/src/pages/admin.tsx:                                  <div className="flex items-center gap-3">
+client/src/pages/admin.tsx:                                    <span className="text-white">{skin.name}</span>
+client/src/pages/admin.tsx:                                      className="text-blue-400 hover:text-blue-300 text-xs"
+client/src/pages/admin.tsx:                                  <div className="flex gap-2">
+client/src/pages/admin.tsx:                                <p className="text-gray-400 text-sm  py-4" style={{textAlign: "center"}}>
+client/src/pages/admin.tsx:                      <h3 className="text-lg font-semibold text-white">Progress Bar Color Themes</h3>
+client/src/pages/admin.tsx:                    <div className="p-6 bg-gray-800 rounded-lg">
+client/src/pages/admin.tsx:                      <h3 className="text-lg font-semibold text-white mb-4">Haunt Assignment</h3>
+client/src/pages/admin.tsx:                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+client/src/pages/admin.tsx:                          <Label className="text-white text-sm font-medium mb-2 block">Select Haunt</Label>
+client/src/pages/admin.tsx:                          <Label className="text-white text-sm font-medium mb-2 block">Action</Label>
+client/src/pages/admin.tsx:                          <div className="flex gap-2">
+client/src/pages/admin.tsx:                              className="bg-green-600 hover:bg-green-700"
+client/src/pages/admin.tsx:                              className="border-red-500 text-red-400 hover:bg-red-500 hover:text-white"
+client/src/pages/admin.tsx:                        <div className="mt-4 p-4 bg-gray-700 rounded border">
+client/src/pages/admin.tsx:                          <h4 className="text-white font-medium mb-2">Current Branding Status</h4>
+client/src/pages/admin.tsx:                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+client/src/pages/admin.tsx:                                  <span className="text-gray-300">Background Skin: </span>
+client/src/pages/admin.tsx:                                  <span className={selectedHaunt.skinUrl ? "text-green-400" : "text-gray-400"}>
+client/src/pages/admin.tsx:                                  <span className="text-gray-300">Progress Bar: </span>
+client/src/pages/admin.tsx:                                  <span className={selectedHaunt.progressBarTheme ? "text-green-400" : "text-gray-400"}>
+client/src/pages/admin.tsx:                      <div className="mt-4 p-4 bg-red-900/20 border border-red-600 rounded">
+client/src/pages/admin.tsx:                        <p className="text-red-300 text-sm">
+client/src/pages/admin.tsx:            className="border-red-600 text-red-500 hover:bg-red-600 hover:text-white"
+client/src/sidequests/WackAChupacabra.tsx:        className="fixed inset-0 bg-cover bg-center bg-no-repeat"
+client/src/sidequests/WackAChupacabra.tsx:            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+client/src/sidequests/WackAChupacabra.tsx:          <div className="absolute inset-0 bg-green-500 bg-opacity-30" />
+client/src/sidequests/WackAChupacabra.tsx:            <h2 className="text-4xl font-bold text-white mb-4 drop-shadow-lg">
+client/src/sidequests/WackAChupacabra.tsx:            <p className="text-xl text-white  drop-shadow-lg" style={{marginBottom: "1.5rem"}}>
+client/src/sidequests/WackAChupacabra.tsx:            <p className="text-lg text-white mb-8 drop-shadow-lg">
+client/src/sidequests/WackAChupacabra.tsx:                className="px-8 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg transition-colors duration-200 shadow-lg"
+client/src/sidequests/WackAChupacabra.tsx:                className="block px-8 py-3 bg-gray-600 hover:bg-gray-700 text-white font-bold rounded-lg transition-colors duration-200 shadow-lg"
+client/src/sidequests/WackAChupacabra.tsx:        <div className="flex justify-between items-center p-6">
+client/src/sidequests/WackAChupacabra.tsx:          <div className="text-2xl font-bold text-white drop-shadow-lg">
+client/src/sidequests/WackAChupacabra.tsx:          <div className="text-lg text-white drop-shadow-lg" style={{ fontFamily: 'Frijole, cursive' }}>
+client/src/sidequests/WackAChupacabra.tsx:              <h1 className="text-4xl font-bold text-white  drop-shadow-lg" style={{marginBottom: "1.5rem", fontFamily: 'Frijole, cursive'}}>
+client/src/sidequests/WackAChupacabra.tsx:              <p className="text-lg text-white mb-8 drop-shadow-lg max-w-md">
+client/src/sidequests/WackAChupacabra.tsx:                className="px-8 py-4 bg-green-600 hover:bg-green-700 text-white font-bold text-xl rounded-lg transition-colors duration-200 shadow-lg"
+client/src/sidequests/WackAChupacabra.tsx:            <div className="grid grid-cols-3 grid-rows-2 gap-6 md:gap-8 place-items-center max-w-md mx-auto">
+client/src/sidequests/WackAChupacabra.tsx:                      <div className="absolute -top-1 left-0 right-0 flex justify-center pointer-events-none z-10">
+client/src/sidequests/WackAChupacabra.tsx:          <div className="absolute bottom-6 left-6">
+client/src/sidequests/WretchedWiring.tsx:        className="fixed inset-0 bg-cover bg-center bg-no-repeat"
+client/src/sidequests/WretchedWiring.tsx:        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 p-4">
+client/src/sidequests/WretchedWiring.tsx:              className="w-full h-auto object-contain rounded-lg shadow-2xl"
+client/src/sidequests/WretchedWiring.tsx:            <div className="absolute bottom-2 sm:bottom-4 left-1/2 transform -translate-x-1/2 flex flex-col sm:flex-row gap-2 sm:gap-4 w-full px-4 sm:px-0 sm:w-auto">
+client/src/sidequests/WretchedWiring.tsx:                className="px-4 py-2 sm:px-6 sm:py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors duration-200 shadow-lg text-sm sm:text-base"
+client/src/sidequests/WretchedWiring.tsx:                className="px-4 py-2 sm:px-6 sm:py-3 bg-gray-600 hover:bg-gray-700 text-white font-bold rounded-lg transition-colors duration-200 shadow-lg inline-block  text-sm sm:text-base" style={{textAlign: "center"}}
+client/src/sidequests/WretchedWiring.tsx:        <div className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-80">
+client/src/sidequests/WretchedWiring.tsx:          <div className=" bg-gray-800 bg-opacity-95 p-8 rounded-xl border-2 border-yellow-500 max-w-md" style={{textAlign: "center"}}>
+client/src/sidequests/WretchedWiring.tsx:            <h1 className="text-4xl font-bold text-yellow-400  drop-shadow-lg" style={{marginBottom: "1.5rem"}} style={{ fontFamily: 'Courier, monospace' }}>
+client/src/sidequests/WretchedWiring.tsx:            <p className="text-lg text-white mb-8 drop-shadow-lg">
+client/src/sidequests/WretchedWiring.tsx:              className="px-8 py-4 bg-yellow-600 hover:bg-yellow-700 text-white font-bold rounded-lg transition-colors duration-200 shadow-lg text-xl"
+client/src/sidequests/WretchedWiring.tsx:          <div className="absolute left-8 top-1/2 transform -translate-y-1/2 space-y-8">
+client/src/sidequests/WretchedWiring.tsx:          <div className="absolute right-8 top-1/2 transform -translate-y-1/2 space-y-8">
+client/src/sidequests/WretchedWiring.tsx:          className="absolute top-16 left-16 z-40 cursor-pointer select-none"
+client/src/sidequests/WretchedWiring.tsx:          className={`absolute top-8 right-8 w-20 h-20 z-30 transition-all duration-200 ${
+client/src/sidequests/WretchedWiring.tsx:            className={`absolute inset-0 flex items-center justify-center font-bold text-xs transition-all duration-200 ${
+client/src/sidequests/WretchedWiring.tsx:        <div className="fixed top-16 left-1/2 transform -translate-x-1/2 z-40">
+client/src/sidequests/WretchedWiring.tsx:            <div className="bg-gray-900 bg-opacity-95 border-2 border-red-500 rounded-lg p-4 max-w-sm mb-2 animate-bounce">
+client/src/sidequests/WretchedWiring.tsx:              <div className="text-red-400 font-bold text-sm mb-1">Dr. Heinous says:</div>
+client/src/sidequests/WretchedWiring.tsx:              <div className="text-white text-sm">{gameState.currentTaunt}</div>
+client/src/sidequests/WretchedWiring.tsx:              <div className="absolute bottom-0 left-1/2 transform translate-y-full -translate-x-1/2">
+client/src/sidequests/WretchedWiring.tsx:                <div className="w-0 h-0 border-l-4 border-r-4 border-t-8 border-transparent border-t-red-500"></div>
+client/src/sidequests/WretchedWiring.tsx:        <div className="fixed bottom-8 right-8 z-40 animate-pulse">
+client/src/sidequests/WretchedWiring.tsx:            <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
+client/src/sidequests/WretchedWiring.tsx:              <div className="bg-purple-900 bg-opacity-95 border-2 border-purple-400 rounded-lg p-2 text-white text-xs">
+client/src/sidequests/WretchedWiring.tsx:        <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-30">
+client/src/sidequests/WretchedWiring.tsx:              className="px-8 py-4 bg-red-600 hover:bg-red-700 text-white font-bold rounded-full transition-all duration-300 shadow-lg animate-pulse border-4 border-red-400"
+client/src/sidequests/WretchedWiring.tsx:              <div className="absolute -top-16 left-1/2 transform -translate-x-1/2 whitespace-nowrap animate-bounce">
+client/src/sidequests/WretchedWiring.tsx:                <div className="bg-red-900 bg-opacity-95 border-2 border-red-400 rounded-lg p-3 text-white font-bold text-sm">
+client/src/sidequests/WretchedWiring.tsx:        <div className="absolute top-6 left-1/2 transform -translate-x-1/2 z-20">
+client/src/sidequests/WretchedWiring.tsx:          <h1 className="text-3xl font-bold text-yellow-400 drop-shadow-lg" style={{ fontFamily: 'Courier, monospace' }}>
+client/src/sidequests/ChupacabraChallenge.tsx:        className="absolute inset-0 bg-cover bg-center opacity-30"
+client/src/sidequests/ChupacabraChallenge.tsx:          className="absolute inset-0 bg-red-500 opacity-20 animate-pulse z-5"
+client/src/sidequests/ChupacabraChallenge.tsx:      <div className="relative z-10 text-center py-6">
+client/src/sidequests/ChupacabraChallenge.tsx:          className="text-4xl md:text-6xl font-bold text-red-400 mb-2"
+client/src/sidequests/ChupacabraChallenge.tsx:        <p className="text-lg text-gray-300">
+client/src/sidequests/ChupacabraChallenge.tsx:        <div className="text-xl font-bold text-green-400">
+client/src/sidequests/ChupacabraChallenge.tsx:          className={`text-xl font-bold transition-all duration-300 ${
+client/src/sidequests/ChupacabraChallenge.tsx:          {isPanicMode && <span className="text-red-400 font-bold">CONTAINMENT FAILING! </span>}
+client/src/sidequests/ChupacabraChallenge.tsx:        <div className="text-lg text-yellow-400">
+client/src/sidequests/ChupacabraChallenge.tsx:      <div className="absolute top-20 right-8 z-20">
+client/src/sidequests/ChupacabraChallenge.tsx:          <div className="absolute -left-48 top-2 bg-black bg-opacity-80 text-red-400 text-sm px-3 py-2 rounded-lg border border-red-400 max-w-48">
+client/src/sidequests/ChupacabraChallenge.tsx:          <div className="text-center">
+client/src/sidequests/ChupacabraChallenge.tsx:            <h2 className="text-3xl text-red-400 mb-6">
+client/src/sidequests/ChupacabraChallenge.tsx:            <p className="text-lg text-gray-300 mb-8">
+client/src/sidequests/ChupacabraChallenge.tsx:              className="px-8 py-4 bg-gradient-to-r from-red-600 to-red-800 text-white font-bold text-xl rounded-lg border-2 border-red-400 hover:from-red-500 hover:to-red-700 transition-all duration-200 transform hover:scale-105"
+client/src/sidequests/ChupacabraChallenge.tsx:            className={`grid grid-cols-4 gap-4 max-w-lg mx-auto transition-all duration-300 ${
+client/src/sidequests/ChupacabraChallenge.tsx:          <div className="text-center">
+client/src/sidequests/ChupacabraChallenge.tsx:            <h2 className="text-4xl text-green-400 mb-4">CHUPACABRA CONTAINED!</h2>
+client/src/sidequests/ChupacabraChallenge.tsx:            <p className="text-2xl text-green-300 mb-2">
+client/src/sidequests/ChupacabraChallenge.tsx:            <p className="text-lg text-yellow-400 mb-6">
+client/src/sidequests/ChupacabraChallenge.tsx:            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+client/src/sidequests/ChupacabraChallenge.tsx:                className="px-6 py-3 bg-gradient-to-r from-green-600 to-green-800 text-white font-bold rounded-lg border-2 border-green-400 hover:from-green-500 hover:to-green-700 transition-all duration-200 transform hover:scale-105"
+client/src/sidequests/ChupacabraChallenge.tsx:                className="px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-800 text-white font-bold rounded-lg border-2 border-purple-400 hover:from-purple-500 hover:to-purple-700 transition-all duration-200 transform hover:scale-105"
+client/src/sidequests/ChupacabraChallenge.tsx:          <div className="text-center">
+client/src/sidequests/ChupacabraChallenge.tsx:            <h2 className="text-4xl text-red-400 mb-4">CHUPACABRA ESCAPED!</h2>
+client/src/sidequests/ChupacabraChallenge.tsx:            <p className="text-xl text-red-300 mb-2">
+client/src/sidequests/ChupacabraChallenge.tsx:            <p className="text-lg text-yellow-400 mb-6">
+client/src/sidequests/ChupacabraChallenge.tsx:            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+client/src/sidequests/ChupacabraChallenge.tsx:                className="px-6 py-3 bg-gradient-to-r from-red-600 to-red-800 text-white font-bold rounded-lg border-2 border-red-400 hover:from-red-500 hover:to-red-700 transition-all duration-200 transform hover:scale-105"
+client/src/sidequests/ChupacabraChallenge.tsx:                className="px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-800 text-white font-bold rounded-lg border-2 border-purple-400 hover:from-purple-500 hover:to-purple-700 transition-all duration-200 transform hover:scale-105"
+client/src/sidequests/CurseCrafting.tsx:          <h1 className="text-4xl md:text-6xl font-bold  mb-8 drop-shadow-lg" style={{textAlign: "center", fontFamily: 'Eater, cursive', color: '#39ff14' }}>
+client/src/sidequests/CurseCrafting.tsx:          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 sm:gap-4">
+client/src/sidequests/CurseCrafting.tsx:                  <div className="bg-black/60 border border-gray-600 rounded-lg p-2 sm:p-3 backdrop-blur-sm">
+client/src/sidequests/CurseCrafting.tsx:                    <p className="text-xs  text-white mt-2 truncate" style={{textAlign: "center"}}>{ingredient.name}</p>
+client/src/sidequests/CurseCrafting.tsx:                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
+client/src/sidequests/CurseCrafting.tsx:      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
+client/src/sidequests/CurseCrafting.tsx:            <div className="absolute top-4 left-1/2 transform -translate-x-1/2 flex gap-1">
+client/src/sidequests/CurseCrafting.tsx:          <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-black/80 px-3 py-1 rounded-full">
+client/src/sidequests/CurseCrafting.tsx:            <span className="text-white text-sm font-bold">{cauldronIngredients.length}/3</span>
+client/src/sidequests/CurseCrafting.tsx:          className={`mt-4 px-8 py-3 text-lg font-bold rounded-lg shadow-lg transition-all duration-1000 ${
+client/src/sidequests/CurseCrafting.tsx:          <div className="bg-black/90 border border-purple-400 rounded-lg p-3 max-w-xs backdrop-blur-sm">
+client/src/sidequests/CurseCrafting.tsx:            <h4 className="text-purple-300 font-bold text-sm">{hoveredIngredient.name}</h4>
+client/src/sidequests/CurseCrafting.tsx:            <p className="text-gray-300 text-xs mt-1">{hoveredIngredient.description}</p>
+client/src/sidequests/CurseCrafting.tsx:        <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/50 backdrop-blur-sm">
+client/src/sidequests/CurseCrafting.tsx:            <div className="absolute inset-0 bg-green-400/30 rounded-full blur-3xl scale-125 animate-pulse"></div>
+client/src/sidequests/CurseCrafting.tsx:                <p className="text-base sm:text-lg font-bold text-gray-800 leading-snug font-serif">
+client/src/sidequests/CurseCrafting.tsx:                <p className="text-xs sm:text-sm italic text-gray-900 font-serif">
+client/src/sidequests/CurseCrafting.tsx:                  <p className="text-xs text-gray-800 font-serif mt-1">
+client/src/sidequests/CurseCrafting.tsx:            <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2 flex gap-3">
+client/src/sidequests/CurseCrafting.tsx:                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-bold shadow-lg transform hover:scale-105 transition-all"
+client/src/sidequests/CurseCrafting.tsx:                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-bold shadow-lg transform hover:scale-105 transition-all"
+client/src/sidequests/GloryGrab.tsx:        className="absolute inset-0 bg-cover bg-center opacity-40"
+client/src/sidequests/GloryGrab.tsx:      <div className="relative z-10 text-center py-6">
+client/src/sidequests/GloryGrab.tsx:          className="text-4xl md:text-6xl font-bold text-amber-400 mb-2"
+client/src/sidequests/GloryGrab.tsx:        <p className="text-lg text-gray-300">
+client/src/sidequests/GloryGrab.tsx:        <div className="text-2xl font-bold text-green-400">
+client/src/sidequests/GloryGrab.tsx:        <div className="text-2xl font-bold text-blue-400">
+client/src/sidequests/GloryGrab.tsx:        <div className="text-lg text-purple-400">
+client/src/sidequests/GloryGrab.tsx:      <div className="absolute top-20 right-8 z-20">
+client/src/sidequests/GloryGrab.tsx:          <div className="absolute -left-48 top-2 bg-black bg-opacity-80 text-amber-400 text-sm px-3 py-2 rounded-lg border border-amber-400 max-w-48">
+client/src/sidequests/GloryGrab.tsx:          className="w-full h-full relative border-2 border-amber-400 rounded-lg bg-black bg-opacity-30"
+client/src/sidequests/GloryGrab.tsx:                className="w-full h-full rounded-full border-4 flex items-center justify-center text-white font-bold"
+client/src/sidequests/GloryGrab.tsx:                className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-12 h-1 bg-gray-600 rounded-full overflow-hidden"
+client/src/sidequests/GloryGrab.tsx:                  className="h-full bg-red-500 transition-all duration-100"
+client/src/sidequests/GloryGrab.tsx:            <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70">
+client/src/sidequests/GloryGrab.tsx:              <div className="text-center">
+client/src/sidequests/GloryGrab.tsx:                <h2 className="text-3xl text-amber-400 mb-6">Ready to start collecting?</h2>
+client/src/sidequests/GloryGrab.tsx:                  className="px-8 py-4 bg-gradient-to-r from-amber-600 to-amber-800 text-white font-bold text-xl rounded-lg border-2 border-amber-400 hover:from-amber-500 hover:to-amber-700 transition-all duration-200 transform hover:scale-105"
+client/src/sidequests/GloryGrab.tsx:            <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70">
+client/src/sidequests/GloryGrab.tsx:              <div className="text-center">
+client/src/sidequests/GloryGrab.tsx:                <h2 className="text-4xl text-amber-400 mb-4">Laboratory Session Complete!</h2>
+client/src/sidequests/GloryGrab.tsx:                <p className="text-2xl text-green-400 mb-2">Final Score: {gameState.score}</p>
+client/src/sidequests/GloryGrab.tsx:                <p className="text-lg text-purple-400 mb-6">Chaos Level Reached: {gameState.chaosLevel}</p>
+client/src/sidequests/GloryGrab.tsx:                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+client/src/sidequests/GloryGrab.tsx:                    className="px-6 py-3 bg-gradient-to-r from-green-600 to-green-800 text-white font-bold rounded-lg border-2 border-green-400 hover:from-green-500 hover:to-green-700 transition-all duration-200 transform hover:scale-105"
+client/src/sidequests/GloryGrab.tsx:                    className="px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-800 text-white font-bold rounded-lg border-2 border-purple-400 hover:from-purple-500 hover:to-purple-700 transition-all duration-200 transform hover:scale-105"
+client/src/sidequests/CrypticCompliments.tsx:            className="absolute w-1 h-1 bg-purple-400 rounded-full animate-pulse"
+client/src/sidequests/CrypticCompliments.tsx:      <div className="relative z-10 text-center py-8">
+client/src/sidequests/CrypticCompliments.tsx:          className="text-4xl md:text-6xl font-bold text-purple-400 mb-4"
+client/src/sidequests/CrypticCompliments.tsx:        <p className="text-lg text-gray-300">
+client/src/sidequests/CrypticCompliments.tsx:      <div className="absolute top-16 right-8 z-20">
+client/src/sidequests/CrypticCompliments.tsx:        <div className="absolute -left-32 top-2 bg-black bg-opacity-80 text-purple-400 text-sm px-3 py-2 rounded-lg border border-purple-400">
+client/src/sidequests/CrypticCompliments.tsx:          <div className="text-center">
+client/src/sidequests/CrypticCompliments.tsx:                className="w-full h-full bg-gradient-to-br from-purple-600 to-purple-900 rounded-lg border-4 border-purple-400 flex items-center justify-center text-6xl"
+client/src/sidequests/CrypticCompliments.tsx:            <h2 className="text-2xl text-purple-300 mb-4">
+client/src/sidequests/CrypticCompliments.tsx:              className="px-8 py-3 bg-gradient-to-r from-purple-600 to-purple-800 text-white font-bold text-lg rounded-lg border-2 border-purple-400 hover:from-purple-500 hover:to-purple-700 transition-all duration-200 transform hover:scale-105"
+client/src/sidequests/CrypticCompliments.tsx:              className="relative bg-gradient-to-br from-amber-100 to-amber-200 p-8 md:p-12 rounded-lg border-4 border-amber-600 transform rotate-[-1.5deg] transition-all duration-1000 animate-[unfurl_1s_ease-out]"
+client/src/sidequests/CrypticCompliments.tsx:                className="text-center animate-[burnIn_2s_ease-out_forwards]"
+client/src/sidequests/CrypticCompliments.tsx:                  className="text-lg md:text-xl leading-relaxed mb-6"
+client/src/sidequests/CrypticCompliments.tsx:                    className="text-right animate-[fadeIn_1s_ease-out]"
+client/src/sidequests/CrypticCompliments.tsx:                    <p className="text-base md:text-lg text-amber-800">
+client/src/sidequests/CrypticCompliments.tsx:              <div className="absolute top-2 left-2 w-6 h-6 border-l-4 border-t-4 border-amber-600 opacity-60"></div>
+client/src/sidequests/CrypticCompliments.tsx:              <div className="absolute top-2 right-2 w-6 h-6 border-r-4 border-t-4 border-amber-600 opacity-60"></div>
+client/src/sidequests/CrypticCompliments.tsx:              <div className="absolute bottom-2 left-2 w-6 h-6 border-l-4 border-b-4 border-amber-600 opacity-60"></div>
+client/src/sidequests/CrypticCompliments.tsx:              <div className="absolute bottom-2 right-2 w-6 h-6 border-r-4 border-b-4 border-amber-600 opacity-60"></div>
+client/src/sidequests/CrypticCompliments.tsx:            <div className="text-center mt-8 space-y-4">
+client/src/sidequests/CrypticCompliments.tsx:              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+client/src/sidequests/CrypticCompliments.tsx:                  className="px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-800 text-white font-bold rounded-lg border-2 border-purple-400 hover:from-purple-500 hover:to-purple-700 transition-all duration-200 transform hover:scale-105"
+client/src/sidequests/CrypticCompliments.tsx:                  className="px-6 py-3 bg-gradient-to-r from-gray-600 to-gray-800 text-white font-bold rounded-lg border-2 border-gray-400 hover:from-gray-500 hover:to-gray-700 transition-all duration-200 transform hover:scale-105"
+client/src/sidequests/CrypticCompliments.tsx:                className="px-6 py-3 bg-gradient-to-r from-red-600 to-red-800 text-white font-bold rounded-lg border-2 border-red-400 hover:from-red-500 hover:to-red-700 transition-all duration-200 transform hover:scale-105"
+client/src/sidequests/LabEscape.tsx:        className="absolute inset-0 bg-cover bg-center opacity-40"
+client/src/sidequests/LabEscape.tsx:      <div className="relative z-10 text-center py-6">
+client/src/sidequests/LabEscape.tsx:          className="text-4xl md:text-6xl font-bold text-red-400 mb-2"
+client/src/sidequests/LabEscape.tsx:        <p className="text-lg text-gray-300">
+client/src/sidequests/LabEscape.tsx:        <div className="text-xl font-bold text-green-400">
+client/src/sidequests/LabEscape.tsx:        <div className="text-xl font-bold text-red-400">
+client/src/sidequests/LabEscape.tsx:      <div className="absolute top-20 right-8 z-20">
+client/src/sidequests/LabEscape.tsx:          <div className="absolute -left-48 top-2 bg-black bg-opacity-80 text-red-400 text-sm px-3 py-2 rounded-lg border border-red-400 max-w-48">
+client/src/sidequests/LabEscape.tsx:          <div className="text-center max-w-2xl">
+client/src/sidequests/LabEscape.tsx:            <h2 className="text-3xl text-red-400 mb-6">
+client/src/sidequests/LabEscape.tsx:            <p className="text-lg text-gray-300 mb-4">
+client/src/sidequests/LabEscape.tsx:            <p className="text-lg text-gray-300 mb-8">
+client/src/sidequests/LabEscape.tsx:              className="px-8 py-4 bg-gradient-to-r from-red-600 to-red-800 text-white font-bold text-xl rounded-lg border-2 border-red-400 hover:from-red-500 hover:to-red-700 transition-all duration-200 transform hover:scale-105"
+client/src/sidequests/LabEscape.tsx:            <div className="flex justify-center mb-8 gap-8">
+client/src/sidequests/LabEscape.tsx:                  className={`w-24 h-32 md:w-32 md:h-40 bg-gradient-to-b from-amber-800 to-amber-900 border-4 border-amber-600 rounded-lg cursor-pointer transition-all duration-300 hover:scale-105 ${
+client/src/sidequests/LabEscape.tsx:                  <div className="w-full h-full flex items-center justify-center text-4xl">
+client/src/sidequests/LabEscape.tsx:                  <div className="text-center text-amber-400 font-bold mt-2">
+client/src/sidequests/LabEscape.tsx:              <div className="bg-black bg-opacity-60 border-2 border-purple-400 rounded-lg p-6 md:p-8 mb-6">
+client/src/sidequests/LabEscape.tsx:                <h3 className="text-2xl text-purple-400 mb-4 text-center">
+client/src/sidequests/LabEscape.tsx:                <p className="text-lg text-gray-300 mb-6 text-center leading-relaxed">
+client/src/sidequests/LabEscape.tsx:                  <div className="bg-yellow-900 bg-opacity-50 border border-yellow-600 rounded-lg p-4 mb-6">
+client/src/sidequests/LabEscape.tsx:                    <p className="text-yellow-300 text-center">
+client/src/sidequests/LabEscape.tsx:                <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
+client/src/sidequests/LabEscape.tsx:                    className="px-4 py-2 bg-gray-800 border-2 border-gray-600 rounded-lg text-white text-center focus:border-purple-400 focus:outline-none flex-1 max-w-xs"
+client/src/sidequests/LabEscape.tsx:                  <div className="flex gap-2">
+client/src/sidequests/LabEscape.tsx:                      className="px-6 py-2 bg-gradient-to-r from-green-600 to-green-800 text-white font-bold rounded-lg border-2 border-green-400 hover:from-green-500 hover:to-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+client/src/sidequests/LabEscape.tsx:                        className="px-6 py-2 bg-gradient-to-r from-yellow-600 to-yellow-800 text-white font-bold rounded-lg border-2 border-yellow-400 hover:from-yellow-500 hover:to-yellow-700 transition-all duration-200"
+client/src/sidequests/LabEscape.tsx:          <div className="text-center">
+client/src/sidequests/LabEscape.tsx:            <div className="text-6xl mb-6 animate-bounce">🎉</div>
+client/src/sidequests/LabEscape.tsx:            <h2 className="text-4xl text-green-400 mb-4">ESCAPE SUCCESSFUL!</h2>
+client/src/sidequests/LabEscape.tsx:            <p className="text-2xl text-green-300 mb-2">
+client/src/sidequests/LabEscape.tsx:            <p className="text-lg text-yellow-400 mb-6">
+client/src/sidequests/LabEscape.tsx:            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+client/src/sidequests/LabEscape.tsx:                className="px-6 py-3 bg-gradient-to-r from-green-600 to-green-800 text-white font-bold rounded-lg border-2 border-green-400 hover:from-green-500 hover:to-green-700 transition-all duration-200 transform hover:scale-105"
+client/src/sidequests/LabEscape.tsx:                className="px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-800 text-white font-bold rounded-lg border-2 border-purple-400 hover:from-purple-500 hover:to-purple-700 transition-all duration-200 transform hover:scale-105"
+client/src/sidequests/LabEscape.tsx:          <div className="text-center">
+client/src/sidequests/LabEscape.tsx:            <div className="text-6xl mb-6">💀</div>
+client/src/sidequests/LabEscape.tsx:            <h2 className="text-4xl text-red-400 mb-4">TRAPPED FOREVER!</h2>
+client/src/sidequests/LabEscape.tsx:            <p className="text-xl text-red-300 mb-2">
+client/src/sidequests/LabEscape.tsx:            <p className="text-lg text-yellow-400 mb-6">
+client/src/sidequests/LabEscape.tsx:            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+client/src/sidequests/LabEscape.tsx:                className="px-6 py-3 bg-gradient-to-r from-red-600 to-red-800 text-white font-bold rounded-lg border-2 border-red-400 hover:from-red-500 hover:to-red-700 transition-all duration-200 transform hover:scale-105"
+client/src/sidequests/LabEscape.tsx:                className="px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-800 text-white font-bold rounded-lg border-2 border-purple-400 hover:from-purple-500 hover:to-purple-700 transition-all duration-200 transform hover:scale-105"
+client/src/App.tsx.bak:    <div className="min-h-screen bg-gradient-to-br from-void via-shadow to-dark text-white">

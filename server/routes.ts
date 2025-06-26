@@ -2238,6 +2238,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
           'node-blue-right': '/sidequests/wretched-wiring/node-blue-right.png',
           'Pull-Chain': '/sidequests/wretched-wiring/Pull-Chain.png',
           'Certificate-of-Failure': '/sidequests/wretched-wiring/Certificate-of-Failure.png'
+        },
+        'monster-name-generator': {
+          'monster-card_1750900915378': '/sidequests/monster-name-generator/monster-card_1750900915378.png'
         }
       };
       
