@@ -463,11 +463,6 @@ export function Crime() {
       {/* Gameplay Phase */}
       {(gameState.phase === 'gameplay' || gameState.phase === 'reshuffling') && (
         <div style={{
-          backgroundImage: 'url(/sidequests/crime/game-board.png)',
-          backgroundSize: '150%',
-          backgroundPosition: 'right center',
-          backgroundRepeat: 'no-repeat',
-          animation: 'gameboardZoomIn 2s ease-out',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
