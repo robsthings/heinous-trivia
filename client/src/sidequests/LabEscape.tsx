@@ -329,7 +329,10 @@ export function LabEscape() {
                   cursor: 'pointer',
                   transition: 'all 0.3s ease',
                   transform: 'scale(1)',
-                  filter: 'brightness(1)'
+                  filter: 'brightness(1)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = 'scale(1.05)';
@@ -346,12 +349,17 @@ export function LabEscape() {
                   style={{
                     width: 'clamp(156px, 26vw, 260px)',
                     height: 'clamp(234px, 39vw, 390px)',
-                    objectFit: 'contain'
+                    objectFit: 'contain',
+                    display: 'block'
                   }}
                 />
                 <div style={{
                   textAlign: 'center',
-                  marginTop: '1rem'
+                  marginTop: '1rem',
+                  height: '2rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
                 }}>
                   <p style={{
                     color: '#ff6b35',
