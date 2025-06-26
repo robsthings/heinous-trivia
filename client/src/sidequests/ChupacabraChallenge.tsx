@@ -458,15 +458,11 @@ export function ChupacabraChallenge() {
                   filter: card.isMatched ? 'brightness(1.1) contrast(1.1)' : 'none'
                 }}
                 onMouseEnter={(e) => {
-                  if (!card.isMatched) {
-                    e.currentTarget.style.transform = 'scale(1.05)';
-                    if (!card.isFlipped) {
-                      e.currentTarget.style.filter = 'brightness(1.1)';
-                    }
+                  if (!card.isMatched && !card.isFlipped) {
+                    e.currentTarget.style.filter = 'brightness(1.1)';
                   }
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'scale(1)';
                   if (!card.isFlipped && !card.isMatched) {
                     e.currentTarget.style.filter = 'none';
                   }
