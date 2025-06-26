@@ -133,7 +133,7 @@ export function MonsterNameGenerator() {
       {/* Dr. Heinous sprite */}
       <div style={{ position: 'absolute', top: '2rem', left: '2rem', zIndex: '20' }}>
         <img 
-          src="/heinous/dr-heinous-presenting.png" 
+          src="/heinous/presenting.png" 
           alt="Dr. Heinous"
           style={{ 
             width: 'clamp(6rem, 10vw, 8rem)', 
