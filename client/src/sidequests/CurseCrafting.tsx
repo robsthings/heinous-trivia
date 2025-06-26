@@ -2,26 +2,28 @@ import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import html2canvas from "html2canvas";
+import { useSidequestAssets } from "@/hooks/use-sidequest-assets";
 
-const ingredients = [
-  { id: "potion-1", name: "Easther of Wood Rossen", description: "A botanical distillate no druid will take credit for.", icon: "/sidequests/curse-crafting/potion-1.png" },
-  { id: "potion-2", name: "Sneaker Worn Sock Lint", description: "Harvested from gym bags left overnight in warm cars.", icon: "/sidequests/curse-crafting/potion-2.png" },
-  { id: "potion-3", name: "Forgotten Credit Score", description: "Whispered by rejected loan officers in the dead of night.", icon: "/sidequests/curse-crafting/potion-3.png" },
-  { id: "potion-4", name: "Screaming Mushroom Extract", description: "Stored in a jar to keep the volume down.", icon: "/sidequests/curse-crafting/potion-4.png" },
-  { id: "potion-5", name: "Pickled Moonbeam", description: "Softly glowing. Slightly fermented. Faintly accusatory.", icon: "/sidequests/curse-crafting/potion-5.png" },
-  { id: "potion-6", name: "Whisper of Goat Spite", description: "Still resentful about that one time in 2013.", icon: "/sidequests/curse-crafting/potion-6.png" },
-  { id: "potion-7", name: "Dust from a Forgotten Sibling", description: "Don't ask whose. Or why it's still warm.", icon: "/sidequests/curse-crafting/potion-7.png" },
-  { id: "potion-8", name: "Cursed Caffeine Residue", description: "Found beneath an intern's eyelid. Do not microwave.", icon: "/sidequests/curse-crafting/potion-8.png" },
-  { id: "potion-9", name: "Banshee's Final Breath", description: "Smells like drama and singed lace.", icon: "/sidequests/curse-crafting/potion-9.png" },
-  { id: "potion-10", name: "Melted Plastic Halloween Fang", description: "Surprisingly chewy. Ghosts hate it.", icon: "/sidequests/curse-crafting/potion-10.png" },
-  { id: "potion-11", name: "Cat Hair from Another Timeline", description: "Somehow allergic to itself.", icon: "/sidequests/curse-crafting/potion-11.png" },
-  { id: "potion-12", name: "Spoiled Fortune Cookie", description: "\"Your doom is near.\" Reads the fortune.", icon: "/sidequests/curse-crafting/potion-12.png" },
-  { id: "potion-13", name: "Phantom Glitter", description: "Never leaves. Especially not your soul.", icon: "/sidequests/curse-crafting/potion-13.png" },
-  { id: "potion-14", name: "Eye of Newt, Store Brand™", description: "Budget-friendly. Mildly effective. Not FDA approved.", icon: "/sidequests/curse-crafting/potion-14.png" },
-  { id: "potion-15", name: "Essence of Teen Angst", description: "Bottled during Mercury retrograde. Handle with eye-rolls.", icon: "/sidequests/curse-crafting/potion-15.png" },
-  { id: "potion-16", name: "Frog Tears", description: "Extracted under emotional duress. Slightly minty.", icon: "/sidequests/curse-crafting/potion-16.png" },
-  { id: "potion-17", name: "Graveyard Dew", description: "Collected by moonlight and regret. Keep refrigerated.", icon: "/sidequests/curse-crafting/potion-17.png" },
-  { id: "potion-18", name: "Secondhand Hex Smoke", description: "Smells like thrift-store incense and broken promises.", icon: "/sidequests/curse-crafting/potion-18.png" },
+// Base ingredient data without hardcoded paths
+const ingredientData = [
+  { id: "potion-1", name: "Easther of Wood Rossen", description: "A botanical distillate no druid will take credit for." },
+  { id: "potion-2", name: "Sneaker Worn Sock Lint", description: "Harvested from gym bags left overnight in warm cars." },
+  { id: "potion-3", name: "Forgotten Credit Score", description: "Whispered by rejected loan officers in the dead of night." },
+  { id: "potion-4", name: "Screaming Mushroom Extract", description: "Stored in a jar to keep the volume down." },
+  { id: "potion-5", name: "Pickled Moonbeam", description: "Softly glowing. Slightly fermented. Faintly accusatory." },
+  { id: "potion-6", name: "Whisper of Goat Spite", description: "Still resentful about that one time in 2013." },
+  { id: "potion-7", name: "Dust from a Forgotten Sibling", description: "Don't ask whose. Or why it's still warm." },
+  { id: "potion-8", name: "Cursed Caffeine Residue", description: "Found beneath an intern's eyelid. Do not microwave." },
+  { id: "potion-9", name: "Banshee's Final Breath", description: "Smells like drama and singed lace." },
+  { id: "potion-10", name: "Melted Plastic Halloween Fang", description: "Surprisingly chewy. Ghosts hate it." },
+  { id: "potion-11", name: "Cat Hair from Another Timeline", description: "Somehow allergic to itself." },
+  { id: "potion-12", name: "Spoiled Fortune Cookie", description: "\"Your doom is near.\" Reads the fortune." },
+  { id: "potion-13", name: "Phantom Glitter", description: "Never leaves. Especially not your soul." },
+  { id: "potion-14", name: "Eye of Newt, Store Brand™", description: "Budget-friendly. Mildly effective. Not FDA approved." },
+  { id: "potion-15", name: "Essence of Teen Angst", description: "Bottled during Mercury retrograde. Handle with eye-rolls." },
+  { id: "potion-16", name: "Frog Tears", description: "Extracted under emotional duress. Slightly minty." },
+  { id: "potion-17", name: "Graveyard Dew", description: "Collected by moonlight and regret. Keep refrigerated." },
+  { id: "potion-18", name: "Secondhand Hex Smoke", description: "Smells like thrift-store incense and broken promises." },
 ];
 
 interface Ingredient {
@@ -124,11 +126,20 @@ export function CurseCrafting() {
   const [gamePhase, setGamePhase] = useState<'selecting' | 'brewing' | 'revealing'>('selecting');
   const [generatedCurse, setGeneratedCurse] = useState<GeneratedCurse | null>(null);
 
+  // Load assets and initialize ingredients
+  const { data: assets } = useSidequestAssets('curse-crafting');
+  
+  // Create ingredients with proper asset URLs
+  const ingredients = ingredientData.map(item => ({
+    ...item,
+    icon: assets?.[item.id] || `/heinous/gift.png` // Fallback to existing asset
+  }));
+
   // Initialize with 8 random ingredients on component mount
   useEffect(() => {
     const shuffled = [...ingredients].sort(() => Math.random() - 0.5);
     setAvailableIngredients(shuffled.slice(0, 8));
-  }, []);
+  }, [assets]);
 
   const handleIngredientClick = (ingredient: Ingredient) => {
     if (selectedIngredients.find(i => i.id === ingredient.id)) {
