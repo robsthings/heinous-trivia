@@ -148,7 +148,7 @@ export function ChupacabraChallenge() {
       );
 
       if (newFlippedCards.length === 2) {
-        const [firstCard, secondCard] = newFlippedCards.map(id => newCards[id]);
+        const [firstCard, secondCard] = newFlippedCards.map(id => newCards.find(card => card.id === id));
         
         setTimeout(() => {
           setGameState(current => {
