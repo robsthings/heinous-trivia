@@ -107,10 +107,11 @@ export function LabEscape() {
     const isCorrect = userAnswer === correctAnswer;
     
     const newAttempts = gameState.attempts + 1;
-    const newCorrectAnswers = isCorrect ? gameState.correctAnswers + 1 : gameState.correctAnswers;
 
     if (isCorrect) {
-      // Correct answer
+      // Correct answer - move to next riddle
+      const newCorrectAnswers = gameState.correctAnswers + 1;
+      
       if (newCorrectAnswers >= 3) {
         // Victory condition
         setGameState(prev => ({
@@ -121,7 +122,7 @@ export function LabEscape() {
           message: VICTORY_MESSAGES[Math.floor(Math.random() * VICTORY_MESSAGES.length)]
         }));
       } else {
-        // Continue playing
+        // Continue playing - back to door selection
         setGameState(prev => ({
           ...prev,
           correctAnswers: newCorrectAnswers,
@@ -135,9 +136,9 @@ export function LabEscape() {
         }));
       }
     } else {
-      // Wrong answer
+      // Wrong answer - check if they've used all attempts
       if (newAttempts >= gameState.maxAttempts) {
-        // Game over
+        // Game over - too many wrong attempts total
         setGameState(prev => ({
           ...prev,
           attempts: newAttempts,
@@ -145,7 +146,7 @@ export function LabEscape() {
           message: CHUPACABRA_TAUNTS[Math.floor(Math.random() * CHUPACABRA_TAUNTS.length)]
         }));
       } else {
-        // Continue with wrong answer
+        // Wrong answer but can try again on this riddle
         setGameState(prev => ({
           ...prev,
           attempts: newAttempts,
