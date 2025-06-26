@@ -576,37 +576,53 @@ export function WretchedWiring() {
       {gameState.isPlaying && (
         <>
           {/* Left Side Terminals */}
-          <div className="absolute left-8 top-1/2 transform -translate-y-1/2 space-y-8">
-            <div className="relative">
+          <div style={{
+            position: 'absolute',
+            left: '2rem',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '2rem'
+          }}>
+            <div style={{ position: 'relative' }}>
               <img 
                 src={assets['node-red-left'] || '/sidequests/wretched-wiring/node-red-left.png'} 
                 alt="Red Terminal Left" 
-                className="w-16 h-16" 
+                style={{ width: '4rem', height: '4rem' }}
               />
             </div>
-            <div className="relative">
+            <div style={{ position: 'relative' }}>
               <img 
                 src={assets['node-blue-left'] || '/sidequests/wretched-wiring/node-blue-left.png'} 
                 alt="Blue Terminal Left" 
-                className="w-16 h-16" 
+                style={{ width: '4rem', height: '4rem' }}
               />
             </div>
           </div>
 
           {/* Right Side Terminals */}
-          <div className="absolute right-8 top-1/2 transform -translate-y-1/2 space-y-8">
-            <div className="relative">
+          <div style={{
+            position: 'absolute',
+            right: '2rem',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '2rem'
+          }}>
+            <div style={{ position: 'relative' }}>
               <img 
                 src={assets['node-red-right'] || '/sidequests/wretched-wiring/node-red-right.png'} 
                 alt="Red Terminal Right" 
-                className="w-16 h-16" 
+                style={{ width: '4rem', height: '4rem' }}
               />
             </div>
-            <div className="relative">
+            <div style={{ position: 'relative' }}>
               <img 
                 src={assets['node-blue-right'] || '/sidequests/wretched-wiring/node-blue-right.png'} 
                 alt="Blue Terminal Right" 
-                className="w-16 h-16" 
+                style={{ width: '4rem', height: '4rem' }}
               />
             </div>
           </div>
@@ -616,25 +632,41 @@ export function WretchedWiring() {
       {/* Pull Chain */}
       {gameState.isPlaying && (
         <div 
-          className="absolute top-16 left-16 z-40 cursor-pointer select-none"
+          style={{
+            position: 'absolute',
+            top: '4rem',
+            left: '4rem',
+            zIndex: 1000,
+            cursor: 'pointer',
+            userSelect: 'none'
+          }}
           onClick={handlePullChain}
-          style={{ zIndex: 1000 }}
         >
-          <div className="relative">
+          <div style={{ position: 'relative' }}>
             <img 
               src={assets['Pull-Chain'] || '/sidequests/wretched-wiring/Pull-Chain.png'} 
               alt="Pull Chain"
-              className={`w-28 h-auto transition-all duration-300 hover:brightness-125 hover:scale-110 ${
-                gameState.pullChainPulled 
-                  ? 'transform translate-y-6 animate-bounce' 
-                  : ''
-              }`}
               style={{
+                width: '7rem',
+                height: 'auto',
+                transition: 'all 0.3s',
                 filter: gameState.pullChainPulled 
                   ? 'drop-shadow(0 6px 12px rgba(255,255,0,0.8)) brightness(1.2)' 
                   : 'drop-shadow(0 4px 8px rgba(0,0,0,0.5)) brightness(1.1)',
                 maxWidth: '112px',
-                minWidth: '84px'
+                minWidth: '84px',
+                transform: gameState.pullChainPulled ? 'translateY(1.5rem)' : 'none',
+                animation: gameState.pullChainPulled ? 'bounce 1s infinite' : 'none'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.filter = 'brightness(1.25) drop-shadow(0 6px 12px rgba(255,255,0,0.6))';
+                e.currentTarget.style.transform = gameState.pullChainPulled ? 'translateY(1.5rem) scale(1.1)' : 'scale(1.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.filter = gameState.pullChainPulled 
+                  ? 'drop-shadow(0 6px 12px rgba(255,255,0,0.8)) brightness(1.2)' 
+                  : 'drop-shadow(0 4px 8px rgba(0,0,0,0.5)) brightness(1.1)';
+                e.currentTarget.style.transform = gameState.pullChainPulled ? 'translateY(1.5rem)' : 'none';
               }}
             />
           </div>
@@ -646,24 +678,39 @@ export function WretchedWiring() {
         !wire.isStolen && (
           <div
             key={wire.id}
-            className={`absolute cursor-pointer select-none z-30 transition-all duration-200 ${
-              wire.isDragging ? 'scale-110 z-40' : 'hover:scale-105'
-            }`}
             style={{
+              position: 'absolute',
               left: wire.position.x,
               top: wire.position.y,
-              transform: `rotate(${wire.rotation}deg)`,
-              filter: wire.isDragging ? 'drop-shadow(0 0 10px rgba(255,255,0,0.5))' : 'none'
+              transform: `rotate(${wire.rotation}deg) ${wire.isDragging ? 'scale(1.1)' : ''}`,
+              filter: wire.isDragging ? 'drop-shadow(0 0 10px rgba(255,255,0,0.5))' : 'none',
+              cursor: 'pointer',
+              userSelect: 'none',
+              zIndex: wire.isDragging ? 40 : 30,
+              transition: 'all 0.2s'
             }}
             onMouseDown={(e) => handleDragStart(wire.id, e)}
             onTouchStart={(e) => handleDragStart(wire.id, e)}
             onClick={() => rotateWire(wire.id)}
+            onMouseEnter={(e) => {
+              if (!wire.isDragging) {
+                e.currentTarget.style.transform = `rotate(${wire.rotation}deg) scale(1.05)`;
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (!wire.isDragging) {
+                e.currentTarget.style.transform = `rotate(${wire.rotation}deg)`;
+              }
+            }}
           >
             <img 
               src={assets[wire.assetName.replace('.png', '')] || `/sidequests/wretched-wiring/${wire.assetName}`} 
               alt={`${wire.color} wire`}
-              className="w-25 h-25 pointer-events-none"
-              style={{ width: '100px', height: '100px' }}
+              style={{ 
+                width: '100px', 
+                height: '100px',
+                pointerEvents: 'none'
+              }}
               draggable={false}
             />
           </div>
@@ -673,25 +720,29 @@ export function WretchedWiring() {
       {/* Fake Timer Ring */}
       {gameState.isPlaying && (
         <div 
-          className={`absolute top-8 right-8 w-20 h-20 z-30 transition-all duration-200 ${
-            Math.abs(timerRef.current % 360) < 30 
-              ? 'animate-bounce scale-110' 
-              : ''
-          }`}
           style={{
+            position: 'absolute',
+            top: '2rem',
+            right: '2rem',
+            width: '5rem',
+            height: '5rem',
+            zIndex: 30,
+            transition: 'all 0.2s',
             filter: Math.abs(timerRef.current % 360) < 30 
               ? 'drop-shadow(0 0 20px rgba(239, 68, 68, 0.8))' 
-              : 'none'
+              : 'none',
+            transform: Math.abs(timerRef.current % 360) < 30 ? 'scale(1.1)' : 'scale(1)',
+            animation: Math.abs(timerRef.current % 360) < 30 ? 'bounce 1s infinite' : 'none'
           }}
         >
           <svg 
             width="80" 
             height="80" 
-            className={`transform -rotate-90 transition-all duration-200 ${
-              Math.abs(timerRef.current % 360) < 30 
-                ? 'animate-pulse' 
-                : ''
-            }`}
+            style={{
+              transform: 'rotate(-90deg)',
+              transition: 'all 0.2s',
+              animation: Math.abs(timerRef.current % 360) < 30 ? 'pulse 2s infinite' : 'none'
+            }}
           >
             {/* Background ring */}
             <circle
@@ -712,7 +763,7 @@ export function WretchedWiring() {
               strokeWidth="4"
               strokeDasharray={`${2 * Math.PI * 35}`}
               strokeDashoffset={`${2 * Math.PI * 35 * (1 - (timerRef.current / 360))}`}
-              className="transition-all duration-200"
+              style={{ transition: 'all 0.2s' }}
             />
             {/* Panic slice with intense effects */}
             {Math.abs(timerRef.current % 360) < 30 && (
