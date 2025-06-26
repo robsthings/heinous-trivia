@@ -79,7 +79,7 @@ export function ChupacabraChallenge() {
     matches: 0,
     attempts: 0,
     timeLeft: 90,
-    gamePhase: 'ready',
+    gamePhase: 'playing',
     failureMessage: ''
   });
 
@@ -139,7 +139,8 @@ export function ChupacabraChallenge() {
     if (gameState.gamePhase !== 'playing') return;
     if (gameState.flippedCards.length >= 2) return;
     if (gameState.flippedCards.includes(cardId)) return;
-    if (gameState.cards[cardId].isMatched) return;
+    const targetCard = gameState.cards.find(card => card.id === cardId);
+    if (targetCard?.isMatched) return;
 
     setGameState(prev => {
       const newFlippedCards = [...prev.flippedCards, cardId];
