@@ -631,7 +631,7 @@ export function LabEscape() {
             flexDirection: window.innerWidth < 640 ? 'column' : 'row',
             gap: '1rem',
             justifyContent: 'center',
-            zIndex: '10000'
+            zIndex: '99999'
           }}>
             <button
             onClick={resetGame}
