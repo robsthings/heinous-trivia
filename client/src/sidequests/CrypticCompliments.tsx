@@ -182,30 +182,52 @@ export const CrypticCompliments: React.FC = () => {
           position: 'absolute',
           top: '50%',
           left: '50%',
-          transform: 'translate(-50%, -60%)',
+          transform: 'translate(-50%, -50%)',
           zIndex: '20',
           textAlign: 'center'
         }}>
-          <img 
-            src="/sidequests/cryptic-compliments/gift.png" 
-            alt="Dr. Heinous with Gift" 
-            style={{
-              width: 'clamp(16rem, 40vw, 24rem)',
-              height: 'clamp(16rem, 40vw, 24rem)',
-              marginBottom: '1rem'
-            }}
-          />
-          <div style={{
-            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-            color: '#a855f7',
-            fontSize: '1rem',
-            padding: '0.75rem 1rem',
-            borderRadius: '0.5rem',
-            border: '1px solid #a855f7',
-            maxWidth: '250px',
-            margin: '0 auto'
-          }}>
-            A gift from the darkness...
+          <div style={{ position: 'relative' }}>
+            <img 
+              src="/sidequests/cryptic-compliments/gift.png" 
+              alt="Dr. Heinous with Gift" 
+              style={{
+                width: 'clamp(16rem, 40vw, 24rem)',
+                height: 'clamp(16rem, 40vw, 24rem)',
+                display: 'block'
+              }}
+            />
+            {/* Gift box positioned at his hand */}
+            <div 
+              onClick={generateCompliment}
+              style={{
+                position: 'absolute',
+                bottom: '25%',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                width: 'clamp(3rem, 8vw, 5rem)',
+                height: 'clamp(3rem, 8vw, 5rem)',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                zIndex: '30'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'translateX(-50%) scale(1.15)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'translateX(-50%) scale(1)'}
+            >
+              <div style={{
+                width: '100%',
+                height: '100%',
+                background: 'linear-gradient(135deg, #9333ea 0%, #581c87 100%)',
+                borderRadius: '0.5rem',
+                border: '2px solid #a855f7',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: 'clamp(1.5rem, 4vw, 2.5rem)',
+                boxShadow: '0 0 20px rgba(168, 85, 247, 0.8)'
+              }}>
+                🎁
+              </div>
+            </div>
           </div>
         </div>
       )}
@@ -222,54 +244,35 @@ export const CrypticCompliments: React.FC = () => {
         zIndex: '10'
       }}>
         
-        {/* Gift Box positioned relative to Dr. Heinous hand */}
+        {/* Additional UI Elements below character */}
         {animationPhase === 0 && (
           <div style={{ 
             textAlign: 'center',
             position: 'relative',
-            marginTop: '6rem'
+            marginTop: '22rem',
+            zIndex: '10'
           }}>
-            {/* Position emoji gift near Dr. Heinous's hand */}
-            <div 
-              onClick={generateCompliment}
-              style={{
-                position: 'absolute',
-                top: '-18rem',
-                left: '50%',
-                transform: 'translateX(-20%)', // Adjusted to better align with larger image
-                width: 'clamp(5rem, 12vw, 8rem)',
-                height: 'clamp(5rem, 12vw, 8rem)',
-                cursor: 'pointer',
-                transition: 'all 0.3s ease',
-                zIndex: '30'
-              }}
-              onMouseEnter={(e) => e.currentTarget.style.transform = 'translateX(-20%) scale(1.1)'}
-              onMouseLeave={(e) => e.currentTarget.style.transform = 'translateX(-20%) scale(1)'}
-            >
-              <div style={{
-                width: '100%',
-                height: '100%',
-                background: 'linear-gradient(135deg, #9333ea 0%, #581c87 100%)',
-                borderRadius: '0.75rem',
-                border: '3px solid #a855f7',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: 'clamp(2.5rem, 7vw, 4rem)',
-                boxShadow: '0 0 40px rgba(168, 85, 247, 0.8)'
-              }}>
-                🎁
-              </div>
+            <div style={{
+              backgroundColor: 'rgba(0, 0, 0, 0.6)',
+              color: '#a855f7',
+              fontSize: 'clamp(0.875rem, 2.5vw, 1rem)',
+              padding: '0.75rem 1.5rem',
+              borderRadius: '0.5rem',
+              border: '1px solid #a855f7',
+              maxWidth: '300px',
+              margin: '0 auto 1.5rem auto',
+              backdropFilter: 'blur(10px)'
+            }}>
+              A gift from the darkness...
             </div>
             
             <h2 style={{
               fontSize: 'clamp(1.25rem, 4vw, 1.75rem)',
               color: '#d8b4fe',
               marginBottom: '2rem',
-              marginTop: '2rem',
               textShadow: '0 0 10px rgba(168, 85, 247, 0.5)'
             }}>
-              A mysterious gift from the darkness awaits...
+              A mysterious gift awaits...
             </h2>
             
             <button
