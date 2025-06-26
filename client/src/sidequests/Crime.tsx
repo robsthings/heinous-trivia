@@ -58,24 +58,26 @@ export function Crime() {
     setGameState(prev => ({ ...prev, phase: 'sequence', sequenceStep: 1 }));
   };
 
-  // Progress through sequence steps (slower timing)
+  // Progress through sequence steps with fade transitions
   useEffect(() => {
     if (gameState.phase === 'sequence' && gameState.sequenceStep > 0) {
       const timer = setTimeout(() => {
         if (gameState.sequenceStep < 3) {
           setGameState(prev => ({ ...prev, sequenceStep: prev.sequenceStep + 1 }));
         } else {
-          // Start gameplay
-          const pattern = generatePattern();
-          setGameState(prev => ({ 
-            ...prev, 
-            phase: 'gameplay', 
-            currentPattern: pattern,
-            playerInput: [],
-            canRepeat: true,
-            patternViewCount: 0
-          }));
-          showPattern(pattern);
+          // Final transition: fade out book-3 and zoom in game-board
+          setTimeout(() => {
+            const pattern = generatePattern();
+            setGameState(prev => ({ 
+              ...prev, 
+              phase: 'gameplay', 
+              currentPattern: pattern,
+              playerInput: [],
+              canRepeat: true,
+              patternViewCount: 0
+            }));
+            showPattern(pattern);
+          }, 1000); // 1 second delay for final book fade out
         }
       }, 3000); // Slower timing - 3 seconds between each gif
       return () => clearTimeout(timer);
@@ -305,6 +307,34 @@ export function Crime() {
           0%, 100% { filter: brightness(1); }
           50% { filter: brightness(1.5) hue-rotate(45deg); }
         }
+        
+        @keyframes bookFadeIn {
+          0% { opacity: 0; }
+          100% { opacity: 1; }
+        }
+        
+        @keyframes bookFadeOut {
+          0% { opacity: 1; }
+          100% { opacity: 0; }
+        }
+        
+        @keyframes gameboardZoomIn {
+          0% { 
+            backgroundSize: 100%; 
+            backgroundPosition: center;
+            opacity: 0;
+          }
+          50% {
+            backgroundSize: 125%;
+            backgroundPosition: center;
+            opacity: 0.5;
+          }
+          100% { 
+            backgroundSize: 150%; 
+            backgroundPosition: right center;
+            opacity: 1;
+          }
+        }
       `}</style>
 
       {/* Flicker overlay for fail transition */}
@@ -401,7 +431,7 @@ export function Crime() {
               }}
             />
             
-            {/* Book overlay - 2x bigger, glowing, 2/3 down screen */}
+            {/* Book overlay - 2x bigger, glowing, 2/3 down screen with fade transitions */}
             <div style={{
               position: 'absolute',
               top: '66%',
@@ -414,13 +444,14 @@ export function Crime() {
               justifyContent: 'center'
             }}>
               <img
+                key={gameState.sequenceStep}
                 src={`/sidequests/crime/book-${gameState.sequenceStep}.png`}
                 alt={`Book ${gameState.sequenceStep}`}
                 style={{
                   maxWidth: '100%',
                   maxHeight: '100%',
                   objectFit: 'contain',
-                  animation: 'bookReveal 2s ease-in-out, glowPulse 2s ease-in-out infinite',
+                  animation: 'bookFadeIn 0.5s ease-in-out, glowPulse 2s ease-in-out infinite',
                   filter: 'drop-shadow(0 0 30px rgba(0,255,255,0.8))'
                 }}
               />
@@ -432,13 +463,20 @@ export function Crime() {
       {/* Gameplay Phase */}
       {(gameState.phase === 'gameplay' || gameState.phase === 'reshuffling') && (
         <div style={{
+          backgroundImage: 'url(/sidequests/crime/game-board.png)',
+          backgroundSize: '150%',
+          backgroundPosition: 'right center',
+          backgroundRepeat: 'no-repeat',
+          animation: 'gameboardZoomIn 2s ease-out',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           gap: 'clamp(1rem, 4vw, 2rem)',
           width: '100%',
           maxWidth: '800px',
-          margin: '0 auto'
+          margin: '0 auto',
+          minHeight: '60vh',
+          padding: 'clamp(1rem, 4vw, 2rem)'
         }}>
           {/* Round indicator */}
           <div style={{
