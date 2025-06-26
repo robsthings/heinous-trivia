@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'wouter';
-import { useSidequestAssets } from '../hooks/use-sidequest-assets';
+
 
 interface MonsterNameGeneratorProps {
   showHeinous?: boolean;

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Link, useLocation } from 'wouter';
 import { useQuery } from '@tanstack/react-query';
-import { useSidequestAssets } from '../hooks/use-sidequest-assets';
+
 
 interface GameState {
   score: number;

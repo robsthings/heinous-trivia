@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import html2canvas from "html2canvas";
-import { useSidequestAssets } from "@/hooks/use-sidequest-assets";
+
 
 // Base ingredient data without hardcoded paths
 const ingredientData = [
@@ -126,7 +126,7 @@ export function CurseCrafting() {
   const [gamePhase, setGamePhase] = useState<'selecting' | 'brewing' | 'revealing'>('selecting');
   const [generatedCurse, setGeneratedCurse] = useState<GeneratedCurse | null>(null);
 
-  const { data: assets = {} } = useSidequestAssets('curse-crafting');
+
 
   // Create ingredients with existing asset fallbacks
   const ingredients = ingredientData.map(item => ({

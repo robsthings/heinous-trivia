@@ -426,7 +426,7 @@ export function WretchedWiring() {
             margin: '0 auto'
           }}>
             <img 
-              src={assets['certificate']} 
+              src="/sidequests/wretched-wiring/certificate.png" 
               alt="Certificate of Giving Up"
               style={{
                 width: '100%',
