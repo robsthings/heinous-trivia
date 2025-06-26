@@ -2116,11 +2116,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
           'wire-red-3': '/sidequests/wretched-wiring/wire-red-3.png',
           'wire-red-4': '/sidequests/wretched-wiring/wire-red-4.png',
           'wire-blue-1': '/sidequests/wretched-wiring/wire-blue-1.png',
-          'node-blue-left': '/sidequests/wretched-wiring/node-blue-left.png',
-          'node-red-right': '/sidequests/wretched-wiring/node-red-right.png',
-          'node-blue-right': '/sidequests/wretched-wiring/node-blue-right.png',
-          'Pull-Chain': '/sidequests/wretched-wiring/Pull-Chain.png',
-          'Certificate-of-Failure': '/sidequests/wretched-wiring/Certificate-of-Failure.png'
+          'wire-blue-2': '/sidequests/wretched-wiring/wire-blue-2.png',
+          'wire-blue-3': '/sidequests/wretched-wiring/wire-blue-3.png',
+          'wire-blue-4': '/sidequests/wretched-wiring/wire-blue-4.png',
+          'wretched-wiring-bg': '/sidequests/wretched-wiring/wretched-wiring-bg.png'
         },
         'monster-name-generator': {
           'monster-card_1750900915378': '/sidequests/monster-name-generator/monster-card_1750900915378.png'
@@ -2260,11 +2259,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
           'game-over-goo': '/sidequests/wack-a-chupacabra/game-over-goo.png'
         },
         'wretched-wiring': {
-          'wire-red-straight': '/sidequests/wretched-wiring/wire-red-straight.png',
-          'wire-blue-straight': '/sidequests/wretched-wiring/wire-blue-straight.png',
-          'wire-red-curved': '/sidequests/wretched-wiring/wire-red-curved.png',
-          'wire-blue-curved': '/sidequests/wretched-wiring/wire-blue-curved.png',
-          'node-red-left': '/sidequests/wretched-wiring/node-red-left.png',
+          'wire-red-1': '/sidequests/wretched-wiring/wire-red-1.png',
+          'wire-red-2': '/sidequests/wretched-wiring/wire-red-2.png',
+          'wire-red-3': '/sidequests/wretched-wiring/wire-red-3.png',
+          'wire-red-4': '/sidequests/wretched-wiring/wire-red-4.png',
+          'wire-blue-1': '/sidequests/wretched-wiring/wire-blue-1.png',
           'node-blue-left': '/sidequests/wretched-wiring/node-blue-left.png',
           'node-red-right': '/sidequests/wretched-wiring/node-red-right.png',
           'node-blue-right': '/sidequests/wretched-wiring/node-blue-right.png',
