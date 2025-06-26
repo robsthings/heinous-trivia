@@ -123,8 +123,8 @@ export function WretchedWiring() {
   // Initialize random wires
   const initializeWires = () => {
     const wireAssets = [
-      'wire-red-straight', 'wire-red-curved',
-      'wire-blue-straight', 'wire-blue-curved'
+      'wire-red-1', 'wire-red-2', 'wire-red-3', 'wire-red-4',
+      'wire-blue-1', 'wire-blue-2', 'wire-blue-3', 'wire-blue-4'
     ];
 
     const shuffled = wireAssets.sort(() => Math.random() - 0.5);
