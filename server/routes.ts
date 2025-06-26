@@ -2076,8 +2076,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get all sidequest assets
   app.get('/api/sidequests/assets', async (req: Request, res: Response) => {
     try {
-      // Return local fallback assets since Firebase Storage migration hasn't been completed
-      const fallbackAssets = {
+      // Return local assets for all sidequests
+      const localAssets = {
         'curse-crafting': {
           'potion-1': '/sidequests/curse-crafting/potion-1.png',
           'potion-2': '/sidequests/curse-crafting/potion-2.png',
@@ -2151,85 +2151,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       };
       
-      res.json({ assets: fallbackAssets });
+      res.json({ assets: localAssets });
     } catch (error) {
       console.error('Failed to get sidequest assets:', error);
       res.status(500).json({ error: 'Failed to retrieve sidequest assets' });
     }
   });
   
-  // Upload sidequest asset to Firebase Storage
-  app.post('/api/sidequests/:sidequestName/assets', upload.single('file'), async (req: Request, res: Response) => {
-    try {
-      const { sidequestName } = req.params;
-      const { filename } = req.body;
-      
-      if (!req.file) {
-        return res.status(400).json({ error: "No file uploaded" });
-      }
-      
-      if (!filename) {
-        return res.status(400).json({ error: "Filename is required" });
-      }
-      
-      // Upload to Firebase Storage under sidequests path
-      const storagePath = `sidequests/${sidequestName}/`;
-      const uploadResult = await FirebaseService.uploadFile(
-        req.file.buffer,
-        filename,
-        storagePath
-      );
-      
-      // Save asset mapping to Firebase for easy retrieval
-      const assetDoc = firestore.collection('sidequest-assets').doc(sidequestName);
-      await assetDoc.set({
-        assets: {
-          [filename.replace(/\.[^/.]+$/, "")]: uploadResult.downloadURL
-        }
-      }, { merge: true });
-      
-      res.json({ 
-        success: true, 
-        url: uploadResult.downloadURL,
-        message: `Asset ${filename} uploaded successfully`
-      });
-      
-    } catch (error) {
-      console.error(`Error uploading sidequest asset:`, error);
-      res.status(500).json({ error: "Failed to upload sidequest asset" });
-    }
-  });
+
 
   // Get assets for a specific sidequest
   app.get('/api/sidequests/:sidequestName/assets', async (req: Request, res: Response) => {
     try {
       const { sidequestName } = req.params;
       
-      // Check Firebase Storage for uploaded assets
-      if (firestore) {
-        try {
-          // Try both singular and plural collection names
-          let assetDoc = await firestore.collection('sidequest-assets').doc(sidequestName).get();
-          if (!assetDoc.exists) {
-            assetDoc = await firestore.collection('sidequests-assets').doc(sidequestName).get();
-          }
-          if (!assetDoc.exists) {
-            assetDoc = await firestore.collection('sidequests').doc(sidequestName).get();
-          }
-          
-          if (assetDoc.exists) {
-            const data = assetDoc.data();
-            if (data && data.assets) {
-              console.log(`Found Firebase assets for ${sidequestName}:`, data.assets);
-              return res.json({ assets: data.assets });
-            }
-          }
-        } catch (error) {
-          console.log(`No Firebase assets found for ${sidequestName}, falling back to local`);
-        }
-      }
-      
-      // Return local fallback assets for specific sidequest
+      // Return local assets for specific sidequest
       const allAssets = {
         'curse-crafting': {
           'potion-1': '/sidequests/curse-crafting/potion-1.png',
