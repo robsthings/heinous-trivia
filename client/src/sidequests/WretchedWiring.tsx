@@ -379,7 +379,14 @@ export function WretchedWiring() {
       style={{
         position: 'relative',
         minHeight: '100vh',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        transform: Math.abs(timerRef.current % 360) < 30 
+          ? `translate(${Math.sin(Date.now() * 0.02) * 3}px, ${Math.cos(Date.now() * 0.025) * 2}px) scale(${1 + Math.sin(Date.now() * 0.03) * 0.002})` 
+          : 'none',
+        transition: Math.abs(timerRef.current % 360) < 30 ? 'none' : 'transform 0.3s ease-out',
+        filter: Math.abs(timerRef.current % 360) < 30 
+          ? `contrast(${1.1 + Math.sin(Date.now() * 0.02) * 0.1}) brightness(${0.95 + Math.sin(Date.now() * 0.025) * 0.05})` 
+          : 'none'
       }}
       onMouseMove={handleDrag}
       onMouseUp={handleDragEnd}
@@ -736,21 +743,36 @@ export function WretchedWiring() {
             width: '5rem',
             height: '5rem',
             zIndex: 30,
-            transition: 'all 0.2s',
+            transition: 'all 0.1s ease-out',
             filter: Math.abs(timerRef.current % 360) < 30 
-              ? 'drop-shadow(0 0 20px rgba(239, 68, 68, 0.8))' 
+              ? 'drop-shadow(0 0 30px rgba(239, 68, 68, 1)) drop-shadow(0 0 50px rgba(239, 68, 68, 0.5)) brightness(1.3) contrast(1.5)' 
+              : 'drop-shadow(0 0 5px rgba(16, 185, 129, 0.3))',
+            transform: Math.abs(timerRef.current % 360) < 30 
+              ? `scale(1.3) rotate(${Math.sin(Date.now() * 0.01) * 3}deg)` 
+              : 'scale(1)',
+            animation: Math.abs(timerRef.current % 360) < 30 
+              ? 'none' 
               : 'none',
-            transform: Math.abs(timerRef.current % 360) < 30 ? 'scale(1.1)' : 'scale(1)',
-            animation: Math.abs(timerRef.current % 360) < 30 ? 'bounce 1s infinite' : 'none'
+            backgroundColor: Math.abs(timerRef.current % 360) < 30 
+              ? 'rgba(239, 68, 68, 0.1)' 
+              : 'transparent',
+            borderRadius: '50%',
+            border: Math.abs(timerRef.current % 360) < 30 
+              ? '2px solid rgba(239, 68, 68, 0.6)' 
+              : 'none'
           }}
         >
           <svg 
             width="80" 
             height="80" 
             style={{
-              transform: 'rotate(-90deg)',
-              transition: 'all 0.2s',
-              animation: Math.abs(timerRef.current % 360) < 30 ? 'pulse 2s infinite' : 'none'
+              transform: Math.abs(timerRef.current % 360) < 30 
+                ? `rotate(-90deg) scale(${1 + Math.sin(Date.now() * 0.02) * 0.1})` 
+                : 'rotate(-90deg)',
+              transition: Math.abs(timerRef.current % 360) < 30 ? 'none' : 'all 0.2s',
+              filter: Math.abs(timerRef.current % 360) < 30 
+                ? `hue-rotate(${Math.sin(Date.now() * 0.01) * 30}deg) saturate(1.5)` 
+                : 'none'
             }}
           >
             {/* Background ring */}
@@ -813,11 +835,20 @@ export function WretchedWiring() {
               alignItems: 'center',
               justifyContent: 'center',
               fontWeight: 'bold',
-              fontSize: '0.75rem',
-              transition: 'all 0.2s',
-              color: Math.abs(timerRef.current % 360) < 30 ? '#fca5a5' : '#ffffff',
-              animation: Math.abs(timerRef.current % 360) < 30 ? 'pulse 2s infinite' : 'none',
-              transform: Math.abs(timerRef.current % 360) < 30 ? 'scale(1.1)' : 'scale(1)'
+              fontSize: Math.abs(timerRef.current % 360) < 30 ? '0.9rem' : '0.75rem',
+              transition: Math.abs(timerRef.current % 360) < 30 ? 'none' : 'all 0.2s',
+              color: Math.abs(timerRef.current % 360) < 30 
+                ? `hsl(${Math.sin(Date.now() * 0.02) * 60 + 0}, 100%, 70%)` 
+                : '#ffffff',
+              textShadow: Math.abs(timerRef.current % 360) < 30 
+                ? `0 0 10px rgba(239, 68, 68, 0.8), 0 0 20px rgba(239, 68, 68, 0.6), 0 0 30px rgba(239, 68, 68, 0.4)` 
+                : 'none',
+              transform: Math.abs(timerRef.current % 360) < 30 
+                ? `scale(${1.2 + Math.sin(Date.now() * 0.03) * 0.15}) rotate(${Math.sin(Date.now() * 0.025) * 2}deg)` 
+                : 'scale(1)',
+              filter: Math.abs(timerRef.current % 360) < 30 
+                ? `contrast(${1.3 + Math.sin(Date.now() * 0.02) * 0.3})` 
+                : 'none'
             }}
           >
             {Math.abs(timerRef.current % 360) < 30 ? 'PANIC!' : 'FAKE'}
