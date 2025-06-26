@@ -401,7 +401,7 @@ export function WretchedWiring() {
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundImage: assets['wretched-wiring-bg'] ? `url(${assets['wretched-wiring-bg']})` : 'linear-gradient(135deg, #1f2937 0%, #374151 50%, #111827 100%)',
+          backgroundImage: `url(${assets['wretched-wiring-bg']})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
@@ -430,7 +430,7 @@ export function WretchedWiring() {
             margin: '0 auto'
           }}>
             <img 
-              src={assets['certificate'] || "/sidequests/wretched-wiring/certificate.png"} 
+              src={assets['certificate']} 
               alt="Certificate of Giving Up"
               style={{
                 width: '100%',
