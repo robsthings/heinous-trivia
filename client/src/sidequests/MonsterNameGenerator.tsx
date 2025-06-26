@@ -45,18 +45,32 @@ export function MonsterNameGenerator() {
   const [monster, setMonster] = useState<MonsterData | null>(null);
   const [isScanning, setIsScanning] = useState(false);
   const [scanProgress, setScanProgress] = useState(0);
+  const [showMonsterCard, setShowMonsterCard] = useState(false);
+  const [showMonsterName, setShowMonsterName] = useState(false);
 
   const startScan = () => {
     setIsScanning(true);
     setScanProgress(0);
     setMonster(null);
+    setShowMonsterCard(false);
+    setShowMonsterName(false);
 
     const scanInterval = setInterval(() => {
       setScanProgress(prev => {
         if (prev >= 100) {
           clearInterval(scanInterval);
           setIsScanning(false);
-          setMonster(generateMonster());
+          
+          // First show the monster card
+          const newMonster = generateMonster();
+          setMonster(newMonster);
+          setShowMonsterCard(true);
+          
+          // Then reveal the name after a short delay
+          setTimeout(() => {
+            setShowMonsterName(true);
+          }, 800);
+          
           return 100;
         }
         return prev + 2;
@@ -68,6 +82,8 @@ export function MonsterNameGenerator() {
     setMonster(null);
     setScanProgress(0);
     setIsScanning(false);
+    setShowMonsterCard(false);
+    setShowMonsterName(false);
   };
 
   return (
@@ -143,26 +159,45 @@ export function MonsterNameGenerator() {
           </div>
         )}
 
-        {/* Scan line animation */}
+        {/* Full-width scan line animation */}
         {isScanning && (
           <div 
-            className="absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-green-400 to-transparent opacity-80 z-20"
+            className="fixed left-0 right-0 h-1 z-50 pointer-events-none"
             style={{
-              top: `${(scanProgress / 100) * 100}%`,
-              boxShadow: '0 0 20px #10b981',
+              top: `${(scanProgress / 100) * window.innerHeight}px`,
+              background: 'linear-gradient(to right, transparent 0%, #10b981 20%, #22c55e 50%, #10b981 80%, transparent 100%)',
+              boxShadow: '0 0 30px #10b981, 0 0 60px #10b981',
+              filter: 'blur(0.5px)',
+              transition: 'top 0.1s linear'
+            }}
+          />
+        )}
+        
+        {/* Additional glow effect for scan line */}
+        {isScanning && (
+          <div 
+            className="fixed left-0 right-0 h-2 z-49 pointer-events-none"
+            style={{
+              top: `${(scanProgress / 100) * window.innerHeight - 2}px`,
+              background: 'linear-gradient(to right, transparent 0%, rgba(16, 185, 129, 0.3) 20%, rgba(34, 197, 94, 0.5) 50%, rgba(16, 185, 129, 0.3) 80%, transparent 100%)',
+              boxShadow: '0 0 40px rgba(16, 185, 129, 0.4)',
               transition: 'top 0.1s linear'
             }}
           />
         )}
 
         {/* Monster card */}
-        {monster && !isScanning && (
+        {monster && showMonsterCard && (
           <div 
             className="bg-black bg-opacity-80 border-2 border-green-400 rounded-lg p-8 max-w-lg w-full mx-4 transform scale-0 animate-[scaleIn_0.5s_ease-out_forwards]"
             style={{ boxShadow: '0 0 30px rgba(16, 185, 129, 0.3)' }}
           >
-            <h2 className="text-2xl md:text-3xl font-bold text-green-400 mb-6 text-center" style={{ fontFamily: 'Nosifer, cursive' }}>
-              {monster.name}
+            <h2 className="text-2xl md:text-3xl font-bold text-green-400 mb-6 text-center" style={{ 
+              fontFamily: 'Nosifer, cursive',
+              opacity: showMonsterName ? 1 : 0,
+              transition: 'opacity 0.8s ease-in-out'
+            }}>
+              {showMonsterName ? monster.name : '???'}
             </h2>
             
             <div className="space-y-4 text-gray-300" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
