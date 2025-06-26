@@ -353,24 +353,7 @@ export function LabEscape() {
                     display: 'block'
                   }}
                 />
-                <div style={{
-                  textAlign: 'center',
-                  marginTop: '1rem',
-                  height: '2rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}>
-                  <p style={{
-                    color: '#ff6b35',
-                    fontWeight: 'bold',
-                    fontSize: 'clamp(1rem, 3vw, 1.25rem)',
-                    margin: '0',
-                    textShadow: '0 0 10px rgba(255, 107, 53, 0.8)'
-                  }}>
-                    Door {doorNum}
-                  </p>
-                </div>
+
               </div>
             ))}
           </div>
