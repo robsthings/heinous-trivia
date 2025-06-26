@@ -96,32 +96,9 @@ export function WretchedWiring() {
 
   const { data: assets = {}, isLoading: assetsLoading } = useSidequestAssets('wretched-wiring');
   
-  // Asset fallback helper function
-  const getAssetUrl = (assetName: string, fallbackPath: string = '') => {
-    // Return Firebase asset URL if available, otherwise use local fallback
-    if (assets[assetName]) {
-      return assets[assetName];
-    }
-    
-    // Use existing Dr. Heinous assets as placeholders for missing graphics
-    const fallbacks = {
-      'wretched-wiring-bg': '/heinous/neutral.png',
-      'node-red-left': '/heinous/charming.png',
-      'node-blue-left': '/heinous/charming.png', 
-      'node-red-right': '/heinous/charming.png',
-      'node-blue-right': '/heinous/charming.png',
-      'Pull-Chain': '/heinous/charming.png',
-      'wire-red-1': '/heinous/charming.png',
-      'wire-red-2': '/heinous/charming.png',
-      'wire-red-3': '/heinous/charming.png',
-      'wire-red-4': '/heinous/charming.png',
-      'wire-blue-1': '/heinous/charming.png',
-      'wire-blue-2': '/heinous/charming.png',
-      'wire-blue-3': '/heinous/charming.png',
-      'wire-blue-4': '/heinous/charming.png'
-    };
-    
-    return fallbacks[assetName] || fallbackPath || '/heinous/charming.png';
+  // Asset helper function - directly use loaded assets
+  const getAssetUrl = (assetName: string) => {
+    return assets[assetName] || `/sidequests/wretched-wiring/${assetName}.png`;
   };
 
   // Initialize random wires
