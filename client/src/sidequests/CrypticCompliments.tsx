@@ -190,8 +190,8 @@ export const CrypticCompliments: React.FC = () => {
             src="/sidequests/cryptic-compliments/gift.png" 
             alt="Dr. Heinous with Gift" 
             style={{
-              width: 'clamp(8rem, 20vw, 12rem)',
-              height: 'clamp(8rem, 20vw, 12rem)',
+              width: 'clamp(16rem, 40vw, 24rem)',
+              height: 'clamp(16rem, 40vw, 24rem)',
               marginBottom: '1rem'
             }}
           />
