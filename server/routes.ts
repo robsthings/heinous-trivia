@@ -2124,6 +2124,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
         },
         'monster-name-generator': {
           'monster-card_1750900915378': '/sidequests/monster-name-generator/monster-card_1750900915378.png'
+        },
+        'chupacabra-challenge': {
+          'chupa-bg': '/sidequests/chupacabra-challenge/chupa-bg.png',
+          'chupa-bg-bars': '/sidequests/chupacabra-challenge/chupa-bg-bars.png',
+          'chupa-key': '/sidequests/chupacabra-challenge/chupa-key.png'
+        },
+        'cryptic-compliments': {
+          'scroll-bg': '/sidequests/cryptic-compliments/scroll-bg.png',
+          'signature': '/sidequests/cryptic-compliments/signature.gif'
+        },
+        'glory-grab': {
+          'vial-1-normal': '/sidequests/glory-grab/vial-1-normal.png',
+          'vial-2-normal': '/sidequests/glory-grab/vial-2-normal.png',
+          'vial-3-normal': '/sidequests/glory-grab/vial-3-normal.png',
+          'vial-4-normal': '/sidequests/glory-grab/vial-4-normal.png',
+          'vial-empty': '/sidequests/glory-grab/vial-empty.png'
+        },
+        'lab-escape': {
+          'confetti': '/sidequests/lab-escape/confetti.gif',
+          'door-prison': '/sidequests/lab-escape/door-prison.png'
         }
       };
       
@@ -2253,6 +2273,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
         },
         'monster-name-generator': {
           'monster-card_1750900915378': '/sidequests/monster-name-generator/monster-card_1750900915378.png'
+        },
+        'chupacabra-challenge': {
+          'chupa-bg': '/sidequests/chupacabra-challenge/chupa-bg.png',
+          'chupa-bg-bars': '/sidequests/chupacabra-challenge/chupa-bg-bars.png',
+          'chupa-key': '/sidequests/chupacabra-challenge/chupa-key.png'
+        },
+        'cryptic-compliments': {
+          'scroll-bg': '/sidequests/cryptic-compliments/scroll-bg.png',
+          'signature': '/sidequests/cryptic-compliments/signature.gif'
+        },
+        'glory-grab': {
+          'vial-1-normal': '/sidequests/glory-grab/vial-1-normal.png',
+          'vial-2-normal': '/sidequests/glory-grab/vial-2-normal.png',
+          'vial-3-normal': '/sidequests/glory-grab/vial-3-normal.png',
+          'vial-4-normal': '/sidequests/glory-grab/vial-4-normal.png',
+          'vial-empty': '/sidequests/glory-grab/vial-empty.png'
+        },
+        'lab-escape': {
+          'confetti': '/sidequests/lab-escape/confetti.gif',
+          'door-prison': '/sidequests/lab-escape/door-prison.png'
         }
       };
       
