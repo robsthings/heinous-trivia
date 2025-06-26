@@ -594,7 +594,33 @@ export function LabEscape() {
           </div>
         )}
 
-        {/* Failure Phase */}
+        {/* Full Screen Failure Image */}
+        {gameState.gamePhase === 'failure' && (
+          <div style={{
+            position: 'fixed',
+            top: '0',
+            left: '0',
+            width: '100vw',
+            height: '100vh',
+            zIndex: '9999',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <img
+              src="/sidequests/lab-escape/fail.png"
+              alt="Failure"
+              style={{
+                width: '100vw',
+                height: '100vh',
+                objectFit: 'cover',
+                animation: gameState.failAnimationPhase === 'falling' ? 'trapDoorFall 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards' : 'none'
+              }}
+            />
+          </div>
+        )}
+
+        {/* Failure Phase Content */}
         {gameState.gamePhase === 'failure' && (
           <div style={{
             textAlign: 'center',
@@ -604,31 +630,10 @@ export function LabEscape() {
             padding: 'clamp(2rem, 5vw, 4rem)',
             maxWidth: '90%',
             backdropFilter: 'blur(15px)',
-            boxShadow: '0 0 40px rgba(239, 68, 68, 0.3)'
+            boxShadow: '0 0 40px rgba(239, 68, 68, 0.3)',
+            position: 'relative',
+            zIndex: '10000'
           }}>
-            <div style={{
-              position: 'fixed',
-              top: '0',
-              left: '0',
-              width: '100vw',
-              height: '100vh',
-              zIndex: '9999',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginBottom: '2rem'
-            }}>
-              <img
-                src="/sidequests/lab-escape/fail.png"
-                alt="Failure"
-                style={{
-                  width: '100vw',
-                  height: '100vh',
-                  objectFit: 'cover',
-                  animation: gameState.failAnimationPhase === 'falling' ? 'trapDoorFall 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards' : 'none'
-                }}
-              />
-            </div>
             <h2 style={{
               fontSize: 'clamp(2rem, 5vw, 3rem)',
               color: '#ef4444',
