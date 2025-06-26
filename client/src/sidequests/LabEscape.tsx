@@ -351,7 +351,7 @@ export function LabEscape() {
                     height: doorNum === 2 ? 'clamp(205px, 34.13vw, 341px)' : 'clamp(293px, 48.75vw, 488px)',
                     objectFit: 'contain',
                     display: 'block',
-                    marginBottom: doorNum === 2 ? 'clamp(2rem, 5vw, 4rem)' : '0'
+                    marginBottom: doorNum === 2 ? 'clamp(3rem, 8vw, 6rem)' : '0'
                   }}
                 />
 
