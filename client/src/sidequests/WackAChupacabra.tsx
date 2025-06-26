@@ -151,11 +151,11 @@ export function WackAChupacabra() {
   const getSpriteImagePath = (sprite: string): string => {
     switch (sprite) {
       case 'chupacabra':
-        return '/sidequests/wack-a-chupacabra/wack-chupacabra.png';
+        return '/chupacabra/chupacabra-1.png';
       case 'decoy':
-        return '/sidequests/wack-a-chupacabra/wack-decoy.png';
+        return '/chupacabra/chupacabra-2.png';
       case 'vial':
-        return '/sidequests/wack-a-chupacabra/wack-vial.png';
+        return '/heinous/gift.png';
       default:
         return '';
     }
@@ -166,7 +166,7 @@ export function WackAChupacabra() {
       {/* Background */}
       <div 
         className="fixed inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: 'url(/sidequests/wack-a-chupacabra/wack-bg.png)' }}
+        style={{ backgroundImage: 'url(/backgrounds/lab-dark-blue.png)' }}
       />
 
       {/* Moon with Haunt Logo Overlay */}
@@ -179,7 +179,7 @@ export function WackAChupacabra() {
            }}>
         {/* Moon Background */}
         <img 
-          src="/sidequests/wack-a-chupacabra/wack-moon.png" 
+          src="/heinous/presenting.png" 
           alt="Moon"
           className="w-full h-full object-contain"
         />
@@ -202,7 +202,7 @@ export function WackAChupacabra() {
           {/* Green goo splash effect */}
           <div 
             className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: 'url(/sidequests/wack-a-chupacabra/wack-splash.png)' }}
+            style={{ backgroundImage: 'url(/backgrounds/lab-dark-blue.png)' }}
           />
           <div className="absolute inset-0 bg-green-500 bg-opacity-30" />
           
@@ -253,7 +253,7 @@ export function WackAChupacabra() {
         {!gameState.isPlaying && !gameState.isGameOver && (
           <div className="flex-1 flex items-center justify-center">
             <div style={{textAlign: "center"}}>
-              <h1 className="text-4xl font-bold text-white  drop-shadow-lg" style={{marginBottom: "1.5rem"}} style={{ fontFamily: 'Frijole, cursive' }}>
+              <h1 className="text-4xl font-bold text-white  drop-shadow-lg" style={{marginBottom: "1.5rem", fontFamily: 'Frijole, cursive'}}>
                 WACK-A-CHUPACABRA
               </h1>
               <p className="text-lg text-white mb-8 drop-shadow-lg max-w-md">
@@ -300,7 +300,7 @@ export function WackAChupacabra() {
                   >
                     {/* Hole */}
                     <img
-                      src="/sidequests/wack-a-chupacabra/wack-hole.png"
+                      src="/heinous/neutral.png"
                       alt={`Hole ${index + 1}`}
                       className="w-30 h-30 md:w-36 md:h-36 block"
                     />
