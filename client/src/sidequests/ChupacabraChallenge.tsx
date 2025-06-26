@@ -447,7 +447,7 @@ export function ChupacabraChallenge() {
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   backgroundRepeat: 'no-repeat',
-                  border: card.isFlipped || card.isMatched ? '2px solid #a855f7' : '2px solid #6b7280',
+                  border: 'none',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
