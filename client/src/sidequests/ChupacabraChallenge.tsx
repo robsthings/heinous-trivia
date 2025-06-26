@@ -281,7 +281,7 @@ export function ChupacabraChallenge() {
           color: '#f87171',
           marginBottom: '0.5rem',
           textShadow: '0 0 20px #ef4444',
-          fontFamily: 'Impact, Arial Black, sans-serif'
+          fontFamily: 'Creepster, Impact, Arial Black, sans-serif'
         }}>
           CHUPACABRA CHALLENGE
         </h1>
