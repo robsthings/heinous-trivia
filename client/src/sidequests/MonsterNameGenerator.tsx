@@ -140,7 +140,7 @@ export function MonsterNameGenerator() {
         
         {/* Scanning overlay */}
         {isScanning && (
-          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center z-30">
+          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
             <div className="text-center">
               <div className="text-6xl text-green-400 mb-4 animate-pulse">
                 SCANNING...
@@ -162,13 +162,14 @@ export function MonsterNameGenerator() {
         {/* Full-width scan line animation */}
         {isScanning && (
           <div 
-            className="fixed left-0 right-0 h-1 z-50 pointer-events-none"
+            className="fixed left-0 right-0 h-1 pointer-events-none"
             style={{
               top: `${scanProgress}vh`,
               background: 'linear-gradient(to right, transparent 0%, #10b981 20%, #22c55e 50%, #10b981 80%, transparent 100%)',
               boxShadow: '0 0 30px #10b981, 0 0 60px #10b981',
               filter: 'blur(0.5px)',
-              transition: 'top 0.1s linear'
+              transition: 'top 0.1s linear',
+              zIndex: 9999
             }}
           />
         )}
@@ -176,12 +177,13 @@ export function MonsterNameGenerator() {
         {/* Additional glow effect for scan line */}
         {isScanning && (
           <div 
-            className="fixed left-0 right-0 h-3 z-40 pointer-events-none"
+            className="fixed left-0 right-0 h-3 pointer-events-none"
             style={{
               top: `calc(${scanProgress}vh - 1px)`,
               background: 'linear-gradient(to right, transparent 0%, rgba(16, 185, 129, 0.3) 20%, rgba(34, 197, 94, 0.5) 50%, rgba(16, 185, 129, 0.3) 80%, transparent 100%)',
               boxShadow: '0 0 40px rgba(16, 185, 129, 0.4)',
-              transition: 'top 0.1s linear'
+              transition: 'top 0.1s linear',
+              zIndex: 9998
             }}
           />
         )}
