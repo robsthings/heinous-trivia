@@ -367,7 +367,11 @@ export function WretchedWiring() {
 
   return (
     <div 
-      className="relative min-h-screen overflow-hidden"
+      style={{
+        position: 'relative',
+        minHeight: '100vh',
+        overflow: 'hidden'
+      }}
       onMouseMove={handleDrag}
       onMouseUp={handleDragEnd}
       onTouchMove={handleDrag}
@@ -375,29 +379,99 @@ export function WretchedWiring() {
     >
       {/* Background */}
       <div 
-        className="fixed inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${assets['wretched-wiring-bg'] || '/sidequests/wretched-wiring/wretched-wiring-bg.png'})` }}
+        style={{ 
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundImage: `url(${assets['wretched-wiring-bg'] || '/sidequests/wretched-wiring/wretched-wiring-bg.png'})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
       />
 
       {/* Certificate Screen */}
       {gameState.showCertificate && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 p-4">
-          <div className="relative w-full max-w-lg mx-auto">
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: 50,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: 'rgba(0, 0, 0, 0.9)',
+          padding: '1rem'
+        }}>
+          <div style={{
+            position: 'relative',
+            width: '100%',
+            maxWidth: '32rem',
+            margin: '0 auto'
+          }}>
             <img 
               src="/heinous/presenting.png" 
               alt="Certificate of Giving Up"
-              className="w-full h-auto object-contain rounded-lg shadow-2xl"
+              style={{
+                width: '100%',
+                height: 'auto',
+                objectFit: 'contain',
+                borderRadius: '0.5rem',
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
+              }}
             />
-            <div className="absolute bottom-2 sm:bottom-4 left-1/2 transform -translate-x-1/2 flex flex-col sm:flex-row gap-2 sm:gap-4 w-full px-4 sm:px-0 sm:w-auto">
+            <div style={{
+              position: 'absolute',
+              bottom: '0.5rem',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '0.5rem',
+              width: '100%',
+              paddingLeft: '1rem',
+              paddingRight: '1rem'
+            }}>
               <button
                 onClick={resetGame}
-                className="px-4 py-2 sm:px-6 sm:py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors duration-200 shadow-lg text-sm sm:text-base"
+                style={{
+                  padding: '0.5rem 1rem',
+                  backgroundColor: '#2563eb',
+                  color: 'white',
+                  fontWeight: 'bold',
+                  borderRadius: '0.5rem',
+                  transition: 'background-color 0.2s',
+                  boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+                  fontSize: '0.875rem',
+                  border: 'none',
+                  cursor: 'pointer'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#1d4ed8'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#2563eb'}
               >
                 Try Again
               </button>
               <Link
                 href="/game"
-                className="px-4 py-2 sm:px-6 sm:py-3 bg-gray-600 hover:bg-gray-700 text-white font-bold rounded-lg transition-colors duration-200 shadow-lg inline-block  text-sm sm:text-base" style={{textAlign: "center"}}
+                style={{
+                  display: 'inline-block',
+                  padding: '0.5rem 1rem',
+                  backgroundColor: '#4b5563',
+                  color: 'white',
+                  fontWeight: 'bold',
+                  borderRadius: '0.5rem',
+                  transition: 'background-color 0.2s',
+                  boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+                  fontSize: '0.875rem',
+                  textAlign: 'center',
+                  textDecoration: 'none'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#374151'}
+                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#4b5563'}
               >
                 Return to Game
               </Link>
@@ -408,22 +482,65 @@ export function WretchedWiring() {
 
       {/* Game Start Screen */}
       {!gameState.isPlaying && !gameState.showCertificate && (
-        <div className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-80">
-          <div className=" bg-gray-800 bg-opacity-95 p-8 rounded-xl border-2 border-yellow-500 max-w-md" style={{textAlign: "center"}}>
-            <h1 className="text-4xl font-bold text-yellow-400  drop-shadow-lg" style={{marginBottom: "1.5rem", fontFamily: 'Courier, monospace'}}>
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: 40,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: 'rgba(0, 0, 0, 0.8)'
+        }}>
+          <div style={{
+            backgroundColor: 'rgba(31, 41, 55, 0.95)',
+            padding: '2rem',
+            borderRadius: '0.75rem',
+            border: '2px solid #eab308',
+            maxWidth: '28rem',
+            textAlign: 'center'
+          }}>
+            <h1 style={{
+              fontSize: '2.25rem',
+              fontWeight: 'bold',
+              color: '#facc15',
+              filter: 'drop-shadow(0 4px 3px rgba(0, 0, 0, 0.07))',
+              marginBottom: '1.5rem',
+              fontFamily: 'Courier, monospace'
+            }}>
               WRETCHED WIRING
             </h1>
-            <p className="text-lg text-white mb-8 drop-shadow-lg">
+            <p style={{
+              fontSize: '1.125rem',
+              color: 'white',
+              marginBottom: '2rem',
+              filter: 'drop-shadow(0 4px 3px rgba(0, 0, 0, 0.07))'
+            }}>
               "Fix" the electrical system by connecting wires to terminals. 
               Nothing will actually work, but at least you'll look busy!
             </p>
             <button
               onClick={startGame}
-              className="px-8 py-4 bg-yellow-600 hover:bg-yellow-700 text-white font-bold rounded-lg transition-colors duration-200 shadow-lg text-xl"
+              style={{
+                padding: '1rem 2rem',
+                backgroundColor: '#ca8a04',
+                color: 'white',
+                fontWeight: 'bold',
+                borderRadius: '0.5rem',
+                transition: 'background-color 0.2s',
+                boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+                fontSize: '1.25rem',
+                border: 'none',
+                cursor: 'pointer'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#a16207'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#ca8a04'}
             >
               Start "Fixing"
             </button>
-            <div className="mt-4">
+            <div style={{ marginTop: '1rem' }}>
               <Link
                 href="/game"
                 style={{
