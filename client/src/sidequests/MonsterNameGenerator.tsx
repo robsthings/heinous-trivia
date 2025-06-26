@@ -75,20 +75,28 @@ export function MonsterNameGenerator() {
   };
 
   return (
-    <div 
-      style={{
-        minHeight: '100vh',
+    <>
+      <style>
+        {`
+          @keyframes pulse {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+          }
+        `}
+      </style>
+      <div 
+        style={{
+          minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
         position: 'relative',
         overflow: 'hidden',
         background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)',
         fontFamily: 'system-ui, -apple-system, sans-serif'
-      }}
-    >
-      {/* Background particles */}
-      <div style={{ position: 'absolute', inset: '0', opacity: '0.2' }}>
-        {[...Array(50)].map((_, i) => (
+      }}>
+        {/* Background particles */}
+        <div style={{ position: 'absolute', inset: '0', opacity: '0.2' }}>
+          {[...Array(50)].map((_, i) => (
           <div
             key={i}
             style={{
@@ -256,36 +264,69 @@ export function MonsterNameGenerator() {
             }}
           >
             {/* Monster Card Visual */}
-            {assets && assets['monster-card'] ? (
-              <img 
-                src={assets['monster-card']} 
-                alt="Monster Card"
-                style={{
-                  width: '100%',
-                  maxWidth: '200px',
-                  height: 'auto',
-                  marginBottom: '1rem',
-                  borderRadius: '0.5rem',
-                  filter: 'drop-shadow(0 0 10px rgba(16, 185, 129, 0.3))'
-                }}
-              />
-            ) : (
+            <div style={{
+              width: '200px',
+              height: '260px',
+              margin: '0 auto 1rem',
+              backgroundColor: 'rgba(16, 185, 129, 0.1)',
+              border: '2px solid #10b981',
+              borderRadius: '0.5rem',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '0.875rem',
+              color: '#10b981',
+              position: 'relative',
+              boxShadow: '0 0 20px rgba(16, 185, 129, 0.2)',
+              background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05))'
+            }}>
+              {/* Monster Silhouette */}
               <div style={{
-                width: '200px',
-                height: '260px',
-                margin: '0 auto 1rem',
-                backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                border: '2px dashed #10b981',
-                borderRadius: '0.5rem',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '0.875rem',
+                width: '80px',
+                height: '80px',
+                backgroundColor: '#374151',
+                borderRadius: '50%',
+                marginBottom: '1rem',
+                opacity: '0.6',
+                position: 'relative'
+              }}>
+                {/* Glowing Eyes */}
+                <div style={{
+                  position: 'absolute',
+                  top: '30px',
+                  left: '20px',
+                  width: '8px',
+                  height: '8px',
+                  backgroundColor: '#10b981',
+                  borderRadius: '50%',
+                  boxShadow: '0 0 10px #10b981',
+                  animation: 'pulse 2s infinite'
+                }}></div>
+                <div style={{
+                  position: 'absolute',
+                  top: '30px',
+                  right: '20px',
+                  width: '8px',
+                  height: '8px',
+                  backgroundColor: '#10b981',
+                  borderRadius: '50%',
+                  boxShadow: '0 0 10px #10b981',
+                  animation: 'pulse 2s infinite'
+                }}></div>
+              </div>
+              
+              <div style={{
+                textAlign: 'center',
+                padding: '0.5rem',
+                fontSize: '12px',
+                fontWeight: 'bold',
                 color: '#10b981'
               }}>
-                Monster Card
+                CLASSIFIED<br />
+                SPECIMEN DATA
               </div>
-            )}
+            </div>
             <h2 
               style={{ 
                 fontSize: 'clamp(1.5rem, 4vw, 2rem)',
@@ -446,15 +487,6 @@ export function MonsterNameGenerator() {
           </button>
         </div>
       </div>
-
-      <style>
-        {`
-          @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-          }
-        `}
-      </style>
-    </div>
+    </>
   );
 }
