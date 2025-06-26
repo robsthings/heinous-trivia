@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'wouter';
-import { useSidequestAssets } from '../hooks/use-sidequest-assets';
+
 
 interface GameState {
   isPlaying: boolean;
@@ -94,15 +94,11 @@ export function WretchedWiring() {
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const timerRef = useRef<number>(0);
 
-  const { data: assets = {}, isLoading: assetsLoading } = useSidequestAssets('wretched-wiring');
+
   
-  // Direct asset URL lookup
+  // Local static asset paths
   const getAssetUrl = (assetName: string) => {
-    const url = assets[assetName];
-    if (!url) {
-      console.log(`Asset ${assetName} not found in:`, assets);
-    }
-    return url;
+    return `/sidequests/wretched-wiring/${assetName}`;
   };
 
   // Initialize random wires
@@ -401,7 +397,7 @@ export function WretchedWiring() {
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundImage: `url(${assets['wretched-wiring-bg']})`,
+          backgroundImage: `url(/sidequests/wretched-wiring/wretched-wiring-bg.png)`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
