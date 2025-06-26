@@ -2076,14 +2076,55 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get all sidequest assets
   app.get('/api/sidequests/assets', async (req: Request, res: Response) => {
     try {
-      const assets = await FirebaseService.getBrandingAssets();
-      const sidequestMapping = assets.find((asset: any) => asset.id === 'sidequest-assets');
+      // Return local fallback assets since Firebase Storage migration hasn't been completed
+      const fallbackAssets = {
+        'curse-crafting': {
+          'potion-1': '/sidequests/curse-crafting/potion-1.png',
+          'potion-2': '/sidequests/curse-crafting/potion-2.png',
+          'potion-3': '/sidequests/curse-crafting/potion-3.png',
+          'potion-4': '/sidequests/curse-crafting/potion-4.png',
+          'potion-5': '/sidequests/curse-crafting/potion-5.png',
+          'potion-6': '/sidequests/curse-crafting/potion-6.png',
+          'potion-7': '/sidequests/curse-crafting/potion-7.png',
+          'potion-8': '/sidequests/curse-crafting/potion-8.png',
+          'potion-9': '/sidequests/curse-crafting/potion-9.png',
+          'potion-10': '/sidequests/curse-crafting/potion-10.png',
+          'potion-11': '/sidequests/curse-crafting/potion-11.png',
+          'potion-12': '/sidequests/curse-crafting/potion-12.png',
+          'potion-13': '/sidequests/curse-crafting/potion-13.png',
+          'potion-14': '/sidequests/curse-crafting/potion-14.png',
+          'potion-15': '/sidequests/curse-crafting/potion-15.png',
+          'potion-16': '/sidequests/curse-crafting/potion-16.png',
+          'potion-17': '/sidequests/curse-crafting/potion-17.png',
+          'potion-18': '/sidequests/curse-crafting/potion-18.png',
+          'cauldron': '/sidequests/curse-crafting/cauldron.png',
+          'scroll-bg': '/sidequests/curse-crafting/scroll-bg.png',
+          'signature': '/sidequests/curse-crafting/signature.gif'
+        },
+        'wack-a-chupacabra': {
+          'wack-bg': '/sidequests/wack-a-chupacabra/wack-bg.png',
+          'wack-hole': '/sidequests/wack-a-chupacabra/wack-hole.png',
+          'wack-moon': '/sidequests/wack-a-chupacabra/wack-moon.png',
+          'chupacabra-sprite': '/sidequests/wack-a-chupacabra/chupacabra-sprite.png',
+          'decoy-sprite': '/sidequests/wack-a-chupacabra/decoy-sprite.png',
+          'vial-sprite': '/sidequests/wack-a-chupacabra/vial-sprite.png',
+          'game-over-goo': '/sidequests/wack-a-chupacabra/game-over-goo.png'
+        },
+        'wretched-wiring': {
+          'wire-red-straight': '/sidequests/wretched-wiring/wire-red-straight.png',
+          'wire-blue-straight': '/sidequests/wretched-wiring/wire-blue-straight.png',
+          'wire-red-curved': '/sidequests/wretched-wiring/wire-red-curved.png',
+          'wire-blue-curved': '/sidequests/wretched-wiring/wire-blue-curved.png',
+          'node-red-left': '/sidequests/wretched-wiring/node-red-left.png',
+          'node-blue-left': '/sidequests/wretched-wiring/node-blue-left.png',
+          'node-red-right': '/sidequests/wretched-wiring/node-red-right.png',
+          'node-blue-right': '/sidequests/wretched-wiring/node-blue-right.png',
+          'Pull-Chain': '/sidequests/wretched-wiring/Pull-Chain.png',
+          'Certificate-of-Failure': '/sidequests/wretched-wiring/Certificate-of-Failure.png'
+        }
+      };
       
-      if (sidequestMapping && sidequestMapping.mapping) {
-        res.json({ assets: sidequestMapping.mapping });
-      } else {
-        res.json({ assets: {} });
-      }
+      res.json({ assets: fallbackAssets });
     } catch (error) {
       console.error('Failed to get sidequest assets:', error);
       res.status(500).json({ error: 'Failed to retrieve sidequest assets' });
@@ -2094,14 +2135,57 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get('/api/sidequests/:sidequestName/assets', async (req: Request, res: Response) => {
     try {
       const { sidequestName } = req.params;
-      const assets = await FirebaseService.getBrandingAssets();
-      const sidequestMapping = assets.find((asset: any) => asset.id === 'sidequest-assets');
       
-      if (sidequestMapping && sidequestMapping.mapping && sidequestMapping.mapping[sidequestName]) {
-        res.json({ assets: sidequestMapping.mapping[sidequestName] });
-      } else {
-        res.json({ assets: {} });
-      }
+      // Return local fallback assets for specific sidequest
+      const allAssets = {
+        'curse-crafting': {
+          'potion-1': '/sidequests/curse-crafting/potion-1.png',
+          'potion-2': '/sidequests/curse-crafting/potion-2.png',
+          'potion-3': '/sidequests/curse-crafting/potion-3.png',
+          'potion-4': '/sidequests/curse-crafting/potion-4.png',
+          'potion-5': '/sidequests/curse-crafting/potion-5.png',
+          'potion-6': '/sidequests/curse-crafting/potion-6.png',
+          'potion-7': '/sidequests/curse-crafting/potion-7.png',
+          'potion-8': '/sidequests/curse-crafting/potion-8.png',
+          'potion-9': '/sidequests/curse-crafting/potion-9.png',
+          'potion-10': '/sidequests/curse-crafting/potion-10.png',
+          'potion-11': '/sidequests/curse-crafting/potion-11.png',
+          'potion-12': '/sidequests/curse-crafting/potion-12.png',
+          'potion-13': '/sidequests/curse-crafting/potion-13.png',
+          'potion-14': '/sidequests/curse-crafting/potion-14.png',
+          'potion-15': '/sidequests/curse-crafting/potion-15.png',
+          'potion-16': '/sidequests/curse-crafting/potion-16.png',
+          'potion-17': '/sidequests/curse-crafting/potion-17.png',
+          'potion-18': '/sidequests/curse-crafting/potion-18.png',
+          'cauldron': '/sidequests/curse-crafting/cauldron.png',
+          'scroll-bg': '/sidequests/curse-crafting/scroll-bg.png',
+          'signature': '/sidequests/curse-crafting/signature.gif'
+        },
+        'wack-a-chupacabra': {
+          'wack-bg': '/sidequests/wack-a-chupacabra/wack-bg.png',
+          'wack-hole': '/sidequests/wack-a-chupacabra/wack-hole.png',
+          'wack-moon': '/sidequests/wack-a-chupacabra/wack-moon.png',
+          'chupacabra-sprite': '/sidequests/wack-a-chupacabra/chupacabra-sprite.png',
+          'decoy-sprite': '/sidequests/wack-a-chupacabra/decoy-sprite.png',
+          'vial-sprite': '/sidequests/wack-a-chupacabra/vial-sprite.png',
+          'game-over-goo': '/sidequests/wack-a-chupacabra/game-over-goo.png'
+        },
+        'wretched-wiring': {
+          'wire-red-straight': '/sidequests/wretched-wiring/wire-red-straight.png',
+          'wire-blue-straight': '/sidequests/wretched-wiring/wire-blue-straight.png',
+          'wire-red-curved': '/sidequests/wretched-wiring/wire-red-curved.png',
+          'wire-blue-curved': '/sidequests/wretched-wiring/wire-blue-curved.png',
+          'node-red-left': '/sidequests/wretched-wiring/node-red-left.png',
+          'node-blue-left': '/sidequests/wretched-wiring/node-blue-left.png',
+          'node-red-right': '/sidequests/wretched-wiring/node-red-right.png',
+          'node-blue-right': '/sidequests/wretched-wiring/node-blue-right.png',
+          'Pull-Chain': '/sidequests/wretched-wiring/Pull-Chain.png',
+          'Certificate-of-Failure': '/sidequests/wretched-wiring/Certificate-of-Failure.png'
+        }
+      };
+      
+      const sidequestAssets = allAssets[sidequestName] || {};
+      res.json({ assets: sidequestAssets });
     } catch (error) {
       console.error(`Failed to get assets for ${req.params.sidequestName}:`, error);
       res.status(500).json({ error: 'Failed to retrieve sidequest assets' });
