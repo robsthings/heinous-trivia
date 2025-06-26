@@ -108,6 +108,32 @@ export function LabEscape() {
     failAnimationPhase: 'none'
   });
 
+  // Handle trap door fall animation sequence
+  React.useEffect(() => {
+    if (gameState.failAnimationPhase === 'falling') {
+      // After animation completes (1.5s), show the landed state
+      const timer = setTimeout(() => {
+        setGameState(prev => ({
+          ...prev,
+          failAnimationPhase: 'landed'
+        }));
+      }, 1500);
+
+      // After a brief pause, show the complete state with buttons
+      const completeTimer = setTimeout(() => {
+        setGameState(prev => ({
+          ...prev,
+          failAnimationPhase: 'complete'
+        }));
+      }, 2000);
+
+      return () => {
+        clearTimeout(timer);
+        clearTimeout(completeTimer);
+      };
+    }
+  }, [gameState.failAnimationPhase]);
+
   const getRandomRiddle = () => {
     const availableRiddles = RIDDLES.filter(riddle => !gameState.usedRiddles.includes(riddle.id));
     if (availableRiddles.length === 0) {
@@ -589,7 +615,8 @@ export function LabEscape() {
                 style={{
                   width: 'clamp(120px, 25vw, 200px)',
                   height: 'clamp(120px, 25vw, 200px)',
-                  objectFit: 'contain'
+                  objectFit: 'contain',
+                  animation: gameState.failAnimationPhase === 'falling' ? 'trapDoorFall 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards' : 'none'
                 }}
               />
             </div>
@@ -610,12 +637,13 @@ export function LabEscape() {
             }}>
               {gameState.message}
             </p>
-            <div style={{
-              display: 'flex',
-              flexDirection: window.innerWidth < 640 ? 'column' : 'row',
-              gap: '1rem',
-              justifyContent: 'center'
-            }}>
+            {gameState.failAnimationPhase === 'complete' && (
+              <div style={{
+                display: 'flex',
+                flexDirection: window.innerWidth < 640 ? 'column' : 'row',
+                gap: '1rem',
+                justifyContent: 'center'
+              }}>
               <button
                 onClick={resetGame}
                 style={{
