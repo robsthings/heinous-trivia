@@ -592,21 +592,21 @@ export function ChupacabraChallenge() {
         {gameState.gamePhase === 'defeat' && (
           <div style={{ textAlign: 'center' }}>
             <h2 style={{
-              fontSize: clamp('2rem', 8vw, '2.5rem'),
+              fontSize: 'clamp(2rem, 8vw, 2.5rem)',
               color: '#f87171',
               marginBottom: '1rem'
             }}>
               CHUPACABRA ESCAPED!
             </h2>
             <p style={{
-              fontSize: clamp('1rem', 4vw, '1.25rem'),
+              fontSize: 'clamp(1rem, 4vw, 1.25rem)',
               color: '#fca5a5',
               marginBottom: '0.5rem'
             }}>
               {gameState.failureMessage}
             </p>
             <p style={{
-              fontSize: clamp('0.9rem', 3vw, '1.125rem'),
+              fontSize: 'clamp(0.9rem, 3vw, 1.125rem)',
               color: '#fbbf24',
               marginBottom: '1.5rem'
             }}>
@@ -622,7 +622,7 @@ export function ChupacabraChallenge() {
               <button
                 onClick={resetGame}
                 style={{
-                  padding: clamp('0.75rem 1.5rem', '3vw', '0.75rem 1.5rem'),
+                  padding: 'clamp(0.75rem, 3vw, 0.75rem) clamp(1.5rem, 3vw, 1.5rem)',
                   background: 'linear-gradient(to right, #dc2626, #991b1b)',
                   color: 'white',
                   fontWeight: 'bold',
@@ -631,7 +631,7 @@ export function ChupacabraChallenge() {
                   cursor: 'pointer',
                   transition: 'all 0.2s ease',
                   transform: 'scale(1)',
-                  fontSize: clamp('0.9rem', 3vw, '1rem')
+                  fontSize: 'clamp(0.9rem, 3vw, 1rem)'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.background = 'linear-gradient(to right, #b91c1c, #7f1d1d)';
@@ -648,7 +648,7 @@ export function ChupacabraChallenge() {
               <button
                 onClick={() => window.history.back()}
                 style={{
-                  padding: clamp('0.75rem 1.5rem', '3vw', '0.75rem 1.5rem'),
+                  padding: 'clamp(0.75rem, 3vw, 0.75rem) clamp(1.5rem, 3vw, 1.5rem)',
                   background: 'linear-gradient(to right, #7c3aed, #5b21b6)',
                   color: 'white',
                   fontWeight: 'bold',
@@ -657,7 +657,7 @@ export function ChupacabraChallenge() {
                   cursor: 'pointer',
                   transition: 'all 0.2s ease',
                   transform: 'scale(1)',
-                  fontSize: clamp('0.9rem', 3vw, '1rem')
+                  fontSize: 'clamp(0.9rem, 3vw, 1rem)'
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.background = 'linear-gradient(to right, #5b21b6, #4c1d95)';
