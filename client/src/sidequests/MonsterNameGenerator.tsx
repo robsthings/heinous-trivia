@@ -271,22 +271,28 @@ function MonsterNameGeneratorCore({ showHeinous = true }: MonsterNameGeneratorPr
               maxWidth: 'clamp(20rem, 50vw, 28rem)',
               aspectRatio: '3/4',
               margin: '0 auto',
-              background: 'rgba(0, 0, 0, 0.8)',
-              border: '2px solid #10b981',
-              borderRadius: '1rem',
+              backgroundImage: 'url(/assets/monster-card_1750900915378.png)',
+              backgroundSize: 'contain',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 0 30px rgba(16, 185, 129, 0.3)'
+              justifyContent: 'center'
             }}
           >
-            {/* Monster name display - always two lines */}
-            <div style={{ textAlign: 'center', padding: '1.5rem' }}>
+            {/* Monster name display positioned over the card's text area */}
+            <div style={{ 
+              textAlign: 'center', 
+              marginTop: '2rem',
+              padding: '1rem',
+              maxWidth: '70%'
+            }}>
               <h1 style={{
                 fontSize: 'clamp(1.125rem, 4vw, 1.5rem)',
                 fontFamily: 'Nosifer, system-ui, sans-serif',
-                color: '#ef4444',
-                lineHeight: '1.2'
+                color: '#8B4513',
+                lineHeight: '1.2',
+                textShadow: '1px 1px 2px rgba(0,0,0,0.3)'
               }}>
                 {monsterName.split(' ').map((word, index) => (
                   <div key={index} style={{ display: 'block' }}>
