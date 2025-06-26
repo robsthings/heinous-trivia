@@ -21,10 +21,8 @@ interface GameState {
   message: string;
 }
 
-const VIAL_TYPES = [
-  { type: 'normal' as const, probability: 0.5, points: 10, lifetime: 3000 },
-  { type: 'glowing' as const, probability: 0.2, points: 25, lifetime: 2500 },
-  { type: 'exploding' as const, probability: 0.15, points: 50, lifetime: 1500 },
+const VIAL_SPAWN_TYPES = [
+  { type: 'normal' as const, probability: 0.85, points: 10, lifetime: 3000 },
   { type: 'decoy' as const, probability: 0.15, points: -15, lifetime: 4000 }
 ];
 
@@ -57,18 +55,13 @@ const HEINOUS_REACTIONS = {
 
 function getRandomVialType(chaosLevel: number) {
   const random = Math.random();
-  let cumulative = 0;
   
-  for (const vialType of VIAL_TYPES) {
-    const adjustedProb = vialType.type === 'exploding' ? 
-      vialType.probability * (1 + chaosLevel * 0.2) : 
-      vialType.probability;
-    
-    cumulative += adjustedProb;
-    if (random < cumulative) return vialType;
+  // Simple binary choice: normal collectible vial or decoy vial
+  if (random < VIAL_SPAWN_TYPES[1].probability) {
+    return VIAL_SPAWN_TYPES[1]; // decoy
+  } else {
+    return VIAL_SPAWN_TYPES[0]; // normal
   }
-  
-  return VIAL_TYPES[0];
 }
 
 function getRandomReaction(category: keyof typeof HEINOUS_REACTIONS): string {
@@ -123,17 +116,13 @@ export function GloryGrab() {
       let newScore = prev.score;
       let message = '';
 
-      switch (vial.type) {
-        case 'normal':
-        case 'glowing':
-        case 'exploding':
-          newScore += vial.points;
-          message = getRandomReaction('collect');
-          break;
-        case 'decoy':
-          newScore += vial.points; // -15 points for clicking decoy
-          message = getRandomReaction('decoy');
-          break;
+      if (vial.type === 'decoy') {
+        newScore += vial.points; // -15 points for clicking decoy
+        message = getRandomReaction('decoy');
+      } else {
+        // Normal vials give base points regardless of visual state
+        newScore += vial.points;
+        message = getRandomReaction('collect');
       }
 
       return {
