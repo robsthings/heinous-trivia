@@ -75,19 +75,33 @@ export function Welcome() {
 
   return (
     <div 
-      className="min-h-screen w-full overflow-hidden relative"
       style={{
+        minHeight: '100vh',
+        height: '100vh',
+        width: '100vw',
+        overflow: 'hidden',
+        position: 'fixed',
+        top: 0,
+        left: 0,
         backgroundImage: 'url("/backgrounds/lab-dark-blue.png")',
         backgroundSize: 'cover',
         backgroundPosition: 'center center',
-        backgroundRepeat: 'no-repeat'
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed'
       }}
     >
       <div 
-        className="min-h-screen flex flex-col items-center justify-center px-4"
         style={{
+          minHeight: '100vh',
+          height: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '0 1rem',
           textAlign: "center",
-          background: 'linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(55,65,81,0.7), rgba(0,0,0,0.8))'
+          background: 'linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(55,65,81,0.7), rgba(0,0,0,0.8))',
+          overflow: 'hidden'
         }}
       >
         
