@@ -48,114 +48,238 @@ const CRYPTIC_COMPLIMENTS: Compliment[] = [
   },
   {
     text: "Your wicked intelligence puts Machiavelli to shame",
-    author: "The Dark Arts Academy"
+    author: "The Italian Renaissance"
   },
   {
-    text: "The storm clouds gather just to witness your beauty",
-    author: "Mother Nature's Evil Twin"
+    text: "The spirits dance with joy when you enter a room",
+    author: "The Spectral Ballroom"
+  },
+  {
+    text: "Your mysterious ways would make Nostradamus jealous",
+    author: "The Oracle of Delphi"
+  },
+  {
+    text: "Even black cats consider you their lucky charm",
+    author: "The Feline Underworld"
+  },
+  {
+    text: "Your enchanting darkness rivals the most beautiful eclipse",
+    author: "The Celestial Court"
+  },
+  {
+    text: "The werewolves howl your praises to the moon",
+    author: "The Lupine Brotherhood"
+  },
+  {
+    text: "Your gothic elegance makes Victorian ghosts swoon",
+    author: "The Spirit of Gothic Literature"
+  },
+  {
+    text: "Even fortune tellers can't predict how amazing you are",
+    author: "Madame Zelda's Crystal Ball"
+  },
+  {
+    text: "Your spine-chilling smile brightens the darkest dungeons",
+    author: "The Medieval Torture Chamber"
+  },
+  {
+    text: "The banshees sing lullabies in your honor",
+    author: "The Irish Otherworld"
   }
 ];
 
-export function CrypticCompliments() {
-  const [isRevealed, setIsRevealed] = useState(false);
+export const CrypticCompliments: React.FC = () => {
   const [selectedCompliment, setSelectedCompliment] = useState<Compliment | null>(null);
+  const [isRevealed, setIsRevealed] = useState(false);
   const [showSignature, setShowSignature] = useState(false);
+  const [animationPhase, setAnimationPhase] = useState(0); // 0: gift, 1: paper-1, 2: paper-2, 3: paper-3, 4: paper-4 (final)
 
   const generateCompliment = () => {
     const randomCompliment = CRYPTIC_COMPLIMENTS[Math.floor(Math.random() * CRYPTIC_COMPLIMENTS.length)];
     setSelectedCompliment(randomCompliment);
-    setIsRevealed(true);
     setShowSignature(false);
+    setAnimationPhase(1);
     
-    // Show signature after compliment text animation
+    // Animation sequence: paper unfurling through 4 stages
+    setTimeout(() => setAnimationPhase(2), 400);
+    setTimeout(() => setAnimationPhase(3), 800);
     setTimeout(() => {
-      setShowSignature(true);
-    }, 1500);
+      setAnimationPhase(4);
+      setIsRevealed(true);
+    }, 1200);
+    setTimeout(() => setShowSignature(true), 2700); // Signature appears after text burn-in
   };
 
   const resetCompliment = () => {
-    setIsRevealed(false);
     setSelectedCompliment(null);
+    setIsRevealed(false);
     setShowSignature(false);
+    setAnimationPhase(0);
   };
 
   return (
-    <div 
-      className="min-h-screen flex flex-col relative overflow-hidden"
-      style={{
-        background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)',
-        fontFamily: 'system-ui, -apple-system, sans-serif'
-      }}
-    >
+    <div style={{
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      position: 'relative',
+      overflow: 'hidden',
+      background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)',
+      fontFamily: 'system-ui, -apple-system, sans-serif'
+    }}>
       {/* Background particles */}
-      <div className="absolute inset-0 opacity-20">
+      <div style={{
+        position: 'absolute',
+        inset: '0',
+        opacity: '0.2'
+      }}>
         {[...Array(30)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-1 h-1 bg-purple-400 rounded-full animate-pulse"
             style={{
+              position: 'absolute',
+              width: '4px',
+              height: '4px',
+              backgroundColor: '#a855f7',
+              borderRadius: '50%',
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${2 + Math.random() * 2}s`
+              animation: `pulse ${2 + Math.random() * 2}s infinite`,
+              animationDelay: `${Math.random() * 3}s`
             }}
           />
         ))}
       </div>
 
       {/* Header */}
-      <div className="relative z-10 text-center py-8">
-        <h1 
-          className="text-4xl md:text-6xl font-bold text-purple-400 mb-4"
-          style={{ textShadow: '0 0 20px #a855f7', fontFamily: 'Creepster, cursive' }}
-        >
+      <div style={{
+        position: 'relative',
+        zIndex: '10',
+        textAlign: 'center',
+        padding: '2rem 0'
+      }}>
+        <h1 style={{
+          fontSize: 'clamp(2rem, 8vw, 4rem)',
+          fontWeight: 'bold',
+          color: '#a855f7',
+          marginBottom: '1rem',
+          textShadow: '0 0 20px #a855f7',
+          fontFamily: 'Creepster, cursive'
+        }}>
           CRYPTIC COMPLIMENTS
         </h1>
-        <p className="text-lg text-gray-300">
+        <p style={{
+          fontSize: '1.125rem',
+          color: '#d1d5db'
+        }}>
           Receive mysterious praise from the beyond
         </p>
       </div>
 
       {/* Dr. Heinous */}
-      <div className="absolute top-16 right-8 z-20">
+      <div style={{
+        position: 'absolute',
+        top: '4rem',
+        right: '2rem',
+        zIndex: '20'
+      }}>
         <img 
-          src="/heinous/gift.png" 
+          src="/sidequests/cryptic-compliments/gift.png" 
           alt="Dr. Heinous with Gift" 
-          className="w-20 h-20 md:w-24 md:h-24"
+          style={{
+            width: 'clamp(5rem, 12vw, 6rem)',
+            height: 'clamp(5rem, 12vw, 6rem)'
+          }}
         />
-        <div className="absolute -left-32 top-2 bg-black bg-opacity-80 text-purple-400 text-sm px-3 py-2 rounded-lg border border-purple-400">
+        <div style={{
+          position: 'absolute',
+          left: '-8rem',
+          top: '0.5rem',
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          color: '#a855f7',
+          fontSize: '0.875rem',
+          padding: '0.5rem 0.75rem',
+          borderRadius: '0.5rem',
+          border: '1px solid #a855f7'
+        }}>
           A gift from the darkness...
         </div>
       </div>
 
       {/* Main content */}
-      <div className="flex-1 flex flex-col items-center justify-center px-4 relative z-10">
+      <div style={{
+        flex: '1',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '0 1rem',
+        position: 'relative',
+        zIndex: '10'
+      }}>
         
-        {/* Gift Box (before reveal) */}
-        {!isRevealed && (
-          <div className="text-center">
+        {/* Gift Box or Paper Animation */}
+        {animationPhase === 0 && (
+          <div style={{ textAlign: 'center' }}>
             <div 
-              className="w-32 h-32 md:w-40 md:h-40 mx-auto mb-8 cursor-pointer transition-all duration-300 hover:scale-110"
               onClick={generateCompliment}
+              style={{
+                width: 'clamp(8rem, 20vw, 10rem)',
+                height: 'clamp(8rem, 20vw, 10rem)',
+                margin: '0 auto 2rem auto',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                transform: 'scale(1)',
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
             >
-              <div 
-                className="w-full h-full bg-gradient-to-br from-purple-600 to-purple-900 rounded-lg border-4 border-purple-400 flex items-center justify-center text-6xl"
-                style={{ boxShadow: '0 0 30px rgba(168, 85, 247, 0.5)' }}
-              >
+              <div style={{
+                width: '100%',
+                height: '100%',
+                background: 'linear-gradient(135deg, #9333ea 0%, #581c87 100%)',
+                borderRadius: '0.5rem',
+                border: '4px solid #a855f7',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: 'clamp(3rem, 8vw, 4rem)',
+                boxShadow: '0 0 30px rgba(168, 85, 247, 0.5)'
+              }}>
                 🎁
               </div>
             </div>
             
-            <h2 className="text-2xl text-purple-300 mb-4">
+            <h2 style={{
+              fontSize: '1.5rem',
+              color: '#d8b4fe',
+              marginBottom: '1rem'
+            }}>
               A mysterious gift awaits...
             </h2>
             
             <button
               onClick={generateCompliment}
-              className="px-8 py-3 bg-gradient-to-r from-purple-600 to-purple-800 text-white font-bold text-lg rounded-lg border-2 border-purple-400 hover:from-purple-500 hover:to-purple-700 transition-all duration-200 transform hover:scale-105"
-              style={{ 
+              style={{
+                padding: '0.75rem 2rem',
+                background: 'linear-gradient(to right, #9333ea, #581c87)',
+                color: 'white',
+                fontWeight: 'bold',
+                fontSize: '1.125rem',
+                borderRadius: '0.5rem',
+                border: '2px solid #a855f7',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
                 textShadow: '0 0 10px rgba(0,0,0,0.5)',
                 boxShadow: '0 0 20px rgba(168, 85, 247, 0.3)'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'linear-gradient(to right, #7c3aed, #4c1d95)';
+                e.currentTarget.style.transform = 'scale(1.05)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'linear-gradient(to right, #9333ea, #581c87)';
+                e.currentTarget.style.transform = 'scale(1)';
               }}
             >
               OPEN GIFT
@@ -163,63 +287,119 @@ export function CrypticCompliments() {
           </div>
         )}
 
-        {/* Parchment Scroll (after reveal) */}
-        {isRevealed && selectedCompliment && (
-          <div className="max-w-2xl mx-auto">
-            <div 
-              className="relative bg-gradient-to-br from-amber-100 to-amber-200 p-8 md:p-12 rounded-lg border-4 border-amber-600 transform rotate-[-1.5deg] transition-all duration-1000 animate-[unfurl_1s_ease-out]"
-              style={{ 
-                boxShadow: '0 10px 30px rgba(0,0,0,0.3), inset 0 0 20px rgba(245, 158, 11, 0.1)',
-                backgroundImage: 'radial-gradient(circle at 20% 30%, rgba(245, 158, 11, 0.1) 0%, transparent 50%)'
+        {/* Paper Animation Phases */}
+        {animationPhase > 0 && animationPhase < 4 && (
+          <div style={{
+            maxWidth: '32rem',
+            margin: '0 auto',
+            textAlign: 'center'
+          }}>
+            <img 
+              src={`/sidequests/cryptic-compliments/paper-${animationPhase}.png`}
+              alt={`Paper unfurling stage ${animationPhase}`}
+              style={{
+                maxWidth: '100%',
+                height: 'auto',
+                animation: 'unfurl 0.4s ease-out'
               }}
-            >
-              {/* Burn-in text effect */}
-              <div 
-                className="text-center animate-[burnIn_2s_ease-out_forwards]"
+            />
+          </div>
+        )}
+
+        {/* Final Parchment with Text (phase 4) */}
+        {animationPhase === 4 && selectedCompliment && (
+          <div style={{ maxWidth: '32rem', margin: '0 auto' }}>
+            <div style={{
+              position: 'relative',
+              textAlign: 'center'
+            }}>
+              <img 
+                src="/sidequests/cryptic-compliments/paper-4.png"
+                alt="Final parchment"
                 style={{
+                  maxWidth: '100%',
+                  height: 'auto'
+                }}
+              />
+              
+              {/* Text overlay on parchment */}
+              <div style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: '80%',
+                maxWidth: '400px'
+              }}>
+                {/* Burn-in text effect */}
+                <div style={{
+                  animation: isRevealed ? 'burnIn 2s ease-out forwards' : 'none',
                   fontFamily: "'Cinzel Decorative', serif",
                   color: '#451a03'
-                }}
-              >
-                <p 
-                  className="text-lg md:text-xl leading-relaxed mb-6"
-                  style={{
-                    textShadow: '1px 1px 2px rgba(245, 158, 11, 0.3)',
-                    fontSize: 'clamp(1.1rem, 2.5vw, 1.8rem)'
-                  }}
-                >
-                  "{selectedCompliment.text}"
-                </p>
-                
-                {/* Signature */}
-                {showSignature && (
-                  <div 
-                    className="text-right animate-[fadeIn_1s_ease-out]"
-                    style={{ fontFamily: "'Homemade Apple', cursive" }}
-                  >
-                    <p className="text-base md:text-lg text-amber-800">
-                      — {selectedCompliment.author}
-                    </p>
-                  </div>
-                )}
+                }}>
+                  <p style={{
+                    fontSize: 'clamp(0.9rem, 2.2vw, 1.4rem)',
+                    lineHeight: '1.6',
+                    marginBottom: '1.5rem',
+                    textShadow: '1px 1px 2px rgba(245, 158, 11, 0.3)'
+                  }}>
+                    "{selectedCompliment.text}"
+                  </p>
+                  
+                  {/* Signature */}
+                  {showSignature && (
+                    <div style={{
+                      textAlign: 'right',
+                      animation: 'fadeIn 1s ease-out',
+                      fontFamily: "'Homemade Apple', cursive"
+                    }}>
+                      <p style={{
+                        fontSize: 'clamp(0.8rem, 2vw, 1.1rem)',
+                        color: '#92400e'
+                      }}>
+                        — {selectedCompliment.author}
+                      </p>
+                    </div>
+                  )}
+                </div>
               </div>
-
-              {/* Decorative corners */}
-              <div className="absolute top-2 left-2 w-6 h-6 border-l-4 border-t-4 border-amber-600 opacity-60"></div>
-              <div className="absolute top-2 right-2 w-6 h-6 border-r-4 border-t-4 border-amber-600 opacity-60"></div>
-              <div className="absolute bottom-2 left-2 w-6 h-6 border-l-4 border-b-4 border-amber-600 opacity-60"></div>
-              <div className="absolute bottom-2 right-2 w-6 h-6 border-r-4 border-b-4 border-amber-600 opacity-60"></div>
             </div>
 
             {/* Action buttons */}
-            <div className="text-center mt-8 space-y-4">
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div style={{
+              textAlign: 'center',
+              marginTop: '2rem',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '1rem'
+            }}>
+              <div style={{
+                display: 'flex',
+                flexDirection: window.innerWidth < 640 ? 'column' : 'row',
+                gap: '1rem',
+                justifyContent: 'center'
+              }}>
                 <button
                   onClick={generateCompliment}
-                  className="px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-800 text-white font-bold rounded-lg border-2 border-purple-400 hover:from-purple-500 hover:to-purple-700 transition-all duration-200 transform hover:scale-105"
-                  style={{ 
+                  style={{
+                    padding: '0.75rem 1.5rem',
+                    background: 'linear-gradient(to right, #9333ea, #581c87)',
+                    color: 'white',
+                    fontWeight: 'bold',
+                    borderRadius: '0.5rem',
+                    border: '2px solid #a855f7',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
                     textShadow: '0 0 10px rgba(0,0,0,0.5)',
                     boxShadow: '0 0 20px rgba(168, 85, 247, 0.3)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'linear-gradient(to right, #7c3aed, #4c1d95)';
+                    e.currentTarget.style.transform = 'scale(1.05)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'linear-gradient(to right, #9333ea, #581c87)';
+                    e.currentTarget.style.transform = 'scale(1)';
                   }}
                 >
                   Another Compliment
@@ -227,7 +407,24 @@ export function CrypticCompliments() {
                 
                 <button
                   onClick={resetCompliment}
-                  className="px-6 py-3 bg-gradient-to-r from-gray-600 to-gray-800 text-white font-bold rounded-lg border-2 border-gray-400 hover:from-gray-500 hover:to-gray-700 transition-all duration-200 transform hover:scale-105"
+                  style={{
+                    padding: '0.75rem 1.5rem',
+                    background: 'linear-gradient(to right, #4b5563, #1f2937)',
+                    color: 'white',
+                    fontWeight: 'bold',
+                    borderRadius: '0.5rem',
+                    border: '2px solid #6b7280',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'linear-gradient(to right, #6b7280, #374151)';
+                    e.currentTarget.style.transform = 'scale(1.05)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'linear-gradient(to right, #4b5563, #1f2937)';
+                    e.currentTarget.style.transform = 'scale(1)';
+                  }}
                 >
                   Reset Gift
                 </button>
@@ -235,7 +432,24 @@ export function CrypticCompliments() {
               
               <button
                 onClick={() => window.history.back()}
-                className="px-6 py-3 bg-gradient-to-r from-red-600 to-red-800 text-white font-bold rounded-lg border-2 border-red-400 hover:from-red-500 hover:to-red-700 transition-all duration-200 transform hover:scale-105"
+                style={{
+                  padding: '0.75rem 1.5rem',
+                  background: 'linear-gradient(to right, #dc2626, #991b1b)',
+                  color: 'white',
+                  fontWeight: 'bold',
+                  borderRadius: '0.5rem',
+                  border: '2px solid #ef4444',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'linear-gradient(to right, #ef4444, #b91c1c)';
+                  e.currentTarget.style.transform = 'scale(1.05)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'linear-gradient(to right, #dc2626, #991b1b)';
+                  e.currentTarget.style.transform = 'scale(1)';
+                }}
               >
                 Return to Game
               </button>
@@ -244,45 +458,53 @@ export function CrypticCompliments() {
         )}
       </div>
 
-      <style jsx>{`
-        @keyframes unfurl {
-          0% { 
-            transform: scale(0.1) rotate(-1.5deg); 
-            opacity: 0; 
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          @keyframes unfurl {
+            0% { 
+              transform: scale(0.1) rotate(-1.5deg); 
+              opacity: 0; 
+            }
+            50% { 
+              transform: scale(1.1) rotate(-1.5deg); 
+              opacity: 0.8; 
+            }
+            100% { 
+              transform: scale(1) rotate(-1.5deg); 
+              opacity: 1; 
+            }
           }
-          50% { 
-            transform: scale(1.1) rotate(-1.5deg); 
-            opacity: 0.8; 
+          
+          @keyframes burnIn {
+            0% { 
+              opacity: 0;
+              filter: brightness(0) contrast(0);
+              text-shadow: 0 0 20px #f59e0b;
+            }
+            50% { 
+              opacity: 0.7;
+              filter: brightness(1.5) contrast(1.2);
+              text-shadow: 0 0 10px #f59e0b, 1px 1px 2px rgba(245, 158, 11, 0.3);
+            }
+            100% { 
+              opacity: 1;
+              filter: brightness(1) contrast(1);
+              text-shadow: 1px 1px 2px rgba(245, 158, 11, 0.3);
+            }
           }
-          100% { 
-            transform: scale(1) rotate(-1.5deg); 
-            opacity: 1; 
+          
+          @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
           }
-        }
-        
-        @keyframes burnIn {
-          0% { 
-            opacity: 0;
-            filter: brightness(0) contrast(0);
-            text-shadow: 0 0 20px #f59e0b;
+          
+          @keyframes pulse {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.8; }
           }
-          50% { 
-            opacity: 0.7;
-            filter: brightness(1.5) contrast(1.2);
-            text-shadow: 0 0 10px #f59e0b, 1px 1px 2px rgba(245, 158, 11, 0.3);
-          }
-          100% { 
-            opacity: 1;
-            filter: brightness(1) contrast(1);
-            text-shadow: 1px 1px 2px rgba(245, 158, 11, 0.3);
-          }
-        }
-        
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
+        `
+      }} />
     </div>
   );
-}
+};
+
