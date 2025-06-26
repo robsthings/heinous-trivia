@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'wouter';
-import { useSidequestAssets } from '../hooks/use-sidequest-assets';
 
 interface MonsterData {
   name: string;
@@ -11,15 +10,38 @@ interface MonsterData {
 }
 
 function generateMonster(): MonsterData {
-  const prefixes = ['Shadow', 'Blood', 'Cursed', 'Bone', 'Night', 'Dark', 'Spectral', 'Grim', 'Void', 'Phantom'];
-  const types = ['Wraith', 'Fiend', 'Beast', 'Ghoul', 'Demon', 'Specter', 'Revenant', 'Stalker', 'Horror', 'Entity'];
-  const origins = ['Ancient Cemetery', 'Abandoned Asylum', 'Haunted Forest', 'Cursed Mansion', 'Dark Dimension', 'Underground Catacombs'];
-  const weaknesses = ['Holy Water', 'Silver Cross', 'Iron Stakes', 'Salt Circles', 'Sunlight', 'Sacred Flames'];
+  const prefixes = [
+    'Shadow', 'Blood', 'Crimson', 'Dark', 'Void', 'Bone', 'Soul', 'Night', 'Death', 'Frost',
+    'Flame', 'Storm', 'Venomous', 'Cursed', 'Wicked', 'Haunted', 'Spectral', 'Ghastly', 'Dire', 'Savage'
+  ];
+  
+  const bases = [
+    'Stalker', 'Reaper', 'Fiend', 'Beast', 'Wraith', 'Demon', 'Horror', 'Terror', 'Nightmare', 'Phantom',
+    'Crawler', 'Lurker', 'Hunter', 'Predator', 'Slasher', 'Ripper', 'Howler', 'Screamer', 'Devourer', 'Destroyer'
+  ];
+  
+  const types = [
+    'Undead Abomination', 'Demonic Entity', 'Supernatural Predator', 'Cursed Spirit', 'Eldritch Horror',
+    'Vampiric Creature', 'Lycanthropic Beast', 'Spectral Apparition', 'Infernal Spawn', 'Cosmic Terror'
+  ];
+  
+  const weaknesses = [
+    'Holy Water', 'Silver', 'Sunlight', 'Salt Circles', 'Iron', 'Blessed Objects', 'Fire', 'Mirrors',
+    'Running Water', 'Pure Hearts', 'Ancient Symbols', 'Sacred Ground', 'Moonlight', 'Cold Iron'
+  ];
+  
+  const origins = [
+    'Ancient Cemetery', 'Haunted Forest', 'Abandoned Hospital', 'Cursed Mansion', 'Dark Swamp',
+    'Underground Catacombs', 'Forgotten Temple', 'Shadowy Alley', 'Misty Moor', 'Desolate Wasteland'
+  ];
+
+  const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
+  const base = bases[Math.floor(Math.random() * bases.length)];
   
   return {
-    name: `${prefixes[Math.floor(Math.random() * prefixes.length)]} ${types[Math.floor(Math.random() * types.length)]}`,
+    name: `${prefix} ${base}`,
     type: types[Math.floor(Math.random() * types.length)],
-    power: Math.floor(Math.random() * 100) + 1,
+    power: Math.floor(Math.random() * 90) + 10,
     weakness: weaknesses[Math.floor(Math.random() * weaknesses.length)],
     origin: origins[Math.floor(Math.random() * origins.length)]
   };
@@ -27,48 +49,30 @@ function generateMonster(): MonsterData {
 
 export function MonsterNameGenerator() {
   const [, setLocation] = useLocation();
-  const { data: assets } = useSidequestAssets('monster-name-generator');
   const [monster, setMonster] = useState<MonsterData | null>(null);
   const [isScanning, setIsScanning] = useState(false);
-  const [scanProgress, setScanProgress] = useState(0);
   const [showMonsterCard, setShowMonsterCard] = useState(false);
   const [showMonsterName, setShowMonsterName] = useState(false);
 
-  const startScan = () => {
-    console.log('Starting scan...');
+  const handleGenerate = () => {
     setIsScanning(true);
-    setScanProgress(0);
-    setMonster(null);
     setShowMonsterCard(false);
     setShowMonsterName(false);
-
-    const scanInterval = setInterval(() => {
-      setScanProgress(prev => {
-        console.log('Scan progress:', prev);
-        if (prev >= 100) {
-          clearInterval(scanInterval);
-          setIsScanning(false);
-          
-          // First show the monster card
-          const newMonster = generateMonster();
-          setMonster(newMonster);
-          setShowMonsterCard(true);
-          
-          // Then reveal the name after a short delay
-          setTimeout(() => {
-            setShowMonsterName(true);
-          }, 800);
-          
-          return 100;
-        }
-        return prev + 2;
-      });
-    }, 80);
+    
+    setTimeout(() => {
+      setShowMonsterCard(true);
+      
+      setTimeout(() => {
+        const newMonster = generateMonster();
+        setMonster(newMonster);
+        setShowMonsterName(true);
+        setIsScanning(false);
+      }, 2000);
+    }, 1000);
   };
 
   const resetGenerator = () => {
     setMonster(null);
-    setScanProgress(0);
     setIsScanning(false);
     setShowMonsterCard(false);
     setShowMonsterName(false);
@@ -87,183 +91,134 @@ export function MonsterNameGenerator() {
       <div 
         style={{
           minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        position: 'relative',
-        overflow: 'hidden',
-        background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)',
-        fontFamily: 'system-ui, -apple-system, sans-serif'
-      }}>
+          display: 'flex',
+          flexDirection: 'column',
+          position: 'relative',
+          overflow: 'hidden',
+          background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)',
+          fontFamily: 'system-ui, -apple-system, sans-serif'
+        }}>
+        
         {/* Background particles */}
         <div style={{ position: 'absolute', inset: '0', opacity: '0.2' }}>
           {[...Array(50)].map((_, i) => (
-          <div
-            key={i}
-            style={{
-              position: 'absolute',
-              width: '4px',
-              height: '4px',
-              backgroundColor: '#10b981',
-              borderRadius: '50%',
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animation: `pulse 2s infinite ${Math.random() * 3}s`
+            <div
+              key={i}
+              style={{
+                position: 'absolute',
+                width: '4px',
+                height: '4px',
+                backgroundColor: '#10b981',
+                borderRadius: '50%',
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animation: `pulse 2s infinite ${Math.random() * 3}s`
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Header */}
+        <div style={{ position: 'relative', zIndex: '10', textAlign: 'center', padding: '2rem 0' }}>
+          <h1 
+            style={{ 
+              fontSize: 'clamp(2rem, 8vw, 4rem)',
+              fontWeight: 'bold',
+              color: '#10b981',
+              textShadow: '0 0 20px rgba(16, 185, 129, 0.5)',
+              marginBottom: '1rem',
+              fontFamily: 'Creepster, system-ui, sans-serif'
             }}
-          />
-        ))}
-      </div>
-
-      {/* Header */}
-      <div style={{ position: 'relative', zIndex: '10', textAlign: 'center', padding: '2rem 0' }}>
-        <h1 
-          style={{ 
-            fontSize: 'clamp(2rem, 8vw, 4rem)',
-            fontWeight: 'bold',
-            color: '#10b981',
-            marginBottom: '1rem',
-            textShadow: '0 0 20px #10b981', 
-            fontFamily: 'Creepster, cursive' 
-          }}
-        >
-          MONSTER GENERATOR
-        </h1>
-        <p 
-          style={{ 
-            fontSize: '1.125rem',
-            color: '#d1d5db',
-            maxWidth: '32rem',
-            margin: '0 auto',
-            padding: '0 1rem'
-          }}
-        >
-          Dr. Heinous's experimental creature analysis system
-        </p>
-      </div>
-
-      {/* Dr. Heinous sprite */}
-      <div style={{ position: 'absolute', top: '2rem', left: '2rem', zIndex: '20' }}>
-        <img 
-          src="/heinous/presenting.png" 
-          alt="Dr. Heinous"
-          style={{ 
-            width: 'clamp(6rem, 10vw, 8rem)', 
-            height: 'clamp(6rem, 10vw, 8rem)',
-            imageRendering: 'pixelated' 
-          }}
-        />
-      </div>
-
-      {/* Main content */}
-      <div style={{ 
-        flex: '1', 
-        display: 'flex', 
-        flexDirection: 'column', 
-        alignItems: 'center', 
-        justifyContent: 'center', 
-        padding: '0 1rem', 
-        position: 'relative', 
-        zIndex: '10' 
-      }}>
-        
-        {/* Scanning overlay */}
-        {isScanning && (
-          <div style={{ 
-            position: 'absolute', 
-            inset: '0', 
-            backgroundColor: 'rgba(0,0,0,0.5)', 
-            display: 'flex', 
-            alignItems: 'center', 
-            justifyContent: 'center', 
-            zIndex: '20' 
+          >
+            Monster Name Generator
+          </h1>
+          
+          <p style={{ 
+            color: '#e2e8f0', 
+            fontSize: 'clamp(1rem, 4vw, 1.5rem)', 
+            marginBottom: '2rem',
+            textShadow: '0 0 10px rgba(0,0,0,0.8)'
           }}>
-            <div style={{ textAlign: 'center' }}>
-              <div style={{ 
-                fontSize: '4rem', 
-                color: '#10b981', 
-                marginBottom: '1rem',
-                animation: 'pulse 1s infinite'
-              }}>
-                SCANNING...
-              </div>
-              <div style={{ 
-                width: '16rem', 
-                height: '0.5rem', 
-                backgroundColor: '#374151', 
-                borderRadius: '9999px', 
-                overflow: 'hidden' 
-              }}>
-                <div 
-                  style={{ 
-                    height: '100%',
-                    backgroundColor: '#10b981',
-                    width: `${scanProgress}%`,
-                    boxShadow: '0 0 10px #10b981',
-                    transition: 'all 0.3s ease'
-                  }}
-                />
-              </div>
-              <div style={{ color: '#10b981', marginTop: '0.5rem' }}>{scanProgress}%</div>
-            </div>
+            Scan your specimen for cryptid classification
+          </p>
+        </div>
+
+        {/* Scanning Animation */}
+        {isScanning && (
+          <div style={{
+            position: 'absolute',
+            top: '0',
+            left: '0',
+            right: '0',
+            height: '4px',
+            background: 'linear-gradient(90deg, transparent, #10b981, transparent)',
+            animation: 'scanline 4s linear infinite',
+            zIndex: '20'
+          }}>
+            <style>
+              {`
+                @keyframes scanline {
+                  0% { transform: translateY(0vh); }
+                  100% { transform: translateY(100vh); }
+                }
+              `}
+            </style>
           </div>
         )}
 
-        {/* Full-width scan line animation */}
-        {isScanning && (
-          <div 
+        {/* Dr. Heinous Character */}
+        <div style={{
+          position: 'absolute',
+          top: '120px',
+          left: '50px',
+          zIndex: '15'
+        }}>
+          <img 
+            src="/heinous/presenting.png" 
+            alt="Dr. Heinous" 
             style={{
-              position: 'fixed',
-              left: '0',
-              right: '0',
-              height: '4px',
-              top: `${scanProgress}vh`,
-              background: 'linear-gradient(to right, transparent 0%, #10b981 20%, #22c55e 50%, #10b981 80%, transparent 100%)',
-              boxShadow: '0 0 30px #10b981, 0 0 60px #10b981',
-              filter: 'blur(0.5px)',
-              transition: 'top 0.1s linear',
-              zIndex: 9999,
-              pointerEvents: 'none'
+              width: '120px',
+              height: 'auto',
+              filter: 'drop-shadow(0 0 10px rgba(16, 185, 129, 0.3))'
             }}
           />
-        )}
-        
-        {/* Additional glow effect for scan line */}
-        {isScanning && (
-          <div 
-            style={{
-              position: 'fixed',
-              left: '0',
-              right: '0',
-              height: '12px',
-              top: `calc(${scanProgress}vh - 4px)`,
-              background: 'linear-gradient(to right, transparent 0%, rgba(16, 185, 129, 0.3) 20%, rgba(34, 197, 94, 0.5) 50%, rgba(16, 185, 129, 0.3) 80%, transparent 100%)',
-              boxShadow: '0 0 40px rgba(16, 185, 129, 0.4)',
-              transition: 'top 0.1s linear',
-              zIndex: 9998,
-              pointerEvents: 'none'
-            }}
-          />
-        )}
+          <div style={{
+            position: 'absolute',
+            top: '-60px',
+            left: '120px',
+            background: 'rgba(16, 185, 129, 0.9)',
+            color: 'white',
+            padding: '0.5rem 1rem',
+            borderRadius: '1rem',
+            fontSize: '0.875rem',
+            fontWeight: 'bold',
+            textShadow: '0 0 5px rgba(0,0,0,0.8)',
+            whiteSpace: 'nowrap'
+          }}>
+            Hold still. This won't hurt... much.
+          </div>
+        </div>
 
-        {/* Monster Card */}
-        {showMonsterCard && monster && (
+        {/* Main Content */}
+        <div style={{ 
+          flex: '1', 
+          display: 'flex', 
+          flexDirection: 'column', 
+          alignItems: 'center', 
+          justifyContent: 'center',
+          position: 'relative',
+          zIndex: '10',
+          padding: '2rem'
+        }}>
+          
+          {/* Monster Card Visual */}
           <div 
             style={{
-              backgroundColor: 'rgba(0, 0, 0, 0.4)',
-              backdropFilter: 'blur(10px)',
-              borderRadius: '1rem',
-              border: '2px solid #10b981',
-              padding: '2rem',
-              maxWidth: '24rem',
-              width: '100%',
-              margin: '0 1rem',
-              boxShadow: '0 0 30px rgba(16, 185, 129, 0.3)',
-              textAlign: 'center',
               opacity: showMonsterCard ? 1 : 0,
               transform: showMonsterCard ? 'scale(1)' : 'scale(0.8)',
               transition: 'all 0.5s ease'
             }}
           >
-            {/* Monster Card Visual */}
             <div style={{
               width: '200px',
               height: '260px',
@@ -327,75 +282,50 @@ export function MonsterNameGenerator() {
                 SPECIMEN DATA
               </div>
             </div>
-            <h2 
-              style={{ 
-                fontSize: 'clamp(1.5rem, 4vw, 2rem)',
+          </div>
+
+          {/* Monster Details */}
+          {monster && showMonsterName && (
+            <div style={{
+              backgroundColor: 'rgba(0, 0, 0, 0.6)',
+              padding: '2rem',
+              borderRadius: '1rem',
+              border: '2px solid #10b981',
+              boxShadow: '0 0 30px rgba(16, 185, 129, 0.3)',
+              textAlign: 'center',
+              maxWidth: '400px',
+              backdropFilter: 'blur(10px)'
+            }}>
+              <h2 style={{
+                fontSize: '1.5rem',
                 fontWeight: 'bold',
                 color: '#10b981',
-                marginBottom: '1.5rem',
-                textShadow: '0 0 10px #10b981',
-                fontFamily: 'Creepster, cursive'
-              }}
-            >
-              {showMonsterName ? monster.name : '???'}
-            </h2>
-            
-            <div style={{ 
-              display: 'grid', 
-              gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', 
-              gap: '1rem', 
-              marginTop: '1.5rem',
-              fontSize: '0.875rem'
-            }}>
-              <div style={{ 
-                padding: '0.5rem', 
-                backgroundColor: 'rgba(16, 185, 129, 0.1)', 
-                borderRadius: '0.5rem',
-                border: '1px solid rgba(16, 185, 129, 0.3)'
+                marginBottom: '1rem',
+                textShadow: '0 0 10px rgba(16, 185, 129, 0.5)'
               }}>
-                <div style={{ color: '#10b981', fontWeight: 'bold', marginBottom: '0.25rem' }}>TYPE</div>
-                <div style={{ color: '#d1d5db' }}>{monster.type}</div>
-              </div>
+                {monster.name}
+              </h2>
               
-              <div style={{ 
-                padding: '0.5rem', 
-                backgroundColor: 'rgba(16, 185, 129, 0.1)', 
-                borderRadius: '0.5rem',
-                border: '1px solid rgba(16, 185, 129, 0.3)'
-              }}>
-                <div style={{ color: '#10b981', fontWeight: 'bold', marginBottom: '0.25rem' }}>POWER</div>
-                <div style={{ color: '#d1d5db' }}>{monster.power}</div>
-              </div>
-              
-              <div style={{ 
-                padding: '0.5rem', 
-                backgroundColor: 'rgba(16, 185, 129, 0.1)', 
-                borderRadius: '0.5rem',
-                border: '1px solid rgba(16, 185, 129, 0.3)',
-                gridColumn: 'span 2'
-              }}>
-                <div style={{ color: '#10b981', fontWeight: 'bold', marginBottom: '0.25rem' }}>WEAKNESS</div>
-                <div style={{ color: '#d1d5db' }}>{monster.weakness}</div>
-              </div>
-              
-              <div style={{ 
-                padding: '0.5rem', 
-                backgroundColor: 'rgba(16, 185, 129, 0.1)', 
-                borderRadius: '0.5rem',
-                border: '1px solid rgba(16, 185, 129, 0.3)',
-                gridColumn: 'span 2'
-              }}>
-                <div style={{ color: '#10b981', fontWeight: 'bold', marginBottom: '0.25rem' }}>ORIGIN</div>
-                <div style={{ color: '#d1d5db' }}>{monster.origin}</div>
+              <div style={{ color: '#e2e8f0', fontSize: '0.875rem', textAlign: 'left' }}>
+                <p style={{ marginBottom: '0.5rem' }}>
+                  <strong style={{ color: '#10b981' }}>Type:</strong> {monster.type}
+                </p>
+                <p style={{ marginBottom: '0.5rem' }}>
+                  <strong style={{ color: '#10b981' }}>Power Level:</strong> {monster.power}/100
+                </p>
+                <p style={{ marginBottom: '0.5rem' }}>
+                  <strong style={{ color: '#10b981' }}>Weakness:</strong> {monster.weakness}
+                </p>
+                <p>
+                  <strong style={{ color: '#10b981' }}>Origin:</strong> {monster.origin}
+                </p>
               </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {/* Controls */}
-        <div style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
+          {/* Buttons */}
           <button
-            onClick={startScan}
+            onClick={handleGenerate}
             disabled={isScanning}
             style={{ 
               padding: '1rem 2rem',
@@ -410,7 +340,8 @@ export function MonsterNameGenerator() {
               textShadow: '0 0 10px rgba(0,0,0,0.5)',
               boxShadow: '0 0 20px rgba(16, 185, 129, 0.3)',
               transform: 'scale(1)',
-              transition: 'all 0.2s ease'
+              transition: 'all 0.2s ease',
+              marginTop: '2rem'
             }}
             onMouseEnter={(e) => {
               if (!isScanning) {
@@ -443,7 +374,8 @@ export function MonsterNameGenerator() {
                 textShadow: '0 0 10px rgba(0,0,0,0.5)',
                 boxShadow: '0 0 20px rgba(239, 68, 68, 0.3)',
                 transform: 'scale(1)',
-                transition: 'all 0.2s ease'
+                transition: 'all 0.2s ease',
+                marginTop: '1rem'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = 'scale(1.05)';
@@ -472,7 +404,8 @@ export function MonsterNameGenerator() {
               textShadow: '0 0 10px rgba(0,0,0,0.5)',
               boxShadow: '0 0 20px rgba(139, 92, 246, 0.3)',
               transform: 'scale(1)',
-              transition: 'all 0.2s ease'
+              transition: 'all 0.2s ease',
+              marginTop: '2rem'
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'scale(1.05)';
