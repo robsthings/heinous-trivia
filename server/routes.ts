@@ -2119,6 +2119,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
           'wire-blue-2': '/sidequests/wretched-wiring/wire-blue-2.png',
           'wire-blue-3': '/sidequests/wretched-wiring/wire-blue-3.png',
           'wire-blue-4': '/sidequests/wretched-wiring/wire-blue-4.png',
+          'node-red-left': '/sidequests/wretched-wiring/node-red-left.png',
+          'node-red-right': '/sidequests/wretched-wiring/node-red-right.png',
+          'node-blue-left': '/sidequests/wretched-wiring/node-blue-left.png',
+          'node-blue-right': '/sidequests/wretched-wiring/node-blue-right.png',
           'wretched-wiring-bg': '/sidequests/wretched-wiring/wretched-wiring-bg.png',
           'Pull-Chain': '/sidequests/wretched-wiring/Pull-Chain.png'
         },
@@ -2268,6 +2272,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
           'wire-blue-2': '/sidequests/wretched-wiring/wire-blue-2.png',
           'wire-blue-3': '/sidequests/wretched-wiring/wire-blue-3.png',
           'wire-blue-4': '/sidequests/wretched-wiring/wire-blue-4.png',
+          'node-red-left': '/sidequests/wretched-wiring/node-red-left.png',
+          'node-red-right': '/sidequests/wretched-wiring/node-red-right.png',
+          'node-blue-left': '/sidequests/wretched-wiring/node-blue-left.png',
+          'node-blue-right': '/sidequests/wretched-wiring/node-blue-right.png',
           'wretched-wiring-bg': '/sidequests/wretched-wiring/wretched-wiring-bg.png',
           'Pull-Chain': '/sidequests/wretched-wiring/Pull-Chain.png'
         },
