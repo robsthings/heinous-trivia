@@ -92,51 +92,18 @@ export function WretchedWiring() {
   const [gameState, setGameState] = useState<GameState>(INITIAL_GAME_STATE);
   const [draggedWire, setDraggedWire] = useState<string | null>(null);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
-  const [localAssets, setLocalAssets] = useState<Record<string, string>>({});
   const timerRef = useRef<number>(0);
-
-  // Load assets from server API
-  useEffect(() => {
-    const loadAssets = async () => {
-      try {
-        const response = await fetch('/api/sidequests/wretched-wiring/assets');
-        const assets = await response.json();
-        setLocalAssets(assets);
-      } catch (error) {
-        console.error('Failed to load wretched-wiring assets:', error);
-        // Direct fallback to public paths if API fails
-        setLocalAssets({
-          'wire-red-1': '/sidequests/wretched-wiring/wire-red-1.png',
-          'wire-red-2': '/sidequests/wretched-wiring/wire-red-2.png',
-          'wire-red-3': '/sidequests/wretched-wiring/wire-red-3.png',
-          'wire-red-4': '/sidequests/wretched-wiring/wire-red-4.png',
-          'wire-blue-1': '/sidequests/wretched-wiring/wire-blue-1.png',
-          'wire-blue-2': '/sidequests/wretched-wiring/wire-blue-2.png',
-          'wire-blue-3': '/sidequests/wretched-wiring/wire-blue-3.png',
-          'wire-blue-4': '/sidequests/wretched-wiring/wire-blue-4.png',
-          'node-red-left': '/sidequests/wretched-wiring/node-red-left.png',
-          'node-red-right': '/sidequests/wretched-wiring/node-red-right.png',
-          'node-blue-left': '/sidequests/wretched-wiring/node-blue-left.png',
-          'node-blue-right': '/sidequests/wretched-wiring/node-blue-right.png',
-          'wretched-wiring-bg': '/sidequests/wretched-wiring/wretched-wiring-bg.png',
-          'Pull-Chain': '/sidequests/wretched-wiring/Pull-Chain.png',
-          'certificate': '/sidequests/wretched-wiring/certificate.png'
-        });
-      }
-    };
-    loadAssets();
-  }, []);
   
-  // Get asset URL from loaded assets
+  // Simple direct asset path function
   const getAssetUrl = (assetName: string) => {
-    return localAssets[assetName] || `/sidequests/wretched-wiring/${assetName}`;
+    return `/sidequests/wretched-wiring/${assetName}`;
   };
 
   // Initialize random wires
   const initializeWires = () => {
     const wireAssets = [
-      'wire-red-1', 'wire-red-2', 'wire-red-3', 'wire-red-4',
-      'wire-blue-1', 'wire-blue-2', 'wire-blue-3', 'wire-blue-4'
+      'wire-red-1.png', 'wire-red-2.png', 'wire-red-3.png', 'wire-red-4.png',
+      'wire-blue-1.png', 'wire-blue-2.png', 'wire-blue-3.png', 'wire-blue-4.png'
     ];
 
     const shuffled = wireAssets.sort(() => Math.random() - 0.5);
@@ -219,8 +186,8 @@ export function WretchedWiring() {
     // Generate 1-5 new wires
     const numNewWires = Math.floor(Math.random() * 5) + 1;
     const wireAssets = [
-      'wire-red-1', 'wire-red-2', 'wire-red-3', 'wire-red-4',
-      'wire-blue-1', 'wire-blue-2', 'wire-blue-3', 'wire-blue-4'
+      'wire-red-1.png', 'wire-red-2.png', 'wire-red-3.png', 'wire-red-4.png',
+      'wire-blue-1.png', 'wire-blue-2.png', 'wire-blue-3.png', 'wire-blue-4.png'
     ];
 
     const newWires: Wire[] = [];
@@ -457,7 +424,7 @@ export function WretchedWiring() {
             margin: '0 auto'
           }}>
             <img 
-              src="/sidequests/wretched-wiring/certificate.png" 
+              src={getAssetUrl('certificate.png')} 
               alt="Certificate of Giving Up"
               style={{
                 width: '100%',
@@ -630,14 +597,14 @@ export function WretchedWiring() {
           }}>
             <div style={{ position: 'relative' }}>
               <img 
-                src={getAssetUrl('node-red-left')} 
+                src={getAssetUrl('node-red-left.png')} 
                 alt="Red Terminal Left" 
                 style={{ width: '4rem', height: '4rem' }}
               />
             </div>
             <div style={{ position: 'relative' }}>
               <img 
-                src={getAssetUrl('node-blue-left')} 
+                src={getAssetUrl('node-blue-left.png')} 
                 alt="Blue Terminal Left" 
                 style={{ width: '4rem', height: '4rem' }}
               />
@@ -656,14 +623,14 @@ export function WretchedWiring() {
           }}>
             <div style={{ position: 'relative' }}>
               <img 
-                src={getAssetUrl('node-red-right')} 
+                src={getAssetUrl('node-red-right.png')} 
                 alt="Red Terminal Right" 
                 style={{ width: '4rem', height: '4rem' }}
               />
             </div>
             <div style={{ position: 'relative' }}>
               <img 
-                src={getAssetUrl('node-blue-right')} 
+                src={getAssetUrl('node-blue-right.png')} 
                 alt="Blue Terminal Right" 
                 style={{ width: '4rem', height: '4rem' }}
               />
@@ -687,7 +654,7 @@ export function WretchedWiring() {
         >
           <div style={{ position: 'relative' }}>
             <img 
-              src={getAssetUrl('Pull-Chain')} 
+              src={getAssetUrl('Pull-Chain.png')} 
               alt="Pull Chain"
               style={{
                 width: '7rem',
