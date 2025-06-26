@@ -258,47 +258,7 @@ export function LabEscape() {
         </p>
       </div>
 
-      {/* Game Status */}
-      <div style={{
-        position: 'absolute',
-        top: '8rem',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        display: 'flex',
-        gap: '2rem',
-        zIndex: '20'
-      }}>
-        <div style={{
-          background: 'rgba(0, 0, 0, 0.7)',
-          border: '2px solid #10b981',
-          borderRadius: '0.5rem',
-          padding: '0.75rem 1.5rem',
-          backdropFilter: 'blur(10px)'
-        }}>
-          <span style={{
-            color: '#10b981',
-            fontWeight: 'bold',
-            fontSize: 'clamp(0.875rem, 2.5vw, 1rem)'
-          }}>
-            Correct: {gameState.correctAnswers}/3
-          </span>
-        </div>
-        <div style={{
-          background: 'rgba(0, 0, 0, 0.7)',
-          border: '2px solid #ef4444',
-          borderRadius: '0.5rem',
-          padding: '0.75rem 1.5rem',
-          backdropFilter: 'blur(10px)'
-        }}>
-          <span style={{
-            color: '#ef4444',
-            fontWeight: 'bold',
-            fontSize: 'clamp(0.875rem, 2.5vw, 1rem)'
-          }}>
-            Attempts: {gameState.attempts}/{gameState.maxAttempts}
-          </span>
-        </div>
-      </div>
+
 
       {/* Message Display */}
       {gameState.message && (
@@ -697,6 +657,48 @@ export function LabEscape() {
             </div>
           </div>
         )}
+      </div>
+
+      {/* Game Status - Bottom of Page */}
+      <div style={{
+        position: 'fixed',
+        bottom: '2rem',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        display: 'flex',
+        gap: '2rem',
+        zIndex: '20'
+      }}>
+        <div style={{
+          background: 'rgba(0, 0, 0, 0.7)',
+          border: '2px solid #10b981',
+          borderRadius: '0.5rem',
+          padding: '0.75rem 1.5rem',
+          backdropFilter: 'blur(10px)'
+        }}>
+          <span style={{
+            color: '#10b981',
+            fontWeight: 'bold',
+            fontSize: 'clamp(0.875rem, 2.5vw, 1rem)'
+          }}>
+            Correct: {gameState.correctAnswers}/3
+          </span>
+        </div>
+        <div style={{
+          background: 'rgba(0, 0, 0, 0.7)',
+          border: '2px solid #ef4444',
+          borderRadius: '0.5rem',
+          padding: '0.75rem 1.5rem',
+          backdropFilter: 'blur(10px)'
+        }}>
+          <span style={{
+            color: '#ef4444',
+            fontWeight: 'bold',
+            fontSize: 'clamp(0.875rem, 2.5vw, 1rem)'
+          }}>
+            Attempts: {gameState.attempts}/{gameState.maxAttempts}
+          </span>
+        </div>
       </div>
     </div>
   );
