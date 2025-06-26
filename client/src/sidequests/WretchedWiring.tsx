@@ -123,8 +123,8 @@ export function WretchedWiring() {
   // Initialize random wires
   const initializeWires = () => {
     const wireAssets = [
-      'wire-red-straight.png', 'wire-red-curved.png',
-      'wire-blue-straight.png', 'wire-blue-curved.png'
+      'wire-red-straight', 'wire-red-curved',
+      'wire-blue-straight', 'wire-blue-curved'
     ];
 
     const shuffled = wireAssets.sort(() => Math.random() - 0.5);
@@ -207,8 +207,8 @@ export function WretchedWiring() {
     // Generate 1-5 new wires
     const numNewWires = Math.floor(Math.random() * 5) + 1;
     const wireAssets = [
-      'wire-red-1.png', 'wire-red-2.png', 'wire-red-3.png',
-      'wire-blue-1.png', 'wire-blue-2.png', 'wire-blue-3.png'
+      'wire-red-straight', 'wire-red-curved',
+      'wire-blue-straight', 'wire-blue-curved'
     ];
 
     const newWires: Wire[] = [];
@@ -728,7 +728,7 @@ export function WretchedWiring() {
             }}
           >
             <img 
-              src={getAssetUrl(wire.assetName.replace('.png', ''))} 
+              src={getAssetUrl(wire.assetName)} 
               alt={`${wire.color} wire`}
               style={{ 
                 width: '100px', 
