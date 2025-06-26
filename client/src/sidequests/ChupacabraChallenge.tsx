@@ -442,7 +442,7 @@ export function ChupacabraChallenge() {
                   transition: 'all 0.6s ease',
                   transform: 'scale(1)',
                   backgroundImage: card.isFlipped || card.isMatched 
-                    ? `url(/sidequests/chupacabra-challenge/chupa-${card.cardNumber}.png)` 
+                    ? `url(/sidequests/chupacabra-challenge/card-${card.cardNumber}.png)` 
                     : 'url(/sidequests/chupacabra-challenge/card-back.png)',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
