@@ -31,6 +31,7 @@ const upload = multer({
 });
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  const server = createServer(app);
   // Specific route for launcher (without .html extension) - must come before static serving
   app.get("/launcher", (req, res) => {
     res.sendFile(path.resolve(process.cwd(), "client", "public", "launcher.html"));
@@ -2072,183 +2073,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
 
-  
-  // Get all sidequest assets
-  app.get('/api/sidequests/assets', async (req: Request, res: Response) => {
-    try {
-      // Return local assets for all sidequests
-      const localAssets = {
-        'curse-crafting': {
-          'potion-1': '/sidequests/curse-crafting/potion-1.png',
-          'potion-2': '/sidequests/curse-crafting/potion-2.png',
-          'potion-3': '/sidequests/curse-crafting/potion-3.png',
-          'potion-4': '/sidequests/curse-crafting/potion-4.png',
-          'potion-5': '/sidequests/curse-crafting/potion-5.png',
-          'potion-6': '/sidequests/curse-crafting/potion-6.png',
-          'potion-7': '/sidequests/curse-crafting/potion-7.png',
-          'potion-8': '/sidequests/curse-crafting/potion-8.png',
-          'potion-9': '/sidequests/curse-crafting/potion-9.png',
-          'potion-10': '/sidequests/curse-crafting/potion-10.png',
-          'potion-11': '/sidequests/curse-crafting/potion-11.png',
-          'potion-12': '/sidequests/curse-crafting/potion-12.png',
-          'potion-13': '/sidequests/curse-crafting/potion-13.png',
-          'potion-14': '/sidequests/curse-crafting/potion-14.png',
-          'potion-15': '/sidequests/curse-crafting/potion-15.png',
-          'potion-16': '/sidequests/curse-crafting/potion-16.png',
-          'potion-17': '/sidequests/curse-crafting/potion-17.png',
-          'potion-18': '/sidequests/curse-crafting/potion-18.png',
-          'cauldron': '/sidequests/curse-crafting/cauldron.png',
-          'scroll-bg': '/sidequests/curse-crafting/scroll-bg.png',
-          'signature': '/sidequests/curse-crafting/signature.gif'
-        },
-        'wack-a-chupacabra': {
-          'wack-bg': '/sidequests/wack-a-chupacabra/wack-bg.png',
-          'wack-hole': '/sidequests/wack-a-chupacabra/wack-hole.png',
-          'wack-moon': '/sidequests/wack-a-chupacabra/wack-moon.png',
-          'chupacabra-sprite': '/sidequests/wack-a-chupacabra/chupacabra-sprite.png',
-          'decoy-sprite': '/sidequests/wack-a-chupacabra/decoy-sprite.png',
-          'vial-sprite': '/sidequests/wack-a-chupacabra/vial-sprite.png',
-          'game-over-goo': '/sidequests/wack-a-chupacabra/game-over-goo.png'
-        },
-        'wretched-wiring': {
-          'wire-red-1': '/sidequests/wretched-wiring/wire-red-1.png',
-          'wire-red-2': '/sidequests/wretched-wiring/wire-red-2.png',
-          'wire-red-3': '/sidequests/wretched-wiring/wire-red-3.png',
-          'wire-red-4': '/sidequests/wretched-wiring/wire-red-4.png',
-          'wire-blue-1': '/sidequests/wretched-wiring/wire-blue-1.png',
-          'wire-blue-2': '/sidequests/wretched-wiring/wire-blue-2.png',
-          'wire-blue-3': '/sidequests/wretched-wiring/wire-blue-3.png',
-          'wire-blue-4': '/sidequests/wretched-wiring/wire-blue-4.png',
-          'node-red-left': '/sidequests/wretched-wiring/node-red-left.png',
-          'node-red-right': '/sidequests/wretched-wiring/node-red-right.png',
-          'node-blue-left': '/sidequests/wretched-wiring/node-blue-left.png',
-          'node-blue-right': '/sidequests/wretched-wiring/node-blue-right.png',
-          'wretched-wiring-bg': '/sidequests/wretched-wiring/wretched-wiring-bg.png',
-          'Pull-Chain': '/sidequests/wretched-wiring/Pull-Chain.png'
-        },
-        'monster-name-generator': {
-          'monster-card_1750900915378': '/sidequests/monster-name-generator/monster-card_1750900915378.png'
-        },
-        'chupacabra-challenge': {
-          'chupa-bg': '/sidequests/chupacabra-challenge/chupa-bg.png',
-          'chupa-bg-bars': '/sidequests/chupacabra-challenge/chupa-bg-bars.png',
-          'chupa-key': '/sidequests/chupacabra-challenge/chupa-key.png'
-        },
-        'cryptic-compliments': {
-          'scroll-bg': '/sidequests/cryptic-compliments/scroll-bg.png',
-          'signature': '/sidequests/cryptic-compliments/signature.gif'
-        },
-        'glory-grab': {
-          'vial-1-normal': '/sidequests/glory-grab/vial-1-normal.png',
-          'vial-2-normal': '/sidequests/glory-grab/vial-2-normal.png',
-          'vial-3-normal': '/sidequests/glory-grab/vial-3-normal.png',
-          'vial-4-normal': '/sidequests/glory-grab/vial-4-normal.png',
-          'vial-empty': '/sidequests/glory-grab/vial-empty.png'
-        },
-        'lab-escape': {
-          'confetti': '/sidequests/lab-escape/confetti.gif',
-          'door-prison': '/sidequests/lab-escape/door-prison.png'
-        }
-      };
-      
-      res.json({ assets: localAssets });
-    } catch (error) {
-      console.error('Failed to get sidequest assets:', error);
-      res.status(500).json({ error: 'Failed to retrieve sidequest assets' });
-    }
-  });
-  
-
-
-  // Get assets for a specific sidequest
-  app.get('/api/sidequests/:sidequestName/assets', async (req: Request, res: Response) => {
-    try {
-      const { sidequestName } = req.params;
-      
-      // Return local assets for specific sidequest
-      const localAssetsByGame = {
-        'curse-crafting': {
-          'potion-1': '/sidequests/curse-crafting/potion-1.png',
-          'potion-2': '/sidequests/curse-crafting/potion-2.png',
-          'potion-3': '/sidequests/curse-crafting/potion-3.png',
-          'potion-4': '/sidequests/curse-crafting/potion-4.png',
-          'potion-5': '/sidequests/curse-crafting/potion-5.png',
-          'potion-6': '/sidequests/curse-crafting/potion-6.png',
-          'potion-7': '/sidequests/curse-crafting/potion-7.png',
-          'potion-8': '/sidequests/curse-crafting/potion-8.png',
-          'potion-9': '/sidequests/curse-crafting/potion-9.png',
-          'potion-10': '/sidequests/curse-crafting/potion-10.png',
-          'potion-11': '/sidequests/curse-crafting/potion-11.png',
-          'potion-12': '/sidequests/curse-crafting/potion-12.png',
-          'potion-13': '/sidequests/curse-crafting/potion-13.png',
-          'potion-14': '/sidequests/curse-crafting/potion-14.png',
-          'potion-15': '/sidequests/curse-crafting/potion-15.png',
-          'potion-16': '/sidequests/curse-crafting/potion-16.png',
-          'potion-17': '/sidequests/curse-crafting/potion-17.png',
-          'potion-18': '/sidequests/curse-crafting/potion-18.png',
-          'cauldron': '/sidequests/curse-crafting/cauldron.png',
-          'scroll-bg': '/sidequests/curse-crafting/scroll-bg.png',
-          'signature': '/sidequests/curse-crafting/signature.gif'
-        },
-        'wack-a-chupacabra': {
-          'wack-bg': '/sidequests/wack-a-chupacabra/wack-bg.png',
-          'wack-hole': '/sidequests/wack-a-chupacabra/wack-hole.png',
-          'wack-moon': '/sidequests/wack-a-chupacabra/wack-moon.png',
-          'chupacabra-sprite': '/sidequests/wack-a-chupacabra/chupacabra-sprite.png',
-          'decoy-sprite': '/sidequests/wack-a-chupacabra/decoy-sprite.png',
-          'vial-sprite': '/sidequests/wack-a-chupacabra/vial-sprite.png',
-          'game-over-goo': '/sidequests/wack-a-chupacabra/game-over-goo.png'
-        },
-        'wretched-wiring': {
-          'wire-red-1': '/sidequests/wretched-wiring/wire-red-1.png',
-          'wire-red-2': '/sidequests/wretched-wiring/wire-red-2.png',
-          'wire-red-3': '/sidequests/wretched-wiring/wire-red-3.png',
-          'wire-red-4': '/sidequests/wretched-wiring/wire-red-4.png',
-          'wire-blue-1': '/sidequests/wretched-wiring/wire-blue-1.png',
-          'wire-blue-2': '/sidequests/wretched-wiring/wire-blue-2.png',
-          'wire-blue-3': '/sidequests/wretched-wiring/wire-blue-3.png',
-          'wire-blue-4': '/sidequests/wretched-wiring/wire-blue-4.png',
-          'node-red-left': '/sidequests/wretched-wiring/node-red-left.png',
-          'node-red-right': '/sidequests/wretched-wiring/node-red-right.png',
-          'node-blue-left': '/sidequests/wretched-wiring/node-blue-left.png',
-          'node-blue-right': '/sidequests/wretched-wiring/node-blue-right.png',
-          'wretched-wiring-bg': '/sidequests/wretched-wiring/wretched-wiring-bg.png',
-          'Pull-Chain': '/sidequests/wretched-wiring/Pull-Chain.png',
-          'certificate': '/sidequests/wretched-wiring/certificate.png'
-        },
-        'monster-name-generator': {
-          'monster-card_1750900915378': '/sidequests/monster-name-generator/monster-card_1750900915378.png'
-        },
-        'chupacabra-challenge': {
-          'chupa-bg': '/sidequests/chupacabra-challenge/chupa-bg.png',
-          'chupa-bg-bars': '/sidequests/chupacabra-challenge/chupa-bg-bars.png',
-          'chupa-key': '/sidequests/chupacabra-challenge/chupa-key.png'
-        },
-        'cryptic-compliments': {
-          'scroll-bg': '/sidequests/cryptic-compliments/scroll-bg.png',
-          'signature': '/sidequests/cryptic-compliments/signature.gif'
-        },
-        'glory-grab': {
-          'vial-1-normal': '/sidequests/glory-grab/vial-1-normal.png',
-          'vial-2-normal': '/sidequests/glory-grab/vial-2-normal.png',
-          'vial-3-normal': '/sidequests/glory-grab/vial-3-normal.png',
-          'vial-4-normal': '/sidequests/glory-grab/vial-4-normal.png',
-          'vial-empty': '/sidequests/glory-grab/vial-empty.png'
-        },
-        'lab-escape': {
-          'confetti': '/sidequests/lab-escape/confetti.gif',
-          'door-prison': '/sidequests/lab-escape/door-prison.png'
-        }
-      };
-      
-      const sidequestAssets = localAssetsByGame[sidequestName] || {};
-      res.json({ assets: sidequestAssets });
-    } catch (error) {
-      console.error(`Failed to get assets for ${req.params.sidequestName}:`, error);
-      res.status(500).json({ error: 'Failed to retrieve sidequest assets' });
-    }
-  });
-
   // Sidequest API endpoints
   app.get("/api/sidequests", async (req, res) => {
     try {
@@ -2284,58 +2108,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.post("/api/sidequests/:sidequestId", async (req, res) => {
+  app.post("/api/sidequests/progress", async (req, res) => {
     try {
-      const { sidequestId } = req.params;
-      const sidequestData = {
-        ...req.body,
-        id: sidequestId,
-        createdAt: req.body.createdAt || new Date().toISOString()
-      };
-      
-      await FirebaseService.saveSidequest(sidequestId, sidequestData);
-      res.json({ success: true, message: "Sidequest saved successfully" });
-    } catch (error) {
-      console.error("Error saving sidequest:", error);
-      res.status(500).json({ error: "Failed to save sidequest" });
-    }
-  });
-
-  app.post("/api/sidequests/:sidequestId/progress", async (req, res) => {
-    try {
-      const { sidequestId } = req.params;
-      const progressData = {
-        sidequestId,
-        ...req.body,
-        createdAt: req.body.createdAt || new Date().toISOString()
-      };
-      
+      const progressData = req.body;
       await FirebaseService.saveSidequestProgress(progressData);
-      res.json({ success: true, message: "Progress saved successfully" });
+      res.json({ success: true });
     } catch (error) {
       console.error("Error saving sidequest progress:", error);
       res.status(500).json({ error: "Failed to save progress" });
     }
   });
 
-  app.get("/api/sidequests/:sidequestId/progress/:hauntId/:sessionId", async (req, res) => {
+  app.get("/api/sidequests/:sidequestId/progress/:sessionId", async (req, res) => {
     try {
-      const { sidequestId, hauntId, sessionId } = req.params;
-      const progress = await FirebaseService.getSidequestProgress(hauntId, sidequestId, sessionId);
+      const { sidequestId, sessionId } = req.params;
+      const { hauntId } = req.query;
       
-      if (!progress) {
-        return res.status(404).json({ error: "Progress not found" });
-      }
+      const progress = await FirebaseService.getSidequestProgress(
+        hauntId as string, 
+        sidequestId, 
+        sessionId
+      );
       
-      res.json(progress);
+      res.json(progress || {});
     } catch (error) {
       console.error("Error fetching sidequest progress:", error);
       res.status(500).json({ error: "Failed to fetch progress" });
     }
   });
 
-  // 📘 fieldGlossary.json compliance: Legacy non-compliant route removed
-  // Use /api/trivia-questions/:haunt instead (fieldGlossary.json compliant)
-
-  return createServer(app);
+  return server;
 }
