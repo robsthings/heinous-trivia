@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Link, useLocation } from 'wouter';
 import { useQuery } from '@tanstack/react-query';
+import { useSidequestAssets } from '../hooks/use-sidequest-assets';
 
 interface GameState {
   score: number;
@@ -24,6 +25,8 @@ export function WackAChupacabra() {
     currentSprite: null,
     isPlaying: false
   });
+
+  const { data: assets = {} } = useSidequestAssets('wack-a-chupacabra');
 
   const [spriteVisible, setSpriteVisible] = useState(false);
   const gameTimeoutRef = useRef<NodeJS.Timeout | null>(null);

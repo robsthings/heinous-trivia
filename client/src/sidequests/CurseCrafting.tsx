@@ -126,6 +126,8 @@ export function CurseCrafting() {
   const [gamePhase, setGamePhase] = useState<'selecting' | 'brewing' | 'revealing'>('selecting');
   const [generatedCurse, setGeneratedCurse] = useState<GeneratedCurse | null>(null);
 
+  const { data: assets = {} } = useSidequestAssets('curse-crafting');
+
   // Create ingredients with existing asset fallbacks
   const ingredients = ingredientData.map(item => ({
     ...item,
@@ -223,7 +225,7 @@ export function CurseCrafting() {
     <div 
       className="min-h-screen relative overflow-hidden"
       style={{
-        backgroundImage: 'url(/sidequests/curse-crafting/cursed-bg.png)',
+        backgroundImage: assets['cursed-bg'] ? `url(${assets['cursed-bg']})` : 'url(/backgrounds/lab-dark-blue.png)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat'
