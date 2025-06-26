@@ -126,20 +126,17 @@ export function CurseCrafting() {
   const [gamePhase, setGamePhase] = useState<'selecting' | 'brewing' | 'revealing'>('selecting');
   const [generatedCurse, setGeneratedCurse] = useState<GeneratedCurse | null>(null);
 
-  // Load assets and initialize ingredients
-  const { data: assets } = useSidequestAssets('curse-crafting');
-  
-  // Create ingredients with proper asset URLs
+  // Create ingredients with existing asset fallbacks
   const ingredients = ingredientData.map(item => ({
     ...item,
-    icon: assets?.[item.id] || `/heinous/gift.png` // Fallback to existing asset
+    icon: `/heinous/gift.png` // Use existing gift asset as fallback
   }));
 
   // Initialize with 8 random ingredients on component mount
   useEffect(() => {
     const shuffled = [...ingredients].sort(() => Math.random() - 0.5);
     setAvailableIngredients(shuffled.slice(0, 8));
-  }, [assets]);
+  }, []);
 
   const handleIngredientClick = (ingredient: Ingredient) => {
     if (selectedIngredients.find(i => i.id === ingredient.id)) {
@@ -312,7 +309,7 @@ export function CurseCrafting() {
           onDrop={handleDrop}
         >
           <img 
-            src="/sidequests/curse-crafting/cursed-cauldron.png"
+            src="/heinous/presenting.png"
             alt="Cursed Cauldron"
             className="w-48 h-48 sm:w-72 sm:h-72 object-contain"
           />
@@ -384,7 +381,7 @@ export function CurseCrafting() {
             {/* Scroll Image */}
             <img 
               id="curse-scroll"
-              src="/sidequests/curse-crafting/scroll-1.png"
+              src="/backgrounds/lab-dark-blue.png"
               alt="Cursed Scroll"
               className="w-80 h-96 sm:w-96 sm:h-[28rem] object-contain mx-auto relative z-10"
             />
