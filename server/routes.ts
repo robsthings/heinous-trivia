@@ -2071,7 +2071,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // ===== SIDEQUEST ASSETS ENDPOINTS =====
+
   
   // Get all sidequest assets
   app.get('/api/sidequests/assets', async (req: Request, res: Response) => {
