@@ -987,8 +987,20 @@ export function WretchedWiring() {
 
       {/* Title Header */}
       {gameState.isPlaying && (
-        <div className="absolute top-6 left-1/2 transform -translate-x-1/2 z-20">
-          <h1 className="text-3xl font-bold text-yellow-400 drop-shadow-lg" style={{ fontFamily: 'Courier, monospace' }}>
+        <div style={{
+          position: 'absolute',
+          top: '1.5rem',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 20
+        }}>
+          <h1 style={{
+            fontSize: '1.875rem',
+            fontWeight: 'bold',
+            color: '#facc15',
+            filter: 'drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1))',
+            fontFamily: 'Courier, monospace'
+          }}>
             WRETCHED WIRING
           </h1>
         </div>
