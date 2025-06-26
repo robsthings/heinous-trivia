@@ -192,8 +192,8 @@ export function WretchedWiring() {
     // Generate 1-5 new wires
     const numNewWires = Math.floor(Math.random() * 5) + 1;
     const wireAssets = [
-      'wire-red-straight', 'wire-red-curved',
-      'wire-blue-straight', 'wire-blue-curved'
+      'wire-red-1', 'wire-red-2', 'wire-red-3', 'wire-red-4',
+      'wire-blue-1', 'wire-blue-2', 'wire-blue-3', 'wire-blue-4'
     ];
 
     const newWires: Wire[] = [];
@@ -394,7 +394,7 @@ export function WretchedWiring() {
           left: 0,
           right: 0,
           bottom: 0,
-          background: assets['wretched-wiring-bg'] ? `url(${assets['wretched-wiring-bg']})` : 'linear-gradient(135deg, #1f2937 0%, #374151 50%, #111827 100%)',
+          backgroundImage: assets['wretched-wiring-bg'] ? `url(${assets['wretched-wiring-bg']})` : 'linear-gradient(135deg, #1f2937 0%, #374151 50%, #111827 100%)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
