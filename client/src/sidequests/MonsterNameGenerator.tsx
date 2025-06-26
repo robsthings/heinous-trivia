@@ -17,7 +17,7 @@ function MonsterNameGeneratorCore({ showHeinous = true }: MonsterNameGeneratorPr
   const [isFlashing, setIsFlashing] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
   
-  // Get Firebase assets for monster name generator
+
 
 
   const adjectives = [
