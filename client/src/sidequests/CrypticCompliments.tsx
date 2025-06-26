@@ -176,35 +176,39 @@ export const CrypticCompliments: React.FC = () => {
         </p>
       </div>
 
-      {/* Dr. Heinous */}
-      <div style={{
-        position: 'absolute',
-        top: '4rem',
-        right: '2rem',
-        zIndex: '20'
-      }}>
-        <img 
-          src="/sidequests/cryptic-compliments/gift.png" 
-          alt="Dr. Heinous with Gift" 
-          style={{
-            width: 'clamp(5rem, 12vw, 6rem)',
-            height: 'clamp(5rem, 12vw, 6rem)'
-          }}
-        />
+      {/* Dr. Heinous - only show when gift box is displayed */}
+      {animationPhase === 0 && (
         <div style={{
           position: 'absolute',
-          left: '-8rem',
-          top: '0.5rem',
-          backgroundColor: 'rgba(0, 0, 0, 0.8)',
-          color: '#a855f7',
-          fontSize: '0.875rem',
-          padding: '0.5rem 0.75rem',
-          borderRadius: '0.5rem',
-          border: '1px solid #a855f7'
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -60%)',
+          zIndex: '20',
+          textAlign: 'center'
         }}>
-          A gift from the darkness...
+          <img 
+            src="/sidequests/cryptic-compliments/gift.png" 
+            alt="Dr. Heinous with Gift" 
+            style={{
+              width: 'clamp(8rem, 20vw, 12rem)',
+              height: 'clamp(8rem, 20vw, 12rem)',
+              marginBottom: '1rem'
+            }}
+          />
+          <div style={{
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            color: '#a855f7',
+            fontSize: '1rem',
+            padding: '0.75rem 1rem',
+            borderRadius: '0.5rem',
+            border: '1px solid #a855f7',
+            maxWidth: '250px',
+            margin: '0 auto'
+          }}>
+            A gift from the darkness...
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Main content */}
       <div style={{
@@ -218,33 +222,41 @@ export const CrypticCompliments: React.FC = () => {
         zIndex: '10'
       }}>
         
-        {/* Gift Box or Paper Animation */}
+        {/* Gift Box positioned relative to Dr. Heinous hand */}
         {animationPhase === 0 && (
-          <div style={{ textAlign: 'center' }}>
+          <div style={{ 
+            textAlign: 'center',
+            position: 'relative',
+            marginTop: '3rem'
+          }}>
+            {/* Position emoji gift near Dr. Heinous's hand */}
             <div 
               onClick={generateCompliment}
               style={{
-                width: 'clamp(8rem, 20vw, 10rem)',
-                height: 'clamp(8rem, 20vw, 10rem)',
-                margin: '0 auto 2rem auto',
+                position: 'absolute',
+                top: '-12rem',
+                left: '50%',
+                transform: 'translateX(-30%)', // Offset to align with hand position
+                width: 'clamp(4rem, 10vw, 6rem)',
+                height: 'clamp(4rem, 10vw, 6rem)',
                 cursor: 'pointer',
                 transition: 'all 0.3s ease',
-                transform: 'scale(1)',
+                zIndex: '30'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'translateX(-30%) scale(1.1)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'translateX(-30%) scale(1)'}
             >
               <div style={{
                 width: '100%',
                 height: '100%',
                 background: 'linear-gradient(135deg, #9333ea 0%, #581c87 100%)',
                 borderRadius: '0.5rem',
-                border: '4px solid #a855f7',
+                border: '3px solid #a855f7',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: 'clamp(3rem, 8vw, 4rem)',
-                boxShadow: '0 0 30px rgba(168, 85, 247, 0.5)'
+                fontSize: 'clamp(2rem, 6vw, 3rem)',
+                boxShadow: '0 0 30px rgba(168, 85, 247, 0.7)'
               }}>
                 🎁
               </div>
@@ -253,7 +265,8 @@ export const CrypticCompliments: React.FC = () => {
             <h2 style={{
               fontSize: '1.5rem',
               color: '#d8b4fe',
-              marginBottom: '1rem'
+              marginBottom: '1rem',
+              marginTop: '1rem'
             }}>
               A mysterious gift awaits...
             </h2>
@@ -328,8 +341,9 @@ export const CrypticCompliments: React.FC = () => {
                 top: '50%',
                 left: '50%',
                 transform: 'translate(-50%, -50%)',
-                width: '80%',
-                maxWidth: '400px'
+                width: '70%',
+                maxWidth: '350px',
+                padding: '0 1rem'
               }}>
                 {/* Burn-in text effect */}
                 <div style={{
