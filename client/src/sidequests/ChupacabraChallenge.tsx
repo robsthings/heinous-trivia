@@ -437,8 +437,11 @@ export function ChupacabraChallenge() {
                   transition: 'all 0.6s ease',
                   transform: 'scale(1)',
                   background: card.isFlipped || card.isMatched 
-                    ? 'linear-gradient(to bottom right, #7c3aed, #5b21b6)' 
+                    ? `url(/sidequests/chupacabra-challenge/chupa-${card.cardNumber}.png)` 
                     : 'linear-gradient(to bottom right, #374151, #111827)',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  backgroundRepeat: 'no-repeat',
                   border: card.isFlipped || card.isMatched ? '2px solid #a855f7' : '2px solid #6b7280',
                   display: 'flex',
                   alignItems: 'center',
@@ -465,38 +468,25 @@ export function ChupacabraChallenge() {
                 }}
                 onClick={() => flipCard(card.id)}
               >
-                <div style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}>
-                  {card.isFlipped || card.isMatched ? (
-                    <img 
-                      src={`/sidequests/chupacabra-challenge/card-${card.cardNumber}.png`}
-                      alt={`Card ${card.cardNumber}`}
-                      style={{
-                        width: '80%',
-                        height: '80%',
-                        objectFit: 'contain'
-                      }}
-                    />
-                  ) : (
-                    <img 
-                      src="/sidequests/chupacabra-challenge/card-back.png"
-                      alt="Card Back"
-                      style={{
-                        width: '80%',
-                        height: '80%',
-                        objectFit: 'contain'
-                      }}
-                    />
-                  )}
-                </div>
+                {!card.isFlipped && !card.isMatched && (
+                  <div style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                    <span style={{
+                      fontSize: 'clamp(1.5rem, 5vw, 2.5rem)',
+                      color: '#9ca3af',
+                      fontWeight: 'bold',
+                      textShadow: '0 2px 4px rgba(0,0,0,0.5)'
+                    }}>?</span>
+                  </div>
+                )}
               </div>
             ))}
           </div>
