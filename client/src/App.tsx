@@ -22,18 +22,14 @@ import Info from "@/pages/info";
 import NotFound from "@/pages/not-found";
 import { TestProgressPage } from "@/pages/test-progress";
 import { TestProgressThemesPage } from "@/pages/test-progress-themes";
-import { MonsterNameGenerator } from "@/pages/sidequests/MonsterNameGenerator";
-import { GloryGrab } from "@/pages/sidequests/GloryGrab";
-import { CrypticCompliments } from "@/pages/sidequests/CrypticCompliments";
-import ChupacabraChallenge from "@/pages/ChupacabraChallenge";
-import { NecromancersGambit } from "@/pages/sidequests/NecromancersGambit";
-import { SpectralMemory } from "@/pages/sidequests/SpectralMemory";
-import { PhantomsPuzzle } from "@/pages/sidequests/PhantomsPuzzle";
-import { WretchedWiring } from "@/pages/sidequests/WretchedWiring";
+import { MonsterNameGenerator } from "@/sidequests/MonsterNameGenerator";
+import { GloryGrab } from "@/sidequests/GloryGrab";
+import { CrypticCompliments } from "@/sidequests/CrypticCompliments";
+import { ChupacabraChallenge } from "@/sidequests/ChupacabraChallenge";
+import { WretchedWiring } from "@/sidequests/WretchedWiring";
 import { CurseCrafting } from "@/sidequests/CurseCrafting";
 import { WackAChupacabra } from "@/sidequests/WackAChupacabra";
-import { LabEscape } from "@/pages/lab-escape";
-import { FaceTheChupacabra } from "@/components/sidequests/face-the-chupacabra";
+import { LabEscape } from "@/sidequests/LabEscape";
 import HauntTest from "@/pages/haunt-test";
 
 
@@ -62,16 +58,11 @@ function Router() {
       <Route path="/sidequest/monster-name-generator" component={MonsterNameGenerator} />
       <Route path="/sidequest/glory-grab" component={GloryGrab} />
       <Route path="/sidequest/cryptic-compliments" component={CrypticCompliments} />
-
       <Route path="/sidequest/chupacabra-challenge" component={ChupacabraChallenge} />
-      <Route path="/sidequest/necromancers-gambit" component={NecromancersGambit} />
-      <Route path="/sidequest/spectral-memory" component={SpectralMemory} />
-      <Route path="/sidequest/phantoms-puzzle" component={PhantomsPuzzle} />
       <Route path="/sidequest/wretched-wiring" component={WretchedWiring} />
       <Route path="/sidequest/curse-crafting" component={CurseCrafting} />
       <Route path="/sidequest/wack-a-chupacabra" component={WackAChupacabra} />
       <Route path="/sidequest/lab-escape" component={LabEscape} />
-      <Route path="/sidequest/face-the-chupacabra" component={FaceTheChupacabra} />
 
       <Route component={NotFound} />
     </Switch>
