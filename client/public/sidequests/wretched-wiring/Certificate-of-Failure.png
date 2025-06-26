@@ -1,0 +1,15 @@
+<svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="certGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fef3c7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect x="10" y="10" width="380" height="280" fill="url(#certGradient)" rx="10" stroke="#92400e" stroke-width="3"/>
+  <text x="200" y="50" text-anchor="middle" fill="#92400e" font-size="20" font-weight="bold">CERTIFICATE OF FAILURE</text>
+  <text x="200" y="100" text-anchor="middle" fill="#1f2937" font-size="14">Awarded to:</text>
+  <text x="200" y="130" text-anchor="middle" fill="#1f2937" font-size="16" font-weight="bold">WRETCHED WIRE WARRIOR</text>
+  <text x="200" y="170" text-anchor="middle" fill="#1f2937" font-size="12">For outstanding achievement in</text>
+  <text x="200" y="190" text-anchor="middle" fill="#1f2937" font-size="12">Making Everything Worse</text>
+  <text x="200" y="240" text-anchor="middle" fill="#92400e" font-size="10">Dr. Heinous, Chief of Chaos</text>
+</svg>
