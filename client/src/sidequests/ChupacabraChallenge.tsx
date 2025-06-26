@@ -444,7 +444,7 @@ export function ChupacabraChallenge() {
                   backgroundImage: card.isFlipped || card.isMatched 
                     ? `url(/sidequests/chupacabra-challenge/card-${card.cardNumber}.png)` 
                     : 'url(/sidequests/chupacabra-challenge/card-back.png)',
-                  backgroundSize: 'contain',
+                  backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   backgroundRepeat: 'no-repeat',
                   border: 'none',
