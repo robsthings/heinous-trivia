@@ -96,9 +96,13 @@ export function WretchedWiring() {
 
   const { data: assets = {}, isLoading: assetsLoading } = useSidequestAssets('wretched-wiring');
   
-  // Asset helper function - directly use loaded assets
+  // Direct asset URL lookup
   const getAssetUrl = (assetName: string) => {
-    return assets[assetName] || `/sidequests/wretched-wiring/${assetName}.png`;
+    const url = assets[assetName];
+    if (!url) {
+      console.log(`Asset ${assetName} not found in:`, assets);
+    }
+    return url;
   };
 
   // Initialize random wires
