@@ -183,19 +183,23 @@ export function ChupacabraChallenge() {
                 matches: newMatches
               };
             } else {
-              // No match
-              const updatedCards = current.cards.map(card =>
-                newFlippedCards.includes(card.id)
-                  ? { ...card, isFlipped: false }
-                  : card
-              );
-              
+              // No match - delay before flipping back
               setReactionMessage(getRandomReaction('mismatch'));
+              
+              setTimeout(() => {
+                setGameState(prevState => ({
+                  ...prevState,
+                  cards: prevState.cards.map(card =>
+                    newFlippedCards.includes(card.id)
+                      ? { ...card, isFlipped: false }
+                      : card
+                  ),
+                  flippedCards: []
+                }));
+              }, 1000);
               
               return {
                 ...current,
-                cards: updatedCards,
-                flippedCards: [],
                 attempts: current.attempts + 1
               };
             }
@@ -437,7 +441,7 @@ export function ChupacabraChallenge() {
                   cursor: 'pointer',
                   transition: 'all 0.6s ease',
                   transform: 'scale(1)',
-                  background: card.isFlipped || card.isMatched 
+                  backgroundImage: card.isFlipped || card.isMatched 
                     ? `url(/sidequests/chupacabra-challenge/chupa-${card.cardNumber}.png)` 
                     : 'url(/sidequests/chupacabra-challenge/card-back.png)',
                   backgroundSize: 'cover',
