@@ -225,7 +225,7 @@ export function CurseCrafting() {
     <div 
       className="min-h-screen relative overflow-hidden"
       style={{
-        backgroundImage: assets['cursed-bg'] ? `url(${assets['cursed-bg']})` : 'url(/backgrounds/lab-dark-blue.png)',
+        backgroundImage: 'url(/sidequests/curse-crafting/cursed-bg.png)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat'

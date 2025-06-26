@@ -18,7 +18,7 @@ function MonsterNameGeneratorCore({ showHeinous = true }: MonsterNameGeneratorPr
   const cardRef = useRef<HTMLDivElement>(null);
   
   // Get Firebase assets for monster name generator
-  const { data: assets } = useSidequestAssets('monster-name-generator');
+
 
   const adjectives = [
     "Gloopy", "Cryptic", "Snarling", "Chittering", "Pustulent", 
@@ -296,17 +296,10 @@ function MonsterNameGeneratorCore({ showHeinous = true }: MonsterNameGeneratorPr
               maxWidth: 'clamp(20rem, 50vw, 28rem)',
               aspectRatio: '3/4',
               margin: '0 auto',
-              ...(assets?.['monster-card_1750900915378'] ? {
-                backgroundImage: `url(${assets['monster-card_1750900915378']})`,
-                backgroundSize: 'contain',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-              } : {
-                backgroundImage: 'url(/sidequests/monster-name-generator/monster-card_1750900915378.png)',
-                backgroundSize: 'contain',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-              }),
+              backgroundImage: `url('/sidequests/monster-name-generator/monster-card.png')`,
+              backgroundSize: 'contain',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center'

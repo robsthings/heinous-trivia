@@ -26,7 +26,7 @@ export function WackAChupacabra() {
     isPlaying: false
   });
 
-  const { data: assets = {} } = useSidequestAssets('wack-a-chupacabra');
+
 
   const [spriteVisible, setSpriteVisible] = useState(false);
   const gameTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -170,7 +170,7 @@ export function WackAChupacabra() {
       <div 
         className="fixed inset-0 bg-cover bg-center bg-no-repeat"
         style={{ 
-          backgroundImage: assets['wack-bg'] ? `url(${assets['wack-bg']})` : 'url(/backgrounds/lab-dark-blue.png)'
+          backgroundImage: 'url(/sidequests/wack-a-chupacabra/wack-bg.png)'
         }}
       />
 
