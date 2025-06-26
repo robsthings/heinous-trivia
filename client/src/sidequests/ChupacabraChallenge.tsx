@@ -425,8 +425,8 @@ export function ChupacabraChallenge() {
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: 'clamp(0.75rem, 3vw, 1.5rem)',
-            maxWidth: 'clamp(24rem, 75vw, 36rem)',
+            gap: 'clamp(0.25rem, 1vw, 0.5rem)',
+            maxWidth: 'clamp(28rem, 85vw, 42rem)',
             margin: '0 auto',
             transition: 'all 0.3s ease',
             animation: isPanicMode ? 'pulse 1s infinite' : 'none'
@@ -435,8 +435,8 @@ export function ChupacabraChallenge() {
               <div
                 key={card.id}
                 style={{
-                  width: 'clamp(5.2rem, 15.6vw, 7.8rem)',
-                  height: 'clamp(7.28rem, 21.84vw, 10.92rem)',
+                  width: 'clamp(6.5rem, 19vw, 9.5rem)',
+                  height: 'clamp(9.1rem, 26.6vw, 13.3rem)',
                   borderRadius: '0.5rem',
                   cursor: 'pointer',
                   transition: 'all 0.6s ease',
