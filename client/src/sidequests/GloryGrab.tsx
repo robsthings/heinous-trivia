@@ -8,6 +8,7 @@ interface Vial {
   maxTime: number;
   type: 'normal' | 'decoy' | 'glowing' | 'exploding';
   points: number;
+  vialNumber: number;
 }
 
 interface GameState {
@@ -103,7 +104,8 @@ export function GloryGrab() {
       timeLeft: vialType.lifetime,
       maxTime: vialType.lifetime,
       type: vialType.type,
-      points: vialType.points
+      points: vialType.points,
+      vialNumber: Math.ceil(Math.random() * 4)
     };
 
     setGameState(prev => ({
@@ -253,136 +255,259 @@ export function GloryGrab() {
     return () => clearInterval(countdown);
   }, [gameState.isPlaying]);
 
-  const getVialColor = (vial: Vial) => {
+  const getVialImagePath = (vial: Vial) => {
     const progress = vial.timeLeft / vial.maxTime;
     
     switch (vial.type) {
       case 'normal':
-        return progress > 0.3 ? '#10b981' : '#ef4444';
+        return `/sidequests/glory-grab/vial-${vial.vialNumber}-normal.png`;
       case 'glowing':
-        return progress > 0.3 ? '#3b82f6' : '#ef4444';
+        return `/sidequests/glory-grab/vial-${vial.vialNumber}-glowing.png`;
       case 'exploding':
-        return progress > 0.3 ? '#f59e0b' : '#dc2626';
+        return progress > 0.3 ? 
+          `/sidequests/glory-grab/vial-${vial.vialNumber}-glowing.png` : 
+          `/sidequests/glory-grab/vial-${vial.vialNumber}-exploding.png`;
       case 'decoy':
-        return '#6b7280';
+        return `/sidequests/glory-grab/vial-empty.png`;
       default:
-        return '#10b981';
+        return `/sidequests/glory-grab/vial-1-normal.png`;
     }
   };
 
-  const getVialGlow = (vial: Vial) => {
-    if (vial.type === 'glowing') return '0 0 20px #3b82f6';
-    if (vial.type === 'exploding') return '0 0 15px #f59e0b';
-    if (vial.timeLeft / vial.maxTime < 0.3) return '0 0 10px #ef4444';
-    return 'none';
-  };
-
   return (
-    <div 
-      className="min-h-screen flex flex-col relative overflow-hidden"
-      style={{
-        background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)',
-        fontFamily: 'system-ui, -apple-system, sans-serif'
-      }}
-    >
+    <div style={{
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      position: 'relative',
+      overflow: 'hidden',
+      background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)',
+      fontFamily: 'system-ui, -apple-system, sans-serif'
+    }}>
       {/* Background */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center opacity-40"
-        style={{ backgroundImage: 'url(/backgrounds/lab-dark-blue.png)' }}
-      />
+      <div style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundImage: 'url(/sidequests/glory-grab/glory-bg.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        opacity: 0.4
+      }} />
 
       {/* Header */}
-      <div className="relative z-10 text-center py-6">
-        <h1 
-          className="text-4xl md:text-6xl font-bold text-amber-400 mb-2"
-          style={{ textShadow: '0 0 20px #f59e0b', fontFamily: 'Creepster, cursive' }}
-        >
+      <div style={{
+        position: 'relative',
+        zIndex: 10,
+        textAlign: 'center',
+        padding: '1.5rem'
+      }}>
+        <h1 style={{
+          fontSize: 'clamp(2.5rem, 8vw, 4rem)',
+          fontWeight: 'bold',
+          color: '#f59e0b',
+          marginBottom: '0.5rem',
+          textShadow: '0 0 20px #f59e0b',
+          fontFamily: 'Creepster, cursive'
+        }}>
           GLORY GRAB
         </h1>
-        <p className="text-lg text-gray-300">
+        <p style={{
+          fontSize: 'clamp(1rem, 4vw, 1.25rem)',
+          color: '#d1d5db'
+        }}>
           Collect laboratory vials before they explode!
         </p>
       </div>
 
       {/* Game Stats */}
-      <div className="relative z-10 flex justify-between items-center px-6 py-4">
-        <div className="text-2xl font-bold text-green-400">
+      <div style={{
+        position: 'relative',
+        zIndex: 10,
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '1.5rem',
+        flexWrap: 'wrap',
+        gap: '1rem'
+      }}>
+        <div style={{
+          fontSize: 'clamp(1.2rem, 5vw, 1.5rem)',
+          fontWeight: 'bold',
+          color: '#10b981'
+        }}>
           Score: {gameState.score}
         </div>
-        <div className="text-2xl font-bold text-blue-400">
+        <div style={{
+          fontSize: 'clamp(1.2rem, 5vw, 1.5rem)',
+          fontWeight: 'bold',
+          color: '#3b82f6'
+        }}>
           Time: {gameState.timeLeft}s
         </div>
-        <div className="text-lg text-purple-400">
+        <div style={{
+          fontSize: 'clamp(1rem, 4vw, 1.25rem)',
+          color: '#a855f7'
+        }}>
           Chaos Level: {gameState.chaosLevel}
         </div>
       </div>
 
       {/* Dr. Heinous */}
-      <div className="absolute top-20 right-8 z-20">
+      <div style={{
+        position: 'absolute',
+        top: '5rem',
+        right: '2rem',
+        zIndex: 20
+      }}>
         <img 
           src="/heinous/scheming.png" 
-          alt="Dr. Heinous" 
-          className="w-16 h-16 md:w-20 md:h-20"
+          alt="Dr. Heinous"
+          style={{
+            width: 'clamp(4rem, 10vw, 5rem)',
+            height: 'clamp(4rem, 10vw, 5rem)'
+          }}
         />
         {gameState.message && (
-          <div className="absolute -left-48 top-2 bg-black bg-opacity-80 text-amber-400 text-sm px-3 py-2 rounded-lg border border-amber-400 max-w-48">
+          <div style={{
+            position: 'absolute',
+            left: '-12rem',
+            top: '0.5rem',
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            color: '#f59e0b',
+            fontSize: '0.875rem',
+            padding: '0.75rem',
+            borderRadius: '0.5rem',
+            border: '1px solid #f59e0b',
+            maxWidth: '12rem',
+            wordWrap: 'break-word'
+          }}>
             {gameState.message}
           </div>
         )}
       </div>
 
       {/* Game Area */}
-      <div className="flex-1 relative z-10 mx-4 my-4">
+      <div style={{
+        flex: 1,
+        position: 'relative',
+        zIndex: 10,
+        margin: '1rem',
+        minHeight: '400px'
+      }}>
         <div 
           ref={gameAreaRef}
-          className="w-full h-full relative border-2 border-amber-400 rounded-lg bg-black bg-opacity-30"
-          style={{ minHeight: '400px' }}
+          style={{
+            width: '100%',
+            height: '100%',
+            position: 'relative',
+            border: '2px solid #f59e0b',
+            borderRadius: '0.5rem',
+            backgroundColor: 'rgba(0, 0, 0, 0.3)',
+            minHeight: '400px'
+          }}
         >
           {/* Vials */}
           {gameState.vials.map(vial => (
             <div
               key={vial.id}
-              className="absolute w-16 h-16 cursor-pointer transition-all duration-200 hover:scale-110"
               style={{
+                position: 'absolute',
+                width: 'clamp(3rem, 8vw, 4rem)',
+                height: 'clamp(3rem, 8vw, 4rem)',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
                 left: vial.x,
                 top: vial.y,
                 transform: 'translate(-50%, -50%)'
               }}
               onClick={() => collectVial(vial.id)}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translate(-50%, -50%) scale(1.1)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translate(-50%, -50%) scale(1)';
+              }}
             >
-              {/* Vial container */}
-              <div
-                className="w-full h-full rounded-full border-4 flex items-center justify-center text-white font-bold"
+              {/* Vial Image */}
+              <img
+                src={getVialImagePath(vial)}
+                alt={`${vial.type} vial`}
                 style={{
-                  backgroundColor: getVialColor(vial),
-                  borderColor: getVialColor(vial),
-                  boxShadow: getVialGlow(vial),
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'contain',
+                  filter: vial.timeLeft / vial.maxTime < 0.3 ? 'brightness(1.5) contrast(1.2)' : 'none',
                   animation: vial.timeLeft / vial.maxTime < 0.3 ? 'pulse 0.5s infinite' : 'none'
                 }}
-              >
-                {vial.type === 'decoy' ? '?' : vial.points}
-              </div>
+              />
               
               {/* Countdown indicator */}
-              <div 
-                className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-12 h-1 bg-gray-600 rounded-full overflow-hidden"
-              >
-                <div 
-                  className="h-full bg-red-500 transition-all duration-100"
-                  style={{ width: `${(vial.timeLeft / vial.maxTime) * 100}%` }}
-                />
+              <div style={{
+                position: 'absolute',
+                bottom: '-0.5rem',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                width: '3rem',
+                height: '0.25rem',
+                backgroundColor: '#4b5563',
+                borderRadius: '0.25rem',
+                overflow: 'hidden'
+              }}>
+                <div style={{
+                  height: '100%',
+                  backgroundColor: '#ef4444',
+                  transition: 'all 0.1s ease',
+                  width: `${(vial.timeLeft / vial.maxTime) * 100}%`
+                }} />
               </div>
             </div>
           ))}
 
           {/* Game Over/Start Screen */}
           {(!gameState.isPlaying && !gameState.isGameOver) && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70">
-              <div className="text-center">
-                <h2 className="text-3xl text-amber-400 mb-6">Ready to start collecting?</h2>
+            <div style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.7)'
+            }}>
+              <div style={{ textAlign: 'center' }}>
+                <h2 style={{
+                  fontSize: 'clamp(1.5rem, 6vw, 2rem)',
+                  color: '#f59e0b',
+                  marginBottom: '1.5rem'
+                }}>
+                  Ready to start collecting?
+                </h2>
                 <button
                   onClick={startGame}
-                  className="px-8 py-4 bg-gradient-to-r from-amber-600 to-amber-800 text-white font-bold text-xl rounded-lg border-2 border-amber-400 hover:from-amber-500 hover:to-amber-700 transition-all duration-200 transform hover:scale-105"
+                  style={{
+                    padding: '1rem 2rem',
+                    background: 'linear-gradient(to right, #d97706, #92400e)',
+                    color: '#ffffff',
+                    fontWeight: 'bold',
+                    fontSize: 'clamp(1rem, 4vw, 1.25rem)',
+                    borderRadius: '0.5rem',
+                    border: '2px solid #f59e0b',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'linear-gradient(to right, #f59e0b, #d97706)';
+                    e.currentTarget.style.transform = 'scale(1.05)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'linear-gradient(to right, #d97706, #92400e)';
+                    e.currentTarget.style.transform = 'scale(1)';
+                  }}
                 >
                   START GAME
                 </button>
@@ -392,23 +517,93 @@ export function GloryGrab() {
 
           {/* Game Over Screen */}
           {gameState.isGameOver && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70">
-              <div className="text-center">
-                <h2 className="text-4xl text-amber-400 mb-4">Laboratory Session Complete!</h2>
-                <p className="text-2xl text-green-400 mb-2">Final Score: {gameState.score}</p>
-                <p className="text-lg text-purple-400 mb-6">Chaos Level Reached: {gameState.chaosLevel}</p>
+            <div style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: 'rgba(0, 0, 0, 0.7)'
+            }}>
+              <div style={{ textAlign: 'center' }}>
+                <h2 style={{
+                  fontSize: 'clamp(1.8rem, 6vw, 2.5rem)',
+                  color: '#f59e0b',
+                  marginBottom: '1rem'
+                }}>
+                  Laboratory Session Complete!
+                </h2>
+                <p style={{
+                  fontSize: 'clamp(1.2rem, 5vw, 1.5rem)',
+                  color: '#10b981',
+                  marginBottom: '0.5rem'
+                }}>
+                  Final Score: {gameState.score}
+                </p>
+                <p style={{
+                  fontSize: 'clamp(1rem, 4vw, 1.25rem)',
+                  color: '#a855f7',
+                  marginBottom: '1.5rem'
+                }}>
+                  Chaos Level Reached: {gameState.chaosLevel}
+                </p>
                 
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <div style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '1rem',
+                  justifyContent: 'center',
+                  alignItems: 'center'
+                }}>
                   <button
                     onClick={playAgain}
-                    className="px-6 py-3 bg-gradient-to-r from-green-600 to-green-800 text-white font-bold rounded-lg border-2 border-green-400 hover:from-green-500 hover:to-green-700 transition-all duration-200 transform hover:scale-105"
+                    style={{
+                      padding: '0.75rem 1.5rem',
+                      background: 'linear-gradient(to right, #059669, #047857)',
+                      color: '#ffffff',
+                      fontWeight: 'bold',
+                      borderRadius: '0.5rem',
+                      border: '2px solid #10b981',
+                      cursor: 'pointer',
+                      fontSize: 'clamp(0.9rem, 3vw, 1rem)',
+                      transition: 'all 0.2s ease'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = 'linear-gradient(to right, #10b981, #059669)';
+                      e.currentTarget.style.transform = 'scale(1.05)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = 'linear-gradient(to right, #059669, #047857)';
+                      e.currentTarget.style.transform = 'scale(1)';
+                    }}
                   >
                     INCREASE CHAOS ({gameState.chaosLevel + 1})
                   </button>
                   
                   <button
                     onClick={() => window.history.back()}
-                    className="px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-800 text-white font-bold rounded-lg border-2 border-purple-400 hover:from-purple-500 hover:to-purple-700 transition-all duration-200 transform hover:scale-105"
+                    style={{
+                      padding: '0.75rem 1.5rem',
+                      background: 'linear-gradient(to right, #7c3aed, #6d28d9)',
+                      color: '#ffffff',
+                      fontWeight: 'bold',
+                      borderRadius: '0.5rem',
+                      border: '2px solid #a855f7',
+                      cursor: 'pointer',
+                      fontSize: 'clamp(0.9rem, 3vw, 1rem)',
+                      transition: 'all 0.2s ease'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = 'linear-gradient(to right, #a855f7, #7c3aed)';
+                      e.currentTarget.style.transform = 'scale(1.05)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = 'linear-gradient(to right, #7c3aed, #6d28d9)';
+                      e.currentTarget.style.transform = 'scale(1)';
+                    }}
                   >
                     Return to Game
                   </button>
@@ -418,6 +613,18 @@ export function GloryGrab() {
           )}
         </div>
       </div>
+
+      {/* CSS Animations */}
+      <style>{`
+        @keyframes pulse {
+          0%, 100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.5;
+          }
+        }
+      `}</style>
     </div>
   );
 }
