@@ -317,7 +317,7 @@ export function LabEscape() {
           <div style={{
             display: 'flex',
             justifyContent: 'center',
-            alignItems: 'flex-end',
+            alignItems: 'flex-start',
             gap: 'clamp(1rem, 4vw, 3rem)',
             flexWrap: 'wrap'
           }}>
