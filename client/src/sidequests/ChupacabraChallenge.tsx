@@ -456,14 +456,14 @@ export function ChupacabraChallenge() {
                   if (!card.isMatched) {
                     e.currentTarget.style.transform = 'scale(1.05)';
                     if (!card.isFlipped) {
-                      e.currentTarget.style.background = 'linear-gradient(to bottom right, #4b5563, #1f2937)';
+                      e.currentTarget.style.filter = 'brightness(1.1)';
                     }
                   }
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'scale(1)';
                   if (!card.isFlipped && !card.isMatched) {
-                    e.currentTarget.style.background = 'linear-gradient(to bottom right, #374151, #111827)';
+                    e.currentTarget.style.filter = 'none';
                   }
                 }}
                 onClick={() => flipCard(card.id)}
