@@ -19,6 +19,7 @@ interface GameState {
   message: string;
   usedRiddles: string[];
   selectedDoor: number | null;
+  failAnimationPhase: 'none' | 'falling' | 'landed' | 'complete';
 }
 
 // Convert riddles data and add horror-themed hints
@@ -82,10 +83,17 @@ export function LabEscape() {
         60% { transform: translateY(-8px) rotate(-0.4deg); }
         80% { transform: translateY(-3px) rotate(0.2deg); }
       }
+      @keyframes trapDoorFall {
+        0% { transform: translateY(100vh) scale(0.8); opacity: 0; }
+        70% { transform: translateY(-10px) scale(1.1); opacity: 1; }
+        85% { transform: translateY(5px) scale(0.95); }
+        100% { transform: translateY(0px) scale(1); opacity: 1; }
+      }
     `;
     document.head.appendChild(style);
     return () => document.head.removeChild(style);
   }, []);
+
   const [gameState, setGameState] = useState<GameState>({
     currentRiddle: null,
     correctAnswers: 0,
@@ -96,7 +104,8 @@ export function LabEscape() {
     currentGuess: '',
     message: '',
     usedRiddles: [],
-    selectedDoor: null
+    selectedDoor: null,
+    failAnimationPhase: 'none'
   });
 
   const getRandomRiddle = () => {
@@ -164,11 +173,12 @@ export function LabEscape() {
     } else {
       // Wrong answer - one attempt per riddle, move back to door selection
       if (newAttempts >= gameState.maxAttempts) {
-        // Game over - too many wrong attempts total
+        // Game over - too many wrong attempts total - start trap door animation
         setGameState(prev => ({
           ...prev,
           attempts: newAttempts,
           gamePhase: 'failure',
+          failAnimationPhase: 'falling',
           message: CHUPACABRA_TAUNTS[Math.floor(Math.random() * CHUPACABRA_TAUNTS.length)]
         }));
       } else {
