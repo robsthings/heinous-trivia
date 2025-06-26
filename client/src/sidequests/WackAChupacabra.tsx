@@ -505,23 +505,31 @@ export function WackAChupacabra() {
                     
                     {/* Sprite */}
                     {gameState.currentHole === index && gameState.currentSprite && spriteVisible && (
-                      <div style={{
-                        position: 'absolute',
-                        top: '-0.25rem',
-                        left: 0,
-                        right: 0,
-                        display: 'flex',
-                        justifyContent: 'center',
-                        pointerEvents: 'none',
-                        zIndex: 10
-                      }}>
+                      <div 
+                        style={{
+                          position: 'absolute',
+                          top: '-0.25rem',
+                          left: 0,
+                          right: 0,
+                          display: 'flex',
+                          justifyContent: 'center',
+                          pointerEvents: 'auto',
+                          zIndex: 10,
+                          cursor: 'pointer'
+                        }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleHoleClick(index);
+                        }}
+                      >
                         <img
                           src={getSpriteImagePath(gameState.currentSprite)}
                           alt={gameState.currentSprite}
                           style={{
                             width: 'clamp(4.5rem, 12vw, 6rem)',
                             height: 'clamp(4.5rem, 12vw, 6rem)',
-                            animation: 'bounce 1s infinite'
+                            animation: 'bounce 1s infinite',
+                            cursor: 'pointer'
                           }}
                         />
                       </div>
