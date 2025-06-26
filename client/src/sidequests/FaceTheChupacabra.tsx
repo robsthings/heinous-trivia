@@ -114,18 +114,7 @@ export function FaceTheChupacabra() {
   };
 
   const getBackgroundImage = () => {
-    switch (gameState.phase) {
-      case 'start':
-        return '/sidequests/face-the-chupacabra/chupa-bg-bars.png';
-      case 'playing':
-        return '/sidequests/face-the-chupacabra/chupa-bg.png';
-      case 'won':
-        return '/sidequests/face-the-chupacabra/chupa-bg.png';
-      case 'lost':
-        return '/sidequests/face-the-chupacabra/chupa-bg.png';
-      default:
-        return '/sidequests/face-the-chupacabra/chupa-bg.png';
-    }
+    return '/sidequests/face-the-chupacabra/chupa-bg.png';
   };
 
   const renderKeys = () => {
