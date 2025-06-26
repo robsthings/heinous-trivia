@@ -435,8 +435,8 @@ export function ChupacabraChallenge() {
               <div
                 key={card.id}
                 style={{
-                  width: 'clamp(4rem, 12vw, 6rem)',
-                  height: 'clamp(5.6rem, 16.8vw, 8.4rem)',
+                  width: 'clamp(5.2rem, 15.6vw, 7.8rem)',
+                  height: 'clamp(7.28rem, 21.84vw, 10.92rem)',
                   borderRadius: '0.5rem',
                   cursor: 'pointer',
                   transition: 'all 0.6s ease',
