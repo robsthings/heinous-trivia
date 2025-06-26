@@ -283,7 +283,7 @@ export function ChupacabraChallenge() {
           textShadow: '0 0 20px #ef4444',
           fontFamily: 'Impact, Arial Black, sans-serif'
         }}>
-          MEMORY CHALLENGE
+          CHUPACABRA CHALLENGE
         </h1>
         <p style={{
           fontSize: 'clamp(0.9rem, 3vw, 1.125rem)',
@@ -316,7 +316,7 @@ export function ChupacabraChallenge() {
           transition: 'all 0.3s ease',
           animation: isPanicMode ? 'bounce 1s infinite' : 'none'
         }}>
-          {isPanicMode && <span style={{ color: '#f87171', fontWeight: 'bold' }}>HURRY UP! </span>}
+          {isPanicMode && <span style={{ color: '#f87171', fontWeight: 'bold' }}>CONTAINMENT FAILING! </span>}
           Time: {gameState.timeLeft}s
         </div>
         <div style={{
