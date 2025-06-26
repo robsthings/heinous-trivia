@@ -347,10 +347,11 @@ export function LabEscape() {
                   src={`/sidequests/lab-escape/door-${doorNum}.png`}
                   alt={`Door ${doorNum}`}
                   style={{
-                    width: 'clamp(156px, 26vw, 260px)',
-                    height: 'clamp(234px, 39vw, 390px)',
+                    width: doorNum === 2 ? 'clamp(109px, 18.2vw, 182px)' : 'clamp(156px, 26vw, 260px)',
+                    height: doorNum === 2 ? 'clamp(164px, 27.3vw, 273px)' : 'clamp(234px, 39vw, 390px)',
                     objectFit: 'contain',
-                    display: 'block'
+                    display: 'block',
+                    marginBottom: doorNum === 2 ? 'clamp(2rem, 5vw, 4rem)' : '0'
                   }}
                 />
 
