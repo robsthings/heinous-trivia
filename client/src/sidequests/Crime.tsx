@@ -92,12 +92,12 @@ export function Crime() {
     }));
     
     let index = 0;
-    const showNext = () => {
-      if (index < pattern.length) {
-        setGameState(prev => ({ ...prev, patternIndex: index + 1 }));
-        index++;
-        setTimeout(showNext, 800);
-      } else {
+    const timer = setInterval(() => {
+      index++;
+      setGameState(prev => ({ ...prev, patternIndex: index }));
+      
+      if (index >= pattern.length) {
+        clearInterval(timer);
         setTimeout(() => {
           setGameState(prev => ({ 
             ...prev, 
@@ -105,10 +105,9 @@ export function Crime() {
             patternIndex: 0,
             canRepeat: prev.patternViewCount < 2
           }));
-        }, 500);
+        }, 800);
       }
-    };
-    showNext();
+    }, 800);
   };
 
   // Repeat pattern (only available twice)
