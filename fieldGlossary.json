@@ -13,7 +13,8 @@
       "trivia-questions": "General trivia question pool",
       "globalQuestionPacks": "System-wide question packs",
       "branding-assets": "Custom branding and assets",
-      "hauntConfigs": "Legacy haunt configuration collection"
+      "hauntConfigs": "Legacy haunt configuration collection",
+      "sidequests": "Mini-game definitions and progress tracking"
     },
     "subcollections": {
       "leaderboards/{hauntId}/players": "Player entries for specific haunt",
@@ -96,6 +97,12 @@
       "status": "VERIFIED_WORKING"
     }
   ],
+  "routing_conventions": {
+    "sidequest_urls": "/sidequest/{game-name} (singular) - Frontend routing paths",
+    "sidequest_assets": "/sidequests/{game-name}/ (plural) - Asset storage paths",
+    "sidequest_api": "/api/sidequests/ (plural) - Server API endpoints",
+    "note": "Routes use singular, assets and APIs use plural"
+  },
   "verification_status": {
     "leaderboard_api": "✅ Working - uses 'haunt' parameter correctly",
     "ad_tracking": "✅ Working - uses 'action' field correctly", 
