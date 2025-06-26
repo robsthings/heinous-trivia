@@ -2121,6 +2121,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
           'node-blue-right': '/sidequests/wretched-wiring/node-blue-right.png',
           'Pull-Chain': '/sidequests/wretched-wiring/Pull-Chain.png',
           'Certificate-of-Failure': '/sidequests/wretched-wiring/Certificate-of-Failure.png'
+        },
+        'monster-name-generator': {
+          'monster-card_1750900915378': '/sidequests/monster-name-generator/monster-card_1750900915378.png'
         }
       };
       
@@ -2178,13 +2181,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { sidequestName } = req.params;
       
-      // Check Firebase first for uploaded assets
+      // Check Firebase Storage for uploaded assets
       if (firestore) {
         try {
-          const assetDoc = await firestore.collection('sidequest-assets').doc(sidequestName).get();
+          // Try both singular and plural collection names
+          let assetDoc = await firestore.collection('sidequest-assets').doc(sidequestName).get();
+          if (!assetDoc.exists) {
+            assetDoc = await firestore.collection('sidequests-assets').doc(sidequestName).get();
+          }
+          if (!assetDoc.exists) {
+            assetDoc = await firestore.collection('sidequests').doc(sidequestName).get();
+          }
+          
           if (assetDoc.exists) {
             const data = assetDoc.data();
             if (data && data.assets) {
+              console.log(`Found Firebase assets for ${sidequestName}:`, data.assets);
               return res.json({ assets: data.assets });
             }
           }
