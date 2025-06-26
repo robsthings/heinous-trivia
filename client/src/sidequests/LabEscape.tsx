@@ -607,15 +607,24 @@ export function LabEscape() {
             boxShadow: '0 0 40px rgba(239, 68, 68, 0.3)'
           }}>
             <div style={{
+              position: 'fixed',
+              top: '0',
+              left: '0',
+              width: '100vw',
+              height: '100vh',
+              zIndex: '1000',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
               marginBottom: '2rem'
             }}>
               <img
                 src="/sidequests/lab-escape/fail.png"
                 alt="Failure"
                 style={{
-                  width: 'clamp(120px, 25vw, 200px)',
-                  height: 'clamp(120px, 25vw, 200px)',
-                  objectFit: 'contain',
+                  width: '100vw',
+                  height: '100vh',
+                  objectFit: 'cover',
                   animation: gameState.failAnimationPhase === 'falling' ? 'trapDoorFall 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards' : 'none'
                 }}
               />
