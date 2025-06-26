@@ -425,8 +425,8 @@ export function ChupacabraChallenge() {
           <div style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: 'clamp(0.25rem, 1vw, 0.5rem)',
-            maxWidth: 'clamp(28rem, 85vw, 42rem)',
+            gap: 'clamp(0.125rem, 0.5vw, 0.25rem)',
+            maxWidth: 'clamp(32rem, 90vw, 48rem)',
             margin: '0 auto',
             transition: 'all 0.3s ease',
             animation: isPanicMode ? 'pulse 1s infinite' : 'none'
