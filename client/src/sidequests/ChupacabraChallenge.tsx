@@ -388,7 +388,7 @@ export function ChupacabraChallenge() {
               marginBottom: '2rem',
               maxWidth: '600px'
             }}>
-              Match all 8 pairs of cryptid cards within 90 seconds to keep it contained.
+              Match all 8 pairs of cards within 90 seconds to keep Chupacabra contained.
             </p>
             <button
               onClick={startGame}
