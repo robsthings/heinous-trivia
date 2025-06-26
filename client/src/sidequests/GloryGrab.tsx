@@ -97,10 +97,11 @@ export function GloryGrab() {
     const rect = gameAreaRef.current.getBoundingClientRect();
     const vialType = getRandomVialType(gameState.chaosLevel);
     
+    const vialSize = 112; // 7rem = 112px (75% larger than original 4rem = 64px)
     const newVial: Vial = {
       id: Math.random().toString(36).substr(2, 9),
-      x: Math.random() * (rect.width - 80) + 40,
-      y: Math.random() * (rect.height - 80) + 40,
+      x: Math.random() * (rect.width - vialSize) + vialSize/2,
+      y: Math.random() * (rect.height - vialSize - 120) + 120, // Account for header space
       timeLeft: vialType.lifetime,
       maxTime: vialType.lifetime,
       type: vialType.type,
@@ -258,19 +259,17 @@ export function GloryGrab() {
   const getVialImagePath = (vial: Vial) => {
     const progress = vial.timeLeft / vial.maxTime;
     
-    switch (vial.type) {
-      case 'normal':
-        return `/sidequests/glory-grab/vial-${vial.vialNumber}-normal.png`;
-      case 'glowing':
-        return `/sidequests/glory-grab/vial-${vial.vialNumber}-glowing.png`;
-      case 'exploding':
-        return progress > 0.3 ? 
-          `/sidequests/glory-grab/vial-${vial.vialNumber}-glowing.png` : 
-          `/sidequests/glory-grab/vial-${vial.vialNumber}-exploding.png`;
-      case 'decoy':
-        return `/sidequests/glory-grab/vial-empty.png`;
-      default:
-        return `/sidequests/glory-grab/vial-1-normal.png`;
+    if (vial.type === 'decoy') {
+      return `/sidequests/glory-grab/vial-empty.png`;
+    }
+    
+    // All vials start as normal and progress through states based on time remaining
+    if (progress > 0.6) {
+      return `/sidequests/glory-grab/vial-${vial.vialNumber}-normal.png`;
+    } else if (progress > 0.3) {
+      return `/sidequests/glory-grab/vial-${vial.vialNumber}-glowing.png`;
+    } else {
+      return `/sidequests/glory-grab/vial-${vial.vialNumber}-exploding.png`;
     }
   };
 
@@ -400,13 +399,12 @@ export function GloryGrab() {
         <div 
           ref={gameAreaRef}
           style={{
-            width: '100%',
-            height: '100%',
-            position: 'relative',
-            border: '2px solid #f59e0b',
-            borderRadius: '0.5rem',
-            backgroundColor: 'rgba(0, 0, 0, 0.3)',
-            minHeight: '400px'
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            zIndex: 5
           }}
         >
           {/* Vials */}
@@ -415,8 +413,8 @@ export function GloryGrab() {
               key={vial.id}
               style={{
                 position: 'absolute',
-                width: 'clamp(3rem, 8vw, 4rem)',
-                height: 'clamp(3rem, 8vw, 4rem)',
+                width: 'clamp(5.25rem, 14vw, 7rem)',
+                height: 'clamp(5.25rem, 14vw, 7rem)',
                 cursor: 'pointer',
                 transition: 'all 0.2s ease',
                 left: vial.x,
