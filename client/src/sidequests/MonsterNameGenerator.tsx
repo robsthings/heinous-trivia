@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useLocation } from 'wouter';
+import { useSidequestAssets } from '../hooks/use-sidequest-assets';
 
 interface MonsterData {
   name: string;
@@ -26,6 +27,7 @@ function generateMonster(): MonsterData {
 
 export function MonsterNameGenerator() {
   const [, setLocation] = useLocation();
+  const { data: assets } = useSidequestAssets('monster-name-generator');
   const [monster, setMonster] = useState<MonsterData | null>(null);
   const [isScanning, setIsScanning] = useState(false);
   const [scanProgress, setScanProgress] = useState(0);
