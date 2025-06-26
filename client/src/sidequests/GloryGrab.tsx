@@ -159,16 +159,16 @@ export function GloryGrab() {
     setTimeout(() => setGameState(prev => ({ ...prev, message: '' })), 2000);
   };
 
-  const startGame = () => {
-    setGameState({
+  const startGame = (preserveChaosLevel = false) => {
+    setGameState(prev => ({
       score: 0,
       timeLeft: 20,
       isPlaying: true,
       isGameOver: false,
-      chaosLevel: 1,
+      chaosLevel: preserveChaosLevel ? prev.chaosLevel : 1,
       vials: [],
       message: 'Collect the vials before they explode!'
-    });
+    }));
   };
 
   const playAgain = () => {
@@ -178,7 +178,7 @@ export function GloryGrab() {
       message: prev.chaosLevel >= 3 ? getRandomReaction('chaos') : ''
     }));
     
-    setTimeout(() => startGame(), 1000);
+    setTimeout(() => startGame(true), 1000);
   };
 
   // Game timer
@@ -578,7 +578,7 @@ export function GloryGrab() {
                       e.currentTarget.style.transform = 'scale(1)';
                     }}
                   >
-                    INCREASE CHAOS ({gameState.chaosLevel + 1})
+                    Play Again
                   </button>
                   
                   <button
