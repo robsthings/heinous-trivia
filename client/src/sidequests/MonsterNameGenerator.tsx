@@ -124,6 +124,27 @@ function MonsterNameGeneratorCore({ showHeinous = true }: MonsterNameGeneratorPr
         fontFamily: 'system-ui, sans-serif'
       }}
     >
+      {/* Title */}
+      <div style={{
+        position: 'absolute',
+        top: 'clamp(1rem, 4vh, 2rem)',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        zIndex: 10,
+        textAlign: 'center'
+      }}>
+        <h1 style={{
+          fontFamily: 'Creepster, cursive',
+          fontSize: 'clamp(1.5rem, 6vw, 3rem)',
+          color: '#dc2626',
+          textShadow: '2px 2px 4px rgba(0,0,0,0.8), 0 0 10px rgba(220,38,38,0.5)',
+          margin: 0,
+          letterSpacing: '0.05em'
+        }}>
+          MONSTER NAME GENERATOR
+        </h1>
+      </div>
+
       {/* Dark overlay for better contrast */}
       <div style={{
         position: 'absolute',
