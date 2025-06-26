@@ -670,7 +670,7 @@ export function WretchedWiring() {
         >
           <div style={{ position: 'relative' }}>
             <img 
-              src={assets['Pull-Chain'] || '/sidequests/wretched-wiring/Pull-Chain.png'} 
+              src={getAssetUrl('Pull-Chain')} 
               alt="Pull Chain"
               style={{
                 width: '7rem',
@@ -730,7 +730,7 @@ export function WretchedWiring() {
             }}
           >
             <img 
-              src={assets[wire.assetName.replace('.png', '')] || `/sidequests/wretched-wiring/${wire.assetName}`} 
+              src={getAssetUrl(wire.assetName.replace('.png', ''))} 
               alt={`${wire.color} wire`}
               style={{ 
                 width: '100px', 
