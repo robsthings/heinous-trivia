@@ -148,22 +148,34 @@ export function Crime() {
     setFlickerActive(false);
   };
 
+  const containerStyle = gameState.phase === 'intro' 
+    ? {
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
+        display: 'flex',
+        flexDirection: 'column' as const,
+        alignItems: 'center' as const,
+        justifyContent: 'center' as const,
+        padding: '1rem',
+        position: 'relative' as const,
+        fontFamily: 'system-ui, -apple-system, sans-serif'
+      }
+    : {
+        minHeight: '100vh',
+        backgroundImage: 'url("/sidequests/crime/game-board.png")',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        display: 'flex',
+        flexDirection: 'column' as const,
+        alignItems: 'center' as const,
+        justifyContent: 'center' as const,
+        padding: '1rem',
+        position: 'relative' as const,
+        fontFamily: 'system-ui, -apple-system, sans-serif'
+      };
+
   return (
-    <div style={{
-      minHeight: '100vh',
-      background: gameState.phase === 'intro' 
-        ? 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)'
-        : `url("/sidequests/crime/game-board.png")`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '1rem',
-      position: 'relative',
-      fontFamily: 'system-ui, -apple-system, sans-serif'
-    }}>
+    <div style={containerStyle}>
 
       {/* Flicker overlay for fail transition */}
       {flickerActive && (
@@ -236,18 +248,19 @@ export function Crime() {
       {/* Sequence Phase */}
       {gameState.phase === 'sequence' && (
         <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '2rem',
-          position: 'relative'
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          zIndex: 9999
         }}>
           <div style={{
             position: 'relative',
-            width: 'clamp(400px, 60vw, 600px)',
-            height: 'clamp(300px, 45vw, 450px)'
+            width: '100%',
+            height: '100%'
           }}>
-            {/* Control room background */}
+            {/* Control room background - full screen */}
             <img
               src={`/sidequests/crime/control-room-${gameState.sequenceStep}.gif`}
               alt={`Control Room ${gameState.sequenceStep}`}
@@ -255,18 +268,18 @@ export function Crime() {
                 width: '100%',
                 height: '100%',
                 objectFit: 'cover',
-                borderRadius: '10px'
+                display: 'block'
               }}
             />
             
-            {/* Book overlay centered on podium */}
+            {/* Book overlay centered on screen */}
             <div style={{
               position: 'absolute',
               top: '50%',
               left: '50%',
               transform: 'translate(-50%, -50%)',
-              width: '30%',
-              height: '30%',
+              width: 'clamp(120px, 20vw, 200px)',
+              height: 'clamp(120px, 20vw, 200px)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center'
@@ -282,16 +295,30 @@ export function Crime() {
                 }}
               />
             </div>
-          </div>
 
-          <p style={{
-            fontSize: '1.2rem',
-            color: '#e5e7eb',
-            textAlign: 'center',
-            textShadow: '1px 1px 2px rgba(0,0,0,0.8)'
-          }}>
-            Analyzing security protocols... Step {gameState.sequenceStep}/3
-          </p>
+            {/* Status text overlay */}
+            <div style={{
+              position: 'absolute',
+              bottom: '10%',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              background: 'rgba(0,0,0,0.8)',
+              padding: '1rem 2rem',
+              borderRadius: '10px',
+              border: '2px solid #00ff00'
+            }}>
+              <p style={{
+                fontSize: 'clamp(1rem, 3vw, 1.5rem)',
+                color: '#00ff00',
+                textAlign: 'center',
+                margin: 0,
+                textShadow: '0 0 10px #00ff00',
+                fontFamily: 'monospace'
+              }}>
+                ANALYZING SECURITY PROTOCOLS... STEP {gameState.sequenceStep}/3
+              </p>
+            </div>
+          </div>
         </div>
       )}
 
