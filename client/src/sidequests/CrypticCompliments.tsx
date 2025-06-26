@@ -84,7 +84,7 @@ export function CrypticCompliments() {
       className="min-h-screen flex flex-col relative overflow-hidden"
       style={{
         background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)',
-        fontFamily: "'Creepster', cursive"
+        fontFamily: 'system-ui, -apple-system, sans-serif'
       }}
     >
       {/* Background particles */}
@@ -107,7 +107,7 @@ export function CrypticCompliments() {
       <div className="relative z-10 text-center py-8">
         <h1 
           className="text-4xl md:text-6xl font-bold text-purple-400 mb-4"
-          style={{ textShadow: '0 0 20px #a855f7' }}
+          style={{ textShadow: '0 0 20px #a855f7', fontFamily: 'Creepster, cursive' }}
         >
           CRYPTIC COMPLIMENTS
         </h1>

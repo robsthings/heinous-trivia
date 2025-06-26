@@ -231,7 +231,7 @@ export function LabEscape() {
       className="min-h-screen flex flex-col relative overflow-hidden"
       style={{
         background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)',
-        fontFamily: "'Creepster', cursive"
+        fontFamily: 'system-ui, -apple-system, sans-serif'
       }}
     >
       {/* Background */}
@@ -244,7 +244,7 @@ export function LabEscape() {
       <div className="relative z-10 text-center py-6">
         <h1 
           className="text-4xl md:text-6xl font-bold text-red-400 mb-2"
-          style={{ textShadow: '0 0 20px #ef4444' }}
+          style={{ textShadow: '0 0 20px #ef4444', fontFamily: 'Creepster, cursive' }}
         >
           LAB ESCAPE
         </h1>
