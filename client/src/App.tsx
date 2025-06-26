@@ -27,6 +27,7 @@ import { WretchedWiring } from "@/sidequests/WretchedWiring";
 import { CurseCrafting } from "@/sidequests/CurseCrafting";
 import { WackAChupacabra } from "@/sidequests/WackAChupacabra";
 import { LabEscape } from "@/sidequests/LabEscape";
+import { FaceTheChupacabra } from "@/sidequests/FaceTheChupacabra";
 
 
 
@@ -57,6 +58,7 @@ function Router() {
       <Route path="/sidequest/curse-crafting" component={CurseCrafting} />
       <Route path="/sidequest/wack-a-chupacabra" component={WackAChupacabra} />
       <Route path="/sidequest/lab-escape" component={LabEscape} />
+      <Route path="/sidequest/face-the-chupacabra" component={FaceTheChupacabra} />
 
       <Route component={NotFound} />
     </Switch>

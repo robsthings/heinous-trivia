@@ -9,6 +9,7 @@ export { LabEscape } from './LabEscape';
 export { WackAChupacabra } from './WackAChupacabra';
 export { CurseCrafting } from './CurseCrafting';
 export { WretchedWiring } from './WretchedWiring';
+export { FaceTheChupacabra } from './FaceTheChupacabra';
 
 // Side Quest metadata for dynamic loading
 export const SIDE_QUESTS = {
@@ -70,6 +71,13 @@ export const SIDE_QUESTS = {
     description: 'Chaotic electrical "repair" simulation with no actual logic',
     difficulty: 'Impossible',
     estimatedTime: '5-10 minutes (or until you give up)'
+  },
+  'face-the-chupacabra': {
+    name: 'Face the Chupacabra',
+    component: 'FaceTheChupacabra',
+    description: 'Rock-paper-scissors duel against the legendary cryptid',
+    difficulty: 'Medium',
+    estimatedTime: '3-5 minutes'
   }
 } as const;
 
