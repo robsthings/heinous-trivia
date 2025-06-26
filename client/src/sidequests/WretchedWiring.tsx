@@ -92,13 +92,44 @@ export function WretchedWiring() {
   const [gameState, setGameState] = useState<GameState>(INITIAL_GAME_STATE);
   const [draggedWire, setDraggedWire] = useState<string | null>(null);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+  const [localAssets, setLocalAssets] = useState<Record<string, string>>({});
   const timerRef = useRef<number>(0);
 
-
+  // Load assets from server API
+  useEffect(() => {
+    const loadAssets = async () => {
+      try {
+        const response = await fetch('/api/sidequests/wretched-wiring/assets');
+        const assets = await response.json();
+        setLocalAssets(assets);
+      } catch (error) {
+        console.error('Failed to load wretched-wiring assets:', error);
+        // Direct fallback to public paths if API fails
+        setLocalAssets({
+          'wire-red-1': '/sidequests/wretched-wiring/wire-red-1.png',
+          'wire-red-2': '/sidequests/wretched-wiring/wire-red-2.png',
+          'wire-red-3': '/sidequests/wretched-wiring/wire-red-3.png',
+          'wire-red-4': '/sidequests/wretched-wiring/wire-red-4.png',
+          'wire-blue-1': '/sidequests/wretched-wiring/wire-blue-1.png',
+          'wire-blue-2': '/sidequests/wretched-wiring/wire-blue-2.png',
+          'wire-blue-3': '/sidequests/wretched-wiring/wire-blue-3.png',
+          'wire-blue-4': '/sidequests/wretched-wiring/wire-blue-4.png',
+          'node-red-left': '/sidequests/wretched-wiring/node-red-left.png',
+          'node-red-right': '/sidequests/wretched-wiring/node-red-right.png',
+          'node-blue-left': '/sidequests/wretched-wiring/node-blue-left.png',
+          'node-blue-right': '/sidequests/wretched-wiring/node-blue-right.png',
+          'wretched-wiring-bg': '/sidequests/wretched-wiring/wretched-wiring-bg.png',
+          'Pull-Chain': '/sidequests/wretched-wiring/Pull-Chain.png',
+          'certificate': '/sidequests/wretched-wiring/certificate.png'
+        });
+      }
+    };
+    loadAssets();
+  }, []);
   
-  // Local static asset paths
+  // Get asset URL from loaded assets
   const getAssetUrl = (assetName: string) => {
-    return `/sidequests/wretched-wiring/${assetName}`;
+    return localAssets[assetName] || `/sidequests/wretched-wiring/${assetName}`;
   };
 
   // Initialize random wires
@@ -397,7 +428,7 @@ export function WretchedWiring() {
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundImage: `url(/sidequests/wretched-wiring/wretched-wiring-bg.png)`,
+          backgroundImage: `url(${getAssetUrl('wretched-wiring-bg.png')})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'

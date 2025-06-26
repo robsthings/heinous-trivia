@@ -2166,7 +2166,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { sidequestName } = req.params;
       
       // Return local assets for specific sidequest
-      const allAssets = {
+      const localAssetsByGame = {
         'curse-crafting': {
           'potion-1': '/sidequests/curse-crafting/potion-1.png',
           'potion-2': '/sidequests/curse-crafting/potion-2.png',
@@ -2213,7 +2213,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           'node-blue-left': '/sidequests/wretched-wiring/node-blue-left.png',
           'node-blue-right': '/sidequests/wretched-wiring/node-blue-right.png',
           'wretched-wiring-bg': '/sidequests/wretched-wiring/wretched-wiring-bg.png',
-          'Pull-Chain': '/sidequests/wretched-wiring/Pull-Chain.png'
+          'Pull-Chain': '/sidequests/wretched-wiring/Pull-Chain.png',
+          'certificate': '/sidequests/wretched-wiring/certificate.png'
         },
         'monster-name-generator': {
           'monster-card_1750900915378': '/sidequests/monster-name-generator/monster-card_1750900915378.png'
@@ -2240,7 +2241,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       };
       
-      const sidequestAssets = allAssets[sidequestName] || {};
+      const sidequestAssets = localAssetsByGame[sidequestName] || {};
       res.json({ assets: sidequestAssets });
     } catch (error) {
       console.error(`Failed to get assets for ${req.params.sidequestName}:`, error);
