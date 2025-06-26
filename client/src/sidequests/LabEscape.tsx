@@ -621,7 +621,7 @@ export function LabEscape() {
         )}
 
         {/* Failure Phase Buttons - Fixed at Bottom */}
-        {gameState.gamePhase === 'failure' && gameState.failAnimationPhase === 'complete' && (
+        {gameState.gamePhase === 'failure' && (
           <div style={{
             position: 'fixed',
             bottom: '2rem',
