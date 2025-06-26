@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 interface Card {
   id: number;
-  symbol: string;
+  cardNumber: number;
   isFlipped: boolean;
   isMatched: boolean;
 }
@@ -16,8 +16,6 @@ interface GameState {
   gamePhase: 'ready' | 'playing' | 'victory' | 'defeat';
   failureMessage: string;
 }
-
-const CRYPTID_SYMBOLS = ['👹', '🦇', '💀', '🕷️', '🐍', '👻', '🔮', '⚡'];
 
 const CHUPACABRA_REACTIONS = {
   match: [
@@ -56,13 +54,14 @@ function shuffleArray<T>(array: T[]): T[] {
 }
 
 function createCards(): Card[] {
-  const symbols = CRYPTID_SYMBOLS.slice(0, 8);
-  const pairs = [...symbols, ...symbols];
+  // Create pairs of cards 1-8
+  const cardNumbers = [1, 2, 3, 4, 5, 6, 7, 8];
+  const pairs = [...cardNumbers, ...cardNumbers];
   const shuffledPairs = shuffleArray(pairs);
   
-  return shuffledPairs.map((symbol, index) => ({
+  return shuffledPairs.map((cardNumber, index) => ({
     id: index,
-    symbol,
+    cardNumber,
     isFlipped: false,
     isMatched: false
   }));
@@ -153,7 +152,7 @@ export function ChupacabraChallenge() {
         
         setTimeout(() => {
           setGameState(current => {
-            if (firstCard.symbol === secondCard.symbol) {
+            if (firstCard.cardNumber === secondCard.cardNumber) {
               // Match found
               const updatedCards = current.cards.map(card =>
                 newFlippedCards.includes(card.id)
@@ -226,93 +225,189 @@ export function ChupacabraChallenge() {
   };
 
   return (
-    <div 
-      className="min-h-screen flex flex-col relative overflow-hidden"
-      style={{
-        background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)',
-        fontFamily: "'Frijole', cursive"
-      }}
-    >
+    <div style={{
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      position: 'relative',
+      overflow: 'hidden',
+      background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)',
+      fontFamily: 'system-ui, -apple-system, sans-serif'
+    }}>
       {/* Background */}
-      <div 
-        className="absolute inset-0 bg-cover bg-center opacity-30"
-        style={{ backgroundImage: 'url(/backgrounds/lab-dark-blue.png)' }}
-      />
+      <div style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundImage: 'url(/sidequests/chupacabra-challenge/challenge-bg.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        opacity: 0.3
+      }} />
 
       {/* Panic mode effects */}
       {isPanicMode && (
-        <div 
-          className="absolute inset-0 bg-red-500 opacity-20 animate-pulse z-5"
-          style={{ animation: 'pulse 0.5s infinite' }}
-        />
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: '#ef4444',
+          opacity: 0.2,
+          animation: 'pulse 0.5s infinite',
+          zIndex: 5
+        }} />
       )}
 
       {/* Header */}
-      <div className="relative z-10 text-center py-6">
-        <h1 
-          className="text-4xl md:text-6xl font-bold text-red-400 mb-2"
-          style={{ 
-            textShadow: '0 0 20px #ef4444',
-            fontFamily: "'Frijole', cursive"
-          }}
-        >
+      <div style={{
+        position: 'relative',
+        zIndex: 10,
+        textAlign: 'center',
+        paddingTop: 'clamp(1rem, 3vw, 1.5rem)',
+        paddingBottom: 'clamp(1rem, 3vw, 1.5rem)'
+      }}>
+        <h1 style={{
+          fontSize: 'clamp(2rem, 8vw, 3.75rem)',
+          fontWeight: 'bold',
+          color: '#f87171',
+          marginBottom: '0.5rem',
+          textShadow: '0 0 20px #ef4444',
+          fontFamily: 'Impact, Arial Black, sans-serif'
+        }}>
           CHUPACABRA CHALLENGE
         </h1>
-        <p className="text-lg text-gray-300">
+        <p style={{
+          fontSize: 'clamp(0.9rem, 3vw, 1.125rem)',
+          color: '#d1d5db'
+        }}>
           Match the cryptid cards before time runs out!
         </p>
       </div>
 
       {/* Game Stats */}
-      <div className="relative z-10 flex justify-between items-center px-6 py-4">
-        <div className="text-xl font-bold text-green-400">
+      <div style={{
+        position: 'relative',
+        zIndex: 10,
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: '1rem 1.5rem'
+      }}>
+        <div style={{
+          fontSize: 'clamp(1rem, 4vw, 1.25rem)',
+          fontWeight: 'bold',
+          color: '#4ade80'
+        }}>
           Matches: {gameState.matches}/8
         </div>
-        <div 
-          className={`text-xl font-bold transition-all duration-300 ${
-            isPanicMode ? 'text-red-400 animate-bounce' : 'text-cyan-400'
-          }`}
-        >
-          {isPanicMode && <span className="text-red-400 font-bold">CONTAINMENT FAILING! </span>}
+        <div style={{
+          fontSize: 'clamp(1rem, 4vw, 1.25rem)',
+          fontWeight: 'bold',
+          color: isPanicMode ? '#f87171' : '#22d3ee',
+          transition: 'all 0.3s ease',
+          animation: isPanicMode ? 'bounce 1s infinite' : 'none'
+        }}>
+          {isPanicMode && <span style={{ color: '#f87171', fontWeight: 'bold' }}>CONTAINMENT FAILING! </span>}
           Time: {gameState.timeLeft}s
         </div>
-        <div className="text-lg text-yellow-400">
+        <div style={{
+          fontSize: 'clamp(0.9rem, 3vw, 1.125rem)',
+          color: '#fbbf24'
+        }}>
           Attempts: {gameState.attempts}
         </div>
       </div>
 
       {/* Chupacabra */}
-      <div className="absolute top-20 right-8 z-20">
+      <div style={{
+        position: 'absolute',
+        top: 'clamp(5rem, 15vw, 8rem)',
+        right: 'clamp(1rem, 5vw, 2rem)',
+        zIndex: 20
+      }}>
         <img 
           src="/chupacabra/chupacabra-3.png"
           alt="Chupacabra" 
-          className="w-16 h-16 md:w-20 md:h-20"
+          style={{
+            width: 'clamp(3rem, 8vw, 5rem)',
+            height: 'clamp(3rem, 8vw, 5rem)'
+          }}
         />
         {reactionMessage && (
-          <div className="absolute -left-48 top-2 bg-black bg-opacity-80 text-red-400 text-sm px-3 py-2 rounded-lg border border-red-400 max-w-48">
+          <div style={{
+            position: 'absolute',
+            left: 'clamp(-12rem, -30vw, -12rem)',
+            top: '0.5rem',
+            background: 'rgba(0, 0, 0, 0.8)',
+            color: '#f87171',
+            fontSize: 'clamp(0.75rem, 2.5vw, 0.875rem)',
+            padding: '0.5rem 0.75rem',
+            borderRadius: '0.5rem',
+            border: '1px solid #f87171',
+            maxWidth: 'clamp(10rem, 25vw, 12rem)',
+            wordWrap: 'break-word'
+          }}>
             {reactionMessage}
           </div>
         )}
       </div>
 
       {/* Game Area */}
-      <div className="flex-1 flex items-center justify-center px-4 relative z-10">
+      <div style={{
+        flex: 1,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '1rem',
+        position: 'relative',
+        zIndex: 10
+      }}>
         
         {/* Ready Screen */}
         {gameState.gamePhase === 'ready' && (
-          <div className="text-center">
-            <h2 className="text-3xl text-red-400 mb-6">
+          <div style={{ textAlign: 'center' }}>
+            <h2 style={{
+              fontSize: 'clamp(1.5rem, 6vw, 1.875rem)',
+              color: '#f87171',
+              marginBottom: '1.5rem'
+            }}>
               The Chupacabra awaits in its containment grid!
             </h2>
-            <p className="text-lg text-gray-300 mb-8">
-              Match all 8 pairs of cryptid symbols within 90 seconds to keep it contained.
+            <p style={{
+              fontSize: 'clamp(0.9rem, 3vw, 1.125rem)',
+              color: '#d1d5db',
+              marginBottom: '2rem',
+              maxWidth: '600px'
+            }}>
+              Match all 8 pairs of cryptid cards within 90 seconds to keep it contained.
             </p>
             <button
               onClick={startGame}
-              className="px-8 py-4 bg-gradient-to-r from-red-600 to-red-800 text-white font-bold text-xl rounded-lg border-2 border-red-400 hover:from-red-500 hover:to-red-700 transition-all duration-200 transform hover:scale-105"
-              style={{ 
+              style={{
+                padding: 'clamp(0.75rem, 4vw, 1rem) clamp(1.5rem, 4vw, 2rem)',
+                background: 'linear-gradient(to right, #dc2626, #991b1b)',
+                color: 'white',
+                fontWeight: 'bold',
+                fontSize: 'clamp(1rem, 4vw, 1.25rem)',
+                borderRadius: '0.5rem',
+                border: '2px solid #f87171',
+                cursor: 'pointer',
                 textShadow: '0 0 10px rgba(0,0,0,0.5)',
-                boxShadow: '0 0 20px rgba(239, 68, 68, 0.3)'
+                boxShadow: '0 0 20px rgba(239, 68, 68, 0.3)',
+                transition: 'all 0.2s ease',
+                transform: 'scale(1)'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'linear-gradient(to right, #b91c1c, #7f1d1d)';
+                e.currentTarget.style.transform = 'scale(1.05)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'linear-gradient(to right, #dc2626, #991b1b)';
+                e.currentTarget.style.transform = 'scale(1)';
               }}
             >
               START CHALLENGE
@@ -322,33 +417,85 @@ export function ChupacabraChallenge() {
 
         {/* Game Grid */}
         {gameState.gamePhase === 'playing' && (
-          <div 
-            className={`grid grid-cols-4 gap-4 max-w-lg mx-auto transition-all duration-300 ${
-              isPanicMode ? 'animate-pulse' : ''
-            }`}
-          >
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(4, 1fr)',
+            gap: 'clamp(0.5rem, 2vw, 1rem)',
+            maxWidth: 'clamp(16rem, 50vw, 24rem)',
+            margin: '0 auto',
+            transition: 'all 0.3s ease',
+            animation: isPanicMode ? 'pulse 1s infinite' : 'none'
+          }}>
             {gameState.cards.map((card) => (
               <div
                 key={card.id}
-                className={`
-                  w-20 h-20 md:w-24 md:h-24 rounded-lg cursor-pointer transition-all duration-600 transform hover:scale-105
-                  ${card.isFlipped || card.isMatched 
-                    ? 'bg-gradient-to-br from-purple-600 to-purple-800 border-purple-400' 
-                    : 'bg-gradient-to-br from-gray-700 to-gray-900 border-gray-500 hover:from-gray-600 hover:to-gray-800'
-                  }
-                  ${card.isMatched ? 'ring-4 ring-green-400 brightness-110 contrast-110' : ''}
-                  border-2 flex items-center justify-center text-3xl
-                `}
                 style={{
+                  width: 'clamp(3rem, 10vw, 6rem)',
+                  height: 'clamp(3rem, 10vw, 6rem)',
+                  borderRadius: '0.5rem',
+                  cursor: 'pointer',
+                  transition: 'all 0.6s ease',
+                  transform: 'scale(1)',
+                  background: card.isFlipped || card.isMatched 
+                    ? 'linear-gradient(to bottom right, #7c3aed, #5b21b6)' 
+                    : 'linear-gradient(to bottom right, #374151, #111827)',
+                  border: card.isFlipped || card.isMatched ? '2px solid #a855f7' : '2px solid #6b7280',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: 'clamp(1.5rem, 5vw, 1.875rem)',
                   perspective: '1000px',
                   transformStyle: 'preserve-3d',
-                  transform: card.isFlipped || card.isMatched ? 'rotateY(180deg)' : 'rotateY(0deg)',
-                  boxShadow: card.isMatched ? '0 0 20px rgba(34, 197, 94, 0.5)' : 'none'
+                  boxShadow: card.isMatched ? '0 0 20px rgba(34, 197, 94, 0.5), 0 0 0 4px #22c55e' : 'none',
+                  filter: card.isMatched ? 'brightness(1.1) contrast(1.1)' : 'none'
+                }}
+                onMouseEnter={(e) => {
+                  if (!card.isMatched) {
+                    e.currentTarget.style.transform = 'scale(1.05)';
+                    if (!card.isFlipped) {
+                      e.currentTarget.style.background = 'linear-gradient(to bottom right, #4b5563, #1f2937)';
+                    }
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'scale(1)';
+                  if (!card.isFlipped && !card.isMatched) {
+                    e.currentTarget.style.background = 'linear-gradient(to bottom right, #374151, #111827)';
+                  }
                 }}
                 onClick={() => flipCard(card.id)}
               >
-                <div className="absolute inset-0 flex items-center justify-center">
-                  {card.isFlipped || card.isMatched ? card.symbol : '?'}
+                <div style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  {card.isFlipped || card.isMatched ? (
+                    <img 
+                      src={`/sidequests/chupacabra-challenge/card-${card.cardNumber}.png`}
+                      alt={`Card ${card.cardNumber}`}
+                      style={{
+                        width: '80%',
+                        height: '80%',
+                        objectFit: 'contain'
+                      }}
+                    />
+                  ) : (
+                    <img 
+                      src="/sidequests/chupacabra-challenge/card-back.png"
+                      alt="Card Back"
+                      style={{
+                        width: '80%',
+                        height: '80%',
+                        objectFit: 'contain'
+                      }}
+                    />
+                  )}
                 </div>
               </div>
             ))}
@@ -357,26 +504,83 @@ export function ChupacabraChallenge() {
 
         {/* Victory Screen */}
         {gameState.gamePhase === 'victory' && (
-          <div className="text-center">
-            <h2 className="text-4xl text-green-400 mb-4">CHUPACABRA CONTAINED!</h2>
-            <p className="text-2xl text-green-300 mb-2">
+          <div style={{ textAlign: 'center' }}>
+            <h2 style={{
+              fontSize: 'clamp(2rem, 8vw, 2.5rem)',
+              color: '#4ade80',
+              marginBottom: '1rem'
+            }}>
+              CHUPACABRA CONTAINED!
+            </h2>
+            <p style={{
+              fontSize: 'clamp(1.25rem, 5vw, 1.5rem)',
+              color: '#86efac',
+              marginBottom: '0.5rem'
+            }}>
               Time Remaining: {gameState.timeLeft} seconds
             </p>
-            <p className="text-lg text-yellow-400 mb-6">
+            <p style={{
+              fontSize: 'clamp(0.9rem, 3vw, 1.125rem)',
+              color: '#fbbf24',
+              marginBottom: '1.5rem'
+            }}>
               Attempts Made: {gameState.attempts}
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div style={{
+              display: 'flex',
+              flexDirection: window.innerWidth < 640 ? 'column' : 'row',
+              gap: '1rem',
+              justifyContent: 'center'
+            }}>
               <button
                 onClick={resetGame}
-                className="px-6 py-3 bg-gradient-to-r from-green-600 to-green-800 text-white font-bold rounded-lg border-2 border-green-400 hover:from-green-500 hover:to-green-700 transition-all duration-200 transform hover:scale-105"
+                style={{
+                  padding: 'clamp(0.75rem, 3vw, 0.75rem) clamp(1.5rem, 3vw, 1.5rem)',
+                  background: 'linear-gradient(to right, #059669, #047857)',
+                  color: 'white',
+                  fontWeight: 'bold',
+                  borderRadius: '0.5rem',
+                  border: '2px solid #4ade80',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  transform: 'scale(1)',
+                  fontSize: 'clamp(0.9rem, 3vw, 1rem)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'linear-gradient(to right, #047857, #065f46)';
+                  e.currentTarget.style.transform = 'scale(1.05)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'linear-gradient(to right, #059669, #047857)';
+                  e.currentTarget.style.transform = 'scale(1)';
+                }}
               >
                 CHALLENGE AGAIN
               </button>
               
               <button
                 onClick={() => window.history.back()}
-                className="px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-800 text-white font-bold rounded-lg border-2 border-purple-400 hover:from-purple-500 hover:to-purple-700 transition-all duration-200 transform hover:scale-105"
+                style={{
+                  padding: 'clamp(0.75rem, 3vw, 0.75rem) clamp(1.5rem, 3vw, 1.5rem)',
+                  background: 'linear-gradient(to right, #7c3aed, #5b21b6)',
+                  color: 'white',
+                  fontWeight: 'bold',
+                  borderRadius: '0.5rem',
+                  border: '2px solid #a855f7',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  transform: 'scale(1)',
+                  fontSize: 'clamp(0.9rem, 3vw, 1rem)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'linear-gradient(to right, #5b21b6, #4c1d95)';
+                  e.currentTarget.style.transform = 'scale(1.05)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'linear-gradient(to right, #7c3aed, #5b21b6)';
+                  e.currentTarget.style.transform = 'scale(1)';
+                }}
               >
                 Return to Game
               </button>
@@ -386,26 +590,83 @@ export function ChupacabraChallenge() {
 
         {/* Defeat Screen */}
         {gameState.gamePhase === 'defeat' && (
-          <div className="text-center">
-            <h2 className="text-4xl text-red-400 mb-4">CHUPACABRA ESCAPED!</h2>
-            <p className="text-xl text-red-300 mb-2">
+          <div style={{ textAlign: 'center' }}>
+            <h2 style={{
+              fontSize: clamp('2rem', 8vw, '2.5rem'),
+              color: '#f87171',
+              marginBottom: '1rem'
+            }}>
+              CHUPACABRA ESCAPED!
+            </h2>
+            <p style={{
+              fontSize: clamp('1rem', 4vw, '1.25rem'),
+              color: '#fca5a5',
+              marginBottom: '0.5rem'
+            }}>
               {gameState.failureMessage}
             </p>
-            <p className="text-lg text-yellow-400 mb-6">
+            <p style={{
+              fontSize: clamp('0.9rem', 3vw, '1.125rem'),
+              color: '#fbbf24',
+              marginBottom: '1.5rem'
+            }}>
               Matches Found: {gameState.matches}/8
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <div style={{
+              display: 'flex',
+              flexDirection: window.innerWidth < 640 ? 'column' : 'row',
+              gap: '1rem',
+              justifyContent: 'center'
+            }}>
               <button
                 onClick={resetGame}
-                className="px-6 py-3 bg-gradient-to-r from-red-600 to-red-800 text-white font-bold rounded-lg border-2 border-red-400 hover:from-red-500 hover:to-red-700 transition-all duration-200 transform hover:scale-105"
+                style={{
+                  padding: clamp('0.75rem 1.5rem', '3vw', '0.75rem 1.5rem'),
+                  background: 'linear-gradient(to right, #dc2626, #991b1b)',
+                  color: 'white',
+                  fontWeight: 'bold',
+                  borderRadius: '0.5rem',
+                  border: '2px solid #f87171',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  transform: 'scale(1)',
+                  fontSize: clamp('0.9rem', 3vw, '1rem')
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'linear-gradient(to right, #b91c1c, #7f1d1d)';
+                  e.currentTarget.style.transform = 'scale(1.05)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'linear-gradient(to right, #dc2626, #991b1b)';
+                  e.currentTarget.style.transform = 'scale(1)';
+                }}
               >
                 TRY AGAIN
               </button>
               
               <button
                 onClick={() => window.history.back()}
-                className="px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-800 text-white font-bold rounded-lg border-2 border-purple-400 hover:from-purple-500 hover:to-purple-700 transition-all duration-200 transform hover:scale-105"
+                style={{
+                  padding: clamp('0.75rem 1.5rem', '3vw', '0.75rem 1.5rem'),
+                  background: 'linear-gradient(to right, #7c3aed, #5b21b6)',
+                  color: 'white',
+                  fontWeight: 'bold',
+                  borderRadius: '0.5rem',
+                  border: '2px solid #a855f7',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease',
+                  transform: 'scale(1)',
+                  fontSize: clamp('0.9rem', 3vw, '1rem')
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'linear-gradient(to right, #5b21b6, #4c1d95)';
+                  e.currentTarget.style.transform = 'scale(1.05)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'linear-gradient(to right, #7c3aed, #5b21b6)';
+                  e.currentTarget.style.transform = 'scale(1)';
+                }}
               >
                 Return to Game
               </button>
