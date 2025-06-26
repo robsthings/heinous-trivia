@@ -136,7 +136,7 @@ export function LabEscape() {
         }));
       }
     } else {
-      // Wrong answer - check if they've used all attempts
+      // Wrong answer - one attempt per riddle, move back to door selection
       if (newAttempts >= gameState.maxAttempts) {
         // Game over - too many wrong attempts total
         setGameState(prev => ({
@@ -146,12 +146,15 @@ export function LabEscape() {
           message: CHUPACABRA_TAUNTS[Math.floor(Math.random() * CHUPACABRA_TAUNTS.length)]
         }));
       } else {
-        // Wrong answer but can try again on this riddle
+        // Wrong answer - back to door selection for new riddle
         setGameState(prev => ({
           ...prev,
           attempts: newAttempts,
+          gamePhase: 'intro',
+          currentRiddle: null,
+          selectedDoor: null,
           currentGuess: '',
-          showHint: true,
+          showHint: false,
           message: CHUPACABRA_TAUNTS[Math.floor(Math.random() * CHUPACABRA_TAUNTS.length)]
         }));
       }
