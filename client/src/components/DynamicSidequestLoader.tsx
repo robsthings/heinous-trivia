@@ -14,7 +14,7 @@ const componentMap = {
   'glory-grab': lazy(() => import('@/pages/sidequests/GloryGrab').then(m => ({ default: m.GloryGrab }))),
   'chupacabra-challenge': lazy(() => import('@/pages/ChupacabraChallenge')),
   'cryptic-compliments': lazy(() => import('@/pages/sidequests/CrypticCompliments').then(m => ({ default: m.CrypticCompliments }))),
-  'wheel-of-misfortune': lazy(() => import('@/pages/sidequests/WheelOfMisfortune')),
+
   'necromancers-gambit': lazy(() => import('@/pages/sidequests/NecromancersGambit').then(m => ({ default: m.NecromancersGambit }))),
   'spectral-memory': lazy(() => import('@/pages/sidequests/SpectralMemory').then(m => ({ default: m.SpectralMemory }))),
   'phantoms-puzzle': lazy(() => import('@/pages/sidequests/PhantomsPuzzle').then(m => ({ default: m.PhantomsPuzzle }))),
