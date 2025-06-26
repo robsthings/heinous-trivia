@@ -644,7 +644,7 @@ export function LabEscape() {
                 gap: '1rem',
                 justifyContent: 'center'
               }}>
-              <button
+                <button
                 onClick={resetGame}
                 style={{
                   padding: '1rem 2rem',
