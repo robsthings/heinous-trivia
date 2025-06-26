@@ -201,7 +201,7 @@ export const CrypticCompliments: React.FC = () => {
               onClick={generateCompliment}
               style={{
                 position: 'absolute',
-                bottom: '15%',
+                bottom: '0%',
                 left: '50%',
                 transform: 'translateX(-50%)',
                 width: 'clamp(3rem, 8vw, 5rem)',
