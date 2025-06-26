@@ -2119,7 +2119,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           'wire-blue-2': '/sidequests/wretched-wiring/wire-blue-2.png',
           'wire-blue-3': '/sidequests/wretched-wiring/wire-blue-3.png',
           'wire-blue-4': '/sidequests/wretched-wiring/wire-blue-4.png',
-          'wretched-wiring-bg': '/sidequests/wretched-wiring/wretched-wiring-bg.png'
+          'wretched-wiring-bg': '/sidequests/wretched-wiring/wretched-wiring-bg.png',
+          'Pull-Chain': '/sidequests/wretched-wiring/Pull-Chain.png'
         },
         'monster-name-generator': {
           'monster-card_1750900915378': '/sidequests/monster-name-generator/monster-card_1750900915378.png'
@@ -2267,7 +2268,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           'wire-blue-2': '/sidequests/wretched-wiring/wire-blue-2.png',
           'wire-blue-3': '/sidequests/wretched-wiring/wire-blue-3.png',
           'wire-blue-4': '/sidequests/wretched-wiring/wire-blue-4.png',
-          'wretched-wiring-bg': '/sidequests/wretched-wiring/wretched-wiring-bg.png'
+          'wretched-wiring-bg': '/sidequests/wretched-wiring/wretched-wiring-bg.png',
+          'Pull-Chain': '/sidequests/wretched-wiring/Pull-Chain.png'
         },
         'monster-name-generator': {
           'monster-card_1750900915378': '/sidequests/monster-name-generator/monster-card_1750900915378.png'
