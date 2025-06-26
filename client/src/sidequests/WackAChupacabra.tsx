@@ -1,7 +1,6 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { Link, useLocation } from 'wouter';
+import { useState, useEffect, useRef } from 'react';
+import { Link } from 'wouter';
 import { useQuery } from '@tanstack/react-query';
-
 
 interface GameState {
   score: number;
@@ -15,7 +14,6 @@ const SPRITE_DURATION = 1200; // 1.2 seconds
 const SPAWN_DELAY = 800; // Delay between spawns
 
 export function WackAChupacabra() {
-  const [location] = useLocation();
   const hauntId = new URLSearchParams(window.location.search).get('haunt') || 'headquarters';
   
   const [gameState, setGameState] = useState<GameState>({
@@ -25,8 +23,6 @@ export function WackAChupacabra() {
     currentSprite: null,
     isPlaying: false
   });
-
-
 
   const [spriteVisible, setSpriteVisible] = useState(false);
   const gameTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -154,48 +150,80 @@ export function WackAChupacabra() {
   const getSpriteImagePath = (sprite: string): string => {
     switch (sprite) {
       case 'chupacabra':
-        return '/chupacabra/chupacabra-1.png';
+        return '/sidequests/wack-a-chupacabra/wack-chupacabra.png';
       case 'decoy':
-        return '/chupacabra/chupacabra-2.png';
+        return '/sidequests/wack-a-chupacabra/wack-decoy.png';
       case 'vial':
-        return '/heinous/gift.png';
+        return '/sidequests/wack-a-chupacabra/wack-vial.png';
       default:
         return '';
     }
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden">
+    <div style={{
+      position: 'relative',
+      minHeight: '100vh',
+      overflow: 'hidden'
+    }}>
       {/* Background */}
       <div 
-        className="fixed inset-0 bg-cover bg-center bg-no-repeat"
         style={{ 
-          backgroundImage: 'url(/sidequests/wack-a-chupacabra/wack-bg.png)'
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundImage: 'url(/sidequests/wack-a-chupacabra/wack-bg.png)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
         }}
       />
 
       {/* Moon with Haunt Logo Overlay */}
-      <div className="fixed z-5 pointer-events-none" 
-           style={{
-             top: 'clamp(2rem, 8vh, 4rem)',
-             right: 'clamp(1rem, 8vw, 3rem)',
-             width: 'clamp(9rem, 22.5vw, 15rem)',
-             height: 'clamp(9rem, 22.5vw, 15rem)'
-           }}>
+      <div style={{
+        position: 'fixed',
+        zIndex: 5,
+        pointerEvents: 'none',
+        top: 'clamp(2rem, 8vh, 4rem)',
+        right: 'clamp(1rem, 8vw, 3rem)',
+        width: 'clamp(9rem, 22.5vw, 15rem)',
+        height: 'clamp(9rem, 22.5vw, 15rem)'
+      }}>
         {/* Moon Background */}
         <img 
-          src="/heinous/presenting.png" 
+          src="/sidequests/wack-a-chupacabra/wack-moon.png" 
           alt="Moon"
-          className="w-full h-full object-contain"
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'contain'
+          }}
         />
         
         {/* Haunt Logo Overlay */}
         {hauntConfig?.logoPath && (
-          <div className="absolute inset-0 flex items-center justify-center">
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
             <img 
               src={hauntConfig.logoPath} 
               alt="Haunt Logo"
-              className="w-3/4 h-3/4 object-contain opacity-80 filter grayscale"
+              style={{
+                width: '75%',
+                height: '75%',
+                objectFit: 'contain',
+                opacity: 0.8,
+                filter: 'grayscale(100%)'
+              }}
             />
           </div>
         )}
@@ -203,35 +231,125 @@ export function WackAChupacabra() {
 
       {/* Game Over Overlay */}
       {gameState.isGameOver && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center">
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: 50,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
           {/* Green goo splash effect */}
           <div 
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: 'url(/backgrounds/lab-dark-blue.png)' }}
+            style={{ 
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundImage: 'url(/sidequests/wack-a-chupacabra/wack-splash.png)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat'
+            }}
           />
-          <div className="absolute inset-0 bg-green-500 bg-opacity-30" />
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(34, 197, 94, 0.3)'
+          }} />
           
           {/* Game Over UI */}
-          <div className="relative z-10 " style={{textAlign: "center"}}>
-            <h2 className="text-4xl font-bold text-white mb-4 drop-shadow-lg">
+          <div style={{
+            position: 'relative',
+            zIndex: 10,
+            textAlign: 'center'
+          }}>
+            <h2 style={{
+              fontSize: 'clamp(2rem, 8vw, 2.5rem)',
+              fontFamily: 'Creepster, cursive',
+              fontWeight: 'bold',
+              color: '#ffffff',
+              marginBottom: '1rem',
+              textShadow: '2px 2px 4px rgba(0,0,0,0.7)'
+            }}>
               GAME OVER!
             </h2>
-            <p className="text-xl text-white  drop-shadow-lg" style={{marginBottom: "1.5rem"}}>
+            <p style={{
+              fontSize: 'clamp(1.2rem, 5vw, 1.5rem)',
+              color: '#ffffff',
+              marginBottom: '1.5rem',
+              textShadow: '2px 2px 4px rgba(0,0,0,0.7)'
+            }}>
               You hit the poison vial!
             </p>
-            <p className="text-lg text-white mb-8 drop-shadow-lg">
+            <p style={{
+              fontSize: 'clamp(1rem, 4vw, 1.25rem)',
+              color: '#ffffff',
+              marginBottom: '2rem',
+              textShadow: '2px 2px 4px rgba(0,0,0,0.7)'
+            }}>
               Final Score: {gameState.score}
             </p>
-            <div className="space-y-4">
+            <div style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '1rem',
+              alignItems: 'center'
+            }}>
               <button
                 onClick={resetGame}
-                className="px-8 py-3 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg transition-colors duration-200 shadow-lg"
+                style={{
+                  padding: '0.75rem 2rem',
+                  background: 'linear-gradient(to right, #dc2626, #b91c1c)',
+                  color: '#ffffff',
+                  fontWeight: 'bold',
+                  borderRadius: '0.5rem',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontSize: '1rem',
+                  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'linear-gradient(to right, #b91c1c, #991b1b)';
+                  e.currentTarget.style.transform = 'scale(1.05)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'linear-gradient(to right, #dc2626, #b91c1c)';
+                  e.currentTarget.style.transform = 'scale(1)';
+                }}
               >
                 Try Again
               </button>
               <Link
                 href="/game"
-                className="block px-8 py-3 bg-gray-600 hover:bg-gray-700 text-white font-bold rounded-lg transition-colors duration-200 shadow-lg"
+                style={{
+                  display: 'inline-block',
+                  padding: '0.75rem 2rem',
+                  background: 'linear-gradient(to right, #4b5563, #374151)',
+                  color: '#ffffff',
+                  fontWeight: 'bold',
+                  borderRadius: '0.5rem',
+                  textDecoration: 'none',
+                  fontSize: '1rem',
+                  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'linear-gradient(to right, #6b7280, #4b5563)';
+                  e.currentTarget.style.transform = 'scale(1.05)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'linear-gradient(to right, #4b5563, #374151)';
+                  e.currentTarget.style.transform = 'scale(1)';
+                }}
               >
                 Return to Game
               </Link>
@@ -241,32 +359,88 @@ export function WackAChupacabra() {
       )}
 
       {/* Game UI */}
-      <div className="relative z-10 h-screen flex flex-col">
+      <div style={{
+        position: 'relative',
+        zIndex: 10,
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column'
+      }}>
         {/* Score Display */}
-        <div className="flex justify-between items-center p-6">
-          <div className="text-2xl font-bold text-white drop-shadow-lg">
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          padding: '1.5rem'
+        }}>
+          <div style={{
+            fontSize: 'clamp(1.2rem, 5vw, 1.5rem)',
+            fontWeight: 'bold',
+            color: '#ffffff',
+            textShadow: '2px 2px 4px rgba(0,0,0,0.7)'
+          }}>
             Score: {gameState.score}
           </div>
-          <div className="text-lg text-white drop-shadow-lg" style={{ fontFamily: 'Frijole, cursive' }}>
+          <div style={{
+            fontSize: 'clamp(1rem, 4vw, 1.25rem)',
+            color: '#ffffff',
+            textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
+            fontFamily: 'Frijole, cursive'
+          }}>
             WACK-A-CHUPACABRA
           </div>
         </div>
-        
-
 
         {/* Game Start Screen */}
         {!gameState.isPlaying && !gameState.isGameOver && (
-          <div className="flex-1 flex items-center justify-center">
-            <div style={{textAlign: "center"}}>
-              <h1 className="text-4xl font-bold text-white  drop-shadow-lg" style={{marginBottom: "1.5rem", fontFamily: 'Frijole, cursive'}}>
+          <div style={{
+            flex: 1,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <div style={{textAlign: 'center'}}>
+              <h1 style={{
+                fontSize: 'clamp(2rem, 8vw, 2.5rem)',
+                fontFamily: 'Creepster, cursive',
+                fontWeight: 'bold',
+                color: '#ffffff',
+                marginBottom: '1.5rem',
+                textShadow: '2px 2px 4px rgba(0,0,0,0.7)'
+              }}>
                 WACK-A-CHUPACABRA
               </h1>
-              <p className="text-lg text-white mb-8 drop-shadow-lg max-w-md">
+              <p style={{
+                fontSize: 'clamp(1rem, 4vw, 1.25rem)',
+                color: '#ffffff',
+                marginBottom: '2rem',
+                textShadow: '2px 2px 4px rgba(0,0,0,0.7)',
+                maxWidth: '28rem'
+              }}>
                 Hit the Chupacabras (+1 point), avoid decoys (-1 point), and DON'T hit the poison vials!
               </p>
               <button
                 onClick={startGame}
-                className="px-8 py-4 bg-green-600 hover:bg-green-700 text-white font-bold text-xl rounded-lg transition-colors duration-200 shadow-lg"
+                style={{
+                  padding: '1rem 2rem',
+                  background: 'linear-gradient(to right, #16a34a, #15803d)',
+                  color: '#ffffff',
+                  fontWeight: 'bold',
+                  fontSize: 'clamp(1.1rem, 4vw, 1.25rem)',
+                  borderRadius: '0.5rem',
+                  border: 'none',
+                  cursor: 'pointer',
+                  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'linear-gradient(to right, #15803d, #166534)';
+                  e.currentTarget.style.transform = 'scale(1.05)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'linear-gradient(to right, #16a34a, #15803d)';
+                  e.currentTarget.style.transform = 'scale(1)';
+                }}
               >
                 Start Game
               </button>
@@ -276,8 +450,22 @@ export function WackAChupacabra() {
 
         {/* Game Area - Holes Grid */}
         {gameState.isPlaying && (
-          <div className="flex-1 flex items-end justify-center pb-20">
-            <div className="grid grid-cols-3 grid-rows-2 gap-6 md:gap-8 place-items-center max-w-md mx-auto">
+          <div style={{
+            flex: 1,
+            display: 'flex',
+            alignItems: 'flex-end',
+            justifyContent: 'center',
+            paddingBottom: '5rem'
+          }}>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(3, 1fr)',
+              gridTemplateRows: 'repeat(2, 1fr)',
+              gap: 'clamp(1rem, 4vw, 2rem)',
+              placeItems: 'center',
+              maxWidth: '28rem',
+              margin: '0 auto'
+            }}>
               {Array.from({ length: 5 }, (_, index) => {
                 // Position holes: top row has 2 holes centered (indices 0,1), bottom row has 3 holes (indices 2,3,4)
                 let gridColumnStart;
@@ -296,8 +484,9 @@ export function WackAChupacabra() {
                 return (
                   <div
                     key={index}
-                    className="relative cursor-pointer"
                     style={{
+                      position: 'relative',
+                      cursor: 'pointer',
                       gridColumn: `${gridColumnStart} / span 1`,
                       gridRow: gridRowStart
                     }}
@@ -305,18 +494,35 @@ export function WackAChupacabra() {
                   >
                     {/* Hole */}
                     <img
-                      src="/heinous/neutral.png"
+                      src="/sidequests/wack-a-chupacabra/wack-hole.png"
                       alt={`Hole ${index + 1}`}
-                      className="w-30 h-30 md:w-36 md:h-36 block"
+                      style={{
+                        width: 'clamp(5rem, 15vw, 9rem)',
+                        height: 'clamp(5rem, 15vw, 9rem)',
+                        display: 'block'
+                      }}
                     />
                     
                     {/* Sprite */}
                     {gameState.currentHole === index && gameState.currentSprite && spriteVisible && (
-                      <div className="absolute -top-1 left-0 right-0 flex justify-center pointer-events-none z-10">
+                      <div style={{
+                        position: 'absolute',
+                        top: '-0.25rem',
+                        left: 0,
+                        right: 0,
+                        display: 'flex',
+                        justifyContent: 'center',
+                        pointerEvents: 'none',
+                        zIndex: 10
+                      }}>
                         <img
                           src={getSpriteImagePath(gameState.currentSprite)}
                           alt={gameState.currentSprite}
-                          className="w-18 h-18 md:w-24 md:h-24 animate-bounce"
+                          style={{
+                            width: 'clamp(4.5rem, 12vw, 6rem)',
+                            height: 'clamp(4.5rem, 12vw, 6rem)',
+                            animation: 'bounce 1s infinite'
+                          }}
                         />
                       </div>
                     )}
@@ -329,7 +535,11 @@ export function WackAChupacabra() {
 
         {/* Back Button */}
         {!gameState.isPlaying && !gameState.isGameOver && (
-          <div className="absolute bottom-6 left-6">
+          <div style={{
+            position: 'absolute',
+            bottom: '1.5rem',
+            left: '1.5rem'
+          }}>
             <Link
               href="/game"
               style={{
@@ -359,6 +569,24 @@ export function WackAChupacabra() {
           </div>
         )}
       </div>
+
+      {/* CSS Animations */}
+      <style>{`
+        @keyframes bounce {
+          0%, 20%, 53%, 80%, 100% {
+            transform: translate3d(0,0,0);
+          }
+          40%, 43% {
+            transform: translate3d(0, -30px, 0);
+          }
+          70% {
+            transform: translate3d(0, -15px, 0);
+          }
+          90% {
+            transform: translate3d(0, -4px, 0);
+          }
+        }
+      `}</style>
     </div>
   );
 }
