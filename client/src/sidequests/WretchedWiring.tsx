@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link } from 'wouter';
+import { useSidequestAssets } from '../hooks/use-sidequest-assets';
 
 interface GameState {
   isPlaying: boolean;
@@ -92,6 +93,8 @@ export function WretchedWiring() {
   const [draggedWire, setDraggedWire] = useState<string | null>(null);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const timerRef = useRef<number>(0);
+
+  const { data: assets = {} } = useSidequestAssets('wretched-wiring');
 
   // Initialize random wires
   const initializeWires = () => {

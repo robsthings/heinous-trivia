@@ -169,7 +169,9 @@ export function WackAChupacabra() {
       {/* Background */}
       <div 
         className="fixed inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: 'url(/backgrounds/lab-dark-blue.png)' }}
+        style={{ 
+          backgroundImage: assets['wack-bg'] ? `url(${assets['wack-bg']})` : 'url(/backgrounds/lab-dark-blue.png)'
+        }}
       />
 
       {/* Moon with Haunt Logo Overlay */}
