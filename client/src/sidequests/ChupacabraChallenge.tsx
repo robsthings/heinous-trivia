@@ -438,7 +438,7 @@ export function ChupacabraChallenge() {
                   transform: 'scale(1)',
                   background: card.isFlipped || card.isMatched 
                     ? `url(/sidequests/chupacabra-challenge/chupa-${card.cardNumber}.png)` 
-                    : 'linear-gradient(to bottom right, #374151, #111827)',
+                    : 'url(/sidequests/chupacabra-challenge/card-back.png)',
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                   backgroundRepeat: 'no-repeat',
@@ -468,25 +468,7 @@ export function ChupacabraChallenge() {
                 }}
                 onClick={() => flipCard(card.id)}
               >
-                {!card.isFlipped && !card.isMatched && (
-                  <div style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  }}>
-                    <span style={{
-                      fontSize: 'clamp(1.5rem, 5vw, 2.5rem)',
-                      color: '#9ca3af',
-                      fontWeight: 'bold',
-                      textShadow: '0 2px 4px rgba(0,0,0,0.5)'
-                    }}>?</span>
-                  </div>
-                )}
+
               </div>
             ))}
           </div>
