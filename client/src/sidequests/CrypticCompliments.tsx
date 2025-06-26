@@ -216,14 +216,12 @@ export const CrypticCompliments: React.FC = () => {
               <div style={{
                 width: '100%',
                 height: '100%',
-                background: 'linear-gradient(135deg, #9333ea 0%, #581c87 100%)',
-                borderRadius: '0.5rem',
-                border: '2px solid #a855f7',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 fontSize: 'clamp(1.5rem, 4vw, 2.5rem)',
-                boxShadow: '0 0 20px rgba(168, 85, 247, 0.8)'
+                filter: 'drop-shadow(0 0 20px rgba(168, 85, 247, 0.8)) drop-shadow(0 0 40px rgba(168, 85, 247, 0.6))',
+                textShadow: '0 0 30px rgba(168, 85, 247, 0.9)'
               }}>
                 🎁
               </div>
