@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'wouter';
+import { useSidequestAssets } from '../hooks/use-sidequest-assets';
 
 interface MonsterNameGeneratorProps {
   showHeinous?: boolean;
@@ -15,6 +16,9 @@ function MonsterNameGeneratorCore({ showHeinous = true }: MonsterNameGeneratorPr
   const [scanProgress, setScanProgress] = useState(0);
   const [isFlashing, setIsFlashing] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
+  
+  // Get Firebase assets for monster name generator
+  const { data: assets } = useSidequestAssets('monster-name-generator');
 
   const adjectives = [
     "Gloopy", "Cryptic", "Snarling", "Chittering", "Pustulent", 
@@ -271,7 +275,11 @@ function MonsterNameGeneratorCore({ showHeinous = true }: MonsterNameGeneratorPr
               maxWidth: 'clamp(20rem, 50vw, 28rem)',
               aspectRatio: '3/4',
               margin: '0 auto',
-              backgroundImage: 'url(/assets/monster-card_1750900915378.png)',
+              backgroundImage: assets?.['monster-card_1750900915378'] ? `url(${assets['monster-card_1750900915378']})` : undefined,
+              background: !assets?.['monster-card_1750900915378'] ? 'rgba(0, 0, 0, 0.8)' : undefined,
+              border: !assets?.['monster-card_1750900915378'] ? '2px solid #10b981' : undefined,
+              borderRadius: !assets?.['monster-card_1750900915378'] ? '1rem' : undefined,
+              boxShadow: !assets?.['monster-card_1750900915378'] ? '0 0 30px rgba(16, 185, 129, 0.3)' : undefined,
               backgroundSize: 'contain',
               backgroundPosition: 'center',
               backgroundRepeat: 'no-repeat',
