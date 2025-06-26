@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-type GamePhase = 'intro' | 'sequence' | 'gameplay' | 'win' | 'fail';
+type GamePhase = 'intro' | 'sequence' | 'gameplay' | 'win' | 'fail' | 'reshuffling';
 
 interface GameState {
   phase: GamePhase;
@@ -11,6 +11,9 @@ interface GameState {
   roundsPlayed: number;
   showingPattern: boolean;
   patternIndex: number;
+  canRepeat: boolean;
+  patternViewCount: number;
+  glyphPositions: number[];
 }
 
 export function Crime() {
@@ -22,10 +25,23 @@ export function Crime() {
     roundsWon: 0,
     roundsPlayed: 0,
     showingPattern: false,
-    patternIndex: 0
+    patternIndex: 0,
+    canRepeat: true,
+    patternViewCount: 0,
+    glyphPositions: [1, 2, 3, 4, 5, 6]
   });
 
   const [flickerActive, setFlickerActive] = useState(false);
+
+  // Shuffle array utility
+  const shuffleArray = (array: number[]) => {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  };
 
   // Generate random pattern of 3-6 glyphs
   const generatePattern = () => {
@@ -42,7 +58,7 @@ export function Crime() {
     setGameState(prev => ({ ...prev, phase: 'sequence', sequenceStep: 1 }));
   };
 
-  // Progress through sequence steps
+  // Progress through sequence steps (slower timing)
   useEffect(() => {
     if (gameState.phase === 'sequence' && gameState.sequenceStep > 0) {
       const timer = setTimeout(() => {
@@ -50,87 +66,158 @@ export function Crime() {
           setGameState(prev => ({ ...prev, sequenceStep: prev.sequenceStep + 1 }));
         } else {
           // Start gameplay
-          const newPattern = generatePattern();
-          setGameState(prev => ({
-            ...prev,
-            phase: 'gameplay',
-            currentPattern: newPattern,
+          const pattern = generatePattern();
+          setGameState(prev => ({ 
+            ...prev, 
+            phase: 'gameplay', 
+            currentPattern: pattern,
             playerInput: [],
-            showingPattern: true,
-            patternIndex: 0
+            canRepeat: true,
+            patternViewCount: 0
           }));
+          showPattern(pattern);
         }
-      }, 2000);
+      }, 3000); // Slower timing - 3 seconds between each gif
       return () => clearTimeout(timer);
     }
   }, [gameState.phase, gameState.sequenceStep]);
 
   // Show pattern to player
-  useEffect(() => {
-    if (gameState.showingPattern && gameState.patternIndex < gameState.currentPattern.length) {
-      const timer = setTimeout(() => {
-        setGameState(prev => ({ ...prev, patternIndex: prev.patternIndex + 1 }));
-      }, 800);
-      return () => clearTimeout(timer);
-    } else if (gameState.showingPattern && gameState.patternIndex >= gameState.currentPattern.length) {
-      // Pattern shown completely, allow player input
-      setGameState(prev => ({ ...prev, showingPattern: false }));
-    }
-  }, [gameState.showingPattern, gameState.patternIndex, gameState.currentPattern.length]);
-
-  // Handle glyph click
-  const handleGlyphClick = (glyphNumber: number) => {
-    if (gameState.showingPattern) return;
-
-    const newPlayerInput = [...gameState.playerInput, glyphNumber];
-    const currentIndex = gameState.playerInput.length;
+  const showPattern = (pattern: number[]) => {
+    setGameState(prev => ({ 
+      ...prev, 
+      showingPattern: true, 
+      patternIndex: 0,
+      patternViewCount: prev.patternViewCount + 1
+    }));
     
-    // Check if current input matches pattern
-    if (glyphNumber !== gameState.currentPattern[currentIndex]) {
-      // Wrong input - trigger fail
-      triggerFail();
-      return;
-    }
-
-    setGameState(prev => ({ ...prev, playerInput: newPlayerInput }));
-
-    // Check if pattern completed correctly
-    if (newPlayerInput.length === gameState.currentPattern.length) {
-      // Round won
-      const newRoundsWon = gameState.roundsWon + 1;
-      const newRoundsPlayed = gameState.roundsPlayed + 1;
-
-      if (newRoundsWon >= 3) {
-        // Game won
-        setGameState(prev => ({ ...prev, phase: 'win' }));
-      } else if (newRoundsPlayed >= 5 && newRoundsWon < 3) {
-        // Game lost (didn't win 3 out of 5)
-        triggerFail();
+    let index = 0;
+    const showNext = () => {
+      if (index < pattern.length) {
+        setGameState(prev => ({ ...prev, patternIndex: index + 1 }));
+        index++;
+        setTimeout(showNext, 800);
       } else {
-        // Start next round
         setTimeout(() => {
-          const newPattern = generatePattern();
-          setGameState(prev => ({
-            ...prev,
-            currentPattern: newPattern,
-            playerInput: [],
-            roundsWon: newRoundsWon,
-            roundsPlayed: newRoundsPlayed,
-            showingPattern: true,
-            patternIndex: 0
+          setGameState(prev => ({ 
+            ...prev, 
+            showingPattern: false, 
+            patternIndex: 0,
+            canRepeat: prev.patternViewCount < 2
           }));
-        }, 1000);
+        }, 500);
       }
+    };
+    showNext();
+  };
+
+  // Repeat pattern (only available twice)
+  const repeatPattern = () => {
+    if (gameState.canRepeat && gameState.patternViewCount < 2) {
+      showPattern(gameState.currentPattern);
     }
   };
 
-  // Trigger fail sequence
-  const triggerFail = () => {
+  // Handle glyph click
+  const handleGlyphClick = (glyphNum: number) => {
+    if (gameState.showingPattern) return;
+
+    const newInput = [...gameState.playerInput, glyphNum];
+    setGameState(prev => ({ ...prev, playerInput: newInput }));
+
+    // Check if pattern matches so far
+    const isCorrectSoFar = newInput.every((input, index) => 
+      input === gameState.currentPattern[index]
+    );
+
+    if (!isCorrectSoFar) {
+      // Wrong - start reshuffle and new round
+      handleRoundLoss();
+    } else if (newInput.length === gameState.currentPattern.length) {
+      // Correct complete pattern
+      handleRoundWin();
+    }
+  };
+
+  // Handle round win
+  const handleRoundWin = () => {
+    const newRoundsWon = gameState.roundsWon + 1;
+    const newRoundsPlayed = gameState.roundsPlayed + 1;
+
+    if (newRoundsWon >= 3) {
+      // Game win - green flash
+      setGameState(prev => ({ 
+        ...prev, 
+        phase: 'win', 
+        roundsWon: newRoundsWon,
+        roundsPlayed: newRoundsPlayed
+      }));
+    } else {
+      // Continue to next round
+      setTimeout(() => {
+        const pattern = generatePattern();
+        setGameState(prev => ({ 
+          ...prev, 
+          roundsWon: newRoundsWon,
+          roundsPlayed: newRoundsPlayed,
+          currentPattern: pattern,
+          playerInput: [],
+          canRepeat: true,
+          patternViewCount: 0
+        }));
+        showPattern(pattern);
+      }, 1000);
+    }
+  };
+
+  // Handle round loss
+  const handleRoundLoss = () => {
+    const newRoundsPlayed = gameState.roundsPlayed + 1;
+    
+    if (newRoundsPlayed >= 5) {
+      // Game over - red flash
+      triggerFailureSequence();
+    } else {
+      // Reshuffle and continue
+      setGameState(prev => ({ 
+        ...prev, 
+        phase: 'reshuffling',
+        roundsPlayed: newRoundsPlayed,
+        playerInput: []
+      }));
+      
+      // Visibly reshuffle glyphs
+      setTimeout(() => {
+        const shuffledPositions = shuffleArray([1, 2, 3, 4, 5, 6]);
+        setGameState(prev => ({ 
+          ...prev, 
+          glyphPositions: shuffledPositions
+        }));
+        
+        // Pause then start new sequence
+        setTimeout(() => {
+          const pattern = generatePattern();
+          setGameState(prev => ({ 
+            ...prev, 
+            phase: 'gameplay',
+            currentPattern: pattern,
+            playerInput: [],
+            canRepeat: true,
+            patternViewCount: 0
+          }));
+          showPattern(pattern);
+        }, 1500);
+      }, 500);
+    }
+  };
+
+  // Trigger failure sequence
+  const triggerFailureSequence = () => {
     setFlickerActive(true);
     setTimeout(() => {
-      setFlickerActive(false);
       setGameState(prev => ({ ...prev, phase: 'fail' }));
-    }, 500);
+      setFlickerActive(false);
+    }, 1500);
   };
 
   // Reset game
@@ -143,7 +230,10 @@ export function Crime() {
       roundsWon: 0,
       roundsPlayed: 0,
       showingPattern: false,
-      patternIndex: 0
+      patternIndex: 0,
+      canRepeat: true,
+      patternViewCount: 0,
+      glyphPositions: [1, 2, 3, 4, 5, 6]
     });
     setFlickerActive(false);
   };
@@ -163,19 +253,60 @@ export function Crime() {
     : {
         minHeight: '100vh',
         backgroundImage: 'url("/sidequests/crime/game-board.png")',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        backgroundSize: gameState.phase === 'gameplay' || gameState.phase === 'reshuffling' ? '150%' : 'cover',
+        backgroundPosition: gameState.phase === 'gameplay' || gameState.phase === 'reshuffling' ? 'left center' : 'center',
         display: 'flex',
         flexDirection: 'column' as const,
         alignItems: 'center' as const,
         justifyContent: 'center' as const,
         padding: '1rem',
         position: 'relative' as const,
-        fontFamily: 'system-ui, -apple-system, sans-serif'
+        fontFamily: 'system-ui, -apple-system, sans-serif',
+        animation: gameState.phase === 'gameplay' ? 'zoomFromCenter 1s ease-out' : 'none'
       };
 
   return (
     <div style={containerStyle}>
+      
+      {/* CSS Animations */}
+      <style>{`
+        @keyframes bookReveal {
+          0% { opacity: 0; transform: scale(0.8) rotateY(-15deg); }
+          100% { opacity: 1; transform: scale(1) rotateY(0deg); }
+        }
+        
+        @keyframes staticFlicker {
+          0%, 100% { opacity: 0.1; }
+          50% { opacity: 0.3; }
+        }
+        
+        @keyframes zoomFromCenter {
+          0% { 
+            backgroundSize: 100%; 
+            backgroundPosition: center; 
+          }
+          100% { 
+            backgroundSize: 150%; 
+            backgroundPosition: left center; 
+          }
+        }
+        
+        @keyframes glowPulse {
+          0%, 100% { 
+            boxShadow: 0 0 20px rgba(0,255,255,0.6);
+            filter: brightness(1.2);
+          }
+          50% { 
+            boxShadow: 0 0 40px rgba(0,255,255,1);
+            filter: brightness(1.5);
+          }
+        }
+        
+        @keyframes reshuffleGlow {
+          0%, 100% { filter: brightness(1); }
+          50% { filter: brightness(1.5) hue-rotate(45deg); }
+        }
+      `}</style>
 
       {/* Flicker overlay for fail transition */}
       {flickerActive && (
@@ -201,12 +332,11 @@ export function Crime() {
           textAlign: 'center'
         }}>
           <h1 style={{
-            fontSize: 'clamp(2rem, 6vw, 3.5rem)',
-            fontWeight: 'bold',
+            fontSize: 'clamp(2.5rem, 8vw, 4rem)',
             color: '#ff0000',
-            textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
-            fontFamily: 'Creepster, cursive',
-            marginBottom: '1rem'
+            textShadow: '0 0 20px rgba(255,0,0,0.8)',
+            margin: 0,
+            fontFamily: 'serif'
           }}>
             C.R.I.M.E.
           </h1>
@@ -272,14 +402,14 @@ export function Crime() {
               }}
             />
             
-            {/* Book overlay centered on screen */}
+            {/* Book overlay - 2x bigger, glowing, 2/3 down screen */}
             <div style={{
               position: 'absolute',
-              top: '50%',
+              top: '66%',
               left: '50%',
               transform: 'translate(-50%, -50%)',
-              width: 'clamp(120px, 20vw, 200px)',
-              height: 'clamp(120px, 20vw, 200px)',
+              width: 'clamp(240px, 40vw, 400px)',
+              height: 'clamp(240px, 40vw, 400px)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center'
@@ -291,87 +421,87 @@ export function Crime() {
                   maxWidth: '100%',
                   maxHeight: '100%',
                   objectFit: 'contain',
-                  animation: 'bookReveal 2s ease-in-out'
+                  animation: 'bookReveal 2s ease-in-out, glowPulse 2s ease-in-out infinite',
+                  filter: 'drop-shadow(0 0 30px rgba(0,255,255,0.8))'
                 }}
               />
-            </div>
-
-            {/* Status text overlay */}
-            <div style={{
-              position: 'absolute',
-              bottom: '10%',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              background: 'rgba(0,0,0,0.8)',
-              padding: '1rem 2rem',
-              borderRadius: '10px',
-              border: '2px solid #00ff00'
-            }}>
-              <p style={{
-                fontSize: 'clamp(1rem, 3vw, 1.5rem)',
-                color: '#00ff00',
-                textAlign: 'center',
-                margin: 0,
-                textShadow: '0 0 10px #00ff00',
-                fontFamily: 'monospace'
-              }}>
-                ANALYZING SECURITY PROTOCOLS... STEP {gameState.sequenceStep}/3
-              </p>
             </div>
           </div>
         </div>
       )}
 
       {/* Gameplay Phase */}
-      {gameState.phase === 'gameplay' && (
+      {(gameState.phase === 'gameplay' || gameState.phase === 'reshuffling') && (
         <div style={{
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: '2rem',
+          gap: 'clamp(1rem, 4vw, 2rem)',
           width: '100%',
-          maxWidth: '800px'
+          maxWidth: '800px',
+          marginLeft: 'auto',
+          marginRight: '2rem'
         }}>
-          {/* Round counter */}
+          {/* Round indicator */}
           <div style={{
             background: 'rgba(0,0,0,0.8)',
-            padding: '1rem 2rem',
-            borderRadius: '10px',
-            border: '2px solid #00ff00'
+            padding: '0.5rem 1.5rem',
+            borderRadius: '20px',
+            border: '2px solid #00ff00',
+            boxShadow: '0 0 15px rgba(0,255,0,0.3)'
           }}>
             <p style={{
+              fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)',
               color: '#00ff00',
-              fontSize: '1.2rem',
-              fontWeight: 'bold',
-              textAlign: 'center',
-              margin: 0
+              margin: 0,
+              textShadow: '0 0 10px #00ff00',
+              fontFamily: 'monospace'
             }}>
               Round {gameState.roundsPlayed + 1}/5 - Wins: {gameState.roundsWon}/3
             </p>
           </div>
 
-          {/* Pattern display message */}
-          {gameState.showingPattern && (
-            <p style={{
-              color: '#ffff00',
-              fontSize: '1.1rem',
-              textAlign: 'center',
-              textShadow: '1px 1px 2px rgba(0,0,0,0.8)',
-              animation: 'pulse 1s infinite'
-            }}>
-              MEMORIZE THE SEQUENCE...
-            </p>
-          )}
-
+          {/* Input the sequence instruction */}
           {!gameState.showingPattern && (
             <p style={{
+              fontSize: 'clamp(1rem, 3vw, 1.3rem)',
               color: '#00ff00',
-              fontSize: '1.1rem',
               textAlign: 'center',
-              textShadow: '1px 1px 2px rgba(0,0,0,0.8)'
+              textShadow: '0 0 10px #00ff00',
+              margin: 0,
+              fontFamily: 'monospace'
             }}>
               INPUT THE SEQUENCE
             </p>
+          )}
+
+          {/* Repeat button */}
+          {!gameState.showingPattern && gameState.canRepeat && gameState.patternViewCount < 2 && (
+            <button
+              onClick={repeatPattern}
+              style={{
+                background: 'linear-gradient(45deg, #ff6600, #ff9900)',
+                color: '#ffffff',
+                border: 'none',
+                padding: '0.8rem 1.5rem',
+                borderRadius: '25px',
+                fontSize: 'clamp(0.9rem, 2.5vw, 1.1rem)',
+                fontWeight: 'bold',
+                cursor: 'pointer',
+                boxShadow: '0 4px 15px rgba(255,102,0,0.4)',
+                transition: 'all 0.3s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'scale(1.05)';
+                e.currentTarget.style.boxShadow = '0 6px 20px rgba(255,102,0,0.6)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'scale(1)';
+                e.currentTarget.style.boxShadow = '0 4px 15px rgba(255,102,0,0.4)';
+              }}
+            >
+              REPEAT PATTERN ({2 - gameState.patternViewCount} left)
+            </button>
           )}
 
           {/* Glyph grid */}
@@ -380,22 +510,23 @@ export function Crime() {
             gridTemplateColumns: 'repeat(3, 1fr)',
             gap: 'clamp(1rem, 3vw, 2rem)',
             width: '100%',
-            maxWidth: '400px'
+            maxWidth: '400px',
+            animation: gameState.phase === 'reshuffling' ? 'reshuffleGlow 0.5s ease-in-out infinite' : 'none'
           }}>
-            {[1, 2, 3, 4, 5, 6].map((glyphNum) => {
+            {gameState.glyphPositions.map((glyphNum, index) => {
               const isHighlighted = gameState.showingPattern && 
                 gameState.patternIndex > 0 && 
                 gameState.currentPattern[gameState.patternIndex - 1] === glyphNum;
 
               return (
                 <button
-                  key={glyphNum}
+                  key={index}
                   onClick={() => handleGlyphClick(glyphNum)}
-                  disabled={gameState.showingPattern}
+                  disabled={gameState.showingPattern || gameState.phase === 'reshuffling'}
                   style={{
                     background: 'transparent',
                     border: 'none',
-                    cursor: gameState.showingPattern ? 'default' : 'pointer',
+                    cursor: (gameState.showingPattern || gameState.phase === 'reshuffling') ? 'default' : 'pointer',
                     padding: '0.5rem',
                     borderRadius: '10px',
                     transition: 'all 0.3s ease',
@@ -404,13 +535,13 @@ export function Crime() {
                     boxShadow: isHighlighted ? '0 0 20px rgba(0,255,0,0.8)' : 'none'
                   }}
                   onMouseEnter={(e) => {
-                    if (!gameState.showingPattern) {
+                    if (!gameState.showingPattern && gameState.phase !== 'reshuffling') {
                       e.currentTarget.style.transform = 'scale(1.1)';
                       e.currentTarget.style.filter = 'brightness(1.2)';
                     }
                   }}
                   onMouseLeave={(e) => {
-                    if (!gameState.showingPattern) {
+                    if (!gameState.showingPattern && gameState.phase !== 'reshuffling') {
                       e.currentTarget.style.transform = 'scale(1)';
                       e.currentTarget.style.filter = 'brightness(1)';
                     }
@@ -457,7 +588,76 @@ export function Crime() {
         </div>
       )}
 
-      {/* Fail Phase */}
+      {/* Win Phase - Green flash */}
+      {gameState.phase === 'win' && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          background: 'rgba(0,255,0,0.3)',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 9999
+        }}>
+          <div style={{
+            background: 'rgba(0,0,0,0.9)',
+            padding: '3rem',
+            borderRadius: '20px',
+            border: '3px solid #00ff00',
+            textAlign: 'center',
+            boxShadow: '0 0 50px rgba(0,255,0,0.8)'
+          }}>
+            <h2 style={{
+              fontSize: 'clamp(2rem, 6vw, 3rem)',
+              color: '#00ff00',
+              textShadow: '0 0 30px #00ff00',
+              margin: '0 0 1rem 0'
+            }}>
+              ACCESS GRANTED
+            </h2>
+            
+            <p style={{
+              fontSize: 'clamp(1rem, 3vw, 1.5rem)',
+              color: '#ffffff',
+              margin: '0 0 2rem 0'
+            }}>
+              Security protocols bypassed successfully!
+            </p>
+
+            <button
+              onClick={resetGame}
+              style={{
+                background: 'linear-gradient(45deg, #4caf50, #45a049)',
+                color: '#ffffff',
+                border: 'none',
+                padding: '1rem 2rem',
+                borderRadius: '25px',
+                fontSize: 'clamp(1rem, 3vw, 1.2rem)',
+                fontWeight: 'bold',
+                cursor: 'pointer',
+                boxShadow: '0 4px 15px rgba(76,175,80,0.4)',
+                transition: 'all 0.3s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'scale(1.05)';
+                e.currentTarget.style.boxShadow = '0 6px 20px rgba(76,175,80,0.6)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'scale(1)';
+                e.currentTarget.style.boxShadow = '0 4px 15px rgba(76,175,80,0.4)';
+              }}
+            >
+              INITIATE NEW SEQUENCE
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Fail Phase - Red flash */}
       {gameState.phase === 'fail' && (
         <div style={{
           position: 'fixed',
@@ -475,160 +675,84 @@ export function Crime() {
           <div style={{
             background: 'rgba(0,0,0,0.9)',
             padding: '3rem',
-            borderRadius: '15px',
+            borderRadius: '20px',
             border: '3px solid #ff0000',
             textAlign: 'center',
-            animation: 'redFlash 1s infinite'
+            boxShadow: '0 0 50px rgba(255,0,0,0.8)'
           }}>
             <h2 style={{
-              fontSize: 'clamp(1.5rem, 5vw, 2.5rem)',
+              fontSize: 'clamp(2rem, 6vw, 3rem)',
               color: '#ff0000',
-              fontWeight: 'bold',
-              fontFamily: 'Creepster, cursive',
-              textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
-              marginBottom: '1rem'
+              textShadow: '0 0 30px #ff0000',
+              margin: '0 0 1rem 0'
             }}>
-              ALERT: UNAUTHORIZED ACCESS DETECTED
+              UNAUTHORIZED ACCESS
             </h2>
-
+            
             <p style={{
-              fontSize: '1.2rem',
-              color: '#e5e7eb',
-              marginBottom: '2rem'
+              fontSize: 'clamp(1rem, 3vw, 1.5rem)',
+              color: '#ffffff',
+              margin: '0 0 2rem 0'
             }}>
-              Dr. Heinous is approaching...
+              Security breach detected. System locked.
             </p>
 
-            <button
-              onClick={resetGame}
-              style={{
-                background: 'linear-gradient(45deg, #7f1d1d, #dc2626)',
-                border: '2px solid #ffffff',
-                borderRadius: '0.5rem',
-                padding: '1rem 2rem',
-                fontSize: '1.1rem',
-                fontWeight: 'bold',
-                color: '#ffffff',
-                cursor: 'pointer',
-                transition: 'all 0.3s ease',
-                textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
-                boxShadow: '0 4px 8px rgba(0,0,0,0.5)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'scale(1.05)';
-                e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.7)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'scale(1)';
-                e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.5)';
-              }}
-            >
-              TRY AGAIN
-            </button>
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+              <button
+                onClick={resetGame}
+                style={{
+                  background: 'linear-gradient(45deg, #ff4444, #cc0000)',
+                  color: '#ffffff',
+                  border: 'none',
+                  padding: '1rem 2rem',
+                  borderRadius: '25px',
+                  fontSize: 'clamp(1rem, 3vw, 1.2rem)',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  boxShadow: '0 4px 15px rgba(255,68,68,0.4)',
+                  transition: 'all 0.3s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'scale(1.05)';
+                  e.currentTarget.style.boxShadow = '0 6px 20px rgba(255,68,68,0.6)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'scale(1)';
+                  e.currentTarget.style.boxShadow = '0 4px 15px rgba(255,68,68,0.4)';
+                }}
+              >
+                TRY AGAIN
+              </button>
+
+              <button
+                onClick={() => window.location.href = '/game/headquarters'}
+                style={{
+                  background: 'linear-gradient(45deg, #666666, #444444)',
+                  color: '#ffffff',
+                  border: 'none',
+                  padding: '1rem 2rem',
+                  borderRadius: '25px',
+                  fontSize: 'clamp(1rem, 3vw, 1.2rem)',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  boxShadow: '0 4px 15px rgba(102,102,102,0.4)',
+                  transition: 'all 0.3s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'scale(1.05)';
+                  e.currentTarget.style.boxShadow = '0 6px 20px rgba(102,102,102,0.6)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'scale(1)';
+                  e.currentTarget.style.boxShadow = '0 4px 15px rgba(102,102,102,0.4)';
+                }}
+              >
+                RETURN TO GAME
+              </button>
+            </div>
           </div>
         </div>
       )}
-
-      {/* Win Phase */}
-      {gameState.phase === 'win' && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100vw',
-          height: '100vh',
-          background: 'rgba(0,255,0,0.2)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          zIndex: 9999,
-          animation: 'fadeIn 1s ease-in'
-        }}>
-          <div style={{
-            background: 'rgba(0,0,0,0.9)',
-            padding: '3rem',
-            borderRadius: '15px',
-            border: '3px solid #00ff00',
-            textAlign: 'center',
-            boxShadow: '0 0 30px rgba(0,255,0,0.5)'
-          }}>
-            <h2 style={{
-              fontSize: 'clamp(1.5rem, 5vw, 2.5rem)',
-              color: '#00ff00',
-              fontWeight: 'bold',
-              fontFamily: 'Creepster, cursive',
-              textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
-              marginBottom: '1rem'
-            }}>
-              ACCESS GRANTED
-            </h2>
-
-            <p style={{
-              fontSize: '1.2rem',
-              color: '#e5e7eb',
-              marginBottom: '2rem'
-            }}>
-              CONTROL ROOM BREACHED
-            </p>
-
-            <button
-              onClick={() => window.location.href = '/game/headquarters'}
-              style={{
-                background: 'linear-gradient(45deg, #15803d, #22c55e)',
-                border: '2px solid #ffffff',
-                borderRadius: '0.5rem',
-                padding: '1rem 2rem',
-                fontSize: '1.1rem',
-                fontWeight: 'bold',
-                color: '#ffffff',
-                cursor: 'pointer',
-                transition: 'all 0.3s ease',
-                textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
-                boxShadow: '0 4px 8px rgba(0,0,0,0.5)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'scale(1.05)';
-                e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.7)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'scale(1)';
-                e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.5)';
-              }}
-            >
-              RETURN TO GAME
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* CSS Animations */}
-      <style dangerouslySetInnerHTML={{
-        __html: `
-          @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
-          }
-          @keyframes staticFlicker {
-            0% { opacity: 0.1; }
-            50% { opacity: 0.3; }
-            100% { opacity: 0.1; }
-          }
-          @keyframes redFlash {
-            0%, 100% { border-color: #ff0000; box-shadow: 0 0 20px rgba(255,0,0,0.5); }
-            50% { border-color: #ff6666; box-shadow: 0 0 40px rgba(255,0,0,0.8); }
-          }
-          @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-          }
-          @keyframes bookReveal {
-            0% { opacity: 0; transform: scale(0.5) rotate(-10deg); }
-            50% { opacity: 0.8; transform: scale(1.1) rotate(5deg); }
-            100% { opacity: 1; transform: scale(1) rotate(0deg); }
-          }
-        `
-      }} />
     </div>
   );
 }
