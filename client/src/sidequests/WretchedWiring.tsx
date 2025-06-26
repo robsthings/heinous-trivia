@@ -461,20 +461,36 @@ export function WretchedWiring() {
           {/* Left Side Terminals */}
           <div className="absolute left-8 top-1/2 transform -translate-y-1/2 space-y-8">
             <div className="relative">
-              <img src="/heinous/neutral.png" alt="Red Terminal Left" className="w-16 h-16" />
+              <img 
+                src={assets['node-red-left'] || '/sidequests/wretched-wiring/node-red-left.png'} 
+                alt="Red Terminal Left" 
+                className="w-16 h-16" 
+              />
             </div>
             <div className="relative">
-              <img src="/heinous/neutral.png" alt="Blue Terminal Left" className="w-16 h-16" />
+              <img 
+                src={assets['node-blue-left'] || '/sidequests/wretched-wiring/node-blue-left.png'} 
+                alt="Blue Terminal Left" 
+                className="w-16 h-16" 
+              />
             </div>
           </div>
 
           {/* Right Side Terminals */}
           <div className="absolute right-8 top-1/2 transform -translate-y-1/2 space-y-8">
             <div className="relative">
-              <img src="/heinous/neutral.png" alt="Red Terminal Right" className="w-16 h-16" />
+              <img 
+                src={assets['node-red-right'] || '/sidequests/wretched-wiring/node-red-right.png'} 
+                alt="Red Terminal Right" 
+                className="w-16 h-16" 
+              />
             </div>
             <div className="relative">
-              <img src="/heinous/neutral.png" alt="Blue Terminal Right" className="w-16 h-16" />
+              <img 
+                src={assets['node-blue-right'] || '/sidequests/wretched-wiring/node-blue-right.png'} 
+                alt="Blue Terminal Right" 
+                className="w-16 h-16" 
+              />
             </div>
           </div>
         </>
@@ -489,7 +505,7 @@ export function WretchedWiring() {
         >
           <div className="relative">
             <img 
-              src="/heinous/gift.png" 
+              src={assets['Pull-Chain'] || '/sidequests/wretched-wiring/Pull-Chain.png'} 
               alt="Pull Chain"
               className={`w-28 h-auto transition-all duration-300 hover:brightness-125 hover:scale-110 ${
                 gameState.pullChainPulled 
@@ -527,7 +543,7 @@ export function WretchedWiring() {
             onClick={() => rotateWire(wire.id)}
           >
             <img 
-              src={`/heinous/neutral.png`} 
+              src={assets[wire.assetName.replace('.png', '')] || `/sidequests/wretched-wiring/${wire.assetName}`} 
               alt={`${wire.color} wire`}
               className="w-25 h-25 pointer-events-none"
               style={{ width: '100px', height: '100px' }}
