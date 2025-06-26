@@ -777,8 +777,7 @@ export function WretchedWiring() {
                   strokeWidth="8"
                   strokeDasharray="15"
                   strokeDashoffset="0"
-                  className="animate-spin"
-                  style={{ animationDuration: '0.5s' }}
+                  style={{ animation: 'spin 0.5s linear infinite' }}
                 />
                 <circle
                   cx="40"
@@ -789,17 +788,28 @@ export function WretchedWiring() {
                   strokeWidth="2"
                   strokeDasharray="10"
                   strokeDashoffset="0"
-                  className="animate-pulse"
+                  style={{ animation: 'pulse 2s infinite' }}
                 />
               </>
             )}
           </svg>
           <div 
-            className={`absolute inset-0 flex items-center justify-center font-bold text-xs transition-all duration-200 ${
-              Math.abs(timerRef.current % 360) < 30 
-                ? 'text-red-300 animate-pulse scale-110' 
-                : 'text-white'
-            }`}
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontWeight: 'bold',
+              fontSize: '0.75rem',
+              transition: 'all 0.2s',
+              color: Math.abs(timerRef.current % 360) < 30 ? '#fca5a5' : '#ffffff',
+              animation: Math.abs(timerRef.current % 360) < 30 ? 'pulse 2s infinite' : 'none',
+              transform: Math.abs(timerRef.current % 360) < 30 ? 'scale(1.1)' : 'scale(1)'
+            }}
           >
             {Math.abs(timerRef.current % 360) < 30 ? 'PANIC!' : 'FAKE'}
           </div>
@@ -808,23 +818,65 @@ export function WretchedWiring() {
 
       {/* Heinous Taunts with Sprite */}
       {gameState.currentTaunt && (
-        <div className="fixed top-16 left-1/2 transform -translate-x-1/2 z-40">
-          <div className="flex flex-col items-center">
+        <div style={{
+          position: 'fixed',
+          top: '4rem',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 40
+        }}>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center'
+          }}>
             {/* Speech Bubble */}
-            <div className="bg-gray-900 bg-opacity-95 border-2 border-red-500 rounded-lg p-4 max-w-sm mb-2 animate-bounce">
-              <div className="text-red-400 font-bold text-sm mb-1">Dr. Heinous says:</div>
-              <div className="text-white text-sm">{gameState.currentTaunt}</div>
+            <div style={{
+              backgroundColor: 'rgba(17, 24, 39, 0.95)',
+              border: '2px solid #ef4444',
+              borderRadius: '0.5rem',
+              padding: '1rem',
+              maxWidth: '24rem',
+              marginBottom: '0.5rem',
+              animation: 'bounce 1s infinite',
+              position: 'relative'
+            }}>
+              <div style={{
+                color: '#f87171',
+                fontWeight: 'bold',
+                fontSize: '0.875rem',
+                marginBottom: '0.25rem'
+              }}>Dr. Heinous says:</div>
+              <div style={{
+                color: '#ffffff',
+                fontSize: '0.875rem'
+              }}>{gameState.currentTaunt}</div>
               {/* Speech bubble tail */}
-              <div className="absolute bottom-0 left-1/2 transform translate-y-full -translate-x-1/2">
-                <div className="w-0 h-0 border-l-4 border-r-4 border-t-8 border-transparent border-t-red-500"></div>
+              <div style={{
+                position: 'absolute',
+                bottom: 0,
+                left: '50%',
+                transform: 'translateY(100%) translateX(-50%)'
+              }}>
+                <div style={{
+                  width: 0,
+                  height: 0,
+                  borderLeft: '8px solid transparent',
+                  borderRight: '8px solid transparent',
+                  borderTop: '16px solid #ef4444'
+                }}></div>
               </div>
             </div>
             {/* Dr. Heinous Sprite */}
-            <div className="animate-pulse">
+            <div style={{ animation: 'pulse 2s infinite' }}>
               <img 
                 src={`/heinous/${gameState.currentHeinousSprite}`}
                 alt="Dr. Heinous"
-                className="w-24 h-24 object-contain"
+                style={{
+                  width: '6rem',
+                  height: '6rem',
+                  objectFit: 'contain'
+                }}
               />
             </div>
           </div>
@@ -833,15 +885,38 @@ export function WretchedWiring() {
 
       {/* Chupacabra Wire Thief */}
       {gameState.chupacabraVisible && (
-        <div className="fixed bottom-8 right-8 z-40 animate-pulse">
-          <div className="relative">
+        <div style={{
+          position: 'fixed',
+          bottom: '2rem',
+          right: '2rem',
+          zIndex: 40,
+          animation: 'pulse 2s infinite'
+        }}>
+          <div style={{ position: 'relative' }}>
             <img 
               src="/chupacabra/chupacabra-1.png" 
               alt="Chupacabra"
-              className="w-32 h-32 animate-bounce"
+              style={{
+                width: '8rem',
+                height: '8rem',
+                animation: 'bounce 1s infinite'
+              }}
             />
-            <div className="absolute -top-12 left-1/2 transform -translate-x-1/2 whitespace-nowrap">
-              <div className="bg-purple-900 bg-opacity-95 border-2 border-purple-400 rounded-lg p-2 text-white text-xs">
+            <div style={{
+              position: 'absolute',
+              top: '-3rem',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              whiteSpace: 'nowrap'
+            }}>
+              <div style={{
+                backgroundColor: 'rgba(88, 28, 135, 0.95)',
+                border: '2px solid #a855f7',
+                borderRadius: '0.5rem',
+                padding: '0.5rem',
+                color: '#ffffff',
+                fontSize: '0.75rem'
+              }}>
                 {gameState.chupacabraMessage}
               </div>
             </div>
@@ -851,13 +926,33 @@ export function WretchedWiring() {
 
       {/* I Give Up Button */}
       {gameState.isPlaying && (
-        <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 z-30">
-          <div className="relative">
+        <div style={{
+          position: 'fixed',
+          bottom: '2rem',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 30
+        }}>
+          <div style={{ position: 'relative' }}>
             <button
               onClick={giveUp}
-              className="px-8 py-4 bg-red-600 hover:bg-red-700 text-white font-bold rounded-full transition-all duration-300 shadow-lg animate-pulse border-4 border-red-400"
               style={{
-                boxShadow: '0 0 20px rgba(239, 68, 68, 0.5), inset 0 0 20px rgba(239, 68, 68, 0.1)'
+                padding: '1rem 2rem',
+                backgroundColor: '#dc2626',
+                color: '#ffffff',
+                fontWeight: 'bold',
+                borderRadius: '9999px',
+                transition: 'all 0.3s',
+                boxShadow: '0 0 20px rgba(239, 68, 68, 0.5), inset 0 0 20px rgba(239, 68, 68, 0.1), 0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+                animation: 'pulse 2s infinite',
+                border: '4px solid #f87171',
+                cursor: 'pointer'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#b91c1c';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = '#dc2626';
               }}
             >
               🏳️ I GIVE UP 🏳️
@@ -865,8 +960,23 @@ export function WretchedWiring() {
             
             {/* "That's broken too" message */}
             {gameState.showGiveUpMessage && (
-              <div className="absolute -top-16 left-1/2 transform -translate-x-1/2 whitespace-nowrap animate-bounce">
-                <div className="bg-red-900 bg-opacity-95 border-2 border-red-400 rounded-lg p-3 text-white font-bold text-sm">
+              <div style={{
+                position: 'absolute',
+                top: '-4rem',
+                left: '50%',
+                transform: 'translateX(-50%)',
+                whiteSpace: 'nowrap',
+                animation: 'bounce 1s infinite'
+              }}>
+                <div style={{
+                  backgroundColor: 'rgba(127, 29, 29, 0.95)',
+                  border: '2px solid #f87171',
+                  borderRadius: '0.5rem',
+                  padding: '0.75rem',
+                  color: '#ffffff',
+                  fontWeight: 'bold',
+                  fontSize: '0.875rem'
+                }}>
                   That's broken too.
                 </div>
               </div>
