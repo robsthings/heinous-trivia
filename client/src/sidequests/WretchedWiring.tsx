@@ -96,45 +96,6 @@ export function WretchedWiring() {
 
   const { data: assets = {}, isLoading: assetsLoading } = useSidequestAssets('wretched-wiring');
   
-  // Show loading screen while assets are loading
-  if (assetsLoading) {
-    return (
-      <>
-        <style>{`
-          @keyframes wretchedSpin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-          }
-        `}</style>
-        <div style={{
-          minHeight: "100vh",
-          background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontFamily: "Arial, sans-serif"
-        }}>
-          <div style={{
-            textAlign: "center",
-            color: "#ffffff"
-          }}>
-            <div style={{
-              width: "60px",
-              height: "60px",
-              border: "4px solid #ff4444",
-              borderTop: "4px solid transparent",
-              borderRadius: "50%",
-              animation: "wretchedSpin 1s linear infinite",
-              margin: "0 auto 20px"
-            }}></div>
-            <h2 style={{ margin: 0, fontSize: "24px", color: "#ff4444" }}>Loading Wretched Wiring...</h2>
-            <p style={{ margin: "10px 0 0", opacity: 0.8 }}>Preparing chaos simulator assets</p>
-          </div>
-        </div>
-      </>
-    );
-  }
-  
   // Asset fallback helper function
   const getAssetUrl = (assetName: string, fallbackPath: string = '') => {
     // Return Firebase asset URL if available, otherwise use local fallback
@@ -452,7 +413,7 @@ export function WretchedWiring() {
           left: 0,
           right: 0,
           bottom: 0,
-          background: 'linear-gradient(135deg, #1f2937 0%, #374151 50%, #111827 100%)',
+          background: assets['wretched-wiring-bg'] ? `url(${assets['wretched-wiring-bg']})` : 'linear-gradient(135deg, #1f2937 0%, #374151 50%, #111827 100%)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
