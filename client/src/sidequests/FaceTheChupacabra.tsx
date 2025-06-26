@@ -526,90 +526,123 @@ export function FaceTheChupacabra() {
 
         {/* Defeat Phase */}
         {gameState.phase === 'lost' && (
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem' }}>
-            <h2 style={{
-              fontSize: 'clamp(2rem, 8vw, 4rem)',
-              fontWeight: 'bold',
-              color: '#ef4444',
-              textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
-              fontFamily: 'Creepster, cursive'
+          <>
+            {/* Trap bars sliding down animation */}
+            <div style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '100vw',
+              height: '100vh',
+              backgroundImage: 'url("/sidequests/face-the-chupacabra/chupa-bg-bars.png")',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              zIndex: 9999,
+              animation: 'trapBars 1.5s ease-out forwards',
+              transform: 'translateY(-100vh)'
+            }} />
+
+            {/* Defeat content */}
+            <div style={{ 
+              display: 'flex', 
+              flexDirection: 'column', 
+              alignItems: 'center', 
+              gap: '2rem',
+              position: 'relative',
+              zIndex: 10000
             }}>
-              💀 DEFEATED! 💀
-            </h2>
-            
-            <div style={{ position: 'relative' }}>
-              <img
-                src="/sidequests/face-the-chupacabra/chupa-bite.png"
-                alt="Defeat"
-                style={{
-                  width: '8rem',
-                  height: '8rem',
-                  margin: '0 auto',
-                  filter: 'sepia(100%) saturate(200%) hue-rotate(320deg)'
-                }}
-              />
-            </div>
-            
-            <p style={{
-              fontSize: '1.25rem',
-              color: '#e5e7eb',
-              marginBottom: '1.5rem',
-              maxWidth: '600px',
-              lineHeight: '1.6'
-            }}>
-              The Chupacabra has bested you! You only collected {gameState.playerKeys} key{gameState.playerKeys !== 1 ? 's' : ''} before falling to the legendary cryptid.
-            </p>
-            
-            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-              <button
-                onClick={resetGame}
-                style={{
-                  background: 'linear-gradient(45deg, #7f1d1d, #dc2626)',
-                  border: 'none',
-                  borderRadius: '0.5rem',
-                  padding: '0.75rem 1.5rem',
-                  fontSize: '1rem',
-                  fontWeight: 'bold',
-                  color: '#ffffff',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease',
-                  textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'scale(1.05)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'scale(1)';
-                }}
-              >
-                TRY AGAIN
-              </button>
+              <h2 style={{
+                fontSize: 'clamp(2rem, 8vw, 4rem)',
+                fontWeight: 'bold',
+                color: '#ef4444',
+                textShadow: '2px 2px 4px rgba(0,0,0,0.8)',
+                fontFamily: 'Creepster, cursive',
+                animation: 'defeatPulse 2s infinite'
+              }}>
+                💀 TRAPPED! 💀
+              </h2>
               
-              <button
-                onClick={() => window.location.href = '/game/headquarters'}
-                style={{
-                  background: 'linear-gradient(45deg, #374151, #6b7280)',
-                  border: 'none',
-                  borderRadius: '0.5rem',
-                  padding: '0.75rem 1.5rem',
-                  fontSize: '1rem',
-                  fontWeight: 'bold',
-                  color: '#ffffff',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease',
-                  textShadow: '1px 1px 2px rgba(0,0,0,0.5)'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'scale(1.05)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'scale(1)';
-                }}
-              >
-                RETURN TO GAME
-              </button>
+              <div style={{ position: 'relative' }}>
+                <img
+                  src="/sidequests/face-the-chupacabra/chupa-bite.png"
+                  alt="Defeat"
+                  style={{
+                    width: '8rem',
+                    height: '8rem',
+                    margin: '0 auto',
+                    filter: 'sepia(100%) saturate(200%) hue-rotate(320deg)',
+                    animation: 'defeatShake 3s infinite'
+                  }}
+                />
+              </div>
+              
+
+              
+              <div style={{ 
+                display: 'flex', 
+                gap: '1rem', 
+                flexWrap: 'wrap', 
+                justifyContent: 'center',
+                position: 'relative',
+                zIndex: 99999
+              }}>
+                <button
+                  onClick={resetGame}
+                  style={{
+                    background: 'linear-gradient(45deg, #7f1d1d, #dc2626)',
+                    border: '2px solid #ffffff',
+                    borderRadius: '0.5rem',
+                    padding: '0.75rem 1.5rem',
+                    fontSize: '1rem',
+                    fontWeight: 'bold',
+                    color: '#ffffff',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
+                    boxShadow: '0 4px 8px rgba(0,0,0,0.5)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'scale(1.05)';
+                    e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.7)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'scale(1)';
+                    e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.5)';
+                  }}
+                >
+                  TRY AGAIN
+                </button>
+                
+                <button
+                  onClick={() => window.location.href = '/game/headquarters'}
+                  style={{
+                    background: 'linear-gradient(45deg, #374151, #6b7280)',
+                    border: '2px solid #ffffff',
+                    borderRadius: '0.5rem',
+                    padding: '0.75rem 1.5rem',
+                    fontSize: '1rem',
+                    fontWeight: 'bold',
+                    color: '#ffffff',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    textShadow: '1px 1px 2px rgba(0,0,0,0.5)',
+                    boxShadow: '0 4px 8px rgba(0,0,0,0.5)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'scale(1.05)';
+                    e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.7)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'scale(1)';
+                    e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.5)';
+                  }}
+                >
+                  RETURN TO GAME
+                </button>
+              </div>
             </div>
-          </div>
+          </>
         )}
       </div>
 
@@ -625,6 +658,32 @@ export function FaceTheChupacabra() {
             40%, 43% { transform: translateY(-10px); }
             70% { transform: translateY(-5px); }
             90% { transform: translateY(-2px); }
+          }
+          @keyframes trapBars {
+            0% { transform: translateY(-100vh); }
+            100% { transform: translateY(0); }
+          }
+          @keyframes defeatPulse {
+            0%, 100% { 
+              opacity: 1; 
+              transform: scale(1);
+            }
+            50% { 
+              opacity: 0.8; 
+              transform: scale(1.05);
+            }
+          }
+          @keyframes defeatShake {
+            0%, 100% { transform: translateX(0) rotate(0deg); }
+            10% { transform: translateX(-2px) rotate(-1deg); }
+            20% { transform: translateX(2px) rotate(1deg); }
+            30% { transform: translateX(-2px) rotate(-1deg); }
+            40% { transform: translateX(2px) rotate(1deg); }
+            50% { transform: translateX(-1px) rotate(-0.5deg); }
+            60% { transform: translateX(1px) rotate(0.5deg); }
+            70% { transform: translateX(-1px) rotate(-0.5deg); }
+            80% { transform: translateX(1px) rotate(0.5deg); }
+            90% { transform: translateX(0) rotate(0deg); }
           }
         `
       }} />
