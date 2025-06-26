@@ -22,10 +22,10 @@ interface GameState {
 }
 
 const VIAL_TYPES = [
-  { type: 'normal' as const, probability: 0.6, points: 10, lifetime: 3000 },
+  { type: 'normal' as const, probability: 0.5, points: 10, lifetime: 3000 },
   { type: 'glowing' as const, probability: 0.2, points: 25, lifetime: 2500 },
   { type: 'exploding' as const, probability: 0.15, points: 50, lifetime: 1500 },
-  { type: 'decoy' as const, probability: 0.05, points: 0, lifetime: 4000 }
+  { type: 'decoy' as const, probability: 0.15, points: -15, lifetime: 4000 }
 ];
 
 const HEINOUS_REACTIONS = {
@@ -131,6 +131,7 @@ export function GloryGrab() {
           message = getRandomReaction('collect');
           break;
         case 'decoy':
+          newScore += vial.points; // -15 points for clicking decoy
           message = getRandomReaction('decoy');
           break;
       }
