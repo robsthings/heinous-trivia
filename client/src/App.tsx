@@ -25,7 +25,6 @@ import { TestProgressThemesPage } from "@/pages/test-progress-themes";
 import { MonsterNameGenerator } from "@/pages/sidequests/MonsterNameGenerator";
 import { GloryGrab } from "@/pages/sidequests/GloryGrab";
 import { CrypticCompliments } from "@/pages/sidequests/CrypticCompliments";
-import WheelOfMisfortune from "@/pages/sidequests/WheelOfMisfortune";
 import ChupacabraChallenge from "@/pages/ChupacabraChallenge";
 import { NecromancersGambit } from "@/pages/sidequests/NecromancersGambit";
 import { SpectralMemory } from "@/pages/sidequests/SpectralMemory";
@@ -63,7 +62,7 @@ function Router() {
       <Route path="/sidequest/monster-name-generator" component={MonsterNameGenerator} />
       <Route path="/sidequest/glory-grab" component={GloryGrab} />
       <Route path="/sidequest/cryptic-compliments" component={CrypticCompliments} />
-      <Route path="/sidequest/wheel-of-misfortune" component={WheelOfMisfortune} />
+
       <Route path="/sidequest/chupacabra-challenge" component={ChupacabraChallenge} />
       <Route path="/sidequest/necromancers-gambit" component={NecromancersGambit} />
       <Route path="/sidequest/spectral-memory" component={SpectralMemory} />

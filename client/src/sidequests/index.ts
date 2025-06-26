@@ -5,12 +5,9 @@ export { MonsterNameGenerator } from './MonsterNameGenerator';
 export { GloryGrab } from './GloryGrab';
 export { ChupacabraChallenge } from './ChupacabraChallenge';
 export { CrypticCompliments } from './CrypticCompliments';
-export { HexOrFlex } from './HexOrFlex';
 export { LabEscape } from './LabEscape';
 export { WackAChupacabra } from './WackAChupacabra';
-export { HeinousHighScore } from './HeinousHighScore';
 export { CurseCrafting } from './CurseCrafting';
-export { WheelOfMisfortune } from './WheelOfMisfortune';
 export { WretchedWiring } from './WretchedWiring';
 
 // Side Quest metadata for dynamic loading
@@ -43,13 +40,7 @@ export const SIDE_QUESTS = {
     difficulty: 'Easy',
     estimatedTime: '2-4 minutes'
   },
-  'hex-or-flex': {
-    name: 'Hex or Flex',
-    component: 'HexOrFlex',
-    description: 'Choose your supernatural path',
-    difficulty: 'Medium',
-    estimatedTime: '3-4 minutes'
-  },
+
   'lab-escape': {
     name: 'Lab Escape',
     component: 'LabEscape',
@@ -64,13 +55,7 @@ export const SIDE_QUESTS = {
     difficulty: 'Medium',
     estimatedTime: '3-5 minutes'
   },
-  'heinous-high-score': {
-    name: 'Heinous High Score',
-    component: 'HeinousHighScore',
-    description: 'Beat the ultimate challenge',
-    difficulty: 'Expert',
-    estimatedTime: '10-15 minutes'
-  },
+
   'curse-crafting': {
     name: 'Curse Crafting',
     component: 'CurseCrafting',
@@ -78,13 +63,7 @@ export const SIDE_QUESTS = {
     difficulty: 'Medium',
     estimatedTime: '4-6 minutes'
   },
-  'wheel-of-misfortune': {
-    name: 'Wheel of Misfortune',
-    component: 'WheelOfMisfortune',
-    description: 'Spin for your fate',
-    difficulty: 'Easy',
-    estimatedTime: '1-2 minutes'
-  },
+
   'wretched-wiring': {
     name: 'Wretched Wiring',
     component: 'WretchedWiring',
