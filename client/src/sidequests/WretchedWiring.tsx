@@ -94,7 +94,46 @@ export function WretchedWiring() {
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const timerRef = useRef<number>(0);
 
-  const { data: assets = {} } = useSidequestAssets('wretched-wiring');
+  const { data: assets = {}, isLoading: assetsLoading } = useSidequestAssets('wretched-wiring');
+  
+  // Show loading screen while assets are loading
+  if (assetsLoading) {
+    return (
+      <>
+        <style>{`
+          @keyframes wretchedSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}</style>
+        <div style={{
+          minHeight: "100vh",
+          background: "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontFamily: "Arial, sans-serif"
+        }}>
+          <div style={{
+            textAlign: "center",
+            color: "#ffffff"
+          }}>
+            <div style={{
+              width: "60px",
+              height: "60px",
+              border: "4px solid #ff4444",
+              borderTop: "4px solid transparent",
+              borderRadius: "50%",
+              animation: "wretchedSpin 1s linear infinite",
+              margin: "0 auto 20px"
+            }}></div>
+            <h2 style={{ margin: 0, fontSize: "24px", color: "#ff4444" }}>Loading Wretched Wiring...</h2>
+            <p style={{ margin: "10px 0 0", opacity: 0.8 }}>Preparing chaos simulator assets</p>
+          </div>
+        </div>
+      </>
+    );
+  }
   
   // Asset fallback helper function
   const getAssetUrl = (assetName: string, fallbackPath: string = '') => {
@@ -111,10 +150,14 @@ export function WretchedWiring() {
       'node-red-right': '/heinous/charming.png',
       'node-blue-right': '/heinous/charming.png',
       'Pull-Chain': '/heinous/charming.png',
-      'wire-red-straight': '/heinous/charming.png',
-      'wire-red-curved': '/heinous/charming.png',
-      'wire-blue-straight': '/heinous/charming.png',
-      'wire-blue-curved': '/heinous/charming.png'
+      'wire-red-1': '/heinous/charming.png',
+      'wire-red-2': '/heinous/charming.png',
+      'wire-red-3': '/heinous/charming.png',
+      'wire-red-4': '/heinous/charming.png',
+      'wire-blue-1': '/heinous/charming.png',
+      'wire-blue-2': '/heinous/charming.png',
+      'wire-blue-3': '/heinous/charming.png',
+      'wire-blue-4': '/heinous/charming.png'
     };
     
     return fallbacks[assetName] || fallbackPath || '/heinous/charming.png';
