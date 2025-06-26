@@ -1,11 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'wouter';
+import { useSidequestAssets } from '../hooks/use-sidequest-assets';
 
 interface MonsterNameGeneratorProps {
   showHeinous?: boolean;
 }
 
 function MonsterNameGeneratorCore({ showHeinous = true }: MonsterNameGeneratorProps) {
+  const [, navigate] = useLocation();
   const [scanPhase, setScanPhase] = useState<'scanning' | 'complete'>('scanning');
   const [currentScanText, setCurrentScanText] = useState('');
   const [monsterName, setMonsterName] = useState('');
@@ -14,6 +16,9 @@ function MonsterNameGeneratorCore({ showHeinous = true }: MonsterNameGeneratorPr
   const [scanProgress, setScanProgress] = useState(0);
   const [isFlashing, setIsFlashing] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
+  
+  // Get Firebase assets for monster name generator
+  const { data: assets } = useSidequestAssets('monster-name-generator');
 
   const adjectives = [
     "Gloopy", "Cryptic", "Snarling", "Chittering", "Pustulent", 
@@ -270,10 +275,17 @@ function MonsterNameGeneratorCore({ showHeinous = true }: MonsterNameGeneratorPr
               maxWidth: 'clamp(20rem, 50vw, 28rem)',
               aspectRatio: '3/4',
               margin: '0 auto',
-              backgroundImage: 'url(/sidequests/monster-name-generator/monster-card_1750900915378.png)',
-              backgroundSize: 'contain',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
+              ...(assets?.['monster-card_1750900915378'] ? {
+                backgroundImage: `url(${assets['monster-card_1750900915378']})`,
+                backgroundSize: 'contain',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+              } : {
+                backgroundImage: 'url(/sidequests/monster-name-generator/monster-card_1750900915378.png)',
+                backgroundSize: 'contain',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+              }),
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center'

@@ -2131,10 +2131,67 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  // Upload sidequest asset to Firebase Storage
+  app.post('/api/sidequests/:sidequestName/assets', upload.single('file'), async (req: Request, res: Response) => {
+    try {
+      const { sidequestName } = req.params;
+      const { filename } = req.body;
+      
+      if (!req.file) {
+        return res.status(400).json({ error: "No file uploaded" });
+      }
+      
+      if (!filename) {
+        return res.status(400).json({ error: "Filename is required" });
+      }
+      
+      // Upload to Firebase Storage under sidequests path
+      const storagePath = `sidequests/${sidequestName}/`;
+      const uploadResult = await FirebaseService.uploadFile(
+        req.file.buffer,
+        filename,
+        storagePath
+      );
+      
+      // Save asset mapping to Firebase for easy retrieval
+      const assetDoc = firestore.collection('sidequest-assets').doc(sidequestName);
+      await assetDoc.set({
+        assets: {
+          [filename.replace(/\.[^/.]+$/, "")]: uploadResult.downloadURL
+        }
+      }, { merge: true });
+      
+      res.json({ 
+        success: true, 
+        url: uploadResult.downloadURL,
+        message: `Asset ${filename} uploaded successfully`
+      });
+      
+    } catch (error) {
+      console.error(`Error uploading sidequest asset:`, error);
+      res.status(500).json({ error: "Failed to upload sidequest asset" });
+    }
+  });
+
   // Get assets for a specific sidequest
   app.get('/api/sidequests/:sidequestName/assets', async (req: Request, res: Response) => {
     try {
       const { sidequestName } = req.params;
+      
+      // Check Firebase first for uploaded assets
+      if (firestore) {
+        try {
+          const assetDoc = await firestore.collection('sidequest-assets').doc(sidequestName).get();
+          if (assetDoc.exists) {
+            const data = assetDoc.data();
+            if (data && data.assets) {
+              return res.json({ assets: data.assets });
+            }
+          }
+        } catch (error) {
+          console.log(`No Firebase assets found for ${sidequestName}, falling back to local`);
+        }
+      }
       
       // Return local fallback assets for specific sidequest
       const allAssets = {
