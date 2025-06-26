@@ -102,7 +102,10 @@ export function Welcome() {
               border: '2px solid #dc2626',
               borderRadius: '0.5rem',
               padding: '0.75rem 1rem',
-              animation: 'speech-bubble-in 0.8s ease-out'
+              animation: 'speech-bubble-in 0.8s ease-out',
+              zIndex: 50,
+              minWidth: '200px',
+              whiteSpace: 'nowrap'
             }}
           >
             <span 
@@ -130,7 +133,8 @@ export function Welcome() {
                 height: 0,
                 borderLeft: '8px solid transparent',
                 borderRight: '8px solid transparent',
-                borderTop: '8px solid #dc2626'
+                borderTop: '8px solid #dc2626',
+                zIndex: 51
               }}
             />
           </div>
