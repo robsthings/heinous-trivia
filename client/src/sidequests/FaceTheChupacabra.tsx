@@ -57,51 +57,47 @@ export function FaceTheChupacabra() {
   const makeChoice = (playerChoice: Choice) => {
     const chupacabraChoice = CHOICES[Math.floor(Math.random() * 3)].value;
     
-    setGameState(prev => ({
-      ...prev,
+    // Calculate result immediately and correctly
+    let result: 'win' | 'lose' | 'tie';
+    
+    if (playerChoice === chupacabraChoice) {
+      result = 'tie';
+    } else if (
+      (playerChoice === 'rock' && chupacabraChoice === 'scissors') ||
+      (playerChoice === 'paper' && chupacabraChoice === 'rock') ||
+      (playerChoice === 'scissors' && chupacabraChoice === 'paper')
+    ) {
+      result = 'win';
+    } else {
+      result = 'lose';
+    }
+
+    // Calculate new scores
+    const newKeys = result === 'win' ? gameState.playerKeys + 1 : gameState.playerKeys;
+    const newLosses = result === 'lose' ? gameState.playerLosses + 1 : gameState.playerLosses;
+    
+    // Check win/lose conditions
+    let newPhase: GamePhase = 'playing';
+    if (newKeys >= 3) {
+      newPhase = 'won';
+    } else if (newLosses >= 3) {
+      newPhase = 'lost';
+    }
+
+    // Set everything at once to prevent conflicts
+    setGameState({
+      ...gameState,
       playerChoice,
       chupacabraChoice,
+      lastResult: result,
+      playerKeys: newKeys,
+      playerLosses: newLosses,
+      phase: newPhase,
       showResult: true,
-    }));
+    });
 
-    // Determine winner after a brief delay
-    setTimeout(() => {
-      let result: 'win' | 'lose' | 'tie';
-      
-      if (playerChoice === chupacabraChoice) {
-        result = 'tie';
-      } else if (
-        (playerChoice === 'rock' && chupacabraChoice === 'scissors') ||
-        (playerChoice === 'paper' && chupacabraChoice === 'rock') ||
-        (playerChoice === 'scissors' && chupacabraChoice === 'paper')
-      ) {
-        result = 'win';
-      } else {
-        result = 'lose';
-      }
-
-      setGameState(prev => {
-        const newKeys = result === 'win' ? prev.playerKeys + 1 : prev.playerKeys;
-        const newLosses = result === 'lose' ? prev.playerLosses + 1 : prev.playerLosses;
-        
-        // Check win/lose conditions
-        let newPhase: GamePhase = 'playing';
-        if (newKeys >= 3) {
-          newPhase = 'won';
-        } else if (newLosses >= 3) {
-          newPhase = 'lost';
-        }
-
-        return {
-          ...prev,
-          lastResult: result,
-          playerKeys: newKeys,
-          playerLosses: newLosses,
-          phase: newPhase,
-        };
-      });
-
-      // Reset choices after showing result
+    // Only reset choices if still playing (not won/lost)
+    if (newPhase === 'playing') {
       setTimeout(() => {
         setGameState(prev => ({
           ...prev,
@@ -109,8 +105,8 @@ export function FaceTheChupacabra() {
           chupacabraChoice: null,
           showResult: false,
         }));
-      }, 2000);
-    }, 1000);
+      }, 2500);
+    }
   };
 
   const getBackgroundImage = () => {
