@@ -60,6 +60,32 @@ const HORROR_HINTS = [
 ];
 
 export function LabEscape() {
+  // Add floating animation styles
+  React.useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes mysticalFloat1 {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        25% { transform: translateY(-8px) rotate(0.5deg); }
+        50% { transform: translateY(-4px) rotate(0deg); }
+        75% { transform: translateY(-12px) rotate(-0.5deg); }
+      }
+      @keyframes mysticalFloat2 {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        33% { transform: translateY(-6px) rotate(-0.3deg); }
+        66% { transform: translateY(-10px) rotate(0.3deg); }
+      }
+      @keyframes mysticalFloat3 {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        20% { transform: translateY(-5px) rotate(0.4deg); }
+        40% { transform: translateY(-15px) rotate(0deg); }
+        60% { transform: translateY(-8px) rotate(-0.4deg); }
+        80% { transform: translateY(-3px) rotate(0.2deg); }
+      }
+    `;
+    document.head.appendChild(style);
+    return () => document.head.removeChild(style);
+  }, []);
   const [gameState, setGameState] = useState<GameState>({
     currentRiddle: null,
     correctAnswers: 0,
@@ -351,7 +377,9 @@ export function LabEscape() {
                     height: doorNum === 2 ? 'clamp(205px, 34.13vw, 341px)' : 'clamp(293px, 48.75vw, 488px)',
                     objectFit: 'contain',
                     display: 'block',
-                    marginBottom: doorNum === 2 ? 'clamp(3rem, 8vw, 6rem)' : '0'
+                    marginBottom: doorNum === 2 ? 'clamp(3rem, 8vw, 6rem)' : '0',
+                    animation: `mysticalFloat${doorNum} ${3 + doorNum * 0.5}s ease-in-out infinite`,
+                    filter: 'drop-shadow(0 4px 12px rgba(139, 0, 0, 0.3))'
                   }}
                 />
 
