@@ -373,7 +373,7 @@ export function WretchedWiring() {
       {/* Background */}
       <div 
         className="fixed inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: 'url(/sidequests/wretched-wiring/wretched-wiring-bg.png)' }}
+        style={{ backgroundImage: 'url(/backgrounds/lab-dark-blue.png)' }}
       />
 
       {/* Certificate Screen */}
@@ -381,7 +381,7 @@ export function WretchedWiring() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 p-4">
           <div className="relative w-full max-w-lg mx-auto">
             <img 
-              src="/sidequests/wretched-wiring/certificate.png" 
+              src="/heinous/presenting.png" 
               alt="Certificate of Giving Up"
               className="w-full h-auto object-contain rounded-lg shadow-2xl"
             />
@@ -458,20 +458,20 @@ export function WretchedWiring() {
           {/* Left Side Terminals */}
           <div className="absolute left-8 top-1/2 transform -translate-y-1/2 space-y-8">
             <div className="relative">
-              <img src="/sidequests/wretched-wiring/node-red-left.png" alt="Red Terminal Left" className="w-16 h-16" />
+              <img src="/heinous/neutral.png" alt="Red Terminal Left" className="w-16 h-16" />
             </div>
             <div className="relative">
-              <img src="/sidequests/wretched-wiring/node-blue-left.png" alt="Blue Terminal Left" className="w-16 h-16" />
+              <img src="/heinous/neutral.png" alt="Blue Terminal Left" className="w-16 h-16" />
             </div>
           </div>
 
           {/* Right Side Terminals */}
           <div className="absolute right-8 top-1/2 transform -translate-y-1/2 space-y-8">
             <div className="relative">
-              <img src="/sidequests/wretched-wiring/node-red-right.png" alt="Red Terminal Right" className="w-16 h-16" />
+              <img src="/heinous/neutral.png" alt="Red Terminal Right" className="w-16 h-16" />
             </div>
             <div className="relative">
-              <img src="/sidequests/wretched-wiring/node-blue-right.png" alt="Blue Terminal Right" className="w-16 h-16" />
+              <img src="/heinous/neutral.png" alt="Blue Terminal Right" className="w-16 h-16" />
             </div>
           </div>
         </>
@@ -486,7 +486,7 @@ export function WretchedWiring() {
         >
           <div className="relative">
             <img 
-              src="/sidequests/wretched-wiring/Pull-Chain.png" 
+              src="/heinous/gift.png" 
               alt="Pull Chain"
               className={`w-28 h-auto transition-all duration-300 hover:brightness-125 hover:scale-110 ${
                 gameState.pullChainPulled 
@@ -524,7 +524,7 @@ export function WretchedWiring() {
             onClick={() => rotateWire(wire.id)}
           >
             <img 
-              src={`/sidequests/wretched-wiring/${wire.assetName}`} 
+              src={`/heinous/neutral.png`} 
               alt={`${wire.color} wire`}
               className="w-25 h-25 pointer-events-none"
               style={{ width: '100px', height: '100px' }}
