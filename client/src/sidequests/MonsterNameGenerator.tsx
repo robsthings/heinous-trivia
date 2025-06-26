@@ -255,6 +255,37 @@ export function MonsterNameGenerator() {
               transition: 'all 0.5s ease'
             }}
           >
+            {/* Monster Card Visual */}
+            {assets && assets['monster-card'] ? (
+              <img 
+                src={assets['monster-card']} 
+                alt="Monster Card"
+                style={{
+                  width: '100%',
+                  maxWidth: '200px',
+                  height: 'auto',
+                  marginBottom: '1rem',
+                  borderRadius: '0.5rem',
+                  filter: 'drop-shadow(0 0 10px rgba(16, 185, 129, 0.3))'
+                }}
+              />
+            ) : (
+              <div style={{
+                width: '200px',
+                height: '260px',
+                margin: '0 auto 1rem',
+                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                border: '2px dashed #10b981',
+                borderRadius: '0.5rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '0.875rem',
+                color: '#10b981'
+              }}>
+                Monster Card
+              </div>
+            )}
             <h2 
               style={{ 
                 fontSize: 'clamp(1.5rem, 4vw, 2rem)',
