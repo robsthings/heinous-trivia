@@ -98,11 +98,11 @@ export function MonsterNameGenerator() {
       <div className="relative z-10 text-center py-8">
         <h1 
           className="text-4xl md:text-6xl font-bold text-green-400 mb-4"
-          style={{ textShadow: '0 0 20px #10b981' }}
+          style={{ textShadow: '0 0 20px #10b981', fontFamily: 'Creepster, cursive' }}
         >
           MONSTER GENERATOR
         </h1>
-        <p className="text-lg text-gray-300">
+        <p className="text-lg text-gray-300" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
           Summon creatures from the darkest depths
         </p>
       </div>
@@ -161,11 +161,11 @@ export function MonsterNameGenerator() {
             className="bg-black bg-opacity-80 border-2 border-green-400 rounded-lg p-8 max-w-lg w-full mx-4 transform scale-0 animate-[scaleIn_0.5s_ease-out_forwards]"
             style={{ boxShadow: '0 0 30px rgba(16, 185, 129, 0.3)' }}
           >
-            <h2 className="text-2xl md:text-3xl font-bold text-green-400 mb-6 text-center">
+            <h2 className="text-2xl md:text-3xl font-bold text-green-400 mb-6 text-center" style={{ fontFamily: 'Nosifer, cursive' }}>
               {monster.name}
             </h2>
             
-            <div className="space-y-4 text-gray-300">
+            <div className="space-y-4 text-gray-300" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
               <div className="flex justify-between">
                 <span className="text-green-400">Type:</span>
                 <span>{monster.type}</span>
@@ -194,7 +194,8 @@ export function MonsterNameGenerator() {
             className="px-8 py-3 bg-gradient-to-r from-green-600 to-green-800 text-white font-bold text-lg rounded-lg border-2 border-green-400 hover:from-green-500 hover:to-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-105"
             style={{ 
               textShadow: '0 0 10px rgba(0,0,0,0.5)',
-              boxShadow: '0 0 20px rgba(16, 185, 129, 0.3)'
+              boxShadow: '0 0 20px rgba(16, 185, 129, 0.3)',
+              fontFamily: 'system-ui, -apple-system, sans-serif'
             }}
           >
             {isScanning ? 'SCANNING...' : 'GENERATE MONSTER'}
@@ -206,7 +207,8 @@ export function MonsterNameGenerator() {
               className="px-8 py-3 bg-gradient-to-r from-red-600 to-red-800 text-white font-bold text-lg rounded-lg border-2 border-red-400 hover:from-red-500 hover:to-red-700 transition-all duration-200 transform hover:scale-105"
               style={{ 
                 textShadow: '0 0 10px rgba(0,0,0,0.5)',
-                boxShadow: '0 0 20px rgba(239, 68, 68, 0.3)'
+                boxShadow: '0 0 20px rgba(239, 68, 68, 0.3)',
+                fontFamily: 'system-ui, -apple-system, sans-serif'
               }}
             >
               RESET
@@ -220,7 +222,8 @@ export function MonsterNameGenerator() {
           className="mt-8 px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-800 text-white font-bold rounded-lg border-2 border-purple-400 hover:from-purple-500 hover:to-purple-700 transition-all duration-200 transform hover:scale-105"
           style={{ 
             textShadow: '0 0 10px rgba(0,0,0,0.5)',
-            boxShadow: '0 0 20px rgba(147, 51, 234, 0.3)'
+            boxShadow: '0 0 20px rgba(147, 51, 234, 0.3)',
+            fontFamily: 'system-ui, -apple-system, sans-serif'
           }}
         >
           Return to Game

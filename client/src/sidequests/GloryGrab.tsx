@@ -282,7 +282,7 @@ export function GloryGrab() {
       className="min-h-screen flex flex-col relative overflow-hidden"
       style={{
         background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)',
-        fontFamily: "'Creepster', cursive"
+        fontFamily: 'system-ui, -apple-system, sans-serif'
       }}
     >
       {/* Background */}
@@ -295,7 +295,7 @@ export function GloryGrab() {
       <div className="relative z-10 text-center py-6">
         <h1 
           className="text-4xl md:text-6xl font-bold text-amber-400 mb-2"
-          style={{ textShadow: '0 0 20px #f59e0b' }}
+          style={{ textShadow: '0 0 20px #f59e0b', fontFamily: 'Creepster, cursive' }}
         >
           GLORY GRAB
         </h1>
