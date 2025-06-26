@@ -612,7 +612,7 @@ export function LabEscape() {
               left: '0',
               width: '100vw',
               height: '100vh',
-              zIndex: '1000',
+              zIndex: '9999',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
