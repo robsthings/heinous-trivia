@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { useLocation } from 'wouter';
 
 interface MonsterData {
   name: string;
@@ -8,32 +9,14 @@ interface MonsterData {
   origin: string;
 }
 
-const adjectives = [
-  'Terrifying', 'Ancient', 'Cursed', 'Bloodthirsty', 'Sinister', 'Ghastly', 'Malevolent',
-  'Spectral', 'Putrid', 'Ravenous', 'Vile', 'Wretched', 'Demonic', 'Abyssal', 'Nightmarish'
-];
-
-const nouns = [
-  'Beast', 'Demon', 'Wraith', 'Fiend', 'Specter', 'Ghoul', 'Phantom', 'Banshee',
-  'Reaper', 'Shade', 'Horror', 'Revenant', 'Lurker', 'Stalker', 'Devourer'
-];
-
-const suffixes = [
-  'of Doom', 'the Destroyer', 'from Beyond', 'of Shadows', 'the Damned',
-  'of the Abyss', 'the Cursed', 'from Hell', 'the Nightmare', 'of Death'
-];
-
-const types = ['Undead', 'Demon', 'Spirit', 'Beast', 'Eldritch Horror'];
-const weaknesses = ['Holy Water', 'Silver', 'Salt Circle', 'Sunlight', 'Iron', 'Sacred Ground'];
-const origins = ['Ancient Cemetery', 'Abandoned Asylum', 'Cursed Forest', 'Dark Dimension', 'Forgotten Crypt'];
-
 function generateMonster(): MonsterData {
-  const adjective = adjectives[Math.floor(Math.random() * adjectives.length)];
-  const noun = nouns[Math.floor(Math.random() * nouns.length)];
-  const suffix = suffixes[Math.floor(Math.random() * suffixes.length)];
+  const prefixes = ['Shadow', 'Blood', 'Cursed', 'Bone', 'Night', 'Dark', 'Spectral', 'Grim', 'Void', 'Phantom'];
+  const types = ['Wraith', 'Fiend', 'Beast', 'Ghoul', 'Demon', 'Specter', 'Revenant', 'Stalker', 'Horror', 'Entity'];
+  const origins = ['Ancient Cemetery', 'Abandoned Asylum', 'Haunted Forest', 'Cursed Mansion', 'Dark Dimension', 'Underground Catacombs'];
+  const weaknesses = ['Holy Water', 'Silver Cross', 'Iron Stakes', 'Salt Circles', 'Sunlight', 'Sacred Flames'];
   
   return {
-    name: `${adjective} ${noun} ${suffix}`,
+    name: `${prefixes[Math.floor(Math.random() * prefixes.length)]} ${types[Math.floor(Math.random() * types.length)]}`,
     type: types[Math.floor(Math.random() * types.length)],
     power: Math.floor(Math.random() * 100) + 1,
     weakness: weaknesses[Math.floor(Math.random() * weaknesses.length)],
@@ -42,6 +25,7 @@ function generateMonster(): MonsterData {
 }
 
 export function MonsterNameGenerator() {
+  const [, setLocation] = useLocation();
   const [monster, setMonster] = useState<MonsterData | null>(null);
   const [isScanning, setIsScanning] = useState(false);
   const [scanProgress, setScanProgress] = useState(0);
@@ -49,6 +33,7 @@ export function MonsterNameGenerator() {
   const [showMonsterName, setShowMonsterName] = useState(false);
 
   const startScan = () => {
+    console.log('Starting scan...');
     setIsScanning(true);
     setScanProgress(0);
     setMonster(null);
@@ -57,6 +42,7 @@ export function MonsterNameGenerator() {
 
     const scanInterval = setInterval(() => {
       setScanProgress(prev => {
+        console.log('Scan progress:', prev);
         if (prev >= 100) {
           clearInterval(scanInterval);
           setIsScanning(false);
@@ -88,73 +74,125 @@ export function MonsterNameGenerator() {
 
   return (
     <div 
-      className="min-h-screen flex flex-col relative overflow-hidden"
       style={{
+        minHeight: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        position: 'relative',
+        overflow: 'hidden',
         background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)',
-        fontFamily: "'Creepster', cursive"
+        fontFamily: 'system-ui, -apple-system, sans-serif'
       }}
     >
       {/* Background particles */}
-      <div className="absolute inset-0 opacity-20">
+      <div style={{ position: 'absolute', inset: '0', opacity: '0.2' }}>
         {[...Array(50)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-1 h-1 bg-green-400 rounded-full animate-pulse"
             style={{
+              position: 'absolute',
+              width: '4px',
+              height: '4px',
+              backgroundColor: '#10b981',
+              borderRadius: '50%',
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${2 + Math.random() * 2}s`
+              animation: `pulse 2s infinite ${Math.random() * 3}s`
             }}
           />
         ))}
       </div>
 
       {/* Header */}
-      <div className="relative z-10 text-center py-8">
+      <div style={{ position: 'relative', zIndex: '10', textAlign: 'center', padding: '2rem 0' }}>
         <h1 
-          className="text-4xl md:text-6xl font-bold text-green-400 mb-4"
-          style={{ textShadow: '0 0 20px #10b981', fontFamily: 'Creepster, cursive' }}
+          style={{ 
+            fontSize: 'clamp(2rem, 8vw, 4rem)',
+            fontWeight: 'bold',
+            color: '#10b981',
+            marginBottom: '1rem',
+            textShadow: '0 0 20px #10b981', 
+            fontFamily: 'Creepster, cursive' 
+          }}
         >
           MONSTER GENERATOR
         </h1>
-        <p className="text-lg text-gray-300" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-          Summon creatures from the darkest depths
+        <p 
+          style={{ 
+            fontSize: '1.125rem',
+            color: '#d1d5db',
+            maxWidth: '32rem',
+            margin: '0 auto',
+            padding: '0 1rem'
+          }}
+        >
+          Dr. Heinous's experimental creature analysis system
         </p>
       </div>
 
       {/* Dr. Heinous sprite */}
-      <div className="absolute top-16 right-8 z-20">
+      <div style={{ position: 'absolute', top: '2rem', right: '2rem', zIndex: '20' }}>
         <img 
-          src="/heinous/scheming.png" 
-          alt="Dr. Heinous" 
-          className="w-20 h-20 md:w-24 md:h-24"
+          src="/heinous/dr-heinous-presenting.png" 
+          alt="Dr. Heinous"
+          style={{ 
+            width: 'clamp(6rem, 10vw, 8rem)', 
+            height: 'clamp(6rem, 10vw, 8rem)',
+            imageRendering: 'pixelated' 
+          }}
         />
-        <div className="absolute -left-32 top-2 bg-black bg-opacity-80 text-green-400 text-sm px-3 py-2 rounded-lg border border-green-400">
-          Hold still. This won't hurt... much.
-        </div>
       </div>
 
       {/* Main content */}
-      <div className="flex-1 flex flex-col items-center justify-center px-4 relative z-10">
+      <div style={{ 
+        flex: '1', 
+        display: 'flex', 
+        flexDirection: 'column', 
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        padding: '0 1rem', 
+        position: 'relative', 
+        zIndex: '10' 
+      }}>
         
         {/* Scanning overlay */}
         {isScanning && (
-          <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
-            <div className="text-center">
-              <div className="text-6xl text-green-400 mb-4 animate-pulse">
+          <div style={{ 
+            position: 'absolute', 
+            inset: '0', 
+            backgroundColor: 'rgba(0,0,0,0.5)', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            zIndex: '20' 
+          }}>
+            <div style={{ textAlign: 'center' }}>
+              <div style={{ 
+                fontSize: '4rem', 
+                color: '#10b981', 
+                marginBottom: '1rem',
+                animation: 'pulse 1s infinite'
+              }}>
                 SCANNING...
               </div>
-              <div className="w-64 h-2 bg-gray-700 rounded-full overflow-hidden">
+              <div style={{ 
+                width: '16rem', 
+                height: '0.5rem', 
+                backgroundColor: '#374151', 
+                borderRadius: '9999px', 
+                overflow: 'hidden' 
+              }}>
                 <div 
-                  className="h-full bg-green-400 transition-all duration-300"
                   style={{ 
+                    height: '100%',
+                    backgroundColor: '#10b981',
                     width: `${scanProgress}%`,
-                    boxShadow: '0 0 10px #10b981'
+                    boxShadow: '0 0 10px #10b981',
+                    transition: 'all 0.3s ease'
                   }}
                 />
               </div>
-              <div className="text-green-400 mt-2">{scanProgress}%</div>
+              <div style={{ color: '#10b981', marginTop: '0.5rem' }}>{scanProgress}%</div>
             </div>
           </div>
         )}
@@ -162,14 +200,18 @@ export function MonsterNameGenerator() {
         {/* Full-width scan line animation */}
         {isScanning && (
           <div 
-            className="fixed left-0 right-0 h-1 pointer-events-none"
             style={{
+              position: 'fixed',
+              left: '0',
+              right: '0',
+              height: '4px',
               top: `${scanProgress}vh`,
               background: 'linear-gradient(to right, transparent 0%, #10b981 20%, #22c55e 50%, #10b981 80%, transparent 100%)',
               boxShadow: '0 0 30px #10b981, 0 0 60px #10b981',
               filter: 'blur(0.5px)',
               transition: 'top 0.1s linear',
-              zIndex: 9999
+              zIndex: 9999,
+              pointerEvents: 'none'
             }}
           />
         )}
@@ -177,62 +219,136 @@ export function MonsterNameGenerator() {
         {/* Additional glow effect for scan line */}
         {isScanning && (
           <div 
-            className="fixed left-0 right-0 h-3 pointer-events-none"
             style={{
-              top: `calc(${scanProgress}vh - 1px)`,
+              position: 'fixed',
+              left: '0',
+              right: '0',
+              height: '12px',
+              top: `calc(${scanProgress}vh - 4px)`,
               background: 'linear-gradient(to right, transparent 0%, rgba(16, 185, 129, 0.3) 20%, rgba(34, 197, 94, 0.5) 50%, rgba(16, 185, 129, 0.3) 80%, transparent 100%)',
               boxShadow: '0 0 40px rgba(16, 185, 129, 0.4)',
               transition: 'top 0.1s linear',
-              zIndex: 9998
+              zIndex: 9998,
+              pointerEvents: 'none'
             }}
           />
         )}
 
-        {/* Monster card */}
-        {monster && showMonsterCard && (
+        {/* Monster Card */}
+        {showMonsterCard && monster && (
           <div 
-            className="bg-black bg-opacity-80 border-2 border-green-400 rounded-lg p-8 max-w-lg w-full mx-4 transform scale-0 animate-[scaleIn_0.5s_ease-out_forwards]"
-            style={{ boxShadow: '0 0 30px rgba(16, 185, 129, 0.3)' }}
+            style={{
+              backgroundColor: 'rgba(0, 0, 0, 0.4)',
+              backdropFilter: 'blur(10px)',
+              borderRadius: '1rem',
+              border: '2px solid #10b981',
+              padding: '2rem',
+              maxWidth: '24rem',
+              width: '100%',
+              margin: '0 1rem',
+              boxShadow: '0 0 30px rgba(16, 185, 129, 0.3)',
+              textAlign: 'center',
+              opacity: showMonsterCard ? 1 : 0,
+              transform: showMonsterCard ? 'scale(1)' : 'scale(0.8)',
+              transition: 'all 0.5s ease'
+            }}
           >
-            <h2 className="text-2xl md:text-3xl font-bold text-green-400 mb-6 text-center" style={{ 
-              fontFamily: 'Nosifer, cursive',
-              opacity: showMonsterName ? 1 : 0,
-              transition: 'opacity 0.8s ease-in-out'
-            }}>
+            <h2 
+              style={{ 
+                fontSize: 'clamp(1.5rem, 4vw, 2rem)',
+                fontWeight: 'bold',
+                color: '#10b981',
+                marginBottom: '1.5rem',
+                textShadow: '0 0 10px #10b981',
+                fontFamily: 'Creepster, cursive'
+              }}
+            >
               {showMonsterName ? monster.name : '???'}
             </h2>
             
-            <div className="space-y-4 text-gray-300" style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-              <div className="flex justify-between">
-                <span className="text-green-400">Type:</span>
-                <span>{monster.type}</span>
+            <div style={{ 
+              display: 'grid', 
+              gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', 
+              gap: '1rem', 
+              marginTop: '1.5rem',
+              fontSize: '0.875rem'
+            }}>
+              <div style={{ 
+                padding: '0.5rem', 
+                backgroundColor: 'rgba(16, 185, 129, 0.1)', 
+                borderRadius: '0.5rem',
+                border: '1px solid rgba(16, 185, 129, 0.3)'
+              }}>
+                <div style={{ color: '#10b981', fontWeight: 'bold', marginBottom: '0.25rem' }}>TYPE</div>
+                <div style={{ color: '#d1d5db' }}>{monster.type}</div>
               </div>
-              <div className="flex justify-between">
-                <span className="text-green-400">Power Level:</span>
-                <span className="text-red-400 font-bold">{monster.power}/100</span>
+              
+              <div style={{ 
+                padding: '0.5rem', 
+                backgroundColor: 'rgba(16, 185, 129, 0.1)', 
+                borderRadius: '0.5rem',
+                border: '1px solid rgba(16, 185, 129, 0.3)'
+              }}>
+                <div style={{ color: '#10b981', fontWeight: 'bold', marginBottom: '0.25rem' }}>POWER</div>
+                <div style={{ color: '#d1d5db' }}>{monster.power}</div>
               </div>
-              <div className="flex justify-between">
-                <span className="text-green-400">Weakness:</span>
-                <span>{monster.weakness}</span>
+              
+              <div style={{ 
+                padding: '0.5rem', 
+                backgroundColor: 'rgba(16, 185, 129, 0.1)', 
+                borderRadius: '0.5rem',
+                border: '1px solid rgba(16, 185, 129, 0.3)',
+                gridColumn: 'span 2'
+              }}>
+                <div style={{ color: '#10b981', fontWeight: 'bold', marginBottom: '0.25rem' }}>WEAKNESS</div>
+                <div style={{ color: '#d1d5db' }}>{monster.weakness}</div>
               </div>
-              <div className="flex justify-between">
-                <span className="text-green-400">Origin:</span>
-                <span>{monster.origin}</span>
+              
+              <div style={{ 
+                padding: '0.5rem', 
+                backgroundColor: 'rgba(16, 185, 129, 0.1)', 
+                borderRadius: '0.5rem',
+                border: '1px solid rgba(16, 185, 129, 0.3)',
+                gridColumn: 'span 2'
+              }}>
+                <div style={{ color: '#10b981', fontWeight: 'bold', marginBottom: '0.25rem' }}>ORIGIN</div>
+                <div style={{ color: '#d1d5db' }}>{monster.origin}</div>
               </div>
             </div>
           </div>
         )}
 
         {/* Controls */}
-        <div className="mt-8 flex flex-col sm:flex-row gap-4">
+        <div style={{ marginTop: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
           <button
             onClick={startScan}
             disabled={isScanning}
-            className="px-8 py-3 bg-gradient-to-r from-green-600 to-green-800 text-white font-bold text-lg rounded-lg border-2 border-green-400 hover:from-green-500 hover:to-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 transform hover:scale-105"
             style={{ 
+              padding: '1rem 2rem',
+              background: 'linear-gradient(to right, #059669, #047857)',
+              color: 'white',
+              fontWeight: 'bold',
+              fontSize: '1.125rem',
+              borderRadius: '0.5rem',
+              border: '2px solid #10b981',
+              cursor: isScanning ? 'not-allowed' : 'pointer',
+              opacity: isScanning ? 0.5 : 1,
               textShadow: '0 0 10px rgba(0,0,0,0.5)',
               boxShadow: '0 0 20px rgba(16, 185, 129, 0.3)',
-              fontFamily: 'system-ui, -apple-system, sans-serif'
+              transform: 'scale(1)',
+              transition: 'all 0.2s ease'
+            }}
+            onMouseEnter={(e) => {
+              if (!isScanning) {
+                e.currentTarget.style.transform = 'scale(1.05)';
+                e.currentTarget.style.background = 'linear-gradient(to right, #10b981, #059669)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (!isScanning) {
+                e.currentTarget.style.transform = 'scale(1)';
+                e.currentTarget.style.background = 'linear-gradient(to right, #059669, #047857)';
+              }
             }}
           >
             {isScanning ? 'SCANNING...' : 'GENERATE MONSTER'}
@@ -241,38 +357,71 @@ export function MonsterNameGenerator() {
           {monster && (
             <button
               onClick={resetGenerator}
-              className="px-8 py-3 bg-gradient-to-r from-red-600 to-red-800 text-white font-bold text-lg rounded-lg border-2 border-red-400 hover:from-red-500 hover:to-red-700 transition-all duration-200 transform hover:scale-105"
               style={{ 
+                padding: '1rem 2rem',
+                background: 'linear-gradient(to right, #dc2626, #b91c1c)',
+                color: 'white',
+                fontWeight: 'bold',
+                fontSize: '1.125rem',
+                borderRadius: '0.5rem',
+                border: '2px solid #ef4444',
+                cursor: 'pointer',
                 textShadow: '0 0 10px rgba(0,0,0,0.5)',
                 boxShadow: '0 0 20px rgba(239, 68, 68, 0.3)',
-                fontFamily: 'system-ui, -apple-system, sans-serif'
+                transform: 'scale(1)',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'scale(1.05)';
+                e.currentTarget.style.background = 'linear-gradient(to right, #ef4444, #dc2626)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'scale(1)';
+                e.currentTarget.style.background = 'linear-gradient(to right, #dc2626, #b91c1c)';
               }}
             >
               RESET
             </button>
           )}
-        </div>
 
-        {/* Return button */}
-        <button
-          onClick={() => window.history.back()}
-          className="mt-8 px-6 py-3 bg-gradient-to-r from-purple-600 to-purple-800 text-white font-bold rounded-lg border-2 border-purple-400 hover:from-purple-500 hover:to-purple-700 transition-all duration-200 transform hover:scale-105"
-          style={{ 
-            textShadow: '0 0 10px rgba(0,0,0,0.5)',
-            boxShadow: '0 0 20px rgba(147, 51, 234, 0.3)',
-            fontFamily: 'system-ui, -apple-system, sans-serif'
-          }}
-        >
-          Return to Game
-        </button>
+          <button
+            onClick={() => setLocation('/game/headquarters')}
+            style={{ 
+              padding: '0.75rem 1.5rem',
+              background: 'linear-gradient(to right, #7c3aed, #6d28d9)',
+              color: 'white',
+              fontWeight: 'bold',
+              fontSize: '1rem',
+              borderRadius: '0.5rem',
+              border: '2px solid #8b5cf6',
+              cursor: 'pointer',
+              textShadow: '0 0 10px rgba(0,0,0,0.5)',
+              boxShadow: '0 0 20px rgba(139, 92, 246, 0.3)',
+              transform: 'scale(1)',
+              transition: 'all 0.2s ease'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'scale(1.05)';
+              e.currentTarget.style.background = 'linear-gradient(to right, #8b5cf6, #7c3aed)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'scale(1)';
+              e.currentTarget.style.background = 'linear-gradient(to right, #7c3aed, #6d28d9)';
+            }}
+          >
+            Return to Game
+          </button>
+        </div>
       </div>
 
-      <style>{`
-        @keyframes scaleIn {
-          from { transform: scale(0); opacity: 0; }
-          to { transform: scale(1); opacity: 1; }
-        }
-      `}</style>
+      <style>
+        {`
+          @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+          }
+        `}
+      </style>
     </div>
   );
 }
