@@ -283,13 +283,13 @@ export function ChupacabraChallenge() {
           textShadow: '0 0 20px #ef4444',
           fontFamily: 'Impact, Arial Black, sans-serif'
         }}>
-          CHUPACABRA CHALLENGE
+          MEMORY CHALLENGE
         </h1>
         <p style={{
           fontSize: 'clamp(0.9rem, 3vw, 1.125rem)',
           color: '#d1d5db'
         }}>
-          Match the cryptid cards before time runs out!
+          Match the cards before time runs out!
         </p>
       </div>
 
@@ -316,7 +316,7 @@ export function ChupacabraChallenge() {
           transition: 'all 0.3s ease',
           animation: isPanicMode ? 'bounce 1s infinite' : 'none'
         }}>
-          {isPanicMode && <span style={{ color: '#f87171', fontWeight: 'bold' }}>CONTAINMENT FAILING! </span>}
+          {isPanicMode && <span style={{ color: '#f87171', fontWeight: 'bold' }}>HURRY UP! </span>}
           Time: {gameState.timeLeft}s
         </div>
         <div style={{
