@@ -28,6 +28,7 @@ import { CurseCrafting } from "@/sidequests/CurseCrafting";
 import { WackAChupacabra } from "@/sidequests/WackAChupacabra";
 import { LabEscape } from "@/sidequests/LabEscape";
 import { FaceTheChupacabra } from "@/sidequests/FaceTheChupacabra";
+import { Crime } from "@/sidequests/Crime";
 
 
 
@@ -59,6 +60,7 @@ function Router() {
       <Route path="/sidequest/wack-a-chupacabra" component={WackAChupacabra} />
       <Route path="/sidequest/lab-escape" component={LabEscape} />
       <Route path="/sidequest/face-the-chupacabra" component={FaceTheChupacabra} />
+      <Route path="/sidequest/crime" component={Crime} />
 
       <Route component={NotFound} />
     </Switch>

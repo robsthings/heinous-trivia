@@ -10,6 +10,7 @@ export { WackAChupacabra } from './WackAChupacabra';
 export { CurseCrafting } from './CurseCrafting';
 export { WretchedWiring } from './WretchedWiring';
 export { FaceTheChupacabra } from './FaceTheChupacabra';
+export { Crime } from './Crime';
 
 // Side Quest metadata for dynamic loading
 export const SIDE_QUESTS = {
@@ -78,6 +79,13 @@ export const SIDE_QUESTS = {
     description: 'Rock-paper-scissors duel against the legendary cryptid',
     difficulty: 'Medium',
     estimatedTime: '3-5 minutes'
+  },
+  'crime': {
+    name: 'C.R.I.M.E.',
+    component: 'Crime',
+    description: 'Control Room Interactive Memory Experiment - Simon-style memory challenge',
+    difficulty: 'Hard',
+    estimatedTime: '5-8 minutes'
   }
 } as const;
 
