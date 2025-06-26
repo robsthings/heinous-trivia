@@ -11,7 +11,6 @@ import HauntAdmin from "@/pages/haunt-admin";
 import HauntAuth from "@/pages/haunt-auth";
 
 import Analytics from "@/pages/analytics";
-import AnalyticsTest from "@/pages/analytics-test";
 import AnalyticsSimple from "@/pages/analytics-simple";
 import AnalyticsProduction from "@/pages/analytics-production";
 import UberAdmin from "@/pages/uber-admin";
@@ -20,8 +19,6 @@ import Terms from "@/pages/terms";
 import UploadGuidelines from "@/pages/upload-guidelines";
 import Info from "@/pages/info";
 import NotFound from "@/pages/not-found";
-import { TestProgressPage } from "@/pages/test-progress";
-import { TestProgressThemesPage } from "@/pages/test-progress-themes";
 import { MonsterNameGenerator } from "@/sidequests/MonsterNameGenerator";
 import { GloryGrab } from "@/sidequests/GloryGrab";
 import { CrypticCompliments } from "@/sidequests/CrypticCompliments";
@@ -30,7 +27,7 @@ import { WretchedWiring } from "@/sidequests/WretchedWiring";
 import { CurseCrafting } from "@/sidequests/CurseCrafting";
 import { WackAChupacabra } from "@/sidequests/WackAChupacabra";
 import { LabEscape } from "@/sidequests/LabEscape";
-import HauntTest from "@/pages/haunt-test";
+
 
 
 function Router() {
@@ -45,7 +42,6 @@ function Router() {
       <Route path="/haunt-auth/:hauntId" component={HauntAuth} />
       <Route path="/haunt-admin/:hauntId" component={HauntAdmin} />
       <Route path="/analytics/:hauntId" component={AnalyticsProduction} />
-      <Route path="/analytics-test/:hauntId" component={AnalyticsTest} />
       <Route path="/analytics-simple/:hauntId" component={AnalyticsSimple} />
       <Route path="/analytics-original/:hauntId" component={Analytics} />
       <Route path="/uber-admin" component={UberAdmin} />
@@ -53,8 +49,6 @@ function Router() {
       <Route path="/terms" component={Terms} />
       <Route path="/upload-guidelines" component={UploadGuidelines} />
       <Route path="/info" component={Info} />
-      <Route path="/test-progress" component={TestProgressPage} />
-      <Route path="/haunt-test" component={HauntTest} />
       <Route path="/sidequest/monster-name-generator" component={MonsterNameGenerator} />
       <Route path="/sidequest/glory-grab" component={GloryGrab} />
       <Route path="/sidequest/cryptic-compliments" component={CrypticCompliments} />
