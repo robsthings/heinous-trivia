@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+// @ts-ignore
 import riddlesData from '../data/riddles.json';
 
 interface Riddle {
@@ -26,6 +27,8 @@ const RIDDLES: Riddle[] = riddlesData.map(riddle => ({
   question: riddle.question,
   answer: riddle.answer.toLowerCase().trim()
 }));
+
+
 
 const CHUPACABRA_TAUNTS = [
   "Wrong again, foolish mortal!",
