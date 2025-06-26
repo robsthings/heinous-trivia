@@ -693,6 +693,7 @@ export function LabEscape() {
                 RETURN TO GAME
               </button>
             </div>
+            )}
           </div>
         )}
       </div>
