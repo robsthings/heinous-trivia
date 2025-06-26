@@ -95,6 +95,32 @@ export function WretchedWiring() {
   const timerRef = useRef<number>(0);
 
   const { data: assets = {} } = useSidequestAssets('wretched-wiring');
+  
+  // Asset fallback helper function
+  const getAssetUrl = (assetName: string, fallbackPath: string = '') => {
+    // Return Firebase asset URL if available, otherwise use local fallback
+    if (assets[assetName]) {
+      return assets[assetName];
+    }
+    
+    // Use existing Dr. Heinous assets as placeholders for missing graphics
+    const fallbacks = {
+      'wretched-wiring-bg': '/heinous/neutral.png',
+      'node-red-left': '/heinous/charming.png',
+      'node-blue-left': '/heinous/charming.png', 
+      'node-red-right': '/heinous/charming.png',
+      'node-blue-right': '/heinous/charming.png',
+      'Pull-Chain': '/heinous/charming.png',
+      'wire-red-1': '/heinous/charming.png',
+      'wire-red-2': '/heinous/charming.png',
+      'wire-red-3': '/heinous/charming.png',
+      'wire-blue-1': '/heinous/charming.png',
+      'wire-blue-2': '/heinous/charming.png',
+      'wire-blue-3': '/heinous/charming.png'
+    };
+    
+    return fallbacks[assetName] || fallbackPath || '/heinous/charming.png';
+  };
 
   // Initialize random wires
   const initializeWires = () => {
@@ -385,7 +411,7 @@ export function WretchedWiring() {
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundImage: `url(${assets['wretched-wiring-bg'] || '/sidequests/wretched-wiring/wretched-wiring-bg.png'})`,
+          backgroundImage: `url(${getAssetUrl('wretched-wiring-bg')})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
@@ -587,14 +613,14 @@ export function WretchedWiring() {
           }}>
             <div style={{ position: 'relative' }}>
               <img 
-                src={assets['node-red-left'] || '/sidequests/wretched-wiring/node-red-left.png'} 
+                src={getAssetUrl('node-red-left')} 
                 alt="Red Terminal Left" 
                 style={{ width: '4rem', height: '4rem' }}
               />
             </div>
             <div style={{ position: 'relative' }}>
               <img 
-                src={assets['node-blue-left'] || '/sidequests/wretched-wiring/node-blue-left.png'} 
+                src={getAssetUrl('node-blue-left')} 
                 alt="Blue Terminal Left" 
                 style={{ width: '4rem', height: '4rem' }}
               />
@@ -613,14 +639,14 @@ export function WretchedWiring() {
           }}>
             <div style={{ position: 'relative' }}>
               <img 
-                src={assets['node-red-right'] || '/sidequests/wretched-wiring/node-red-right.png'} 
+                src={getAssetUrl('node-red-right')} 
                 alt="Red Terminal Right" 
                 style={{ width: '4rem', height: '4rem' }}
               />
             </div>
             <div style={{ position: 'relative' }}>
               <img 
-                src={assets['node-blue-right'] || '/sidequests/wretched-wiring/node-blue-right.png'} 
+                src={getAssetUrl('node-blue-right')} 
                 alt="Blue Terminal Right" 
                 style={{ width: '4rem', height: '4rem' }}
               />
