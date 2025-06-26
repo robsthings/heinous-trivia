@@ -376,7 +376,7 @@ export function WretchedWiring() {
       {/* Background */}
       <div 
         className="fixed inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: 'url(/backgrounds/lab-dark-blue.png)' }}
+        style={{ backgroundImage: `url(${assets['wretched-wiring-bg'] || '/sidequests/wretched-wiring/wretched-wiring-bg.png'})` }}
       />
 
       {/* Certificate Screen */}
@@ -410,7 +410,7 @@ export function WretchedWiring() {
       {!gameState.isPlaying && !gameState.showCertificate && (
         <div className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-80">
           <div className=" bg-gray-800 bg-opacity-95 p-8 rounded-xl border-2 border-yellow-500 max-w-md" style={{textAlign: "center"}}>
-            <h1 className="text-4xl font-bold text-yellow-400  drop-shadow-lg" style={{marginBottom: "1.5rem"}} style={{ fontFamily: 'Courier, monospace' }}>
+            <h1 className="text-4xl font-bold text-yellow-400  drop-shadow-lg" style={{marginBottom: "1.5rem", fontFamily: 'Courier, monospace'}}>
               WRETCHED WIRING
             </h1>
             <p className="text-lg text-white mb-8 drop-shadow-lg">
