@@ -66,18 +66,18 @@ export function Crime() {
           setGameState(prev => ({ ...prev, sequenceStep: prev.sequenceStep + 1 }));
         } else {
           // Final transition: fade out book-3 and zoom in game-board
+          const pattern = generatePattern();
+          setGameState(prev => ({ 
+            ...prev, 
+            phase: 'gameplay', 
+            currentPattern: pattern,
+            playerInput: [],
+            canRepeat: true,
+            patternViewCount: 0
+          }));
           setTimeout(() => {
-            const pattern = generatePattern();
-            setGameState(prev => ({ 
-              ...prev, 
-              phase: 'gameplay', 
-              currentPattern: pattern,
-              playerInput: [],
-              canRepeat: true,
-              patternViewCount: 0
-            }));
             showPattern(pattern);
-          }, 1000); // 1 second delay for final book fade out
+          }, 2500); // Wait for zoom animation to complete
         }
       }, 3000); // Slower timing - 3 seconds between each gif
       return () => clearTimeout(timer);
@@ -320,20 +320,26 @@ export function Crime() {
         
         @keyframes gameboardZoomIn {
           0% { 
-            backgroundSize: 100%; 
-            backgroundPosition: center;
+            transform: scale(0.1);
             opacity: 0;
           }
-          50% {
-            backgroundSize: 125%;
-            backgroundPosition: center;
-            opacity: 0.5;
+          30% {
+            transform: scale(0.5);
+            opacity: 0.3;
+          }
+          70% {
+            transform: scale(1.2);
+            opacity: 0.8;
           }
           100% { 
-            backgroundSize: 150%; 
-            backgroundPosition: right center;
+            transform: scale(1);
             opacity: 1;
           }
+        }
+        
+        @keyframes bookFadeOut {
+          0% { opacity: 1; }
+          100% { opacity: 0; }
         }
       `}</style>
 
@@ -451,11 +457,38 @@ export function Crime() {
                   maxWidth: '100%',
                   maxHeight: '100%',
                   objectFit: 'contain',
-                  animation: 'bookFadeIn 0.5s ease-in-out, glowPulse 2s ease-in-out infinite',
+                  animation: gameState.sequenceStep === 3 ? 
+                    'bookFadeIn 0.5s ease-in-out, glowPulse 2s ease-in-out infinite, bookFadeOut 1s ease-in-out 2s forwards' :
+                    'bookFadeIn 0.5s ease-in-out, glowPulse 2s ease-in-out infinite',
                   filter: 'drop-shadow(0 0 30px rgba(0,255,255,0.8))'
                 }}
               />
             </div>
+
+            {/* Game board that zooms in from behind book-3 */}
+            {gameState.sequenceStep === 3 && (
+              <div style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: '100%',
+                height: '100%',
+                zIndex: -1,
+                animation: 'gameboardZoomIn 2s ease-out 1s forwards'
+              }}>
+                <img
+                  src="/sidequests/crime/game-board.png"
+                  alt="Game Board"
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'contain',
+                    opacity: 0
+                  }}
+                />
+              </div>
+            )}
           </div>
         </div>
       )}
