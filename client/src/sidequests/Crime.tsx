@@ -438,8 +438,7 @@ export function Crime() {
           gap: 'clamp(1rem, 4vw, 2rem)',
           width: '100%',
           maxWidth: '800px',
-          marginLeft: 'auto',
-          marginRight: '2rem'
+          margin: '0 auto'
         }}>
           {/* Round indicator */}
           <div style={{
