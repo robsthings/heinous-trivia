@@ -227,72 +227,75 @@ export const CrypticCompliments: React.FC = () => {
           <div style={{ 
             textAlign: 'center',
             position: 'relative',
-            marginTop: '3rem'
+            marginTop: '6rem'
           }}>
             {/* Position emoji gift near Dr. Heinous's hand */}
             <div 
               onClick={generateCompliment}
               style={{
                 position: 'absolute',
-                top: '-12rem',
+                top: '-18rem',
                 left: '50%',
-                transform: 'translateX(-30%)', // Offset to align with hand position
-                width: 'clamp(4rem, 10vw, 6rem)',
-                height: 'clamp(4rem, 10vw, 6rem)',
+                transform: 'translateX(-20%)', // Adjusted to better align with larger image
+                width: 'clamp(5rem, 12vw, 8rem)',
+                height: 'clamp(5rem, 12vw, 8rem)',
                 cursor: 'pointer',
                 transition: 'all 0.3s ease',
                 zIndex: '30'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.transform = 'translateX(-30%) scale(1.1)'}
-              onMouseLeave={(e) => e.currentTarget.style.transform = 'translateX(-30%) scale(1)'}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'translateX(-20%) scale(1.1)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'translateX(-20%) scale(1)'}
             >
               <div style={{
                 width: '100%',
                 height: '100%',
                 background: 'linear-gradient(135deg, #9333ea 0%, #581c87 100%)',
-                borderRadius: '0.5rem',
+                borderRadius: '0.75rem',
                 border: '3px solid #a855f7',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                fontSize: 'clamp(2rem, 6vw, 3rem)',
-                boxShadow: '0 0 30px rgba(168, 85, 247, 0.7)'
+                fontSize: 'clamp(2.5rem, 7vw, 4rem)',
+                boxShadow: '0 0 40px rgba(168, 85, 247, 0.8)'
               }}>
                 🎁
               </div>
             </div>
             
             <h2 style={{
-              fontSize: '1.5rem',
+              fontSize: 'clamp(1.25rem, 4vw, 1.75rem)',
               color: '#d8b4fe',
-              marginBottom: '1rem',
-              marginTop: '1rem'
+              marginBottom: '2rem',
+              marginTop: '2rem',
+              textShadow: '0 0 10px rgba(168, 85, 247, 0.5)'
             }}>
-              A mysterious gift awaits...
+              A mysterious gift from the darkness awaits...
             </h2>
             
             <button
               onClick={generateCompliment}
               style={{
-                padding: '0.75rem 2rem',
+                padding: '1rem 2.5rem',
                 background: 'linear-gradient(to right, #9333ea, #581c87)',
                 color: 'white',
                 fontWeight: 'bold',
-                fontSize: '1.125rem',
-                borderRadius: '0.5rem',
+                fontSize: 'clamp(1rem, 3vw, 1.25rem)',
+                borderRadius: '0.75rem',
                 border: '2px solid #a855f7',
                 cursor: 'pointer',
                 transition: 'all 0.2s ease',
                 textShadow: '0 0 10px rgba(0,0,0,0.5)',
-                boxShadow: '0 0 20px rgba(168, 85, 247, 0.3)'
+                boxShadow: '0 0 25px rgba(168, 85, 247, 0.4)'
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = 'linear-gradient(to right, #7c3aed, #4c1d95)';
                 e.currentTarget.style.transform = 'scale(1.05)';
+                e.currentTarget.style.boxShadow = '0 0 35px rgba(168, 85, 247, 0.6)';
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = 'linear-gradient(to right, #9333ea, #581c87)';
                 e.currentTarget.style.transform = 'scale(1)';
+                e.currentTarget.style.boxShadow = '0 0 25px rgba(168, 85, 247, 0.4)';
               }}
             >
               OPEN GIFT
