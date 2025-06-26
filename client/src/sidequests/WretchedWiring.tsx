@@ -111,12 +111,10 @@ export function WretchedWiring() {
       'node-red-right': '/heinous/charming.png',
       'node-blue-right': '/heinous/charming.png',
       'Pull-Chain': '/heinous/charming.png',
-      'wire-red-1': '/heinous/charming.png',
-      'wire-red-2': '/heinous/charming.png',
-      'wire-red-3': '/heinous/charming.png',
-      'wire-blue-1': '/heinous/charming.png',
-      'wire-blue-2': '/heinous/charming.png',
-      'wire-blue-3': '/heinous/charming.png'
+      'wire-red-straight': '/heinous/charming.png',
+      'wire-red-curved': '/heinous/charming.png',
+      'wire-blue-straight': '/heinous/charming.png',
+      'wire-blue-curved': '/heinous/charming.png'
     };
     
     return fallbacks[assetName] || fallbackPath || '/heinous/charming.png';
@@ -125,8 +123,8 @@ export function WretchedWiring() {
   // Initialize random wires
   const initializeWires = () => {
     const wireAssets = [
-      'wire-red-1.png', 'wire-red-2.png', 'wire-red-3.png',
-      'wire-blue-1.png', 'wire-blue-2.png', 'wire-blue-3.png'
+      'wire-red-straight.png', 'wire-red-curved.png',
+      'wire-blue-straight.png', 'wire-blue-curved.png'
     ];
 
     const shuffled = wireAssets.sort(() => Math.random() - 0.5);
@@ -411,7 +409,7 @@ export function WretchedWiring() {
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundImage: `url(${getAssetUrl('wretched-wiring-bg')})`,
+          background: 'linear-gradient(135deg, #1f2937 0%, #374151 50%, #111827 100%)',
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat'
