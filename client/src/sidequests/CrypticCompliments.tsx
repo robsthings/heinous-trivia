@@ -196,12 +196,12 @@ export const CrypticCompliments: React.FC = () => {
                 display: 'block'
               }}
             />
-            {/* Gift box positioned at his hand */}
+            {/* Gift box positioned at bottom center of his hand */}
             <div 
               onClick={generateCompliment}
               style={{
                 position: 'absolute',
-                bottom: '25%',
+                bottom: '15%',
                 left: '50%',
                 transform: 'translateX(-50%)',
                 width: 'clamp(3rem, 8vw, 5rem)',
