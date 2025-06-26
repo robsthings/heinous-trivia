@@ -84,8 +84,9 @@ export function Welcome() {
       }}
     >
       <div 
-        className="min-h-screen flex flex-col items-center justify-center px-4 " style={{textAlign: "center"}}
+        className="min-h-screen flex flex-col items-center justify-center px-4"
         style={{
+          textAlign: "center",
           background: 'linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(55,65,81,0.7), rgba(0,0,0,0.8))'
         }}
       >

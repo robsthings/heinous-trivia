@@ -72,10 +72,29 @@ export function RootRedirector() {
 
   // Show loading state while redirect logic executes
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black   justify-center" style={{alignItems: "center"}} className="flex-center">
-      <div className="text-center">
-        <div className="animate-spin w-12 h-12 border-4 border-red-500 border-t-transparent rounded-full mx-auto mb-4"></div>
-        <p className="text-gray-400 creepster text-lg">
+    <div 
+      className="min-h-screen flex items-center justify-center"
+      style={{
+        background: 'linear-gradient(to bottom right, #1f2937, #581c87, #000000)'
+      }}
+    >
+      <div style={{ textAlign: 'center' }}>
+        <div 
+          style={{
+            width: '3rem',
+            height: '3rem',
+            border: '4px solid #ef4444',
+            borderTop: '4px solid transparent',
+            borderRadius: '50%',
+            margin: '0 auto 1rem auto',
+            animation: 'spin 1s linear infinite'
+          }}
+        ></div>
+        <p style={{
+          color: '#9ca3af',
+          fontFamily: '"Creepster", cursive',
+          fontSize: '1.125rem'
+        }}>
           Summoning the darkness...
         </p>
       </div>

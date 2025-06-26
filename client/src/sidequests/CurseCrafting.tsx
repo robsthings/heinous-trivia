@@ -265,19 +265,19 @@ export function CurseCrafting() {
                       e.currentTarget.style.border = '2px solid #4ade80';
                       e.currentTarget.style.transform = 'scale(1.05)';
                     }
+                    setHoveredIngredient(ingredient);
                   }}
                   onMouseLeave={(e) => {
                     if (!isInCauldron && !isSelected) {
                       e.currentTarget.style.border = 'none';
                       e.currentTarget.style.transform = 'scale(1)';
                     }
+                    setHoveredIngredient(null);
                   }}
                   draggable={isSelected && !isInCauldron}
                   onClick={() => handleIngredientClick(ingredient)}
                   onDragStart={(e) => isSelected && handleDragStart(e, ingredient)}
                   onDragEnd={handleDragEnd}
-                  onMouseEnter={() => setHoveredIngredient(ingredient)}
-                  onMouseLeave={() => setHoveredIngredient(null)}
                 >
                   <div className="bg-black/60 border border-gray-600 rounded-lg p-2 sm:p-3 backdrop-blur-sm">
                     <img 
