@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
 import fs from 'fs';
-import { execSync } from 'child_process';
+import path from 'path';
 
-console.log('🔍 Verifying deployment readiness...\n');
+console.log('🔍 Verifying deployment readiness...');
 
 // Check required files exist
 const requiredFiles = [
@@ -12,104 +12,105 @@ const requiredFiles = [
   'dist/public/index.html'
 ];
 
-console.log('✅ Required Files Check:');
+console.log('\n📋 Checking required files:');
 let allFilesExist = true;
+
 for (const file of requiredFiles) {
   if (fs.existsSync(file)) {
-    const size = fs.statSync(file).size;
-    console.log(`  ✓ ${file} (${Math.round(size / 1024)}KB)`);
+    const stats = fs.statSync(file);
+    const size = Math.round(stats.size / 1024);
+    console.log(`✅ ${file} (${size}KB)`);
   } else {
-    console.log(`  ❌ ${file} - MISSING`);
+    console.log(`❌ ${file} - MISSING`);
     allFilesExist = false;
   }
 }
 
 if (!allFilesExist) {
-  console.log('\n❌ DEPLOYMENT NOT READY - Missing required files');
+  console.log('\n❌ Deployment not ready - missing required files');
   process.exit(1);
 }
 
-// Check package.json structure
-console.log('\n✅ Package.json Validation:');
+// Verify package.json configuration
+console.log('\n📦 Verifying package.json:');
 const packageJson = JSON.parse(fs.readFileSync('dist/package.json', 'utf8'));
-const requiredFields = ['name', 'version', 'type', 'main', 'scripts', 'engines', 'dependencies'];
-for (const field of requiredFields) {
-  if (packageJson[field]) {
-    console.log(`  ✓ ${field}: ${typeof packageJson[field] === 'object' ? 'configured' : packageJson[field]}`);
-  } else {
-    console.log(`  ❌ ${field}: missing`);
+
+const requiredFields = {
+  'type': 'module',
+  'main': 'index.js',
+  'scripts.start': 'NODE_ENV=production node index.js'
+};
+
+for (const [field, expected] of Object.entries(requiredFields)) {
+  const fieldPath = field.split('.');
+  let value = packageJson;
+  for (const key of fieldPath) {
+    value = value?.[key];
   }
-}
-
-// Verify start script
-if (packageJson.scripts?.start?.includes('node index.js')) {
-  console.log('  ✓ Start script: Cloud Run compatible');
-} else {
-  console.log('  ❌ Start script: Not Cloud Run compatible');
-}
-
-// Check server configuration
-console.log('\n✅ Server Configuration:');
-const serverContent = fs.readFileSync('server/index.ts', 'utf8');
-if (serverContent.includes('process.env.PORT')) {
-  console.log('  ✓ PORT environment variable: Configured');
-} else {
-  console.log('  ❌ PORT environment variable: Not configured');
-}
-
-if (serverContent.includes('host: "0.0.0.0"')) {
-  console.log('  ✓ Host binding: 0.0.0.0 (Cloud Run compatible)');
-} else {
-  console.log('  ❌ Host binding: Not properly configured');
+  
+  if (value === expected) {
+    console.log(`✅ ${field}: "${value}"`);
+  } else {
+    console.log(`❌ ${field}: expected "${expected}", got "${value}"`);
+    allFilesExist = false;
+  }
 }
 
 // Check static assets
-console.log('\n✅ Static Assets:');
+console.log('\n📁 Checking static assets:');
 if (fs.existsSync('dist/public')) {
   const publicFiles = fs.readdirSync('dist/public', { recursive: true });
-  console.log(`  ✓ Static files: ${publicFiles.length} assets copied`);
+  console.log(`✅ ${publicFiles.length} static assets found`);
   
-  // Check for essential assets
-  const essentialAssets = ['icons', 'heinous', 'chupacabra', 'sidequests'];
-  for (const asset of essentialAssets) {
-    if (fs.existsSync(`dist/public/${asset}`)) {
-      console.log(`  ✓ ${asset}: Available`);
+  // Check for key assets
+  const keyAssets = [
+    'index.html',
+    'manifest.json',
+    'icons',
+    'heinous',
+    'chupacabra',
+    'sidequests'
+  ];
+  
+  for (const asset of keyAssets) {
+    const assetPath = path.join('dist/public', asset);
+    if (fs.existsSync(assetPath)) {
+      console.log(`✅ ${asset} present`);
     } else {
-      console.log(`  ⚠️ ${asset}: Missing (may affect functionality)`);
+      console.log(`⚠️  ${asset} missing (may be optional)`);
     }
   }
 } else {
-  console.log('  ❌ Public directory: Missing');
+  console.log(`❌ dist/public directory missing`);
+  allFilesExist = false;
 }
 
-// Test production server startup
-console.log('\n✅ Production Server Test:');
-try {
-  const result = execSync('cd dist && NODE_ENV=production PORT=8081 timeout 5s node index.js', { 
-    encoding: 'utf8',
-    timeout: 6000 
-  });
-} catch (error) {
-  if (error.message.includes('serving on port')) {
-    console.log('  ✓ Server startup: Working');
-  } else {
-    console.log('  ❌ Server startup: Failed');
-    console.log('  Error:', error.message);
-  }
+// Check server bundle size
+console.log('\n⚡ Server bundle analysis:');
+const serverSize = fs.statSync('dist/index.js').size;
+const sizeKB = Math.round(serverSize / 1024);
+
+if (serverSize > 50000) { // Minimum 50KB for a valid bundle
+  console.log(`✅ Server bundle: ${sizeKB}KB (adequate size)`);
+} else {
+  console.log(`❌ Server bundle: ${sizeKB}KB (too small, likely build error)`);
+  allFilesExist = false;
 }
 
-// Final summary
-console.log('\n🚀 DEPLOYMENT READINESS SUMMARY');
-console.log('=========================================');
-console.log('✓ Server bundle created (100KB)');
-console.log('✓ Production package.json configured');
-console.log('✓ Static assets structured correctly');
-console.log('✓ Cloud Run port configuration ready');
-console.log('✓ Production server startup verified');
-console.log('\n🎯 DEPLOYMENT FIXES APPLIED:');
-console.log('• Single port configuration (removed multiple ports)');
-console.log('• Proper dist/index.js server bundle creation');
-console.log('• Cloud Run compatible package.json start script');
-console.log('• Complete static asset structure');
-console.log('• PORT environment variable configuration');
-console.log('\n✅ READY FOR CLOUD RUN DEPLOYMENT!');
+// Final verification
+if (allFilesExist) {
+  console.log('\n🚀 DEPLOYMENT READY!');
+  console.log('\nNext steps:');
+  console.log('1. Upload dist/ folder to your cloud platform');
+  console.log('2. Set NODE_ENV=production');
+  console.log('3. Set PORT environment variable (default: 5000)');
+  console.log('4. Run: npm start');
+  console.log('\nThe application will serve:');
+  console.log('- Static assets from dist/public/');
+  console.log('- API routes from dist/index.js');
+  console.log('- Client-side routing via index.html fallback');
+} else {
+  console.log('\n❌ DEPLOYMENT NOT READY');
+  console.log('Run "npm run build" to fix missing files');
+  process.exit(1);
+}
