@@ -2483,7 +2483,7 @@ export default function Admin() {
                                           await deleteDoc(packRef);
                                           
                                           // Refresh the list
-                                          await loadExistingPacks();
+                                          await loadTriviaPacks();
                                           
                                           toast({
                                             title: "Pack Deleted",
