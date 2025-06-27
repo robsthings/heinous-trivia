@@ -89,11 +89,11 @@ export function Crime() {
     setGameState(prev => ({ 
       ...prev, 
       showingPattern: true, 
-      patternIndex: 0,
+      patternIndex: -1, // Start with -1 so first increment goes to 0
       patternViewCount: prev.patternViewCount + 1
     }));
     
-    let index = 0;
+    let index = -1;
     const timer = setInterval(() => {
       index++;
       setGameState(prev => ({ ...prev, patternIndex: index }));
@@ -104,7 +104,7 @@ export function Crime() {
           setGameState(prev => ({ 
             ...prev, 
             showingPattern: false, 
-            patternIndex: 0,
+            patternIndex: -1,
             canRepeat: prev.patternViewCount < 2
           }));
         }, 800);
@@ -584,8 +584,9 @@ export function Crime() {
           }}>
             {gameState.glyphPositions.map((glyphNum, index) => {
               const isHighlighted = gameState.showingPattern && 
-                gameState.patternIndex > 0 && 
-                gameState.currentPattern[gameState.patternIndex - 1] === glyphNum;
+                gameState.patternIndex >= 0 && 
+                gameState.patternIndex < gameState.currentPattern.length &&
+                gameState.currentPattern[gameState.patternIndex] === glyphNum;
 
               return (
                 <button
