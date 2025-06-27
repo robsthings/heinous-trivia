@@ -36,11 +36,10 @@ try {
   process.exit(1);
 }
 
-// Step 2: Copy static assets from client/public
+// Step 2: Copy static assets from client/public to dist root (deployment structure)
 console.log('📁 Copying static assets...');
-fs.mkdirSync('./dist/public', { recursive: true });
 
-// Copy all static assets from client/public
+// Copy all static assets from client/public to dist/ (not dist/public)
 if (fs.existsSync('./client/public')) {
   const copyDir = (src, dest) => {
     if (!fs.existsSync(dest)) {
@@ -58,11 +57,11 @@ if (fs.existsSync('./client/public')) {
     }
   };
   
-  copyDir('./client/public', './dist/public');
-  console.log('✅ Static assets copied');
+  copyDir('./client/public', './dist');
+  console.log('✅ Static assets copied to deployment root');
 }
 
-// Step 3: Create production-ready index.html
+// Step 3: Create production-ready index.html  
 console.log('📄 Creating production index.html...');
 const productionHtml = `<!DOCTYPE html>
 <html lang="en">
@@ -137,8 +136,8 @@ const productionHtml = `<!DOCTYPE html>
 </body>
 </html>`;
 
-fs.writeFileSync('./dist/public/index.html', productionHtml);
-console.log('✅ Production index.html created');
+fs.writeFileSync('./dist/index.html', productionHtml);
+console.log('✅ Production index.html created in deployment root');
 
 // Step 4: Create production package.json
 console.log('📦 Creating production package.json...');
@@ -182,7 +181,7 @@ console.log('✅ Production package.json created');
 console.log('🔍 Verifying deployment structure...');
 const requiredFiles = [
   'dist/index.js',
-  'dist/public/index.html', 
+  'dist/index.html', 
   'dist/package.json'
 ];
 
@@ -195,12 +194,12 @@ if (missingFiles.length > 0) {
 
 // Check file sizes and structure
 const indexJsSize = fs.statSync('dist/index.js').size;
-const publicFiles = fs.readdirSync('dist/public').length;
+const distFiles = fs.readdirSync('dist').length;
 
 console.log('✅ Deployment verification complete!');
 console.log('📊 Build Summary:');
 console.log(`  - Server bundle: ${Math.round(indexJsSize / 1024)}KB`);
-console.log(`  - Static assets: ${publicFiles} files`);
+console.log(`  - Static assets: ${distFiles} files`);
 console.log(`  - Production config: ready`);
 console.log('🚀 Deployment structure ready for Cloud Run');
 

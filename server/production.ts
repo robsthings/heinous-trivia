@@ -14,19 +14,20 @@ export function log(message: string, source = "express") {
 }
 
 export function serveStatic(app: Express) {
-  // Look for static assets in the deployment structure
-  const distPath = path.resolve(process.cwd(), "dist/public");
+  // In deployment, static files are in the current working directory (dist/)
+  const staticPath = process.cwd();
+  const indexPath = path.resolve(staticPath, "index.html");
 
-  if (!fs.existsSync(distPath)) {
+  if (!fs.existsSync(indexPath)) {
     throw new Error(
-      `Could not find the build directory: ${distPath}, make sure to build the client first`,
+      `Could not find index.html in: ${staticPath}, make sure to build the client first`,
     );
   }
 
-  app.use(express.static(distPath));
+  app.use(express.static(staticPath));
 
   // fall through to index.html if the file doesn't exist
   app.use("*", (_req, res) => {
-    res.sendFile(path.resolve(distPath, "index.html"));
+    res.sendFile(indexPath);
   });
 }
