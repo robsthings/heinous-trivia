@@ -95,7 +95,7 @@ const SystemMonitoringDashboard = ({ haunts, triviaPacks }: { haunts: any[], tri
         }
       };
 
-      const results = {};
+      const results: Record<string, string> = {};
       for (const [key, test] of Object.entries(tests)) {
         try {
           const isHealthy = await test();
