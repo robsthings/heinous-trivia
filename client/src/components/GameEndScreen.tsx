@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import type { GameState } from "@/lib/gameState";
-import type { LeaderboardEntry } from "@shared/schema";
+import type { LeaderboardEntry, HauntConfig } from "@shared/schema";
+import { SidequestTransition } from "./SidequestTransition";
 
 interface GameEndScreenProps {
   gameState: GameState;
@@ -23,6 +24,23 @@ export function GameEndScreen({
   const [playerRank, setPlayerRank] = useState<number | null>(null);
   const [scoreSaved, setScoreSaved] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [showSidequestTransition, setShowSidequestTransition] = useState(false);
+  const [hauntConfig, setHauntConfig] = useState<HauntConfig | null>(null);
+
+  // Fetch haunt configuration
+  const fetchHauntConfig = async () => {
+    if (!gameState.currentHaunt) return;
+    
+    try {
+      const response = await fetch(`/api/haunt-config/${gameState.currentHaunt}`);
+      if (response.ok) {
+        const config: HauntConfig = await response.json();
+        setHauntConfig(config);
+      }
+    } catch (error) {
+      console.error('Failed to fetch haunt config:', error);
+    }
+  };
 
   // Fetch leaderboard data
   const fetchLeaderboard = async () => {
