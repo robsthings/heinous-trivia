@@ -3622,7 +3622,7 @@ export default function Admin() {
                           </div>
                           <div>
                             <span style={{ color: '#9ca3af' }}>Response Time: </span>
-                            <span style={{ color: '#10b981', fontWeight: '600' }}>{'< 200ms'}</span>
+                            <span style={{ color: '#10b981', fontWeight: '600' }}>Under 200ms</span>
                           </div>
                         </div>
                       </div>
