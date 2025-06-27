@@ -28,8 +28,25 @@ app.get('/', (req, res) => {
 });
 
 const port = process.env.PORT || 5000;
-app.listen(port, '0.0.0.0', () => {
-  console.log('Server running on port', port);
+const host = '0.0.0.0';
+
+const server = app.listen(port, host, () => {
+  console.log(\`Server running on \${host}:\${port}\`);
+});
+
+// Handle process termination gracefully
+process.on('SIGTERM', () => {
+  console.log('SIGTERM received, shutting down gracefully');
+  server.close(() => {
+    console.log('Process terminated');
+  });
+});
+
+process.on('SIGINT', () => {
+  console.log('SIGINT received, shutting down gracefully');
+  server.close(() => {
+    console.log('Process terminated');
+  });
 });`;
 
 fs.writeFileSync(path.join(distPath, 'index.js'), serverCode);
