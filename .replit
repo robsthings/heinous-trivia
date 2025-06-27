@@ -23,6 +23,10 @@ args = "NODE_ENV=development npx tsx server/index.ts"
 waitForPort = 5000
 
 [[ports]]
+localPort = 3000
+externalPort = 3000
+
+[[ports]]
 localPort = 3001
 externalPort = 3001
 
