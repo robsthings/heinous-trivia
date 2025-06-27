@@ -698,11 +698,11 @@ export default function Analytics() {
                             Good
                           </Badge>
                         ) : ad.ctr > 0 ? (
-                          <Badge >
+                          <Badge style={{ backgroundColor: 'rgba(59, 130, 246, 0.3)', color: '#dbeafe', border: '1px solid rgba(59, 130, 246, 0.5)' }}>
                             Active
                           </Badge>
                         ) : (
-                          <Badge variant="outline" >
+                          <Badge variant="outline" style={{ backgroundColor: 'transparent', color: '#9ca3af', border: '1px solid #6b7280' }}>
                             No Data
                           </Badge>
                         )}
@@ -710,39 +710,39 @@ export default function Analytics() {
                     </div>
                   ))
                 ) : (
-                  <div  style={{textAlign: "center"}}>
-                    <p >No ad performance data available</p>
+                  <div style={{textAlign: "center"}}>
+                    <p style={{ color: 'rgba(255, 255, 255, 0.6)' }}>No ad performance data available</p>
                   </div>
                 )}
 
                 {/* Summary Stats */}
                 {adPerformanceData && adPerformanceData.length > 0 && (
-                  <div >
-                    <div >
-                      <div >
-                        <div >
+                  <div style={{ marginTop: '1.5rem', padding: '1rem', backgroundColor: 'rgba(0, 0, 0, 0.4)', borderRadius: '0.5rem', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
+                      <div style={{ textAlign: 'center' }}>
+                        <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'white' }}>
                           {adPerformanceData.reduce((sum, ad) => sum + ad.views, 0)}
                         </div>
-                        <div >Total Ad Views</div>
+                        <div style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.6)' }}>Total Ad Views</div>
                       </div>
-                      <div >
-                        <div >
+                      <div style={{ textAlign: 'center' }}>
+                        <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'white' }}>
                           {adPerformanceData.reduce((sum, ad) => sum + ad.clicks, 0)}
                         </div>
-                        <div >Total Ad Clicks</div>
+                        <div style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.6)' }}>Total Ad Clicks</div>
                       </div>
-                      <div >
-                        <div >
+                      <div style={{ textAlign: 'center' }}>
+                        <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'white' }}>
                           {adPerformanceData.length > 0 ? 
                             Math.round(adPerformanceData.reduce((sum, ad) => sum + ad.ctr, 0) / adPerformanceData.length) 
                             : 0}%
                         </div>
                         <Tooltip>
                           <TooltipTrigger asChild>
-                            <div >Average CTR</div>
+                            <div style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.6)' }}>Average CTR</div>
                           </TooltipTrigger>
-                          <TooltipContent >
-                            <p >Mathematical Average</p>
+                          <TooltipContent style={{ backgroundColor: 'rgba(0, 0, 0, 0.9)', color: 'white', border: '1px solid rgba(255, 255, 255, 0.2)' }}>
+                            <p style={{ fontSize: '0.875rem' }}>Mathematical Average</p>
                             <p>Sum of all individual ad CTRs divided by number of ads. Each ad contributes equally regardless of traffic volume.</p>
                           </TooltipContent>
                         </Tooltip>
@@ -756,7 +756,7 @@ export default function Analytics() {
         </Card>
 
         {/* Ad Summary Section */}
-        <Card >
+        <Card style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)', border: '1px solid rgba(255, 255, 255, 0.1)', borderRadius: '0.5rem' }}>
           <CardHeader>
             <CardTitle >
               <MousePointerClickIcon  />
