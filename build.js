@@ -1,8 +1,6 @@
-
 const fs = require('fs');
-const { execSync } = require('child_process');
 
-console.log('🚀 Creating bulletproof deployment...');
+console.log('🚀 Creating zero-complexity deployment...');
 
 // Clean and create dist
 if (fs.existsSync('./dist')) {
@@ -10,9 +8,8 @@ if (fs.existsSync('./dist')) {
 }
 fs.mkdirSync('./dist', { recursive: true });
 
-// Create the simplest possible server bundle
-const serverCode = `
-const express = require('express');
+// Create the absolute simplest Express server possible
+const serverCode = `const express = require('express');
 const path = require('path');
 const app = express();
 
@@ -29,75 +26,45 @@ app.get('*', (req, res) => {
 
 const port = process.env.PORT || 5000;
 app.listen(port, '0.0.0.0', () => {
-  console.log('Server running on port', port);
-});
-`;
+  console.log(\`Server running on port \${port}\`);
+});`;
 
 fs.writeFileSync('./dist/index.js', serverCode);
 
-// Create minimal package.json
-const deployPackage = {
-  "name": "heinous-trivia-deploy",
+// Create the absolute minimal package.json
+const packageJson = {
+  "name": "heinous-trivia",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
-    "express": "^4.18.2"
-  },
-  "engines": {
-    "node": ">=18.0.0"
+    "express": "4.18.2"
   }
 };
 
-fs.writeFileSync('./dist/package.json', JSON.stringify(deployPackage, null, 2));
+fs.writeFileSync('./dist/package.json', JSON.stringify(packageJson, null, 2));
 
-// Create public directory and basic index.html
+// Create public folder with basic HTML
 fs.mkdirSync('./dist/public', { recursive: true });
 
-const indexHtml = `<!DOCTYPE html>
-<html lang="en">
+const html = `<!DOCTYPE html>
+<html>
 <head>
+    <title>Heinous Trivia</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heinous Trivia</title>
-    <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            background: #1a1a1a; 
-            color: #fff; 
-            margin: 0; 
-            padding: 20px;
-            text-align: center;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-        h1 { color: #ff6b6b; margin-bottom: 20px; }
-        p { line-height: 1.6; margin-bottom: 15px; }
-        .status { 
-            background: #2d5a2d; 
-            padding: 10px; 
-            border-radius: 5px; 
-            margin: 20px 0;
-        }
-    </style>
 </head>
-<body>
-    <div class="container">
-        <h1>🎃 Heinous Trivia</h1>
-        <div class="status">✅ Deployment Successful</div>
-        <p>Horror-themed trivia platform is now running!</p>
-        <p>Server started at: ${new Date().toISOString()}</p>
-    </div>
+<body style="background: #000; color: #fff; font-family: Arial; text-align: center; padding: 50px;">
+    <h1 style="color: #ff6b6b;">🎃 Heinous Trivia</h1>
+    <p>Server is running!</p>
+    <p>Deployed successfully at: ${new Date().toISOString()}</p>
 </body>
 </html>`;
 
-fs.writeFileSync('./dist/public/index.html', indexHtml);
+fs.writeFileSync('./dist/public/index.html', html);
 
-console.log('✅ Ultra-simple deployment created');
-console.log('📁 Structure: dist/index.js + dist/package.json + dist/public/');
-console.log('🚀 Ready for deployment with zero complexity!');
+console.log('✅ Zero-complexity deployment ready');
+console.log('📦 Pure CommonJS, minimal dependencies');
+console.log('🚀 Should work on any Node.js hosting platform');
