@@ -2049,6 +2049,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Delete trivia pack (server-side for proper permissions)
+  app.delete("/api/uber/trivia-pack/:packId", async (req, res) => {
+    try {
+      const { packId } = req.params;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      const packRef = firestore.collection('trivia-packs').doc(packId);
+      const packDoc = await packRef.get();
+      
+      if (!packDoc.exists) {
+        return res.status(404).json({ error: "Trivia pack not found" });
+      }
+      
+      await packRef.delete();
+      
+      console.log(`✅ Successfully deleted trivia pack: ${packId}`);
+      res.json({ success: true, packId });
+    } catch (error) {
+      console.error("Error deleting trivia pack:", error);
+      res.status(500).json({ error: "Failed to delete trivia pack" });
+    }
+  });
+
 
   // Sidequest API endpoints
   app.get("/api/sidequests", async (req, res) => {

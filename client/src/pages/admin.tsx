@@ -2479,8 +2479,17 @@ export default function Admin() {
                                     onClick={async () => {
                                       if (confirm(`Delete "${pack.name}" trivia pack?\n\nThis action cannot be undone and will remove the pack from all haunts.`)) {
                                         try {
-                                          const packRef = doc(firestore, 'trivia-packs', pack.id!);
-                                          await deleteDoc(packRef);
+                                          const response = await fetch(`/api/uber/trivia-pack/${pack.id}`, {
+                                            method: 'DELETE',
+                                            headers: {
+                                              'Content-Type': 'application/json',
+                                            }
+                                          });
+                                          
+                                          if (!response.ok) {
+                                            const errorData = await response.json();
+                                            throw new Error(errorData.error || 'Failed to delete pack');
+                                          }
                                           
                                           // Refresh the list
                                           await loadTriviaPacks();
@@ -2490,9 +2499,10 @@ export default function Admin() {
                                             description: `"${pack.name}" has been permanently removed`,
                                           });
                                         } catch (error) {
+                                          console.error("Delete error:", error);
                                           toast({
                                             title: "Error",
-                                            description: "Failed to delete trivia pack",
+                                            description: `Failed to delete trivia pack: ${error instanceof Error ? error.message : 'Unknown error'}`,
                                             variant: "destructive"
                                           });
                                         }
