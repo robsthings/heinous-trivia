@@ -14,47 +14,18 @@ export function log(message: string, source = "express") {
 }
 
 export function serveStatic(app: Express) {
-  // In deployment, static files are served from public directory relative to the deployed server location
-  const staticPath = path.resolve(process.cwd(), "public");
-  const indexPath = path.resolve(staticPath, "index.html");
+  const distPath = path.resolve(process.cwd(), "dist", "public");
 
-  log(`Attempting to serve static files from: ${staticPath}`);
-  log(`Looking for index.html at: ${indexPath}`);
-
-  // Check if files exist in the expected location
-  if (!fs.existsSync(staticPath)) {
-    // Try alternative path structure for deployment
-    const altStaticPath = path.resolve(process.cwd(), "dist", "public");
-    const altIndexPath = path.resolve(altStaticPath, "index.html");
-    
-    log(`Static directory not found at ${staticPath}, trying alternative: ${altStaticPath}`);
-    
-    if (fs.existsSync(altStaticPath) && fs.existsSync(altIndexPath)) {
-      log(`Using alternative static path: ${altStaticPath}`);
-      app.use(express.static(altStaticPath));
-      app.use("*", (_req, res) => {
-        res.sendFile(altIndexPath);
-      });
-      return;
-    }
-    
+  if (!fs.existsSync(distPath)) {
     throw new Error(
-      `Static directory not found at either ${staticPath} or ${altStaticPath}. Make sure build process creates public directory.`,
+      `Could not find the build directory: ${distPath}, make sure to build the client first`,
     );
   }
 
-  if (!fs.existsSync(indexPath)) {
-    throw new Error(
-      `Could not find index.html in: ${staticPath}. Make sure build process creates public/index.html.`,
-    );
-  }
+  app.use(express.static(distPath));
 
-  // Serve static files from public directory
-  app.use(express.static(staticPath));
-  log(`Static files configured from: ${staticPath}`);
-
-  // Fall through to index.html for client-side routing
+  // fall through to index.html if the file doesn't exist
   app.use("*", (_req, res) => {
-    res.sendFile(indexPath);
+    res.sendFile(path.resolve(distPath, "index.html"));
   });
 }
