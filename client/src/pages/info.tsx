@@ -352,9 +352,9 @@ export default function Info() {
               padding: '2rem',
               textAlign: "center"
             }}>
-              <h3 className="font-nosifer text-2xl text-white mb-4">BASIC</h3>
-              <div className="text-4xl font-bold text-gray-300 " style={{marginBottom: "1.5rem"}}>$99<span className="text-lg">/season</span></div>
-              <ul className="text-left space-y-3 mb-8 text-gray-300">
+              <h3 >BASIC</h3>
+              <div  style={{marginBottom: "1.5rem"}}>$99<span >/season</span></div>
+              <ul >
                 <li>✓ Up to 5 custom questions</li>
                 <li>✓ 3 branded ads maximum</li>
                 <li>✓ Basic question packs</li>
@@ -377,12 +377,12 @@ export default function Info() {
               transform: 'scale(1.05)',
               textAlign: "center"
             }}>
-              <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-red-600 text-white px-4 py-1 rounded-full text-sm font-bold">
+              <div >
                 MOST POPULAR
               </div>
-              <h3 className="font-nosifer text-2xl text-red-400 mb-4">PRO</h3>
-              <div className="text-4xl font-bold text-white " style={{marginBottom: "1.5rem"}}>$199<span className="text-lg">/season</span></div>
-              <ul className="text-left space-y-3 mb-8 text-gray-300">
+              <h3 >PRO</h3>
+              <div  style={{marginBottom: "1.5rem"}}>$199<span >/season</span></div>
+              <ul >
                 <li>✓ Up to 15 custom questions</li>
                 <li>✓ 5 branded ads maximum</li>
                 <li>✓ Advanced question packs</li>
@@ -403,9 +403,9 @@ export default function Info() {
               padding: '2rem',
               textAlign: "center"
             }}>
-              <h3 className="font-nosifer text-2xl text-purple-400 mb-4">PREMIUM</h3>
-              <div className="text-4xl font-bold text-white " style={{marginBottom: "1.5rem"}}>$399<span className="text-lg">/season</span></div>
-              <ul className="text-left space-y-3 mb-8 text-gray-300">
+              <h3 >PREMIUM</h3>
+              <div  style={{marginBottom: "1.5rem"}}>$399<span >/season</span></div>
+              <ul >
                 <li>✓ Up to 50 custom questions</li>
                 <li>✓ 10 branded ads maximum</li>
                 <li>✓ Elite question packs</li>
@@ -549,52 +549,52 @@ export default function Info() {
           </ul>
 
           {/* Security & Standards Badges */}
-          <div className="flex flex-wrap justify-center gap-4 mt-8 pt-6 border-t border-gray-800">
-            <div className="flex items-center gap-2 bg-green-900/30 border border-green-600 rounded-lg px-3 py-2">
-              <span className="text-green-400">🔒</span>
-              <span className="text-xs text-green-300 font-medium">HTTPS Encrypted</span>
+          <div >
+            <div >
+              <span >🔒</span>
+              <span >HTTPS Encrypted</span>
             </div>
-            <div className="flex items-center gap-2 bg-blue-900/30 border border-blue-600 rounded-lg px-3 py-2">
-              <span className="text-blue-400">🛡️</span>
-              <span className="text-xs text-blue-300 font-medium">Firebase Secured</span>
+            <div >
+              <span >🛡️</span>
+              <span >Firebase Secured</span>
             </div>
-            <div className="flex items-center gap-2 bg-purple-900/30 border border-purple-600 rounded-lg px-3 py-2">
-              <span className="text-purple-400">📱</span>
-              <span className="text-xs text-purple-300 font-medium">PWA Compliant</span>
+            <div >
+              <span >📱</span>
+              <span >PWA Compliant</span>
             </div>
-            <div className="flex items-center gap-2 bg-orange-900/30 border border-orange-600 rounded-lg px-3 py-2">
-              <span className="text-orange-400">⚡</span>
-              <span className="text-xs text-orange-300 font-medium">99.9% Uptime</span>
+            <div >
+              <span >⚡</span>
+              <span >99.9% Uptime</span>
             </div>
           </div>
         </div>
       </div>
 
       {/* Footer */}
-      <footer className="bg-black border-t border-gray-800 py-8">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="mb-4 md:mb-0">
+      <footer >
+        <div >
+          <div >
+            <div >
               <h3 style={{ fontFamily: '"Creepster", cursive', fontSize: '1.25rem', color: '#ef4444' }}>HEINOUS TRIVIA</h3>
-              <p className="text-gray-400 text-sm">Taking Over The World - One Queue Line at a Time!</p>
+              <p >Taking Over The World - One Queue Line at a Time!</p>
             </div>
-            <div className="flex space-x-6 text-sm">
-              <Link href="/privacy" className="text-gray-400 hover:text-white transition-colors">
+            <div >
+              <Link href="/privacy" >
                 Privacy Policy
               </Link>
-              <Link href="/terms" className="text-gray-400 hover:text-white transition-colors">
+              <Link href="/terms" >
                 Terms of Service
               </Link>
               <a 
                 href="mailto:ResirWrecked@yahoo.com" 
-                className="text-gray-400 hover:text-white transition-colors"
+                
               >
                 Contact
               </a>
             </div>
           </div>
-          <div className="border-t border-gray-800 mt-6 pt-6 " style={{textAlign: "center"}}>
-            <p className="text-gray-500 text-sm">
+          <div  style={{textAlign: "center"}}>
+            <p >
               © 2025 Heinous Trivia. All rights reserved. Prepare to be terrified.
             </p>
           </div>

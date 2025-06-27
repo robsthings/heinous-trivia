@@ -144,39 +144,39 @@ export function ChupacabraChallenge() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-900 via-indigo-900 to-black text-white flex flex-col items-center justify-center p-4">
-      <div className="max-w-4xl w-full">
+    <div >
+      <div >
         
         {/* Header */}
-        <div className=" mb-8" style={{textAlign: "center"}}>
-          <h1 className="text-4xl lg:text-6xl font-bold text-red-400 mb-4 tracking-wider">
+        <div  style={{textAlign: "center"}}>
+          <h1 >
             CHUPACABRA CHALLENGE
           </h1>
-          <p className="text-lg text-gray-300">
+          <p >
             Survive 30 seconds without being detected by the prowling beast
           </p>
         </div>
 
         {/* Game Area */}
-        <div className="relative">
+        <div >
           
           {gamePhase === "intro" && (
-            <div className=" bg-black/50 backdrop-blur-sm p-8 rounded-lg border border-red-500/30" style={{textAlign: "center"}}>
-              <div className="mb-6">
+            <div  style={{textAlign: "center"}}>
+              <div >
                 <img 
                   src="/chupacabra/sprite-chupacabra.png"
                   alt="Chupacabra"
-                  className="w-32 h-32 mx-auto mb-4"
+                  
                 />
               </div>
-              <h2 className="text-2xl font-bold text-red-400 mb-4">The Hunt Begins</h2>
-              <p className="text-gray-300  max-w-md mx-auto" className="mb-6">
+              <h2 >The Hunt Begins</h2>
+              <p  >
                 The legendary Chupacabra stalks these cursed grounds. Choose your hiding spot wisely - 
                 some locations offer better concealment than others. Can you remain hidden for 30 seconds?
               </p>
               <Button 
                 onClick={startGame}
-                className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 text-lg"
+                
               >
                 Begin the Challenge
               </Button>
@@ -185,17 +185,17 @@ export function ChupacabraChallenge() {
 
           {gamePhase === "hiding" && (
             <div style={{textAlign: "center"}}>
-              <div className="bg-black/50 backdrop-blur-sm p-6 rounded-lg border border-red-500/30 " className="mb-6">
-                <h2 className="text-2xl font-bold text-red-400 mb-4">Choose Your Hiding Spot</h2>
-                <p className="text-gray-300 mb-4">
+              <div  >
+                <h2 >Choose Your Hiding Spot</h2>
+                <p >
                   Click on a location to hide. Each spot has different safety ratings...
                 </p>
               </div>
               
               {/* Cemetery Map */}
-              <div className="relative bg-gray-800 rounded-lg h-96 overflow-hidden border-2 border-gray-600">
+              <div >
                 <div 
-                  className="absolute inset-0 bg-cover bg-center opacity-60"
+                  
                   style={{ backgroundImage: 'linear-gradient(45deg, #1a1a2e 25%, transparent 25%), linear-gradient(-45deg, #1a1a2e 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #1a1a2e 75%), linear-gradient(-45deg, transparent 75%, #1a1a2e 75%)' }}
                 />
                 
@@ -203,7 +203,7 @@ export function ChupacabraChallenge() {
                   <button
                     key={spot.id}
                     onClick={() => selectHidingSpot(spot)}
-                    className="absolute transform -translate-x-1/2 -translate-y-1/2 bg-green-600/70 hover:bg-green-500 border-2 border-green-400 rounded-lg p-2 text-xs font-bold transition-all hover:scale-110"
+                    
                     style={{
                       left: `${spot.x}%`,
                       top: `${spot.y}%`,
@@ -212,12 +212,12 @@ export function ChupacabraChallenge() {
                     }}
                     title={`${spot.name} (Safety: ${spot.safetyRating}/5)`}
                   >
-                    <span className="block " style={{textAlign: "center"}}>
+                    <span  style={{textAlign: "center"}}>
                       {spot.name}
                     </span>
-                    <div className="flex justify-center mt-1">
+                    <div >
                       {Array.from({ length: spot.safetyRating }, (_, i) => (
-                        <span key={i} className="text-yellow-400">★</span>
+                        <span key={i} >★</span>
                       ))}
                     </div>
                   </button>
@@ -227,30 +227,30 @@ export function ChupacabraChallenge() {
           )}
 
           {(gamePhase === "hunting") && (
-            <div className={`text-center ${heartbeat ? 'animate-pulse' : ''}`}>
-              <div className="bg-black/50 backdrop-blur-sm p-6 rounded-lg border border-red-500/30 " className="mb-6">
-                <div className="flex  items-center mb-4" style={{justifyContent: "space-between"}}>
-                  <div className="text-left">
-                    <div className="text-lg font-bold text-green-400">
+            <div `}>
+              <div  >
+                <div  style={{justifyContent: "space-between"}}>
+                  <div >
+                    <div >
                       Hidden: {currentHidingSpot?.name}
                     </div>
-                    <div className="text-sm text-gray-400">
+                    <div >
                       Safety Rating: {Array.from({ length: currentHidingSpot?.safetyRating || 0 }, (_, i) => (
-                        <span key={i} className="text-yellow-400">★</span>
+                        <span key={i} >★</span>
                       ))}
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="text-2xl font-bold text-blue-400">
+                  <div >
+                    <div >
                       {timeRemaining}s
                     </div>
-                    <div className="text-sm text-gray-400">remaining</div>
+                    <div >remaining</div>
                   </div>
                 </div>
                 
-                <div className="mb-4">
-                  <div className="text-sm text-gray-400 mb-2">Detection Risk</div>
-                  <div className="w-full bg-gray-700 rounded-full h-3">
+                <div >
+                  <div >Detection Risk</div>
+                  <div >
                     <div 
                       className={`h-3 rounded-full transition-all duration-500 ${
                         detectionRisk > 70 ? 'bg-red-500' : detectionRisk > 40 ? 'bg-yellow-500' : 'bg-green-500'
@@ -260,22 +260,22 @@ export function ChupacabraChallenge() {
                   </div>
                 </div>
                 
-                <p className={`text-center ${detectionRisk > 70 ? 'text-red-400' : 'text-gray-300'}`}>
+                <p `}>
                   {getChupacabraReaction()}
                 </p>
               </div>
               
               {/* Game Area with Chupacabra */}
-              <div className="relative bg-gray-800 rounded-lg h-96 overflow-hidden border-2 border-gray-600">
+              <div >
                 <div 
-                  className="absolute inset-0 bg-cover bg-center opacity-40"
+                  
                   style={{ backgroundImage: 'linear-gradient(45deg, #1a1a2e 25%, transparent 25%), linear-gradient(-45deg, #1a1a2e 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #1a1a2e 75%), linear-gradient(-45deg, transparent 75%, #1a1a2e 75%)' }}
                 />
                 
                 {/* Player's hiding spot */}
                 {currentHidingSpot && (
                   <div
-                    className="absolute transform -translate-x-1/2 -translate-y-1/2 bg-green-600/50 border-2 border-green-400 rounded-lg"
+                    
                     style={{
                       left: `${currentHidingSpot.x}%`,
                       top: `${currentHidingSpot.y}%`,
@@ -283,15 +283,15 @@ export function ChupacabraChallenge() {
                       height: `${currentHidingSpot.height}%`
                     }}
                   >
-                    <div className="w-full h-full flex items-center justify-center">
-                      <span className="text-xs font-bold">YOU</span>
+                    <div >
+                      <span >YOU</span>
                     </div>
                   </div>
                 )}
                 
                 {/* Chupacabra */}
                 <div
-                  className="absolute transform -translate-x-1/2 -translate-y-1/2 transition-all duration-500"
+                  
                   style={{
                     left: `${chupacabraPosition.x}%`,
                     top: `${chupacabraPosition.y}%`
@@ -300,7 +300,7 @@ export function ChupacabraChallenge() {
                   <img 
                     src="/chupacabra/sprite-chupacabra.png"
                     alt="Chupacabra"
-                    className="w-16 h-16"
+                    
                   />
                 </div>
               </div>
@@ -312,11 +312,11 @@ export function ChupacabraChallenge() {
               <div className={`bg-black/50 backdrop-blur-sm p-8 rounded-lg border mb-6 ${
                 gamePhase === "caught" ? 'border-red-500/50 bg-red-900/20' : 'border-green-500/50 bg-green-900/20'
               }`}>
-                <div className="mb-6">
+                <div >
                   <img 
                     src="/chupacabra/sprite-chupacabra.png"
                     alt="Chupacabra"
-                    className={`w-32 h-32 mx-auto mb-4 ${gamePhase === "caught" ? 'animate-bounce' : 'opacity-50'}`}
+                    `}
                   />
                 </div>
                 
@@ -326,19 +326,19 @@ export function ChupacabraChallenge() {
                   {getResultMessage().title}
                 </h2>
                 
-                <p className="text-gray-300  max-w-md mx-auto" className="mb-6">
+                <p  >
                   {getResultMessage().message}
                 </p>
                 
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <div >
                   <Button 
                     onClick={startGame}
-                    className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3"
+                    
                   >
                     Hunt Again
                   </Button>
-                  <Link href="/game/headquarters" className="no-underline">
-                    <Button className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 w-full">
+                  <Link href="/game/headquarters" >
+                    <Button >
                       Return to Main Game
                     </Button>
                   </Link>

@@ -171,15 +171,15 @@ export default function ChupacabraChallenge() {
       
       {/* Panic Mode Red Flash Overlay */}
       {isPanicMode && (
-        <div className="absolute inset-0 bg-red-500/20 animate-ping pointer-events-none" />
+        <div  />
       )}
       
       {/* Vertical Timer - Left side on desktop, top-left on mobile */}
       {timerActive && !gameComplete && !gameFailed && (
-        <div className="fixed top-4 left-4 md:top-1/2 md:left-4 md:-translate-y-1/2 z-40">
-          <div className="flex flex-col items-center">
+        <div >
+          <div >
             {/* Timer liquid container */}
-            <div className="relative w-8 h-40 md:w-12 md:h-56">
+            <div >
               <div 
                 className={`w-full transition-all duration-1000 ease-linear shadow-lg border-2 rounded-full ${
                   isPanicMode 
@@ -213,35 +213,35 @@ export default function ChupacabraChallenge() {
       
       {/* Panic Mode Warning Text */}
       {isPanicMode && (
-        <div className="fixed top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
+        <div >
           <div style={{textAlign: "center"}}>
-            <h2 className="text-4xl md:text-6xl font-bold text-red-400 animate-bounce drop-shadow-lg">
+            <h2 >
               ⚠️ CONTAINMENT FAILING! ⚠️
             </h2>
-            <p className="text-xl md:text-2xl text-red-300 animate-pulse mt-2">
+            <p >
               The Chupacabra is breaking free!
             </p>
           </div>
         </div>
       )}
       
-      <div className="relative z-10 w-full max-w-4xl">
+      <div >
         {/* Title */}
-        <div className="  sm:mb-8" style={{marginBottom: "1.5rem"}} style={{textAlign: "center"}}>
+        <div  style={{marginBottom: "1.5rem"}} style={{textAlign: "center"}}>
           <h1 
-            className="text-3xl sm:text-4xl md:text-5xl font-bold text-orange-300 mb-4 drop-shadow-lg" 
+             
             style={{ fontFamily: 'Frijole, cursive' }}
           >
             CHUPACABRA CHALLENGE
           </h1>
-          <p className="text-lg sm:text-xl text-red-200 drop-shadow-md">
+          <p >
             Match the cryptid pairs before they escape!
           </p>
-          <div className="mt-4 flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center">
-            <p className="text-base sm:text-lg text-red-200">
+          <div >
+            <p >
               Matched Pairs: {matchedPairs}/8
             </p>
-            <p className="text-base sm:text-lg text-red-200">
+            <p >
               Attempts: {attempts}
             </p>
           </div>
@@ -275,7 +275,7 @@ export default function ChupacabraChallenge() {
                 >
                   {/* Card Back (face down) */}
                   <div 
-                    className="absolute inset-0 w-full h-full rounded-lg overflow-hidden backface-hidden border-2 border-red-600 hover:border-red-400 transition-colors duration-300"
+                    
                     style={{ 
                       backfaceVisibility: 'hidden',
                       transform: 'rotateY(0deg)'
@@ -284,7 +284,7 @@ export default function ChupacabraChallenge() {
                     <img
                       src="/sidequests/chupacabra-challenge/card-back.png"
                       alt="Card Back"
-                      className="w-full h-full object-cover"
+                      
                     />
                   </div>
                   
@@ -308,7 +308,7 @@ export default function ChupacabraChallenge() {
                     <img
                       src={`/sidequests/chupacabra-challenge/card-${card.faceValue}.png`}
                       alt={`Cryptid ${card.faceValue}`}
-                      className="w-full h-full object-cover"
+                      
                     />
                   </div>
                 </div>
@@ -319,27 +319,27 @@ export default function ChupacabraChallenge() {
 
         {/* Game Complete Overlay */}
         {gameComplete && (
-          <div className=" mb-8" style={{textAlign: "center"}}>
-            <div className="bg-black/80 border border-red-500 rounded-lg p-6 sm:p-8 max-w-md mx-auto">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-green-400 mb-4">
+          <div  style={{textAlign: "center"}}>
+            <div >
+              <h2 >
                 You've survived the Chupacabra Challenge!
               </h2>
-              <p className="text-lg sm:text-xl text-red-200 mb-4">
+              <p >
                 All cryptid pairs matched in {attempts} attempts!
               </p>
-              <p className="text-base sm:text-lg text-red-300 " style={{marginBottom: "1.5rem"}}>
+              <p  style={{marginBottom: "1.5rem"}}>
                 The Chupacabra is impressed by your memory skills.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+              <div >
                 <button
                   onClick={initializeCards}
-                  className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200"
+                  
                 >
                   Play Again
                 </button>
                 <Link href="/game/headquarters">
-                  <button className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200">
+                  <button >
                     Return to Main Game
                   </button>
                 </Link>
@@ -350,27 +350,27 @@ export default function ChupacabraChallenge() {
 
         {/* Game Failed Overlay */}
         {gameFailed && (
-          <div className=" mb-8" style={{textAlign: "center"}}>
-            <div className="bg-black/80 border border-red-500 rounded-lg p-6 sm:p-8 max-w-md mx-auto">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-red-400 mb-4">
+          <div  style={{textAlign: "center"}}>
+            <div >
+              <h2 >
                 You failed the Chupacabra Challenge!
               </h2>
-              <p className="text-lg sm:text-xl text-red-200 mb-4">
+              <p >
                 Time ran out! You matched {matchedPairs}/8 pairs in {attempts} attempts.
               </p>
-              <p className="text-base sm:text-lg text-red-300 " style={{marginBottom: "1.5rem"}}>
+              <p  style={{marginBottom: "1.5rem"}}>
                 The Chupacabra escapes into the night...
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+              <div >
                 <button
                   onClick={initializeCards}
-                  className="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200"
+                  
                 >
                   Play Again
                 </button>
                 <Link href="/game/headquarters">
-                  <button className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200">
+                  <button >
                     Return to Main Game
                   </button>
                 </Link>
@@ -381,7 +381,7 @@ export default function ChupacabraChallenge() {
 
         {/* Chupacabra Reactions - positioned in corner */}
         {showChupacabraReaction && (
-          <div className="fixed bottom-4 right-4 z-50">
+          <div >
             <img
               src={`/chupacabra/chupacabra-${showChupacabraReaction === 'scheming' ? '4' : '2'}.png`}
               alt={`Chupacabra ${showChupacabraReaction}`}

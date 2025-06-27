@@ -37,83 +37,83 @@ export default function AnalyticsPolished() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
-        <div className=" text-white" style={{textAlign: "center"}}>Loading analytics...</div>
+      <div >
+        <div  style={{textAlign: "center"}}>Loading analytics...</div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
-        <div className=" text-red-400" style={{textAlign: "center"}}>Error: {error.message}</div>
+      <div >
+        <div  style={{textAlign: "center"}}>Error: {error.message}</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
-      <div className="max-w-7xl mx-auto">
-        <div className=" text-white mb-8" style={{textAlign: "center"}}>
-          <h1 className="text-3xl font-bold mb-4 bg-green-600 p-4 rounded">FIXED Analytics Dashboard</h1>
-          <p className="text-gray-300">Haunt: {hauntId}</p>
-          <p className="text-yellow-400 font-bold">Ad Engagement Working - 200%</p>
+    <div >
+      <div >
+        <div  style={{textAlign: "center"}}>
+          <h1 >FIXED Analytics Dashboard</h1>
+          <p >Haunt: {hauntId}</p>
+          <p >Ad Engagement Working - 200%</p>
         </div>
 
         {/* Key Metrics Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <Card className="bg-slate-800/50 border-slate-700">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-white">Total Games</CardTitle>
-              <Trophy className="h-4 w-4 text-orange-500" />
+        <div >
+          <Card >
+            <CardHeader >
+              <CardTitle >Total Games</CardTitle>
+              <Trophy  />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-white">{analyticsData?.totalGames || 0}</div>
-              <p className="text-xs text-gray-400">Games completed</p>
+              <div >{analyticsData?.totalGames || 0}</div>
+              <p >Games completed</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-slate-800/50 border-slate-700">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-white">Unique Players</CardTitle>
-              <Users className="h-4 w-4 text-green-500" />
+          <Card >
+            <CardHeader >
+              <CardTitle >Unique Players</CardTitle>
+              <Users  />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-white">{analyticsData?.uniquePlayers || 0}</div>
-              <p className="text-xs text-gray-400">Individual players</p>
+              <div >{analyticsData?.uniquePlayers || 0}</div>
+              <p >Individual players</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-slate-800/50 border-slate-700">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-white">Average Score</CardTitle>
-              <Target className="h-4 w-4 text-purple-500" />
+          <Card >
+            <CardHeader >
+              <CardTitle >Average Score</CardTitle>
+              <Target  />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-white">{analyticsData?.averageScore || 0}</div>
-              <p className="text-xs text-gray-400">Points per game</p>
+              <div >{analyticsData?.averageScore || 0}</div>
+              <p >Points per game</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-yellow-500 border-yellow-400">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-black">Ad Engagement</CardTitle>
-              <MousePointer className="h-4 w-4 text-black" />
+          <Card >
+            <CardHeader >
+              <CardTitle >Ad Engagement</CardTitle>
+              <MousePointer  />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-black">{analyticsData?.adClickThrough || 0}%</div>
-              <p className="text-xs text-black">Click-through rate</p>
+              <div >{analyticsData?.adClickThrough || 0}%</div>
+              <p >Click-through rate</p>
             </CardContent>
           </Card>
         </div>
 
         {/* Debug Section */}
-        <Card className="bg-slate-800/50 border-slate-700 mb-8">
+        <Card >
           <CardHeader>
-            <CardTitle className="text-white">Debug - Raw API Data</CardTitle>
+            <CardTitle >Debug - Raw API Data</CardTitle>
           </CardHeader>
           <CardContent>
-            <pre className="text-green-400 text-sm overflow-x-auto">
+            <pre >
               {JSON.stringify(analyticsData, null, 2)}
             </pre>
           </CardContent>

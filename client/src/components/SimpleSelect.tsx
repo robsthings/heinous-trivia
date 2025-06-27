@@ -20,7 +20,7 @@ export function SimpleSelect({
   const selectedOption = options.find(opt => opt.value === value);
   
   return (
-    <div style={{ position: 'relative' }} className={className}>
+    <div style={{ position: 'relative' }} >
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
@@ -113,7 +113,7 @@ export function SimpleSelect({
       
       {isOpen && (
         <div 
-          className="fixed inset-0 z-40" 
+           
           onClick={() => setIsOpen(false)}
         />
       )}

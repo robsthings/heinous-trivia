@@ -195,33 +195,33 @@ export function PhantomsPuzzle() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-900 via-indigo-900 to-black text-white flex flex-col items-center justify-center p-4">
-      <div className="max-w-4xl w-full">
+    <div >
+      <div >
         
         {/* Header */}
-        <div  className="mb-6" style={{textAlign: "center"}}>
-          <h1 className="text-4xl lg:text-6xl font-bold text-blue-400 mb-4 tracking-wider">
+        <div   style={{textAlign: "center"}}>
+          <h1 >
             PHANTOM'S PUZZLE
           </h1>
-          <p className="text-lg text-gray-300">
+          <p >
             Memorize and recreate the phantom's ethereal patterns
           </p>
         </div>
 
         {gamePhase === "intro" && (
-          <div className=" bg-black/50 backdrop-blur-sm p-8 rounded-lg border border-blue-500/30" style={{textAlign: "center"}}>
-            <div className="mb-6">
-              <span className="text-8xl">👻</span>
+          <div  style={{textAlign: "center"}}>
+            <div >
+              <span >👻</span>
             </div>
-            <h2 className="text-2xl font-bold text-blue-400 mb-4">The Phantom's Challenge</h2>
-            <p className="text-gray-300  max-w-md mx-auto" className="mb-6">
+            <h2 >The Phantom's Challenge</h2>
+            <p  >
               The ethereal phantom will show you mystical patterns that grow increasingly complex. 
               Study each sequence carefully, then recreate it from memory. 
               Three mistakes and your mind belongs to the phantom!
             </p>
             <Button 
               onClick={startGame}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 text-lg"
+              
             >
               Accept the Challenge
             </Button>
@@ -231,49 +231,49 @@ export function PhantomsPuzzle() {
         {(gamePhase === "studying" || gamePhase === "inputting") && (
           <div>
             {/* Game Stats */}
-            <div className="flex  items-center  bg-black/30 rounded-lg p-4" style={{justifyContent: "space-between"}} className="mb-6">
+            <div  style={{justifyContent: "space-between"}} >
               <div style={{textAlign: "center"}}>
-                <div className="text-2xl font-bold text-blue-400">{level}</div>
-                <div className="text-sm text-gray-400">Level</div>
+                <div >{level}</div>
+                <div >Level</div>
               </div>
               <div style={{textAlign: "center"}}>
-                <div className="text-xl text-purple-400">{score}</div>
-                <div className="text-sm text-gray-400">Score</div>
+                <div >{score}</div>
+                <div >Score</div>
               </div>
               <div style={{textAlign: "center"}}>
-                <div className={`text-2xl font-bold ${mistakes >= 2 ? 'text-red-400' : mistakes >= 1 ? 'text-yellow-400' : 'text-green-400'}`}>
+                <div `}>
                   {3 - mistakes}
                 </div>
-                <div className="text-sm text-gray-400">Lives Left</div>
+                <div >Lives Left</div>
               </div>
             </div>
 
             {/* Timer */}
-            <div  className="mb-6" style={{textAlign: "center"}}>
+            <div   style={{textAlign: "center"}}>
               <div className={`text-4xl font-bold ${
                 (gamePhase === "studying" ? studyTimeLeft : inputTimeLeft) <= 3 ? 'text-red-400 animate-pulse' : 'text-blue-400'
               }`}>
                 {gamePhase === "studying" ? studyTimeLeft : inputTimeLeft}s
               </div>
-              <div className="text-sm text-gray-400">
+              <div >
                 {gamePhase === "studying" ? "Study Time" : "Input Time"}
               </div>
             </div>
 
             {/* Phantom Message */}
-            <div className="  bg-blue-900/20 rounded-lg p-4 border border-blue-500/30" className="mb-6" style={{textAlign: "center"}}>
-              <p className="text-blue-300 italic">"{getPhantomReaction()}"</p>
+            <div   style={{textAlign: "center"}}>
+              <p >"{getPhantomReaction()}"</p>
             </div>
 
             {/* Pattern Display */}
             {gamePhase === "studying" && currentPattern && (
-              <div className="mb-6">
-                <h3 className="text-xl font-bold  mb-4 text-blue-400" style={{textAlign: "center"}}>Study This Pattern</h3>
-                <div className="flex justify-center gap-3 flex-wrap bg-gray-800/50 rounded-lg p-6 border border-gray-600">
+              <div >
+                <h3  style={{textAlign: "center"}}>Study This Pattern</h3>
+                <div >
                   {currentPattern.sequence.map((symbol, index) => (
                     <div
                       key={index}
-                      className="w-16 h-16 bg-blue-600/30 rounded-lg flex items-center justify-center text-3xl border border-blue-400/50"
+                      
                     >
                       {symbol}
                     </div>
@@ -285,10 +285,10 @@ export function PhantomsPuzzle() {
             {/* Input Phase */}
             {gamePhase === "inputting" && currentPattern && (
               <div>
-                <h3 className="text-xl font-bold  mb-4 text-blue-400" style={{textAlign: "center"}}>Recreate the Pattern</h3>
+                <h3  style={{textAlign: "center"}}>Recreate the Pattern</h3>
                 
                 {/* User Input Display */}
-                <div className=" flex justify-center gap-3 flex-wrap bg-gray-800/50 rounded-lg p-6 border border-gray-600 min-h-[100px]" className="mb-6">
+                <div  >
                   {currentPattern.sequence.map((_, index) => (
                     <div
                       key={index}
@@ -304,12 +304,12 @@ export function PhantomsPuzzle() {
                 </div>
 
                 {/* Symbol Selection */}
-                <div className="grid grid-cols-3 gap-4 max-w-md mx-auto mb-4">
+                <div >
                   {phantomSymbols.map((symbol) => (
                     <button
                       key={symbol}
                       onClick={() => addSymbolToInput(symbol)}
-                      className="w-16 h-16 bg-blue-600/30 hover:bg-blue-500/50 rounded-lg flex items-center justify-center text-3xl border border-blue-400/50 transition-all hover:scale-110"
+                      
                     >
                       {symbol}
                     </button>
@@ -320,7 +320,7 @@ export function PhantomsPuzzle() {
                 <div style={{textAlign: "center"}}>
                   <Button
                     onClick={resetInput}
-                    className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2"
+                    
                   >
                     Clear Input
                   </Button>
@@ -335,8 +335,8 @@ export function PhantomsPuzzle() {
             <div className={`bg-black/50 backdrop-blur-sm p-8 rounded-lg border mb-6 ${
               gamePhase === "victory" ? 'border-green-500/50 bg-green-900/20' : 'border-red-500/50 bg-red-900/20'
             }`}>
-              <div className="mb-6">
-                <span className="text-8xl">
+              <div >
+                <span >
                   {gamePhase === "victory" ? "🧠" : "👻"}
                 </span>
               </div>
@@ -347,35 +347,35 @@ export function PhantomsPuzzle() {
                 {gamePhase === "victory" ? "MENTAL MASTERY!" : "PHANTOM VICTORY!"}
               </h2>
               
-              <p className="text-gray-300 mb-4">
+              <p >
                 {gamePhase === "victory" 
                   ? "Your mind has proven superior to the phantom's ethereal puzzles!" 
                   : "The phantom has overwhelmed your mental defenses..."}
               </p>
               
-              <div className="  bg-gray-800/50 rounded-lg p-4" className="mb-6" style={{textAlign: "center"}}>
-                <div className="text-lg font-bold text-blue-400 mb-2">Final Results</div>
-                <div className="grid grid-cols-2 gap-4">
+              <div   style={{textAlign: "center"}}>
+                <div >Final Results</div>
+                <div >
                   <div>
-                    <div className="text-2xl font-bold text-purple-400">{score}</div>
-                    <div className="text-sm text-gray-400">Total Score</div>
+                    <div >{score}</div>
+                    <div >Total Score</div>
                   </div>
                   <div>
-                    <div className="text-2xl font-bold text-yellow-400">{level}</div>
-                    <div className="text-sm text-gray-400">Levels Completed</div>
+                    <div >{level}</div>
+                    <div >Levels Completed</div>
                   </div>
                 </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div >
                 <Button 
                   onClick={startGame}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3"
+                  
                 >
                   Challenge Again
                 </Button>
-                <Link href="/game/headquarters" className="no-underline">
-                  <Button className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 w-full">
+                <Link href="/game/headquarters" >
+                  <Button >
                     Return to Main Game
                   </Button>
                 </Link>

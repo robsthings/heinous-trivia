@@ -186,32 +186,32 @@ export function NecromancersGambit() {
       justifyContent: 'center',
       padding: '1rem'
     }}>
-      <div className="max-w-6xl w-full">
+      <div >
         
         {/* Header */}
-        <div  className="mb-6" style={{textAlign: "center"}}>
-          <h1 className="text-4xl lg:text-6xl font-bold text-purple-400 mb-4 tracking-wider">
+        <div   style={{textAlign: "center"}}>
+          <h1 >
             NECROMANCER'S GAMBIT
           </h1>
-          <p className="text-lg text-gray-300">
+          <p >
             A strategic battle of cards against the forces of darkness
           </p>
         </div>
 
         {gamePhase === "intro" && (
-          <div className=" bg-black/50 backdrop-blur-sm p-8 rounded-lg border border-purple-500/30" style={{textAlign: "center"}}>
-            <div className="mb-6">
-              <span className="text-8xl">💀</span>
+          <div  style={{textAlign: "center"}}>
+            <div >
+              <span >💀</span>
             </div>
-            <h2 className="text-2xl font-bold text-purple-400 mb-4">The Challenge Awaits</h2>
-            <p className="text-gray-300  max-w-md mx-auto" className="mb-6">
+            <h2 >The Challenge Awaits</h2>
+            <p  >
               Face the ancient necromancer in a battle of strategy and cunning. 
               Choose your cards wisely - each has unique powers that can turn the tide of battle.
               First to win 2 rounds claims victory!
             </p>
             <Button 
               onClick={startGame}
-              className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 text-lg"
+              
             >
               Begin the Gambit
             </Button>
@@ -221,18 +221,18 @@ export function NecromancersGambit() {
         {(gamePhase === "player-turn" || gamePhase === "battle") && (
           <div>
             {/* Score Display */}
-            <div className="flex  items-center  bg-black/30 rounded-lg p-4" style={{justifyContent: "space-between"}} className="mb-6">
+            <div  style={{justifyContent: "space-between"}} >
               <div style={{textAlign: "center"}}>
-                <div className="text-2xl font-bold text-blue-400">{playerScore}</div>
-                <div className="text-sm text-gray-400">Player Wins</div>
+                <div >{playerScore}</div>
+                <div >Player Wins</div>
               </div>
               <div style={{textAlign: "center"}}>
-                <div className="text-xl text-purple-400">Round {round}</div>
-                <div className="text-sm text-gray-400">of 3</div>
+                <div >Round {round}</div>
+                <div >of 3</div>
               </div>
               <div style={{textAlign: "center"}}>
-                <div className="text-2xl font-bold text-red-400">{necromancerScore}</div>
-                <div className="text-sm text-gray-400">Necromancer Wins</div>
+                <div >{necromancerScore}</div>
+                <div >Necromancer Wins</div>
               </div>
             </div>
 
@@ -245,61 +245,61 @@ export function NecromancersGambit() {
               border: '1px solid #4b5563',
               marginBottom: '1.5rem'
             }}>
-                <h3 className="text-xl font-bold  mb-4 text-purple-400" style={{textAlign: "center"}}>Battle in Progress</h3>
-                <div className="flex  items-center" style={{justifyContent: "space-between"}}>
-                  <div className=" bg-blue-900/30 rounded-lg p-4 border border-blue-500/30" style={{textAlign: "center"}}>
-                    <div className="text-3xl mb-2">{playerSelectedCard.icon}</div>
-                    <div className="font-bold text-blue-400">{playerSelectedCard.name}</div>
-                    <div className="text-lg text-white">Power: {playerSelectedCard.power}</div>
-                    <div className="text-xs text-gray-400 mt-1">{playerSelectedCard.effect}</div>
+                <h3  style={{textAlign: "center"}}>Battle in Progress</h3>
+                <div  style={{justifyContent: "space-between"}}>
+                  <div  style={{textAlign: "center"}}>
+                    <div >{playerSelectedCard.icon}</div>
+                    <div >{playerSelectedCard.name}</div>
+                    <div >Power: {playerSelectedCard.power}</div>
+                    <div >{playerSelectedCard.effect}</div>
                   </div>
                   
-                  <div className=" mx-4" style={{textAlign: "center"}}>
-                    <div className="text-4xl animate-pulse">⚔️</div>
-                    <div className="text-sm text-gray-400 mt-2">VS</div>
+                  <div  style={{textAlign: "center"}}>
+                    <div >⚔️</div>
+                    <div >VS</div>
                   </div>
                   
-                  <div className=" bg-red-900/30 rounded-lg p-4 border border-red-500/30" style={{textAlign: "center"}}>
-                    <div className="text-3xl mb-2">{necromancerSelectedCard.icon}</div>
-                    <div className="font-bold text-red-400">{necromancerSelectedCard.name}</div>
-                    <div className="text-lg text-white">Power: {necromancerSelectedCard.power}</div>
-                    <div className="text-xs text-gray-400 mt-1">{necromancerSelectedCard.effect}</div>
+                  <div  style={{textAlign: "center"}}>
+                    <div >{necromancerSelectedCard.icon}</div>
+                    <div >{necromancerSelectedCard.name}</div>
+                    <div >Power: {necromancerSelectedCard.power}</div>
+                    <div >{necromancerSelectedCard.effect}</div>
                   </div>
                 </div>
                 
                 {battleResult && (
-                  <div className="mt-4 p-3 bg-yellow-900/30 rounded border border-yellow-500/30">
-                    <p className=" text-yellow-200" style={{textAlign: "center"}}>{battleResult}</p>
+                  <div >
+                    <p  style={{textAlign: "center"}}>{battleResult}</p>
                   </div>
                 )}
               </div>
             )}
 
             {/* Necromancer's Reaction */}
-            <div className="  bg-red-900/20 rounded-lg p-4 border border-red-500/30" className="mb-6" style={{textAlign: "center"}}>
-              <p className="text-red-300 italic">"{getNecromancerReaction()}"</p>
+            <div   style={{textAlign: "center"}}>
+              <p >"{getNecromancerReaction()}"</p>
             </div>
 
             {/* Player's Hand */}
             {gamePhase === "player-turn" && (
               <div>
-                <h3 className="text-xl font-bold mb-4  text-blue-400" style={{textAlign: "center"}}>Choose Your Card</h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <h3  style={{textAlign: "center"}}>Choose Your Card</h3>
+                <div >
                   {playerHand.map((card) => (
                     <button
                       key={card.id}
                       onClick={() => selectPlayerCard(card)}
-                      className="bg-blue-900/30 hover:bg-blue-800/50 rounded-lg p-4 border border-blue-500/30 transition-all hover:scale-105 text-left"
+                      
                     >
-                      <div className="flex items-center mb-2">
-                        <span className="text-2xl mr-3">{card.icon}</span>
+                      <div >
+                        <span >{card.icon}</span>
                         <div>
-                          <div className="font-bold text-blue-400">{card.name}</div>
-                          <div className="text-lg text-white">Power: {card.power}</div>
+                          <div >{card.name}</div>
+                          <div >Power: {card.power}</div>
                         </div>
                       </div>
-                      <div className="text-sm text-gray-300 mb-2">{card.description}</div>
-                      <div className="text-xs text-blue-300">{card.effect}</div>
+                      <div >{card.description}</div>
+                      <div >{card.effect}</div>
                     </button>
                   ))}
                 </div>
@@ -308,15 +308,15 @@ export function NecromancersGambit() {
 
             {/* Necromancer's Hand (hidden) */}
             {necromancerHand.length > 0 && (
-              <div className="mt-6">
-                <h3 className="text-xl font-bold mb-4  text-red-400" style={{textAlign: "center"}}>Necromancer's Hand</h3>
-                <div className="flex justify-center gap-2">
+              <div >
+                <h3  style={{textAlign: "center"}}>Necromancer's Hand</h3>
+                <div >
                   {necromancerHand.map((_, index) => (
                     <div
                       key={index}
-                      className="w-16 h-20 bg-red-900/30 rounded border border-red-500/30 flex items-center justify-center"
+                      
                     >
-                      <span className="text-2xl">🂠</span>
+                      <span >🂠</span>
                     </div>
                   ))}
                 </div>
@@ -330,8 +330,8 @@ export function NecromancersGambit() {
             <div className={`bg-black/50 backdrop-blur-sm p-8 rounded-lg border mb-6 ${
               gamePhase === "victory" ? 'border-green-500/50 bg-green-900/20' : 'border-red-500/50 bg-red-900/20'
             }`}>
-              <div className="mb-6">
-                <span className="text-8xl">
+              <div >
+                <span >
                   {gamePhase === "victory" ? "👑" : "💀"}
                 </span>
               </div>
@@ -342,35 +342,35 @@ export function NecromancersGambit() {
                 {gamePhase === "victory" ? "VICTORY!" : "DEFEAT!"}
               </h2>
               
-              <p className="text-gray-300 mb-4">
+              <p >
                 {gamePhase === "victory" 
                   ? "You have bested the necromancer with cunning and strategy!" 
                   : "The necromancer's dark power has overwhelmed you..."}
               </p>
               
-              <div className="  bg-gray-800/50 rounded-lg p-4" className="mb-6" style={{textAlign: "center"}}>
-                <div className="text-lg font-bold text-purple-400 mb-2">Final Score</div>
-                <div className="flex justify-center gap-8">
+              <div   style={{textAlign: "center"}}>
+                <div >Final Score</div>
+                <div >
                   <div>
-                    <div className="text-2xl font-bold text-blue-400">{playerScore}</div>
-                    <div className="text-sm text-gray-400">Player</div>
+                    <div >{playerScore}</div>
+                    <div >Player</div>
                   </div>
                   <div>
-                    <div className="text-2xl font-bold text-red-400">{necromancerScore}</div>
-                    <div className="text-sm text-gray-400">Necromancer</div>
+                    <div >{necromancerScore}</div>
+                    <div >Necromancer</div>
                   </div>
                 </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div >
                 <Button 
                   onClick={startGame}
-                  className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3"
+                  
                 >
                   Play Again
                 </Button>
-                <Link href="/game/headquarters" className="no-underline">
-                  <Button className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 w-full">
+                <Link href="/game/headquarters" >
+                  <Button >
                     Return to Main Game
                   </Button>
                 </Link>
@@ -379,11 +379,11 @@ export function NecromancersGambit() {
 
             {/* Game History */}
             {gameHistory.length > 0 && (
-              <div className="mt-6 bg-gray-800/30 rounded-lg p-4 border border-gray-600">
-                <h3 className="text-lg font-bold text-purple-400 mb-3">Battle History</h3>
-                <div className="space-y-2 max-h-32 overflow-y-auto">
+              <div >
+                <h3 >Battle History</h3>
+                <div >
                   {gameHistory.map((result, index) => (
-                    <div key={index} className="text-sm text-gray-300 p-2 bg-gray-700/30 rounded">
+                    <div key={index} >
                       Round {index + 1}: {result}
                     </div>
                   ))}

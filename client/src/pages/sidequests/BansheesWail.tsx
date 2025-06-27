@@ -172,11 +172,11 @@ export function BansheesWail() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden p-4 bg-gradient-to-b from-purple-900 via-indigo-900 to-black">
+    <div >
       {/* Wailing effect overlay */}
       {gamePhase === "playing" && (
         <div 
-          className="absolute inset-0 pointer-events-none"
+          
           style={{
             background: `radial-gradient(circle, rgba(139, 69, 19, ${wailIntensity * 0.1}) 0%, transparent 70%)`,
             animation: `pulse ${2 / wailIntensity}s ease-in-out infinite`
@@ -184,27 +184,27 @@ export function BansheesWail() {
         />
       )}
 
-      <div className="relative z-10 w-full max-w-4xl">
+      <div >
         {/* Title */}
-        <div className=" mb-8" className="text-center">
-          <h1 className="text-4xl md:text-6xl font-bold text-purple-300 mb-4 drop-shadow-lg">
+        <div  >
+          <h1 >
             BANSHEE'S WAIL
           </h1>
-          <p className="text-lg md:text-xl text-purple-200 drop-shadow-md">
+          <p >
             Hit the beats to silence the banshee's cry!
           </p>
         </div>
 
         {gamePhase === "intro" && (
-          <div className=" mb-8" className="text-center">
-            <div className="bg-black/80 border border-purple-500 rounded-lg p-6 md:p-8 max-w-md mx-auto">
-              <h2 className="text-2xl md:text-3xl font-bold text-purple-400 mb-4">
+          <div  >
+            <div >
+              <h2 >
                 Ready to Face the Banshee?
               </h2>
-              <p className="text-base md:text-lg text-purple-200 mb-4">
+              <p >
                 Time the beats perfectly to silence her wail. Miss too many and face her fury!
               </p>
-              <div className="text-sm md:text-base text-purple-300  space-y-2" className="mb-6">
+              <div  >
                 <p>• Hit SPACEBAR or tap when beats reach the purple zone</p>
                 <p>• Build combos for higher scores</p>
                 <p>• You have 3 lives - don't miss!</p>
@@ -213,7 +213,7 @@ export function BansheesWail() {
               
               <Button
                 onClick={initializeGame}
-                className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200"
+                
               >
                 Begin the Ritual
               </Button>
@@ -224,33 +224,33 @@ export function BansheesWail() {
         {gamePhase === "playing" && (
           <>
             {/* Game Stats */}
-            <div className="flex flex-wrap justify-center gap-4 md:gap-8  " className="mb-6" className="text-center">
-              <div className="text-purple-200">
-                <span className="text-lg md:text-xl font-bold">Score: {score}</span>
+            <div   >
+              <div >
+                <span >Score: {score}</span>
               </div>
-              <div className="text-purple-200">
-                <span className="text-lg md:text-xl font-bold">Combo: {combo}</span>
+              <div >
+                <span >Combo: {combo}</span>
               </div>
-              <div className="text-purple-200">
-                <span className="text-lg md:text-xl font-bold">Lives: {lives}</span>
+              <div >
+                <span >Lives: {lives}</span>
               </div>
-              <div className="text-purple-200">
-                <span className="text-lg md:text-xl font-bold">Time: {timeLeft}s</span>
+              <div >
+                <span >Time: {timeLeft}s</span>
               </div>
             </div>
 
             {/* Wail Intensity Indicator */}
-            <div  className="mb-6" className="text-center">
-              <p className="text-base md:text-lg text-purple-300 animate-pulse">
+            <div   >
+              <p >
                 {getWailMessage()}
               </p>
             </div>
 
             {/* Beat Track */}
-            <div className="relative w-full h-20 md:h-24 bg-black/50 border-2 border-purple-500 rounded-lg  overflow-hidden" className="mb-6">
+            <div  >
               {/* Hit Zone */}
-              <div className="absolute right-0 top-0 bottom-0 w-16 md:w-20 bg-purple-500/30 border-l-2 border-purple-400 flex items-center justify-center">
-                <span className="text-purple-300 font-bold text-sm md:text-base">HIT</span>
+              <div >
+                <span >HIT</span>
               </div>
 
               {/* Beats */}
@@ -270,10 +270,10 @@ export function BansheesWail() {
             </div>
 
             {/* Hit Button */}
-            <div className="text-center">
+            <div >
               <Button
                 onClick={hitBeat}
-                className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-8 md:py-6 md:px-12 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200 text-lg md:text-xl"
+                
               >
                 HIT BEAT (SPACE)
               </Button>
@@ -282,29 +282,29 @@ export function BansheesWail() {
         )}
 
         {gamePhase === "victory" && (
-          <div className=" mb-8" className="text-center">
-            <div className="bg-black/80 border border-green-500 rounded-lg p-6 md:p-8 max-w-md mx-auto">
-              <h2 className="text-3xl md:text-4xl font-bold text-green-400 mb-4">
+          <div  >
+            <div >
+              <h2 >
                 The Banshee is Silenced!
               </h2>
-              <p className="text-lg md:text-xl text-green-200 mb-4">
+              <p >
                 You survived the wailing with perfect timing!
               </p>
-              <div className="text-base md:text-lg text-green-300  space-y-2" className="mb-6">
+              <div  >
                 <p>Final Score: {score}</p>
                 <p>Max Combo: {maxCombo}</p>
                 <p>Performance: {getPerformanceRating()}</p>
               </div>
               
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+              <div >
                 <Button
                   onClick={initializeGame}
-                  className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200"
+                  
                 >
                   Face Another Banshee
                 </Button>
                 <Link href="/game/headquarters">
-                  <Button className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200">
+                  <Button >
                     Return to Main Game
                   </Button>
                 </Link>
@@ -314,29 +314,29 @@ export function BansheesWail() {
         )}
 
         {gamePhase === "defeat" && (
-          <div className=" mb-8" className="text-center">
-            <div className="bg-black/80 border border-red-500 rounded-lg p-6 md:p-8 max-w-md mx-auto">
-              <h2 className="text-3xl md:text-4xl font-bold text-red-400 mb-4">
+          <div  >
+            <div >
+              <h2 >
                 The Banshee's Wail Consumes You!
               </h2>
-              <p className="text-lg md:text-xl text-red-200 mb-4">
+              <p >
                 Your timing faltered and the banshee's cry overwhelmed you.
               </p>
-              <div className="text-base md:text-lg text-red-300  space-y-2" className="mb-6">
+              <div  >
                 <p>Final Score: {score}</p>
                 <p>Max Combo: {maxCombo}</p>
                 <p>Performance: {getPerformanceRating()}</p>
               </div>
               
-              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+              <div >
                 <Button
                   onClick={initializeGame}
-                  className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200"
+                  
                 >
                   Try Again
                 </Button>
                 <Link href="/game/headquarters">
-                  <Button className="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg shadow-lg transform hover:scale-105 transition-all duration-200">
+                  <Button >
                     Return to Main Game
                   </Button>
                 </Link>

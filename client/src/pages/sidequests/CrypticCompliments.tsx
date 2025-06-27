@@ -181,48 +181,48 @@ export function CrypticCompliments() {
                   }}
                 />
                 {/* Soft pulsing glow */}
-                <div className="absolute inset-0 bg-yellow-400 opacity-20 rounded-full blur-xl animate-pulse pointer-events-none"></div>
+                <div ></div>
               </div>
               
               {/* Speech Bubble */}
-              <div className="mt-6 relative">
-                <div className="bg-gray-900 border-2 border-purple-400 rounded-lg p-4 max-w-md mx-auto relative">
-                  <p className="text-purple-100 text-lg font-creepster">
+              <div >
+                <div >
+                  <p >
                     I have something for you... I think.
                   </p>
-                  <div className="absolute bottom-[-10px] left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[10px] border-r-[10px] border-t-[10px] border-l-transparent border-r-transparent border-t-purple-400"></div>
+                  <div ></div>
                 </div>
               </div>
             </div>
 
             {/* Instructions */}
-            <div className="text-purple-200 text-xl">
+            <div >
               <p>Click Dr. Heinous to receive your... gift</p>
             </div>
           </div>
         )}
 
         {(phase === "unfurling" || phase === "revealed") && (
-          <div className="animate-scale-in" id="compliment-display">
+          <div  id="compliment-display">
             {/* Parchment Animation Container */}
-            <div className="mb-8 flex justify-center relative">
+            <div >
               <img 
                 src={`/sidequests/cryptic-compliments/paper-${unfurlingFrame}.png`}
                 alt="Parchment unfurling"
-                className={`max-w-lg w-full h-auto ${phase === "revealed" ? "floating-scroll" : ""}`}
+                `}
               />
               
               {/* Compliment Text Overlay - positioned over the parchment */}
               {phase === "revealed" && isTextRevealed && (
-                <div className="absolute inset-0 flex  justify-center p-6" style={{alignItems: "center"}}>
-                  <div className="w-full " style={{textAlign: "center"}} style={{ maxWidth: '400px', marginTop: '5px' }}>
-                    <p className="compliment-text">
+                <div  style={{alignItems: "center"}}>
+                  <div  style={{textAlign: "center"}} style={{ maxWidth: '400px', marginTop: '5px' }}>
+                    <p >
                       "{compliment}"
                     </p>
                     {showSignature && (
-                      <div className="mt-6 pr-2 animate-fade-in">
+                      <div >
                         <div 
-                          className="transform -rotate-2 opacity-80"
+                          
                           style={{
                             marginLeft: "auto", // Right align the container
                             width: "120px", // Fixed width to prevent repositioning
@@ -233,7 +233,7 @@ export function CrypticCompliments() {
                           <img 
                             src="/heinous/signature.gif"
                             alt="Dr. Heinous Signature"
-                            className="max-w-full h-auto"
+                            
                             style={{
                               filter: "drop-shadow(1px 1px 1px rgba(0,0,0,0.2))",
                               animationPlayState: signatureComplete ? 'paused' : 'running',
@@ -250,13 +250,13 @@ export function CrypticCompliments() {
 
             {/* Dr. Heinous Reaction */}
             {phase === "revealed" && isTextRevealed && (
-              <div className="mb-8 animate-fade-in">
+              <div >
                 <img 
                   src="/heinous/neutral.png"
                   alt="Dr. Heinous" 
-                  className="w-32 h-32 mx-auto"
+                  
                 />
-                <p className="text-purple-200 text-lg font-creepster mt-4">
+                <p >
                   "{heinousReaction}"
                 </p>
               </div>
@@ -264,24 +264,24 @@ export function CrypticCompliments() {
 
             {/* Action Buttons */}
             {phase === "revealed" && isTextRevealed && (
-              <div className="flex flex-col sm:flex-row gap-4 justify-center  animate-fade-in" style={{alignItems: "center"}}>
+              <div  style={{alignItems: "center"}}>
                 <button
                   onClick={takeScreenshot}
-                  className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-bold transition-all duration-200 flex  gap-2 shadow-lg hover:shadow-xl transform hover:scale-105" style={{alignItems: "center"}}
+                   style={{alignItems: "center"}}
                 >
                   📸 Screenshot My Compliment
                 </button>
                 
                 <button
                   onClick={resetGame}
-                  className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-bold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+                  
                 >
                   Get Another Gift
                 </button>
                 
                 <Link 
                   href="/game/headquarters"
-                  className="bg-purple-800 hover:bg-purple-900 text-white px-6 py-3 rounded-lg font-bold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 no-underline"
+                  
                 >
                   Return to Main Game
                 </Link>

@@ -182,25 +182,25 @@ export function LabEscape() {
   // Fail screen
   if (gameState.gameFailed) {
     return (
-      <div className="min-h-screen relative overflow-hidden">
+      <div >
         <img 
           src="/sidequests/lab-escape/fail.png" 
           alt="Prison Fail Screen"
-          className="w-full h-full object-cover"
+          
         />
         
-        <div className="absolute inset-0 flex items-end justify-center">
-          <div className="pb-8">
-            <div className="space-x-4">
+        <div >
+          <div >
+            <div >
               <button
                 onClick={resetGame}
-                className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-colors duration-200 shadow-lg"
+                
               >
                 Try Again
               </button>
               <Link
                 href="/game"
-                className="px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white font-bold rounded-lg transition-colors duration-200 shadow-lg inline-block"
+                
               >
                 Back to Game
               </Link>
@@ -212,35 +212,35 @@ export function LabEscape() {
   }
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <div >
       {/* Background */}
       <img 
         src="/sidequests/lab-escape/bg-room.png" 
         alt="Laboratory Room"
-        className="w-full h-full object-cover"
+        
       />
       
       {/* Win Banner */}
       {gameState.gameWon && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <div className="relative">
+        <div >
+          <div >
             <img 
               src="/sidequests/lab-escape/banner.png" 
               alt="Victory Banner"
-              className="max-w-full max-h-full object-contain animate-pulse"
+              
             />
             
             {/* Confetti effects */}
             <img 
               src="/sidequests/lab-escape/confetti.gif" 
               alt="Confetti"
-              className="absolute top-0 left-0 w-full h-full object-cover pointer-events-none opacity-80"
+              
             />
             
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
+            <div >
               <Link
                 href="/game/headquarters"
-                className="px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold rounded-lg transition-all duration-200 shadow-lg transform hover:scale-105 inline-block"
+                
               >
                 🎮 Return to Game
               </Link>
@@ -255,7 +255,7 @@ export function LabEscape() {
           <img 
             src="/sidequests/lab-escape/door-1.png" 
             alt="Door 1"
-            className="absolute top-1/2 left-8 transform -translate-y-1/2 w-48 h-auto cursor-pointer transition-all duration-200 hover:brightness-110"
+            
             style={{ 
               animation: 'door-glow 3s ease-in-out infinite',
               animationDelay: '0s'
@@ -265,7 +265,7 @@ export function LabEscape() {
           <img 
             src="/sidequests/lab-escape/door-2.png" 
             alt="Door 2"
-            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-full w-48 h-auto cursor-pointer transition-all duration-200 hover:brightness-110"
+            
             style={{ 
               animation: 'door-glow 2.5s ease-in-out infinite',
               animationDelay: '0.5s'
@@ -275,7 +275,7 @@ export function LabEscape() {
           <img 
             src="/sidequests/lab-escape/door-3.png" 
             alt="Door 3"
-            className="absolute top-1/2 right-8 transform -translate-y-1/2 w-48 h-auto cursor-pointer transition-all duration-200 hover:brightness-110"
+            
             style={{ 
               animation: 'door-glow 3.5s ease-in-out infinite',
               animationDelay: '1s'
@@ -286,15 +286,15 @@ export function LabEscape() {
       )}
 
       {/* Score Display */}
-      <div className="absolute top-4 left-4 z-30">
-        <div className="bg-black bg-opacity-80 border-2 border-yellow-600 rounded-lg p-4">
-          <div className="text-yellow-400 font-mono text-sm">
+      <div >
+        <div >
+          <div >
             ESCAPE PROGRESS
           </div>
-          <div className="text-white font-mono">
+          <div >
             Correct: {gameState.correctAnswers}/3
           </div>
-          <div className="text-white font-mono">
+          <div >
             Attempts: {gameState.totalAttempts}/5
           </div>
         </div>
@@ -302,15 +302,15 @@ export function LabEscape() {
 
       {/* Chupacabra Taunts */}
       {gameState.chupacabraMessage && (
-        <div className="fixed bottom-8 right-8 z-40 animate-bounce">
-          <div className="relative">
+        <div >
+          <div >
             <img 
               src={`/chupacabra/${gameState.selectedChupacabra}`} 
               alt="Chupacabra"
-              className="w-32 h-32"
+              
             />
-            <div className="absolute -top-16 left-1/2 transform -translate-x-1/2">
-              <div className="bg-red-900 bg-opacity-95 border-2 border-red-400 rounded-lg p-3 text-white text-xs max-w-48 " style={{textAlign: "center"}}>
+            <div >
+              <div  style={{textAlign: "center"}}>
                 {gameState.chupacabraMessage}
               </div>
             </div>
@@ -320,36 +320,36 @@ export function LabEscape() {
 
       {/* Riddle Input Modal */}
       {gameState.showInput && gameState.currentRiddle && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 backdrop-blur-sm">
-          <div className="relative max-w-lg mx-4 animate-in fade-in zoom-in duration-500">
+        <div >
+          <div >
             {/* Glowing border effect */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 via-yellow-500 to-purple-600 rounded-xl blur opacity-75 animate-pulse"></div>
+            <div ></div>
             
             {/* Main card */}
-            <div className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-black border-4 border-yellow-500 rounded-xl p-8 shadow-2xl">
+            <div >
               {/* Floating particles effect */}
-              <div className="absolute inset-0 overflow-hidden rounded-xl">
-                <div className="absolute top-2 left-4 w-1 h-1 bg-yellow-400 rounded-full animate-ping"></div>
-                <div className="absolute top-8 right-6 w-1 h-1 bg-purple-400 rounded-full animate-ping" style={{ animationDelay: '0.5s' }}></div>
-                <div className="absolute bottom-6 left-8 w-1 h-1 bg-green-400 rounded-full animate-ping" style={{ animationDelay: '1s' }}></div>
-                <div className="absolute bottom-4 right-4 w-1 h-1 bg-red-400 rounded-full animate-ping" style={{ animationDelay: '1.5s' }}></div>
+              <div >
+                <div ></div>
+                <div  style={{ animationDelay: '0.5s' }}></div>
+                <div  style={{ animationDelay: '1s' }}></div>
+                <div  style={{ animationDelay: '1.5s' }}></div>
               </div>
               
               {/* Content */}
-              <div className="relative z-10">
-                <h2 className="text-yellow-400 font-bold text-2xl   tracking-wider drop-shadow-lg" style={{marginBottom: "1.5rem"}} style={{textAlign: "center"}} style={{ fontFamily: 'Creepster, cursive' }}>
+              <div >
+                <h2  style={{marginBottom: "1.5rem"}} style={{textAlign: "center"}} style={{ fontFamily: 'Creepster, cursive' }}>
                   ⚡ RIDDLE OF THE LAB ⚡
                 </h2>
                 
-                <div className="bg-black bg-opacity-50 rounded-lg p-6  border border-yellow-500/30" style={{marginBottom: "1.5rem"}}>
-                  <p className="text-white text-lg mb-4  leading-relaxed font-medium" style={{textAlign: "center"}}>
+                <div  style={{marginBottom: "1.5rem"}}>
+                  <p  style={{textAlign: "center"}}>
                     {gameState.currentRiddle.question}
                   </p>
                   
                   {gameState.currentRiddle.hint && (
-                    <div className="border-t border-gray-600 pt-4">
-                      <p className="text-amber-300 text-sm italic  flex items-center justify-center gap-2" style={{textAlign: "center"}}>
-                        <span className="text-yellow-400">💡</span>
+                    <div >
+                      <p  style={{textAlign: "center"}}>
+                        <span >💡</span>
                         <span>Hint: {gameState.currentRiddle.hint}</span>
                       </p>
                     </div>
@@ -362,21 +362,21 @@ export function LabEscape() {
                   onChange={(e) => setGameState(prev => ({ ...prev, userAnswer: e.target.value }))}
                   onKeyPress={handleKeyPress}
                   placeholder="Type your answer..."
-                  className="w-full p-4 bg-gray-800 border-2 border-gray-600 rounded-lg text-white text-lg focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/20 focus:outline-none  shadow-inner transition-all duration-200" style={{marginBottom: "1.5rem"}}
+                   style={{marginBottom: "1.5rem"}}
                   autoFocus
                 />
                 
-                <div className="flex gap-4 justify-center">
+                <div >
                   <button
                     onClick={handleSubmitAnswer}
                     disabled={!gameState.userAnswer.trim()}
-                    className="px-8 py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 disabled:from-gray-600 disabled:to-gray-700 text-white font-bold rounded-lg transition-all duration-200 shadow-lg hover:shadow-green-500/25 transform hover:scale-105 disabled:hover:scale-100"
+                    
                   >
                     🔬 Submit
                   </button>
                   <button
                     onClick={() => setGameState(prev => ({ ...prev, showInput: false, currentRiddle: null, userAnswer: '' }))}
-                    className="px-8 py-3 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold rounded-lg transition-all duration-200 shadow-lg hover:shadow-red-500/25 transform hover:scale-105"
+                    
                   >
                     🚪 Escape
                   </button>
@@ -389,12 +389,12 @@ export function LabEscape() {
 
       {/* Instructions */}
       {!gameState.showInput && !gameState.gameWon && !gameState.gameFailed && (
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-30">
-          <div className="bg-black bg-opacity-80 border-2 border-yellow-600 rounded-lg p-4 " style={{textAlign: "center"}}>
-            <div className="text-yellow-400 font-mono text-sm mb-2">
+        <div >
+          <div  style={{textAlign: "center"}}>
+            <div >
               ESCAPE THE LAB
             </div>
-            <div className="text-white text-xs">
+            <div >
               Click doors to solve riddles • Get 3 correct before 5 attempts
             </div>
           </div>

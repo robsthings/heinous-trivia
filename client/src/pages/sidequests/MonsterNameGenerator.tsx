@@ -145,9 +145,9 @@ function MonsterNameGeneratorCore({ showHeinous = true }: MonsterNameGeneratorPr
 
       {/* Full-screen scan line animation */}
       {scanPhase === 'scanning' && scanLineProgress < 100 && (
-        <div className="absolute inset-0 z-30 pointer-events-none">
+        <div >
           <div 
-            className="absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-blue-400 to-transparent opacity-80 transition-all duration-75"
+            
             style={{
               top: `${scanLineProgress}%`,
               boxShadow: '0 0 20px #60a5fa, 0 0 40px #60a5fa',
@@ -155,7 +155,7 @@ function MonsterNameGeneratorCore({ showHeinous = true }: MonsterNameGeneratorPr
             }}
           />
           <div 
-            className="absolute left-0 right-0 h-0.5 bg-blue-300 transition-all duration-75"
+            
             style={{
               top: `${scanLineProgress}%`,
               boxShadow: '0 0 10px #93c5fd'
@@ -166,9 +166,9 @@ function MonsterNameGeneratorCore({ showHeinous = true }: MonsterNameGeneratorPr
 
       {/* Scanning text overlay */}
       {scanPhase === 'scanning' && (
-        <div className="absolute inset-0 z-25 flex items-center justify-center pointer-events-none">
-          <div className=" px-4" className="text-center">
-            <h2 className="text-blue-400 text-xl sm:text-2xl md:text-3xl font-bold animate-pulse mb-4">
+        <div >
+          <div  >
+            <h2 >
               {currentScanText}
             </h2>
           </div>
@@ -177,17 +177,17 @@ function MonsterNameGeneratorCore({ showHeinous = true }: MonsterNameGeneratorPr
 
       {/* Dr. Heinous sprite with improved positioning */}
       {showHeinous && (
-        <div className="absolute left-4 sm:left-8 z-20" style={{ top: 'calc(50% - 2rem)' }}>
-          <div className="relative">
+        <div  style={{ top: 'calc(50% - 2rem)' }}>
+          <div >
             {/* Speech bubble positioned above sprite */}
-            <div className="absolute -top-20 sm:-top-24 left-1/2 transform -translate-x-1/2 bg-gray-900 border-2 border-red-600 rounded-lg px-3 py-2 w-48 sm:6 shadow-lg animate-fade-in z-10" style={{width: "1.25rem"}}>
-              <div className="text-red-400 text-xs sm:text-sm font-semibold " className="text-center">
+            <div  style={{width: "1.25rem"}}>
+              <div  >
                 Hold still. This won't hurt… much.
               </div>
               {/* Speech bubble tail pointing down */}
-              <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2">
-                <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-red-600"></div>
-                <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[4px] border-r-[4px] border-t-[4px] border-l-transparent border-r-transparent border-t-gray-900"></div>
+              <div >
+                <div ></div>
+                <div ></div>
               </div>
             </div>
             
@@ -195,7 +195,7 @@ function MonsterNameGeneratorCore({ showHeinous = true }: MonsterNameGeneratorPr
             <img
               src={heinousSprites.charming}
               alt="Dr. Heinous"
-              className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 object-contain drop-shadow-2xl animate-sprite-idle-twitch"
+              
               style={{ marginTop: '2rem' }}
             />
           </div>
@@ -203,13 +203,13 @@ function MonsterNameGeneratorCore({ showHeinous = true }: MonsterNameGeneratorPr
       )}
 
       {/* Main content */}
-      <div className="relative z-10 flex items-center justify-center min-h-screen p-4">
+      <div >
         
         {/* Monster card - hidden during scanning, revealed when complete */}
         {showCard && (
           <div 
             ref={cardRef}
-            className="relative w-full max-w-sm sm:max-w-md aspect-[3/4] mx-auto animate-fade-in"
+            
             style={{
               backgroundImage: 'url(/sidequests/monster-name-generator/monster-card.png)',
               backgroundSize: 'contain',
@@ -218,11 +218,11 @@ function MonsterNameGeneratorCore({ showHeinous = true }: MonsterNameGeneratorPr
             }}
           >
             {/* Monster name display - always two lines */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className=" px-6" className="text-center">
-                <h1 className="text-lg sm:text-xl md:text-2xl font-nosifer text-red-500 leading-tight animate-fade-in">
+            <div >
+              <div  >
+                <h1 >
                   {monsterName.split(' ').map((word, index) => (
-                    <div key={index} className="block">
+                    <div key={index} >
                       {word}
                     </div>
                   ))}
@@ -234,7 +234,7 @@ function MonsterNameGeneratorCore({ showHeinous = true }: MonsterNameGeneratorPr
 
         {/* Action buttons - responsive layout */}
         {scanPhase === 'complete' && (
-          <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col gap-2 sm:gap-3 animate-fade-in w-full max-w-xs px-4">
+          <div >
             <button
               onClick={handleScreenshot}
               style={{
@@ -288,7 +288,7 @@ function MonsterNameGeneratorCore({ showHeinous = true }: MonsterNameGeneratorPr
             <Button
               onClick={handleReturnToGame}
               variant="ghost"
-              className="text-gray-400 hover:text-white px-4 sm:px-6 py-2 sm:py-3 text-xs sm:text-sm w-full"
+              
             >
               Return to Main Game
             </Button>

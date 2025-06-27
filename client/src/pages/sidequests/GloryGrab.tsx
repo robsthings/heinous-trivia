@@ -250,7 +250,7 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
 
   return (
     <div 
-      className="min-h-screen w-full relative overflow-hidden"
+      
       style={{
         backgroundImage: 'url(/sidequests/glory-grab/glory-bg.png)',
         backgroundSize: 'cover',
@@ -258,19 +258,19 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
         backgroundRepeat: 'no-repeat'
       }}
     >
-      <div className="absolute inset-0 bg-black/30" />
+      <div  />
       
       {showHeinous && (
-        <div className="absolute left-4 sm:left-8 z-20" style={{ top: 'calc(50% - 2rem)' }}>
-          <div className="relative">
+        <div  style={{ top: 'calc(50% - 2rem)' }}>
+          <div >
             {showHeinousMessage && (
-              <div className="absolute -top-20 sm:-top-24 left-1/2 transform -translate-x-1/2 bg-gray-900 border-2 border-red-600 rounded-lg px-3 py-2 w-48 sm:w-56 shadow-lg animate-fade-in z-10">
-                <div className="text-red-400 text-xs sm:text-sm font-semibold " className="text-center">
+              <div >
+                <div  >
                   {heinousMessage}
                 </div>
-                <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2">
-                  <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-red-600"></div>
-                  <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[4px] border-r-[4px] border-t-[4px] border-l-transparent border-r-transparent border-t-gray-900"></div>
+                <div >
+                  <div ></div>
+                  <div ></div>
                 </div>
               </div>
             )}
@@ -278,18 +278,18 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
             <img
               src={heinousSprites.scheming}
               alt="Dr. Heinous"
-              className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 object-contain drop-shadow-2xl animate-sprite-idle-twitch"
+              
               style={{ marginTop: '2rem' }}
             />
           </div>
         </div>
       )}
 
-      <div className="relative z-10 flex items-center justify-center min-h-screen p-4">
+      <div >
         
         {gamePhase === 'title' && (
           <div 
-            className="w-full h-96 max-w-2xl mx-auto cursor-pointer animate-fade-in"
+            
             onClick={startGame}
             style={{
               backgroundImage: 'url(/sidequests/glory-grab/glory-title.png)',
@@ -303,21 +303,21 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
         {gamePhase === 'playing' && (
           <div 
             ref={gameAreaRef}
-            className="absolute inset-0 w-full h-full"
+            
           >
-            <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-30">
-              <div className="bg-black/70 rounded-lg px-4 py-2 flex gap-4 text-white">
-                <div className="text-center">
-                  <div className="text-xs text-gray-300">SCORE</div>
-                  <div className="text-xl font-bold text-green-400">{score}</div>
+            <div >
+              <div >
+                <div >
+                  <div >SCORE</div>
+                  <div >{score}</div>
                 </div>
-                <div className="text-center">
-                  <div className="text-xs text-gray-300">TIME</div>
-                  <div className="text-xl font-bold text-red-400">{timeLeft}s</div>
+                <div >
+                  <div >TIME</div>
+                  <div >{timeLeft}s</div>
                 </div>
                 {chaosLevel > 1 && (
-                  <div className="text-center">
-                    <div className="text-xs text-gray-300">CHAOS</div>
+                  <div >
+                    <div >CHAOS</div>
                     <div className={`text-xl font-bold ${
                       chaosLevel <= 3 ? 'text-yellow-400' :
                       chaosLevel <= 6 ? 'text-orange-400' : 'text-red-400'
@@ -330,8 +330,8 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
             </div>
 
             {vials.filter(v => v.isExploding).length >= 2 && (
-              <div className="absolute inset-0 z-25 pointer-events-none">
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-red-500 text-4xl font-bold animate-pulse">
+              <div >
+                <div >
                   MELTDOWN!
                 </div>
               </div>
@@ -355,15 +355,15 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
                 <img
                   src={getVialImage(vial)}
                   alt={vial.isEmpty ? "Empty vial" : `Vial ${vial.vialType}`}
-                  className="w-full h-full object-contain"
+                  
                   style={{
                     filter: vial.isExploding ? 'brightness(3) saturate(3) hue-rotate(0deg)' : 'none'
                   }}
                 />
                 
-                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                <div >
                   <div 
-                    className="h-1.5 bg-red-500 rounded"
+                    
                     style={{
                       width: `${Math.max((vial.countdown / vial.maxCountdown) * 56, 4)}px`,
                       backgroundColor: vial.countdown > 1 ? '#10b981' : '#ef4444'
@@ -376,29 +376,29 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
         )}
 
         {gamePhase === 'complete' && (
-          <div className=" animate-fade-in" className="text-center">
-            <div className="bg-black/80 rounded-lg p-8 max-w-md mx-auto">
-              <h1 className="text-3xl sm:text-4xl font-bold text-red-500 mb-4">
+          <div  >
+            <div >
+              <h1 >
                 EXPERIMENT COMPLETE!
               </h1>
-              <div className="text-2xl font-bold text-green-400 " className="mb-6">
+              <div  >
                 Final Score: {score}
               </div>
-              <div className="text-gray-300 mb-4">
+              <div >
                 {score >= 100 ? "Magnificent! You saved the lab!" :
                  score >= 50 ? "Not bad, but my vials are still smoking..." :
                  "Pathetic! My laboratory is in ruins!"}
               </div>
               
               {chaosLevel > 1 && (
-                <div  className="mb-6" className="text-center">
+                <div   >
                   <div className={`text-lg font-bold ${
                     chaosLevel <= 3 ? 'text-yellow-400' :
                     chaosLevel <= 6 ? 'text-orange-400' : 'text-red-400'
                   }`}>
                     Chaos Level {chaosLevel} Complete!
                   </div>
-                  <div className="text-sm text-gray-400 mt-1">
+                  <div >
                     {chaosLevel <= 2 ? "The laboratory grows unstable..." :
                      chaosLevel <= 4 ? "Vials spawn faster and multiply!" :
                      chaosLevel <= 6 ? "MAXIMUM MAYHEM APPROACHING!" :
@@ -407,13 +407,13 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
                 </div>
               )}
               
-              <div className="flex flex-col gap-3">
+              <div >
                 <Button
                   onClick={() => {
                     setChaosLevel(prev => prev + 1);
                     startGame();
                   }}
-                  className="bg-green-700 hover:bg-green-600 text-white px-6 py-3 text-sm font-semibold w-full"
+                  
                 >
                   {chaosLevel === 1 ? 'Play Again' : `CHAOS LEVEL ${chaosLevel + 1}!`}
                 </Button>
@@ -421,7 +421,7 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
                 <Button
                   onClick={handleReturnToGame}
                   variant="ghost"
-                  className="text-gray-400 hover:text-white px-6 py-3 text-sm w-full"
+                  
                 >
                   Return to Main Game
                 </Button>

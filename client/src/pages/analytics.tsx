@@ -150,18 +150,18 @@ export default function Analytics() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800">
-        <div className="max-w-7xl mx-auto px-6 py-12">
-          <div className="flex flex-col items-center justify-center space-y-6">
-            <div className="relative">
-              <div className="animate-spin rounded-full h-16 w-16 border-4 border-blue-500/30 border-t-blue-500"></div>
-              <div className="absolute inset-0 rounded-full h-16 w-16 border-4 border-purple-500/20 border-r-purple-500 animate-spin" style={{animationDirection: 'reverse', animationDuration: '1.5s'}}></div>
+      <div >
+        <div >
+          <div >
+            <div >
+              <div ></div>
+              <div  style={{animationDirection: 'reverse', animationDuration: '1.5s'}}></div>
             </div>
-            <div className=" space-y-2" style={{textAlign: "center"}}>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+            <div  style={{textAlign: "center"}}>
+              <h1 >
                 Analytics Dashboard
               </h1>
-              <p className="text-gray-300 text-lg">Loading comprehensive analytics data...</p>
+              <p >Loading comprehensive analytics data...</p>
             </div>
           </div>
         </div>
@@ -171,11 +171,11 @@ export default function Analytics() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800">
-        <div className="max-w-7xl mx-auto px-6 py-12">
-          <div className=" text-white" style={{textAlign: "center"}}>
-            <h1 className="text-3xl font-bold mb-4">Analytics Dashboard</h1>
-            <p className="text-red-400">Error loading analytics data: {error.message}</p>
+      <div >
+        <div >
+          <div  style={{textAlign: "center"}}>
+            <h1 >Analytics Dashboard</h1>
+            <p >Error loading analytics data: {error.message}</p>
           </div>
         </div>
       </div>
@@ -190,41 +190,41 @@ export default function Analytics() {
 
   return (
     <TooltipProvider>
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-900 to-slate-800">
-        <div className="max-w-7xl mx-auto px-6 py-8 space-y-8">
+      <div >
+        <div >
           {/* Header Section */}
-          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 shadow-2xl">
-            <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
-            <div className="space-y-3">
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+          <div >
+            <div >
+            <div >
+              <h1 >
                 Analytics Dashboard
               </h1>
-              <div className="flex items-center space-x-3">
-                <Badge variant="outline" className="bg-blue-500/20 text-blue-300 border-blue-500/30 px-3 py-1">
-                  <BarChart3Icon className="w-4 h-4 mr-2" />
+              <div >
+                <Badge variant="outline" >
+                  <BarChart3Icon  />
                   {hauntId}
                 </Badge>
-                <Badge variant="outline" className="bg-green-500/20 text-green-300 border-green-500/30 px-3 py-1">
-                  <ActivityIcon className="w-4 h-4 mr-2" />
+                <Badge variant="outline" >
+                  <ActivityIcon  />
                   Live Data
                 </Badge>
-                <Badge variant="outline" className="bg-purple-500/20 text-purple-300 border-purple-500/30 px-3 py-1">
+                <Badge variant="outline" >
                   Pro Feature
                 </Badge>
                 <Button 
                   onClick={refreshData}
                   variant="outline" 
                   size="sm"
-                  className="bg-emerald-500/20 border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/30"
+                  
                 >
-                  <RefreshCwIcon className="w-4 h-4 mr-2" />
+                  <RefreshCwIcon  />
                   Refresh
                 </Button>
               </div>
             </div>
             
             {/* Time Range Selector */}
-            <div className="flex items-center space-x-2 bg-white/5 rounded-xl p-2 border border-white/10">
+            <div >
               {(['7d', '30d', '90d'] as const).map((range) => (
                 <button
                   key={range}
@@ -243,69 +243,69 @@ export default function Analytics() {
         </div>
 
         {/* Key Performance Metrics */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div >
           {/* Total Games */}
-          <Card className="bg-gradient-to-br from-blue-500/10 to-blue-600/5 border-blue-500/20 backdrop-blur-sm">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
-              <CardTitle className="text-sm font-medium text-blue-200">Total Games</CardTitle>
-              <div className="bg-blue-500/20 p-2 rounded-lg">
-                <CalendarIcon className="h-5 w-5 text-blue-400" />
+          <Card >
+            <CardHeader >
+              <CardTitle >Total Games</CardTitle>
+              <div >
+                <CalendarIcon  />
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-white">{analyticsData?.totalGames || 0}</div>
-              <p className="text-xs text-blue-300 mt-1">Games completed</p>
+              <div >{analyticsData?.totalGames || 0}</div>
+              <p >Games completed</p>
             </CardContent>
           </Card>
 
           {/* Unique Players */}
-          <Card className="bg-gradient-to-br from-green-500/10 to-green-600/5 border-green-500/20 backdrop-blur-sm">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
-              <CardTitle className="text-sm font-medium text-green-200">Unique Players</CardTitle>
-              <div className="bg-green-500/20 p-2 rounded-lg">
-                <UsersIcon className="h-5 w-5 text-green-400" />
+          <Card >
+            <CardHeader >
+              <CardTitle >Unique Players</CardTitle>
+              <div >
+                <UsersIcon  />
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-white">{analyticsData?.uniquePlayers || 0}</div>
-              <p className="text-xs text-green-300 mt-1">Individual players</p>
+              <div >{analyticsData?.uniquePlayers || 0}</div>
+              <p >Individual players</p>
             </CardContent>
           </Card>
 
           {/* Completion Rate */}
-          <Card className="bg-gradient-to-br from-yellow-500/10 to-yellow-600/5 border-yellow-500/20 backdrop-blur-sm">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
-              <CardTitle className="text-sm font-medium text-yellow-200">Completion Rate</CardTitle>
-              <div className="bg-yellow-500/20 p-2 rounded-lg">
-                <AwardIcon className="h-5 w-5 text-yellow-400" />
+          <Card >
+            <CardHeader >
+              <CardTitle >Completion Rate</CardTitle>
+              <div >
+                <AwardIcon  />
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-white">{analyticsData?.completionRate || 0}%</div>
-              <p className="text-xs text-yellow-300 mt-1">Games finished</p>
+              <div >{analyticsData?.completionRate || 0}%</div>
+              <p >Games finished</p>
             </CardContent>
           </Card>
 
           {/* Ad Engagement - Highlighted */}
-          <Card className="bg-gradient-to-br from-purple-500/20 to-pink-500/10 border-purple-500/30 backdrop-blur-sm ring-2 ring-purple-500/50">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
+          <Card >
+            <CardHeader >
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <CardTitle className="text-sm font-medium text-purple-200 cursor-help">Ad Engagement</CardTitle>
+                  <CardTitle >Ad Engagement</CardTitle>
                 </TooltipTrigger>
-                <TooltipContent className="max-w-xs">
-                  <p className="font-semibold mb-1">Overall Click-Through Rate</p>
+                <TooltipContent >
+                  <p >Overall Click-Through Rate</p>
                   <p>Total clicks divided by total views across ALL ads. Weighted by actual traffic volume, so popular ads have more influence on this metric.</p>
                 </TooltipContent>
               </Tooltip>
-              <div className="bg-purple-500/30 p-2 rounded-lg">
-                <MousePointerClickIcon className="h-5 w-5 text-purple-400" />
+              <div >
+                <MousePointerClickIcon  />
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-white">{analyticsData?.adClickThrough || 0}%</div>
-              <p className="text-xs text-purple-300 mt-1">Click-through rate</p>
-              <div className="mt-2">
+              <div >{analyticsData?.adClickThrough || 0}%</div>
+              <p >Click-through rate</p>
+              <div >
                 <Badge className={`${
                   (analyticsData?.adClickThrough || 0) >= 5 
                     ? 'bg-green-500/30 text-green-200 border-green-500/50' 
@@ -325,103 +325,103 @@ export default function Analytics() {
         </div>
 
         {/* Detailed Analytics Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div >
           {/* Player Engagement Card */}
-          <Card className="bg-white/5 backdrop-blur-sm border-white/10">
+          <Card >
             <CardHeader>
-              <CardTitle className="text-xl font-semibold text-white flex items-center">
-                <GroupIcon className="w-5 h-5 mr-2 text-blue-400" />
+              <CardTitle >
+                <GroupIcon  />
                 Player Engagement
               </CardTitle>
-              <CardDescription className="text-gray-300">
+              <CardDescription >
                 Core engagement metrics that matter to your haunt
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-300">Total Players</span>
-                    <span className="text-lg font-semibold text-white">{analyticsData?.uniquePlayers || 0}</span>
+            <CardContent >
+              <div >
+                <div >
+                  <div >
+                    <span >Total Players</span>
+                    <span >{analyticsData?.uniquePlayers || 0}</span>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-300">Return Players</span>
-                    <span className="text-lg font-semibold text-white">{analyticsData?.uniquePlayers || 0}</span>
+                  <div >
+                    <span >Return Players</span>
+                    <span >{analyticsData?.uniquePlayers || 0}</span>
                   </div>
                 </div>
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-300">Return Rate</span>
-                    <span className="text-lg font-semibold text-green-400">{analyticsData?.returnPlayerRate || 0}%</span>
+                <div >
+                  <div >
+                    <span >Return Rate</span>
+                    <span >{analyticsData?.returnPlayerRate || 0}%</span>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-300">Completion Rate</span>
-                    <span className="text-lg font-semibold text-green-400">{analyticsData?.completionRate || 0}%</span>
+                  <div >
+                    <span >Completion Rate</span>
+                    <span >{analyticsData?.completionRate || 0}%</span>
                   </div>
                 </div>
               </div>
 
-              <div className="space-y-3">
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-300">Return Rate</span>
-                  <span className="text-white">{analyticsData?.returnPlayerRate || 0}%</span>
+              <div >
+                <div >
+                  <span >Return Rate</span>
+                  <span >{analyticsData?.returnPlayerRate || 0}%</span>
                 </div>
-                <Progress value={analyticsData?.returnPlayerRate || 0} className="h-2" />
+                <Progress value={analyticsData?.returnPlayerRate || 0}  />
                 
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-300">Completion Rate</span>
-                  <span className="text-white">{analyticsData?.completionRate || 0}%</span>
+                <div >
+                  <span >Completion Rate</span>
+                  <span >{analyticsData?.completionRate || 0}%</span>
                 </div>
-                <Progress value={analyticsData?.completionRate || 0} className="h-2" />
+                <Progress value={analyticsData?.completionRate || 0}  />
               </div>
             </CardContent>
           </Card>
 
           {/* Activity Insights Card */}
-          <Card className="bg-white/5 backdrop-blur-sm border-white/10">
+          <Card >
             <CardHeader>
-              <CardTitle className="text-xl font-semibold text-white flex items-center">
-                <TrendingUpIcon className="w-5 h-5 mr-2 text-green-400" />
+              <CardTitle >
+                <TrendingUpIcon  />
                 Activity Insights
               </CardTitle>
-              <CardDescription className="text-gray-300">
+              <CardDescription >
                 When and how players engage with your haunt
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="grid grid-cols-1 gap-4">
-                <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10">
-                  <div className="flex items-center space-x-3">
-                    <ActivityIcon className="w-5 h-5 text-blue-400" />
-                    <span className="text-gray-300">Avg. Session Time</span>
+            <CardContent >
+              <div >
+                <div >
+                  <div >
+                    <ActivityIcon  />
+                    <span >Avg. Session Time</span>
                   </div>
-                  <span className="text-white font-semibold">{analyticsData?.avgSessionTime || 0} min</span>
+                  <span >{analyticsData?.avgSessionTime || 0} min</span>
                 </div>
                 
-                <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10">
-                  <div className="flex items-center space-x-3">
-                    <CalendarIcon className="w-5 h-5 text-purple-400" />
-                    <span className="text-gray-300">Daily Average</span>
+                <div >
+                  <div >
+                    <CalendarIcon  />
+                    <span >Daily Average</span>
                   </div>
-                  <span className="text-white font-semibold">{analyticsData?.dailyAverage || 0} games</span>
+                  <span >{analyticsData?.dailyAverage || 0} games</span>
                 </div>
                 
-                <div className="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/10">
-                  <div className="flex items-center space-x-3">
-                    <TargetIcon className="w-5 h-5 text-yellow-400" />
-                    <span className="text-gray-300">Peak Activity</span>
+                <div >
+                  <div >
+                    <TargetIcon  />
+                    <span >Peak Activity</span>
                   </div>
-                  <span className="text-white font-semibold">{analyticsData?.peakActivity || 'No data'}</span>
+                  <span >{analyticsData?.peakActivity || 'No data'}</span>
                 </div>
                 
                 {/* Ad Engagement Highlight */}
-                <div className="flex items-center justify-between p-3 bg-gradient-to-r from-purple-500/20 to-pink-500/10 rounded-lg border border-purple-500/30">
-                  <div className="flex items-center space-x-3">
-                    <MousePointerClickIcon className="w-5 h-5 text-purple-400" />
-                    <span className="text-purple-200">Ad Engagement</span>
+                <div >
+                  <div >
+                    <MousePointerClickIcon  />
+                    <span >Ad Engagement</span>
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <span className="text-white font-bold text-lg">{analyticsData?.adClickThrough || 0}%</span>
+                  <div >
+                    <span >{analyticsData?.adClickThrough || 0}%</span>
                     <Badge className={`text-xs ${
                       (analyticsData?.adClickThrough || 0) >= 5 
                         ? 'bg-green-500/30 text-green-200 border-green-500/50' 
@@ -443,40 +443,40 @@ export default function Analytics() {
         </div>
 
         {/* Ad Performance Metrics Section */}
-        <Card className="bg-white/5 backdrop-blur-sm border-white/10">
+        <Card >
           <CardHeader>
-            <CardTitle className="text-xl font-semibold text-white flex items-center">
-              <MousePointerClickIcon className="w-5 h-5 mr-2 text-purple-400" />
+            <CardTitle >
+              <MousePointerClickIcon  />
               Ad Performance Metrics
             </CardTitle>
-            <CardDescription className="text-gray-300">
+            <CardDescription >
               Detailed performance data for all ads uploaded to this haunt
             </CardDescription>
           </CardHeader>
           <CardContent>
             {adsLoading || adMetricsLoading ? (
-              <div className="flex items-center justify-center py-8">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500"></div>
-                <span className="ml-3 text-gray-300">Loading ad performance data...</span>
+              <div >
+                <div ></div>
+                <span >Loading ad performance data...</span>
               </div>
             ) : !adsData || adsData.length === 0 ? (
-              <div className=" py-8" style={{textAlign: "center"}}>
-                <div className="bg-slate-800/50 rounded-lg p-6 border border-slate-700/50">
-                  <MousePointerClickIcon className="w-12 h-12 text-gray-500 mx-auto mb-3" />
-                  <p className="text-gray-400 text-lg">No ads found for this haunt</p>
-                  <p className="text-gray-500 text-sm mt-1">Upload ads through the haunt admin panel to see performance metrics here</p>
+              <div  style={{textAlign: "center"}}>
+                <div >
+                  <MousePointerClickIcon  />
+                  <p >No ads found for this haunt</p>
+                  <p >Upload ads through the haunt admin panel to see performance metrics here</p>
                 </div>
               </div>
             ) : adsData && adsData.length > 0 ? (
-              <div className="space-y-4">
+              <div >
                 {/* Table Header */}
-                <div className="grid grid-cols-12 gap-4 pb-3 border-b border-white/10 text-sm font-medium text-gray-300">
-                  <div className="col-span-1">Preview</div>
-                  <div className="col-span-4">Ad Details</div>
-                  <div className="col-span-2 " style={{textAlign: "center"}}>Views</div>
-                  <div className="col-span-2 " style={{textAlign: "center"}}>Clicks</div>
-                  <div className="col-span-2 " style={{textAlign: "center"}}>CTR</div>
-                  <div className="col-span-1 " style={{textAlign: "center"}}>Performance</div>
+                <div >
+                  <div >Preview</div>
+                  <div >Ad Details</div>
+                  <div  style={{textAlign: "center"}}>Views</div>
+                  <div  style={{textAlign: "center"}}>Clicks</div>
+                  <div  style={{textAlign: "center"}}>CTR</div>
+                  <div  style={{textAlign: "center"}}>Performance</div>
                 </div>
 
                 {/* Display ads with their performance metrics */}
@@ -488,15 +488,15 @@ export default function Analytics() {
                   const ctr = adPerformance?.ctr || 0;
 
                   return (
-                    <div key={ad.id || index} className="grid grid-cols-12 gap-4 py-4 border-b border-white/5 hover:bg-white/5 rounded-lg transition-colors">
+                    <div key={ad.id || index} >
                       {/* Thumbnail */}
-                      <div className="col-span-1">
-                        <div className="w-12 h-12 rounded-lg overflow-hidden bg-slate-800 border border-slate-700">
+                      <div >
+                        <div >
                           {ad.imageUrl ? (
                             <img 
                               src={ad.imageUrl} 
                               alt={ad.title}
-                              className="w-full h-full object-cover"
+                              
                               onError={(e) => {
                                 const target = e.currentTarget as HTMLImageElement;
                                 target.style.display = 'none';
@@ -505,22 +505,22 @@ export default function Analytics() {
                               }}
                             />
                           ) : null}
-                          <div className="w-full h-full flex items-center justify-center text-gray-500" style={{display: ad.imageUrl ? 'none' : 'flex'}}>
-                            <PieChartIcon className="w-6 h-6" />
+                          <div  style={{display: ad.imageUrl ? 'none' : 'flex'}}>
+                            <PieChartIcon  />
                           </div>
                         </div>
                       </div>
 
                       {/* Ad Details */}
-                      <div className="col-span-4 space-y-1">
-                        <h4 className="text-white font-medium truncate">{ad.title || 'Untitled Ad'}</h4>
-                        <p className="text-gray-400 text-sm truncate">{ad.description || 'No description'}</p>
+                      <div >
+                        <h4 >{ad.title || 'Untitled Ad'}</h4>
+                        <p >{ad.description || 'No description'}</p>
                         {ad.link && ad.link !== '#' && (
                           <a 
                             href={ad.link} 
                             target="_blank" 
                             rel="noopener noreferrer"
-                            className="text-blue-400 text-xs hover:text-blue-300 truncate block"
+                            
                           >
                             {ad.link}
                           </a>
@@ -528,27 +528,27 @@ export default function Analytics() {
                       </div>
 
                       {/* Views */}
-                      <div className="col-span-2 " style={{textAlign: "center"}}>
-                        <div className="text-white font-semibold text-lg">{views}</div>
-                        <div className="text-gray-400 text-xs">impressions</div>
+                      <div style={{textAlign: "center"}}>
+                        <div style={{fontSize: "1.25rem", fontWeight: "bold"}}>{views}</div>
+                        <div style={{fontSize: "0.75rem", color: "#9ca3af"}}>impressions</div>
                       </div>
 
                       {/* Clicks */}
-                      <div className="col-span-2 " style={{textAlign: "center"}}>
-                        <div className="text-white font-semibold text-lg">{clicks}</div>
-                        <div className="text-gray-400 text-xs">engagements</div>
+                      <div style={{textAlign: "center"}}>
+                        <div style={{fontSize: "1.25rem", fontWeight: "bold"}}>{clicks}</div>
+                        <div style={{fontSize: "0.75rem", color: "#9ca3af"}}>engagements</div>
                       </div>
 
                       {/* CTR */}
-                      <div className="col-span-2 " style={{textAlign: "center"}}>
-                        <div className={`font-bold text-lg ${ctr > 0 ? 'text-green-400' : 'text-gray-400'}`}>
+                      <div style={{textAlign: "center"}}>
+                        <div style={{fontSize: "1.25rem", fontWeight: "bold"}}>
                           {ctr > 0 ? `${ctr.toFixed(1)}%` : '0%'}
                         </div>
-                        <div className="text-gray-400 text-xs">click rate</div>
+                        <div style={{fontSize: "0.75rem", color: "#9ca3af"}}>click rate</div>
                       </div>
 
                       {/* Performance Badge */}
-                      <div className="col-span-1 " style={{textAlign: "center"}}>
+                      <div  style={{textAlign: "center"}}>
                         <Badge 
                           variant="outline" 
                           className={`text-xs ${
@@ -567,29 +567,29 @@ export default function Analytics() {
                 })}
               </div>
             ) : (
-              <div className="space-y-4">
+              <div >
                 {/* Table Header */}
-                <div className="grid grid-cols-12 gap-4 pb-3 border-b border-white/10 text-sm font-medium text-gray-300">
-                  <div className="col-span-1">Preview</div>
-                  <div className="col-span-4">Ad Details</div>
-                  <div className="col-span-2 " style={{textAlign: "center"}}>Views</div>
-                  <div className="col-span-2 " style={{textAlign: "center"}}>Clicks</div>
-                  <div className="col-span-2 " style={{textAlign: "center"}}>CTR</div>
-                  <div className="col-span-1 " style={{textAlign: "center"}}>Performance</div>
+                <div >
+                  <div >Preview</div>
+                  <div >Ad Details</div>
+                  <div  style={{textAlign: "center"}}>Views</div>
+                  <div  style={{textAlign: "center"}}>Clicks</div>
+                  <div  style={{textAlign: "center"}}>CTR</div>
+                  <div  style={{textAlign: "center"}}>Performance</div>
                 </div>
 
                 {/* Ad Performance Rows */}
                 {adPerformanceData && adPerformanceData.length > 0 ? (
                   adPerformanceData.map((ad, index) => (
-                    <div key={index} className="grid grid-cols-12 gap-4 py-4 border-b border-white/5 hover:bg-white/5 rounded-lg transition-colors">
+                    <div key={index} >
                       {/* Thumbnail */}
-                      <div className="col-span-1">
-                        <div className="w-12 h-12 rounded-lg overflow-hidden bg-slate-800 border border-slate-700">
+                      <div >
+                        <div >
                           {ad.imageUrl ? (
                             <img 
                               src={ad.imageUrl} 
                               alt={ad.title}
-                              className="w-full h-full object-cover"
+                              
                               onError={(e) => {
                                 const target = e.currentTarget as HTMLImageElement;
                                 target.style.display = 'none';
@@ -598,22 +598,22 @@ export default function Analytics() {
                               }}
                             />
                           ) : null}
-                          <div className="w-full h-full flex items-center justify-center text-gray-500" style={{display: ad.imageUrl ? 'none' : 'flex'}}>
-                            <PieChartIcon className="w-6 h-6" />
+                          <div  style={{display: ad.imageUrl ? 'none' : 'flex'}}>
+                            <PieChartIcon  />
                           </div>
                         </div>
                       </div>
 
                       {/* Ad Details */}
-                      <div className="col-span-4 space-y-1">
-                        <h4 className="text-white font-medium truncate">{ad.title || 'Untitled Ad'}</h4>
-                        <p className="text-gray-400 text-sm truncate">{ad.description || 'No description'}</p>
+                      <div >
+                        <h4 >{ad.title || 'Untitled Ad'}</h4>
+                        <p >{ad.description || 'No description'}</p>
                         {ad.link && ad.link !== '#' && (
                           <a 
                             href={ad.link} 
                             target="_blank" 
                             rel="noopener noreferrer"
-                            className="text-blue-400 text-xs hover:text-blue-300 truncate block"
+                            
                           >
                             {ad.link}
                           </a>
@@ -621,19 +621,19 @@ export default function Analytics() {
                       </div>
 
                       {/* Views */}
-                      <div className="col-span-2 " style={{textAlign: "center"}}>
-                        <div className="text-white font-semibold text-lg">{ad.views}</div>
-                        <div className="text-gray-400 text-xs">impressions</div>
+                      <div  style={{textAlign: "center"}}>
+                        <div >{ad.views}</div>
+                        <div >impressions</div>
                       </div>
 
                       {/* Clicks */}
-                      <div className="col-span-2 " style={{textAlign: "center"}}>
-                        <div className="text-white font-semibold text-lg">{ad.clicks}</div>
-                        <div className="text-gray-400 text-xs">engagements</div>
+                      <div  style={{textAlign: "center"}}>
+                        <div >{ad.clicks}</div>
+                        <div >engagements</div>
                       </div>
 
                       {/* CTR */}
-                      <div className="col-span-2 " style={{textAlign: "center"}}>
+                      <div  style={{textAlign: "center"}}>
                         <div className={`font-bold text-lg ${
                           ad.ctr >= 100 ? 'text-green-400' : 
                           ad.ctr >= 50 ? 'text-yellow-400' : 
@@ -641,25 +641,25 @@ export default function Analytics() {
                         }`}>
                           {ad.ctr}%
                         </div>
-                        <div className="text-gray-400 text-xs">click rate</div>
+                        <div >click rate</div>
                       </div>
 
                       {/* Performance Badge */}
-                      <div className="col-span-1 " style={{textAlign: "center"}}>
+                      <div  style={{textAlign: "center"}}>
                         {ad.ctr >= 100 ? (
-                          <Badge className="bg-green-500/30 text-green-200 border-green-500/50 text-xs">
+                          <Badge >
                             Excellent
                           </Badge>
                         ) : ad.ctr >= 50 ? (
-                          <Badge className="bg-yellow-500/30 text-yellow-200 border-yellow-500/50 text-xs">
+                          <Badge >
                             Good
                           </Badge>
                         ) : ad.ctr > 0 ? (
-                          <Badge className="bg-blue-500/30 text-blue-200 border-blue-500/50 text-xs">
+                          <Badge >
                             Active
                           </Badge>
                         ) : (
-                          <Badge variant="outline" className="bg-gray-500/20 text-gray-400 border-gray-500/30 text-xs">
+                          <Badge variant="outline" >
                             No Data
                           </Badge>
                         )}
@@ -667,39 +667,39 @@ export default function Analytics() {
                     </div>
                   ))
                 ) : (
-                  <div className=" py-6" style={{textAlign: "center"}}>
-                    <p className="text-gray-400">No ad performance data available</p>
+                  <div  style={{textAlign: "center"}}>
+                    <p >No ad performance data available</p>
                   </div>
                 )}
 
                 {/* Summary Stats */}
                 {adPerformanceData && adPerformanceData.length > 0 && (
-                  <div className="mt-6 pt-4 border-t border-white/10">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                        <div className="text-2xl font-bold text-white">
+                  <div >
+                    <div >
+                      <div >
+                        <div >
                           {adPerformanceData.reduce((sum, ad) => sum + ad.views, 0)}
                         </div>
-                        <div className="text-gray-300 text-sm">Total Ad Views</div>
+                        <div >Total Ad Views</div>
                       </div>
-                      <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                        <div className="text-2xl font-bold text-white">
+                      <div >
+                        <div >
                           {adPerformanceData.reduce((sum, ad) => sum + ad.clicks, 0)}
                         </div>
-                        <div className="text-gray-300 text-sm">Total Ad Clicks</div>
+                        <div >Total Ad Clicks</div>
                       </div>
-                      <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                        <div className="text-2xl font-bold text-purple-400">
+                      <div >
+                        <div >
                           {adPerformanceData.length > 0 ? 
                             Math.round(adPerformanceData.reduce((sum, ad) => sum + ad.ctr, 0) / adPerformanceData.length) 
                             : 0}%
                         </div>
                         <Tooltip>
                           <TooltipTrigger asChild>
-                            <div className="text-gray-300 text-sm cursor-help">Average CTR</div>
+                            <div >Average CTR</div>
                           </TooltipTrigger>
-                          <TooltipContent className="max-w-xs">
-                            <p className="font-semibold mb-1">Mathematical Average</p>
+                          <TooltipContent >
+                            <p >Mathematical Average</p>
                             <p>Sum of all individual ad CTRs divided by number of ads. Each ad contributes equally regardless of traffic volume.</p>
                           </TooltipContent>
                         </Tooltip>
@@ -713,69 +713,69 @@ export default function Analytics() {
         </Card>
 
         {/* Ad Summary Section */}
-        <Card className="bg-gradient-to-br from-purple-500/10 to-pink-500/5 border-purple-500/20 backdrop-blur-sm">
+        <Card >
           <CardHeader>
-            <CardTitle className="text-xl font-semibold text-white flex items-center">
-              <MousePointerClickIcon className="w-5 h-5 mr-2 text-purple-400" />
+            <CardTitle >
+              <MousePointerClickIcon  />
               Ad Campaign Summary
             </CardTitle>
-            <CardDescription className="text-gray-300">
+            <CardDescription >
               Comprehensive overview of all advertising performance across your haunt
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div >
               {/* Total Ads */}
-              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="bg-blue-500/20 p-2 rounded-lg">
-                    <PieChartIcon className="w-5 h-5 text-blue-400" />
+              <div >
+                <div >
+                  <div >
+                    <PieChartIcon  />
                   </div>
-                  <Badge variant="outline" className="bg-blue-500/20 text-blue-300 border-blue-500/30 text-xs">
+                  <Badge variant="outline" >
                     Active
                   </Badge>
                 </div>
-                <div className="text-2xl font-bold text-white">{adsData?.length || 0}</div>
-                <div className="text-gray-300 text-sm">Total Ads Uploaded</div>
+                <div >{adsData?.length || 0}</div>
+                <div >Total Ads Uploaded</div>
               </div>
 
               {/* Total Impressions */}
-              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="bg-green-500/20 p-2 rounded-lg">
-                    <TrendingUpIcon className="w-5 h-5 text-green-400" />
+              <div >
+                <div >
+                  <div >
+                    <TrendingUpIcon  />
                   </div>
-                  <Badge variant="outline" className="bg-green-500/20 text-green-300 border-green-500/30 text-xs">
+                  <Badge variant="outline" >
                     Views
                   </Badge>
                 </div>
-                <div className="text-2xl font-bold text-white">
+                <div >
                   {analyticsData?.adPerformanceData?.reduce((sum, ad) => sum + ad.views, 0) || 0}
                 </div>
-                <div className="text-gray-300 text-sm">Total Impressions</div>
+                <div >Total Impressions</div>
               </div>
 
               {/* Total Clicks */}
-              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="bg-yellow-500/20 p-2 rounded-lg">
-                    <MousePointerClickIcon className="w-5 h-5 text-yellow-400" />
+              <div >
+                <div >
+                  <div >
+                    <MousePointerClickIcon  />
                   </div>
-                  <Badge variant="outline" className="bg-yellow-500/20 text-yellow-300 border-yellow-500/30 text-xs">
+                  <Badge variant="outline" >
                     Clicks
                   </Badge>
                 </div>
-                <div className="text-2xl font-bold text-white">
+                <div >
                   {analyticsData?.adPerformanceData?.reduce((sum, ad) => sum + ad.clicks, 0) || 0}
                 </div>
-                <div className="text-gray-300 text-sm">Total Engagements</div>
+                <div >Total Engagements</div>
               </div>
 
               {/* Overall Performance */}
-              <div className="bg-white/5 rounded-lg p-4 border border-white/10">
-                <div className="flex items-center justify-between mb-2">
-                  <div className="bg-purple-500/20 p-2 rounded-lg">
-                    <AwardIcon className="w-5 h-5 text-purple-400" />
+              <div >
+                <div >
+                  <div >
+                    <AwardIcon  />
                   </div>
                   <Badge className={`text-xs ${
                     (analyticsData?.adClickThrough || 0) >= 5 
@@ -791,35 +791,35 @@ export default function Analytics() {
                       : 'Needs Improvement'}
                   </Badge>
                 </div>
-                <div className="text-2xl font-bold text-white">{analyticsData?.adClickThrough || 0}%</div>
-                <div className="text-gray-300 text-sm">Overall CTR</div>
+                <div >{analyticsData?.adClickThrough || 0}%</div>
+                <div >Overall CTR</div>
               </div>
             </div>
 
             {/* Call to Action */}
-            <div className="mt-6 pt-6 border-t border-white/10">
-              <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/10 rounded-lg p-6 border border-purple-500/30">
-                <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-                  <div className="space-y-2">
-                    <h3 className="text-lg font-semibold text-white">Ready to optimize your ad performance?</h3>
-                    <p className="text-gray-300 text-sm">
+            <div >
+              <div >
+                <div >
+                  <div >
+                    <h3 >Ready to optimize your ad performance?</h3>
+                    <p >
                       Upload more ads, adjust targeting, and maximize your haunt's revenue potential with detailed analytics insights.
                     </p>
                   </div>
-                  <div className="flex flex-col sm:flex-row gap-3">
+                  <div >
                     <Button 
                       onClick={() => window.location.href = `https://heinoustrivia.com/haunt-admin/${hauntId}`}
-                      className="bg-purple-500 hover:bg-purple-600 text-white border-0"
+                      
                     >
-                      <MousePointerClickIcon className="w-4 h-4 mr-2" />
+                      <MousePointerClickIcon  />
                       Manage Ads
                     </Button>
                     <Button 
                       variant="outline" 
                       onClick={refreshData}
-                      className="bg-white/5 border-white/20 text-white hover:bg-white/10"
+                      
                     >
-                      <RefreshCwIcon className="w-4 h-4 mr-2" />
+                      <RefreshCwIcon  />
                       Refresh Data
                     </Button>
                   </div>
@@ -830,8 +830,8 @@ export default function Analytics() {
         </Card>
 
         {/* Footer */}
-        <div className=" py-6" style={{textAlign: "center"}}>
-          <p className="text-sm text-gray-400">
+        <div  style={{textAlign: "center"}}>
+          <p >
             Analytics Dashboard • Pro/Premium Feature
           </p>
         </div>

@@ -73,7 +73,7 @@ export function RootRedirector() {
   // Show loading state while redirect logic executes
   return (
     <div 
-      className="min-h-screen flex items-center justify-center"
+      
       style={{
         background: 'linear-gradient(to bottom right, #1f2937, #581c87, #000000)'
       }}

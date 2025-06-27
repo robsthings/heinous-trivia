@@ -248,15 +248,15 @@ function Game() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black flex items-center justify-center px-4">
-        <Card className="bg-gray-900/50 border-gray-700 text-white max-w-md w-full">
+      <div >
+        <Card >
           <CardHeader>
-            <CardTitle className=" text-red-400" style={{textAlign: "center"}}>Error</CardTitle>
+            <CardTitle  style={{textAlign: "center"}}>Error</CardTitle>
           </CardHeader>
-          <CardContent className=" space-y-4" style={{textAlign: "center"}}>
-            <p className="text-gray-300">{error}</p>
+          <CardContent  style={{textAlign: "center"}}>
+            <p >{error}</p>
             <Link href="/">
-              <Button variant="outline" className="bg-gray-800 border-gray-600 text-white hover:bg-gray-700">
+              <Button variant="outline" >
                 Return Home
               </Button>
             </Link>
@@ -268,21 +268,21 @@ function Game() {
 
   if (showNamePrompt) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black flex items-center justify-center px-4">
-        <Card className="bg-gray-900/50 border-gray-700 text-white max-w-md w-full">
+      <div >
+        <Card >
           <CardHeader>
-            <CardTitle className=" text-red-400 flex items-center justify-center gap-2" style={{textAlign: "center"}}>
-              <User className="h-6 w-6" />
+            <CardTitle  style={{textAlign: "center"}}>
+              <User  />
               Enter Your Name
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent >
             <Input
               type="text"
               placeholder="Your display name"
               value={tempName}
               onChange={(e) => setTempName(e.target.value)}
-              className="bg-gray-800 border-gray-600 text-white placeholder-gray-400"
+              
               onKeyPress={(e) => {
                 if (e.key === 'Enter' && tempName.trim()) {
                   savePlayerInfo(tempName.trim());
@@ -292,7 +292,7 @@ function Game() {
             <Button 
               onClick={() => tempName.trim() && savePlayerInfo(tempName.trim())}
               disabled={!tempName.trim()}
-              className="w-full bg-red-600 hover:bg-red-700"
+              
             >
               Start Playing
             </Button>
@@ -305,7 +305,7 @@ function Game() {
   if (gameState.gameComplete || gameState.showEndScreen) {
     return (
       <div 
-        className="game-container min-h-screen"
+        
         style={{
           background: gameState.hauntConfig?.skinUrl 
             ? `url(${gameState.hauntConfig.skinUrl}) center/cover`
@@ -315,7 +315,7 @@ function Game() {
       >
         <GameHeader gameState={gameState} />
         
-        <main className="px-3 sm:px-4 pb-20">
+        <main >
           <GameEndScreen
             gameState={gameState}
             onSaveScore={handleSaveScore}
@@ -341,7 +341,7 @@ function Game() {
 
   return (
     <div 
-      className="min-h-screen"
+      
       style={{
         background: gameState.hauntConfig?.skinUrl 
           ? `url(${gameState.hauntConfig.skinUrl}) center/cover`
@@ -353,7 +353,7 @@ function Game() {
         gameState={gameState}
       />
       
-      <main className="px-4 pb-20">
+      <main >
         {!gameState.showAd && (
           <TriviaCard
             gameState={gameState}

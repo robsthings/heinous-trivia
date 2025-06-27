@@ -69,19 +69,19 @@ export default function Home() {
             }}>
               How to Enter a Haunt
             </h2>
-            <div className="space-y-3 sm:space-y-4 text-gray-300">
-              <p className="text-base sm:text-lg">
+            <div >
+              <p >
                 Each haunt provides their own unique access link to their trivia experience.
               </p>
-              <p className="text-sm sm:text-base">
+              <p >
                 Contact your favorite haunt directly to receive their exclusive game link, 
                 or ask them to sign up for Heinous Trivia to create their own horror trivia experience.
               </p>
-              <div className="mt-6 sm:mt-8 p-3 sm:p-4 bg-red-900/30 border border-red-600/50 rounded-lg">
-                <h3 className="text-lg sm:text-xl font-semibold text-red-400 mb-2 sm:mb-3">
+              <div >
+                <h3 >
                   For Haunt Owners
                 </h3>
-                <p className="text-xs sm:text-sm text-gray-300">
+                <p >
                   Want to create your own horror trivia experience? 
                   Contact us directly to set up custom questions, themes, and leaderboards for your visitors.
                 </p>

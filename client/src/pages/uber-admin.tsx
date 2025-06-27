@@ -152,9 +152,9 @@ export default function UberAdmin() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
-        <div className="max-w-7xl mx-auto flex items-center justify-center h-screen">
-          <div className="text-white text-xl">Loading analytics...</div>
+      <div >
+        <div >
+          <div >Loading analytics...</div>
         </div>
       </div>
     );
@@ -162,9 +162,9 @@ export default function UberAdmin() {
 
   if (!analytics) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
-        <div className="max-w-7xl mx-auto flex items-center justify-center h-screen">
-          <div className="text-white text-xl">Failed to load analytics data</div>
+      <div >
+        <div >
+          <div >Failed to load analytics data</div>
         </div>
       </div>
     );
@@ -186,103 +186,103 @@ export default function UberAdmin() {
   const COLORS = ['#64748B', '#8B5CF6', '#F59E0B'];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
-      <div className="max-w-7xl mx-auto">
-        <div className=" text-white mb-8" style={{textAlign: "center"}}>
-          <h1 className="text-4xl font-bold mb-4">Global Analytics Dashboard</h1>
-          <p className="text-lg text-gray-300">Platform-wide insights across all haunts</p>
-          <Badge variant="outline" className="mt-2 text-red-400 border-red-400">
+    <div >
+      <div >
+        <div  style={{textAlign: "center"}}>
+          <h1 >Global Analytics Dashboard</h1>
+          <p >Platform-wide insights across all haunts</p>
+          <Badge variant="outline" >
             Admin Access Only
           </Badge>
         </div>
 
         {/* Navigation */}
-        <div className="flex justify-center gap-4 " style={{marginBottom: "1.5rem"}}>
-          <Link href="/admin" className="text-purple-400 hover:text-purple-300 underline">
+        <div  style={{marginBottom: "1.5rem"}}>
+          <Link href="/admin" >
             Admin Panel
           </Link>
-          <Link href="/analytics" className="text-purple-400 hover:text-purple-300 underline">
+          <Link href="/analytics" >
             Individual Analytics
           </Link>
         </div>
 
         {/* Main Tabs */}
-        <Tabs defaultValue="analytics" className="w-full">
-          <div className="flex justify-center " style={{marginBottom: "1.5rem"}}>
-            <TabsList className="grid w-full max-w-2xl grid-cols-2 bg-slate-800 border-slate-700">
-              <TabsTrigger value="analytics" className="text-white data-[state=active]:bg-purple-600">
-                <TrendingUp className="w-4 h-4 mr-2" />
+        <Tabs defaultValue="analytics" >
+          <div  style={{marginBottom: "1.5rem"}}>
+            <TabsList >
+              <TabsTrigger value="analytics" >
+                <TrendingUp  />
                 Analytics Dashboard
               </TabsTrigger>
-              <TabsTrigger value="haunts" className="text-white data-[state=active]:bg-purple-600">
-                <Settings className="w-4 h-4 mr-2" />
+              <TabsTrigger value="haunts" >
+                <Settings  />
                 Haunt Management
               </TabsTrigger>
 
             </TabsList>
           </div>
 
-          <TabsContent value="analytics" className="mt-6">
+          <TabsContent value="analytics" >
             {/* Time Range Selector */}
-            <div className="flex justify-center " style={{marginBottom: "1.5rem"}}>
-              <Tabs value={timeRange} onValueChange={(value) => setTimeRange(value as "7d" | "30d" | "90d")} className="w-auto">
-                <TabsList className="grid w-full grid-cols-3 bg-slate-800 border-slate-700">
-                  <TabsTrigger value="7d" className="text-white data-[state=active]:bg-purple-600">Last 7 Days</TabsTrigger>
-                  <TabsTrigger value="30d" className="text-white data-[state=active]:bg-purple-600">Last 30 Days</TabsTrigger>
-                  <TabsTrigger value="90d" className="text-white data-[state=active]:bg-purple-600">Last 90 Days</TabsTrigger>
+            <div  style={{marginBottom: "1.5rem"}}>
+              <Tabs value={timeRange} onValueChange={(value) => setTimeRange(value as "7d" | "30d" | "90d")} >
+                <TabsList >
+                  <TabsTrigger value="7d" >Last 7 Days</TabsTrigger>
+                  <TabsTrigger value="30d" >Last 30 Days</TabsTrigger>
+                  <TabsTrigger value="90d" >Last 90 Days</TabsTrigger>
                 </TabsList>
               </Tabs>
             </div>
 
             {/* Platform Overview Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-              <Card className="bg-slate-800 border-slate-700">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-300">Total Haunts</CardTitle>
-                  <Building className="h-4 w-4 text-purple-400" />
+            <div >
+              <Card >
+                <CardHeader >
+                  <CardTitle >Total Haunts</CardTitle>
+                  <Building  />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold text-white">{analytics.totalHaunts}</div>
-                  <p className="text-xs text-gray-400">
+                  <div >{analytics.totalHaunts}</div>
+                  <p >
                     {analytics.proHaunts} Pro, {analytics.premiumHaunts} Premium
                   </p>
                 </CardContent>
               </Card>
 
-              <Card className="bg-slate-800 border-slate-700">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-300">Total Games</CardTitle>
-                  <Gamepad2 className="h-4 w-4 text-purple-400" />
+              <Card >
+                <CardHeader >
+                  <CardTitle >Total Games</CardTitle>
+                  <Gamepad2  />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold text-white">{totalGames.toLocaleString()}</div>
-                  <p className="text-xs text-gray-400">
+                  <div >{totalGames.toLocaleString()}</div>
+                  <p >
                     Across all haunts
                   </p>
                 </CardContent>
               </Card>
 
-              <Card className="bg-slate-800 border-slate-700">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-300">Total Players</CardTitle>
-                  <Users className="h-4 w-4 text-purple-400" />
+              <Card >
+                <CardHeader >
+                  <CardTitle >Total Players</CardTitle>
+                  <Users  />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold text-white">{totalPlayers.toLocaleString()}</div>
-                  <p className="text-xs text-gray-400">
+                  <div >{totalPlayers.toLocaleString()}</div>
+                  <p >
                     Unique players
                   </p>
                 </CardContent>
               </Card>
 
-              <Card className="bg-slate-800 border-slate-700">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium text-gray-300">Avg Return Rate</CardTitle>
-                  <TrendingUp className="h-4 w-4 text-purple-400" />
+              <Card >
+                <CardHeader >
+                  <CardTitle >Avg Return Rate</CardTitle>
+                  <TrendingUp  />
                 </CardHeader>
                 <CardContent>
-                  <div className="text-2xl font-bold text-white">{avgReturnRate.toFixed(1)}%</div>
-                  <p className="text-xs text-gray-400">
+                  <div >{avgReturnRate.toFixed(1)}%</div>
+                  <p >
                     Player retention
                   </p>
                 </CardContent>
@@ -290,11 +290,11 @@ export default function UberAdmin() {
             </div>
 
             {/* Charts and Tables */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <div >
               {/* Tier Distribution */}
-              <Card className="bg-slate-800 border-slate-700">
+              <Card >
                 <CardHeader>
-                  <CardTitle className="text-white">Subscription Tier Distribution</CardTitle>
+                  <CardTitle >Subscription Tier Distribution</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <ResponsiveContainer width="100%" height={300}>
@@ -320,9 +320,9 @@ export default function UberAdmin() {
               </Card>
 
               {/* Performance Metrics */}
-              <Card className="bg-slate-800 border-slate-700">
+              <Card >
                 <CardHeader>
-                  <CardTitle className="text-white">Top Performing Haunts</CardTitle>
+                  <CardTitle >Top Performing Haunts</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <ResponsiveContainer width="100%" height={300}>
@@ -339,34 +339,34 @@ export default function UberAdmin() {
             </div>
 
             {/* Detailed Breakdown Table */}
-            <Card className="bg-slate-800 border-slate-700">
+            <Card >
               <CardHeader>
-                <CardTitle className="text-white">Detailed Haunt Performance</CardTitle>
+                <CardTitle >Detailed Haunt Performance</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="overflow-x-auto">
-                  <table className="w-full text-sm text-gray-300">
+                <div >
+                  <table >
                     <thead>
-                      <tr className="border-b border-slate-700">
-                        <th className="text-left p-3">Haunt</th>
-                        <th className="text-left p-3">Tier</th>
-                        <th className="text-right p-3">Games</th>
-                        <th className="text-right p-3">Players</th>
-                        <th className="text-right p-3">Return Rate</th>
-                        <th className="text-right p-3">Ad CTR</th>
-                        <th className="text-right p-3">Avg Score</th>
+                      <tr >
+                        <th >Haunt</th>
+                        <th >Tier</th>
+                        <th >Games</th>
+                        <th >Players</th>
+                        <th >Return Rate</th>
+                        <th >Ad CTR</th>
+                        <th >Avg Score</th>
                       </tr>
                     </thead>
                     <tbody>
                       {analytics.hauntBreakdown.map((haunt) => (
-                        <tr key={haunt.hauntId} className="border-b border-slate-700 hover:bg-slate-700/50">
-                          <td className="p-3">
+                        <tr key={haunt.hauntId} >
+                          <td >
                             <div>
-                              <div className="font-medium text-white">{haunt.name}</div>
-                              <div className="text-xs text-gray-400">{haunt.hauntId}</div>
+                              <div >{haunt.name}</div>
+                              <div >{haunt.hauntId}</div>
                             </div>
                           </td>
-                          <td className="p-3">
+                          <td >
                             <Badge 
                               variant={haunt.tier === 'premium' ? 'default' : haunt.tier === 'pro' ? 'secondary' : 'outline'}
                               className={
@@ -378,11 +378,11 @@ export default function UberAdmin() {
                               {haunt.tier}
                             </Badge>
                           </td>
-                          <td className="p-3 text-right">{haunt.totalGames.toLocaleString()}</td>
-                          <td className="p-3 text-right">{haunt.uniquePlayers.toLocaleString()}</td>
-                          <td className="p-3 text-right">{haunt.returnPlayerRate.toFixed(1)}%</td>
-                          <td className="p-3 text-right">{haunt.adClickThrough.toFixed(1)}%</td>
-                          <td className="p-3 text-right">{haunt.competitiveMetrics.averageScore.toFixed(0)}</td>
+                          <td >{haunt.totalGames.toLocaleString()}</td>
+                          <td >{haunt.uniquePlayers.toLocaleString()}</td>
+                          <td >{haunt.returnPlayerRate.toFixed(1)}%</td>
+                          <td >{haunt.adClickThrough.toFixed(1)}%</td>
+                          <td >{haunt.competitiveMetrics.averageScore.toFixed(0)}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -392,20 +392,20 @@ export default function UberAdmin() {
             </Card>
           </TabsContent>
 
-          <TabsContent value="haunts" className="mt-6">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <TabsContent value="haunts" >
+            <div >
               {/* Haunt List */}
-              <Card className="bg-slate-800 border-slate-700">
+              <Card >
                 <CardHeader>
-                  <CardTitle className="text-white flex items-center gap-2">
-                    <Building className="w-5 h-5" />
+                  <CardTitle >
+                    <Building  />
                     Select Haunt
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-2">
+                  <div >
                     {Object.entries(hauntConfigs).length === 0 ? (
-                      <div className="text-gray-400 text-sm">Loading haunts...</div>
+                      <div >Loading haunts...</div>
                     ) : (
                       Object.entries(hauntConfigs).map(([hauntId, config]) => (
                         <Button
@@ -418,9 +418,9 @@ export default function UberAdmin() {
                           }`}
                           onClick={() => setSelectedHaunt(hauntId)}
                         >
-                          <div className="flex flex-col items-start">
-                            <span className="font-medium">{config.name}</span>
-                            <span className="text-xs opacity-70">{hauntId}</span>
+                          <div >
+                            <span >{config.name}</span>
+                            <span >{hauntId}</span>
                           </div>
                         </Button>
                       ))
@@ -431,18 +431,18 @@ export default function UberAdmin() {
 
               {/* Visual Skins Editor */}
               {selectedHaunt && (
-                <div className="lg:col-span-2">
-                  <Card className="bg-slate-800 border-slate-700">
+                <div >
+                  <Card >
                     <CardHeader>
-                      <CardTitle className="text-white flex items-center gap-2">
-                        <Palette className="w-5 h-5" />
+                      <CardTitle >
+                        <Palette  />
                         Visual Skins - {hauntConfigs[selectedHaunt]?.name || selectedHaunt}
                       </CardTitle>
                     </CardHeader>
-                    <CardContent className="space-y-6">
+                    <CardContent >
                       {/* Background Image URL */}
-                      <div className="space-y-3">
-                        <Label className="text-white font-medium">Background Image URL</Label>
+                      <div >
+                        <Label >Background Image URL</Label>
                         <Input
                           type="text"
                           placeholder="Enter image URL (e.g., https://example.com/image.jpg)"
@@ -450,34 +450,34 @@ export default function UberAdmin() {
                           onChange={(e) => {
                             updateHauntTheme(selectedHaunt, { background: e.target.value });
                           }}
-                          className="bg-slate-700 border-slate-600 text-white"
+                          
                         />
-                        <div className="text-xs text-gray-400">
+                        <div >
                           Enter a direct URL to an image file. The image will be used as the background for this haunt.
                         </div>
                       </div>
 
                       {/* Progress Bar Theme */}
-                      <div className="space-y-3">
-                        <Label className="text-white font-medium">Progress Bar Theme</Label>
+                      <div >
+                        <Label >Progress Bar Theme</Label>
                         <Select
                           value={hauntConfigs[selectedHaunt]?.theme?.progressBar || "default"}
                           onValueChange={(value) => updateHauntTheme(selectedHaunt, { progressBar: value })}
                         >
-                          <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+                          <SelectTrigger >
                             <SelectValue placeholder="Select progress bar theme" />
                           </SelectTrigger>
-                          <SelectContent className="bg-slate-700 border-slate-600">
-                            <SelectItem value="default" className="text-white hover:bg-slate-600">
+                          <SelectContent >
+                            <SelectItem value="default" >
                               Default - Solid Fill
                             </SelectItem>
-                            <SelectItem value="lightning" className="text-white hover:bg-slate-600">
+                            <SelectItem value="lightning" >
                               Lightning - Electric Blue Bolts
                             </SelectItem>
-                            <SelectItem value="blood" className="text-white hover:bg-slate-600">
+                            <SelectItem value="blood" >
                               Blood - Dripping Red Bar
                             </SelectItem>
-                            <SelectItem value="chains" className="text-white hover:bg-slate-600">
+                            <SelectItem value="chains" >
                               Chains - Animated Chain Links
                             </SelectItem>
                           </SelectContent>
@@ -485,11 +485,11 @@ export default function UberAdmin() {
                       </div>
 
                       {/* Preview Section */}
-                      <div className="space-y-3">
-                        <Label className="text-white font-medium">Theme Preview</Label>
-                        <div className="p-4 bg-slate-700 rounded-lg border border-slate-600">
-                          <div className="text-sm text-gray-300 mb-2">Progress Bar Preview:</div>
-                          <div className="w-full h-6 bg-slate-600 rounded-full overflow-hidden">
+                      <div >
+                        <Label >Theme Preview</Label>
+                        <div >
+                          <div >Progress Bar Preview:</div>
+                          <div >
                             <div 
                               className={`h-full w-3/5 ${
                                 hauntConfigs[selectedHaunt]?.theme?.progressBar === 'lightning' 

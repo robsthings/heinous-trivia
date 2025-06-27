@@ -106,10 +106,10 @@ export function Welcome() {
       >
         
         {/* Dr. Heinous Character with Speech Bubble */}
-        <div className="relative " style={{marginBottom: "1.5rem"}}>
+        <div  style={{marginBottom: "1.5rem"}}>
           {/* Speech Bubble */}
           <div 
-            className="absolute left-1/2 transform -translate-x-1/2"
+            
             style={{
               top: '-4rem',
               backgroundColor: '#111827',
@@ -157,7 +157,7 @@ export function Welcome() {
           <img 
             src="/heinous/charming.png" 
             alt="Dr. Heinous" 
-            className="object-contain"
+            
             style={{
               width: '16rem',
               height: 'auto',

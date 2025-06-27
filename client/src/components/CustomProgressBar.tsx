@@ -59,27 +59,37 @@ export function CustomProgressBar({ progress, hauntConfig, className = "" }: Cus
     
     return (
       <div 
-        className={`relative w-full h-4 rounded-full overflow-hidden ${className}`}
         style={{
+          position: 'relative',
+          width: '100%',
+          height: '1rem',
+          borderRadius: '9999px',
+          overflow: 'hidden',
           backgroundColor: '#1f2937',
           border: '2px solid #10b981',
-          boxShadow: '0 0 10px rgba(16, 185, 129, 0.5)'
+          boxShadow: '0 0 10px rgba(16, 185, 129, 0.5)',
+          ...className ? {} : {}
         }}
       >
         {/* Custom themed progress bar */}
         <div 
-          className="h-full transition-all duration-300 ease-out rounded-full"
           style={{ 
+            height: '100%',
             width: `${Math.max(0, Math.min(100, progress))}%`,
             background: themeData.background,
             boxShadow: themeData.boxShadow,
+            borderRadius: '9999px',
+            transition: 'all 300ms ease-out',
             animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
           }}
         >
           {/* Glowing overlay effect */}
           <div 
-            className="absolute inset-0 rounded-full opacity-30"
             style={{
+              position: 'absolute',
+              top: 0, right: 0, bottom: 0, left: 0,
+              borderRadius: '9999px',
+              opacity: 0.3,
               background: 'linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent)',
               animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
             }}
@@ -106,10 +116,22 @@ export function CustomProgressBar({ progress, hauntConfig, className = "" }: Cus
 
   // Default progress bar for Basic tier or haunts without custom theme
   return (
-    <div className={`relative w-full h-4 bg-gray-800 rounded-full overflow-hidden ${className}`}>
+    <div style={{
+      position: 'relative',
+      width: '100%',
+      height: '1rem',
+      backgroundColor: '#1f2937',
+      borderRadius: '9999px',
+      overflow: 'hidden'
+    }}>
       <div 
-        className="h-full bg-gradient-to-r from-red-600 to-orange-500 transition-all duration-300 ease-out rounded-full"
-        style={{ width: `${Math.max(0, Math.min(100, progress))}%` }}
+        style={{ 
+          height: '100%',
+          width: `${Math.max(0, Math.min(100, progress))}%`,
+          background: 'linear-gradient(to right, #dc2626, #ea580c)',
+          borderRadius: '9999px',
+          transition: 'all 300ms ease-out'
+        }}
       />
       <div style={{
         position: 'absolute',

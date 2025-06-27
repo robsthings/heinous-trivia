@@ -223,7 +223,7 @@ export function CurseCrafting() {
 
   return (
     <div 
-      className="min-h-screen relative overflow-hidden"
+      
       style={{
         backgroundImage: 'url(/sidequests/curse-crafting/cursed-bg.png)',
         backgroundSize: 'cover',
@@ -233,13 +233,13 @@ export function CurseCrafting() {
       onMouseMove={handleMouseMove}
     >
       {/* Ingredient Grid - Top of screen - Hidden during reveal */}
-      <div className={`pt-8 px-4 transition-opacity duration-1000 ${gamePhase === 'revealing' ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
-        <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl md:text-6xl font-bold  mb-8 drop-shadow-lg" style={{textAlign: "center", fontFamily: 'Eater, cursive', color: '#39ff14' }}>
+      <div style={{display: gamePhase === 'reveal' ? 'none' : 'block'}}>
+        <div style={{padding: '1rem'}}>
+          <h1 style={{textAlign: "center", fontFamily: 'Eater, cursive', color: '#39ff14', fontSize: 'clamp(1.5rem, 5vw, 2.5rem)', marginBottom: '1rem'}}>
             CURSE CRAFTING
           </h1>
           
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3 sm:gap-4">
+          <div style={{display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.5rem', maxWidth: '32rem', margin: '0 auto'}}>
             {availableIngredients.map((ingredient) => {
               const isSelected = selectedIngredients.find(i => i.id === ingredient.id);
               const isInCauldron = cauldronIngredients.find(i => i.id === ingredient.id);
@@ -279,18 +279,18 @@ export function CurseCrafting() {
                   onDragStart={(e) => isSelected && handleDragStart(e, ingredient)}
                   onDragEnd={handleDragEnd}
                 >
-                  <div className="bg-black/60 border border-gray-600 rounded-lg p-2 sm:p-3 backdrop-blur-sm">
+                  <div >
                     <img 
                       src={ingredient.icon} 
                       alt={ingredient.name}
-                      className="w-12 h-12 sm:w-16 sm:h-16 mx-auto object-contain"
+                      
                     />
-                    <p className="text-xs  text-white mt-2 truncate" style={{textAlign: "center"}}>{ingredient.name}</p>
+                    <p  style={{textAlign: "center"}}>{ingredient.name}</p>
                   </div>
                   
                   {/* Selection indicator */}
                   {isSelected && !isInCauldron && (
-                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-purple-500 rounded-full flex items-center justify-center text-white text-xs font-bold">
+                    <div >
                       ✓
                     </div>
                   )}
@@ -302,7 +302,7 @@ export function CurseCrafting() {
       </div>
 
       {/* Cauldron - Bottom center */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center">
+      <div >
         <div
           className={`relative transition-all duration-300 ${
             draggedIngredient ? 'scale-110 ring-4 ring-purple-400 ring-opacity-50' : ''
@@ -313,22 +313,22 @@ export function CurseCrafting() {
           <img 
             src="/heinous/presenting.png"
             alt="Cursed Cauldron"
-            className="w-48 h-48 sm:w-72 sm:h-72 object-contain"
+            
           />
           
           {/* Ingredients in cauldron */}
           {cauldronIngredients.length > 0 && (
-            <div className="absolute top-4 left-1/2 transform -translate-x-1/2 flex gap-1">
+            <div >
               {cauldronIngredients.map((ingredient, index) => (
                 <div
                   key={ingredient.id}
-                  className="w-6 h-6 sm:w-8 sm:h-8 animate-bounce"
+                  
                   style={{ animationDelay: `${index * 200}ms` }}
                 >
                   <img 
                     src={ingredient.icon} 
                     alt={ingredient.name}
-                    className="w-full h-full object-contain opacity-80"
+                    
                   />
                 </div>
               ))}
@@ -336,8 +336,8 @@ export function CurseCrafting() {
           )}
           
           {/* Cauldron count indicator */}
-          <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-black/80 px-3 py-1 rounded-full">
-            <span className="text-white text-sm font-bold">{cauldronIngredients.length}/3</span>
+          <div >
+            <span >{cauldronIngredients.length}/3</span>
           </div>
         </div>
 
@@ -360,50 +360,50 @@ export function CurseCrafting() {
       {/* Tooltip */}
       {hoveredIngredient && (
         <div
-          className="fixed z-50 pointer-events-none"
+          
           style={{
             left: tooltipPosition.x + 10,
             top: tooltipPosition.y - 60,
           }}
         >
-          <div className="bg-black/90 border border-purple-400 rounded-lg p-3 max-w-xs backdrop-blur-sm">
-            <h4 className="text-purple-300 font-bold text-sm">{hoveredIngredient.name}</h4>
-            <p className="text-gray-300 text-xs mt-1">{hoveredIngredient.description}</p>
+          <div >
+            <h4 >{hoveredIngredient.name}</h4>
+            <p >{hoveredIngredient.description}</p>
           </div>
         </div>
       )}
 
       {/* Scroll Reveal Animation */}
       {gamePhase === 'revealing' && generatedCurse && (
-        <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-          <div id="curse-scroll-container" className="relative animate-scroll-reveal">
+        <div >
+          <div id="curse-scroll-container" >
             {/* Toxic Green Glow Background */}
-            <div className="absolute inset-0 bg-green-400/30 rounded-full blur-3xl scale-125 animate-pulse"></div>
+            <div ></div>
             
             {/* Scroll Image */}
             <img 
               id="curse-scroll"
               src="/backgrounds/lab-dark-blue.png"
               alt="Cursed Scroll"
-              className="w-80 h-96 sm:w-96 sm:h-[28rem] object-contain mx-auto relative z-10"
+              
             />
             
             {/* Curse Text Overlay */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center px-16 py-20 sm:px-20 sm:py-24 z-20">
-              <div className=" space-y-2 max-w-56 sm:max-w-72" style={{textAlign: "center"}}>
+            <div >
+              <div  style={{textAlign: "center"}}>
                 {/* Main Curse */}
-                <p className="text-base sm:text-lg font-bold text-gray-800 leading-snug font-serif">
+                <p >
                   {generatedCurse.curse}
                 </p>
                 
                 {/* Target */}
-                <p className="text-xs sm:text-sm italic text-gray-900 font-serif">
+                <p >
                   — Upon {generatedCurse.target}
                 </p>
                 
                 {/* Side Effect */}
                 {generatedCurse.sideEffect && (
-                  <p className="text-xs text-gray-800 font-serif mt-1">
+                  <p >
                     {generatedCurse.sideEffect}
                   </p>
                 )}
@@ -411,16 +411,16 @@ export function CurseCrafting() {
             </div>
             
             {/* Action Buttons */}
-            <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2 flex gap-3">
+            <div >
               <Button
                 onClick={captureScrollScreenshot}
-                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-bold shadow-lg transform hover:scale-105 transition-all"
+                
               >
                 📸 Screenshot
               </Button>
               <Button
                 onClick={craftAgain}
-                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg font-bold shadow-lg transform hover:scale-105 transition-all"
+                
               >
                 🔁 Craft Again
               </Button>

@@ -33,7 +33,7 @@ export function CustomSelect({ value, onValueChange, options, placeholder, class
   const selectedOption = options.find(option => option.value === value);
 
   return (
-    <div ref={selectRef} style={{ position: 'relative' }} className={className}>
+    <div ref={selectRef} style={{ position: 'relative' }} >
       {/* Trigger */}
       <button
         type="button"
@@ -132,16 +132,16 @@ export const tierOptions: SelectOption[] = [
   {
     value: 'basic',
     label: 'Basic (5 questions, 3 ads)',
-    icon: <Crown className="h-4 w-4" />
+    icon: <Crown  />
   },
   {
     value: 'pro',
     label: 'Pro (15 questions, 5 ads)',
-    icon: <Zap className="h-4 w-4" />
+    icon: <Zap  />
   },
   {
     value: 'premium',
     label: 'Premium (50 questions, 10 ads)',
-    icon: <Gem className="h-4 w-4" />
+    icon: <Gem  />
   }
 ];

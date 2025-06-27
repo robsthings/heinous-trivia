@@ -219,33 +219,33 @@ export function SpectralMemory() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-indigo-900 via-purple-900 to-black text-white flex flex-col items-center justify-center p-4">
-      <div className="max-w-4xl w-full">
+    <div >
+      <div >
         
         {/* Header */}
-        <div  className="mb-6" style={{textAlign: "center"}}>
-          <h1 className="text-4xl lg:text-6xl font-bold text-purple-400 mb-4 tracking-wider">
+        <div   style={{textAlign: "center"}}>
+          <h1 >
             SPECTRAL MEMORY
           </h1>
-          <p className="text-lg text-gray-300">
+          <p >
             Match the supernatural symbols before time runs out
           </p>
         </div>
 
         {gamePhase === "intro" && (
-          <div className=" bg-black/50 backdrop-blur-sm p-8 rounded-lg border border-purple-500/30" style={{textAlign: "center"}}>
-            <div className="mb-6">
-              <span className="text-8xl">🔮</span>
+          <div  style={{textAlign: "center"}}>
+            <div >
+              <span >🔮</span>
             </div>
-            <h2 className="text-2xl font-bold text-purple-400 mb-4">The Spectral Test</h2>
-            <p className="text-gray-300  max-w-md mx-auto" className="mb-6">
+            <h2 >The Spectral Test</h2>
+            <p  >
               The spirits have scattered their symbols across the ethereal plane. 
               Match all pairs within 60 seconds, but beware - supernatural interference 
               will test your concentration and memory!
             </p>
             <Button 
               onClick={initializeGame}
-              className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 text-lg"
+              
             >
               Begin the Trial
             </Button>
@@ -255,26 +255,26 @@ export function SpectralMemory() {
         {gamePhase === "playing" && (
           <div>
             {/* Game Stats */}
-            <div className="flex  items-center  bg-black/30 rounded-lg p-4" style={{justifyContent: "space-between"}} className="mb-6">
+            <div  style={{justifyContent: "space-between"}} >
               <div style={{textAlign: "center"}}>
-                <div className="text-2xl font-bold text-blue-400">{matches}</div>
-                <div className="text-sm text-gray-400">Pairs Found</div>
+                <div >{matches}</div>
+                <div >Pairs Found</div>
               </div>
               <div style={{textAlign: "center"}}>
-                <div className="text-xl text-purple-400">{moves}</div>
-                <div className="text-sm text-gray-400">Moves</div>
+                <div >{moves}</div>
+                <div >Moves</div>
               </div>
               <div style={{textAlign: "center"}}>
-                <div className={`text-2xl font-bold ${timeLeft <= 10 ? 'text-red-400 animate-pulse' : 'text-green-400'}`}>
+                <div `}>
                   {timeLeft}s
                 </div>
-                <div className="text-sm text-gray-400">Remaining</div>
+                <div >Remaining</div>
               </div>
             </div>
 
             {/* Spectral Messages */}
-            <div className="  bg-purple-900/20 rounded-lg p-4 border border-purple-500/30" className="mb-6" style={{textAlign: "center"}}>
-              <p className={`text-purple-300 italic ${spectralEvent ? 'animate-pulse' : ''}`}>
+            <div   style={{textAlign: "center"}}>
+              <p `}>
                 "{getSpectralMessage()}"
               </p>
             </div>
@@ -311,8 +311,8 @@ export function SpectralMemory() {
             <div className={`bg-black/50 backdrop-blur-sm p-8 rounded-lg border mb-6 ${
               gamePhase === "victory" ? 'border-green-500/50 bg-green-900/20' : 'border-red-500/50 bg-red-900/20'
             }`}>
-              <div className="mb-6">
-                <span className="text-8xl">
+              <div >
+                <span >
                   {gamePhase === "victory" ? "🌟" : "💀"}
                 </span>
               </div>
@@ -323,35 +323,35 @@ export function SpectralMemory() {
                 {gamePhase === "victory" ? "SPECTRAL MASTERY!" : "TIME'S UP!"}
               </h2>
               
-              <p className="text-gray-300 mb-4">
+              <p >
                 {gamePhase === "victory" 
                   ? "You have proven your memory worthy of the supernatural realm!" 
                   : "The spirits have claimed victory this time..."}
               </p>
               
-              <div className="  bg-gray-800/50 rounded-lg p-4" className="mb-6" style={{textAlign: "center"}}>
-                <div className="text-lg font-bold text-purple-400 mb-2">Final Score</div>
-                <div className="grid grid-cols-2 gap-4">
+              <div   style={{textAlign: "center"}}>
+                <div >Final Score</div>
+                <div >
                   <div>
-                    <div className="text-2xl font-bold text-blue-400">{matches}/6</div>
-                    <div className="text-sm text-gray-400">Pairs Found</div>
+                    <div >{matches}/6</div>
+                    <div >Pairs Found</div>
                   </div>
                   <div>
-                    <div className="text-2xl font-bold text-yellow-400">{moves}</div>
-                    <div className="text-sm text-gray-400">Total Moves</div>
+                    <div >{moves}</div>
+                    <div >Total Moves</div>
                   </div>
                 </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div >
                 <Button 
                   onClick={initializeGame}
-                  className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3"
+                  
                 >
                   Try Again
                 </Button>
-                <Link href="/game/headquarters" className="no-underline">
-                  <Button className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 w-full">
+                <Link href="/game/headquarters" >
+                  <Button >
                     Return to Main Game
                   </Button>
                 </Link>

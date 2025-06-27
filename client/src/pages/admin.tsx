@@ -106,93 +106,93 @@ function AnalyticsTab({
               color: '#6b7280',
               margin: '0 auto 1rem auto'
             }} />
-            <p className="text-gray-400">Select a Pro or Premium haunt to view analytics</p>
+            <p >Select a Pro or Premium haunt to view analytics</p>
           </div>
         )}
 
         {selectedAnalyticsHaunt && !isPaidTier && (
-          <div className=" py-8" style={{textAlign: "center"}}>
-            <Crown className="w-12 h-12 text-yellow-500 mx-auto mb-4" />
-            <p className="text-gray-400 mb-2">Analytics are only available for Pro and Premium haunts</p>
-            <p className="text-sm text-gray-500">Upgrade your haunt subscription to access detailed performance metrics</p>
+          <div  style={{textAlign: "center"}}>
+            <Crown  />
+            <p >Analytics are only available for Pro and Premium haunts</p>
+            <p >Upgrade your haunt subscription to access detailed performance metrics</p>
           </div>
         )}
 
         {selectedAnalyticsHaunt && isPaidTier && (
           <>
             {/* Time Range Selector */}
-            <div className="flex justify-center " style={{marginBottom: "1.5rem"}}>
-              <Tabs value={analyticsTimeRange} onValueChange={(value) => setAnalyticsTimeRange(value as "7d" | "30d" | "90d")} className="w-auto">
-                <TabsList className="grid w-full grid-cols-3 bg-gray-800 border-gray-700">
-                  <TabsTrigger value="7d" className="text-white data-[state=active]:bg-red-600">Last 7 Days</TabsTrigger>
-                  <TabsTrigger value="30d" className="text-white data-[state=active]:bg-red-600">Last 30 Days</TabsTrigger>
-                  <TabsTrigger value="90d" className="text-white data-[state=active]:bg-red-600">Last 90 Days</TabsTrigger>
+            <div  style={{marginBottom: "1.5rem"}}>
+              <Tabs value={analyticsTimeRange} onValueChange={(value) => setAnalyticsTimeRange(value as "7d" | "30d" | "90d")} >
+                <TabsList >
+                  <TabsTrigger value="7d" >Last 7 Days</TabsTrigger>
+                  <TabsTrigger value="30d" >Last 30 Days</TabsTrigger>
+                  <TabsTrigger value="90d" >Last 90 Days</TabsTrigger>
                 </TabsList>
               </Tabs>
             </div>
 
             {analyticsLoading && (
-              <div className=" py-8" style={{textAlign: "center"}}>
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-red-500 mx-auto mb-4"></div>
-                <p className="text-gray-400">Loading analytics data...</p>
+              <div  style={{textAlign: "center"}}>
+                <div ></div>
+                <p >Loading analytics data...</p>
               </div>
             )}
 
             {analyticsData && (
-              <div className="space-y-6">
+              <div >
                 {/* Key Metrics Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                  <Card className="bg-gray-800/50 border-gray-600">
-                    <CardContent className="p-4">
-                      <div className="flex items-center gap-3">
-                        <div className="p-2 bg-blue-600/20 rounded-lg">
-                          <GamepadIcon className="w-5 h-5 text-blue-400" />
+                <div >
+                  <Card >
+                    <CardContent >
+                      <div >
+                        <div >
+                          <GamepadIcon  />
                         </div>
                         <div>
-                          <p className="text-gray-400 text-sm">Total Games</p>
-                          <p className="text-white text-2xl font-bold">{analyticsData.totalGames || 0}</p>
+                          <p >Total Games</p>
+                          <p >{analyticsData.totalGames || 0}</p>
                         </div>
                       </div>
                     </CardContent>
                   </Card>
 
-                  <Card className="bg-gray-800/50 border-gray-600">
-                    <CardContent className="p-4">
-                      <div className="flex items-center gap-3">
-                        <div className="p-2 bg-green-600/20 rounded-lg">
-                          <Users className="w-5 h-5 text-green-400" />
+                  <Card >
+                    <CardContent >
+                      <div >
+                        <div >
+                          <Users  />
                         </div>
                         <div>
-                          <p className="text-gray-400 text-sm">Unique Players</p>
-                          <p className="text-white text-2xl font-bold">{analyticsData.uniquePlayers || 0}</p>
+                          <p >Unique Players</p>
+                          <p >{analyticsData.uniquePlayers || 0}</p>
                         </div>
                       </div>
                     </CardContent>
                   </Card>
 
-                  <Card className="bg-gray-800/50 border-gray-600">
-                    <CardContent className="p-4">
-                      <div className="flex items-center gap-3">
-                        <div className="p-2 bg-purple-600/20 rounded-lg">
-                          <Target className="w-5 h-5 text-purple-400" />
+                  <Card >
+                    <CardContent >
+                      <div >
+                        <div >
+                          <Target  />
                         </div>
                         <div>
-                          <p className="text-gray-400 text-sm">Return Rate</p>
-                          <p className="text-white text-2xl font-bold">{analyticsData.returnPlayerRate || 0}%</p>
+                          <p >Return Rate</p>
+                          <p >{analyticsData.returnPlayerRate || 0}%</p>
                         </div>
                       </div>
                     </CardContent>
                   </Card>
 
-                  <Card className="bg-gray-800/50 border-gray-600">
-                    <CardContent className="p-4">
-                      <div className="flex items-center gap-3">
-                        <div className="p-2 bg-yellow-600/20 rounded-lg">
-                          <MousePointer className="w-5 h-5 text-yellow-400" />
+                  <Card >
+                    <CardContent >
+                      <div >
+                        <div >
+                          <MousePointer  />
                         </div>
                         <div>
-                          <p className="text-gray-400 text-sm">Ad Click Rate</p>
-                          <p className="text-white text-2xl font-bold">{analyticsData.adClickThrough || 0}%</p>
+                          <p >Ad Click Rate</p>
+                          <p >{analyticsData.adClickThrough || 0}%</p>
                         </div>
                       </div>
                     </CardContent>
@@ -205,9 +205,9 @@ function AnalyticsTab({
                   gridTemplateColumns: 'repeat(auto-fit, minmax(clamp(200px, 30vw, 300px), 1fr))',
                   gap: 'clamp(0.75rem, 2vw, 1rem)'
                 }}>
-                  <Card className="bg-gray-800/50 border-gray-600">
-                    <CardHeader className="pb-3">
-                      <CardTitle className="text-white text-sm">Performance Metrics</CardTitle>
+                  <Card >
+                    <CardHeader >
+                      <CardTitle >Performance Metrics</CardTitle>
                     </CardHeader>
                     <CardContent style={{
                       display: 'flex',
@@ -270,27 +270,27 @@ function AnalyticsTab({
                     </CardContent>
                   </Card>
 
-                  <Card className="bg-gray-800/50 border-gray-600 md:col-span-2">
-                    <CardHeader className="pb-3">
-                      <CardTitle className="text-white text-sm">Best Performing Questions</CardTitle>
+                  <Card >
+                    <CardHeader >
+                      <CardTitle >Best Performing Questions</CardTitle>
                     </CardHeader>
                     <CardContent>
                       {analyticsData.bestQuestions && analyticsData.bestQuestions.length > 0 ? (
-                        <div className="space-y-2">
+                        <div >
                           {analyticsData.bestQuestions.slice(0, 3).map((question: any, index: number) => (
-                            <div key={index} className="flex justify-between items-center p-2 bg-gray-700/50 rounded">
-                              <div className="flex-1">
-                                <p className="text-white text-sm truncate">{question.question}</p>
-                                <p className="text-gray-400 text-xs">{question.pack}</p>
+                            <div key={index} >
+                              <div >
+                                <p >{question.question}</p>
+                                <p >{question.pack}</p>
                               </div>
-                              <Badge variant="outline" className="text-green-400 border-green-400">
+                              <Badge variant="outline" >
                                 {question.correctRate}% correct
                               </Badge>
                             </div>
                           ))}
                         </div>
                       ) : (
-                        <p className="text-gray-400 text-sm">No question performance data available yet</p>
+                        <p >No question performance data available yet</p>
                       )}
                     </CardContent>
                   </Card>
@@ -298,21 +298,21 @@ function AnalyticsTab({
 
                 {/* Daily Activity Chart */}
                 {analyticsData.timeRangeData?.daily && analyticsData.timeRangeData.daily.length > 0 && (
-                  <Card className="bg-gray-800/50 border-gray-600">
-                    <CardHeader className="pb-3">
-                      <CardTitle className="text-white text-sm flex items-center gap-2">
-                        <Calendar className="w-4 h-4" />
+                  <Card >
+                    <CardHeader >
+                      <CardTitle >
+                        <Calendar  />
                         Daily Activity
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <div className="space-y-3">
+                      <div >
                         {analyticsData.timeRangeData.daily.map((day: any) => (
-                          <div key={day.date} className="flex items-center justify-between">
-                            <span className="text-gray-400 text-sm">{new Date(day.date).toLocaleDateString()}</span>
-                            <div className="flex items-center gap-4">
-                              <span className="text-white text-sm">{day.games} games</span>
-                              <span className="text-gray-400 text-sm">{day.players} players</span>
+                          <div key={day.date} >
+                            <span >{new Date(day.date).toLocaleDateString()}</span>
+                            <div >
+                              <span >{day.games} games</span>
+                              <span >{day.players} players</span>
                             </div>
                           </div>
                         ))}
@@ -599,9 +599,9 @@ export default function Admin() {
 
   const getTierIcon = (tier: string) => {
     switch (tier) {
-      case 'basic': return <Crown className="h-4 w-4" />;
-      case 'pro': return <Zap className="h-4 w-4" />;
-      case 'premium': return <Gem className="h-4 w-4" />;
+      case 'basic': return <Crown  />;
+      case 'pro': return <Zap  />;
+      case 'premium': return <Gem  />;
       default: return null;
     }
   };
@@ -1510,11 +1510,11 @@ export default function Admin() {
             }}>Manage Haunts & Trivia Packs</p>
           </CardHeader>
           <CardContent>
-            <Tabs defaultValue="management" className="w-full" onValueChange={(value) => setActiveTab(value)}>
-              <TabsList className="grid w-full grid-cols-2 md:grid-cols-3 lg:grid-cols-7 bg-gray-900/80 border border-gray-600 rounded-lg" style={{ gap: 'clamp(2px, 1vw, 4px)' }}>
+            <Tabs defaultValue="management"  onValueChange={(value) => setActiveTab(value)}>
+              <TabsList  style={{ gap: 'clamp(2px, 1vw, 4px)' }}>
                 <TabsTrigger 
                   value="management" 
-                  className="font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
+                  
                   style={{
                     fontSize: 'clamp(0.65rem, 1.8vw, 0.875rem)', 
                     padding: 'clamp(0.25rem, 1vw, 0.5rem) clamp(0.5rem, 2vw, 1rem)',
@@ -1531,7 +1531,7 @@ export default function Admin() {
                 </TabsTrigger>
                 <TabsTrigger 
                   value="haunts" 
-                  className="font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
+                  
                   style={{
                     fontSize: 'clamp(0.65rem, 1.8vw, 0.875rem)', 
                     padding: 'clamp(0.25rem, 1vw, 0.5rem) clamp(0.5rem, 2vw, 1rem)',
@@ -1548,7 +1548,7 @@ export default function Admin() {
                 </TabsTrigger>
                 <TabsTrigger 
                   value="packs" 
-                  className="font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
+                  
                   style={{
                     fontSize: 'clamp(0.65rem, 1.8vw, 0.875rem)', 
                     padding: 'clamp(0.25rem, 1vw, 0.5rem) clamp(0.5rem, 2vw, 1rem)',
@@ -1565,7 +1565,7 @@ export default function Admin() {
                 </TabsTrigger>
                 <TabsTrigger 
                   value="assignments" 
-                  className="font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
+                  
                   style={{
                     fontSize: 'clamp(0.65rem, 1.8vw, 0.875rem)', 
                     padding: 'clamp(0.25rem, 1vw, 0.5rem) clamp(0.5rem, 2vw, 1rem)',
@@ -1582,7 +1582,7 @@ export default function Admin() {
                 </TabsTrigger>
                 <TabsTrigger 
                   value="default-ads" 
-                  className="font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
+                  
                   style={{
                     fontSize: 'clamp(0.65rem, 1.8vw, 0.875rem)', 
                     padding: 'clamp(0.25rem, 1vw, 0.5rem) clamp(0.5rem, 2vw, 1rem)',
@@ -1599,7 +1599,7 @@ export default function Admin() {
                 </TabsTrigger>
                 <TabsTrigger 
                   value="branding" 
-                  className="font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
+                  
                   style={{
                     fontSize: 'clamp(0.65rem, 1.8vw, 0.875rem)', 
                     padding: 'clamp(0.25rem, 1vw, 0.5rem) clamp(0.5rem, 2vw, 1rem)',
@@ -1616,7 +1616,7 @@ export default function Admin() {
                 </TabsTrigger>
                 <TabsTrigger 
                   value="analytics" 
-                  className="font-medium rounded-md transition-all duration-200 hover:bg-gray-700/80 hover:text-white"
+                  
                   style={{
                     fontSize: 'clamp(0.65rem, 1.8vw, 0.875rem)', 
                     padding: 'clamp(0.25rem, 1vw, 0.5rem) clamp(0.5rem, 2vw, 1rem)',
@@ -1817,24 +1817,24 @@ export default function Admin() {
                                   </div>
 
                                   {/* Host Panel Link - Hidden/Disabled
-                                  <div className="flex items-center gap-2">
+                                  <div >
                                     <Button 
                                       size="sm" 
                                       variant="outline"
-                                      className="h-8 text-xs border-green-600 text-green-400 hover:bg-green-600 hover:text-white flex-1"
+                                      
                                       onClick={() => window.open(`${window.location.origin}/host-panel/${haunt.id}`, '_blank')}
                                     >
-                                      <Crown className="h-3 w-3 mr-1" />
+                                      <Crown  />
                                       Host Panel: /host-panel/{haunt.id}
-                                      <ExternalLink className="h-3 w-3 ml-1" />
+                                      <ExternalLink  />
                                     </Button>
                                     <Button 
                                       size="sm" 
                                       variant="ghost"
-                                      className="h-8 w-8 p-0 text-green-400 hover:bg-green-600 hover:text-white"
+                                      
                                       onClick={() => copyToClipboard(`${window.location.origin}/host-panel/${haunt.id}`, "Host Panel URL")}
                                     >
-                                      <Copy className="h-3 w-3" />
+                                      <Copy  />
                                     </Button>
                                   </div>
                                   */}
@@ -1999,7 +1999,7 @@ export default function Admin() {
                                 </div>
 
                                 {/* Admin Actions */}
-                                <div className="space-y-2">
+                                <div >
                                   <Button
                                     onClick={() => {
                                       setEditingHaunt(haunt);
@@ -2018,7 +2018,7 @@ export default function Admin() {
                                     }}
                                     variant="outline"
                                     size="sm"
-                                    className="w-full bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-white border-red-600"
+                                    
                                   >
                                     ✏️ Edit Profile
                                   </Button>
@@ -2027,7 +2027,7 @@ export default function Admin() {
                                     onClick={() => deleteHaunt(haunt.id, haunt.name)}
                                     variant="outline"
                                     size="sm"
-                                    className="w-full bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-white border-red-600"
+                                    
                                   >
                                     🗑️ Delete Haunt
                                   </Button>
@@ -2041,7 +2041,7 @@ export default function Admin() {
                                     }}
                                     variant="outline"
                                     size="sm"
-                                    className="w-full bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-white border-red-600"
+                                    
                                     disabled={isLoading}
                                   >
                                     {isLoading ? "Loading..." : "📧 Manage Emails"}
@@ -2056,7 +2056,7 @@ export default function Admin() {
                                     }}
                                     variant="outline"
                                     size="sm"
-                                    className="w-full bg-gradient-to-r from-blue-700 to-green-700 hover:from-blue-600 hover:to-green-600 text-white border-blue-600"
+                                    
                                     disabled={isLoading}
                                   >
                                     {isLoading ? "Sending..." : "🔗 Send Auth Link"}
@@ -2075,47 +2075,47 @@ export default function Admin() {
 
                 {/* Edit Haunt Profile Section */}
                 {editingHaunt && (
-                  <Card className="bg-gray-900/50 border-orange-600 shadow-lg mt-6">
+                  <Card >
                     <CardHeader>
-                      <CardTitle className="text-orange-400 flex items-center gap-2">
+                      <CardTitle >
                         ✏️ Edit Haunt Profile: {editingHaunt.name}
                       </CardTitle>
-                      <p className="text-gray-300 text-sm">
+                      <p >
                         Update haunt details, theme colors, and configuration settings.
                       </p>
                     </CardHeader>
                     <CardContent>
-                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                      <div >
                         
                         {/* Basic Information */}
-                        <div className="space-y-4">
-                          <h3 className="text-white font-medium">Basic Information</h3>
+                        <div >
+                          <h3 >Basic Information</h3>
                           
                           <div>
-                            <Label htmlFor="edit-name" className="text-white">Haunt Name</Label>
+                            <Label htmlFor="edit-name" >Haunt Name</Label>
                             <Input
                               id="edit-name"
                               value={formData.name}
                               onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                              className="bg-gray-800 border-gray-600 text-white"
+                              
                               placeholder="Enter haunt name"
                             />
                           </div>
 
                           <div>
-                            <Label htmlFor="edit-description" className="text-white">Description</Label>
+                            <Label htmlFor="edit-description" >Description</Label>
                             <Textarea
                               id="edit-description"
                               value={formData.description}
                               onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-                              className="bg-gray-800 border-gray-600 text-white"
+                              
                               placeholder="Brief description of the haunt"
                               rows={3}
                             />
                           </div>
 
                           <div>
-                            <Label htmlFor="edit-tier" className="text-white">Subscription Tier</Label>
+                            <Label htmlFor="edit-tier" >Subscription Tier</Label>
                             <SimpleSelect 
                               value={formData.tier} 
                               onValueChange={(value) => setFormData(prev => ({ ...prev, tier: value }))}
@@ -2133,7 +2133,7 @@ export default function Admin() {
                       </div>
 
                       {/* Action Buttons */}
-                      <div className="flex gap-4 mt-6 pt-4 border-t border-gray-700">
+                      <div >
                         <Button
                           onClick={async () => {
                             if (!editingHaunt) return;
@@ -2173,7 +2173,7 @@ export default function Admin() {
                             }
                           }}
                           disabled={isLoading || !formData.name}
-                          className="bg-orange-600 hover:bg-orange-700 text-white"
+                          
                         >
                           {isLoading ? "Saving..." : "💾 Save Changes"}
                         </Button>
@@ -2181,7 +2181,7 @@ export default function Admin() {
                         <Button
                           onClick={() => setEditingHaunt(null)}
                           variant="outline"
-                          className="border-gray-600 text-gray-400 hover:bg-gray-700"
+                          
                         >
                           Cancel
                         </Button>
@@ -2191,85 +2191,85 @@ export default function Admin() {
                 )}
               </TabsContent>
 
-              <TabsContent value="haunts" className="mt-6">
-                <h3 className="text-xl font-bold text-red-400 mb-4">Add New Haunt</h3>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-2 gap-4">
+              <TabsContent value="haunts" >
+                <h3 >Add New Haunt</h3>
+            <form onSubmit={handleSubmit} >
+              <div >
                 <div>
-                  <Label htmlFor="id" className="text-white">Haunt ID *</Label>
+                  <Label htmlFor="id" >Haunt ID *</Label>
                   <Input
                     id="id"
                     value={formData.id}
                     onChange={(e) => handleInputChange('id', e.target.value)}
                     placeholder="e.g., mansionofmadness"
-                    className="bg-gray-800 border-gray-600 text-white"
+                    
                     required
                   />
                 </div>
                 <div>
-                  <Label htmlFor="name" className="text-white">Haunt Name *</Label>
+                  <Label htmlFor="name" >Haunt Name *</Label>
                   <Input
                     id="name"
                     value={formData.name}
                     onChange={(e) => handleInputChange('name', e.target.value)}
                     placeholder="e.g., Mansion of Madness"
-                    className="bg-gray-800 border-gray-600 text-white"
+                    
                     required
                   />
                 </div>
               </div>
 
               <div>
-                <Label htmlFor="description" className="text-white">Description</Label>
+                <Label htmlFor="description" >Description</Label>
                 <Textarea
                   id="description"
                   value={formData.description}
                   onChange={(e) => handleInputChange('description', e.target.value)}
                   placeholder="A chilling description of this haunted location..."
-                  className="bg-gray-800 border-gray-600 text-white"
+                  
                   rows={3}
                 />
               </div>
 
-              <div className="grid grid-cols-1 gap-4">
+              <div >
                 <div>
-                  <Label htmlFor="logoPath" className="text-white">Logo Path</Label>
+                  <Label htmlFor="logoPath" >Logo Path</Label>
                   <Input
                     id="logoPath"
                     value={formData.logoPath}
                     onChange={(e) => handleInputChange('logoPath', e.target.value)}
                     placeholder={`/haunt-assets/${formData.id || 'hauntid'}/logo.png`}
-                    className="bg-gray-800 border-gray-600 text-white"
+                    
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div >
                 <div>
-                  <Label htmlFor="triviaFile" className="text-white">Trivia File</Label>
+                  <Label htmlFor="triviaFile" >Trivia File</Label>
                   <Input
                     id="triviaFile"
                     value={formData.triviaFile}
                     onChange={(e) => handleInputChange('triviaFile', e.target.value)}
                     placeholder={`${formData.id || 'hauntid'}-trivia.json`}
-                    className="bg-gray-800 border-gray-600 text-white"
+                    
                   />
                 </div>
                 <div>
-                  <Label htmlFor="adFile" className="text-white">Ad File</Label>
+                  <Label htmlFor="adFile" >Ad File</Label>
                   <Input
                     id="adFile"
                     value={formData.adFile}
                     onChange={(e) => handleInputChange('adFile', e.target.value)}
                     placeholder={`${formData.id || 'hauntid'}-ads.json`}
-                    className="bg-gray-800 border-gray-600 text-white"
+                    
                   />
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 gap-4">
+              <div >
                 <div>
-                  <Label htmlFor="tier" className="text-white">Subscription Tier</Label>
+                  <Label htmlFor="tier" >Subscription Tier</Label>
                   <SimpleSelect 
                     value={formData.tier} 
                     onValueChange={(value) => handleInputChange('tier', value)}
@@ -2288,72 +2288,72 @@ export default function Admin() {
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3"
+                
               >
                 {isLoading ? "Saving to Firebase..." : "💾 Save Haunt Configuration"}
               </Button>
             </form>
               </TabsContent>
 
-              <TabsContent value="packs" className="mt-6">
-                <div className="space-y-6">
-                  <h3 className="text-xl font-bold text-red-400 mb-4">Create Trivia Pack</h3>
+              <TabsContent value="packs" >
+                <div >
+                  <h3 >Create Trivia Pack</h3>
                   
-                  <form onSubmit={handlePackSubmit} className="space-y-6">
-                    <div className="grid grid-cols-2 gap-4">
+                  <form onSubmit={handlePackSubmit} >
+                    <div >
                       <div>
-                        <Label htmlFor="packName" className="text-white">Pack Name *</Label>
+                        <Label htmlFor="packName" >Pack Name *</Label>
                         <Input
                           id="packName"
                           value={packFormData.name}
                           onChange={(e) => handlePackInputChange('name', e.target.value)}
                           placeholder="e.g., Horror Movie Classics"
-                          className="bg-gray-800 border-gray-600 text-white"
+                          
                           required
                         />
                       </div>
                       <div>
-                        <Label htmlFor="packDescription" className="text-white">Description</Label>
+                        <Label htmlFor="packDescription" >Description</Label>
                         <Input
                           id="packDescription"
                           value={packFormData.description}
                           onChange={(e) => handlePackInputChange('description', e.target.value)}
                           placeholder="Pack description"
-                          className="bg-gray-800 border-gray-600 text-white"
+                          
                         />
                       </div>
                     </div>
 
                     <div>
-                      <Label className="text-white">Questions *</Label>
+                      <Label >Questions *</Label>
                       
                       {/* CSV Upload Option */}
-                      <div className="space-y-4">
-                        <div className="border border-gray-600 rounded-lg p-4 bg-gray-800/30">
-                          <h4 className="text-white font-medium mb-3 flex items-center gap-2">
+                      <div >
+                        <div >
+                          <h4 >
                             📊 Upload CSV Spreadsheet
                           </h4>
-                          <p className="text-gray-400 text-sm mb-3">
+                          <p >
                             Upload a CSV file with your trivia questions. Much easier than JSON!
                           </p>
                           
-                          <div className="space-y-3">
+                          <div >
                             <Input
                               type="file"
                               accept=".csv"
                               onChange={handlePackCSVUpload}
-                              className="bg-gray-800 border-gray-600 text-white file:bg-red-600 file:text-white file:border-none file:rounded file:px-3 file:py-1"
+                              
                             />
                             
-                            <div className="text-xs text-gray-400 bg-gray-900/50 p-3 rounded">
-                              <p className="font-medium text-white mb-1">CSV Format Required:</p>
+                            <div >
+                              <p >CSV Format Required:</p>
                               <p>Columns: question, choice1, choice2, choice3, choice4, correct_answer, explanation, category, difficulty</p>
-                              <p className="mt-1">• correct_answer should be 1, 2, 3, or 4 (matching choice1-4)</p>
+                              <p >• correct_answer should be 1, 2, 3, or 4 (matching choice1-4)</p>
                               <p>• difficulty should be 1-5 (1=easy, 5=expert)</p>
                               <a 
                                 href="data:text/csv;charset=utf-8,question,choice1,choice2,choice3,choice4,correct_answer,explanation,category,difficulty%0A'What year was the movie Psycho released?','1958','1960','1962','1964',2,'Psycho was released in 1960 by Alfred Hitchcock','Horror Movies',2"
                                 download="trivia-pack-template.csv"
-                                className="inline-block mt-2 text-blue-400 hover:text-blue-300 underline"
+                                
                               >
                                 📥 Download CSV Template
                               </a>
@@ -2362,21 +2362,21 @@ export default function Admin() {
                         </div>
                         
                         {/* Manual JSON Option */}
-                        <div className="border border-gray-600 rounded-lg p-4 bg-gray-800/30">
-                          <h4 className="text-white font-medium mb-3">Or Enter JSON Manually</h4>
+                        <div >
+                          <h4 >Or Enter JSON Manually</h4>
                           <Textarea
                             id="questionsJson"
                             value={packFormData.questionsJson}
                             onChange={(e) => handlePackInputChange('questionsJson', e.target.value)}
                             placeholder='[{"id": "q1", "text": "Question?", "category": "Horror", "difficulty": 1, "answers": ["A", "B", "C", "D"], "correctAnswer": 0, "explanation": "Because...", "points": 100}]'
-                            className="bg-gray-800 border-gray-600 text-white min-h-32"
+                            
                           />
                         </div>
                       </div>
                     </div>
 
                     <div>
-                      <Label className="text-white">Access Control</Label>
+                      <Label >Access Control</Label>
                       <SimpleSelect 
                         value={packFormData.accessType} 
                         onValueChange={(value: 'all' | 'tier' | 'select') => handlePackInputChange('accessType', value)}
@@ -2391,10 +2391,10 @@ export default function Admin() {
 
                     {packFormData.accessType === 'tier' && (
                       <div>
-                        <Label className="text-white">Allowed Tiers</Label>
-                        <div className="flex gap-4 mt-2">
+                        <Label >Allowed Tiers</Label>
+                        <div >
                           {['basic', 'pro', 'premium'].map(tier => (
-                            <label key={tier} className="flex items-center gap-2 text-white">
+                            <label key={tier} >
                               <Checkbox
                                 checked={packFormData.allowedTiers.includes(tier)}
                                 onCheckedChange={(checked) => {
@@ -2414,13 +2414,13 @@ export default function Admin() {
 
                     {packFormData.accessType === 'select' && (
                       <div>
-                        <Label htmlFor="allowedHaunts" className="text-white">Allowed Haunt IDs (comma-separated)</Label>
+                        <Label htmlFor="allowedHaunts" >Allowed Haunt IDs (comma-separated)</Label>
                         <Input
                           id="allowedHaunts"
                           value={packFormData.allowedHaunts.join(', ')}
                           onChange={(e) => handlePackInputChange('allowedHaunts', e.target.value.split(',').map(h => h.trim()))}
                           placeholder="widowshollow, mansionofmadness"
-                          className="bg-gray-800 border-gray-600 text-white"
+                          
                         />
                       </div>
                     )}
@@ -2428,24 +2428,24 @@ export default function Admin() {
                     <Button 
                       type="submit" 
                       disabled={isLoading}
-                      className="w-full bg-red-600 hover:bg-red-700 text-white"
+                      
                     >
                       {isLoading ? "Creating Pack..." : "Create Trivia Pack"}
                     </Button>
                   </form>
 
                   {existingPacks.length > 0 && (
-                    <div className="mt-8">
-                      <h4 className="text-lg font-bold text-red-400 mb-4">Existing Trivia Packs</h4>
-                      <div className="space-y-3">
+                    <div >
+                      <h4 >Existing Trivia Packs</h4>
+                      <div >
                         {existingPacks.map((pack) => (
-                          <Card key={pack.id} className="bg-gray-800 border-gray-600">
-                            <CardContent className="p-4">
-                              <div className="flex justify-between items-start">
-                                <div className="flex-1">
-                                  <h5 className="font-bold text-white">{pack.name}</h5>
-                                  <p className="text-gray-300 text-sm">{pack.description}</p>
-                                  <p className="text-gray-400 text-xs mt-1">
+                          <Card key={pack.id} >
+                            <CardContent >
+                              <div >
+                                <div >
+                                  <h5 >{pack.name}</h5>
+                                  <p >{pack.description}</p>
+                                  <p >
                                     {pack.questions.length} questions • Access: {pack.accessType}
                                     {pack.accessType === 'tier' && pack.allowedTiers?.length && (
                                       <span> • Tiers: {pack.allowedTiers.join(', ')}</span>
@@ -2455,7 +2455,7 @@ export default function Admin() {
                                     )}
                                   </p>
                                 </div>
-                                <div className="flex gap-2">
+                                <div >
                                   <Button
                                     onClick={() => {
                                       setPackFormData({
@@ -2471,7 +2471,7 @@ export default function Admin() {
                                     }}
                                     variant="outline"
                                     size="sm"
-                                    className="border-blue-600 text-blue-400 hover:bg-blue-600 hover:text-white"
+                                    
                                   >
                                     ✏️ Edit
                                   </Button>
@@ -2500,7 +2500,7 @@ export default function Admin() {
                                     }}
                                     variant="outline"
                                     size="sm"
-                                    className="border-red-600 text-red-400 hover:bg-red-600 hover:text-white"
+                                    
                                   >
                                     🗑️ Delete
                                   </Button>
@@ -2515,7 +2515,7 @@ export default function Admin() {
                                     }}
                                     variant="ghost"
                                     size="sm"
-                                    className="text-gray-400 hover:text-white"
+                                    
                                   >
                                     👁️ View
                                   </Button>
@@ -2531,21 +2531,21 @@ export default function Admin() {
               </TabsContent>
 
               {/* Pack Assignments Tab */}
-              <TabsContent value="assignments" className="mt-6">
-                <Card className="bg-gray-900/50 border-gray-700">
+              <TabsContent value="assignments" >
+                <Card >
                   <CardHeader>
-                    <CardTitle className="text-purple-400 flex items-center gap-2">
+                    <CardTitle >
                       🎯 Trivia Pack Assignments
                     </CardTitle>
-                    <p className="text-gray-300 text-sm">
+                    <p >
                       View and manage which trivia packs each haunt has access to
                     </p>
                   </CardHeader>
                   <CardContent>
                     {allHaunts.length === 0 ? (
-                      <p className="text-gray-400  py-8" style={{textAlign: "center"}}>No haunts found</p>
+                      <p  style={{textAlign: "center"}}>No haunts found</p>
                     ) : (
-                      <div className="space-y-4">
+                      <div >
                         {allHaunts.map((haunt) => {
                           // Find packs available to this haunt
                           const availablePacks = existingPacks.filter(pack => {
@@ -2556,11 +2556,11 @@ export default function Admin() {
                           });
 
                           return (
-                            <Card key={haunt.id} className="bg-gray-800 border-gray-600">
-                              <CardContent className="p-4">
-                                <div className="flex justify-between items-start mb-3">
+                            <Card key={haunt.id} >
+                              <CardContent >
+                                <div >
                                   <div>
-                                    <h4 className="font-bold text-white flex items-center gap-2">
+                                    <h4 >
                                       {haunt.name}
                                       <Badge variant="outline" className={
                                         haunt.tier === 'premium' ? 'border-purple-500 text-purple-400' :
@@ -2570,39 +2570,39 @@ export default function Admin() {
                                         {haunt.tier}
                                       </Badge>
                                       {!haunt.isActive && (
-                                        <Badge variant="destructive" className="text-xs">
+                                        <Badge variant="destructive" >
                                           Inactive
                                         </Badge>
                                       )}
                                     </h4>
-                                    <p className="text-gray-400 text-sm">{haunt.description || 'No description'}</p>
+                                    <p >{haunt.description || 'No description'}</p>
                                   </div>
                                 </div>
 
-                                <div className="space-y-3">
+                                <div >
                                   <div>
-                                    <h5 className="text-sm font-medium text-gray-300 mb-2">
+                                    <h5 >
                                       Available Trivia Packs ({availablePacks.length})
                                     </h5>
                                     {availablePacks.length === 0 ? (
-                                      <p className="text-gray-500 text-sm italic">
+                                      <p >
                                         No trivia packs assigned • Will use starter pack fallback
                                       </p>
                                     ) : (
-                                      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                                      <div >
                                         {availablePacks.map((pack) => (
-                                          <div key={pack.id} className="bg-gray-700/50 p-2 rounded">
-                                            <div className="flex justify-between items-center">
+                                          <div key={pack.id} >
+                                            <div >
                                               <div>
-                                                <p className="text-white text-sm font-medium">{pack.name}</p>
-                                                <p className="text-gray-400 text-xs">
+                                                <p >{pack.name}</p>
+                                                <p >
                                                   {pack.questions.length} questions • 
                                                   {pack.accessType === 'all' ? ' All haunts' :
                                                    pack.accessType === 'tier' ? ` ${pack.allowedTiers?.join(', ')} tier` :
                                                    ' Direct assignment'}
                                                 </p>
                                               </div>
-                                              <div className="flex gap-1">
+                                              <div >
                                                 <Button
                                                   onClick={() => {
                                                     toast({
@@ -2612,7 +2612,7 @@ export default function Admin() {
                                                   }}
                                                   variant="ghost"
                                                   size="sm"
-                                                  className="text-gray-400 hover:text-white"
+                                                  
                                                 >
                                                   👁️
                                                 </Button>
@@ -2663,7 +2663,7 @@ export default function Admin() {
                                                   }}
                                                   variant="ghost"
                                                   size="sm"
-                                                  className="text-red-400 hover:text-red-300 hover:bg-red-900/30"
+                                                  
                                                 >
                                                   🗑️
                                                 </Button>
@@ -2675,8 +2675,8 @@ export default function Admin() {
                                     )}
                                   </div>
 
-                                  <div className="pt-2 border-t border-gray-600">
-                                    <p className="text-xs text-gray-500">
+                                  <div >
+                                    <p >
                                       Tier Limits: {haunt.tier === 'premium' ? '50' : haunt.tier === 'pro' ? '15' : '5'} questions per game •
                                       Custom questions: Managed by haunt owner •
                                       Pack access: Controlled via pack settings
@@ -2690,9 +2690,9 @@ export default function Admin() {
                       </div>
                     )}
 
-                    <div className="mt-6 p-4 bg-blue-900/20 border border-blue-700 rounded-lg">
-                      <h4 className="text-blue-400 font-medium mb-2">💡 Managing Pack Access</h4>
-                      <ul className="text-sm text-gray-300 space-y-1">
+                    <div >
+                      <h4 >💡 Managing Pack Access</h4>
+                      <ul >
                         <li>• <strong>All haunts:</strong> Pack appears for every haunt regardless of tier</li>
                         <li>• <strong>Tier access:</strong> Pack available to specific subscription tiers</li>
                         <li>• <strong>Select haunts:</strong> Pack assigned to specific haunts only</li>
@@ -2704,37 +2704,37 @@ export default function Admin() {
               </TabsContent>
 
               {/* Default Ads Tab */}
-              <TabsContent value="default-ads" className="space-y-6">
-                <Card className="bg-gray-900/50 border-gray-700">
+              <TabsContent value="default-ads" >
+                <Card >
                   <CardHeader>
-                    <CardTitle className="text-red-400 flex items-center gap-2">
+                    <CardTitle >
                       📢 Default Ads Management
-                      <Badge variant="outline" className="text-gray-300">
+                      <Badge variant="outline" >
                         {defaultAds.length} active
                       </Badge>
                     </CardTitle>
-                    <p className="text-gray-400">
+                    <p >
                       These ads will show for haunts that haven't uploaded their own ads. Perfect for promoting the game itself or other content.
                     </p>
                   </CardHeader>
-                  <CardContent className="space-y-6">
+                  <CardContent >
                     
                     {/* Current Default Ads */}
                     {defaultAds.length > 0 && (
-                      <div className="space-y-4">
-                        <h3 className="text-white font-medium">Current Default Ads</h3>
-                        <div className="grid gap-4">
+                      <div >
+                        <h3 >Current Default Ads</h3>
+                        <div >
                           {defaultAds.map((ad) => (
-                            <div key={ad.id} className="bg-gray-800/50 p-4 rounded-lg border border-gray-600">
-                              <div className="flex items-center gap-4">
+                            <div key={ad.id} >
+                              <div >
                                 {ad.imageUrl && (
-                                  <img src={ad.imageUrl} alt={ad.title} className="w-16 h-16 object-cover rounded" />
+                                  <img src={ad.imageUrl} alt={ad.title}  />
                                 )}
-                                <div className="flex-1">
-                                  <h4 className="text-white font-medium">{ad.title}</h4>
-                                  <p className="text-gray-400 text-sm">{ad.description}</p>
+                                <div >
+                                  <h4 >{ad.title}</h4>
+                                  <p >{ad.description}</p>
                                   {ad.link && (
-                                    <a href={ad.link} target="_blank" rel="noopener noreferrer" className="text-blue-400 text-xs">
+                                    <a href={ad.link} target="_blank" rel="noopener noreferrer" >
                                       {ad.link}
                                     </a>
                                   )}
@@ -2747,17 +2747,17 @@ export default function Admin() {
                     )}
 
                     {/* Upload New Default Ads */}
-                    <div className="space-y-4">
-                      <h3 className="text-white font-medium">Upload New Default Ads</h3>
-                      <p className="text-gray-400 text-sm">
+                    <div >
+                      <h3 >Upload New Default Ads</h3>
+                      <p >
                         These will replace any existing default ads. Great for promoting new features, other haunts, or the game itself.
                       </p>
                       
                       {defaultAdFiles.map((adFile, index) => (
-                        <div key={adFile.id} className="bg-gray-800/30 p-4 rounded-lg border border-gray-600">
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div key={adFile.id} >
+                          <div >
                             <div>
-                              <Label className="text-white text-sm">Ad Image *</Label>
+                              <Label >Ad Image *</Label>
                               <Input
                                 type="file"
                                 accept="image/*"
@@ -2767,11 +2767,11 @@ export default function Admin() {
                                     i === index ? { ...ad, file } : ad
                                   ));
                                 }}
-                                className="bg-gray-700 border-gray-600 text-white"
+                                
                               />
                             </div>
                             <div>
-                              <Label className="text-white text-sm">Ad Title</Label>
+                              <Label >Ad Title</Label>
                               <Input
                                 value={adFile.title}
                                 onChange={(e) => {
@@ -2780,11 +2780,11 @@ export default function Admin() {
                                   ));
                                 }}
                                 placeholder="e.g., Play More Horror Trivia!"
-                                className="bg-gray-700 border-gray-600 text-white"
+                                
                               />
                             </div>
                             <div>
-                              <Label className="text-white text-sm">Description</Label>
+                              <Label >Description</Label>
                               <Input
                                 value={adFile.description}
                                 onChange={(e) => {
@@ -2793,11 +2793,11 @@ export default function Admin() {
                                   ));
                                 }}
                                 placeholder="e.g., Discover more haunts and challenges!"
-                                className="bg-gray-700 border-gray-600 text-white"
+                                
                               />
                             </div>
                             <div>
-                              <Label className="text-white text-sm">Link (Optional)</Label>
+                              <Label >Link (Optional)</Label>
                               <Input
                                 value={adFile.link}
                                 onChange={(e) => {
@@ -2806,7 +2806,7 @@ export default function Admin() {
                                   ));
                                 }}
                                 placeholder="https://..."
-                                className="bg-gray-700 border-gray-600 text-white"
+                                
                               />
                             </div>
                           </div>
@@ -2816,14 +2816,14 @@ export default function Admin() {
                             }}
                             variant="ghost"
                             size="sm"
-                            className="mt-2 text-red-400 hover:text-red-300"
+                            
                           >
                             🗑️ Remove
                           </Button>
                         </div>
                       ))}
                       
-                      <div className="flex gap-3">
+                      <div >
                         <Button
                           onClick={() => {
                             setDefaultAdFiles(prev => [...prev, {
@@ -2835,7 +2835,7 @@ export default function Admin() {
                             }]);
                           }}
                           variant="outline"
-                          className="border-blue-600 text-blue-400 hover:bg-blue-600 hover:text-white"
+                          
                         >
                           ➕ Add Default Ad
                         </Button>
@@ -2843,7 +2843,7 @@ export default function Admin() {
                         {defaultAdFiles.length > 0 && (
                           <Button
                             onClick={saveDefaultAds}
-                            className="bg-green-600 hover:bg-green-700 text-white"
+                            
                           >
                             💾 Save Default Ads
                           </Button>
@@ -2851,9 +2851,9 @@ export default function Admin() {
                       </div>
                     </div>
 
-                    <div className="p-4 bg-blue-900/20 border border-blue-700 rounded-lg">
-                      <h4 className="text-blue-400 font-medium mb-2">💡 How Default Ads Work</h4>
-                      <ul className="text-sm text-gray-300 space-y-1">
+                    <div >
+                      <h4 >💡 How Default Ads Work</h4>
+                      <ul >
                         <li>• Default ads only show when a haunt hasn't uploaded their own ads</li>
                         <li>• Perfect for promoting the game, new features, or other haunts</li>
                         <li>• These ads will appear in all games where the haunt owner hasn't added custom ads</li>
@@ -2865,27 +2865,27 @@ export default function Admin() {
               </TabsContent>
 
               {/* Custom Branding Tab - Uber Admin Only */}
-              <TabsContent value="branding" className="space-y-6">
-                <Card className="bg-gray-900/50 border-gray-700">
+              <TabsContent value="branding" >
+                <Card >
                   <CardHeader>
-                    <CardTitle className="text-red-400 flex items-center gap-2">
+                    <CardTitle >
                       Custom Branding Management
                     </CardTitle>
-                    <p className="text-gray-400 text-sm">
+                    <p >
                       Centrally manage custom background skins and progress bar animations for Pro and Premium haunts. 
                       Upload and assign custom branding assets that will be applied automatically during gameplay.
                     </p>
                   </CardHeader>
-                  <CardContent className="space-y-6">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <CardContent >
+                    <div >
                       
                       {/* Background Skins Section */}
-                      <div className="space-y-4">
-                        <h3 className="text-lg font-semibold text-white">Background Skins</h3>
-                        <div className="space-y-3">
-                          <div className="p-4 bg-gray-800 rounded-lg">
-                            <Label className="text-white text-sm font-medium mb-2 block">Upload New Background Skin</Label>
-                            <p className="text-gray-400 text-xs mb-3">Recommended: 1920x1080 JPG/PNG, or animated GIF</p>
+                      <div >
+                        <h3 >Background Skins</h3>
+                        <div >
+                          <div >
+                            <Label >Upload New Background Skin</Label>
+                            <p >Recommended: 1920x1080 JPG/PNG, or animated GIF</p>
                             <Input
                               type="file"
                               accept="image/*"
@@ -2893,10 +2893,10 @@ export default function Admin() {
                                 const file = e.target.files?.[0] || null;
                                 setBrandingFiles(prev => ({ ...prev, skin: file }));
                               }}
-                              className="bg-gray-700 border-gray-600 text-white file:bg-red-600 file:text-white file:border-0 file:rounded-md file:px-3 file:py-2 file:mr-3 file:cursor-pointer"
+                              
                             />
                             <Button 
-                              className="mt-3 bg-red-600 hover:bg-red-700"
+                              
                               onClick={async () => {
                                 if (brandingFiles.skin) {
                                   await uploadBrandingAsset(brandingFiles.skin, 'skin');
@@ -2908,32 +2908,32 @@ export default function Admin() {
                               }}
                               disabled={!brandingFiles.skin || isLoading}
                             >
-                              <Upload className="w-4 h-4 mr-2" />
+                              <Upload  />
                               {isLoading ? "Uploading..." : "Upload Skin"}
                             </Button>
                           </div>
                           
-                          <div className="p-4 bg-gray-800 rounded-lg">
-                            <h4 className="text-white font-medium mb-3">Available Skins</h4>
-                            <div className="space-y-2">
-                              <div className="flex items-center justify-between p-3 bg-gray-700 rounded">
-                                <span className="text-white">Default Horror Theme</span>
+                          <div >
+                            <h4 >Available Skins</h4>
+                            <div >
+                              <div >
+                                <span >Default Horror Theme</span>
                                 <Badge variant="secondary">Built-in</Badge>
                               </div>
                               {customSkins.map((skin) => (
-                                <div key={skin.id} className="flex items-center justify-between p-3 bg-gray-700 rounded">
-                                  <div className="flex items-center gap-3">
-                                    <span className="text-white">{skin.name}</span>
+                                <div key={skin.id} >
+                                  <div >
+                                    <span >{skin.name}</span>
                                     <a 
                                       href={skin.url} 
                                       target="_blank" 
                                       rel="noopener noreferrer"
-                                      className="text-blue-400 hover:text-blue-300 text-xs"
+                                      
                                     >
                                       Preview
                                     </a>
                                   </div>
-                                  <div className="flex gap-2">
+                                  <div >
                                     <Button 
                                       size="sm" 
                                       variant="outline"
@@ -2997,7 +2997,7 @@ export default function Admin() {
                                 </div>
                               ))}
                               {customSkins.length === 0 && (
-                                <p className="text-gray-400 text-sm  py-4" style={{textAlign: "center"}}>
+                                <p  style={{textAlign: "center"}}>
                                   No custom skins uploaded yet
                                 </p>
                               )}
@@ -3010,8 +3010,8 @@ export default function Admin() {
                     </div>
 
                     {/* Progress Bar Color Themes Section - Moved outside grid */}
-                    <div className="space-y-4">
-                      <h3 className="text-lg font-semibold text-white">Progress Bar Color Themes</h3>
+                    <div >
+                      <h3 >Progress Bar Color Themes</h3>
                       <div style={{
                         padding: '16px',
                         backgroundColor: '#1f2937',
@@ -3152,11 +3152,11 @@ export default function Admin() {
                     </div>
 
                     {/* Haunt Assignment Section */}
-                    <div className="p-6 bg-gray-800 rounded-lg">
-                      <h3 className="text-lg font-semibold text-white mb-4">Haunt Assignment</h3>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div >
+                      <h3 >Haunt Assignment</h3>
+                      <div >
                         <div>
-                          <Label className="text-white text-sm font-medium mb-2 block">Select Haunt</Label>
+                          <Label >Select Haunt</Label>
                           <SimpleSelect 
                             value={selectedHauntForBranding} 
                             onValueChange={setSelectedHauntForBranding}
@@ -3168,10 +3168,10 @@ export default function Admin() {
                           />
                         </div>
                         <div>
-                          <Label className="text-white text-sm font-medium mb-2 block">Action</Label>
-                          <div className="flex gap-2">
+                          <Label >Action</Label>
+                          <div >
                             <Button 
-                              className="bg-green-600 hover:bg-green-700"
+                              
                               onClick={() => {
                                 if (!selectedHauntForBranding) {
                                   toast({
@@ -3203,7 +3203,7 @@ export default function Admin() {
                             </Button>
                             <Button 
                               variant="outline" 
-                              className="border-red-500 text-red-400 hover:bg-red-500 hover:text-white"
+                              
                               onClick={() => {
                                 if (selectedHauntForBranding) {
                                   removeBrandingFromHaunt(selectedHauntForBranding);
@@ -3219,23 +3219,23 @@ export default function Admin() {
 
                       {/* Current Branding Status */}
                       {selectedHauntForBranding && (
-                        <div className="mt-4 p-4 bg-gray-700 rounded border">
-                          <h4 className="text-white font-medium mb-2">Current Branding Status</h4>
+                        <div >
+                          <h4 >Current Branding Status</h4>
                           {(() => {
                             const selectedHaunt = allHaunts.find(h => h.id === selectedHauntForBranding);
                             if (!selectedHaunt) return null;
                             
                             return (
-                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                              <div >
                                 <div>
-                                  <span className="text-gray-300">Background Skin: </span>
-                                  <span className={selectedHaunt.skinUrl ? "text-green-400" : "text-gray-400"}>
+                                  <span >Background Skin: </span>
+                                  <span >
                                     {selectedHaunt.skinUrl ? "Custom assigned" : "Default theme"}
                                   </span>
                                 </div>
                                 <div>
-                                  <span className="text-gray-300">Progress Bar: </span>
-                                  <span className={selectedHaunt.progressBarTheme ? "text-green-400" : "text-gray-400"}>
+                                  <span >Progress Bar: </span>
+                                  <span >
                                     {selectedHaunt.progressBarTheme ? `Theme: ${selectedHaunt.progressBarTheme}` : "Default colors"}
                                   </span>
                                 </div>
@@ -3245,8 +3245,8 @@ export default function Admin() {
                         </div>
                       )}
                       
-                      <div className="mt-4 p-4 bg-red-900/20 border border-red-600 rounded">
-                        <p className="text-red-300 text-sm">
+                      <div >
+                        <p >
                           <strong>🔒 UBER ADMIN ONLY:</strong> Custom branding is exclusive to Pro and Premium tier haunts. 
                           Background skins and progress bar animations will automatically apply during gameplay 
                           for enhanced visitor experience and brand reinforcement.
@@ -3258,7 +3258,7 @@ export default function Admin() {
               </TabsContent>
 
               {/* Analytics Dashboard Tab */}
-              <TabsContent value="analytics" className="space-y-6">
+              <TabsContent value="analytics" >
                 <AnalyticsTab 
                   allHaunts={allHaunts}
                   selectedAnalyticsHaunt={selectedAnalyticsHaunt}
@@ -3271,14 +3271,14 @@ export default function Admin() {
           </CardContent>
         </Card>
 
-        <div className="mt-6 " style={{textAlign: "center"}}>
+        <div  style={{textAlign: "center"}}>
           <Button
             onClick={() => {
               loadTriviaPacks();
               window.location.href = '/';
             }}
             variant="outline"
-            className="border-red-600 text-red-500 hover:bg-red-600 hover:text-white"
+            
           >
             🎮 Back to Game
           </Button>

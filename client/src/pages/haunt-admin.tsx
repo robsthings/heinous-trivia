@@ -729,25 +729,25 @@ export default function HauntAdmin() {
           backdropFilter: 'blur(8px)'
         }}>
           <CardHeader style={{textAlign: "center"}}>
-            <CardTitle className="text-2xl font-bold text-red-500">
+            <CardTitle >
               🎃 Welcome to Your Haunt!
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-6">
-            <p className="text-gray-300 " style={{textAlign: "center"}}>
+          <CardContent >
+            <p  style={{textAlign: "center"}}>
               Set up your admin email to receive secure authentication links for dashboard access.
             </p>
             
-            <div className="space-y-4">
+            <div >
               <div>
-                <Label htmlFor="adminEmail" className="text-white">Admin Email Address</Label>
+                <Label htmlFor="adminEmail" >Admin Email Address</Label>
                 <Input
                   id="adminEmail"
                   type="email"
                   value={newAccessCode}
                   onChange={(e) => setNewAccessCode(e.target.value)}
                   placeholder="admin@yourhaunt.com"
-                  className="bg-gray-800 border-gray-600 text-white"
+                  
                 />
               </div>
               
@@ -794,7 +794,7 @@ export default function HauntAdmin() {
                     setIsSaving(false);
                   }
                 }}
-                className="w-full bg-red-600 hover:bg-red-700 text-white"
+                
                 disabled={isSaving || !newAccessCode.trim()}
               >
                 {isSaving ? "Setting Up..." : "Configure Email Access"}
@@ -822,14 +822,14 @@ export default function HauntAdmin() {
           color: '#ffffff',
           backdropFilter: 'blur(8px)'
         }}>
-          <CardContent className="p-8">
+          <CardContent >
             <div style={{textAlign: "center"}}>
-              <h2 className="text-2xl font-bold text-red-500 mb-4">Haunt Not Found</h2>
-              <p className="text-gray-300 " style={{marginBottom: "1.5rem"}}>The haunt "{hauntId}" could not be found.</p>
+              <h2 >Haunt Not Found</h2>
+              <p  style={{marginBottom: "1.5rem"}}>The haunt "{hauntId}" could not be found.</p>
               <Button
                 onClick={() => window.location.href = '/'}
                 variant="outline"
-                className="border-red-600 text-red-500 hover:bg-red-600 hover:text-white"
+                
               >
                 🎮 Back to Game
               </Button>
@@ -904,7 +904,7 @@ export default function HauntAdmin() {
               disabled={isSaving}
               variant="outline"
               size="sm"
-              className="border-red-500 text-red-400 hover:bg-red-500 hover:text-white bg-black/50"
+              
               title="If your game isn't behaving right, try this."
             >
               🛠️ Unbreak Me!
@@ -914,7 +914,7 @@ export default function HauntAdmin() {
                 onClick={() => setLocation(`/analytics/${hauntId}`)}
                 variant="outline"
                 size="sm"
-                className="bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-white border-red-600"
+                
                 title="View detailed analytics and performance metrics"
               >
                 📊 Analytics
@@ -1050,10 +1050,10 @@ export default function HauntAdmin() {
                       console.log('Logo file selected:', file ? file.name : 'No file');
                       setLogoFile(file);
                     }}
-                    className="bg-gray-800 border-gray-600 text-white file:bg-red-600 file:text-white file:border-0 file:rounded-md file:px-3 file:py-2 file:mr-3 file:cursor-pointer"
+                    
                   />
                   {logoFile && (
-                    <p className="text-green-400 text-xs mt-2 flex items-center gap-1">
+                    <p >
                       ✅ Selected: {logoFile.name}
                     </p>
                   )}
@@ -1061,49 +1061,49 @@ export default function HauntAdmin() {
 
                 {/* Custom Branding Preview (Read-Only) */}
                 {(hauntConfig.tier === 'pro' || hauntConfig.tier === 'premium') && (
-                  <div className="mt-6 p-4 bg-purple-900/20 border border-purple-500 rounded-lg">
-                    <h4 className="text-purple-300 font-medium mb-3 flex items-center gap-2">
+                  <div >
+                    <h4 >
                       🎨 Premium Custom Branding Preview
                     </h4>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div >
                       <div>
-                        <Label className="text-purple-200 text-sm mb-2 block">Custom Background Skin</Label>
+                        <Label >Custom Background Skin</Label>
                         {hauntConfig.skinUrl ? (
-                          <div className="text-green-400 text-sm flex items-center gap-2">
+                          <div >
                             ✅ Active: Custom background assigned
                             <a 
                               href={hauntConfig.skinUrl} 
                               target="_blank" 
                               rel="noopener noreferrer"
-                              className="text-blue-400 hover:text-blue-300 underline"
+                              
                             >
                               Preview
                             </a>
                           </div>
                         ) : (
-                          <div className="text-gray-400 text-sm">Default horror theme active</div>
+                          <div >Default horror theme active</div>
                         )}
                       </div>
                       <div>
-                        <Label className="text-purple-200 text-sm mb-2 block">Custom Progress Bar</Label>
+                        <Label >Custom Progress Bar</Label>
                         {hauntConfig.progressBarUrl ? (
-                          <div className="text-green-400 text-sm flex items-center gap-2">
+                          <div >
                             ✅ Active: Custom animation assigned
                             <a 
                               href={hauntConfig.progressBarUrl} 
                               target="_blank" 
                               rel="noopener noreferrer"
-                              className="text-blue-400 hover:text-blue-300 underline"
+                              
                             >
                               Preview
                             </a>
                           </div>
                         ) : (
-                          <div className="text-gray-400 text-sm">Default progress bar active</div>
+                          <div >Default progress bar active</div>
                         )}
                       </div>
                     </div>
-                    <p className="text-purple-300 text-xs mt-3">
+                    <p >
                       🔒 Custom branding is managed by Uber Admin. Contact support to request changes or custom designs for your haunt.
                     </p>
                   </div>
@@ -1139,23 +1139,23 @@ export default function HauntAdmin() {
                 }}>
                   📢 Ad Management
                 </CardTitle>
-                <p className="text-gray-400 text-sm mt-2">
-                  Your <span className="text-white font-medium capitalize">{hauntConfig.tier}</span> tier allows up to{" "}
-                  <span className="text-white font-medium">{getAdLimit(hauntConfig.tier)}</span> ads. Recommended size: 800x400 PNG.
+                <p >
+                  Your <span >{hauntConfig.tier}</span> tier allows up to{" "}
+                  <span >{getAdLimit(hauntConfig.tier)}</span> ads. Recommended size: 800x400 PNG.
                 </p>
-                <div className="mt-3">
+                <div >
                   <Link 
                     href="/upload-guidelines" 
-                    className="inline-flex items-center gap-1 text-sm text-blue-400 hover:text-blue-300 underline"
+                    
                   >
-                    <ExternalLink className="w-3 h-3" />
+                    <ExternalLink  />
                     Review our Upload Guidelines
                   </Link>
                 </div>
               </CardHeader>
               <CardContent>
                 {/* Ad Grid Management */}
-                <div className="space-y-6">
+                <div >
                   {/* Ad Grid Display */}
                   <div style={{
                     display: 'grid',
@@ -1170,7 +1170,7 @@ export default function HauntAdmin() {
                           {ad ? (
                             // Existing Ad Thumbnail - Compact Size
                             <div 
-                              className="ad-thumbnail"
+                              
                               style={{
                                 position: 'relative',
                                 width: '100%',
@@ -1334,11 +1334,11 @@ export default function HauntAdmin() {
                   </div>
 
                   {/* Summary Info */}
-                  <div className="flex items-center justify-between text-sm">
-                    <span className="text-gray-400">
+                  <div >
+                    <span >
                       {uploadedAds.length} of {getAdLimit(hauntConfig.tier)} ad slots used
                     </span>
-                    <span className="text-gray-500">
+                    <span >
                       {getAdLimit(hauntConfig.tier) - uploadedAds.length} slots remaining
                     </span>
                   </div>
@@ -1394,17 +1394,17 @@ export default function HauntAdmin() {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
+            <div >
               {customQuestions.map((question, index) => (
-                <div key={question.id || index} className="border border-gray-600 rounded-lg p-4 bg-gray-800/30">
-                  <div className="flex justify-between items-center mb-3">
-                    <h4 className="text-white font-medium">Question #{index + 1}</h4>
-                    <div className="flex gap-2">
+                <div key={question.id || index} >
+                  <div >
+                    <h4 >Question #{index + 1}</h4>
+                    <div >
                       <Button
                         onClick={() => setEditingQuestion(question)}
                         variant="outline"
                         size="sm"
-                        className="bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-white border-red-600 text-xs px-2 py-1"
+                        
                       >
                         ✏️ Edit
                       </Button>
@@ -1416,22 +1416,22 @@ export default function HauntAdmin() {
                         }}
                         variant="outline"
                         size="sm"
-                        className="bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-white border-red-600 text-xs px-2 py-1"
+                        
                       >
                         🗑️
                       </Button>
                     </div>
                   </div>
-                  <div className="space-y-2">
+                  <div >
                     <div>
-                      <p className="text-white text-sm font-medium">Question:</p>
-                      <p className="text-gray-300 text-sm">{question.question}</p>
+                      <p >Question:</p>
+                      <p >{question.question}</p>
                     </div>
                     <div>
-                      <p className="text-white text-sm font-medium">Choices:</p>
-                      <ul className="text-gray-300 text-sm ml-3 space-y-1">
+                      <p >Choices:</p>
+                      <ul >
                         {question.choices.map((choice, choiceIndex) => (
-                          <li key={choiceIndex} className={choice === question.correct ? "text-green-400 font-medium" : ""}>
+                          <li key={choiceIndex} >
                             {choice === question.correct ? "✅ " : "• "}{choice}
                           </li>
                         ))}
@@ -1450,7 +1450,7 @@ export default function HauntAdmin() {
                     explanation: ""
                   })}
                   variant="outline"
-                  className="w-full border-red-600 text-red-500 hover:bg-red-600 hover:text-white"
+                  
                 >
                   ➕ Add Custom Question
                 </Button>
@@ -1460,11 +1460,11 @@ export default function HauntAdmin() {
         </Card>
 
         {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
+        <div >
           <Button
             onClick={handleSave}
             disabled={isSaving}
-            className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 text-lg font-semibold w-full sm:w-auto shadow-lg"
+            
           >
             {isSaving ? "Saving..." : "💾 Save Configuration"}
           </Button>
@@ -1472,7 +1472,7 @@ export default function HauntAdmin() {
           <Button
             onClick={() => window.open(`/host-panel/${hauntId}`, '_blank')}
             variant="outline"
-            className="border-green-600 text-green-500 hover:bg-green-600 hover:text-white w-full sm:w-auto"
+            
           >
             👑 Open Host Panel
           </Button>
@@ -1480,7 +1480,7 @@ export default function HauntAdmin() {
           <Button
             onClick={() => window.location.href = `/?haunt=${hauntId}`}
             variant="outline"
-            className="border-red-600 text-red-500 hover:bg-red-600 hover:text-white w-full sm:w-auto"
+            
           >
             🎮 Back to Game
           </Button>
@@ -1488,28 +1488,28 @@ export default function HauntAdmin() {
         
       {/* Custom Question Edit Modal */}
       {editingQuestion && (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
-          <Card className="bg-gray-900 border-gray-600 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+        <div >
+          <Card >
             <CardHeader>
-              <CardTitle className="text-white">
+              <CardTitle >
                 {editingQuestion.question ? "Edit Question" : "Add New Question"}
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent >
               <div>
-                <Label className="text-white">Question *</Label>
+                <Label >Question *</Label>
                 <Textarea
                   value={editingQuestion.question}
                   onChange={(e) => setEditingQuestion(prev => prev ? {...prev, question: e.target.value} : null)}
                   placeholder="Enter your trivia question..."
-                  className="bg-gray-800 border-gray-600 text-white"
+                  
                 />
               </div>
               
-              <div className="space-y-3">
-                <Label className="text-white">Answer Choices *</Label>
+              <div >
+                <Label >Answer Choices *</Label>
                 {editingQuestion.choices.map((choice, index) => (
-                  <div key={index} className="flex gap-2 items-center">
+                  <div key={index} >
                     <Input
                       value={choice}
                       onChange={(e) => {
@@ -1518,7 +1518,7 @@ export default function HauntAdmin() {
                         setEditingQuestion(prev => prev ? {...prev, choices: newChoices} : null);
                       }}
                       placeholder={`Choice ${index + 1}`}
-                      className="bg-gray-800 border-gray-600 text-white"
+                      
                     />
                     <Checkbox
                       checked={editingQuestion.correct === choice}
@@ -1527,28 +1527,28 @@ export default function HauntAdmin() {
                           setEditingQuestion(prev => prev ? {...prev, correct: choice} : null);
                         }
                       }}
-                      className="border-gray-600"
+                      
                     />
-                    <Label className="text-white text-sm">Correct</Label>
+                    <Label >Correct</Label>
                   </div>
                 ))}
               </div>
               
               <div>
-                <Label className="text-white">Explanation (Optional)</Label>
+                <Label >Explanation (Optional)</Label>
                 <Textarea
                   value={editingQuestion.explanation || ""}
                   onChange={(e) => setEditingQuestion(prev => prev ? {...prev, explanation: e.target.value} : null)}
                   placeholder="Explain why this is the correct answer (will show after they answer)..."
-                  className="bg-gray-800 border-gray-600 text-white"
+                  
                   rows={3}
                 />
-                <p className="text-gray-400 text-xs mt-1">
+                <p >
                   This explanation will appear after players answer the question to help them learn.
                 </p>
               </div>
               
-              <div className="flex gap-3 pt-4">
+              <div >
                 <Button
                   onClick={async () => {
                     if (editingQuestion.question && editingQuestion.choices.every(c => c.trim()) && editingQuestion.correct) {
@@ -1573,14 +1573,14 @@ export default function HauntAdmin() {
                       });
                     }
                   }}
-                  className="bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-white border-red-600"
+                  
                 >
                   Save Question
                 </Button>
                 <Button
                   onClick={() => setEditingQuestion(null)}
                   variant="outline"
-                  className="bg-gradient-to-r from-red-700 to-purple-700 hover:from-red-600 hover:to-purple-600 text-white border-red-600"
+                  
                 >
                   Cancel
                 </Button>
@@ -1594,47 +1594,47 @@ export default function HauntAdmin() {
 
       {/* New Ad Modal */}
       {showNewAdForm && (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center p-4 z-50">
-          <Card className="bg-black/90 border-red-600 text-white max-w-md w-full">
+        <div >
+          <Card >
             <CardHeader>
-              <CardTitle className="text-xl font-bold text-red-500">Add New Ad</CardTitle>
+              <CardTitle >Add New Ad</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent >
               <div>
-                <Label className="text-white text-sm font-medium mb-2 block">Title</Label>
+                <Label >Title</Label>
                 <Input
                   value={newAdData.title}
                   onChange={(e) => setNewAdData({...newAdData, title: e.target.value})}
-                  className="bg-gray-800 border-gray-600 text-white"
+                  
                 />
               </div>
               <div>
-                <Label className="text-white text-sm font-medium mb-2 block">Description</Label>
+                <Label >Description</Label>
                 <Textarea
                   value={newAdData.description}
                   onChange={(e) => setNewAdData({...newAdData, description: e.target.value})}
-                  className="bg-gray-800 border-gray-600 text-white"
+                  
                 />
               </div>
               <div>
-                <Label className="text-white text-sm font-medium mb-2 block">Link (optional)</Label>
+                <Label >Link (optional)</Label>
                 <Input
                   value={newAdData.link}
                   onChange={(e) => setNewAdData({...newAdData, link: e.target.value})}
                   placeholder="https://example.com or leave blank"
-                  className="bg-gray-800 border-gray-600 text-white"
+                  
                 />
               </div>
               <div>
-                <Label className="text-white text-sm font-medium mb-2 block">Image</Label>
+                <Label >Image</Label>
                 <Input
                   type="file"
                   accept="image/*"
                   onChange={(e) => setNewAdData({...newAdData, file: e.target.files?.[0] || null})}
-                  className="bg-gray-800 border-gray-600 text-white file:bg-red-600 file:text-white file:border-0 file:rounded-md file:px-3 file:py-2 file:mr-3 file:cursor-pointer"
+                  
                 />
               </div>
-              <div className="flex gap-2">
+              <div >
                 <Button
                   onClick={async () => {
                     if (newAdData.title && newAdData.description && newAdData.file) {
@@ -1649,7 +1649,7 @@ export default function HauntAdmin() {
                       });
                     }
                   }}
-                  className="bg-green-600 hover:bg-green-700 text-white"
+                  
                 >
                   Add Ad
                 </Button>
@@ -1659,7 +1659,7 @@ export default function HauntAdmin() {
                     setShowNewAdForm(false);
                   }}
                   variant="outline"
-                  className="border-gray-600 text-gray-400"
+                  
                 >
                   Cancel
                 </Button>

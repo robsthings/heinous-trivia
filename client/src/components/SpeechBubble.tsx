@@ -73,7 +73,7 @@ export function SpeechBubble({ messages, isVisible, className = "" }: SpeechBubb
   if (!isVisible || messages.length === 0) return null;
 
   return (
-    <div style={{ position: 'relative' }} className={className}>
+    <div style={{ position: 'relative' }} >
       {/* Speech bubble */}
       <div style={{
         position: 'relative',

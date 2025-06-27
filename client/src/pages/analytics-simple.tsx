@@ -38,10 +38,10 @@ export default function AnalyticsSimple() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
-        <div className="max-w-7xl mx-auto">
-          <div className=" text-white" style={{textAlign: "center"}}>
-            <h1 className="text-3xl font-bold mb-4">Analytics Dashboard</h1>
+      <div >
+        <div >
+          <div  style={{textAlign: "center"}}>
+            <h1 >Analytics Dashboard</h1>
             <p>Loading analytics data...</p>
           </div>
         </div>
@@ -51,11 +51,11 @@ export default function AnalyticsSimple() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
-        <div className="max-w-7xl mx-auto">
-          <div className=" text-white" style={{textAlign: "center"}}>
-            <h1 className="text-3xl font-bold mb-4">Analytics Dashboard</h1>
-            <p className="text-red-400">Error loading analytics data: {error.message}</p>
+      <div >
+        <div >
+          <div  style={{textAlign: "center"}}>
+            <h1 >Analytics Dashboard</h1>
+            <p >Error loading analytics data: {error.message}</p>
           </div>
         </div>
       </div>
@@ -63,78 +63,78 @@ export default function AnalyticsSimple() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
-      <div className="max-w-7xl mx-auto">
-        <div className=" text-white mb-8" style={{textAlign: "center"}}>
-          <h1 className="text-3xl font-bold mb-4 bg-green-600 p-4 rounded">SIMPLIFIED Analytics Dashboard</h1>
-          <p className="text-gray-300">Haunt: {hauntId}</p>
-          <p className="text-yellow-400 font-bold">New Component - Ad Engagement Fixed</p>
+    <div >
+      <div >
+        <div  style={{textAlign: "center"}}>
+          <h1 >SIMPLIFIED Analytics Dashboard</h1>
+          <p >Haunt: {hauntId}</p>
+          <p >New Component - Ad Engagement Fixed</p>
         </div>
 
         {/* Key Metrics Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <Card className="bg-slate-800/50 border-slate-700">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-gray-300">Total Games</CardTitle>
-              <Trophy className="h-4 w-4 text-blue-400" />
+        <div >
+          <Card >
+            <CardHeader >
+              <CardTitle >Total Games</CardTitle>
+              <Trophy  />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-white">{analyticsData?.totalGames || 0}</div>
-              <p className="text-xs text-gray-400">Games completed</p>
+              <div >{analyticsData?.totalGames || 0}</div>
+              <p >Games completed</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-slate-800/50 border-slate-700">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-gray-300">Unique Players</CardTitle>
-              <Users className="h-4 w-4 text-green-400" />
+          <Card >
+            <CardHeader >
+              <CardTitle >Unique Players</CardTitle>
+              <Users  />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-white">{analyticsData?.uniquePlayers || 0}</div>
-              <p className="text-xs text-gray-400">Individual players</p>
+              <div >{analyticsData?.uniquePlayers || 0}</div>
+              <p >Individual players</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-slate-800/50 border-slate-700">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-gray-300">Average Score</CardTitle>
-              <Target className="h-4 w-4 text-orange-400" />
+          <Card >
+            <CardHeader >
+              <CardTitle >Average Score</CardTitle>
+              <Target  />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-white">{analyticsData?.averageScore || 0}</div>
-              <p className="text-xs text-gray-400">Points per game</p>
+              <div >{analyticsData?.averageScore || 0}</div>
+              <p >Points per game</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-slate-800/50 border-slate-700">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-gray-300">Return Rate</CardTitle>
-              <TrendingUp className="h-4 w-4 text-purple-400" />
+          <Card >
+            <CardHeader >
+              <CardTitle >Return Rate</CardTitle>
+              <TrendingUp  />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-white">{analyticsData?.returnPlayerRate || 0}%</div>
-              <p className="text-xs text-gray-400">Player retention</p>
+              <div >{analyticsData?.returnPlayerRate || 0}%</div>
+              <p >Player retention</p>
             </CardContent>
           </Card>
         </div>
 
         {/* Ad Engagement Card */}
-        <div className="grid grid-cols-1 gap-6">
-          <Card className="bg-slate-800/50 border-slate-700">
+        <div >
+          <Card >
             <CardHeader>
-              <CardTitle className="text-white flex items-center gap-2">
-                <MousePointer className="h-5 w-5 text-yellow-400" />
+              <CardTitle >
+                <MousePointer  />
                 Ad Engagement Metrics
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
-                <div className="flex items-center justify-between p-4 bg-slate-700/30 rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <MousePointer className="h-5 w-5 text-yellow-400" />
-                    <span className="text-gray-300">Ad Click-Through Rate</span>
+              <div >
+                <div >
+                  <div >
+                    <MousePointer  />
+                    <span >Ad Click-Through Rate</span>
                   </div>
-                  <span className="text-white font-bold text-4xl bg-yellow-400 text-black px-4 py-2 rounded">
+                  <span >
                     {analyticsData?.adClickThrough !== undefined ? `${analyticsData.adClickThrough}%` : 'LOADING...'}
                   </span>
                 </div>
@@ -144,9 +144,9 @@ export default function AnalyticsSimple() {
         </div>
 
         {/* Debug Info */}
-        <div className="mt-8 p-4 bg-slate-800/30 rounded-lg">
-          <h3 className="text-white font-medium mb-2">Debug Information</h3>
-          <pre className="text-gray-300 text-sm overflow-x-auto">
+        <div >
+          <h3 >Debug Information</h3>
+          <pre >
             {JSON.stringify(analyticsData, null, 2)}
           </pre>
         </div>
