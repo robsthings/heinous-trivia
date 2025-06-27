@@ -562,11 +562,21 @@ export default function HauntAdmin() {
 
   const saveCustomQuestions = async (questions: CustomTriviaQuestion[]) => {
     try {
-      // Custom questions would need a dedicated server endpoint
-      // For now, show success message without Firebase operations
+      const response = await fetch(`/api/custom-questions/${hauntId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ questions })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to save questions');
+      }
+
       toast({
         title: "Questions Saved",
-        description: `${questions.length} custom questions processed (server endpoint needed)`,
+        description: `${questions.length} custom questions saved successfully`,
       });
     } catch (error) {
       console.error('Failed to save questions:', error);

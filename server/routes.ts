@@ -1324,6 +1324,54 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Save custom questions for a haunt
+  app.post("/api/custom-questions/:hauntId", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      const { questions } = req.body;
+      
+      if (!firestore) {
+        return res.status(500).json({ error: "Firebase not configured" });
+      }
+      
+      if (!questions || !Array.isArray(questions)) {
+        return res.status(400).json({ error: "Questions array is required" });
+      }
+      
+      // 📘 fieldGlossary.json: "haunt-questions/{hauntId}/questions"
+      const customQuestionsRef = firestore.collection('haunt-questions').doc(hauntId).collection('questions');
+      
+      // Clear existing questions first
+      const existingSnapshot = await customQuestionsRef.get();
+      const batch = firestore.batch();
+      
+      existingSnapshot.docs.forEach(doc => {
+        batch.delete(doc.ref);
+      });
+      
+      // Add new questions
+      questions.forEach(question => {
+        const newQuestionRef = customQuestionsRef.doc();
+        batch.set(newQuestionRef, {
+          question: question.question,
+          choices: question.choices,
+          correct: question.correct,
+          explanation: question.explanation || "",
+          timestamp: new Date()
+        });
+      });
+      
+      await batch.commit();
+      
+      console.log(`💾 Saved ${questions.length} custom questions for ${hauntId}`);
+      res.json({ success: true, count: questions.length });
+      
+    } catch (error) {
+      console.error("Error saving custom questions:", error);
+      res.status(500).json({ error: "Failed to save custom questions" });
+    }
+  });
+
   // Get haunt config
   app.get("/api/haunt-config/:hauntId", async (req, res) => {
     try {
