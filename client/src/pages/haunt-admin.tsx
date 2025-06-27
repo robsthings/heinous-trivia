@@ -1551,20 +1551,18 @@ export default function HauntAdmin() {
                 <Button
                   onClick={async () => {
                     if (editingQuestion.question && editingQuestion.choices.every(c => c.trim()) && editingQuestion.correct) {
-                      if (editingQuestion.question && customQuestions.find(q => q.question === editingQuestion.question)) {
-                        // Update existing
-                        setCustomQuestions(prev => prev.map(q => 
-                          q.question === editingQuestion.question ? editingQuestion : q
-                        ));
-                      } else {
-                        // Add new
-                        setCustomQuestions(prev => [...prev, {...editingQuestion, id: `q${Date.now()}`}]);
-                      }
-                      // Save questions immediately after adding/editing
-                      const updatedQuestions = editingQuestion.question && customQuestions.find(q => q.question === editingQuestion.question) 
+                      // Calculate updated questions first
+                      const isExisting = customQuestions.find(q => q.question === editingQuestion.question);
+                      const updatedQuestions = isExisting
                         ? customQuestions.map(q => q.question === editingQuestion.question ? editingQuestion : q)
                         : [...customQuestions, {...editingQuestion, id: `q${Date.now()}`}];
-                      saveCustomQuestions(updatedQuestions);
+                      
+                      // Update state
+                      setCustomQuestions(updatedQuestions);
+                      
+                      // Save to Firebase immediately
+                      await saveCustomQuestions(updatedQuestions);
+                      
                       setEditingQuestion(null);
                     } else {
                       toast({
