@@ -15,7 +15,7 @@ export function log(message: string, source = "express") {
 
 export function serveStatic(app: Express) {
   // Look for static assets in the deployment structure
-  const distPath = path.resolve(process.cwd(), "public");
+  const distPath = path.resolve(process.cwd(), "dist/public");
 
   if (!fs.existsSync(distPath)) {
     throw new Error(

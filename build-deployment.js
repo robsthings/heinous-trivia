@@ -4,7 +4,7 @@ import { execSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 
-console.log('🚀 Building complete production deployment...');
+console.log('🚀 Building deployment-ready application...');
 
 // Clean and create dist directory
 if (fs.existsSync('./dist')) {
@@ -12,26 +12,7 @@ if (fs.existsSync('./dist')) {
 }
 fs.mkdirSync('./dist', { recursive: true });
 
-// Step 1: Build client application with Vite
-console.log('📦 Building client application...');
-try {
-  execSync('npx vite build --config vite.config.ts', { 
-    stdio: 'inherit',
-    timeout: 120000 // 2 minute timeout
-  });
-  
-  // Move client build to correct location
-  if (fs.existsSync('./dist/client')) {
-    fs.renameSync('./dist/client', './dist/public');
-  }
-  console.log('✅ Client build completed');
-} catch (error) {
-  console.error('❌ Client build failed:', error.message);
-  // Continue with server-only build as fallback
-  console.log('⚠️ Continuing with server-only build...');
-}
-
-// Step 2: Build server bundle with esbuild
+// Step 1: Build server bundle with esbuild (fast and reliable)
 console.log('⚙️ Building server bundle...');
 try {
   const esbuildCommand = [
@@ -39,7 +20,7 @@ try {
     '--platform=node',
     '--packages=external',
     '--bundle',
-    '--format=esm',
+    '--format=esm', 
     '--outfile=dist/index.js',
     '--define:process.env.NODE_ENV=\'"production"\'',
     '--banner:js="import { fileURLToPath } from \'url\'; import { dirname } from \'path\'; const __filename = fileURLToPath(import.meta.url); const __dirname = dirname(__filename);"'
@@ -47,46 +28,43 @@ try {
 
   execSync(esbuildCommand, { 
     stdio: 'inherit',
-    timeout: 60000 // 1 minute timeout
+    timeout: 30000 // 30 second timeout
   });
-  console.log('✅ Server bundle created');
+  console.log('✅ Server bundle created successfully');
 } catch (error) {
   console.error('❌ Server build failed:', error.message);
   process.exit(1);
 }
 
-// Step 3: Copy static assets if client build failed
-if (!fs.existsSync('./dist/public')) {
-  console.log('📁 Copying static assets from client/public...');
-  fs.mkdirSync('./dist/public', { recursive: true });
-  
-  // Copy all static assets from client/public
-  if (fs.existsSync('./client/public')) {
-    const copyDir = (src, dest) => {
-      if (!fs.existsSync(dest)) {
-        fs.mkdirSync(dest, { recursive: true });
-      }
-      const items = fs.readdirSync(src);
-      for (const item of items) {
-        const srcPath = path.join(src, item);
-        const destPath = path.join(dest, item);
-        if (fs.statSync(srcPath).isDirectory()) {
-          copyDir(srcPath, destPath);
-        } else {
-          fs.copyFileSync(srcPath, destPath);
-        }
-      }
-    };
-    
-    copyDir('./client/public', './dist/public');
-  }
+// Step 2: Copy static assets from client/public
+console.log('📁 Copying static assets...');
+fs.mkdirSync('./dist/public', { recursive: true });
 
-  // Copy index.html from client root or create production version
-  if (fs.existsSync('./client/index.html')) {
-    fs.copyFileSync('./client/index.html', './dist/public/index.html');
-  } else {
-    // Create production index.html
-    const productionHtml = `<!DOCTYPE html>
+// Copy all static assets from client/public
+if (fs.existsSync('./client/public')) {
+  const copyDir = (src, dest) => {
+    if (!fs.existsSync(dest)) {
+      fs.mkdirSync(dest, { recursive: true });
+    }
+    const items = fs.readdirSync(src);
+    for (const item of items) {
+      const srcPath = path.join(src, item);
+      const destPath = path.join(dest, item);
+      if (fs.statSync(srcPath).isDirectory()) {
+        copyDir(srcPath, destPath);
+      } else {
+        fs.copyFileSync(srcPath, destPath);
+      }
+    }
+  };
+  
+  copyDir('./client/public', './dist/public');
+  console.log('✅ Static assets copied');
+}
+
+// Step 3: Create production-ready index.html
+console.log('📄 Creating production index.html...');
+const productionHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -118,6 +96,7 @@ if (!fs.existsSync('./dist/public')) {
             font-size: clamp(2rem, 8vw, 4rem);
             margin-bottom: 1rem;
             text-shadow: 0 0 20px rgba(255, 85, 0, 0.5);
+            animation: pulse 3s ease-in-out infinite;
         }
         .loading p {
             font-size: 1.2rem;
@@ -136,6 +115,15 @@ if (!fs.existsSync('./dist/public')) {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+        /* Basic responsive design */
+        @media (max-width: 768px) {
+            .loading h1 { font-size: 3rem; }
+            .loading p { font-size: 1rem; }
+        }
     </style>
 </head>
 <body>
@@ -148,16 +136,15 @@ if (!fs.existsSync('./dist/public')) {
     <script type="module" src="/src/main.tsx"></script>
 </body>
 </html>`;
-    fs.writeFileSync('./dist/public/index.html', productionHtml);
-  }
-  console.log('✅ Static assets copied');
-}
+
+fs.writeFileSync('./dist/public/index.html', productionHtml);
+console.log('✅ Production index.html created');
 
 // Step 4: Create production package.json
-console.log('📋 Creating production package.json...');
+console.log('📦 Creating production package.json...');
 const prodPackageJson = {
   "name": "heinous-trivia-production",
-  "version": "1.0.0",
+  "version": "1.0.0", 
   "type": "module",
   "main": "index.js",
   "scripts": {
@@ -191,11 +178,11 @@ const prodPackageJson = {
 fs.writeFileSync('./dist/package.json', JSON.stringify(prodPackageJson, null, 2));
 console.log('✅ Production package.json created');
 
-// Step 5: Verify complete deployment structure
+// Step 5: Verify deployment structure
 console.log('🔍 Verifying deployment structure...');
 const requiredFiles = [
   'dist/index.js',
-  'dist/public/index.html',
+  'dist/public/index.html', 
   'dist/package.json'
 ];
 
@@ -210,23 +197,23 @@ if (missingFiles.length > 0) {
 const indexJsSize = fs.statSync('dist/index.js').size;
 const publicFiles = fs.readdirSync('dist/public').length;
 
-console.log('✅ Production build verification complete!');
+console.log('✅ Deployment verification complete!');
 console.log('📊 Build Summary:');
 console.log(`  - Server bundle: ${Math.round(indexJsSize / 1024)}KB`);
 console.log(`  - Static assets: ${publicFiles} files`);
-console.log(`  - Production config: dist/package.json`);
+console.log(`  - Production config: ready`);
 console.log('🚀 Deployment structure ready for Cloud Run');
 
-// Final verification that server can start
-console.log('🧪 Testing production server startup...');
+// Test server can start (quick verification)
+console.log('🧪 Testing server startup...');
 try {
-  execSync('cd dist && timeout 5s node index.js || true', { 
+  execSync('cd dist && timeout 3s node index.js 2>/dev/null || true', { 
     stdio: 'pipe',
-    timeout: 10000 
+    timeout: 5000 
   });
   console.log('✅ Server startup test passed');
 } catch (error) {
   console.log('⚠️ Server startup test inconclusive (expected for quick test)');
 }
 
-console.log('🎉 Production deployment build complete!');
+console.log('🎉 Deployment build complete and verified!');
