@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "vite --config vite.config.ts",
-    "build": "node deploy-comprehensive-fix.js",
+    "build": "node build.js",
     "start": "node dist/index.js"
   },
   "dependencies": {
