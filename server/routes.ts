@@ -634,15 +634,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
          * - Load haunt-specific questions ONLY, no global fallbacks unless in triviaPacks config
          */
 
-        // Get haunt configuration to check for assigned triviaPacks
+        // Get haunt configuration to check for assigned trivia packs
         const hauntConfig = await FirebaseService.getHauntConfig(hauntId);
-        console.log(`📘 Loading questions for haunt: ${hauntId} with config:`, {
-          hasTriviaPacks: !!(hauntConfig?.triviaPacks),
-          triviaPackCount: hauntConfig?.triviaPacks?.length || 0
-        });
+        console.log(`Loading questions for haunt: ${hauntId}`);
 
-        // 1. Load custom questions (haunt-specific subcollection per glossary)
-        // 📘 fieldGlossary.json: "haunt-questions/{hauntId}/questions"
+        // Load custom questions and uber admin assigned trivia packs (treated equally)
         const customQuestionsRef = firestore.collection('haunt-questions').doc(hauntId).collection('questions');
         const customSnapshot = await customQuestionsRef.get();
         
@@ -652,13 +648,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
             ...doc.data()
           }));
           questions = [...questions, ...customQuestions];
-          console.log(`✅ Loaded ${customQuestions.length} custom questions for hauntId: ${hauntId}`);
+          console.log(`✅ Loaded ${customQuestions.length} custom questions for ${hauntId}`);
         }
 
-        // 1b. Check for haunt-specific trivia pack assignments in configuration
-        // 📘 fieldGlossary.json: "triviaPacks" field from haunt configuration
+        // Load uber admin assigned trivia packs (mixed equally with custom questions)
         if (hauntConfig?.triviaPacks && Array.isArray(hauntConfig.triviaPacks) && hauntConfig.triviaPacks.length > 0) {
-          console.log(`📘 Found haunt-specific triviaPacks for ${hauntId}: ${hauntConfig.triviaPacks.join(', ')}`);
+          console.log(`Loading assigned trivia packs: ${hauntConfig.triviaPacks.join(', ')}`);
           
           for (const packId of hauntConfig.triviaPacks) {
             try {
@@ -669,175 +664,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
                 const packData = packDoc.data();
                 if (packData.questions && Array.isArray(packData.questions)) {
                   questions = [...questions, ...packData.questions];
-                  console.log(`✅ Loaded ${packData.questions.length} questions from haunt-specific pack: ${packId}`);
+                  console.log(`✅ Loaded ${packData.questions.length} questions from pack: ${packId}`);
                 }
               }
             } catch (error) {
-              console.warn(`⚠️ Could not load haunt-specific pack ${packId}:`, error);
+              console.warn(`Could not load pack ${packId}:`, error);
             }
-          }
-          
-          // If haunt has specific assignments, don't load major packs as fallback
-          if (questions.length >= 20) {
-            console.log(`✅ Sufficient questions from haunt-specific sources: ${questions.length}`);
-            // Skip major pack loading and proceed to randomization
           }
         }
 
-        // Skip the haunt-specific triviaPacks loading since it's handled above
-
-        // 2. If no haunt-specific sources found, assign appropriate fallback packs per haunt
-        if (questions.length < 20) {
-          console.log(`📘 No trivia-packs assigned for haunt: ${hauntId}, loading haunt-specific packs`);
-          
-          // Assign primary trivia packs based on haunt identity for proper isolation per fieldGlossary.json
-          let hauntSpecificPacks = [];
-          if (hauntId === 'headquarters') {
-            hauntSpecificPacks = ['cJ2QUpSECaKdOMbGUGBD'];
-            console.log(`📘 Loading headquarters primary pack: ${hauntSpecificPacks.join(', ')}`);
-          } else if (hauntId === 'Sorcererslair') {
-            // Sorcererslair gets cryptid-chaos pack (cJ2QUpSECaKdOMbGUGBD)
-            hauntSpecificPacks = ['cJ2QUpSECaKdOMbGUGBD'];
-            console.log(`📘 Loading Sorcererslair primary pack: ${hauntSpecificPacks.join(', ')}`);
-          } else {
-            // For other haunts, no primary pack - will fall back to starter-pack
-            hauntSpecificPacks = [];
-            console.log(`📘 No primary pack for ${hauntId}, will use starter-pack fallback`);
-          }
-          
-          for (const packId of hauntSpecificPacks) {
-            try {
-              console.log(`🔍 Attempting to load haunt-specific pack: ${packId}`);
-              const packRef = firestore.collection('trivia-packs').doc(packId);
-              const packDoc = await packRef.get();
-              
-              if (packDoc.exists) {
-                console.log(`✅ Found haunt-specific pack: ${packId}`);
-                const packData = packDoc.data();
-                if (packData.questions && Array.isArray(packData.questions)) {
-                  questions = [...questions, ...packData.questions];
-                  console.log(`✅ Loaded ${packData.questions.length} questions from haunt-specific pack: ${packId}`);
-                } else {
-                  console.log(`❌ Haunt-specific pack ${packId} has no questions array, data:`, packData);
-                }
-              } else {
-                console.log(`❌ Pack ${packId} does not exist in trivia-packs collection`);
-                
-                // Try to find it in globalQuestionPacks collection
-                try {
-                  const globalPackRef = firestore.collection('globalQuestionPacks').doc(packId);
-                  const globalPackDoc = await globalPackRef.get();
-                  
-                  if (globalPackDoc.exists) {
-                    console.log(`✅ Found ${packId} in globalQuestionPacks collection`);
-                    const globalPackData = globalPackDoc.data();
-                    if (globalPackData.questions && Array.isArray(globalPackData.questions)) {
-                      questions = [...questions, ...globalPackData.questions];
-                      console.log(`✅ Loaded ${globalPackData.questions.length} questions from global pack: ${packId}`);
-                    } else {
-                      console.log(`❌ Global pack ${packId} has no questions array`);
-                    }
-                  } else {
-                    console.log(`❌ Pack ${packId} not found in globalQuestionPacks either`);
-                    
-                    // Debug: List available collections only for cryptid-chaos
-                    if (packId === 'cryptid-chaos') {
-                      console.log(`🔍 Searching for cryptid-chaos across all possible collections...`);
-                      
-                      // Check trivia-packs
-                      const allPacksRef = firestore.collection('trivia-packs');
-                      const allPacksSnapshot = await allPacksRef.get();
-                      const availablePacks = allPacksSnapshot.docs.map(doc => doc.id);
-                      console.log(`🔍 Available trivia-packs:`, availablePacks);
-                      
-                      // Check globalQuestionPacks
-                      const globalPacksRef = firestore.collection('globalQuestionPacks');
-                      const globalSnapshot = await globalPacksRef.get();
-                      if (!globalSnapshot.empty) {
-                        const globalPacks = globalSnapshot.docs.map(doc => doc.id);
-                        console.log(`🔍 Available globalQuestionPacks:`, globalPacks);
-                      } else {
-                        console.log(`🔍 globalQuestionPacks collection is empty`);
-                      }
-                      
-                      // Try alternative collection names and structures
-                      const altCollections = ['question-packs', 'packs', 'triviaPacks', 'questionPacks', 'globalPacks', 'global-packs'];
-                      for (const colName of altCollections) {
-                        try {
-                          const altRef = firestore.collection(colName);
-                          const altSnapshot = await altRef.get();
-                          if (!altSnapshot.empty) {
-                            const altPacks = altSnapshot.docs.map(doc => ({ id: doc.id, hasQuestions: !!doc.data().questions }));
-                            console.log(`🔍 Available ${colName}:`, altPacks);
-                            
-                            // Check if cryptid-chaos is in this collection
-                            const cryptidDoc = altSnapshot.docs.find(doc => doc.id === 'cryptid-chaos');
-                            if (cryptidDoc) {
-                              console.log(`✅ Found cryptid-chaos in ${colName}! Loading questions...`);
-                              const cryptidData = cryptidDoc.data();
-                              if (cryptidData && cryptidData.questions && Array.isArray(cryptidData.questions)) {
-                                questions = [...questions, ...cryptidData.questions];
-                                console.log(`✅ Loaded ${cryptidData.questions.length} questions from cryptid-chaos in ${colName}`);
-                              }
-                            }
-                          }
-                        } catch (e) {
-                          // Collection doesn't exist, skip
-                        }
-                      }
-                      
-                      // Also try searching by name field across all collections
-                      try {
-                        const searchCollections = ['trivia-packs', 'globalQuestionPacks', 'question-packs', 'packs'];
-                        for (const searchCol of searchCollections) {
-                          const nameQuery = await firestore.collection(searchCol)
-                            .where('name', '==', 'cryptid-chaos').get();
-                          if (!nameQuery.empty) {
-                            console.log(`✅ Found cryptid-chaos by name in ${searchCol}, document ID:`, nameQuery.docs[0].id);
-                            const nameData = nameQuery.docs[0].data();
-                            if (nameData && nameData.questions && Array.isArray(nameData.questions)) {
-                              questions = [...questions, ...nameData.questions];
-                              console.log(`✅ Loaded ${nameData.questions.length} questions from cryptid-chaos by name search`);
-                            }
-                            break;
-                          }
-                        }
-                      } catch (e) {
-                        console.log(`⚠️ Name search failed:`, e.message);
-                      }
-                    }
-                  }
-                } catch (globalError) {
-                  console.warn(`⚠️ Could not check globalQuestionPacks for ${packId}:`, globalError);
-                }
-              }
-            } catch (error) {
-              console.warn(`⚠️ Could not load haunt-specific pack ${packId}:`, error);
-            }
-          }
-          
-          // Fallback to general collections as additional backup
-          const triviaPacksRef = firestore.collection('trivia-packs');
-          const packsSnapshot = await triviaPacksRef.get();
-          
-          if (!packsSnapshot.empty) {
-            packsSnapshot.docs.forEach(doc => {
-              const packData = doc.data();
-              // 📘 fieldGlossary.json: Check allowedHaunts field from configuration section
-              if (packData.questions && Array.isArray(packData.questions)) {
-                // Only load packs that don't have haunt restrictions or include this haunt
-                if (!packData.allowedHaunts || packData.allowedHaunts.includes(hauntId)) {
-                  questions = [...questions, ...packData.questions];
-                  console.log(`✅ Loaded ${packData.questions.length} questions from general pack: ${doc.id}`);
-                }
-              }
-            });
-          }
-        }
-
-        // Universal Starter Pack Fallback - NEVER let games fail due to missing questions
-        if (questions.length < 20) {
-          console.log(`⚠️ Only ${questions.length} questions loaded, loading starter pack as fallback...`);
+        // Fallback to starter-pack if no questions available
+        if (questions.length === 0) {
+          console.log(`No questions found, loading starter-pack fallback...`);
           
           try {
             const starterPackRef = firestore.collection('trivia-packs').doc('starter-pack');
@@ -846,36 +684,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
             if (starterPackDoc.exists) {
               const starterData = starterPackDoc.data();
               if (starterData.questions && Array.isArray(starterData.questions)) {
-                const existingQuestionTexts = new Set(questions.map(q => q.question || q.text));
-                const newQuestions = starterData.questions.filter(q => 
-                  !existingQuestionTexts.has(q.question || q.text)
-                );
-                questions = [...questions, ...newQuestions];
-                console.log(`✅ Loaded ${newQuestions.length} additional questions from starter pack (${starterData.questions.length} total in pack)`);
+                questions = [...starterData.questions];
+                console.log(`✅ Loaded ${questions.length} questions from starter-pack fallback`);
               }
             }
           } catch (starterError) {
             console.error('Failed to load starter pack:', starterError);
-          }
-          
-          // Final emergency fallback - create basic questions if starter pack fails
-          if (questions.length < 20) {
-            console.log(`🚨 Emergency fallback: Creating basic horror questions to ensure gameplay`);
-            const emergencyQuestions = [
-              { question: "What horror movie features the character Michael Myers?", choices: ["Friday the 13th", "Halloween", "Scream", "The Shining"], correct: "Halloween", explanation: "Michael Myers is the killer in the Halloween franchise." },
-              { question: "Who wrote the novel 'Dracula'?", choices: ["Mary Shelley", "Edgar Allan Poe", "Bram Stoker", "H.P. Lovecraft"], correct: "Bram Stoker", explanation: "Bram Stoker published Dracula in 1897." },
-              { question: "In which Stephen King novel does the Overlook Hotel appear?", choices: ["It", "Pet Sematary", "The Shining", "Carrie"], correct: "The Shining", explanation: "The Overlook Hotel is the haunted setting of The Shining." },
-              { question: "What weapon is typically associated with Jason Voorhees?", choices: ["Chainsaw", "Machete", "Knife", "Axe"], correct: "Machete", explanation: "Jason Voorhees is known for using a machete in the Friday the 13th films." },
-              { question: "Which horror film popularized the phrase 'Here's Johnny!'?", choices: ["Psycho", "The Exorcist", "The Shining", "Halloween"], correct: "The Shining", explanation: "Jack Nicholson's character says this line while breaking through a door." }
-            ];
-            
-            // Duplicate emergency questions to reach 20 minimum
-            while (questions.length + emergencyQuestions.length < 20) {
-              emergencyQuestions.push(...emergencyQuestions.slice(0, Math.min(5, 20 - questions.length - emergencyQuestions.length)));
-            }
-            
-            questions = [...questions, ...emergencyQuestions];
-            console.log(`✅ Added ${emergencyQuestions.length} emergency questions. Total: ${questions.length}`);
           }
         }
 
