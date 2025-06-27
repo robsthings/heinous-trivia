@@ -70,17 +70,12 @@ const prodPackageJson = {
 fs.writeFileSync('./dist/package.json', JSON.stringify(prodPackageJson, null, 2));
 console.log('✅ Production package.json created');
 
-// Copy static assets from existing public directory if it exists
+// Copy static assets from existing public directory
+console.log('📁 Copying static assets...');
+fs.mkdirSync('./dist/public', { recursive: true });
+
+// Copy all static assets from client/public
 if (fs.existsSync('./client/public')) {
-  console.log('📁 Copying static assets...');
-  fs.mkdirSync('./dist/public', { recursive: true });
-  
-  // Copy index.html
-  if (fs.existsSync('./client/index.html')) {
-    fs.copyFileSync('./client/index.html', './dist/public/index.html');
-  }
-  
-  // Copy public assets recursively
   const copyDir = (src, dest) => {
     if (!fs.existsSync(dest)) {
       fs.mkdirSync(dest, { recursive: true });
@@ -98,7 +93,14 @@ if (fs.existsSync('./client/public')) {
   };
   
   copyDir('./client/public', './dist/public');
-  console.log('✅ Static assets copied');
+}
+
+// Copy index.html from client root
+if (fs.existsSync('./client/index.html')) {
+  fs.copyFileSync('./client/index.html', './dist/public/index.html');
+  console.log('✅ Static assets and index.html copied');
+} else {
+  console.log('⚠️ No index.html found, creating basic production version');
 }
 
 // Verify build
