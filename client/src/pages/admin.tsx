@@ -3320,11 +3320,14 @@ export default function Admin() {
                               borderRadius: '50%' 
                             }}></div>
                             <span style={{ color: '#10b981', fontWeight: '600', fontSize: '0.875rem' }}>
-                              Question API
+                              Question System
                             </span>
                           </div>
                           <p style={{ color: '#d1d5db', fontSize: '0.75rem' }}>
-                            Serving 107+ questions per haunt
+                            Headquarters: 206 questions (cryptid + starter)
+                          </p>
+                          <p style={{ color: '#d1d5db', fontSize: '0.75rem', marginTop: '0.25rem' }}>
+                            Sorcererslair: 205 questions (cryptid + starter)
                           </p>
                         </div>
 
