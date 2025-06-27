@@ -227,30 +227,30 @@ export function ChupacabraChallenge() {
           )}
 
           {(gamePhase === "hunting") && (
-            <div `}>
-              <div  >
-                <div  style={{justifyContent: "space-between"}}>
-                  <div >
-                    <div >
+            <div style={{ padding: '2rem', backgroundColor: 'rgba(0, 0, 0, 0.6)', borderRadius: '0.5rem', margin: '1rem 0' }}>
+              <div style={{ marginBottom: '1rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
+                  <div style={{ color: 'white' }}>
+                    <div style={{ fontWeight: 'bold', marginBottom: '0.5rem' }}>
                       Hidden: {currentHidingSpot?.name}
                     </div>
-                    <div >
+                    <div style={{ fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.7)' }}>
                       Safety Rating: {Array.from({ length: currentHidingSpot?.safetyRating || 0 }, (_, i) => (
-                        <span key={i} >★</span>
+                        <span key={i} style={{ color: '#fbbf24' }}>★</span>
                       ))}
                     </div>
                   </div>
-                  <div >
-                    <div >
+                  <div style={{ textAlign: 'center', color: 'white' }}>
+                    <div style={{ fontSize: '1.25rem', fontWeight: 'bold' }}>
                       {timeRemaining}s
                     </div>
-                    <div >remaining</div>
+                    <div style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.7)' }}>remaining</div>
                   </div>
                 </div>
                 
-                <div >
-                  <div >Detection Risk</div>
-                  <div >
+                <div style={{ marginBottom: '1rem' }}>
+                  <div style={{ fontSize: '0.875rem', fontWeight: 'bold', marginBottom: '0.5rem', color: 'white' }}>Detection Risk</div>
+                  <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius: '9999px', height: '0.75rem' }}>
                     <div 
                       style={{
                         height: '0.75rem',
@@ -263,47 +263,55 @@ export function ChupacabraChallenge() {
                   </div>
                 </div>
                 
-                <p `}>
+                <p style={{ textAlign: 'center', fontSize: '0.875rem', fontStyle: 'italic', color: 'rgba(255, 255, 255, 0.8)' }}>
                   {getChupacabraReaction()}
                 </p>
               </div>
               
               {/* Game Area with Chupacabra */}
-              <div >
+              <div style={{ position: 'relative', width: '100%', height: '400px', backgroundColor: 'rgba(0, 0, 0, 0.8)', borderRadius: '0.5rem', overflow: 'hidden' }}>
                 <div 
-                  
-                  style={{ backgroundImage: 'linear-gradient(45deg, #1a1a2e 25%, transparent 25%), linear-gradient(-45deg, #1a1a2e 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #1a1a2e 75%), linear-gradient(-45deg, transparent 75%, #1a1a2e 75%)' }}
+                  style={{ 
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    backgroundImage: 'linear-gradient(45deg, #1a1a2e 25%, transparent 25%), linear-gradient(-45deg, #1a1a2e 25%, transparent 25%), linear-gradient(45deg, transparent 75%, #1a1a2e 75%), linear-gradient(-45deg, transparent 75%, #1a1a2e 75%)',
+                    backgroundSize: '20px 20px'
+                  }}
                 />
                 
                 {/* Player's hiding spot */}
                 {currentHidingSpot && (
                   <div
-                    
                     style={{
+                      position: 'absolute',
                       left: `${currentHidingSpot.x}%`,
                       top: `${currentHidingSpot.y}%`,
                       width: `${currentHidingSpot.width}%`,
                       height: `${currentHidingSpot.height}%`
                     }}
                   >
-                    <div >
-                      <span >YOU</span>
+                    <div style={{ backgroundColor: 'rgba(0, 255, 0, 0.7)', padding: '0.25rem', borderRadius: '0.25rem', fontSize: '0.75rem', fontWeight: 'bold', textAlign: 'center' }}>
+                      <span style={{ color: 'black' }}>YOU</span>
                     </div>
                   </div>
                 )}
                 
                 {/* Chupacabra */}
                 <div
-                  
                   style={{
+                    position: 'absolute',
                     left: `${chupacabraPosition.x}%`,
-                    top: `${chupacabraPosition.y}%`
+                    top: `${chupacabraPosition.y}%`,
+                    transition: 'all 1s ease'
                   }}
                 >
                   <img 
                     src="/chupacabra/sprite-chupacabra.png"
                     alt="Chupacabra"
-                    
+                    style={{ width: '50px', height: '50px' }}
                   />
                 </div>
               </div>
@@ -312,29 +320,45 @@ export function ChupacabraChallenge() {
 
           {(gamePhase === "caught" || gamePhase === "survived") && (
             <div style={{textAlign: "center"}}>
-                gamePhase === "caught" ? 'border-red-500/50 bg-red-900/20' : 'border-green-500/50 bg-green-900/20'
-              }`}>
-                <div >
+              <div style={{
+                padding: '2rem',
+                borderRadius: '0.5rem',
+                border: gamePhase === "caught" ? '1px solid rgba(239, 68, 68, 0.5)' : '1px solid rgba(34, 197, 94, 0.5)',
+                backgroundColor: gamePhase === "caught" ? 'rgba(127, 29, 29, 0.2)' : 'rgba(20, 83, 45, 0.2)'
+              }}>
+                <div style={{ marginBottom: '1rem' }}>
                   <img 
                     src="/chupacabra/sprite-chupacabra.png"
                     alt="Chupacabra"
-                    `}
+                    style={{ width: '100px', height: '100px', margin: '0 auto' }}
                   />
                 </div>
                 
-                  gamePhase === "caught" ? 'text-red-400' : 'text-green-400'
-                }`}>
+                <h2 style={{
+                  fontSize: '1.5rem',
+                  fontWeight: 'bold',
+                  marginBottom: '1rem',
+                  color: gamePhase === "caught" ? '#f87171' : '#4ade80'
+                }}>
                   {getResultMessage().title}
                 </h2>
                 
-                <p  >
+                <p style={{ marginBottom: '1.5rem', color: 'rgba(255, 255, 255, 0.8)' }}>
                   {getResultMessage().message}
                 </p>
                 
-                <div >
+                <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
                   <Button 
                     onClick={startGame}
-                    
+                    style={{
+                      background: 'linear-gradient(135deg, #7c3aed, #3b82f6)',
+                      color: 'white',
+                      border: 'none',
+                      padding: '0.75rem 1.5rem',
+                      borderRadius: '0.5rem',
+                      fontWeight: 'bold',
+                      cursor: 'pointer'
+                    }}
                   >
                     Hunt Again
                   </Button>

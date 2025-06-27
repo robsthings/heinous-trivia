@@ -778,14 +778,14 @@ export default function Analytics() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div >
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1.5rem' }}>
               {/* Total Ads */}
-              <div >
-                <div >
-                  <div >
-                    <PieChartIcon  />
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <PieChartIcon style={{ width: '1rem', height: '1rem', color: 'rgba(255, 255, 255, 0.6)' }} />
                   </div>
-                  <Badge variant="outline" >
+                  <Badge variant="outline" style={{ backgroundColor: 'transparent', color: 'rgba(255, 255, 255, 0.8)', border: '1px solid rgba(255, 255, 255, 0.3)' }}>
                     Active
                   </Badge>
                 </div>

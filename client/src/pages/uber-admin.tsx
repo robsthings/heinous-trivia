@@ -412,10 +412,11 @@ export default function UberAdmin() {
                         <Button
                           key={hauntId}
                           variant={selectedHaunt === hauntId ? "default" : "outline"}
-                            selectedHaunt === hauntId 
-                              ? "bg-purple-600 hover:bg-purple-700" 
-                              : "border-slate-600 text-gray-300 hover:bg-slate-700"
-                          }`}
+                          style={{
+                            backgroundColor: selectedHaunt === hauntId ? '#9333ea' : 'transparent',
+                            borderColor: selectedHaunt === hauntId ? '#9333ea' : '#4b5563',
+                            color: selectedHaunt === hauntId ? 'white' : '#d1d5db'
+                          }}
                           onClick={() => setSelectedHaunt(hauntId)}
                         >
                           <div >
