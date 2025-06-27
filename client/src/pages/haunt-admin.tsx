@@ -1643,8 +1643,163 @@ export default function HauntAdmin() {
         </div>
       )}
 
+      {/* Edit Ad Modal */}
+      {editingAd && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: 'rgba(0, 0, 0, 0.8)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          zIndex: 50
+        }}>
+          <div style={{
+            backgroundColor: '#1f2937',
+            padding: '24px',
+            borderRadius: '8px',
+            width: '90%',
+            maxWidth: '500px',
+            border: '2px solid #4b5563'
+          }}>
+            <h3 style={{
+              color: 'white',
+              fontSize: '18px',
+              fontWeight: '600',
+              marginBottom: '16px'
+            }}>Edit Ad</h3>
+            
+            <div style={{ marginBottom: '16px' }}>
+              <label style={{ color: '#d1d5db', fontSize: '14px', display: 'block', marginBottom: '4px' }}>
+                Title
+              </label>
+              <input
+                type="text"
+                value={editingAd.title || ''}
+                onChange={(e) => setEditingAd({...editingAd, title: e.target.value})}
+                style={{
+                  width: '100%',
+                  padding: '8px 12px',
+                  backgroundColor: '#374151',
+                  border: '1px solid #6b7280',
+                  borderRadius: '4px',
+                  color: 'white',
+                  fontSize: '14px'
+                }}
+              />
+            </div>
 
-      
+            <div style={{ marginBottom: '16px' }}>
+              <label style={{ color: '#d1d5db', fontSize: '14px', display: 'block', marginBottom: '4px' }}>
+                Description
+              </label>
+              <textarea
+                value={editingAd.description || ''}
+                onChange={(e) => setEditingAd({...editingAd, description: e.target.value})}
+                style={{
+                  width: '100%',
+                  padding: '8px 12px',
+                  backgroundColor: '#374151',
+                  border: '1px solid #6b7280',
+                  borderRadius: '4px',
+                  color: 'white',
+                  fontSize: '14px',
+                  minHeight: '80px',
+                  resize: 'vertical'
+                }}
+              />
+            </div>
+
+            <div style={{ marginBottom: '16px' }}>
+              <label style={{ color: '#d1d5db', fontSize: '14px', display: 'block', marginBottom: '4px' }}>
+                Link URL
+              </label>
+              <input
+                type="text"
+                value={editingAd.link || ''}
+                onChange={(e) => setEditingAd({...editingAd, link: e.target.value})}
+                style={{
+                  width: '100%',
+                  padding: '8px 12px',
+                  backgroundColor: '#374151',
+                  border: '1px solid #6b7280',
+                  borderRadius: '4px',
+                  color: 'white',
+                  fontSize: '14px'
+                }}
+              />
+            </div>
+
+            <div style={{ marginBottom: '20px' }}>
+              <label style={{ color: '#d1d5db', fontSize: '14px', display: 'block', marginBottom: '4px' }}>
+                Replace Image (optional)
+              </label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    setEditingAd({...editingAd, newFile: file});
+                  }
+                }}
+                style={{
+                  width: '100%',
+                  padding: '8px 12px',
+                  backgroundColor: '#374151',
+                  border: '1px solid #6b7280',
+                  borderRadius: '4px',
+                  color: 'white',
+                  fontSize: '14px'
+                }}
+              />
+            </div>
+
+            <div style={{ display: 'flex', gap: '8px', justifyContent: 'flex-end' }}>
+              <button
+                onClick={() => setEditingAd(null)}
+                style={{
+                  padding: '8px 16px',
+                  backgroundColor: '#6b7280',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '4px',
+                  fontSize: '14px',
+                  cursor: 'pointer'
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                onClick={async () => {
+                  await updateExistingAd(editingAd.id, {
+                    title: editingAd.title,
+                    description: editingAd.description,
+                    link: editingAd.link,
+                    file: editingAd.newFile
+                  });
+                  setEditingAd(null);
+                }}
+                style={{
+                  padding: '8px 16px',
+                  background: 'linear-gradient(to right, #dc2626, #7c2d12)',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '4px',
+                  fontSize: '14px',
+                  cursor: 'pointer'
+                }}
+              >
+                Save Changes
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <Footer />
 
       </div>
