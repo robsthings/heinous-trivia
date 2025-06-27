@@ -3279,26 +3279,8 @@ export default function Admin() {
 
               {/* Game Monitoring Tab */}
               <TabsContent value="monitoring">
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                  {/* Real-time Game Health Dashboard */}
-                  <Card style={{ backgroundColor: 'rgba(17, 24, 39, 0.5)', borderColor: '#374151' }}>
-                    <CardHeader>
-                      <CardTitle style={{ color: '#10b981', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <div style={{ 
-                          width: '12px', 
-                          height: '12px', 
-                          backgroundColor: '#10b981', 
-                          borderRadius: '50%',
-                          animation: 'pulse 2s infinite'
-                        }}></div>
-                        Real-time Game Monitoring
-                        <Badge variant="outline" style={{ color: '#10b981', borderColor: '#10b981' }}>
-                          LIVE
-                        </Badge>
-                      </CardTitle>
-                      <p style={{ color: '#9ca3af' }}>Monitor game performance and system health across all haunts</p>
-                    </CardHeader>
-                    <CardContent>
+                <RealTimeMonitoringDashboard />
+              </TabsContent>
                       <div style={{ 
                         display: 'grid', 
                         gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', 
