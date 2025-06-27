@@ -43,12 +43,18 @@ export function Crime() {
     return shuffled;
   };
 
-  // Generate random pattern of 3-6 glyphs
+  // Generate random pattern of 3-6 glyphs (no consecutive duplicates)
   const generatePattern = () => {
     const length = Math.floor(Math.random() * 4) + 3; // 3-6 symbols
     const pattern = [];
+    
     for (let i = 0; i < length; i++) {
-      pattern.push(Math.floor(Math.random() * 6) + 1); // 1-6 for glyph numbers
+      let glyph;
+      do {
+        glyph = Math.floor(Math.random() * 6) + 1; // 1-6 for glyph numbers
+      } while (i > 0 && glyph === pattern[i - 1]); // Prevent consecutive duplicates
+      
+      pattern.push(glyph);
     }
     return pattern;
   };
