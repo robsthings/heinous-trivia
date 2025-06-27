@@ -56,6 +56,6 @@
   },
   "devDependencies": {
     "@replit/vite-plugin-runtime-error-modal": "^0.0.3",
-    "@vitejs/plugin-react": "^4.5.2"
+    "@vitejs/plugin-react": "^4.6.0"
   }
 }
