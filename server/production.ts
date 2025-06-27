@@ -21,15 +21,31 @@ export function serveStatic(app: Express) {
   log(`Attempting to serve static files from: ${staticPath}`);
   log(`Looking for index.html at: ${indexPath}`);
 
+  // Check if files exist in the expected location
   if (!fs.existsSync(staticPath)) {
+    // Try alternative path structure for deployment
+    const altStaticPath = path.resolve(process.cwd(), "dist", "public");
+    const altIndexPath = path.resolve(altStaticPath, "index.html");
+    
+    log(`Static directory not found at ${staticPath}, trying alternative: ${altStaticPath}`);
+    
+    if (fs.existsSync(altStaticPath) && fs.existsSync(altIndexPath)) {
+      log(`Using alternative static path: ${altStaticPath}`);
+      app.use(express.static(altStaticPath));
+      app.use("*", (_req, res) => {
+        res.sendFile(altIndexPath);
+      });
+      return;
+    }
+    
     throw new Error(
-      `Static directory not found: ${staticPath}. Make sure build process creates public directory in deployment.`,
+      `Static directory not found at either ${staticPath} or ${altStaticPath}. Make sure build process creates public directory.`,
     );
   }
 
   if (!fs.existsSync(indexPath)) {
     throw new Error(
-      `Could not find index.html in: ${staticPath}. Make sure build process creates public/index.html in deployment.`,
+      `Could not find index.html in: ${staticPath}. Make sure build process creates public/index.html.`,
     );
   }
 
