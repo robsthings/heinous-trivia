@@ -1129,35 +1129,96 @@ export default function HauntAdmin() {
                 {/* Ad Grid Management */}
                 <div className="space-y-6">
                   {/* Ad Grid Display */}
-                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+                  <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+                    gap: '12px',
+                    maxWidth: '100%'
+                  }}>
                     {Array.from({ length: getAdLimit(hauntConfig.tier) }, (_, index) => {
                       const ad = uploadedAds[index];
                       return (
-                        <div key={index} className="relative group">
+                        <div key={index} style={{ position: 'relative' }}>
                           {ad ? (
-                            // Existing Ad Thumbnail - Smaller Size
-                            <div className="relative w-full h-24 bg-gray-800 border-2 border-gray-600 rounded-lg overflow-hidden hover:border-gray-500 transition-colors">
+                            // Existing Ad Thumbnail - Compact Size
+                            <div 
+                              style={{
+                                position: 'relative',
+                                width: '100%',
+                                height: '96px',
+                                backgroundColor: '#1f2937',
+                                border: '2px solid #4b5563',
+                                borderRadius: '8px',
+                                overflow: 'hidden',
+                                cursor: 'pointer',
+                                transition: 'border-color 0.2s'
+                              }}
+                              onMouseEnter={(e) => e.currentTarget.style.borderColor = '#6b7280'}
+                              onMouseLeave={(e) => e.currentTarget.style.borderColor = '#4b5563'}
+                            >
                               {ad.imageUrl && (
                                 <img 
                                   src={ad.imageUrl} 
                                   alt={ad.title}
-                                  className="w-full h-full object-cover"
+                                  style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    objectFit: 'cover'
+                                  }}
                                 />
                               )}
                               {!ad.imageUrl && (
-                                <div className="w-full h-full flex items-center justify-center bg-gray-800">
-                                  <span className="text-gray-500 text-xs">No Image</span>
+                                <div style={{
+                                  width: '100%',
+                                  height: '100%',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  backgroundColor: '#1f2937'
+                                }}>
+                                  <span style={{ color: '#6b7280', fontSize: '12px' }}>No Image</span>
                                 </div>
                               )}
                               
                               {/* Hover Controls */}
-                              <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-2 z-10">
+                              <div 
+                                style={{
+                                  position: 'absolute',
+                                  top: 0,
+                                  left: 0,
+                                  right: 0,
+                                  bottom: 0,
+                                  backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                                  opacity: 0,
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center',
+                                  gap: '8px',
+                                  zIndex: 10,
+                                  transition: 'opacity 0.2s'
+                                }}
+                                onMouseEnter={(e) => e.currentTarget.style.opacity = '1'}
+                                onMouseLeave={(e) => e.currentTarget.style.opacity = '0'}
+                              >
                                 <button
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     setEditingAd(ad);
                                   }}
-                                  className="bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded text-xs font-medium shadow-lg transition-colors"
+                                  style={{
+                                    backgroundColor: '#2563eb',
+                                    color: 'white',
+                                    padding: '4px 8px',
+                                    borderRadius: '4px',
+                                    fontSize: '12px',
+                                    fontWeight: '500',
+                                    border: 'none',
+                                    cursor: 'pointer',
+                                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                                    transition: 'background-color 0.2s'
+                                  }}
+                                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#1d4ed8'}
+                                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#2563eb'}
                                   title="Edit this ad"
                                 >
                                   Edit
@@ -1167,7 +1228,20 @@ export default function HauntAdmin() {
                                     e.stopPropagation();
                                     deleteExistingAd(ad.id);
                                   }}
-                                  className="bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded text-xs font-medium shadow-lg transition-colors"
+                                  style={{
+                                    backgroundColor: '#dc2626',
+                                    color: 'white',
+                                    padding: '4px 8px',
+                                    borderRadius: '4px',
+                                    fontSize: '12px',
+                                    fontWeight: '500',
+                                    border: 'none',
+                                    cursor: 'pointer',
+                                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                                    transition: 'background-color 0.2s'
+                                  }}
+                                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#b91c1c'}
+                                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#dc2626'}
                                   title="Delete this ad"
                                 >
                                   Del
@@ -1175,19 +1249,54 @@ export default function HauntAdmin() {
                               </div>
                               
                               {/* Ad Info Overlay */}
-                              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-2">
-                                <h4 className="text-white font-medium text-xs truncate">{ad.title}</h4>
+                              <div style={{
+                                position: 'absolute',
+                                bottom: 0,
+                                left: 0,
+                                right: 0,
+                                background: 'linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent)',
+                                padding: '8px'
+                              }}>
+                                <h4 style={{
+                                  color: 'white',
+                                  fontWeight: '500',
+                                  fontSize: '12px',
+                                  whiteSpace: 'nowrap',
+                                  overflow: 'hidden',
+                                  textOverflow: 'ellipsis',
+                                  margin: 0
+                                }}>{ad.title}</h4>
                               </div>
                             </div>
                           ) : (
-                            // Empty Ad Slot - Smaller Size
+                            // Empty Ad Slot - Compact Size
                             <div 
                               onClick={() => setShowNewAdForm(true)}
-                              className="w-full h-24 bg-gray-800/50 border-2 border-dashed border-gray-600 rounded-lg flex flex-col items-center justify-center hover:border-gray-500 hover:bg-gray-800/70 transition-colors cursor-pointer group"
+                              style={{
+                                width: '100%',
+                                height: '96px',
+                                backgroundColor: 'rgba(31, 41, 55, 0.5)',
+                                border: '2px dashed #4b5563',
+                                borderRadius: '8px',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                cursor: 'pointer',
+                                transition: 'all 0.2s'
+                              }}
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.borderColor = '#6b7280';
+                                e.currentTarget.style.backgroundColor = 'rgba(31, 41, 55, 0.7)';
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.borderColor = '#4b5563';
+                                e.currentTarget.style.backgroundColor = 'rgba(31, 41, 55, 0.5)';
+                              }}
                             >
-                              <div className="text-2xl text-gray-500 group-hover:text-gray-400 mb-1">+</div>
-                              <span className="text-gray-500 group-hover:text-gray-400 text-xs font-medium">Add</span>
-                              <span className="text-gray-600 text-xs">{index + 1}</span>
+                              <div style={{ fontSize: '24px', color: '#6b7280', marginBottom: '4px' }}>+</div>
+                              <span style={{ color: '#6b7280', fontSize: '12px', fontWeight: '500' }}>Add</span>
+                              <span style={{ color: '#4b5563', fontSize: '12px' }}>{index + 1}</span>
                             </div>
                           )}
                         </div>
