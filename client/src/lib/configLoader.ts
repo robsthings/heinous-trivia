@@ -21,7 +21,7 @@ export class ConfigLoader {
       if (response.ok) {
         const questions = await response.json();
         // Server already provides randomized questions, no need to shuffle again
-        console.log(`Loaded ${questions.length} pre-randomized questions from server`);
+
         return questions;
       }
       console.error('Failed to load questions from server');

@@ -77,19 +77,9 @@ export function InterstitialAd({ gameState, onClose, onVisitAd }: InterstitialAd
   }
 
   const handleVisitAd = () => {
-    console.log('Learn More clicked for ad:', {
-      adIndex,
-      hauntId: gameState.currentHaunt,
-      adTitle: currentAd.title,
-      adLink: currentAd.link
-    });
-    
     if (currentAd.link && currentAd.link !== '#' && currentAd.link.startsWith('http')) {
-      console.log('Tracking ad click for analytics - ID:', currentAd.id, 'Index:', adIndex);
       AnalyticsTracker.trackAdClick(gameState.currentHaunt, adIndex, currentAd.id);
       onVisitAd(currentAd.link);
-    } else {
-      console.log('Ad click not tracked - invalid link:', currentAd.link);
     }
   };
 

@@ -144,7 +144,6 @@ export class GameManager {
       
       // Take exactly the number we need for the game (or all available if less than required)
       const gameQuestions = validQuestions.slice(0, Math.min(this.QUESTIONS_PER_ROUND, validQuestions.length));
-      console.log(`🎮 Game initialized for ${haunt}: ${gameQuestions.length} questions selected from ${questions.length} available`);
 
       return {
         questions: gameQuestions,
@@ -189,9 +188,6 @@ export class GameManager {
   static nextQuestion(state: GameState): GameState {
     const nextIndex = state.currentQuestionIndex + 1;
     
-    console.log(`🎮 Next question: answered=${state.questionsAnswered}/${this.QUESTIONS_PER_ROUND}, nextIndex=${nextIndex}/${state.questions.length}`);
-    console.log(`🎮 Current question index: ${state.currentQuestionIndex}, questions available: ${state.questions.length}`);
-    console.log(`🎮 Next question exists:`, !!state.questions[nextIndex]);
     
     // Critical safety check - if next question doesn't exist, end game gracefully
     if (nextIndex >= state.questions.length) {
