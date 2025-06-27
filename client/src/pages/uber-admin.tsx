@@ -47,6 +47,8 @@ export default function UberAdmin() {
   const [timeRange, setTimeRange] = useState<"7d" | "30d" | "90d">("30d");
   const [selectedHaunt, setSelectedHaunt] = useState<string | null>(null);
   const [hauntConfigs, setHauntConfigs] = useState<Record<string, HauntConfig>>({});
+  const [triviaPacks, setTriviaPacks] = useState<any[]>([]);
+  const [availableHaunts, setAvailableHaunts] = useState<any[]>([]);
 
 
   useEffect(() => {
@@ -64,13 +66,15 @@ export default function UberAdmin() {
         console.log('📊 Analytics data:', data);
         setAnalytics(data);
         
-        // Load haunt configurations - get all haunts directly for the skins editor
+        // Load haunt configurations and trivia packs
         try {
           console.log('🏚️ Fetching haunts...');
-          const hauntsResponse = await fetch('/api/haunts');
+          const hauntsResponse = await fetch('/api/uber/haunts');
           if (hauntsResponse.ok) {
             const allHaunts = await hauntsResponse.json();
             console.log('🏚️ Haunts data:', allHaunts);
+            setAvailableHaunts(allHaunts);
+            
             const configs: Record<string, HauntConfig> = {};
             
             for (const haunt of allHaunts) {
@@ -104,6 +108,20 @@ export default function UberAdmin() {
         } catch (error) {
           console.error('Failed to load haunts for skins editor:', error);
         }
+        
+        // Load trivia packs
+        try {
+          console.log('📚 Fetching trivia packs...');
+          const packsResponse = await fetch('/api/uber/trivia-packs');
+          if (packsResponse.ok) {
+            const packs = await packsResponse.json();
+            console.log('📚 Trivia packs:', packs);
+            setTriviaPacks(packs);
+          }
+        } catch (error) {
+          console.error('Error loading trivia packs:', error);
+        }
+        
       } catch (error) {
         console.error("Failed to load global analytics:", error);
       } finally {
