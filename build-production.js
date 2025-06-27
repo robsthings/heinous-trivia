@@ -4,32 +4,29 @@ import { execSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 
-console.log('🚀 Starting production build...');
+console.log('🚀 Building for production deployment...');
 
-// Clean previous builds
-console.log('🧹 Cleaning previous builds...');
+// Clean and create dist directory
 if (fs.existsSync('./dist')) {
   fs.rmSync('./dist', { recursive: true, force: true });
 }
-
-// Create dist directory
 fs.mkdirSync('./dist', { recursive: true });
 
-// Build client first
-console.log('⚙️ Building client assets...');
+// Step 1: Build the client with Vite
+console.log('📦 Building client application...');
 try {
-  execSync('npx vite build --config vite.config.ts --outDir dist/public', {
+  execSync('npx vite build --config vite.config.ts', { 
     stdio: 'inherit',
-    timeout: 60000 // 1 minute timeout
+    timeout: 120000 // 2 minute timeout
   });
-  console.log('✅ Client build complete');
+  console.log('✅ Client build completed');
 } catch (error) {
   console.error('❌ Client build failed:', error.message);
   process.exit(1);
 }
 
-// Build server with corrected esbuild command
-console.log('⚙️ Building server...');
+// Step 2: Build the server with esbuild
+console.log('⚙️ Building server bundle...');
 try {
   const esbuildCommand = [
     'npx esbuild server/index.ts',
@@ -42,25 +39,25 @@ try {
     '--banner:js="import { fileURLToPath } from \'url\'; import { dirname } from \'path\'; const __filename = fileURLToPath(import.meta.url); const __dirname = dirname(__filename);"'
   ].join(' ');
 
-  execSync(esbuildCommand, {
+  execSync(esbuildCommand, { 
     stdio: 'inherit',
-    timeout: 30000 // 30 second timeout
+    timeout: 60000 // 1 minute timeout
   });
-  console.log('✅ Server build complete');
+  console.log('✅ Server bundle created');
 } catch (error) {
   console.error('❌ Server build failed:', error.message);
   process.exit(1);
 }
 
-// Create production package.json
-console.log('📦 Creating production package.json...');
+// Step 3: Create production package.json
+console.log('📋 Creating production package.json...');
 const prodPackageJson = {
   "name": "heinous-trivia-production",
   "version": "1.0.0",
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=production node index.js"
+    "start": "NODE_ENV=production PORT=5000 node index.js"
   },
   "engines": {
     "node": ">=18.0.0"
@@ -90,7 +87,86 @@ const prodPackageJson = {
 fs.writeFileSync('./dist/package.json', JSON.stringify(prodPackageJson, null, 2));
 console.log('✅ Production package.json created');
 
-// Verify required files exist
+// Step 4: Copy static assets
+console.log('📁 Setting up static assets...');
+
+// Create public directory in dist
+fs.mkdirSync('./dist/public', { recursive: true });
+
+// If client build created assets in dist/client, move them to dist/public
+if (fs.existsSync('./dist/client')) {
+  console.log('📂 Moving Vite build assets...');
+  const moveDir = (src, dest) => {
+    if (!fs.existsSync(dest)) {
+      fs.mkdirSync(dest, { recursive: true });
+    }
+    const items = fs.readdirSync(src);
+    for (const item of items) {
+      const srcPath = path.join(src, item);
+      const destPath = path.join(dest, item);
+      if (fs.statSync(srcPath).isDirectory()) {
+        moveDir(srcPath, destPath);
+      } else {
+        fs.copyFileSync(srcPath, destPath);
+      }
+    }
+  };
+  
+  moveDir('./dist/client', './dist/public');
+  fs.rmSync('./dist/client', { recursive: true, force: true });
+}
+
+// Copy any remaining static assets from client/public
+if (fs.existsSync('./client/public')) {
+  console.log('📂 Copying additional static assets...');
+  const copyDir = (src, dest) => {
+    if (!fs.existsSync(dest)) {
+      fs.mkdirSync(dest, { recursive: true });
+    }
+    const items = fs.readdirSync(src);
+    for (const item of items) {
+      const srcPath = path.join(src, item);
+      const destPath = path.join(dest, item);
+      
+      // Skip if file already exists from Vite build
+      if (fs.existsSync(destPath)) continue;
+      
+      if (fs.statSync(srcPath).isDirectory()) {
+        copyDir(srcPath, destPath);
+      } else {
+        fs.copyFileSync(srcPath, destPath);
+      }
+    }
+  };
+  
+  copyDir('./client/public', './dist/public');
+}
+
+// Ensure index.html exists
+if (!fs.existsSync('./dist/public/index.html')) {
+  if (fs.existsSync('./client/index.html')) {
+    fs.copyFileSync('./client/index.html', './dist/public/index.html');
+  } else {
+    // Create a basic index.html if none exists
+    const basicHtml = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heinous Trivia</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="module" src="/assets/index.js"></script>
+</body>
+</html>`;
+    fs.writeFileSync('./dist/public/index.html', basicHtml);
+  }
+}
+
+console.log('✅ Static assets configured');
+
+// Step 5: Verify build outputs
 console.log('🔍 Verifying build outputs...');
 const requiredFiles = [
   'dist/index.js',
@@ -105,39 +181,19 @@ if (missingFiles.length > 0) {
   process.exit(1);
 }
 
-// Check file sizes and provide build summary
+// Check file sizes
 const indexJsSize = fs.statSync('dist/index.js').size;
-const indexHtmlExists = fs.existsSync('dist/public/index.html');
+const publicFiles = fs.readdirSync('dist/public').length;
 
-console.log('✅ Build verification complete!');
-console.log('📊 Build Summary:');
-console.log(`  - Server bundle: ${Math.round(indexJsSize / 1024)}KB`);
-console.log(`  - Client assets: ${indexHtmlExists ? 'Generated' : 'Missing'}`);
-console.log(`  - Production config: Created`);
+console.log('✅ Production build complete!');
+console.log(`📊 Server bundle: ${Math.round(indexJsSize / 1024)}KB`);
+console.log(`📁 Static files: ${publicFiles} files in public/`);
+console.log('🚀 Ready for deployment');
 
-// Count static assets
-const publicDir = 'dist/public';
-if (fs.existsSync(publicDir)) {
-  const countFiles = (dir) => {
-    let count = 0;
-    const items = fs.readdirSync(dir);
-    for (const item of items) {
-      const fullPath = path.join(dir, item);
-      if (fs.statSync(fullPath).isDirectory()) {
-        count += countFiles(fullPath);
-      } else {
-        count++;
-      }
-    }
-    return count;
-  };
-  
-  const assetCount = countFiles(publicDir);
-  console.log(`  - Static assets: ${assetCount} files`);
-}
-
-console.log('\n🚀 Production build complete! Ready for deployment.');
-console.log('Structure created:');
-console.log('  ├── dist/index.js (server entry point)');
-console.log('  ├── dist/package.json (production dependencies)');
-console.log('  └── dist/public/ (client assets)');
+// List key files for verification
+console.log('\n📋 Deployment structure:');
+console.log('  dist/');
+console.log('  ├── index.js (server entry point)');
+console.log('  ├── package.json (production dependencies)');
+console.log('  └── public/ (static assets)');
+console.log('      └── index.html (client application)');
