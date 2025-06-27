@@ -13,7 +13,7 @@ fs.mkdirSync('./dist', { recursive: true });
 
 // Build server bundle
 console.log('Building server...');
-execSync(`npx esbuild server/index.ts --platform=node --bundle --format=esm --outfile=dist/index.js --define:process.env.NODE_ENV='"production"' --banner:js='import { fileURLToPath } from "url"; import { dirname } from "path"; const __filename = fileURLToPath(import.meta.url); const __dirname = dirname(__filename);'`, { stdio: 'inherit' });
+execSync(`npx esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outfile=dist/index.js --define:process.env.NODE_ENV='"production"' --banner:js='import { fileURLToPath } from "url"; import { dirname } from "path"; const __filename = fileURLToPath(import.meta.url); const __dirname = dirname(__filename);' --external:@neondatabase/serverless --external:drizzle-orm --external:firebase --external:firebase-admin --external:express --external:bcrypt --external:ws --external:cors --external:express-session --external:connect-pg-simple --external:passport --external:passport-local --external:multer --external:zod --external:dotenv --external:node-fetch --external:form-data`, { stdio: 'inherit' });
 
 // Create production directory structure
 fs.mkdirSync('./dist/public', { recursive: true });
@@ -84,6 +84,26 @@ const prodPackageJson = {
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.1",
+    "drizzle-orm": "^0.44.2",
+    "drizzle-zod": "^0.8.2",
+    "firebase": "^11.9.1",
+    "firebase-admin": "^11.11.1",
+    "express": "^4.18.2",
+    "bcrypt": "^6.0.0",
+    "ws": "^8.18.2",
+    "cors": "^2.8.5",
+    "express-session": "^1.18.1",
+    "connect-pg-simple": "^10.0.0",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
+    "multer": "^2.0.1",
+    "zod": "^3.25.67",
+    "dotenv": "^16.3.1",
+    "node-fetch": "^3.3.2",
+    "form-data": "^4.0.3"
   }
 };
 
