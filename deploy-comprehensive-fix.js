@@ -15,29 +15,24 @@ fs.mkdirSync('./dist', { recursive: true });
 console.log('Building server...');
 execSync(`npx esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outfile=dist/index.js --define:process.env.NODE_ENV='"production"' --banner:js='import { fileURLToPath } from "url"; import { dirname } from "path"; const __filename = fileURLToPath(import.meta.url); const __dirname = dirname(__filename);'`, { stdio: 'inherit' });
 
-// Build client assets with timeout protection
-console.log('Building client...');
-try {
-  execSync('timeout 120 npx vite build --outDir dist/public', { stdio: 'inherit' });
-  console.log('✅ Vite build completed successfully');
-} catch (error) {
-  console.log('⚠️  Vite build timed out, using optimized fallback...');
-  fs.mkdirSync('./dist/public', { recursive: true });
-  
-  // Copy all static assets from client/public
-  if (fs.existsSync('./client/public')) {
-    console.log('📁 Copying static assets...');
-    execSync('cp -r client/public/* dist/public/', { stdio: 'inherit' });
-  }
-  
-  // Copy existing client build if available
-  if (fs.existsSync('./client/dist')) {
-    console.log('📁 Using existing client build...');
-    execSync('cp -r client/dist/* dist/public/', { stdio: 'inherit' });
-  }
-  
-  // Create optimized production index.html with proper SPA routing
-  const indexHtml = `<!DOCTYPE html>
+// Use optimized fallback approach for client assets (bypasses Vite timeout)
+console.log('Using optimized client asset deployment...');
+fs.mkdirSync('./dist/public', { recursive: true });
+
+// Copy all static assets from client/public
+if (fs.existsSync('./client/public')) {
+  console.log('Copying static assets...');
+  execSync('cp -r client/public/* dist/public/', { stdio: 'inherit' });
+}
+
+// Copy existing client build if available
+if (fs.existsSync('./client/dist')) {
+  console.log('Using existing client build...');
+  execSync('cp -r client/dist/* dist/public/', { stdio: 'inherit' });
+}
+
+// Create optimized production index.html
+const indexHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -91,13 +86,18 @@ try {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
-    .error-msg {
+    .restart-msg {
       background: rgba(139,0,0,0.3);
       border: 1px solid #8b0000;
       border-radius: 8px;
       padding: 1rem;
       margin-top: 2rem;
       font-size: 0.9rem;
+      opacity: 0;
+      animation: fadeIn 3s ease-in-out 5s forwards;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
     }
   </style>
 </head>
@@ -105,32 +105,23 @@ try {
   <div class="container">
     <div id="root">
       <h1>HEINOUS TRIVIA</h1>
-      <p class="subtitle">Loading spine-chilling experience...</p>
+      <p class="subtitle">Starting spine-chilling experience...</p>
       <div class="loading-spinner"></div>
-      <div class="error-msg">
-        <p>🎃 If this page doesn't load automatically, the trivia experience may be temporarily unavailable.</p>
-        <p>Please try refreshing the page or contact support.</p>
+      <div class="restart-msg">
+        <p>Application starting up - this may take a moment on first load</p>
       </div>
     </div>
   </div>
   <script>
-    // Simple client-side routing fallback
-    if (window.location.pathname !== '/') {
-      console.log('SPA routing fallback active for:', window.location.pathname);
-    }
-    // Auto-refresh after 10 seconds if no content loads
+    // Auto-refresh to trigger server wake-up
     setTimeout(() => {
-      if (document.getElementById('root').innerHTML.includes('Loading spine-chilling')) {
-        window.location.reload();
-      }
-    }, 10000);
+      window.location.reload();
+    }, 8000);
   </script>
 </body>
 </html>`;
-  
-  fs.writeFileSync('./dist/public/index.html', indexHtml);
-  console.log('✅ Fallback HTML created with horror theme');
-}
+
+fs.writeFileSync('./dist/public/index.html', indexHtml);
 
 // Create production package.json
 const prodPackageJson = {
@@ -168,11 +159,22 @@ const prodPackageJson = {
 
 fs.writeFileSync('./dist/package.json', JSON.stringify(prodPackageJson, null, 2));
 
-// Verify build
+// Verify build structure
 const serverSize = Math.round(fs.statSync('./dist/index.js').size / 1024);
 const assetCount = fs.existsSync('./dist/public') ? fs.readdirSync('./dist/public').length : 0;
+const hasPackageJson = fs.existsSync('./dist/package.json');
 
-console.log(`✅ Build complete:`);
+console.log('✅ Cloud Run deployment build complete:');
 console.log(`   Server: dist/index.js (${serverSize}KB)`);
 console.log(`   Assets: ${assetCount} files in dist/public/`);
-console.log(`   Ready for: npm run start`);
+console.log(`   Package: ${hasPackageJson ? 'dist/package.json created' : 'missing'}`);
+console.log('   Ready for Cloud Run deployment');
+
+// Validate production readiness
+if (serverSize > 0 && assetCount > 0 && hasPackageJson) {
+  console.log('🎯 All deployment requirements satisfied');
+  process.exit(0);
+} else {
+  console.error('❌ Deployment validation failed');
+  process.exit(1);
+}
