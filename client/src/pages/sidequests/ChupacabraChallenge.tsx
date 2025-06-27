@@ -252,10 +252,13 @@ export function ChupacabraChallenge() {
                   <div >Detection Risk</div>
                   <div >
                     <div 
-                      className={`h-3 rounded-full transition-all duration-500 ${
-                        detectionRisk > 70 ? 'bg-red-500' : detectionRisk > 40 ? 'bg-yellow-500' : 'bg-green-500'
-                      }`}
-                      style={{ width: `${detectionRisk}%` }}
+                      style={{
+                        height: '0.75rem',
+                        borderRadius: '9999px',
+                        transition: 'all 0.5s ease',
+                        backgroundColor: detectionRisk > 70 ? '#ef4444' : detectionRisk > 40 ? '#eab308' : '#22c55e',
+                        width: `${detectionRisk}%`
+                      }}
                     />
                   </div>
                 </div>
