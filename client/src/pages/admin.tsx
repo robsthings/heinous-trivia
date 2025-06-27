@@ -200,6 +200,17 @@ const SystemMonitoringDashboard = ({ haunts, triviaPacks }: { haunts: any[], tri
             Sidequest Testing Center
           </CardTitle>
           <p style={{ color: '#9ca3af' }}>Test all sidequests for quality assurance</p>
+          <div style={{ 
+            backgroundColor: 'rgba(139, 92, 246, 0.1)', 
+            border: '1px solid #8b5cf6', 
+            borderRadius: '0.5rem', 
+            padding: '0.75rem', 
+            marginBottom: '1rem',
+            fontSize: '0.875rem',
+            color: '#d1d5db'
+          }}>
+            <strong style={{ color: '#8b5cf6' }}>Tier Logic:</strong> Basic (3), Pro (5 total: 3 Basic + 2 new), Premium (10 total: 5 Pro + 5 new)
+          </div>
         </CardHeader>
         <CardContent>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem' }}>
