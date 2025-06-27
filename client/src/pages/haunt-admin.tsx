@@ -851,7 +851,8 @@ export default function HauntAdmin() {
         margin: '0 auto',
         display: 'flex',
         flexDirection: 'column',
-        gap: '1.5rem'
+        gap: '1.5rem',
+        paddingBottom: '6rem'
       }}>
         
         {/* Header Section */}
