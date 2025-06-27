@@ -53,7 +53,7 @@ const prodPackageJson = {
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=production PORT=5000 node index.js"
+    "start": "NODE_ENV=production node index.js"
   },
   "engines": {
     "node": ">=18.0.0"
