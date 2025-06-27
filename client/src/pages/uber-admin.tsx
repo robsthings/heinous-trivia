@@ -419,9 +419,9 @@ export default function UberAdmin() {
                           }}
                           onClick={() => setSelectedHaunt(hauntId)}
                         >
-                          <div >
-                            <span >{config.name}</span>
-                            <span >{hauntId}</span>
+                          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                            <span style={{ fontWeight: 'bold' }}>{config.name}</span>
+                            <span style={{ fontSize: '0.75rem', opacity: 0.7 }}>{hauntId}</span>
                           </div>
                         </Button>
                       ))
@@ -486,20 +486,23 @@ export default function UberAdmin() {
                       </div>
 
                       {/* Preview Section */}
-                      <div >
-                        <Label >Theme Preview</Label>
-                        <div >
-                          <div >Progress Bar Preview:</div>
-                          <div >
+                      <div style={{ marginTop: '1rem' }}>
+                        <Label style={{ color: 'white', marginBottom: '0.5rem', display: 'block' }}>Theme Preview</Label>
+                        <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)', padding: '1rem', borderRadius: '0.5rem' }}>
+                          <div style={{ marginBottom: '0.5rem', color: 'white' }}>Progress Bar Preview:</div>
+                          <div style={{ height: '1rem', backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius: '9999px', overflow: 'hidden' }}>
                             <div 
-                                hauntConfigs[selectedHaunt]?.theme?.progressBar === 'lightning' 
-                                  ? 'bg-gradient-to-r from-blue-400 to-cyan-400' 
+                              style={{
+                                height: '100%',
+                                width: '75%',
+                                background: hauntConfigs[selectedHaunt]?.theme?.progressBar === 'lightning' 
+                                  ? 'linear-gradient(to right, #60a5fa, #22d3ee)' 
                                   : hauntConfigs[selectedHaunt]?.theme?.progressBar === 'blood'
-                                  ? 'bg-gradient-to-r from-red-600 to-red-400'
+                                  ? 'linear-gradient(to right, #dc2626, #f87171)'
                                   : hauntConfigs[selectedHaunt]?.theme?.progressBar === 'chains'
-                                  ? 'bg-gradient-to-r from-gray-400 to-gray-600'
-                                  : 'bg-gradient-to-r from-purple-600 to-purple-400'
-                              }`}
+                                  ? 'linear-gradient(to right, #9ca3af, #4b5563)'
+                                  : 'linear-gradient(to right, #9333ea, #a855f7)'
+                              }}
                             />
                           </div>
                         </div>
