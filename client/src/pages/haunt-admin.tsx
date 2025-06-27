@@ -240,6 +240,12 @@ export default function HauntAdmin() {
             secondaryColor: data.theme?.secondaryColor || "#2D1B69",
             accentColor: data.theme?.accentColor || "#FF6B35"
           });
+          // Load initial data
+          await Promise.all([
+            loadCustomQuestions(),
+            loadUploadedAds(),
+            loadTriviaPacks()
+          ]);
         } else {
           // Check legacy access code system as fallback
           const savedCode = localStorage.getItem(`heinous-admin-${hauntId}`);
@@ -254,6 +260,12 @@ export default function HauntAdmin() {
               secondaryColor: data.theme?.secondaryColor || "#2D1B69",
               accentColor: data.theme?.accentColor || "#FF6B35"
             });
+            // Load initial data
+            await Promise.all([
+              loadCustomQuestions(),
+              loadUploadedAds(),
+              loadTriviaPacks()
+            ]);
           } else {
             // Check if this is first-time setup (no auth method configured)
             if (!data.authCode && (!data.authorizedEmails || data.authorizedEmails.length === 0)) {
@@ -348,11 +360,16 @@ export default function HauntAdmin() {
 
   const loadCustomQuestions = async () => {
     try {
-      // These would require additional server endpoints if needed
-      // For now, set empty array to avoid Firebase calls
-      setCustomQuestions([]);
+      const response = await fetch(`/api/custom-questions/${hauntId}`);
+      if (response.ok) {
+        const questions = await response.json();
+        setCustomQuestions(questions);
+      } else {
+        setCustomQuestions([]);
+      }
     } catch (error) {
       console.error('Failed to load custom questions:', error);
+      setCustomQuestions([]);
     }
   };
 

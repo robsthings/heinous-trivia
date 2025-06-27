@@ -1293,6 +1293,37 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get custom questions for a haunt
+  app.get("/api/custom-questions/:hauntId", async (req, res) => {
+    try {
+      const { hauntId } = req.params;
+      
+      if (!firestore) {
+        return res.status(500).json({ error: "Firebase not configured" });
+      }
+      
+      // 📘 fieldGlossary.json: "haunt-questions/{hauntId}/questions"
+      const customQuestionsRef = firestore.collection('haunt-questions').doc(hauntId).collection('questions');
+      const snapshot = await customQuestionsRef.orderBy('timestamp', 'desc').get();
+      
+      if (snapshot.empty) {
+        return res.json([]);
+      }
+      
+      const customQuestions = snapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      
+      console.log(`📝 Loaded ${customQuestions.length} custom questions for ${hauntId}`);
+      res.json(customQuestions);
+      
+    } catch (error) {
+      console.error("Error fetching custom questions:", error);
+      res.status(500).json({ error: "Failed to fetch custom questions" });
+    }
+  });
+
   // Get haunt config
   app.get("/api/haunt-config/:hauntId", async (req, res) => {
     try {
