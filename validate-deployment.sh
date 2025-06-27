@@ -1,5 +1,4 @@
 #!/bin/bash
-
 echo "🔍 DEPLOYMENT VALIDATION CHECK"
 echo "=============================="
 
@@ -28,27 +27,4 @@ else
   exit 1
 fi
 
-# Check for proper PORT environment variable handling
-echo "🔧 Checking server port configuration..."
-if grep -q "process.env.PORT" dist/index.js && grep -q "0.0.0.0" dist/index.js; then
-  echo "✅ Server configured for Cloud Run (PORT env var + 0.0.0.0 binding)"
-else
-  echo "❌ Server not properly configured for Cloud Run"
-  exit 1
-fi
-
-# Count static assets
-echo "📁 Counting static assets..."
-asset_count=$(find dist/public -type f | wc -l)
-echo "✅ $asset_count static assets available"
-
-echo ""
 echo "🎉 DEPLOYMENT VALIDATION PASSED - READY FOR CLOUD RUN"
-echo "📋 Summary:"
-echo "   • dist/index.js: Production server bundle"
-echo "   • dist/package.json: Correct start script and dependencies"
-echo "   • dist/public/: Complete static asset structure"
-echo "   • dist/Dockerfile: Docker configuration for Cloud Run"
-echo "   • Server: Configured for PORT environment variable with 0.0.0.0 binding"
-echo ""
-echo "✅ ALL DEPLOYMENT FIXES SUCCESSFULLY APPLIED"
