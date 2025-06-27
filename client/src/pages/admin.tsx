@@ -1557,7 +1557,7 @@ export default function Admin() {
                     })
                   }}
                 >
-                  Assignments
+                  Trivia Pack Assignments
                 </TabsTrigger>
                 <TabsTrigger 
                   value="default-ads" 

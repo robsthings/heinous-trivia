@@ -1293,6 +1293,125 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Universal trivia pack assignment endpoints
+  app.get("/api/uber/trivia-packs", async (req, res) => {
+    try {
+      if (!firestore) {
+        return res.status(500).json({ error: "Firebase not configured" });
+      }
+      
+      const packsRef = firestore.collection('trivia-packs');
+      const snapshot = await packsRef.get();
+      const packs = [];
+      
+      snapshot.forEach((doc) => {
+        const data = doc.data();
+        packs.push({
+          id: doc.id,
+          name: data.name || 'Unnamed Pack',
+          questionCount: data.questions ? data.questions.length : 0,
+          description: data.description || ''
+        });
+      });
+      
+      res.json(packs);
+    } catch (error) {
+      console.error("Error fetching trivia packs:", error);
+      res.status(500).json({ error: "Failed to fetch trivia packs" });
+    }
+  });
+
+  app.get("/api/uber/haunts", async (req, res) => {
+    try {
+      if (!firestore) {
+        return res.status(500).json({ error: "Firebase not configured" });
+      }
+      
+      const hauntsRef = firestore.collection('haunts');
+      const snapshot = await hauntsRef.get();
+      const haunts = [];
+      
+      snapshot.forEach((doc) => {
+        const data = doc.data();
+        haunts.push({
+          id: doc.id,
+          name: data.name || 'Unnamed Haunt',
+          triviaPacks: data.triviaPacks || []
+        });
+      });
+      
+      res.json(haunts);
+    } catch (error) {
+      console.error("Error fetching haunts:", error);
+      res.status(500).json({ error: "Failed to fetch haunts" });
+    }
+  });
+
+  app.post("/api/uber/assign-trivia-pack", async (req, res) => {
+    try {
+      const { hauntId, packId } = req.body;
+      
+      if (!hauntId || !packId) {
+        return res.status(400).json({ error: "Both hauntId and packId are required" });
+      }
+      
+      if (!firestore) {
+        return res.status(500).json({ error: "Firebase not configured" });
+      }
+      
+      // Get current haunt config
+      const hauntRef = firestore.collection('haunts').doc(hauntId);
+      const hauntDoc = await hauntRef.get();
+      
+      if (!hauntDoc.exists) {
+        return res.status(404).json({ error: "Haunt not found" });
+      }
+      
+      const hauntData = hauntDoc.data();
+      const currentPacks = hauntData.triviaPacks || [];
+      
+      // Add pack if not already assigned
+      if (!currentPacks.includes(packId)) {
+        const updatedPacks = [...currentPacks, packId];
+        await hauntRef.update({ triviaPacks: updatedPacks });
+        
+        res.json({ 
+          success: true, 
+          message: `Pack ${packId} assigned to ${hauntId}`,
+          triviaPacks: updatedPacks
+        });
+      } else {
+        res.json({ 
+          success: true, 
+          message: `Pack ${packId} already assigned to ${hauntId}`,
+          triviaPacks: currentPacks
+        });
+      }
+    } catch (error) {
+      console.error("Error assigning trivia pack:", error);
+      res.status(500).json({ error: "Failed to assign trivia pack" });
+    }
+  });
+
+  app.delete("/api/uber/trivia-pack/:packId", async (req, res) => {
+    try {
+      const { packId } = req.params;
+      
+      if (!firestore) {
+        return res.status(500).json({ error: "Firebase not configured" });
+      }
+      
+      // Delete the trivia pack
+      const packRef = firestore.collection('trivia-packs').doc(packId);
+      await packRef.delete();
+      
+      res.json({ success: true, message: `Trivia pack ${packId} deleted successfully` });
+    } catch (error) {
+      console.error("Error deleting trivia pack:", error);
+      res.status(500).json({ error: "Failed to delete trivia pack" });
+    }
+  });
+
   // Analytics session endpoints
   app.post("/api/analytics/session", async (req, res) => {
     res.setHeader('Content-Type', 'application/json');
