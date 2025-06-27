@@ -14,19 +14,30 @@ export function log(message: string, source = "express") {
 }
 
 export function serveStatic(app: Express) {
-  // In deployment, static files are served from the public directory relative to the server
-  const staticPath = path.resolve(process.cwd(), "public");
+  // In deployment, static files are served from dist/public directory
+  const staticPath = path.resolve(process.cwd(), "dist", "public");
   const indexPath = path.resolve(staticPath, "index.html");
 
-  if (!fs.existsSync(indexPath)) {
+  log(`Attempting to serve static files from: ${staticPath}`);
+  log(`Looking for index.html at: ${indexPath}`);
+
+  if (!fs.existsSync(staticPath)) {
     throw new Error(
-      `Could not find index.html in: ${staticPath}, make sure to build the client first`,
+      `Static directory not found: ${staticPath}. Make sure build process creates dist/public.`,
     );
   }
 
-  app.use(express.static(staticPath));
+  if (!fs.existsSync(indexPath)) {
+    throw new Error(
+      `Could not find index.html in: ${staticPath}. Make sure build process creates dist/public/index.html.`,
+    );
+  }
 
-  // fall through to index.html if the file doesn't exist
+  // Serve static files from dist/public
+  app.use(express.static(staticPath));
+  log(`Static files configured from: ${staticPath}`);
+
+  // Fall through to index.html for client-side routing
   app.use("*", (_req, res) => {
     res.sendFile(indexPath);
   });
