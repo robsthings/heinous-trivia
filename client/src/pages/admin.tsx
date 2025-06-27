@@ -112,7 +112,7 @@ const SystemMonitoringDashboard = ({ haunts, triviaPacks }: { haunts: any[], tri
     return () => clearInterval(interval);
   }, [haunts, triviaPacks]);
 
-  const getStatusColor = (status) => {
+  const getStatusColor = (status: string) => {
     switch (status) {
       case 'healthy': return '#10b981';
       case 'error': return '#ef4444';
@@ -121,7 +121,7 @@ const SystemMonitoringDashboard = ({ haunts, triviaPacks }: { haunts: any[], tri
     }
   };
 
-  const getStatusIcon = (status) => {
+  const getStatusIcon = (status: string) => {
     switch (status) {
       case 'healthy': return '✅';
       case 'error': return '❌';
