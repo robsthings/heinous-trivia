@@ -13,7 +13,7 @@ fs.mkdirSync('./dist', { recursive: true });
 
 // Build server bundle
 console.log('Building server...');
-execSync(`npx esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outfile=dist/index.js --define:process.env.NODE_ENV='"production"' --banner:js='import { fileURLToPath } from "url"; import { dirname } from "path"; const __filename = fileURLToPath(import.meta.url); const __dirname = dirname(__filename);' --external:@neondatabase/serverless --external:drizzle-orm --external:firebase --external:firebase-admin --external:express --external:bcrypt --external:ws --external:cors --external:express-session --external:connect-pg-simple --external:passport --external:passport-local --external:multer --external:zod --external:dotenv --external:node-fetch --external:form-data`, { stdio: 'inherit' });
+execSync(`npx esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outfile=dist/index.js --define:process.env.NODE_ENV='"production"' --banner:js='import { fileURLToPath } from "url"; import { dirname } from "path"; const __filename = fileURLToPath(import.meta.url); const __dirname = dirname(__filename);'`, { stdio: 'inherit' });
 
 // Create production directory structure
 fs.mkdirSync('./dist/public', { recursive: true });
