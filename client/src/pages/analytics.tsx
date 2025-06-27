@@ -325,22 +325,33 @@ export default function Analytics() {
               </div>
             </CardHeader>
             <CardContent>
-              <div >{analyticsData?.adClickThrough || 0}%</div>
-              <p >Click-through rate</p>
-              <div >
-                <Badge className={`${
-                  (analyticsData?.adClickThrough || 0) >= 5 
-                    ? 'bg-green-500/30 text-green-200 border-green-500/50' 
+              <div style={{ fontSize: '2rem', fontWeight: 'bold', color: 'white' }}>{analyticsData?.adClickThrough || 0}%</div>
+              <p style={{ fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.7)' }}>Click-through rate</p>
+              <div>
+                <Badge style={{
+                  backgroundColor: (analyticsData?.adClickThrough || 0) >= 5 
+                    ? 'rgba(34, 197, 94, 0.3)' 
                     : (analyticsData?.adClickThrough || 0) >= 2 
-                    ? 'bg-yellow-500/30 text-yellow-200 border-yellow-500/50'
-                    : 'bg-red-500/30 text-red-200 border-red-500/50'
-                }`}>
+                    ? 'rgba(234, 179, 8, 0.3)'
+                    : 'rgba(239, 68, 68, 0.3)',
+                  color: (analyticsData?.adClickThrough || 0) >= 5 
+                    ? 'rgb(187, 247, 208)' 
+                    : (analyticsData?.adClickThrough || 0) >= 2 
+                    ? 'rgb(254, 240, 138)'
+                    : 'rgb(254, 202, 202)',
+                  border: `1px solid ${(analyticsData?.adClickThrough || 0) >= 5 
+                    ? 'rgba(34, 197, 94, 0.5)' 
+                    : (analyticsData?.adClickThrough || 0) >= 2 
+                    ? 'rgba(234, 179, 8, 0.5)'
+                    : 'rgba(239, 68, 68, 0.5)'}`
+                }}>
                   {(analyticsData?.adClickThrough || 0) >= 5 
                     ? 'Excellent' 
                     : (analyticsData?.adClickThrough || 0) >= 2 
                     ? 'Good'
                     : 'Needs Improvement'}
                 </Badge>
+              </div>
               </div>
             </CardContent>
           </Card>
@@ -444,7 +455,6 @@ export default function Analytics() {
                   </div>
                   <div >
                     <span >{analyticsData?.adClickThrough || 0}%</span>
-                    <Badge className={`text-xs ${
                       (analyticsData?.adClickThrough || 0) >= 5 
                         ? 'bg-green-500/30 text-green-200 border-green-500/50' 
                         : (analyticsData?.adClickThrough || 0) >= 2 
@@ -573,7 +583,6 @@ export default function Analytics() {
                       <div  style={{textAlign: "center"}}>
                         <Badge 
                           variant="outline" 
-                          className={`text-xs ${
                             ctr >= 5 
                               ? 'bg-green-500/20 text-green-300 border-green-500/30' 
                               : ctr >= 2 
@@ -656,7 +665,6 @@ export default function Analytics() {
 
                       {/* CTR */}
                       <div  style={{textAlign: "center"}}>
-                        <div className={`font-bold text-lg ${
                           ad.ctr >= 100 ? 'text-green-400' : 
                           ad.ctr >= 50 ? 'text-yellow-400' : 
                           ad.ctr > 0 ? 'text-blue-400' : 'text-gray-400'
@@ -799,7 +807,6 @@ export default function Analytics() {
                   <div >
                     <AwardIcon  />
                   </div>
-                  <Badge className={`text-xs ${
                     (analyticsData?.adClickThrough || 0) >= 5 
                       ? 'bg-green-500/30 text-green-200 border-green-500/50' 
                       : (analyticsData?.adClickThrough || 0) >= 2 

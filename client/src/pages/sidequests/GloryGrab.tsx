@@ -318,7 +318,6 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
                 {chaosLevel > 1 && (
                   <div >
                     <div >CHAOS</div>
-                    <div className={`text-xl font-bold ${
                       chaosLevel <= 3 ? 'text-yellow-400' :
                       chaosLevel <= 6 ? 'text-orange-400' : 'text-red-400'
                     } animate-pulse`}>
@@ -340,7 +339,6 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
             {vials.map(vial => (
               <div
                 key={vial.id}
-                className={`absolute w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 cursor-pointer transform transition-all duration-300 ${
                   vial.isCollected ? 'scale-150 opacity-0' : 
                   vial.isExploding ? 'scale-150 opacity-0' : 
                   'scale-100 opacity-100 animate-bounce'
@@ -392,7 +390,6 @@ function GloryGrabCore({ showHeinous = true }: GloryGrabProps) {
               
               {chaosLevel > 1 && (
                 <div   >
-                  <div className={`text-lg font-bold ${
                     chaosLevel <= 3 ? 'text-yellow-400' :
                     chaosLevel <= 6 ? 'text-orange-400' : 'text-red-400'
                   }`}>

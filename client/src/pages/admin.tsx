@@ -2560,21 +2560,24 @@ export default function Admin() {
                               <CardContent >
                                 <div >
                                   <div>
-                                    <h4 >
+                                    <h4 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: 'white', marginBottom: '0.5rem' }}>
                                       {haunt.name}
-                                      <Badge variant="outline" className={
-                                        haunt.tier === 'premium' ? 'border-purple-500 text-purple-400' :
-                                        haunt.tier === 'pro' ? 'border-blue-500 text-blue-400' :
-                                        'border-green-500 text-green-400'
-                                      }>
-                                        {haunt.tier}
-                                      </Badge>
+                                    </h4>
+                                    <Badge style={{
+                                      borderColor: haunt.tier === 'premium' ? '#a855f7' : 
+                                                  haunt.tier === 'pro' ? '#3b82f6' : '#10b981',
+                                      color: haunt.tier === 'premium' ? '#c084fc' : 
+                                            haunt.tier === 'pro' ? '#60a5fa' : '#34d399',
+                                      backgroundColor: 'transparent',
+                                      border: '1px solid'
+                                    }}>
+                                      {haunt.tier}
+                                    </Badge>
                                       {!haunt.isActive && (
-                                        <Badge variant="destructive" >
+                                        <Badge variant="destructive" style={{ marginLeft: '0.5rem' }}>
                                           Inactive
                                         </Badge>
                                       )}
-                                    </h4>
                                     <p >{haunt.description || 'No description'}</p>
                                   </div>
                                 </div>

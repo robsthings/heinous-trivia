@@ -327,7 +327,6 @@ export function NecromancersGambit() {
 
         {(gamePhase === "victory" || gamePhase === "defeat") && (
           <div style={{textAlign: "center"}}>
-            <div className={`bg-black/50 backdrop-blur-sm p-8 rounded-lg border mb-6 ${
               gamePhase === "victory" ? 'border-green-500/50 bg-green-900/20' : 'border-red-500/50 bg-red-900/20'
             }`}>
               <div >
@@ -336,7 +335,6 @@ export function NecromancersGambit() {
                 </span>
               </div>
               
-              <h2 className={`text-3xl font-bold mb-4 ${
                 gamePhase === "victory" ? 'text-green-400' : 'text-red-400'
               }`}>
                 {gamePhase === "victory" ? "VICTORY!" : "DEFEAT!"}

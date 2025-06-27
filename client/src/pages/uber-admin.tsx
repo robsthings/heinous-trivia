@@ -369,7 +369,6 @@ export default function UberAdmin() {
                           <td >
                             <Badge 
                               variant={haunt.tier === 'premium' ? 'default' : haunt.tier === 'pro' ? 'secondary' : 'outline'}
-                              className={
                                 haunt.tier === 'premium' ? 'bg-yellow-600' : 
                                 haunt.tier === 'pro' ? 'bg-purple-600' : 
                                 'border-gray-600'
@@ -411,7 +410,6 @@ export default function UberAdmin() {
                         <Button
                           key={hauntId}
                           variant={selectedHaunt === hauntId ? "default" : "outline"}
-                          className={`w-full justify-start ${
                             selectedHaunt === hauntId 
                               ? "bg-purple-600 hover:bg-purple-700" 
                               : "border-slate-600 text-gray-300 hover:bg-slate-700"
@@ -491,7 +489,6 @@ export default function UberAdmin() {
                           <div >Progress Bar Preview:</div>
                           <div >
                             <div 
-                              className={`h-full w-3/5 ${
                                 hauntConfigs[selectedHaunt]?.theme?.progressBar === 'lightning' 
                                   ? 'bg-gradient-to-r from-blue-400 to-cyan-400' 
                                   : hauntConfigs[selectedHaunt]?.theme?.progressBar === 'blood'

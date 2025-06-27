@@ -152,7 +152,6 @@ export default function ChupacabraChallenge() {
 
   return (
     <div 
-      className={`min-h-screen flex flex-col items-center justify-center relative overflow-hidden p-2 ${
         isPanicMode ? 'animate-pulse' : ''
       }`}
       style={{
@@ -165,7 +164,6 @@ export default function ChupacabraChallenge() {
       }}
     >
       {/* Dark overlay with panic effect */}
-      <div className={`absolute inset-0 ${
         isPanicMode ? 'bg-red-900/60' : 'bg-black/40'
       } transition-colors duration-300`} />
       
@@ -181,7 +179,6 @@ export default function ChupacabraChallenge() {
             {/* Timer liquid container */}
             <div >
               <div 
-                className={`w-full transition-all duration-1000 ease-linear shadow-lg border-2 rounded-full ${
                   isPanicMode 
                     ? 'bg-gradient-to-t from-red-500 via-red-400 to-red-300 shadow-red-500/70 border-red-400/50 animate-pulse' 
                     : 'bg-gradient-to-t from-cyan-400 via-cyan-300 to-cyan-200 shadow-cyan-400/50 border-cyan-500/30'
@@ -191,7 +188,6 @@ export default function ChupacabraChallenge() {
                 }}
               >
                 {/* Inner glow */}
-                <div className={`absolute inset-0 rounded-full ${
                   isPanicMode 
                     ? 'bg-red-300/70 animate-ping' 
                     : 'bg-cyan-300/60 animate-pulse'
@@ -200,7 +196,6 @@ export default function ChupacabraChallenge() {
             </div>
             
             {/* Time display */}
-            <div className={`mt-2 font-bold text-xs md:text-sm text-center transition-colors duration-300 ${
               isPanicMode 
                 ? 'text-red-300 animate-pulse' 
                 : 'text-cyan-300'
@@ -249,13 +244,11 @@ export default function ChupacabraChallenge() {
 
         {/* 4x4 Game Grid */}
         {!gameComplete && !gameFailed && (
-          <div className={`grid grid-cols-4 gap-1 sm:gap-3 max-w-sm sm:max-w-lg md:max-w-2xl mx-auto mb-8 px-2 ${
             isPanicMode ? 'animate-pulse' : ''
           }`}>
             {cards.map((card) => (
               <div
                 key={card.id}
-                className={`
                   aspect-square cursor-pointer relative
                   ${!(card.isFlipped || card.isMatched) && !isChecking ? 'hover:scale-105' : ''}
                   transition-transform duration-200 ease-out
@@ -264,7 +257,6 @@ export default function ChupacabraChallenge() {
                 style={{ perspective: '1000px' }}
               >
                 <div 
-                  className={`
                     relative w-full h-full transition-transform duration-600 ease-in-out preserve-3d
                     ${card.isFlipped || card.isMatched ? 'rotate-y-180' : ''}
                   `}
@@ -290,7 +282,6 @@ export default function ChupacabraChallenge() {
                   
                   {/* Card Front (face up) */}
                   <div 
-                    className={`
                       absolute inset-0 w-full h-full rounded-lg overflow-hidden backface-hidden
                       border-2 transition-all duration-300
                       ${card.isMatched 
@@ -385,7 +376,6 @@ export default function ChupacabraChallenge() {
             <img
               src={`/chupacabra/chupacabra-${showChupacabraReaction === 'scheming' ? '4' : '2'}.png`}
               alt={`Chupacabra ${showChupacabraReaction}`}
-              className={`w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 object-contain ${
                 showChupacabraReaction === 'scheming' 
                   ? 'animate-pulse' 
                   : 'animate-bounce'

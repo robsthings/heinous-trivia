@@ -312,7 +312,6 @@ export function ChupacabraChallenge() {
 
           {(gamePhase === "caught" || gamePhase === "survived") && (
             <div style={{textAlign: "center"}}>
-              <div className={`bg-black/50 backdrop-blur-sm p-8 rounded-lg border mb-6 ${
                 gamePhase === "caught" ? 'border-red-500/50 bg-red-900/20' : 'border-green-500/50 bg-green-900/20'
               }`}>
                 <div >
@@ -323,7 +322,6 @@ export function ChupacabraChallenge() {
                   />
                 </div>
                 
-                <h2 className={`text-3xl font-bold mb-4 ${
                   gamePhase === "caught" ? 'text-red-400' : 'text-green-400'
                 }`}>
                   {getResultMessage().title}

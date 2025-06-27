@@ -257,7 +257,6 @@ export function BansheesWail() {
               {beats.map(beat => (
                 <div
                   key={beat.id}
-                  className={`absolute top-1/2 transform -translate-y-1/2 w-8 h-8 md:w-10 md:h-10 rounded-full transition-all duration-100 ${
                     beat.hit 
                       ? 'bg-green-400 shadow-lg shadow-green-400/50' 
                       : beat.missed 
