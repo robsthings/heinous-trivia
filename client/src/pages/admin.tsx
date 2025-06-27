@@ -49,12 +49,30 @@ const SystemMonitoringDashboard = ({ haunts, triviaPacks }: { haunts: any[], tri
     const totalQuestions = triviaPacks.reduce((sum, pack) => sum + (pack.questions?.length || 0), 0);
     const activeHaunts = haunts.filter(h => h.isActive).length;
     
-    setPerformanceMetrics({
-      totalQuestions,
-      totalAds: haunts.reduce((sum, h) => sum + (h.ads?.length || 0), 0),
-      avgResponseTime: Math.random() * 300 + 100,
-      activeHaunts
-    });
+    // Fetch actual ad counts from all haunts
+    const fetchAdCounts = async () => {
+      let totalAds = 0;
+      for (const haunt of haunts) {
+        try {
+          const response = await fetch(`/api/ads/${haunt.id}`);
+          if (response.ok) {
+            const ads = await response.json();
+            totalAds += ads.length;
+          }
+        } catch (error) {
+          // Continue with other haunts if one fails
+        }
+      }
+      
+      setPerformanceMetrics({
+        totalQuestions,
+        totalAds,
+        avgResponseTime: Math.random() * 300 + 100,
+        activeHaunts
+      });
+    };
+    
+    fetchAdCounts();
 
     // Test system health endpoints
     const testSystemHealth = async () => {
