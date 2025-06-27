@@ -100,7 +100,7 @@ fs.writeFileSync(path.join(distPath, 'index.js'), serverCode);
 
 // Create production package.json
 console.log('📄 Creating production package.json...');
-const packageJson = {
+const prodPackageJson = {
   "name": "heinous-trivia-production",
   "version": "1.0.0",
   "main": "index.js",
@@ -134,12 +134,12 @@ const packageJson = {
   }
 };
 
-fs.writeFileSync(path.join(distPath, 'package.json'), JSON.stringify(packageJson, null, 2));
+fs.writeFileSync(path.join(distPath, 'package.json'), JSON.stringify(prodPackageJson, null, 2));
 
 // Create client assets
 console.log('🎨 Creating client assets...');
-const publicPath = path.join(distPath, 'public');
-fs.mkdirSync(publicPath, { recursive: true });
+const clientPublicPath = path.join(distPath, 'public');
+fs.mkdirSync(clientPublicPath, { recursive: true });
 
 // Create production index.html
 const indexHtml = `<!DOCTYPE html>
@@ -210,14 +210,14 @@ const indexHtml = `<!DOCTYPE html>
 </body>
 </html>`;
 
-fs.writeFileSync(path.join(publicPath, 'index.html'), indexHtml);
+fs.writeFileSync(path.join(clientPublicPath, 'index.html'), indexHtml);
 
 // Copy existing static assets if available
 const staticSources = ['./client/public', './attached_assets'];
 staticSources.forEach(source => {
   if (fs.existsSync(source)) {
     try {
-      fs.cpSync(source, publicPath, { 
+      fs.cpSync(source, clientPublicPath, { 
         recursive: true, 
         filter: (src) => !src.includes('node_modules') && !src.includes('.git')
       });
@@ -230,14 +230,14 @@ staticSources.forEach(source => {
 
 // Verify build
 console.log('🔍 Verifying build...');
-const files = {
+const buildFiles = {
   server: path.join(distPath, 'index.js'),
   package: path.join(distPath, 'package.json'),
-  client: path.join(publicPath, 'index.html')
+  client: path.join(clientPublicPath, 'index.html')
 };
 
 let allValid = true;
-Object.entries(files).forEach(([type, filePath]) => {
+Object.entries(buildFiles).forEach(([type, filePath]) => {
   if (fs.existsSync(filePath)) {
     const stats = fs.statSync(filePath);
     console.log(`✅ ${type}: ${(stats.size / 1024).toFixed(1)}KB`);
@@ -247,8 +247,8 @@ Object.entries(files).forEach(([type, filePath]) => {
   }
 });
 
-const publicFiles = fs.readdirSync(publicPath, { recursive: true }).filter(f => typeof f === 'string');
-console.log(`📂 Total assets: ${publicFiles.length} files`);
+const assetFiles = fs.readdirSync(clientPublicPath, { recursive: true }).filter(f => typeof f === 'string');
+console.log(`📂 Total assets: ${assetFiles.length} files`);
 
 if (allValid) {
   console.log('');
