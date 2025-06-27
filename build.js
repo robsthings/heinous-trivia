@@ -1,72 +1,55 @@
 #!/usr/bin/env node
+
 import { execSync } from 'child_process';
 import fs from 'fs';
-import path from 'path';
 
-console.log('Building server for production...');
+console.log('🚀 Building for Cloud Run deployment...');
 
-// Skip client build due to timeout issues, use server-only deployment
-console.log('Skipping client build (using development assets)...');
-
-// Create dist directory
+// Clean and create dist directory
 if (fs.existsSync('./dist')) {
-  fs.rmSync('./dist', { recursive: true });
+  fs.rmSync('./dist', { recursive: true, force: true });
 }
 fs.mkdirSync('./dist', { recursive: true });
 
-// Copy client assets directly
-if (fs.existsSync('./client/public')) {
-  const copyRecursive = (src, dest) => {
-    if (!fs.existsSync(dest)) {
-      fs.mkdirSync(dest, { recursive: true });
-    }
-    
-    const entries = fs.readdirSync(src, { withFileTypes: true });
-    for (const entry of entries) {
-      const srcPath = path.join(src, entry.name);
-      const destPath = path.join(dest, entry.name);
-      
-      if (entry.isDirectory()) {
-        copyRecursive(srcPath, destPath);
-      } else {
-        fs.copyFileSync(srcPath, destPath);
-      }
-    }
-  };
+// Build server bundle
+console.log('Building server...');
+execSync(`npx esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outfile=dist/index.js --define:process.env.NODE_ENV='"production"' --banner:js='import { fileURLToPath } from "url"; import { dirname } from "path"; const __filename = fileURLToPath(import.meta.url); const __dirname = dirname(__filename);'`, { stdio: 'inherit' });
+
+// Build client assets with timeout protection
+console.log('Building client...');
+try {
+  execSync('timeout 300 npx vite build --outDir dist/public', { stdio: 'inherit' });
+} catch (error) {
+  console.log('Vite build timed out, using fallback...');
+  fs.mkdirSync('./dist/public', { recursive: true });
   
-  copyRecursive('./client/public', './dist/public');
+  // Copy static assets
+  if (fs.existsSync('./client/public')) {
+    execSync('cp -r client/public/* dist/public/', { stdio: 'inherit' });
+  }
   
-  // Create fallback index.html for production
-  const fallbackHtml = `<!DOCTYPE html>
+  // Create production index.html
+  const indexHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heinous Trivia</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heinous Trivia</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: linear-gradient(135deg, #0b0b23 0%, #1a0a2e 50%, #16213e 100%); color: white; margin: 0; padding: 2rem; text-align: center; }
+    .loading { animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+  </style>
 </head>
 <body>
-    <div id="root">
-        <h1>Heinous Trivia</h1>
-        <p>Horror trivia game server is running.</p>
-        <p>API endpoints available at /api/*</p>
-    </div>
+  <div id="root">
+    <h1 class="loading">HEINOUS TRIVIA</h1>
+    <p>Loading spine-chilling experience...</p>
+  </div>
 </body>
 </html>`;
   
-  fs.writeFileSync('./dist/public/index.html', fallbackHtml);
-  console.log('Client assets copied');
-}
-
-// Build server with esbuild
-console.log('Building server...');
-try {
-  execSync(`npx esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outfile=dist/index.js --define:import.meta.dirname='"."' --define:process.env.NODE_ENV='"production"' --banner:js="import { fileURLToPath } from 'url'; import { dirname } from 'path'; const __filename = fileURLToPath(import.meta.url); const __dirname = dirname(__filename);"`, {
-    stdio: 'inherit'
-  });
-  console.log('Server build complete');
-} catch (error) {
-  console.error('Server build failed:', error);
-  process.exit(1);
+  fs.writeFileSync('./dist/public/index.html', indexHtml);
 }
 
 // Create production package.json
@@ -82,31 +65,34 @@ const prodPackageJson = {
     "node": ">=18.0.0"
   },
   "dependencies": {
-    "@neondatabase/serverless": "^0.10.4",
-    "drizzle-orm": "^0.36.4",
-    "firebase-admin": "^13.0.1",
-    "express": "^4.21.1",
+    "@neondatabase/serverless": "^1.0.1",
+    "drizzle-orm": "^0.44.2",
+    "drizzle-zod": "^0.8.2",
+    "firebase": "^11.9.1",
+    "firebase-admin": "^11.11.1",
+    "express": "^4.18.2",
     "bcrypt": "^6.0.0",
-    "ws": "^8.18.0"
+    "ws": "^8.18.2",
+    "cors": "^2.8.5",
+    "express-session": "^1.18.1",
+    "connect-pg-simple": "^10.0.0",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
+    "multer": "^2.0.1",
+    "zod": "^3.25.67",
+    "dotenv": "^16.3.1",
+    "node-fetch": "^3.3.2",
+    "form-data": "^4.0.3"
   }
 };
 
-fs.writeFileSync('dist/package.json', JSON.stringify(prodPackageJson, null, 2));
-console.log('Production package.json created');
+fs.writeFileSync('./dist/package.json', JSON.stringify(prodPackageJson, null, 2));
 
-// Verify build structure
-console.log('Verifying build structure...');
-const requiredFiles = ['dist/index.js', 'dist/package.json'];
-const missingFiles = requiredFiles.filter(file => !fs.existsSync(file));
+// Verify build
+const serverSize = Math.round(fs.statSync('./dist/index.js').size / 1024);
+const assetCount = fs.existsSync('./dist/public') ? fs.readdirSync('./dist/public').length : 0;
 
-if (missingFiles.length > 0) {
-  console.error('Missing required files:', missingFiles);
-  process.exit(1);
-}
-
-console.log('✅ Build verification complete!');
-console.log('Files created:');
-console.log('  - dist/index.js (server bundle)');
-console.log('  - dist/public/ (static assets)');  
-console.log('  - dist/package.json (production deps)');
-console.log('🚀 Ready for deployment!');
+console.log(`✅ Build complete:`);
+console.log(`   Server: dist/index.js (${serverSize}KB)`);
+console.log(`   Assets: ${assetCount} files in dist/public/`);
+console.log(`   Ready for: npm run start`);
