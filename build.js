@@ -1,14 +1,16 @@
 const fs = require('fs');
+const path = require('path');
 
-console.log('🚀 Copying working development setup...');
+console.log('🚀 Creating deployment build...');
 
-// Clean dist
-if (fs.existsSync('./dist')) {
-  fs.rmSync('./dist', { recursive: true, force: true });
+// Create dist directory in workspace root where deployment expects it
+const distPath = '/home/runner/workspace/dist';
+if (fs.existsSync(distPath)) {
+  fs.rmSync(distPath, { recursive: true, force: true });
 }
-fs.mkdirSync('./dist', { recursive: true });
+fs.mkdirSync(distPath, { recursive: true });
 
-// Copy the EXACT server that works in development
+// Create the exact server deployment expects
 const serverCode = `const express = require('express');
 const app = express();
 
@@ -30,9 +32,9 @@ app.listen(port, '0.0.0.0', () => {
   console.log('Server running on port', port);
 });`;
 
-fs.writeFileSync('./dist/index.js', serverCode);
+fs.writeFileSync(path.join(distPath, 'index.js'), serverCode);
 
-// Copy the EXACT package.json structure that works
+// Create package.json in the deployment directory
 const packageJson = {
   "name": "heinous-trivia",
   "version": "1.0.0",
@@ -45,7 +47,7 @@ const packageJson = {
   }
 };
 
-fs.writeFileSync('./dist/package.json', JSON.stringify(packageJson, null, 2));
+fs.writeFileSync(path.join(distPath, 'package.json'), JSON.stringify(packageJson, null, 2));
 
-console.log('✅ Exact development copy ready');
-console.log('📦 Same Express setup that works locally');
+console.log('✅ Deployment build created in workspace root');
+console.log('📦 File location:', path.join(distPath, 'index.js'));
