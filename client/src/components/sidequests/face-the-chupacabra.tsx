@@ -117,7 +117,12 @@ export function FaceTheChupacabra() {
 
   const renderKeys = () => {
     return (
-      <div className=" gap-2 mb-4 justify-center" className="flex-center">
+      <div style={{
+        display: 'flex',
+        gap: '0.5rem',
+        marginBottom: '1rem',
+        justifyContent: 'center'
+      }}>
         {[1, 2, 3].map((keyNum) => (
           <img
             key={keyNum}
@@ -126,7 +131,11 @@ export function FaceTheChupacabra() {
               : `/sidequests/face-the-chupacabra/chupa-key.png`
             }
             alt={`Key ${keyNum}`}
-            className={`w-6 h-16 ${keyNum <= gameState.playerKeys ? 'opacity-100' : 'opacity-30'}`}
+            style={{
+              width: '1.5rem',
+              height: '4rem',
+              opacity: keyNum <= gameState.playerKeys ? 1 : 0.3
+            }}
           />
         ))}
       </div>
@@ -135,26 +144,85 @@ export function FaceTheChupacabra() {
 
   return (
     <div 
-      className="min-h-screen bg-cover bg-center bg-no-repeat flex -col  justify-center p-4 text-white relative" style={{alignItems: "center"}} className="flex-center"
-      style={{ backgroundImage: `url(${getBackgroundImage()})` }}
+      style={{
+        minHeight: '100vh',
+        backgroundImage: `url(${getBackgroundImage()})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: '1rem',
+        color: 'white',
+        position: 'relative'
+      }}
     >
       {/* Dark overlay for better text readability */}
-      <div className="absolute inset-0 bg-black/40"></div>
+      <div style={{
+        position: 'absolute',
+        inset: '0',
+        background: 'rgba(0, 0, 0, 0.4)'
+      }}></div>
       
-      <div className="relative z-10  max-w-lg w-full" className="text-center">
+      <div style={{
+        position: 'relative',
+        zIndex: 10,
+        maxWidth: '32rem',
+        width: '100%',
+        textAlign: 'center'
+      }}>
         {gameState.phase === 'start' && (
-          <div className="flex -col   min-h-screen pt-8 pb-20" style={{justifyContent: "space-between"}} style={{alignItems: "center"}} className="flex-center">
-            <div className="text-center">
-              <h1 className="text-5xl font-bold text-red-500 mb-4 drop-shadow-lg" style={{ fontFamily: 'Creepster, cursive' }}>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            minHeight: '100vh',
+            paddingTop: '2rem',
+            paddingBottom: '5rem',
+            justifyContent: 'space-between',
+            alignItems: 'center'
+          }}>
+            <div style={{ textAlign: 'center' }}>
+              <h1 style={{
+                fontSize: 'clamp(2.5rem, 8vw, 4rem)',
+                fontWeight: 'bold',
+                color: '#ef4444',
+                marginBottom: '1rem',
+                filter: 'drop-shadow(2px 2px 4px rgba(0,0,0,0.5))',
+                fontFamily: 'Creepster, cursive'
+              }}>
                 Face the Chupacabra
               </h1>
-              <p className="text-xl text-gray-200">
+              <p style={{
+                fontSize: 'clamp(1rem, 4vw, 1.25rem)',
+                color: '#e5e7eb'
+              }}>
                 Win 3 rounds of rock-paper-scissors to escape!
               </p>
             </div>
             <button
               onClick={startGame}
-              className="bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-8 rounded-lg text-xl transition-all hover:scale-105 shadow-lg"
+              style={{
+                background: '#dc2626',
+                color: 'white',
+                fontWeight: 'bold',
+                padding: '1rem 2rem',
+                borderRadius: '0.5rem',
+                fontSize: '1.25rem',
+                border: 'none',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = '#b91c1c';
+                e.currentTarget.style.transform = 'scale(1.05)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = '#dc2626';
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
             >
               Start Game
             </button>
@@ -162,29 +230,53 @@ export function FaceTheChupacabra() {
         )}
 
         {gameState.phase === 'playing' && (
-          <div className="space-y-6">
-            <h2 className="text-3xl font-bold text-red-500 mb-4">Choose Your Weapon!</h2>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            <h2 style={{
+              fontSize: 'clamp(1.5rem, 6vw, 2rem)',
+              fontWeight: 'bold',
+              color: '#ef4444',
+              marginBottom: '1rem'
+            }}>Choose Your Weapon!</h2>
             
             {/* Collected keys display */}
-            <div className=" gap-3 justify-center mb-4" className="flex-center">
+            <div style={{
+              display: 'flex',
+              gap: '0.75rem',
+              justifyContent: 'center',
+              marginBottom: '1rem'
+            }}>
               {[1, 2, 3].map((keyNum) => (
-                <div key={keyNum} className="relative">
+                <div key={keyNum} style={{ position: 'relative' }}>
                   {keyNum <= gameState.playerKeys ? (
                     <img
                       src={`/sidequests/face-the-chupacabra/chupa-key-${keyNum}.png`}
                       alt={`Collected Key ${keyNum}`}
-                      className="w-8 h-20 animate-bounce"
-                      style={{ animationDelay: `${keyNum * 0.2}s` }}
+                      style={{
+                        width: '2rem',
+                        height: '5rem',
+                        animation: 'bounce 1s infinite',
+                        animationDelay: `${keyNum * 0.2}s`
+                      }}
                     />
                   ) : (
-                    <div className="w-8 h-20 border-2 border-dashed border-gray-600 rounded opacity-30"></div>
+                    <div style={{
+                      width: '2rem',
+                      height: '5rem',
+                      border: '2px dashed #4b5563',
+                      borderRadius: '0.25rem',
+                      opacity: 0.3
+                    }}></div>
                   )}
                 </div>
               ))}
             </div>
             
             {!gameState.showResult && (
-              <div className="grid grid-cols-3 gap-4">
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(3, 1fr)',
+                gap: '1rem'
+              }}>
                 {CHOICES.map((choice) => (
                   <button
                     key={choice.value}
@@ -213,12 +305,32 @@ export function FaceTheChupacabra() {
                     <img
                       src={choice.image}
                       alt={choice.label}
-                      className="w-16 h-16 mx-auto mb-2"
+                      style={{
+                        width: '4rem',
+                        height: '4rem',
+                        margin: '0 auto 0.5rem auto'
+                      }}
                     />
-                    <div className="text-sm font-medium">{choice.label}</div>
+                    <div style={{
+                      fontSize: '0.875rem',
+                      fontWeight: '500'
+                    }}>{choice.label}</div>
                     
                     {choice.value === 'scissors' && (
-                      <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-black/90 text-red-400 px-2 py-1 rounded text-xs opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                      <div style={{
+                        position: 'absolute',
+                        top: '-2rem',
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        background: 'rgba(0, 0, 0, 0.9)',
+                        color: '#f87171',
+                        padding: '0.25rem 0.5rem',
+                        borderRadius: '0.25rem',
+                        fontSize: '0.75rem',
+                        opacity: 0,
+                        transition: 'opacity 0.3s ease',
+                        whiteSpace: 'nowrap'
+                      }}>
                         Staby Staby
                       </div>
                     )}
