@@ -229,11 +229,33 @@ export default function Analytics() {
                 <button
                   key={range}
                   onClick={() => setTimeRange(range)}
-                  className={`px-6 py-3 rounded-lg text-sm font-semibold transition-all duration-200 ${
-                    timeRange === range
-                      ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg transform scale-105'
-                      : 'text-gray-300 hover:text-white hover:bg-white/10'
-                  }`}
+                  style={{
+                    padding: '0.75rem 1.5rem',
+                    borderRadius: '0.5rem',
+                    fontSize: '0.875rem',
+                    fontWeight: '600',
+                    transition: 'all 0.2s ease',
+                    background: timeRange === range 
+                      ? 'linear-gradient(to right, #3b82f6, #8b5cf6)' 
+                      : 'transparent',
+                    color: timeRange === range ? 'white' : '#d1d5db',
+                    boxShadow: timeRange === range ? '0 10px 15px -3px rgba(0, 0, 0, 0.1)' : 'none',
+                    transform: timeRange === range ? 'scale(1.05)' : 'scale(1)',
+                    border: 'none',
+                    cursor: 'pointer'
+                  }}
+                  onMouseEnter={(e) => {
+                    if (timeRange !== range) {
+                      e.currentTarget.style.color = 'white';
+                      e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (timeRange !== range) {
+                      e.currentTarget.style.color = '#d1d5db';
+                      e.currentTarget.style.backgroundColor = 'transparent';
+                    }
+                  }}
                 >
                   {range === '7d' ? '7 Days' : range === '30d' ? '30 Days' : '90 Days'}
                 </button>
@@ -281,7 +303,7 @@ export default function Analytics() {
               </div>
             </CardHeader>
             <CardContent>
-              <div >{analyticsData?.completionRate || 0}%</div>
+              <div style={{fontSize: '2rem', fontWeight: 'bold', color: '#10b981'}}>{analyticsData?.completionRate || 0}%</div>
               <p >Games finished</p>
             </CardContent>
           </Card>
