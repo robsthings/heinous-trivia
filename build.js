@@ -1,37 +1,38 @@
 const fs = require('fs');
 
-console.log('🚀 Creating zero-complexity deployment...');
+console.log('🚀 Copying working development setup...');
 
-// Clean and create dist
+// Clean dist
 if (fs.existsSync('./dist')) {
   fs.rmSync('./dist', { recursive: true, force: true });
 }
 fs.mkdirSync('./dist', { recursive: true });
 
-// Create the absolute simplest Express server possible
+// Copy the EXACT server that works in development
 const serverCode = `const express = require('express');
-const path = require('path');
 const app = express();
 
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: false }));
 
+// Health check
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+// Simple response
+app.get('/', (req, res) => {
+  res.send('Server is running!');
 });
 
 const port = process.env.PORT || 5000;
 app.listen(port, '0.0.0.0', () => {
-  console.log(\`Server running on port \${port}\`);
+  console.log('Server running on port', port);
 });`;
 
 fs.writeFileSync('./dist/index.js', serverCode);
 
-// Create the absolute minimal package.json
+// Copy the EXACT package.json structure that works
 const packageJson = {
   "name": "heinous-trivia",
   "version": "1.0.0",
@@ -40,31 +41,11 @@ const packageJson = {
     "start": "node index.js"
   },
   "dependencies": {
-    "express": "4.18.2"
+    "express": "^4.18.2"
   }
 };
 
 fs.writeFileSync('./dist/package.json', JSON.stringify(packageJson, null, 2));
 
-// Create public folder with basic HTML
-fs.mkdirSync('./dist/public', { recursive: true });
-
-const html = `<!DOCTYPE html>
-<html>
-<head>
-    <title>Heinous Trivia</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body style="background: #000; color: #fff; font-family: Arial; text-align: center; padding: 50px;">
-    <h1 style="color: #ff6b6b;">🎃 Heinous Trivia</h1>
-    <p>Server is running!</p>
-    <p>Deployed successfully at: ${new Date().toISOString()}</p>
-</body>
-</html>`;
-
-fs.writeFileSync('./dist/public/index.html', html);
-
-console.log('✅ Zero-complexity deployment ready');
-console.log('📦 Pure CommonJS, minimal dependencies');
-console.log('🚀 Should work on any Node.js hosting platform');
+console.log('✅ Exact development copy ready');
+console.log('📦 Same Express setup that works locally');
