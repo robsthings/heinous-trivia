@@ -1129,14 +1129,14 @@ export default function HauntAdmin() {
                 {/* Ad Grid Management */}
                 <div className="space-y-6">
                   {/* Ad Grid Display */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
                     {Array.from({ length: getAdLimit(hauntConfig.tier) }, (_, index) => {
                       const ad = uploadedAds[index];
                       return (
                         <div key={index} className="relative group">
                           {ad ? (
-                            // Existing Ad Thumbnail
-                            <div className="relative aspect-[2/1] bg-gray-800 border-2 border-gray-600 rounded-lg overflow-hidden hover:border-gray-500 transition-colors">
+                            // Existing Ad Thumbnail - Smaller Size
+                            <div className="relative w-full h-24 bg-gray-800 border-2 border-gray-600 rounded-lg overflow-hidden hover:border-gray-500 transition-colors">
                               {ad.imageUrl && (
                                 <img 
                                   src={ad.imageUrl} 
@@ -1146,18 +1146,18 @@ export default function HauntAdmin() {
                               )}
                               {!ad.imageUrl && (
                                 <div className="w-full h-full flex items-center justify-center bg-gray-800">
-                                  <span className="text-gray-500 text-sm">No Image</span>
+                                  <span className="text-gray-500 text-xs">No Image</span>
                                 </div>
                               )}
                               
                               {/* Hover Controls */}
-                              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-3 z-10">
+                              <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center gap-2 z-10">
                                 <button
                                   onClick={(e) => {
                                     e.stopPropagation();
                                     setEditingAd(ad);
                                   }}
-                                  className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-md text-sm font-medium shadow-lg transition-colors"
+                                  className="bg-blue-600 hover:bg-blue-700 text-white px-2 py-1 rounded text-xs font-medium shadow-lg transition-colors"
                                   title="Edit this ad"
                                 >
                                   Edit
@@ -1167,30 +1167,27 @@ export default function HauntAdmin() {
                                     e.stopPropagation();
                                     deleteExistingAd(ad.id);
                                   }}
-                                  className="bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-md text-sm font-medium shadow-lg transition-colors"
+                                  className="bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded text-xs font-medium shadow-lg transition-colors"
                                   title="Delete this ad"
                                 >
-                                  Delete
+                                  Del
                                 </button>
                               </div>
                               
                               {/* Ad Info Overlay */}
-                              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
-                                <h4 className="text-white font-medium text-sm truncate">{ad.title}</h4>
-                                {ad.description && (
-                                  <p className="text-gray-300 text-xs truncate mt-1">{ad.description}</p>
-                                )}
+                              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-2">
+                                <h4 className="text-white font-medium text-xs truncate">{ad.title}</h4>
                               </div>
                             </div>
                           ) : (
-                            // Empty Ad Slot
+                            // Empty Ad Slot - Smaller Size
                             <div 
                               onClick={() => setShowNewAdForm(true)}
-                              className="aspect-[2/1] bg-gray-800/50 border-2 border-dashed border-gray-600 rounded-lg flex flex-col items-center justify-center hover:border-gray-500 hover:bg-gray-800/70 transition-colors cursor-pointer group"
+                              className="w-full h-24 bg-gray-800/50 border-2 border-dashed border-gray-600 rounded-lg flex flex-col items-center justify-center hover:border-gray-500 hover:bg-gray-800/70 transition-colors cursor-pointer group"
                             >
-                              <div className="text-4xl text-gray-500 group-hover:text-gray-400 mb-2">+</div>
-                              <span className="text-gray-500 group-hover:text-gray-400 text-sm font-medium">Add Ad</span>
-                              <span className="text-gray-600 text-xs mt-1">Slot {index + 1}</span>
+                              <div className="text-2xl text-gray-500 group-hover:text-gray-400 mb-1">+</div>
+                              <span className="text-gray-500 group-hover:text-gray-400 text-xs font-medium">Add</span>
+                              <span className="text-gray-600 text-xs">{index + 1}</span>
                             </div>
                           )}
                         </div>
