@@ -1,7 +1,7 @@
 
-import { execSync } from 'child_process';
-import fs from 'fs';
-import path from 'path';
+const { execSync } = require('child_process');
+const fs = require('fs');
+const path = require('path');
 
 console.log('🚀 Building for production deployment...');
 
@@ -17,13 +17,13 @@ if (!fs.existsSync('./server/index.ts')) {
   process.exit(1);
 }
 
-// Build server bundle with more explicit configuration
+// Build server bundle
 console.log('Building server...');
 try {
   const buildCommand = [
     'npx esbuild server/index.ts',
     '--platform=node',
-    '--packages=external',
+    '--packages=external', 
     '--bundle',
     '--format=esm',
     '--outfile=dist/index.js',
@@ -33,7 +33,7 @@ try {
     '--target=node18'
   ].join(' ');
   
-  console.log('Executing build command:', buildCommand);
+  console.log('Executing build command...');
   execSync(buildCommand, { stdio: 'inherit', cwd: process.cwd() });
   
   // Verify the output file was created
@@ -46,14 +46,13 @@ try {
   console.log(`✅ Server bundle created successfully (${fileSize}KB)`);
 } catch (error) {
   console.error('❌ Build failed:', error.message);
-  console.error('Full error:', error);
   process.exit(1);
 }
 
 // Create production directory structure
 fs.mkdirSync('./dist/public', { recursive: true });
 
-// Copy static assets - handle missing directories gracefully
+// Copy static assets
 if (fs.existsSync('./client/public')) {
   console.log('Copying static assets...');
   try {
@@ -106,7 +105,7 @@ const indexHtml = `<!DOCTYPE html>
 
 fs.writeFileSync('./dist/public/index.html', indexHtml);
 
-// Create production package.json with exact dependencies needed
+// Create production package.json
 console.log('Creating production package.json...');
 const prodPackageJson = {
   "name": "heinous-trivia-production",
