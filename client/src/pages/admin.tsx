@@ -3279,88 +3279,10 @@ export default function Admin() {
 
               {/* Game Monitoring Tab */}
               <TabsContent value="monitoring">
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                  <Card style={{ backgroundColor: 'rgba(17, 24, 39, 0.5)', borderColor: '#374151' }}>
-                    <CardHeader>
-                      <CardTitle style={{ color: '#10b981' }}>
-                        Real-time System Monitoring
-                      </CardTitle>
-                      <p style={{ color: '#9ca3af' }}>Test actual API endpoints and system health</p>
-                    </CardHeader>
-                    <CardContent>
-                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
-                        <Button
-                          onClick={async () => {
-                            try {
-                              const response = await fetch('/api/trivia-questions/headquarters');
-                              const data = await response.json();
-                              alert(`✅ Headquarters Questions: ${data.length} loaded`);
-                            } catch (error) {
-                              alert(`❌ Headquarters API Failed: ${error}`);
-                            }
-                          }}
-                          variant="outline"
-                          style={{
-                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                            borderColor: '#10b981',
-                            color: '#10b981'
-                          }}
-                        >
-                          Test Headquarters Questions
-                        </Button>
-                        <Button
-                          onClick={async () => {
-                            try {
-                              const response = await fetch('/api/trivia-questions/Sorcererslair');
-                              const data = await response.json();
-                              alert(`✅ Sorcererslair Questions: ${data.length} loaded`);
-                            } catch (error) {
-                              alert(`❌ Sorcererslair API Failed: ${error}`);
-                            }
-                          }}
-                          variant="outline"
-                          style={{
-                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
-                            borderColor: '#10b981',
-                            color: '#10b981'
-                          }}
-                        >
-                          Test Sorcererslair Questions
-                        </Button>
-                        <Button
-                          onClick={async () => {
-                            try {
-                              const response = await fetch('/api/ads/headquarters');
-                              const data = await response.json();
-                              alert(`✅ Ad System: ${data.length} ads loaded`);
-                            } catch (error) {
-                              alert(`❌ Ad System Failed: ${error}`);
-                            }
-                          }}
-                          variant="outline"
-                          style={{
-                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
-                            borderColor: '#3b82f6',
-                            color: '#3b82f6'
-                          }}
-                        >
-                          Test Ad System
-                        </Button>
-                        <Button
-                          onClick={() => window.open('/game/headquarters', '_blank')}
-                          variant="outline"
-                          style={{
-                            backgroundColor: 'rgba(139, 92, 246, 0.1)',
-                            borderColor: '#8b5cf6',
-                            color: '#8b5cf6'
-                          }}
-                        >
-                          Launch Live Game Test
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
+                <SystemMonitoringDashboard 
+                  haunts={haunts}
+                  triviaPacks={triviaPacks}
+                />
               </TabsContent>
             </Tabs>
           </CardContent>
