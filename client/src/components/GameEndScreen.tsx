@@ -72,9 +72,10 @@ export function GameEndScreen({
     }
   };
 
-  // Fetch leaderboard data when component mounts
+  // Fetch leaderboard data and haunt config when component mounts
   useEffect(() => {
     fetchLeaderboard();
+    fetchHauntConfig();
   }, [gameState.showEndScreen, gameState.currentHaunt, savedPlayerName, gameState.score]);
 
   if (!gameState.showEndScreen) {
@@ -367,8 +368,7 @@ export function GameEndScreen({
                 transition: 'all 0.2s ease'
               }}
               onClick={() => {
-                // Placeholder for future sidequest serving implementation
-                alert('Sidequest summoning coming soon! Dr. Heinous is preparing his supernatural challenges...');
+                setShowSidequestTransition(true);
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = 'linear-gradient(to right, #7c3aed, #8b5cf6)';
@@ -410,6 +410,14 @@ export function GameEndScreen({
           </div>
         </div>
       </div>
+      
+      {/* Sidequest Transition Overlay */}
+      {showSidequestTransition && (
+        <SidequestTransition 
+          hauntConfig={hauntConfig} 
+          onComplete={() => setShowSidequestTransition(false)}
+        />
+      )}
     </div>
   );
 }
