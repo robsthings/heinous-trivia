@@ -94,7 +94,7 @@ try {
 
   // Build client with Vite and copy to dist/public
   console.log('🔨 Building client with Vite...');
-  execSync('npx vite build --config client/vite.config.ts', { stdio: 'inherit' });
+  execSync('cd client && npx vite build', { stdio: 'inherit' });
   
   // Copy client dist to dist/public
   if (fs.existsSync('client/dist')) {
