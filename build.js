@@ -3,8 +3,8 @@ const path = require('path');
 
 console.log('🚀 Creating deployment build...');
 
-// Create dist directory in workspace root where deployment expects it
-const distPath = '/home/runner/workspace/dist';
+// Create dist directory relative to project root
+const distPath = './dist';
 if (fs.existsSync(distPath)) {
   fs.rmSync(distPath, { recursive: true, force: true });
 }
@@ -34,7 +34,7 @@ app.listen(port, '0.0.0.0', () => {
 
 fs.writeFileSync(path.join(distPath, 'index.js'), serverCode);
 
-// Create package.json in the deployment directory
+// Create package.json in the deployment directory  
 const packageJson = {
   "name": "heinous-trivia",
   "version": "1.0.0",
@@ -49,5 +49,5 @@ const packageJson = {
 
 fs.writeFileSync(path.join(distPath, 'package.json'), JSON.stringify(packageJson, null, 2));
 
-console.log('✅ Deployment build created in workspace root');
+console.log('✅ Deployment build created');
 console.log('📦 File location:', path.join(distPath, 'index.js'));
