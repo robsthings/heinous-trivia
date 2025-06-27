@@ -11,9 +11,27 @@ if (fs.existsSync('./dist')) {
 }
 fs.mkdirSync('./dist', { recursive: true });
 
+// Verify entry point exists
+if (!fs.existsSync('./server/index.ts')) {
+  console.error('❌ Entry point server/index.ts not found!');
+  process.exit(1);
+}
+
 // Build server bundle
 console.log('Building server...');
-execSync(`npx esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outfile=dist/index.js --define:process.env.NODE_ENV='"production"' --banner:js='import { fileURLToPath } from "url"; import { dirname } from "path"; const __filename = fileURLToPath(import.meta.url); const __dirname = dirname(__filename);'`, { stdio: 'inherit' });
+try {
+  execSync(`npx esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outfile=dist/index.js --define:process.env.NODE_ENV='"production"' --banner:js='import { fileURLToPath } from "url"; import { dirname } from "path"; const __filename = fileURLToPath(import.meta.url); const __dirname = dirname(__filename);'`, { stdio: 'inherit' });
+  
+  // Verify the output file was created
+  if (!fs.existsSync('./dist/index.js')) {
+    console.error('❌ Build failed: dist/index.js was not created!');
+    process.exit(1);
+  }
+  console.log('✅ Server bundle created successfully');
+} catch (error) {
+  console.error('❌ Build failed:', error.message);
+  process.exit(1);
+}
 
 // Create production directory structure
 fs.mkdirSync('./dist/public', { recursive: true });
