@@ -86,10 +86,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.patch("/api/haunt/:hauntId/branding", async (req, res) => {
     try {
       const { hauntId } = req.params;
-      const { skinUrl, progressBarTheme } = req.body;
+      const { skinUrl, progressBarTheme, triviaPacks } = req.body;
       
       // Validate that at least one branding field is provided (including empty strings for removal)
-      if (skinUrl === undefined && progressBarTheme === undefined) {
+      if (skinUrl === undefined && progressBarTheme === undefined && triviaPacks === undefined) {
         return res.status(400).json({ error: "At least one branding field must be provided" });
       }
 
@@ -97,6 +97,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const updates: any = {};
       if (skinUrl !== undefined) updates.skinUrl = skinUrl; // Allow empty string
       if (progressBarTheme !== undefined) updates.progressBarTheme = progressBarTheme; // Allow empty string
+      if (triviaPacks !== undefined) updates.triviaPacks = triviaPacks; // Support trivia pack assignment
       
       console.log(`Updating branding for ${hauntId}:`, updates);
       await FirebaseService.saveHauntConfig(hauntId, updates);
