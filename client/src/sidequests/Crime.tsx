@@ -77,9 +77,9 @@ export function Crime() {
           }));
           setTimeout(() => {
             showPattern(pattern);
-          }, 2500); // Wait for zoom animation to complete
+          }, 6000); // Wait for slower zoom animation to complete
         }
-      }, 3000); // Slower timing - 3 seconds between each gif
+      }, 5000); // Much slower timing - 5 seconds between each step
       return () => clearTimeout(timer);
     }
   }, [gameState.phase, gameState.sequenceStep]);
@@ -323,13 +323,17 @@ export function Crime() {
             transform: scale(0.1);
             opacity: 0;
           }
-          30% {
-            transform: scale(0.5);
-            opacity: 0.3;
+          20% {
+            transform: scale(0.3);
+            opacity: 0.2;
           }
-          70% {
-            transform: scale(1.2);
-            opacity: 0.8;
+          50% {
+            transform: scale(0.7);
+            opacity: 0.5;
+          }
+          80% {
+            transform: scale(1.1);
+            opacity: 0.9;
           }
           100% { 
             transform: scale(1);
@@ -339,6 +343,7 @@ export function Crime() {
         
         @keyframes bookFadeOut {
           0% { opacity: 1; }
+          50% { opacity: 0.5; }
           100% { opacity: 0; }
         }
       `}</style>
@@ -458,8 +463,8 @@ export function Crime() {
                   maxHeight: '100%',
                   objectFit: 'contain',
                   animation: gameState.sequenceStep === 3 ? 
-                    'bookFadeIn 0.5s ease-in-out, glowPulse 2s ease-in-out infinite, bookFadeOut 1s ease-in-out 2s forwards' :
-                    'bookFadeIn 0.5s ease-in-out, glowPulse 2s ease-in-out infinite',
+                    'bookFadeIn 1s ease-in-out, glowPulse 2s ease-in-out infinite, bookFadeOut 3s ease-in-out 2s forwards' :
+                    'bookFadeIn 1s ease-in-out, glowPulse 2s ease-in-out infinite',
                   filter: 'drop-shadow(0 0 30px rgba(0,255,255,0.8))'
                 }}
               />
@@ -475,7 +480,7 @@ export function Crime() {
                 width: '100%',
                 height: '100%',
                 zIndex: -1,
-                animation: 'gameboardZoomIn 2s ease-out 1s forwards'
+                animation: 'gameboardZoomIn 5s ease-out 2s forwards'
               }}>
                 <img
                   src="/sidequests/crime/game-board.png"
