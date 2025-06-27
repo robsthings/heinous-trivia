@@ -304,9 +304,12 @@ export function CurseCrafting() {
       {/* Cauldron - Bottom center */}
       <div >
         <div
-          className={`relative transition-all duration-300 ${
-            draggedIngredient ? 'scale-110 ring-4 ring-purple-400 ring-opacity-50' : ''
-          }`}
+          style={{
+            position: 'relative',
+            transition: 'all 0.3s ease',
+            transform: draggedIngredient ? 'scale(1.1)' : 'scale(1)',
+            boxShadow: draggedIngredient ? '0 0 0 4px rgba(196, 132, 252, 0.5)' : 'none'
+          }}
           onDragOver={handleDragOver}
           onDrop={handleDrop}
         >
@@ -345,13 +348,33 @@ export function CurseCrafting() {
         <Button
           onClick={stirIrresponsibly}
           disabled={cauldronIngredients.length !== 3}
-          className={`mt-4 px-8 py-3 text-lg font-bold rounded-lg shadow-lg transition-all duration-1000 ${
-            gamePhase === 'revealing' ? 'opacity-0 pointer-events-none' : 'opacity-100'
-          } ${
-            cauldronIngredients.length === 3
-              ? 'bg-purple-600 hover:bg-purple-700 text-white transform hover:scale-105'
-              : 'bg-gray-600 text-gray-400 cursor-not-allowed'
-          }`}
+          style={{
+            marginTop: '1rem',
+            padding: '0.75rem 2rem',
+            fontSize: '1.125rem',
+            fontWeight: 'bold',
+            borderRadius: '0.5rem',
+            boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+            transition: 'all 1s ease',
+            opacity: gamePhase === 'revealing' ? 0 : 1,
+            pointerEvents: gamePhase === 'revealing' ? 'none' : 'auto',
+            backgroundColor: cauldronIngredients.length === 3 ? '#9333ea' : '#4b5563',
+            color: cauldronIngredients.length === 3 ? 'white' : '#9ca3af',
+            cursor: cauldronIngredients.length === 3 ? 'pointer' : 'not-allowed',
+            border: 'none'
+          }}
+          onMouseEnter={(e) => {
+            if (cauldronIngredients.length === 3) {
+              e.currentTarget.style.backgroundColor = '#7c3aed';
+              e.currentTarget.style.transform = 'scale(1.05)';
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (cauldronIngredients.length === 3) {
+              e.currentTarget.style.backgroundColor = '#9333ea';
+              e.currentTarget.style.transform = 'scale(1)';
+            }
+          }}
         >
           Stir Irresponsibly
         </Button>
