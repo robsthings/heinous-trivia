@@ -204,15 +204,15 @@ const SystemMonitoringDashboard = ({ haunts, triviaPacks }: { haunts: any[], tri
         <CardContent>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem' }}>
             {[
-              { name: 'Monster Name Generator', tier: 'Basic', route: '/sidequest/monster-name-generator' },
               { name: 'Glory Grab', tier: 'Basic', route: '/sidequest/glory-grab' },
-              { name: 'Chupacabra Challenge', tier: 'Pro', route: '/sidequest/chupacabra-challenge' },
-              { name: 'Cryptic Compliments', tier: 'Pro', route: '/sidequest/cryptic-compliments' },
+              { name: 'Wack-a-Chupacabra', tier: 'Basic', route: '/sidequest/wack-a-chupacabra' },
+              { name: 'Cryptic Compliments', tier: 'Basic', route: '/sidequest/cryptic-compliments' },
+              { name: 'Wretched Wiring', tier: 'Pro', route: '/sidequest/wretched-wiring' },
               { name: 'Lab Escape', tier: 'Pro', route: '/sidequest/lab-escape' },
-              { name: 'Wretched Wiring', tier: 'Premium', route: '/sidequest/wretched-wiring' },
-              { name: 'Curse Crafting', tier: 'Premium', route: '/sidequest/curse-crafting' },
-              { name: 'Wack-a-Chupacabra', tier: 'Premium', route: '/sidequest/wack-a-chupacabra' },
+              { name: 'Curse Crafting', tier: 'Pro', route: '/sidequest/curse-crafting' },
+              { name: 'Chupacabra Challenge', tier: 'Premium', route: '/sidequest/chupacabra-challenge' },
               { name: 'C.R.I.M.E.', tier: 'Premium', route: '/sidequest/crime' },
+              { name: 'Monster Name Generator', tier: 'Premium', route: '/sidequest/monster-name-generator' },
               { name: 'Face the Chupacabra', tier: 'Premium', route: '/sidequest/face-the-chupacabra' }
             ].map(sidequest => {
               const tierColor = sidequest.tier === 'Basic' ? '#10b981' : 
