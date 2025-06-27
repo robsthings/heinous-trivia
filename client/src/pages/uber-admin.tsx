@@ -369,10 +369,12 @@ export default function UberAdmin() {
                           <td >
                             <Badge 
                               variant={haunt.tier === 'premium' ? 'default' : haunt.tier === 'pro' ? 'secondary' : 'outline'}
-                                haunt.tier === 'premium' ? 'bg-yellow-600' : 
-                                haunt.tier === 'pro' ? 'bg-purple-600' : 
-                                'border-gray-600'
-                              }
+                              style={{
+                                backgroundColor: haunt.tier === 'premium' ? '#ca8a04' : 
+                                haunt.tier === 'pro' ? '#7c3aed' : 
+                                'transparent',
+                                border: haunt.tier === 'basic' ? '1px solid #4b5563' : 'none'
+                              }}
                             >
                               {haunt.tier}
                             </Badge>

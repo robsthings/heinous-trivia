@@ -590,15 +590,26 @@ export default function Analytics() {
                       </div>
 
                       {/* Performance Badge */}
-                      <div  style={{textAlign: "center"}}>
+                      <div style={{textAlign: "center"}}>
                         <Badge 
                           variant="outline" 
-                            ctr >= 5 
-                              ? 'bg-green-500/20 text-green-300 border-green-500/30' 
+                          style={{
+                            backgroundColor: ctr >= 5 
+                              ? 'rgba(34, 197, 94, 0.2)' 
                               : ctr >= 2 
-                              ? 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30'
-                              : 'bg-gray-500/20 text-gray-300 border-gray-500/30'
-                          }`}
+                              ? 'rgba(234, 179, 8, 0.2)'
+                              : 'rgba(107, 114, 128, 0.2)',
+                            color: ctr >= 5 
+                              ? '#86efac' 
+                              : ctr >= 2 
+                              ? '#fde047'
+                              : '#d1d5db',
+                            border: ctr >= 5 
+                              ? '1px solid rgba(34, 197, 94, 0.3)' 
+                              : ctr >= 2 
+                              ? '1px solid rgba(234, 179, 8, 0.3)'
+                              : '1px solid rgba(107, 114, 128, 0.3)'
+                          }}
                         >
                           {ctr >= 5 ? 'Excellent' : ctr >= 2 ? 'Good' : views > 0 ? 'Low CTR' : 'No Data'}
                         </Badge>
@@ -778,54 +789,65 @@ export default function Analytics() {
                     Active
                   </Badge>
                 </div>
-                <div >{adsData?.length || 0}</div>
-                <div >Total Ads Uploaded</div>
+                <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'white' }}>{adsData?.length || 0}</div>
+                <div style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.6)' }}>Total Ads Uploaded</div>
               </div>
 
               {/* Total Impressions */}
-              <div >
-                <div >
-                  <div >
-                    <TrendingUpIcon  />
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <TrendingUpIcon style={{ width: '1rem', height: '1rem', color: 'rgba(255, 255, 255, 0.6)' }} />
                   </div>
-                  <Badge variant="outline" >
+                  <Badge variant="outline" style={{ backgroundColor: 'transparent', color: 'rgba(255, 255, 255, 0.8)', border: '1px solid rgba(255, 255, 255, 0.3)' }}>
                     Views
                   </Badge>
                 </div>
-                <div >
+                <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'white' }}>
                   {analyticsData?.adPerformanceData?.reduce((sum, ad) => sum + ad.views, 0) || 0}
                 </div>
-                <div >Total Impressions</div>
+                <div style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.6)' }}>Total Impressions</div>
               </div>
 
               {/* Total Clicks */}
-              <div >
-                <div >
-                  <div >
-                    <MousePointerClickIcon  />
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <MousePointerClickIcon style={{ width: '1rem', height: '1rem', color: 'rgba(255, 255, 255, 0.6)' }} />
                   </div>
-                  <Badge variant="outline" >
+                  <Badge variant="outline" style={{ backgroundColor: 'transparent', color: 'rgba(255, 255, 255, 0.8)', border: '1px solid rgba(255, 255, 255, 0.3)' }}>
                     Clicks
                   </Badge>
                 </div>
-                <div >
+                <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'white' }}>
                   {analyticsData?.adPerformanceData?.reduce((sum, ad) => sum + ad.clicks, 0) || 0}
                 </div>
-                <div >Total Engagements</div>
+                <div style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.6)' }}>Total Engagements</div>
               </div>
 
               {/* Overall Performance */}
-              <div >
-                <div >
-                  <div >
-                    <AwardIcon  />
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <AwardIcon style={{ width: '1rem', height: '1rem', color: 'rgba(255, 255, 255, 0.6)' }} />
                   </div>
-                    (analyticsData?.adClickThrough || 0) >= 5 
-                      ? 'bg-green-500/30 text-green-200 border-green-500/50' 
+                  <Badge style={{
+                    backgroundColor: (analyticsData?.adClickThrough || 0) >= 5 
+                      ? 'rgba(34, 197, 94, 0.3)' 
                       : (analyticsData?.adClickThrough || 0) >= 2 
-                      ? 'bg-yellow-500/30 text-yellow-200 border-yellow-500/50'
-                      : 'bg-red-500/30 text-red-200 border-red-500/50'
-                  }`}>
+                      ? 'rgba(234, 179, 8, 0.3)'
+                      : 'rgba(239, 68, 68, 0.3)',
+                    color: (analyticsData?.adClickThrough || 0) >= 5 
+                      ? '#bbf7d0' 
+                      : (analyticsData?.adClickThrough || 0) >= 2 
+                      ? '#fef3c7'
+                      : '#fecaca',
+                    border: (analyticsData?.adClickThrough || 0) >= 5 
+                      ? '1px solid rgba(34, 197, 94, 0.5)' 
+                      : (analyticsData?.adClickThrough || 0) >= 2 
+                      ? '1px solid rgba(234, 179, 8, 0.5)'
+                      : '1px solid rgba(239, 68, 68, 0.5)'
+                  }}>
                     {(analyticsData?.adClickThrough || 0) >= 5 
                       ? 'Excellent' 
                       : (analyticsData?.adClickThrough || 0) >= 2 
@@ -833,35 +855,35 @@ export default function Analytics() {
                       : 'Needs Improvement'}
                   </Badge>
                 </div>
-                <div >{analyticsData?.adClickThrough || 0}%</div>
-                <div >Overall CTR</div>
+                <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: 'white' }}>{analyticsData?.adClickThrough || 0}%</div>
+                <div style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.6)' }}>Overall CTR</div>
               </div>
             </div>
 
             {/* Call to Action */}
-            <div >
-              <div >
-                <div >
-                  <div >
-                    <h3 >Ready to optimize your ad performance?</h3>
-                    <p >
+            <div style={{ marginTop: '1.5rem', padding: '1rem', backgroundColor: 'rgba(0, 0, 0, 0.4)', borderRadius: '0.5rem', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem' }}>
+                <div style={{ flex: '1' }}>
+                  <div style={{ marginBottom: '0.5rem' }}>
+                    <h3 style={{ fontSize: '1.125rem', fontWeight: 'bold', color: 'white', marginBottom: '0.5rem' }}>Ready to optimize your ad performance?</h3>
+                    <p style={{ fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.6)' }}>
                       Upload more ads, adjust targeting, and maximize your haunt's revenue potential with detailed analytics insights.
                     </p>
                   </div>
-                  <div >
+                  <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
                     <Button 
                       onClick={() => window.location.href = `https://heinoustrivia.com/haunt-admin/${hauntId}`}
-                      
+                      style={{ background: 'linear-gradient(to right, rgb(147, 51, 234), rgb(79, 70, 229))', color: 'white', border: 'none', padding: '0.5rem 1rem', borderRadius: '0.375rem', display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}
                     >
-                      <MousePointerClickIcon  />
+                      <MousePointerClickIcon style={{ width: '1rem', height: '1rem' }} />
                       Manage Ads
                     </Button>
                     <Button 
                       variant="outline" 
                       onClick={refreshData}
-                      
+                      style={{ backgroundColor: 'transparent', color: 'rgba(255, 255, 255, 0.8)', border: '1px solid rgba(255, 255, 255, 0.3)', padding: '0.5rem 1rem', borderRadius: '0.375rem', display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}
                     >
-                      <RefreshCwIcon  />
+                      <RefreshCwIcon style={{ width: '1rem', height: '1rem' }} />
                       Refresh Data
                     </Button>
                   </div>
@@ -872,8 +894,8 @@ export default function Analytics() {
         </Card>
 
         {/* Footer */}
-        <div  style={{textAlign: "center"}}>
-          <p >
+        <div style={{textAlign: "center", marginTop: "2rem", paddingTop: "1rem", borderTop: "1px solid rgba(255, 255, 255, 0.1)"}}>
+          <p style={{ fontSize: "0.875rem", color: "rgba(255, 255, 255, 0.5)" }}>
             Analytics Dashboard • Pro/Premium Feature
           </p>
         </div>
