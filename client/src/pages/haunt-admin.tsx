@@ -1189,23 +1189,15 @@ export default function HauntAdmin() {
                                 </div>
                               )}
                               
-                              {/* Hover Controls */}
+                              {/* Always Visible Controls */}
                               <div 
-                                className="ad-hover-controls"
                                 style={{
                                   position: 'absolute',
-                                  top: 0,
-                                  left: 0,
-                                  right: 0,
-                                  bottom: 0,
-                                  backgroundColor: 'rgba(0, 0, 0, 0.7)',
-                                  opacity: 0,
+                                  top: '4px',
+                                  right: '4px',
                                   display: 'flex',
-                                  alignItems: 'center',
-                                  justifyContent: 'center',
-                                  gap: '8px',
-                                  zIndex: 10,
-                                  transition: 'opacity 0.2s'
+                                  gap: '4px',
+                                  zIndex: 10
                                 }}
                               >
                                 <button
