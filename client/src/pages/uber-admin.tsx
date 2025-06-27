@@ -35,6 +35,7 @@ interface GlobalAnalytics {
 interface HauntConfig {
   name: string;
   tier: string;
+  triviaPacks?: string[];
   theme?: {
     background?: string;
     progressBar?: string;
@@ -133,6 +134,39 @@ export default function UberAdmin() {
   }, [timeRange]);
 
 
+
+  const handleAssignTriviaPack = async (hauntId: string, packId: string) => {
+    try {
+      const currentConfig = hauntConfigs[hauntId] || { name: hauntId, tier: 'basic' };
+      const updatedConfig = {
+        ...currentConfig,
+        triviaPacks: packId ? [packId] : []
+      };
+
+      const response = await fetch(`/api/uber/assign-trivia-pack`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          hauntId,
+          triviaPacks: updatedConfig.triviaPacks
+        })
+      });
+
+      if (response.ok) {
+        setHauntConfigs(prev => ({
+          ...prev,
+          [hauntId]: updatedConfig
+        }));
+        console.log(`✅ Successfully assigned trivia pack ${packId} to ${hauntId}`);
+      } else {
+        console.error('Failed to assign trivia pack:', await response.text());
+      }
+    } catch (error) {
+      console.error('Error assigning trivia pack:', error);
+    }
+  };
 
   const updateHauntTheme = async (hauntId: string, themeUpdates: Partial<{ background: string; progressBar: string }>) => {
     try {
@@ -235,6 +269,10 @@ export default function UberAdmin() {
               <TabsTrigger value="haunts" >
                 <Settings  />
                 Haunt Management
+              </TabsTrigger>
+              <TabsTrigger value="trivia-packs" >
+                <Gamepad2  />
+                Trivia Pack Assignments
               </TabsTrigger>
 
             </TabsList>
@@ -532,6 +570,102 @@ export default function UberAdmin() {
             </div>
           </TabsContent>
 
+          <TabsContent value="trivia-packs" style={{ color: 'white' }}>
+            <div style={{ display: 'grid', gap: '1.5rem' }}>
+              <Card style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
+                <CardHeader>
+                  <CardTitle style={{ color: 'white', fontFamily: 'Creepster, sans-serif' }}>
+                    <Gamepad2 style={{ width: '1.25rem', height: '1.25rem', display: 'inline-block', marginRight: '0.5rem' }} />
+                    Universal Trivia Pack Assignments
+                  </CardTitle>
+                  <p style={{ color: 'rgba(255, 255, 255, 0.7)' }}>
+                    Manage trivia pack assignments for all haunts from one central location
+                  </p>
+                </CardHeader>
+                <CardContent>
+                  <div style={{ display: 'grid', gap: '1rem' }}>
+                    {/* Pack Assignment Interface */}
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem' }}>
+                      {availableHaunts.map((haunt) => (
+                        <Card key={haunt.id} style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
+                          <CardHeader style={{ paddingBottom: '0.75rem' }}>
+                            <CardTitle style={{ color: 'white', fontSize: '1rem' }}>
+                              {haunt.name || haunt.id}
+                            </CardTitle>
+                            <Badge variant={haunt.tier === 'premium' ? 'default' : haunt.tier === 'pro' ? 'secondary' : 'outline'}>
+                              {haunt.tier?.toUpperCase() || 'BASIC'}
+                            </Badge>
+                          </CardHeader>
+                          <CardContent>
+                            <div style={{ display: 'grid', gap: '0.75rem' }}>
+                              <div>
+                                <Label style={{ color: 'white', marginBottom: '0.5rem', display: 'block' }}>
+                                  Assigned Trivia Packs
+                                </Label>
+                                <Select 
+                                  value={hauntConfigs[haunt.id]?.triviaPacks?.[0] || ""} 
+                                  onValueChange={(value) => handleAssignTriviaPack(haunt.id, value)}
+                                >
+                                  <SelectTrigger style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)', border: '1px solid rgba(255, 255, 255, 0.2)', color: 'white' }}>
+                                    <SelectValue placeholder="Select trivia pack..." />
+                                  </SelectTrigger>
+                                  <SelectContent>
+                                    <SelectItem value="">No pack assigned</SelectItem>
+                                    {triviaPacks.map((pack) => (
+                                      <SelectItem key={pack.id} value={pack.id}>
+                                        {pack.name} ({pack.questionCount} questions)
+                                      </SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                              </div>
+                              
+                              {/* Current Assignment Status */}
+                              <div style={{ padding: '0.75rem', backgroundColor: 'rgba(0, 0, 0, 0.3)', borderRadius: '0.375rem' }}>
+                                <div style={{ fontSize: '0.875rem', color: 'rgba(255, 255, 255, 0.7)' }}>
+                                  Current Status:
+                                </div>
+                                <div style={{ color: 'white', fontWeight: '500' }}>
+                                  {hauntConfigs[haunt.id]?.triviaPacks?.length > 0 
+                                    ? `${hauntConfigs[haunt.id].triviaPacks.length} pack(s) assigned`
+                                    : 'Using starter pack (fallback)'
+                                  }
+                                </div>
+                              </div>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      ))}
+                    </div>
+
+                    {/* Available Trivia Packs Overview */}
+                    <Card style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)', border: '1px solid rgba(255, 255, 255, 0.1)', marginTop: '1rem' }}>
+                      <CardHeader>
+                        <CardTitle style={{ color: 'white' }}>Available Trivia Packs</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem' }}>
+                          {triviaPacks.map((pack) => (
+                            <div key={pack.id} style={{ padding: '1rem', backgroundColor: 'rgba(0, 0, 0, 0.3)', borderRadius: '0.375rem', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
+                              <div style={{ color: 'white', fontWeight: '500', marginBottom: '0.25rem' }}>
+                                {pack.name}
+                              </div>
+                              <div style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.875rem' }}>
+                                {pack.questionCount} questions
+                              </div>
+                              <div style={{ color: 'rgba(255, 255, 255, 0.5)', fontSize: '0.75rem', marginTop: '0.25rem' }}>
+                                ID: {pack.id}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
 
         </Tabs>
       </div>

@@ -1965,6 +1965,90 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get all trivia packs for uber admin
+  app.get("/api/uber/trivia-packs", async (req, res) => {
+    try {
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      const packsSnapshot = await firestore.collection('trivia-packs').get();
+      const packs = packsSnapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          name: data.name || doc.id,
+          questionCount: data.questions ? data.questions.length : 0,
+          description: data.description || ''
+        };
+      });
+      
+      res.json(packs);
+    } catch (error) {
+      console.error("Error fetching trivia packs:", error);
+      res.status(500).json({ error: "Failed to fetch trivia packs" });
+    }
+  });
+
+  // Get all haunts for uber admin
+  app.get("/api/uber/haunts", async (req, res) => {
+    try {
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      const hauntsSnapshot = await firestore.collection('hauntConfigs').get();
+      const haunts = hauntsSnapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          name: data.name || doc.id,
+          tier: data.tier || 'basic',
+          triviaPacks: data.triviaPacks || []
+        };
+      });
+      
+      res.json(haunts);
+    } catch (error) {
+      console.error("Error fetching haunts:", error);
+      res.status(500).json({ error: "Failed to fetch haunts" });
+    }
+  });
+
+  // Assign trivia pack to haunt (universal assignment)
+  app.post("/api/uber/assign-trivia-pack", async (req, res) => {
+    try {
+      const { hauntId, triviaPacks } = req.body;
+      
+      if (!firestore) {
+        throw new Error('Firebase not configured');
+      }
+      
+      if (!hauntId) {
+        return res.status(400).json({ error: "hauntId is required" });
+      }
+      
+      const hauntRef = firestore.collection('hauntConfigs').doc(hauntId);
+      const hauntDoc = await hauntRef.get();
+      
+      if (!hauntDoc.exists) {
+        return res.status(404).json({ error: "Haunt not found" });
+      }
+      
+      // Update the haunt configuration with the assigned trivia packs
+      await hauntRef.update({
+        triviaPacks: triviaPacks || [],
+        updatedAt: FieldValue.serverTimestamp()
+      });
+      
+      console.log(`✅ Successfully assigned trivia packs to ${hauntId}:`, triviaPacks);
+      res.json({ success: true, hauntId, triviaPacks });
+    } catch (error) {
+      console.error("Error assigning trivia pack:", error);
+      res.status(500).json({ error: "Failed to assign trivia pack" });
+    }
+  });
+
 
   // Sidequest API endpoints
   app.get("/api/sidequests", async (req, res) => {
