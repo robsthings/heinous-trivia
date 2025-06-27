@@ -426,7 +426,6 @@ export default function Admin() {
   useEffect(() => {
     loadAllHaunts();
     loadExistingPacks();
-    loadDefaultAds();
   }, []);
 
   const loadAllHaunts = async () => {
@@ -631,25 +630,7 @@ export default function Admin() {
     }
   };
 
-  const loadDefaultAds = async () => {
-    try {
-      if (!auth.currentUser) {
-        await signInAnonymously(auth);
-      }
-      
-      const adsRef = collection(firestore, 'default-ads');
-      const querySnapshot = await getDocs(adsRef);
-      
-      const ads: any[] = [];
-      querySnapshot.forEach((doc) => {
-        ads.push({ id: doc.id, ...doc.data() });
-      });
-      
-      setDefaultAds(ads);
-    } catch (error) {
-      console.error('Failed to load default ads:', error);
-    }
-  };
+
 
   const saveDefaultAds = async () => {
     try {
@@ -695,8 +676,6 @@ export default function Admin() {
         description: `${savedAdsCount} default ads saved successfully`,
       });
       
-      // Refresh the ads list
-      loadDefaultAds();
       setDefaultAdFiles([]);
     } catch (error) {
       console.error('Failed to save default ads:', error);
