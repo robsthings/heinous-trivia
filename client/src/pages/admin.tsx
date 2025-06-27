@@ -14,7 +14,7 @@ import { firestore, auth, storage } from "@/lib/firebase";
 import { doc, setDoc, collection, addDoc, getDocs, updateDoc, deleteDoc } from "firebase/firestore";
 import { signInAnonymously } from "firebase/auth";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { ExternalLink, Settings, GamepadIcon, Crown, Zap, Gem, Copy, Upload, Palette, TrendingUp, Users, Target, MousePointer, Calendar, BarChart3 } from "lucide-react";
+import { ExternalLink, Settings, GamepadIcon, Crown, Zap, Gem, Copy, Upload, Palette, TrendingUp, Users, Target, MousePointer, Calendar, BarChart3, Activity, Database, Server, Eye } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import type { HauntConfig, TriviaQuestion } from "@shared/schema";
 
