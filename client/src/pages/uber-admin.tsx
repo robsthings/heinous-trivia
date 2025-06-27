@@ -137,24 +137,26 @@ export default function UberAdmin() {
 
   const handleAssignTriviaPack = async (hauntId: string, packId: string) => {
     try {
-      const currentConfig = hauntConfigs[hauntId] || { name: hauntId, tier: 'basic' };
-      const updatedConfig = {
-        ...currentConfig,
-        triviaPacks: packId ? [packId] : []
-      };
-
-      const response = await fetch(`/api/uber/assign-trivia-pack`, {
-        method: 'POST',
+      // Always include starter-pack as fallback, plus selected pack if any
+      const triviaPacks = packId ? [packId, "starter-pack"] : ["starter-pack"];
+      
+      const response = await fetch(`/api/haunt/${hauntId}/branding`, {
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          hauntId,
-          triviaPacks: updatedConfig.triviaPacks
+          triviaPacks: triviaPacks
         })
       });
 
       if (response.ok) {
+        const currentConfig = hauntConfigs[hauntId] || { name: hauntId, tier: 'basic' };
+        const updatedConfig = {
+          ...currentConfig,
+          triviaPacks: triviaPacks
+        };
+        
         setHauntConfigs(prev => ({
           ...prev,
           [hauntId]: updatedConfig
