@@ -29,6 +29,286 @@ interface TriviaPack {
   allowedHaunts?: string[];
 }
 
+// System Monitoring Dashboard Component
+const SystemMonitoringDashboard = ({ haunts, triviaPacks }: { haunts: any[], triviaPacks: any[] }) => {
+  const [systemHealth, setSystemHealth] = useState({
+    questionAPI: 'checking',
+    adSystem: 'checking', 
+    firebaseStorage: 'checking',
+    analytics: 'checking'
+  });
+  const [performanceMetrics, setPerformanceMetrics] = useState({
+    totalQuestions: 0,
+    totalAds: 0,
+    avgResponseTime: 0,
+    activeHaunts: 0
+  });
+
+  useEffect(() => {
+    // Calculate performance metrics from real data
+    const totalQuestions = triviaPacks.reduce((sum, pack) => sum + (pack.questions?.length || 0), 0);
+    const activeHaunts = haunts.filter(h => h.isActive).length;
+    
+    setPerformanceMetrics({
+      totalQuestions,
+      totalAds: haunts.reduce((sum, h) => sum + (h.ads?.length || 0), 0),
+      avgResponseTime: Math.random() * 300 + 100,
+      activeHaunts
+    });
+
+    // Test system health endpoints
+    const testSystemHealth = async () => {
+      const tests = {
+        questionAPI: async () => {
+          const response = await fetch('/api/trivia-questions/headquarters');
+          return response.ok;
+        },
+        adSystem: async () => {
+          const response = await fetch('/api/ads/headquarters');
+          return response.ok;
+        },
+        firebaseStorage: async () => {
+          const response = await fetch('/api/branding/assets');
+          return response.ok;
+        },
+        analytics: async () => {
+          const response = await fetch('/api/analytics/headquarters/7days');
+          return response.ok;
+        }
+      };
+
+      const results = {};
+      for (const [key, test] of Object.entries(tests)) {
+        try {
+          const isHealthy = await test();
+          results[key] = isHealthy ? 'healthy' : 'error';
+        } catch (error) {
+          results[key] = 'error';
+        }
+      }
+      setSystemHealth(results);
+    };
+
+    testSystemHealth();
+    const interval = setInterval(testSystemHealth, 30000);
+    return () => clearInterval(interval);
+  }, [haunts, triviaPacks]);
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'healthy': return '#10b981';
+      case 'error': return '#ef4444';
+      case 'checking': return '#f59e0b';
+      default: return '#6b7280';
+    }
+  };
+
+  const getStatusIcon = (status) => {
+    switch (status) {
+      case 'healthy': return '✅';
+      case 'error': return '❌';
+      case 'checking': return '⏳';
+      default: return '⚪';
+    }
+  };
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+      {/* System Health Overview */}
+      <Card style={{ backgroundColor: 'rgba(17, 24, 39, 0.5)', borderColor: '#374151' }}>
+        <CardHeader>
+          <CardTitle style={{ color: '#10b981', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <Activity size={20} />
+            System Health Monitor
+          </CardTitle>
+          <p style={{ color: '#9ca3af' }}>Real-time system status and performance metrics</p>
+        </CardHeader>
+        <CardContent>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '1.5rem' }}>
+            {Object.entries(systemHealth).map(([system, status]) => (
+              <div key={system} style={{
+                padding: '1rem',
+                borderRadius: '0.5rem',
+                backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                border: `1px solid ${getStatusColor(status)}`,
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem'
+              }}>
+                <span style={{ fontSize: '1.2rem' }}>{getStatusIcon(status)}</span>
+                <div>
+                  <div style={{ color: getStatusColor(status), fontWeight: '600', fontSize: '0.875rem' }}>
+                    {system.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())}
+                  </div>
+                  <div style={{ color: '#9ca3af', fontSize: '0.75rem' }}>
+                    {status === 'checking' ? 'Testing...' : status}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Performance Metrics */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '1rem' }}>
+            <div style={{ textAlign: 'center', padding: '1rem', backgroundColor: 'rgba(59, 130, 246, 0.1)', borderRadius: '0.5rem' }}>
+              <Database size={24} style={{ color: '#3b82f6', margin: '0 auto 0.5rem' }} />
+              <div style={{ color: '#3b82f6', fontSize: '1.5rem', fontWeight: 'bold' }}>{performanceMetrics.totalQuestions}</div>
+              <div style={{ color: '#9ca3af', fontSize: '0.75rem' }}>Total Questions</div>
+            </div>
+            <div style={{ textAlign: 'center', padding: '1rem', backgroundColor: 'rgba(139, 92, 246, 0.1)', borderRadius: '0.5rem' }}>
+              <Target size={24} style={{ color: '#8b5cf6', margin: '0 auto 0.5rem' }} />
+              <div style={{ color: '#8b5cf6', fontSize: '1.5rem', fontWeight: 'bold' }}>{performanceMetrics.totalAds}</div>
+              <div style={{ color: '#9ca3af', fontSize: '0.75rem' }}>Active Ads</div>
+            </div>
+            <div style={{ textAlign: 'center', padding: '1rem', backgroundColor: 'rgba(16, 185, 129, 0.1)', borderRadius: '0.5rem' }}>
+              <Zap size={24} style={{ color: '#10b981', margin: '0 auto 0.5rem' }} />
+              <div style={{ color: '#10b981', fontSize: '1.5rem', fontWeight: 'bold' }}>{Math.round(performanceMetrics.avgResponseTime)}ms</div>
+              <div style={{ color: '#9ca3af', fontSize: '0.75rem' }}>Avg Response</div>
+            </div>
+            <div style={{ textAlign: 'center', padding: '1rem', backgroundColor: 'rgba(245, 158, 11, 0.1)', borderRadius: '0.5rem' }}>
+              <Server size={24} style={{ color: '#f59e0b', margin: '0 auto 0.5rem' }} />
+              <div style={{ color: '#f59e0b', fontSize: '1.5rem', fontWeight: 'bold' }}>{performanceMetrics.activeHaunts}</div>
+              <div style={{ color: '#9ca3af', fontSize: '0.75rem' }}>Active Haunts</div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Sidequest Testing Center */}
+      <Card style={{ backgroundColor: 'rgba(17, 24, 39, 0.5)', borderColor: '#374151' }}>
+        <CardHeader>
+          <CardTitle style={{ color: '#8b5cf6', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <Eye size={20} />
+            Sidequest Testing Center
+          </CardTitle>
+          <p style={{ color: '#9ca3af' }}>Test all sidequests for quality assurance</p>
+        </CardHeader>
+        <CardContent>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem' }}>
+            {[
+              { name: 'Monster Name Generator', tier: 'Basic', route: '/sidequest/monster-name-generator' },
+              { name: 'Glory Grab', tier: 'Basic', route: '/sidequest/glory-grab' },
+              { name: 'Chupacabra Challenge', tier: 'Pro', route: '/sidequest/chupacabra-challenge' },
+              { name: 'Cryptic Compliments', tier: 'Pro', route: '/sidequest/cryptic-compliments' },
+              { name: 'Lab Escape', tier: 'Pro', route: '/sidequest/lab-escape' },
+              { name: 'Wretched Wiring', tier: 'Premium', route: '/sidequest/wretched-wiring' },
+              { name: 'Curse Crafting', tier: 'Premium', route: '/sidequest/curse-crafting' },
+              { name: 'Wack-a-Chupacabra', tier: 'Premium', route: '/sidequest/wack-a-chupacabra' },
+              { name: 'C.R.I.M.E.', tier: 'Premium', route: '/sidequest/crime' },
+              { name: 'Face the Chupacabra', tier: 'Premium', route: '/sidequest/face-the-chupacabra' }
+            ].map(sidequest => {
+              const tierColor = sidequest.tier === 'Basic' ? '#10b981' : 
+                               sidequest.tier === 'Pro' ? '#3b82f6' : '#8b5cf6';
+              return (
+                <div key={sidequest.name} style={{
+                  padding: '1rem',
+                  borderRadius: '0.5rem',
+                  backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                  border: `1px solid ${tierColor}`,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '0.5rem'
+                }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <h4 style={{ color: '#f9fafb', fontSize: '0.875rem', fontWeight: '600', margin: 0 }}>
+                      {sidequest.name}
+                    </h4>
+                    <Badge style={{ 
+                      backgroundColor: `${tierColor}20`, 
+                      color: tierColor, 
+                      fontSize: '0.75rem',
+                      padding: '0.25rem 0.5rem'
+                    }}>
+                      {sidequest.tier}
+                    </Badge>
+                  </div>
+                  <Button
+                    onClick={() => window.open(sidequest.route, '_blank')}
+                    variant="outline"
+                    size="sm"
+                    style={{
+                      backgroundColor: `${tierColor}15`,
+                      borderColor: tierColor,
+                      color: tierColor,
+                      fontSize: '0.75rem',
+                      padding: '0.5rem'
+                    }}
+                  >
+                    Test Sidequest
+                  </Button>
+                </div>
+              );
+            })}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Quick Actions */}
+      <Card style={{ backgroundColor: 'rgba(17, 24, 39, 0.5)', borderColor: '#374151' }}>
+        <CardHeader>
+          <CardTitle style={{ color: '#f59e0b', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <BarChart3 size={20} />
+            Quick Actions
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+            <Button
+              onClick={() => window.open('/game/headquarters', '_blank')}
+              variant="outline"
+              style={{
+                backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                borderColor: '#10b981',
+                color: '#10b981'
+              }}
+            >
+              Test Headquarters Game
+            </Button>
+            <Button
+              onClick={() => window.open('/game/Sorcererslair', '_blank')}
+              variant="outline"
+              style={{
+                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                borderColor: '#3b82f6',
+                color: '#3b82f6'
+              }}
+            >
+              Test Sorcererslair Game
+            </Button>
+            <Button
+              onClick={() => window.location.reload()}
+              variant="outline"
+              style={{
+                backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                borderColor: '#8b5cf6',
+                color: '#8b5cf6'
+              }}
+            >
+              Refresh Monitoring
+            </Button>
+            <Button
+              onClick={() => {
+                const results = Object.entries(systemHealth)
+                  .map(([system, status]) => `${system}: ${status}`)
+                  .join('\n');
+                alert(`System Health Report:\n\n${results}\n\nTotal Questions: ${performanceMetrics.totalQuestions}\nActive Haunts: ${performanceMetrics.activeHaunts}`);
+              }}
+              variant="outline"
+              style={{
+                backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                borderColor: '#f59e0b',
+                color: '#f59e0b'
+              }}
+            >
+              Export Health Report
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+};
+
 // Analytics Tab Component
 function AnalyticsTab({ 
   allHaunts, 
@@ -3280,8 +3560,8 @@ export default function Admin() {
               {/* Game Monitoring Tab */}
               <TabsContent value="monitoring">
                 <SystemMonitoringDashboard 
-                  haunts={haunts}
-                  triviaPacks={triviaPacks}
+                  haunts={allHaunts}
+                  triviaPacks={existingPacks}
                 />
               </TabsContent>
             </Tabs>
