@@ -54,10 +54,9 @@ Set these in Replit Secrets:
 - **Leaderboards**: Top 10 scoring system per haunt
 
 ## Production Deployment
-1. Build process: `npm run build`
-2. Start command: `npm run start`
-3. Static assets served from `dist/public`
-4. Autoscale deployment for traffic handling
+1. Build: `npm run build` - Creates `dist/index.js` server and `dist/public/` assets
+2. Start: `npm run start` - Runs production server with PORT environment variable support
+3. Deployment ready for autoscale with proper Cloud Run compatibility
 
 ## File Structure Notes
 - `client/` contains React frontend with Vite
