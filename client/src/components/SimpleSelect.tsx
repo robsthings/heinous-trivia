@@ -1,121 +1,110 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { ChevronDown } from 'lucide-react';
 
 interface SimpleSelectProps {
   value: string;
   onValueChange: (value: string) => void;
   options: Array<{ value: string; label: string }>;
   placeholder?: string;
-  className?: string;
 }
 
 export function SimpleSelect({ 
   value, 
   onValueChange, 
   options, 
-  placeholder = "Select...", 
-  className = "" 
+  placeholder 
 }: SimpleSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
-  
-  const selectedOption = options.find(opt => opt.value === value);
-  
+  const selectRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const selectedOption = options.find(option => option.value === value);
+
   return (
-    <div style={{ position: 'relative' }} >
+    <div ref={selectRef} style={{ position: 'relative', width: '100%' }}>
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         style={{
           width: '100%',
+          padding: '0.5rem 1rem',
           backgroundColor: '#1f2937',
-          border: '1px solid #4b5563',
-          borderRadius: '0.25rem',
-          padding: '0.5rem 0.75rem',
-          textAlign: 'left',
-          color: '#ffffff',
-          cursor: 'pointer',
-          transition: 'background-color 0.2s ease',
-          position: 'relative'
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.backgroundColor = '#374151';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.backgroundColor = '#1f2937';
-        }}
-        onFocus={(e) => {
-          e.currentTarget.style.outline = '2px solid #ef4444';
-          e.currentTarget.style.outlineOffset = '2px';
-        }}
-        onBlur={(e) => {
-          e.currentTarget.style.outline = 'none';
+          border: '1px solid #374151',
+          borderRadius: '0.375rem',
+          color: 'white',
+          fontSize: '0.875rem',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          cursor: 'pointer'
         }}
       >
         <span>{selectedOption?.label || placeholder}</span>
-        <span style={{
-          position: 'absolute',
-          right: '0.75rem',
-          top: '50%',
-          transform: 'translateY(-50%)'
-        }}>
-          {isOpen ? '▲' : '▼'}
-        </span>
+        <ChevronDown 
+          size={16} 
+          style={{ 
+            transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', 
+            transition: 'transform 0.2s' 
+          }} 
+        />
       </button>
-      
+
       {isOpen && (
         <div style={{
           position: 'absolute',
-          zIndex: 50,
-          width: '100%',
+          top: '100%',
+          left: 0,
+          right: 0,
+          backgroundColor: '#1f2937',
+          border: '1px solid #374151',
+          borderRadius: '0.375rem',
           marginTop: '0.25rem',
-          backgroundColor: "#111827",
-          border: '1px solid #4b5563',
-          borderRadius: '0.25rem',
-          boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
+          zIndex: 50,
+          maxHeight: '12rem',
+          overflowY: 'auto'
         }}>
           {options.map((option) => (
             <button
               key={option.value}
-              type="button"
               onClick={() => {
                 onValueChange(option.value);
                 setIsOpen(false);
               }}
-              style={{ 
+              style={{
                 width: '100%',
-                padding: '0.5rem 0.75rem',
+                padding: '0.5rem 1rem',
+                backgroundColor: option.value === value ? '#374151' : 'transparent',
+                color: 'white',
+                fontSize: '0.875rem',
                 textAlign: 'left',
-                color: '#ffffff',
-                backgroundColor: 'rgb(17, 24, 39)',
-                border: 'none',
-                borderBottom: '1px solid rgb(55, 65, 81)',
                 cursor: 'pointer',
-                transition: 'background-color 0.2s ease'
+                border: 'none'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = '#374151';
+                if (option.value !== value) {
+                  e.currentTarget.style.backgroundColor = '#374151';
+                }
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgb(17, 24, 39)';
-              }}
-              onFocus={(e) => {
-                e.currentTarget.style.backgroundColor = '#374151';
-                e.currentTarget.style.outline = 'none';
-              }}
-              onBlur={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgb(17, 24, 39)';
+                if (option.value !== value) {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                }
               }}
             >
               {option.label}
             </button>
           ))}
         </div>
-      )}
-      
-      {isOpen && (
-        <div 
-           
-          onClick={() => setIsOpen(false)}
-        />
       )}
     </div>
   );

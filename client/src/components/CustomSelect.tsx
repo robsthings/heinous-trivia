@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Crown, Zap, Gem, ChevronDown } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { ChevronDown } from 'lucide-react';
 
 interface SelectOption {
   value: string;
@@ -12,10 +12,9 @@ interface CustomSelectProps {
   onValueChange: (value: string) => void;
   options: SelectOption[];
   placeholder?: string;
-  className?: string;
 }
 
-export function CustomSelect({ value, onValueChange, options, placeholder, className = "" }: CustomSelectProps) {
+export function CustomSelect({ value, onValueChange, options, placeholder }: CustomSelectProps) {
   const [isOpen, setIsOpen] = useState(false);
   const selectRef = useRef<HTMLDivElement>(null);
 
@@ -33,92 +32,78 @@ export function CustomSelect({ value, onValueChange, options, placeholder, class
   const selectedOption = options.find(option => option.value === value);
 
   return (
-    <div ref={selectRef} style={{ position: 'relative' }} >
-      {/* Trigger */}
+    <div ref={selectRef} style={{ position: 'relative', width: '100%' }}>
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         style={{
           width: '100%',
+          padding: '0.5rem 1rem',
           backgroundColor: '#1f2937',
-          border: '1px solid #4b5563',
-          color: '#ffffff',
-          padding: '0.5rem 0.75rem',
+          border: '1px solid #374151',
           borderRadius: '0.375rem',
+          color: 'white',
+          fontSize: '0.875rem',
           display: 'flex',
-          justifyContent: 'space-between',
           alignItems: 'center',
-          cursor: 'pointer',
-          transition: 'background-color 0.2s ease'
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.backgroundColor = '#374151';
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.backgroundColor = '#1f2937';
+          justifyContent: 'space-between',
+          cursor: 'pointer'
         }}
       >
-        <span style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.5rem'
-        }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           {selectedOption?.icon}
-          {selectedOption?.label || placeholder}
-        </span>
-        <ChevronDown style={{
-          height: '1rem',
-          width: '1rem',
-          transition: 'transform 0.2s ease',
-          transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)'
-        }} />
+          <span>{selectedOption?.label || placeholder}</span>
+        </div>
+        <ChevronDown size={16} style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 0.2s' }} />
       </button>
 
-      {/* Dropdown */}
       {isOpen && (
         <div style={{
           position: 'absolute',
           top: '100%',
           left: 0,
           right: 0,
-          marginTop: '0.25rem',
           backgroundColor: '#1f2937',
-          border: '1px solid #4b5563',
+          border: '1px solid #374151',
           borderRadius: '0.375rem',
-          boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+          marginTop: '0.25rem',
           zIndex: 50,
-          overflow: 'hidden'
+          maxHeight: '12rem',
+          overflowY: 'auto'
         }}>
           {options.map((option) => (
             <button
               key={option.value}
-              type="button"
               onClick={() => {
                 onValueChange(option.value);
                 setIsOpen(false);
               }}
               style={{
                 width: '100%',
-                padding: '0.5rem 0.75rem',
+                padding: '0.5rem 1rem',
+                backgroundColor: option.value === value ? '#374151' : 'transparent',
+                color: 'white',
+                fontSize: '0.875rem',
                 textAlign: 'left',
-                color: '#ffffff',
-                backgroundColor: 'transparent',
-                border: 'none',
-                cursor: 'pointer',
-                transition: 'background-color 0.2s ease',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '0.5rem'
+                gap: '0.5rem',
+                cursor: 'pointer',
+                border: 'none'
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = '#374151';
+                if (option.value !== value) {
+                  e.currentTarget.style.backgroundColor = '#374151';
+                }
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'transparent';
+                if (option.value !== value) {
+                  e.currentTarget.style.backgroundColor = 'transparent';
+                }
               }}
             >
               {option.icon}
-              {option.label}
+              <span>{option.label}</span>
             </button>
           ))}
         </div>
@@ -127,21 +112,8 @@ export function CustomSelect({ value, onValueChange, options, placeholder, class
   );
 }
 
-// Predefined tier options
 export const tierOptions: SelectOption[] = [
-  {
-    value: 'basic',
-    label: 'Basic (5 questions, 3 ads)',
-    icon: <Crown  />
-  },
-  {
-    value: 'pro',
-    label: 'Pro (15 questions, 5 ads)',
-    icon: <Zap  />
-  },
-  {
-    value: 'premium',
-    label: 'Premium (50 questions, 10 ads)',
-    icon: <Gem  />
-  }
+  { value: 'basic', label: 'Basic' },
+  { value: 'pro', label: 'Pro' },
+  { value: 'premium', label: 'Premium' }
 ];

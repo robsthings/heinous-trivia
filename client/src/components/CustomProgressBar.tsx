@@ -1,4 +1,4 @@
-import type { HauntConfig } from "@shared/schema";
+import { HauntConfig } from '@/lib/types';
 
 interface CustomProgressBarProps {
   progress: number; // 0-100
@@ -6,146 +6,63 @@ interface CustomProgressBarProps {
   className?: string;
 }
 
-export function CustomProgressBar({ progress, hauntConfig, className = "" }: CustomProgressBarProps) {
-  // Define progress bar color themes with inline styles for guaranteed rendering
-  const getProgressBarColors = (theme: string) => {
-    const themes = {
-      'crimson': { 
-        background: 'linear-gradient(to right, #dc2626, #f87171)',
-        boxShadow: '0 0 20px rgba(239, 68, 68, 0.5)'
-      },
-      'blood': { 
-        background: 'linear-gradient(to right, #991b1b, #dc2626)',
-        boxShadow: '0 0 20px rgba(220, 38, 38, 0.5)'
-      },
-      'electric': { 
-        background: 'linear-gradient(to right, #3b82f6, #22d3ee)',
-        boxShadow: '0 0 20px rgba(59, 130, 246, 0.5)'
-      },
-      'toxic': { 
-        background: 'linear-gradient(to right, #10b981, #84cc16)',
-        boxShadow: '0 0 20px rgba(16, 185, 129, 0.5)'
-      },
-      'purple': { 
-        background: 'linear-gradient(to right, #9333ea, #a855f7)',
-        boxShadow: '0 0 20px rgba(147, 51, 234, 0.5)'
-      },
-      'orange': { 
-        background: 'linear-gradient(to right, #ea580c, #fb923c)',
-        boxShadow: '0 0 20px rgba(234, 88, 12, 0.5)'
-      },
-      'pink': { 
-        background: 'linear-gradient(to right, #ec4899, #fb7185)',
-        boxShadow: '0 0 20px rgba(236, 72, 153, 0.5)'
-      },
-      'gold': { 
-        background: 'linear-gradient(to right, #eab308, #f59e0b)',
-        boxShadow: '0 0 20px rgba(234, 179, 8, 0.5)'
-      }
-    };
-    return themes[theme as keyof typeof themes] || themes.crimson;
-  };
-
-  // Check if haunt is eligible for custom progress bar (Pro/Premium only)
-  const isPremiumTier = hauntConfig?.tier === 'pro' || hauntConfig?.tier === 'premium';
-  const hasCustomTheme = isPremiumTier && hauntConfig?.progressBarTheme;
-
-
-
-  // Apply custom theme for Pro/Premium haunts with progressBarTheme
-  if (hasCustomTheme && hauntConfig.progressBarTheme) {
-    const themeData = getProgressBarColors(hauntConfig.progressBarTheme);
-    console.log('🎨 Applying custom theme:', hauntConfig.progressBarTheme);
-    
-    return (
-      <div 
-        style={{
-          position: 'relative',
-          width: '100%',
-          height: '1rem',
-          borderRadius: '9999px',
-          overflow: 'hidden',
-          backgroundColor: '#1f2937',
-          border: '2px solid #10b981',
-          boxShadow: '0 0 10px rgba(16, 185, 129, 0.5)',
-          ...className ? {} : {}
-        }}
-      >
-        {/* Custom themed progress bar */}
-        <div 
-          style={{ 
-            height: '100%',
-            width: `${Math.max(0, Math.min(100, progress))}%`,
-            background: themeData.background,
-            boxShadow: themeData.boxShadow,
-            borderRadius: '9999px',
-            transition: 'all 300ms ease-out',
-            animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
-          }}
-        >
-          {/* Glowing overlay effect */}
-          <div 
-            style={{
-              position: 'absolute',
-              top: 0, right: 0, bottom: 0, left: 0,
-              borderRadius: '9999px',
-              opacity: 0.3,
-              background: 'linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent)',
-              animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
-            }}
-          />
-        </div>
-        
-        {/* Progress text overlay with enhanced readability */}
-        <div style={{
-          position: 'absolute',
-          top: 0, right: 0, bottom: 0, left: 0,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          fontSize: '0.75rem',
-          fontWeight: 'bold',
-          color: '#ffffff',
-          filter: 'drop-shadow(0 1px 2px rgb(0 0 0 / 0.1)) drop-shadow(0 1px 1px rgb(0 0 0 / 0.06))'
-        }}>
-          {Math.round(progress)}%
-        </div>
-      </div>
-    );
+function getProgressBarGradient(hauntConfig: HauntConfig | null | undefined): string {
+  if (!hauntConfig?.progressBarTheme) {
+    return 'linear-gradient(90deg, #dc2626 0%, #7c2d12 50%, #dc2626 100%)';
   }
 
-  // Default progress bar for Basic tier or haunts without custom theme
+  const themes = {
+    'crimson-glow': 'linear-gradient(90deg, #dc2626 0%, #ef4444 50%, #dc2626 100%)',
+    'blood-red': 'linear-gradient(90deg, #7f1d1d 0%, #dc2626 50%, #7f1d1d 100%)',
+    'electric-blue': 'linear-gradient(90deg, #1e40af 0%, #3b82f6 50%, #1e40af 100%)',
+    'toxic-green': 'linear-gradient(90deg, #166534 0%, #22c55e 50%, #166534 100%)',
+    'mystic-purple': 'linear-gradient(90deg, #581c87 0%, #a855f7 50%, #581c87 100%)',
+    'inferno-orange': 'linear-gradient(90deg, #c2410c 0%, #f97316 50%, #c2410c 100%)',
+    'neon-pink': 'linear-gradient(90deg, #be185d 0%, #ec4899 50%, #be185d 100%)',
+    'golden-glow': 'linear-gradient(90deg, #a16207 0%, #eab308 50%, #a16207 100%)'
+  };
+
+  return themes[hauntConfig.progressBarTheme as keyof typeof themes] || themes['crimson-glow'];
+}
+
+export function CustomProgressBar({ progress, hauntConfig, className = "" }: CustomProgressBarProps) {
+  const gradient = getProgressBarGradient(hauntConfig);
+  const glowColor = hauntConfig?.progressBarTheme === 'electric-blue' ? '#3b82f6' : 
+                   hauntConfig?.progressBarTheme === 'toxic-green' ? '#22c55e' :
+                   hauntConfig?.progressBarTheme === 'mystic-purple' ? '#a855f7' :
+                   hauntConfig?.progressBarTheme === 'inferno-orange' ? '#f97316' :
+                   hauntConfig?.progressBarTheme === 'neon-pink' ? '#ec4899' :
+                   hauntConfig?.progressBarTheme === 'golden-glow' ? '#eab308' :
+                   '#dc2626';
+
   return (
     <div style={{
-      position: 'relative',
       width: '100%',
       height: '1rem',
-      backgroundColor: '#1f2937',
-      borderRadius: '9999px',
-      overflow: 'hidden'
+      backgroundColor: 'rgba(0, 0, 0, 0.3)',
+      borderRadius: '0.5rem',
+      overflow: 'hidden',
+      border: '1px solid rgba(255, 255, 255, 0.1)',
+      position: 'relative'
     }}>
-      <div 
-        style={{ 
+      <div
+        style={{
           height: '100%',
+          background: gradient,
           width: `${Math.max(0, Math.min(100, progress))}%`,
-          background: 'linear-gradient(to right, #dc2626, #ea580c)',
-          borderRadius: '9999px',
-          transition: 'all 300ms ease-out'
+          transition: 'width 0.3s ease',
+          borderRadius: '0.5rem',
+          boxShadow: `0 0 10px ${glowColor}40`,
+          animation: 'pulse 2s infinite'
         }}
       />
-      <div style={{
-        position: 'absolute',
-        top: 0, right: 0, bottom: 0, left: 0,
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: '0.75rem',
-        fontWeight: 'bold',
-        color: '#ffffff',
-        filter: 'drop-shadow(0 1px 2px rgb(0 0 0 / 0.1)) drop-shadow(0 1px 1px rgb(0 0 0 / 0.06))'
-      }}>
-        {Math.round(progress)}%
-      </div>
+      
+      <style>{`
+        @keyframes pulse {
+          0%, 100% { box-shadow: 0 0 10px ${glowColor}40; }
+          50% { box-shadow: 0 0 20px ${glowColor}80; }
+        }
+      `}</style>
     </div>
   );
 }
