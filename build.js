@@ -140,4 +140,12 @@ try {
   process.exit(1);
 }
 
+// Ensure the built file has proper permissions
+try {
+  execSync('chmod +x dist/index.js', { stdio: 'pipe' });
+  console.log('✅ Set executable permissions on dist/index.js');
+} catch (error) {
+  console.log('Note: Could not set executable permissions, continuing...');
+}
+
 console.log('🚀 Ready for deployment');
