@@ -1142,6 +1142,7 @@ export default function HauntAdmin() {
                           {ad ? (
                             // Existing Ad Thumbnail - Compact Size
                             <div 
+                              className="ad-thumbnail"
                               style={{
                                 position: 'relative',
                                 width: '100%',
@@ -1153,8 +1154,16 @@ export default function HauntAdmin() {
                                 cursor: 'pointer',
                                 transition: 'border-color 0.2s'
                               }}
-                              onMouseEnter={(e) => e.currentTarget.style.borderColor = '#6b7280'}
-                              onMouseLeave={(e) => e.currentTarget.style.borderColor = '#4b5563'}
+                              onMouseEnter={(e) => {
+                                e.currentTarget.style.borderColor = '#6b7280';
+                                const controls = e.currentTarget.querySelector('.ad-hover-controls') as HTMLElement;
+                                if (controls) controls.style.opacity = '1';
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.borderColor = '#4b5563';
+                                const controls = e.currentTarget.querySelector('.ad-hover-controls') as HTMLElement;
+                                if (controls) controls.style.opacity = '0';
+                              }}
                             >
                               {ad.imageUrl && (
                                 <img 
@@ -1182,6 +1191,7 @@ export default function HauntAdmin() {
                               
                               {/* Hover Controls */}
                               <div 
+                                className="ad-hover-controls"
                                 style={{
                                   position: 'absolute',
                                   top: 0,
@@ -1197,12 +1207,11 @@ export default function HauntAdmin() {
                                   zIndex: 10,
                                   transition: 'opacity 0.2s'
                                 }}
-                                onMouseEnter={(e) => e.currentTarget.style.opacity = '1'}
-                                onMouseLeave={(e) => e.currentTarget.style.opacity = '0'}
                               >
                                 <button
                                   onClick={(e) => {
                                     e.stopPropagation();
+                                    console.log('Edit button clicked for ad:', ad.id);
                                     setEditingAd(ad);
                                   }}
                                   style={{
