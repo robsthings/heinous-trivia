@@ -352,7 +352,6 @@ export default function Analytics() {
                     : 'Needs Improvement'}
                 </Badge>
               </div>
-              </div>
             </CardContent>
           </Card>
         </div>
@@ -448,19 +447,30 @@ export default function Analytics() {
                 </div>
                 
                 {/* Ad Engagement Highlight */}
-                <div >
-                  <div >
-                    <MousePointerClickIcon  />
-                    <span >Ad Engagement</span>
+                <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.4)', borderRadius: '0.5rem', padding: '1rem', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
+                    <MousePointerClickIcon style={{ width: '1.25rem', height: '1.25rem', color: '#a855f7' }} />
+                    <span style={{ fontSize: '0.875rem', fontWeight: '500', color: 'rgba(255, 255, 255, 0.7)' }}>Ad Engagement</span>
                   </div>
-                  <div >
-                    <span >{analyticsData?.adClickThrough || 0}%</span>
-                      (analyticsData?.adClickThrough || 0) >= 5 
-                        ? 'bg-green-500/30 text-green-200 border-green-500/50' 
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <span style={{ fontSize: '2rem', fontWeight: 'bold', color: 'white' }}>{analyticsData?.adClickThrough || 0}%</span>
+                    <Badge style={{
+                      backgroundColor: (analyticsData?.adClickThrough || 0) >= 5 
+                        ? 'rgba(34, 197, 94, 0.3)' 
                         : (analyticsData?.adClickThrough || 0) >= 2 
-                        ? 'bg-yellow-500/30 text-yellow-200 border-yellow-500/50'
-                        : 'bg-red-500/30 text-red-200 border-red-500/50'
-                    }`}>
+                        ? 'rgba(234, 179, 8, 0.3)'
+                        : 'rgba(239, 68, 68, 0.3)',
+                      color: (analyticsData?.adClickThrough || 0) >= 5 
+                        ? '#bbf7d0' 
+                        : (analyticsData?.adClickThrough || 0) >= 2 
+                        ? '#fef3c7'
+                        : '#fecaca',
+                      border: `1px solid ${(analyticsData?.adClickThrough || 0) >= 5 
+                        ? 'rgba(34, 197, 94, 0.5)' 
+                        : (analyticsData?.adClickThrough || 0) >= 2 
+                        ? 'rgba(234, 179, 8, 0.5)'
+                        : 'rgba(239, 68, 68, 0.5)'}`
+                    }}>
                       {(analyticsData?.adClickThrough || 0) >= 5 
                         ? 'Excellent' 
                         : (analyticsData?.adClickThrough || 0) >= 2 
@@ -664,24 +674,27 @@ export default function Analytics() {
                       </div>
 
                       {/* CTR */}
-                      <div  style={{textAlign: "center"}}>
-                          ad.ctr >= 100 ? 'text-green-400' : 
-                          ad.ctr >= 50 ? 'text-yellow-400' : 
-                          ad.ctr > 0 ? 'text-blue-400' : 'text-gray-400'
-                        }`}>
+                      <div style={{textAlign: "center"}}>
+                        <div style={{ 
+                          fontSize: '1.25rem', 
+                          fontWeight: 'bold',
+                          color: ad.ctr >= 100 ? '#4ade80' : 
+                                 ad.ctr >= 50 ? '#facc15' : 
+                                 ad.ctr > 0 ? '#60a5fa' : '#9ca3af'
+                        }}>
                           {ad.ctr}%
                         </div>
-                        <div >click rate</div>
+                        <div style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.6)' }}>click rate</div>
                       </div>
 
                       {/* Performance Badge */}
-                      <div  style={{textAlign: "center"}}>
+                      <div style={{textAlign: "center"}}>
                         {ad.ctr >= 100 ? (
-                          <Badge >
+                          <Badge style={{ backgroundColor: 'rgba(34, 197, 94, 0.3)', color: '#bbf7d0', border: '1px solid rgba(34, 197, 94, 0.5)' }}>
                             Excellent
                           </Badge>
                         ) : ad.ctr >= 50 ? (
-                          <Badge >
+                          <Badge style={{ backgroundColor: 'rgba(234, 179, 8, 0.3)', color: '#fef3c7', border: '1px solid rgba(234, 179, 8, 0.5)' }}>
                             Good
                           </Badge>
                         ) : ad.ctr > 0 ? (

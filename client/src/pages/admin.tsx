@@ -2578,13 +2578,13 @@ export default function Admin() {
                                           Inactive
                                         </Badge>
                                       )}
-                                    <p >{haunt.description || 'No description'}</p>
+                                    <p style={{ color: 'rgba(255, 255, 255, 0.7)', fontSize: '0.875rem' }}>{haunt.description || 'No description'}</p>
                                   </div>
                                 </div>
 
-                                <div >
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                                   <div>
-                                    <h5 >
+                                    <h5 style={{ fontSize: '1rem', fontWeight: '600', color: 'white', marginBottom: '0.25rem' }}>
                                       Available Trivia Packs ({availablePacks.length})
                                     </h5>
                                     {availablePacks.length === 0 ? (
