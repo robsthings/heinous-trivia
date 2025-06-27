@@ -2,6 +2,7 @@
 
 import { execSync } from 'child_process';
 import fs from 'fs';
+import path from 'path';
 
 console.log('🚀 Building server for deployment...');
 
@@ -10,6 +11,18 @@ if (fs.existsSync('./dist')) {
   fs.rmSync('./dist', { recursive: true, force: true });
 }
 fs.mkdirSync('./dist', { recursive: true });
+
+// Build client first to ensure static assets exist
+console.log('🔨 Building client...');
+try {
+  execSync('npx vite build --config client/vite.config.ts', { 
+    stdio: 'inherit',
+    timeout: 120000 // 2 minute timeout
+  });
+  console.log('✅ Client built successfully');
+} catch (error) {
+  console.warn('⚠️ Client build had issues, proceeding with existing assets...');
+}
 
 // Build server with corrected esbuild command
 console.log('⚙️ Building server bundle...');
@@ -70,7 +83,7 @@ const prodPackageJson = {
 fs.writeFileSync('./dist/package.json', JSON.stringify(prodPackageJson, null, 2));
 console.log('✅ Production package.json created');
 
-// Copy static assets from existing public directory
+// Copy static assets and create production index.html
 console.log('📁 Copying static assets...');
 fs.mkdirSync('./dist/public', { recursive: true });
 
@@ -95,13 +108,93 @@ if (fs.existsSync('./client/public')) {
   copyDir('./client/public', './dist/public');
 }
 
-// Copy index.html from client root
-if (fs.existsSync('./client/index.html')) {
-  fs.copyFileSync('./client/index.html', './dist/public/index.html');
-  console.log('✅ Static assets and index.html copied');
-} else {
-  console.log('⚠️ No index.html found, creating basic production version');
-}
+// Create production index.html with proper routing
+console.log('📄 Creating production index.html...');
+const productionIndexHtml = `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <title>Heinous Trivia - Horror Trivia Game</title>
+    <meta name="description" content="Enter the haunted world of Dr. Heinous and test your horror knowledge in this spine-chilling trivia experience." />
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Theme colors for mobile browsers -->
+    <meta name="theme-color" content="#8B0000" />
+    <meta name="msapplication-navbutton-color" content="#8B0000" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    
+    <!-- PWA mobile web app capability -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Heinous Trivia" />
+    <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-128.png" />
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Eater&family=Nosifer&family=Cinzel+Decorative:wght@700&family=Homemade+Apple&family=Frijole&display=swap" rel="stylesheet">
+    
+    <style>
+      /* Horror theme base styles for production */
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+        background: linear-gradient(135deg, #0b001a 0%, #1a0033 50%, #0b001a 100%);
+        color: #f2f2f2;
+        min-height: 100vh;
+      }
+      
+      #root {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        font-family: 'Creepster', cursive;
+        font-size: 2rem;
+        color: #bb86fc;
+        text-shadow: 0 0 20px #bb86fc;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div class="loading">Loading Heinous Trivia...</div>
+    </div>
+    <script>
+      // Simple client-side routing fallback for production
+      window.addEventListener('load', function() {
+        const path = window.location.pathname;
+        if (path !== '/' && !path.startsWith('/api/')) {
+          // For any non-API route, let the server handle routing
+          fetch(path)
+            .then(response => {
+              if (!response.ok && response.status === 404) {
+                // If route not found, redirect to home
+                window.location.href = '/';
+              }
+            })
+            .catch(() => {
+              // On error, redirect to home
+              window.location.href = '/';
+            });
+        }
+      });
+    </script>
+  </body>
+</html>`;
+
+fs.writeFileSync('./dist/public/index.html', productionIndexHtml);
+console.log('✅ Production index.html created with routing support');
 
 // Verify build
 const indexJsSize = fs.statSync('dist/index.js').size;

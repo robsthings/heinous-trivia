@@ -14,8 +14,8 @@ export function log(message: string, source = "express") {
 }
 
 export function serveStatic(app: Express) {
-  // In deployment, static files are served from the public directory
-  const staticPath = path.resolve(process.cwd(), "public");
+  // In deployment, static files are served from the dist/public directory
+  const staticPath = path.resolve(process.cwd(), "dist", "public");
   const indexPath = path.resolve(staticPath, "index.html");
 
   if (!fs.existsSync(indexPath)) {
