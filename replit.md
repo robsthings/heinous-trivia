@@ -107,10 +107,11 @@ Heinous Trivia is a horror-themed trivia platform that allows haunts and enterta
 5. Game state updates with loaded data
 
 ## Current Status
-**DEPLOYMENT BUILD SYSTEM COMPLETELY FIXED** - Missing 'build' script issue resolved with build-simple.js
+**DEPLOYMENT BUILD SYSTEM COMPLETELY FIXED** - Missing 'build' script issue resolved with build-wrapper.js and build-simple.js
 **PRODUCTION BUILD SCRIPT OPERATIONAL** - 109KB server bundle with comprehensive asset copying
 **CLOUD RUN READY** - Verified deployment structure with health checks and proper port binding
 **BUILD DEPENDENCIES RESOLVED** - All missing dependencies installed and external flags configured
+**DEPLOYMENT COMMAND FIXED** - Created build-wrapper.js to handle npm run build command, with fallback build.sh script
 
 ## Changelog
 - June 28, 2025: **DEPLOYMENT BUILD SYSTEM ISSUE PERMANENTLY RESOLVED** - Fixed critical deployment failure caused by missing 'build' script in package.json, created build-simple.js script that generates production-ready deployment bundle (109KB server + static assets), implemented comprehensive esbuild configuration with external dependencies (babel, vite, react components) to prevent bundling conflicts, added packages: 'external' flag to avoid node_modules bundling issues, script successfully creates dist/index.js server bundle + dist/package.json production dependencies + dist/public/ static assets (237 files total), deployment structure now fully operational for Cloud Run with verified build command execution
