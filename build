@@ -1,15 +1,21 @@
-#!/usr/bin/env node
+#!/bin/bash
 
-// Deployment build script that calls the working build-simple.js
-import { execSync } from 'child_process';
+# Deployment Build Script
+# This script creates a production-ready deployment bundle
 
-console.log('🚀 Starting deployment build...');
+echo "🚀 Starting deployment build..."
 
-try {
-  // Execute the proven build-simple.js script
-  execSync('node build-simple.js', { stdio: 'inherit' });
-  console.log('✅ Deployment build completed successfully!');
-} catch (error) {
-  console.error('❌ Deployment build failed:', error.message);
-  process.exit(1);
-}
+# Execute the Node.js build script
+node build-simple.js
+
+# Check if build was successful
+if [ $? -eq 0 ]; then
+    echo "✅ Build completed successfully"
+    echo "📁 Deployment files created in dist/ directory"
+    echo "   - dist/index.js (server bundle)"
+    echo "   - dist/package.json (production config)"
+    echo "   - dist/public/ (static assets)"
+else
+    echo "❌ Build failed"
+    exit 1
+fi

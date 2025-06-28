@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# NPM Build Wrapper Script
+# This script mimics 'npm run build' behavior for Cloud Run deployment
+
+echo "🚀 Executing npm run build equivalent..."
+
+# Run the Node.js build script that we know works
+if command -v node >/dev/null 2>&1; then
+    echo "📦 Running build-simple.js..."
+    node build-simple.js
+    BUILD_EXIT_CODE=$?
+else
+    echo "❌ Node.js not found"
+    exit 1
+fi
+
+# Verify build outputs
+if [ $BUILD_EXIT_CODE -eq 0 ]; then
+    echo "✅ Build completed successfully"
+    
+    # Verify critical files exist
+    if [ -f "dist/index.js" ] && [ -f "dist/package.json" ]; then
+        echo "📁 All deployment files verified:"
+        echo "   - ✅ dist/index.js ($(du -h dist/index.js | cut -f1))"
+        echo "   - ✅ dist/package.json"
+        if [ -d "dist/public" ]; then
+            echo "   - ✅ dist/public/ (static assets)"
+        fi
+        echo "🎯 Deployment bundle ready for Cloud Run"
+        exit 0
+    else
+        echo "❌ Missing critical deployment files"
+        exit 1
+    fi
+else
+    echo "❌ Build failed with exit code $BUILD_EXIT_CODE"
+    exit $BUILD_EXIT_CODE
+fi
