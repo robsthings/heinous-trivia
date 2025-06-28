@@ -5,13 +5,29 @@ const path = require('path');
 
 console.log('🚀 Creating deployment build - bypassing all vite config issues...');
 
-// Clean and create dist directory
+// Create deployment files directly in root for Cloud Run
 const distPath = './dist';
 if (fs.existsSync(distPath)) {
   fs.rmSync(distPath, { recursive: true, force: true });
 }
 fs.mkdirSync(distPath, { recursive: true });
 fs.mkdirSync(path.join(distPath, 'public'), { recursive: true });
+
+// Also create production files in root for direct Cloud Run deployment
+const rootProductionFiles = ['./index.js', './package.json', './public'];
+rootProductionFiles.forEach(file => {
+  if (fs.existsSync(file)) {
+    if (fs.statSync(file).isDirectory()) {
+      fs.rmSync(file, { recursive: true, force: true });
+    } else {
+      fs.unlinkSync(file);
+    }
+  }
+});
+
+if (!fs.existsSync('./public')) {
+  fs.mkdirSync('./public', { recursive: true });
+}
 
 // Create complete server bundle - bypassing vite entirely
 console.log('🔧 Creating server bundle...');
@@ -179,7 +195,9 @@ process.on('unhandledRejection', (reason, promise) => {
 });
 `;
 
+// Write server files to both dist and root for deployment compatibility
 fs.writeFileSync(path.join(distPath, 'index.js'), serverCode);
+fs.writeFileSync('./index.js', serverCode);
 
 // Create package.json with proper module configuration for Cloud Run
 const packageJson = {
@@ -204,6 +222,7 @@ const packageJson = {
 };
 
 fs.writeFileSync(path.join(distPath, 'package.json'), JSON.stringify(packageJson, null, 2));
+fs.writeFileSync('./package.json', JSON.stringify(packageJson, null, 2));
 
 // Create index.html
 const indexHtml = `<!DOCTYPE html>
@@ -253,35 +272,75 @@ const indexHtml = `<!DOCTYPE html>
 </body>
 </html>`;
 
+// Write index.html to both locations
 fs.writeFileSync(path.join(distPath, 'public', 'index.html'), indexHtml);
+fs.writeFileSync('./public/index.html', indexHtml);
 
-// Copy existing assets if available
+// Copy existing assets if available to both locations
 if (fs.existsSync('./client/public')) {
   try {
     const items = fs.readdirSync('./client/public');
     items.forEach(item => {
       const srcPath = path.join('./client/public', item);
-      const destPath = path.join(distPath, 'public', item);
+      const distDestPath = path.join(distPath, 'public', item);
+      const rootDestPath = path.join('./public', item);
+      
       if (fs.statSync(srcPath).isFile()) {
-        fs.copyFileSync(srcPath, destPath);
+        fs.copyFileSync(srcPath, distDestPath);
+        fs.copyFileSync(srcPath, rootDestPath);
+      } else if (fs.statSync(srcPath).isDirectory()) {
+        // Copy subdirectories recursively
+        const copyDir = (src, dest) => {
+          if (!fs.existsSync(dest)) {
+            fs.mkdirSync(dest, { recursive: true });
+          }
+          const entries = fs.readdirSync(src);
+          entries.forEach(entry => {
+            const srcEntry = path.join(src, entry);
+            const destEntry = path.join(dest, entry);
+            if (fs.statSync(srcEntry).isDirectory()) {
+              copyDir(srcEntry, destEntry);
+            } else {
+              fs.copyFileSync(srcEntry, destEntry);
+            }
+          });
+        };
+        copyDir(srcPath, distDestPath);
+        copyDir(srcPath, rootDestPath);
       }
     });
-    console.log('📁 Copied client assets');
+    console.log('📁 Copied client assets to both dist/ and root locations');
   } catch (err) {
-    console.log('⚠️ Could not copy client assets');
+    console.log('⚠️ Could not copy client assets:', err.message);
   }
 }
 
-// Verify build
-const serverSize = fs.statSync(path.join(distPath, 'index.js')).size;
-const packageSize = fs.statSync(path.join(distPath, 'package.json')).size;
-const clientSize = fs.statSync(path.join(distPath, 'public', 'index.html')).size;
+// Verify build - check both locations
+const distServerSize = fs.statSync(path.join(distPath, 'index.js')).size;
+const rootServerSize = fs.statSync('./index.js').size;
+const distPackageSize = fs.statSync(path.join(distPath, 'package.json')).size;
+const rootPackageSize = fs.statSync('./package.json').size;
+const distClientSize = fs.statSync(path.join(distPath, 'public', 'index.html')).size;
+const rootClientSize = fs.statSync('./public/index.html').size;
+
+// Count total files in each location
+const distFiles = require('child_process').execSync(`find ${distPath} -type f | wc -l`).toString().trim();
+const rootPublicFiles = require('child_process').execSync('find ./public -type f 2>/dev/null | wc -l || echo 0').toString().trim();
 
 console.log('');
-console.log('✅ BUILD SUCCESSFUL');
-console.log(`📁 dist/index.js: ${(serverSize/1024).toFixed(1)}KB`);
-console.log(`📁 dist/package.json: ${(packageSize/1024).toFixed(1)}KB`);
-console.log(`📁 dist/public/index.html: ${(clientSize/1024).toFixed(1)}KB`);
+console.log('✅ DUAL-LOCATION BUILD SUCCESSFUL');
+console.log('📁 DIST DIRECTORY:');
+console.log(`   dist/index.js: ${(distServerSize/1024).toFixed(1)}KB`);
+console.log(`   dist/package.json: ${(distPackageSize/1024).toFixed(1)}KB`);
+console.log(`   dist/public/index.html: ${(distClientSize/1024).toFixed(1)}KB`);
+console.log(`   Total files: ${distFiles}`);
+console.log('📁 ROOT DIRECTORY (for Cloud Run):');
+console.log(`   index.js: ${(rootServerSize/1024).toFixed(1)}KB`);
+console.log(`   package.json: ${(rootPackageSize/1024).toFixed(1)}KB`);
+console.log(`   public/index.html: ${(rootClientSize/1024).toFixed(1)}KB`);
+console.log(`   Public files: ${rootPublicFiles}`);
 console.log('');
-console.log('🚀 Deploy: node dist/index.js');
+console.log('🚀 Deploy options:');
+console.log('   Legacy: node dist/index.js');
+console.log('   Cloud Run: node index.js');
 console.log('⚡ Health: /api/health');
