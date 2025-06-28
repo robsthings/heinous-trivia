@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+
+// npm run build alternative for deployment systems
+console.log('🚀 Executing npm run build alternative...');
+
+const { execSync } = require('child_process');
+
+try {
+  execSync('node build-simple.js', { stdio: 'inherit' });
+  console.log('✅ Build completed successfully!');
+} catch (error) {
+  console.error('❌ Build failed:', error.message);
+  process.exit(1);
+}

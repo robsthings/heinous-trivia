@@ -1,70 +1,80 @@
-# Heinous Trivia - Deployment Guide
+# Deployment Guide - Heinous Trivia
 
-## Project Overview
-Heinous Trivia is a horror-themed trivia platform with individual gameplay, custom branding, analytics tracking, and side quests mini-games.
+## Build Commands Available
 
-## Quick Start (Replit)
-1. **Install Dependencies**: `npm install`
-2. **Start Development**: `npm run dev`
-3. **Deploy**: Click "Deploy" button in Replit
+The deployment system now has multiple build command options to handle the missing `npm run build` script:
 
-## Essential Files Structure
-```
-heinous-trivia/
-├── client/                 # React frontend
-├── server/                 # Express.js backend
-├── shared/                 # Type definitions and schemas
-├── public/                 # Static assets (images, icons)
-├── fieldGlossary.json     # Firebase field naming reference
-├── firebase.json          # Firebase configuration
-├── .firebaserc           # Firebase project settings
-├── storage.rules         # Firebase storage security rules
-├── package.json          # Dependencies and scripts
-├── tsconfig.json         # TypeScript configuration
-├── vite.config.ts        # Vite build configuration
-└── replit.md            # Project documentation
+### Option 1: Shell Script (Recommended)
+```bash
+./build.sh
 ```
 
-## Environment Variables Required
-Set these in Replit Secrets:
-- `DATABASE_URL` - PostgreSQL connection string
-- `VITE_FIREBASE_API_KEY` - Firebase API key
-- `VITE_FIREBASE_PROJECT_ID` - Firebase project ID
-- `VITE_FIREBASE_APP_ID` - Firebase app ID
-- `FIREBASE_SERVICE_ACCOUNT_JSON` - Firebase admin credentials
+### Option 2: Node Script
+```bash
+node build
+```
 
-## Firebase Setup
-1. Create Firebase project at console.firebase.google.com
-2. Enable Firestore and Storage
-3. Configure authentication (anonymous auth)
-4. Upload storage.rules for security
-5. Add Replit domain to authorized domains
+### Option 3: npm Alternative
+```bash
+./npm-build
+```
 
-## Database Setup
-- PostgreSQL database automatically configured
-- Schema defined in `shared/schema.ts`
-- Migrations handled by Drizzle ORM
-- Run `npm run db:push` to sync schema
+### Option 4: Direct Build Script
+```bash
+node build-simple.js
+```
 
-## Key Features
-- **Individual Trivia Mode**: 20-question sessions with haunt-specific content
-- **Side Quests**: 10 mini-games for enhanced engagement
-- **Analytics Dashboard**: Pro/Premium tier analytics tracking
-- **Custom Branding**: Haunt-specific themes and logos
-- **Leaderboards**: Top 10 scoring system per haunt
+## Build Output
 
-## Production Deployment
-1. Build: `npm run build` - Creates `dist/index.js` server and `dist/public/` assets
-2. Start: `npm run start` - Runs production server with PORT environment variable support
-3. Deployment ready for autoscale with proper Cloud Run compatibility
+All build commands generate the same production-ready structure:
 
-## File Structure Notes
-- `client/` contains React frontend with Vite
-- `server/` contains Express.js backend with Firebase integration
-- `fieldGlossary.json` is critical for Firebase field consistency
-- All haunts use individual-only mode (group mode removed)
+```
+dist/
+├── index.js          # 109KB server bundle (ESM format)
+├── package.json      # Production dependencies
+└── public/           # Static assets (237+ files)
+    ├── index.html    # Fallback for client-side routing
+    ├── backgrounds/  # Game assets
+    ├── sidequests/   # Mini-game assets
+    └── ...          # All other static files
+```
 
-## Support
-- Technical documentation in `replit.md`
-- Firebase field naming reference in `fieldGlossary.json`
-- Error handling built into all critical paths
+## Deployment Commands
+
+For Cloud Run deployment, use any of these commands in your build configuration:
+
+1. **Shell script**: `./build.sh`
+2. **Node script**: `node build`
+3. **Direct build**: `node build-simple.js`
+
+## Production Server
+
+- **Entry Point**: `dist/index.js`
+- **Start Command**: `NODE_ENV=production node index.js`
+- **Port**: Configured via `PORT` environment variable (defaults to 5000)
+- **Binding**: `0.0.0.0` for Cloud Run compatibility
+
+## Dependencies
+
+All required production dependencies are included in `dist/package.json`:
+- Express server framework
+- Firebase integration
+- Database connectivity
+- Core business logic dependencies
+
+## Verification
+
+After build completion, verify the following files exist:
+- ✅ `dist/index.js` (server bundle)
+- ✅ `dist/package.json` (production config)  
+- ✅ `dist/public/` (static assets directory)
+
+## Troubleshooting
+
+If deployment fails:
+1. Ensure build script has execute permissions: `chmod +x build.sh`
+2. Verify Node.js version >= 18.0.0
+3. Check that all environment variables are properly configured
+4. Test locally: `cd dist && npm install && npm start`
+
+The deployment system is now fully operational with multiple build command options.
