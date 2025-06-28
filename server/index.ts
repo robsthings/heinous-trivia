@@ -98,8 +98,14 @@ app.use((req, res, next) => {
   // setting up all the other routes so the catch-all route
   // doesn't interfere with the other routes
   if (process.env.NODE_ENV === "development") {
-    const { setupVite } = await import("./vite.js");
-    await setupVite(app, server);
+    try {
+      const { setupVite } = await import("./vite.js");
+      await setupVite(app, server);
+    } catch (error) {
+      log("Vite configuration error, using bypass mode");
+      const { setupVite } = await import("./vite-bypass.js");
+      await setupVite(app, server);
+    }
   } else {
     const { serveStatic } = await import("./production.js");
     serveStatic(app);
