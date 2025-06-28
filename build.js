@@ -27,8 +27,9 @@ const transformTypeScript = (content) => {
     .replace(/\{\s*type\s+/g, '{ ') // Remove 'type' from start of imports
     
     // Fix module paths for ES modules
-    .replace(/from\s+["']\.\/([^"']+?)["']/g, 'from "./$1.js"') // Add .js extension to relative imports
-    .replace(/from\s+["']\.\.\/([^"']+?)["']/g, 'from "../$1.js"') // Add .js extension to parent imports
+    .replace(/from\s+["']@shared\/schema["']/g, 'from "./shared/schema.js"') // Convert @shared/schema to relative path
+    .replace(/from\s+["']\.\/([^"'\.]+)["']/g, 'from "./$1.js"') // Add .js extension to relative imports
+    .replace(/from\s+["']\.\.\/([^"'\.]+)["']/g, 'from "../$1.js"') // Add .js extension to parent imports
     
     // Remove parameter type annotations
     .replace(/([a-zA-Z_$][a-zA-Z0-9_$]*)\s*:\s*[A-Za-z<>[\]|&,\s{}'"._-]+(?=\s*[,=)])/g, '$1') // Parameter types
