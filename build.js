@@ -18,12 +18,14 @@ fs.mkdirSync(path.join(distPath, 'public'), { recursive: true });
 console.log("🔧 Processing server files...");
 
 const transformTypeScript = (content) => {
-  // Targeted TypeScript syntax removal for Node.js compatibility
+  // Comprehensive TypeScript syntax removal for Node.js compatibility
   return content
-    // Handle import statements with type
+    // Handle import statements with type - more comprehensive patterns
     .replace(/import\s+type\s+\{[^}]*\}\s+from\s+["'][^"']+["'];?\s*/g, '') // Remove entire type-only imports
-    .replace(/,\s*type\s+([^,}]+)/g, ', $1') // Remove 'type' from imports while preserving names
+    .replace(/,\s*type\s+([^,}]+)/g, ', $1') // Remove 'type' keyword from mixed imports
     .replace(/\{\s*type\s+([^,}]+)/g, '{ $1') // Remove 'type' from start of imports
+    .replace(/type\s+([^,}]+),/g, '$1,') // Remove 'type' from middle of imports
+    .replace(/type\s+([^}]+)\s*\}/g, '$1 }') // Remove 'type' before closing brace
     
     // Fix module paths for ES modules - ONLY what's needed
     .replace(/from\s+["']@shared\/schema["']/g, 'from "./shared/schema.js"') // Convert @shared/schema to relative path
@@ -33,16 +35,21 @@ const transformTypeScript = (content) => {
     .replace(/from\s+["']\.\/production["']/g, 'from "./production.js"') // Fix production import
     .replace(/from\s+["']\.\/vite-bypass["']/g, 'from "./vite-bypass.js"') // Fix vite-bypass import
     
-    // Remove function parameter type annotations - targeted fixes
-    .replace(/function\s+([a-zA-Z_$][a-zA-Z0-9_$]*)\s*\(([^)]*?):\s*[^,)]+/g, 'function $1($2') // Function parameter types
-    .replace(/\(([a-zA-Z_$][a-zA-Z0-9_$]*)\s*:\s*[^,)]+/g, '($1') // Arrow function parameter types
-    .replace(/([a-zA-Z_$][a-zA-Z0-9_$]*)\s*:\s*[^,)=]+(?=\s*[,)])/g, '$1') // General parameter types
+    // Remove variable type annotations that cause syntax errors
+    .replace(/(let|const|var)\s+([a-zA-Z_$][a-zA-Z0-9_$]*)\s*:\s*[^=;]+(\s*=)/g, '$1 $2$3') // Variable declarations with types
+    .replace(/([a-zA-Z_$][a-zA-Z0-9_$]*)\s*:\s*[^,;=)]+(?=\s*[,;=)])/g, '$1') // General type annotations
     
-    // Remove function return type annotations
-    .replace(/\)\s*:\s*[^{=]+(?=\s*[{=])/g, ')') // Function return types
+    // Remove function parameter and return types
+    .replace(/function\s+([a-zA-Z_$][a-zA-Z0-9_$]*)\s*\(([^)]*?)\s*:\s*[^,)]+/g, 'function $1($2') // Function parameter types
+    .replace(/\)\s*:\s*[^{=;]+(?=\s*[{=;])/g, ')') // Function return types
     
-    // Remove variable type annotations
-    .replace(/:\s*[A-Za-z<>[\]|&\s]+(?=\s*=)/g, '') // Variable declarations with types
+    // Remove interface/type definitions (they break Node.js)
+    .replace(/interface\s+[^{]+\{[^}]*\}\s*/g, '') // Remove interface definitions
+    .replace(/type\s+[^=]+=[^;]+;\s*/g, '') // Remove type alias definitions
+    
+    // Clean up any malformed syntax from aggressive replacements
+    .replace(/,\s*,/g, ',') // Remove double commas
+    .replace(/\s+=/g, ' =') // Normalize spacing around assignments
 };
 
 if (fs.existsSync("server/index.ts")) {
