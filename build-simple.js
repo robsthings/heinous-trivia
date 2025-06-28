@@ -24,7 +24,7 @@ try {
     platform: 'node',
     target: 'node18',
     format: 'esm',
-    outfile: 'index.js',
+    outfile: 'dist/index.js',
     external: [
       // Core Node modules
       'fs', 'path', 'url', 'os', 'crypto', 'events', 'stream', 'util',
@@ -59,7 +59,7 @@ try {
     packages: 'external'
   });
   
-  const stats = fs.statSync('index.js');
+  const stats = fs.statSync('dist/index.js');
   console.log(`✅ Server bundle created: ${(stats.size / 1024).toFixed(0)}KB`);
 } catch (error) {
   console.error('❌ Server bundle failed:', error);
@@ -216,8 +216,8 @@ console.log('\n🔍 Build verification:');
 const distFiles = fs.readdirSync('dist');
 console.log('📂 Dist directory contents:', distFiles);
 
-if (fs.existsSync('index.js')) {
-  const serverStats = fs.statSync('index.js');
+if (fs.existsSync('dist/index.js')) {
+  const serverStats = fs.statSync('dist/index.js');
   console.log(`✅ Server bundle: ${(serverStats.size / 1024).toFixed(0)}KB`);
 }
 
