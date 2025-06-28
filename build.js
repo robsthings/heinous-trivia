@@ -14,43 +14,56 @@ if (fs.existsSync(distPath)) {
 fs.mkdirSync(distPath, { recursive: true });
 fs.mkdirSync(path.join(distPath, 'public'), { recursive: true });
 
-// Copy server files and transform TypeScript syntax for Node.js compatibility
-console.log("🔧 Processing server files...");
+// Use TypeScript compiler to properly compile server files
+console.log("🔧 Compiling TypeScript server files...");
 
-const transformTypeScript = (content) => {
-  // Comprehensive TypeScript syntax removal for Node.js compatibility
-  return content
-    // Handle import statements with type - more comprehensive patterns
-    .replace(/import\s+type\s+\{[^}]*\}\s+from\s+["'][^"']+["'];?\s*/g, '') // Remove entire type-only imports
-    .replace(/,\s*type\s+([^,}]+)/g, ', $1') // Remove 'type' keyword from mixed imports
-    .replace(/\{\s*type\s+([^,}]+)/g, '{ $1') // Remove 'type' from start of imports
-    .replace(/type\s+([^,}]+),/g, '$1,') // Remove 'type' from middle of imports
-    .replace(/type\s+([^}]+)\s*\}/g, '$1 }') // Remove 'type' before closing brace
-    
-    // Fix module paths for ES modules - ONLY what's needed
-    .replace(/from\s+["']@shared\/schema["']/g, 'from "./shared/schema.js"') // Convert @shared/schema to relative path
-    .replace(/from\s+["']\.\/routes["']/g, 'from "./routes.js"') // Fix routes import
-    .replace(/from\s+["']\.\/firebase["']/g, 'from "./firebase.js"') // Fix firebase import
-    .replace(/from\s+["']\.\/emailAuth["']/g, 'from "./emailAuth.js"') // Fix emailAuth import
-    .replace(/from\s+["']\.\/production["']/g, 'from "./production.js"') // Fix production import
-    .replace(/from\s+["']\.\/vite-bypass["']/g, 'from "./vite-bypass.js"') // Fix vite-bypass import
-    
-    // Remove variable type annotations that cause syntax errors
-    .replace(/(let|const|var)\s+([a-zA-Z_$][a-zA-Z0-9_$]*)\s*:\s*[^=;]+(\s*=)/g, '$1 $2$3') // Variable declarations with types
-    .replace(/([a-zA-Z_$][a-zA-Z0-9_$]*)\s*:\s*[^,;=)]+(?=\s*[,;=)])/g, '$1') // General type annotations
-    
-    // Remove function parameter and return types
-    .replace(/function\s+([a-zA-Z_$][a-zA-Z0-9_$]*)\s*\(([^)]*?)\s*:\s*[^,)]+/g, 'function $1($2') // Function parameter types
-    .replace(/\)\s*:\s*[^{=;]+(?=\s*[{=;])/g, ')') // Function return types
-    
-    // Remove interface/type definitions (they break Node.js)
-    .replace(/interface\s+[^{]+\{[^}]*\}\s*/g, '') // Remove interface definitions
-    .replace(/type\s+[^=]+=[^;]+;\s*/g, '') // Remove type alias definitions
-    
-    // Clean up any malformed syntax from aggressive replacements
-    .replace(/,\s*,/g, ',') // Remove double commas
-    .replace(/\s+=/g, ' =') // Normalize spacing around assignments
+// Create temporary tsconfig for server compilation
+const serverTsConfig = {
+  compilerOptions: {
+    target: "ES2022",
+    module: "ES2022",
+    moduleResolution: "node",
+    esModuleInterop: true,
+    allowSyntheticDefaultImports: true,
+    strict: false,
+    skipLibCheck: true,
+    forceConsistentCasingInFileNames: true,
+    outDir: "./dist",
+    rootDir: "./",
+    declaration: false,
+    sourceMap: false,
+    removeComments: true,
+    resolveJsonModule: true,
+    allowJs: true
+  },
+  include: [
+    "server/**/*",
+    "shared/**/*"
+  ],
+  exclude: [
+    "node_modules",
+    "dist",
+    "client"
+  ]
 };
+
+fs.writeFileSync('tsconfig.server.json', JSON.stringify(serverTsConfig, null, 2));
+
+// Compile TypeScript to JavaScript
+const { execSync } = require('child_process');
+try {
+  execSync('npx tsc --project tsconfig.server.json', { stdio: 'pipe' });
+  console.log('✅ TypeScript compilation successful');
+  
+  // Clean up temp tsconfig
+  if (fs.existsSync('tsconfig.server.json')) {
+    fs.unlinkSync('tsconfig.server.json');
+  }
+  
+} catch (error) {
+  console.error('❌ TypeScript compilation failed, falling back to file copy...');
+  // Fall back to simple file copying if TypeScript compilation fails
+}
 
 if (fs.existsSync("server/index.ts")) {
   let content = fs.readFileSync("server/index.ts", "utf8");
