@@ -14,94 +14,51 @@ if (fs.existsSync(distPath)) {
 fs.mkdirSync(distPath, { recursive: true });
 fs.mkdirSync(path.join(distPath, 'public'), { recursive: true });
 
-// Use TypeScript compiler to properly compile server files
-console.log("🔧 Compiling TypeScript server files...");
+// Use Vite to build client and copy server files directly
+console.log("🔧 Building client with Vite...");
 
-// Create temporary tsconfig for server compilation
-const serverTsConfig = {
-  compilerOptions: {
-    target: "ES2022",
-    module: "ES2022",
-    moduleResolution: "node",
-    esModuleInterop: true,
-    allowSyntheticDefaultImports: true,
-    strict: false,
-    skipLibCheck: true,
-    forceConsistentCasingInFileNames: true,
-    outDir: "./dist",
-    rootDir: "./",
-    declaration: false,
-    sourceMap: false,
-    removeComments: true,
-    resolveJsonModule: true,
-    allowJs: true
-  },
-  include: [
-    "server/**/*",
-    "shared/**/*"
-  ],
-  exclude: [
-    "node_modules",
-    "dist",
-    "client"
-  ]
-};
-
-fs.writeFileSync('tsconfig.server.json', JSON.stringify(serverTsConfig, null, 2));
-
-// Compile TypeScript to JavaScript
-const { execSync } = require('child_process');
 try {
-  execSync('npx tsc --project tsconfig.server.json', { stdio: 'pipe' });
-  console.log('✅ TypeScript compilation successful');
-  
-  // Clean up temp tsconfig
-  if (fs.existsSync('tsconfig.server.json')) {
-    fs.unlinkSync('tsconfig.server.json');
-  }
-  
+  execSync('npm run build', { stdio: 'inherit' });
+  console.log('✅ Vite client build successful');
 } catch (error) {
-  console.error('❌ TypeScript compilation failed, falling back to file copy...');
-  // Fall back to simple file copying if TypeScript compilation fails
-}
-
-if (fs.existsSync("server/index.ts")) {
-  let content = fs.readFileSync("server/index.ts", "utf8");
-  content = transformTypeScript(content);
-  fs.writeFileSync("dist/index.js", content);
-  console.log("✅ Processed server/index.ts to dist/index.js");
-} else {
-  console.error("❌ No server/index.ts found");
+  console.error('❌ Client build failed:', error.message);
   process.exit(1);
 }
 
-// Process additional server files
+// Copy server files directly with minimal transformation
+console.log("📁 Copying server files...");
+
+const transformImports = (content) => {
+  // Only fix import paths for ES modules
+  return content
+    .replace(/from\s+["']@shared\/schema["']/g, 'from "./shared/schema.js"') 
+    .replace(/from\s+["']\.\/routes["']/g, 'from "./routes.js"')
+    .replace(/from\s+["']\.\/firebase["']/g, 'from "./firebase.js"')
+    .replace(/from\s+["']\.\/emailAuth["']/g, 'from "./emailAuth.js"')
+    .replace(/from\s+["']\.\/production["']/g, 'from "./production.js"')
+    .replace(/from\s+["']\.\/vite-bypass["']/g, 'from "./vite-bypass.js"');
+};
+
 const serverFiles = [
-  { src: "server/routes.ts", dest: "dist/routes.js" },
-  { src: "server/firebase.ts", dest: "dist/firebase.js" },
-  { src: "server/emailAuth.ts", dest: "dist/emailAuth.js" },
-  { src: "server/production.ts", dest: "dist/production.js" },
-  { src: "server/vite-bypass.ts", dest: "dist/vite-bypass.js" }
+  { src: 'server/index.ts', dest: 'dist/index.js' },
+  { src: 'server/routes.ts', dest: 'dist/routes.js' },
+  { src: 'server/firebase.ts', dest: 'dist/firebase.js' },
+  { src: 'server/emailAuth.ts', dest: 'dist/emailAuth.js' },
+  { src: 'server/production.ts', dest: 'dist/production.js' },
+  { src: 'server/vite-bypass.ts', dest: 'dist/vite-bypass.js' },
+  { src: 'shared/schema.ts', dest: 'dist/shared/schema.js' }
 ];
 
-serverFiles.forEach(({ src, dest }) => {
-  if (fs.existsSync(src)) {
-    let content = fs.readFileSync(src, "utf8");
-    content = transformTypeScript(content);
-    fs.writeFileSync(dest, content);
-    console.log(`✅ Processed ${src} to ${dest}`);
-  }
-});
+// Ensure dist and dist/shared directories exist
+if (!fs.existsSync('dist/shared')) fs.mkdirSync('dist/shared', { recursive: true });
 
-// Process shared schema
-if (fs.existsSync("shared/schema.ts")) {
-  if (!fs.existsSync("dist/shared")) {
-    fs.mkdirSync("dist/shared", { recursive: true });
+for (const file of serverFiles) {
+  if (fs.existsSync(file.src)) {
+    const content = fs.readFileSync(file.src, 'utf-8');
+    const transformedContent = transformImports(content);
+    fs.writeFileSync(file.dest, transformedContent);
+    console.log(`✅ Copied ${file.src} to ${file.dest}`);
   }
-  let content = fs.readFileSync("shared/schema.ts", "utf8");
-  content = transformTypeScript(content);
-  fs.writeFileSync("dist/shared/schema.js", content);
-  console.log("✅ Processed shared/schema.ts to dist/shared/schema.js");
 }
 
 // Create production package.json
