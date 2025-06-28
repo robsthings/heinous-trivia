@@ -134,12 +134,47 @@ app.use((err, req, res, next) => {
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 5000;
 const host = "0.0.0.0";
 
-server.listen(port, host, () => {
-  log(\`Server running on \${host}:\${port}\`);
+// Enhanced error handling for server startup
+try {
+  server.listen(port, host, () => {
+    log(\`✅ Server running on \${host}:\${port}\`);
+    log(\`🌐 Health check: http://\${host}:\${port}/api/health\`);
+    log(\`📊 Environment: \${process.env.NODE_ENV || 'development'}\`);
+  });
+} catch (error) {
+  log(\`❌ Failed to start server: \${error.message}\`);
+  process.exit(1);
+}
+
+// Graceful shutdown handlers
+const gracefulShutdown = (signal) => {
+  log(\`\${signal} received, shutting down gracefully...\`);
+  server.close(() => {
+    log('Server closed');
+    process.exit(0);
+  });
+  
+  // Force shutdown after 10 seconds
+  setTimeout(() => {
+    log('Force shutdown');
+    process.exit(1);
+  }, 10000);
+};
+
+process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+process.on('SIGINT', () => gracefulShutdown('SIGINT'));
+
+// Handle uncaught exceptions
+process.on('uncaughtException', (error) => {
+  log(\`Uncaught Exception: \${error.message}\`);
+  console.error(error.stack);
+  process.exit(1);
 });
 
-process.on('SIGTERM', () => server.close(() => process.exit(0)));
-process.on('SIGINT', () => server.close(() => process.exit(0)));
+process.on('unhandledRejection', (reason, promise) => {
+  log(\`Unhandled Rejection at: \${promise}, reason: \${reason}\`);
+  process.exit(1);
+});
 `;
 
 fs.writeFileSync(path.join(distPath, 'index.js'), serverCode);
