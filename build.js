@@ -18,7 +18,7 @@ fs.mkdirSync(path.join(distPath, 'public'), { recursive: true });
 console.log("🔧 Building client with Vite...");
 
 try {
-  execSync('npm run build', { stdio: 'inherit' });
+  execSync('npx vite build', { stdio: 'inherit' });
   console.log('✅ Vite client build successful');
 } catch (error) {
   console.error('❌ Client build failed:', error.message);
