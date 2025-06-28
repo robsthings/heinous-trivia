@@ -14,15 +14,27 @@ export function log(message: string, source = "express") {
 }
 
 export function serveStatic(app: Express) {
-  // In production deployment, static files are in dist/public
-  const distPath = path.resolve(process.cwd(), "dist", "public");
+  // In Cloud Run deployment, we're running from the dist directory
+  // So static files are in ./public relative to the dist/index.js
+  const publicPath = path.resolve(process.cwd(), "public");
   
-  // Fallback to public directory if dist/public doesn't exist
-  const fallbackPath = path.resolve(process.cwd(), "public");
-  const staticPath = fs.existsSync(distPath) ? distPath : fallbackPath;
+  // Fallback paths for different deployment scenarios
+  const distPublicPath = path.resolve(process.cwd(), "dist", "public");
+  const clientPublicPath = path.resolve(process.cwd(), "client", "public");
+  
+  let staticPath;
+  if (fs.existsSync(publicPath)) {
+    staticPath = publicPath;
+  } else if (fs.existsSync(distPublicPath)) {
+    staticPath = distPublicPath;
+  } else if (fs.existsSync(clientPublicPath)) {
+    staticPath = clientPublicPath;
+  } else {
+    staticPath = null;
+  }
 
-  if (!fs.existsSync(staticPath)) {
-    log(`Warning: Static directory not found at ${staticPath}`, "production");
+  if (!staticPath) {
+    log(`Warning: No static directory found. Checked: ${publicPath}, ${distPublicPath}, ${clientPublicPath}`, "production");
     // Create a minimal fallback
     app.use("*", (_req, res) => {
       res.status(200).json({ message: "Heinous Trivia API Server Running", status: "ok" });
