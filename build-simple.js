@@ -15,11 +15,6 @@ if (!fs.existsSync('dist')) {
   fs.mkdirSync('dist', { recursive: true });
 }
 
-// Ensure dist/dist directory exists for Cloud Run compatibility
-if (!fs.existsSync('dist/dist')) {
-  fs.mkdirSync('dist/dist', { recursive: true });
-}
-
 // Step 1: Build server bundle with esbuild
 console.log('📦 Building server bundle...');
 try {
@@ -29,7 +24,7 @@ try {
     platform: 'node',
     target: 'node18',
     format: 'esm',
-    outfile: 'dist/dist/index.js',
+    outfile: 'dist/index.js',
     external: [
       // Core Node modules
       'fs', 'path', 'url', 'os', 'crypto', 'events', 'stream', 'util',
@@ -64,7 +59,7 @@ try {
     packages: 'external'
   });
   
-  const stats = fs.statSync('dist/dist/index.js');
+  const stats = fs.statSync('dist/index.js');
   console.log(`✅ Server bundle created: ${(stats.size / 1024).toFixed(0)}KB`);
 } catch (error) {
   console.error('❌ Server bundle failed:', error);
@@ -79,7 +74,7 @@ const productionPackage = {
   type: "module",
   main: "index.js",
   scripts: {
-    start: "NODE_ENV=production node dist/index.js"
+    start: "NODE_ENV=production node index.js"
   },
   dependencies: {
     "@neondatabase/serverless": "^1.0.1",
@@ -221,8 +216,8 @@ console.log('\n🔍 Build verification:');
 const distFiles = fs.readdirSync('dist');
 console.log('📂 Dist directory contents:', distFiles);
 
-if (fs.existsSync('dist/dist/index.js')) {
-  const serverStats = fs.statSync('dist/dist/index.js');
+if (fs.existsSync('dist/index.js')) {
+  const serverStats = fs.statSync('dist/index.js');
   console.log(`✅ Server bundle: ${(serverStats.size / 1024).toFixed(0)}KB`);
 }
 
@@ -233,6 +228,6 @@ if (fs.existsSync('dist/public')) {
 
 console.log('\n🎉 Simplified deployment build completed successfully!');
 console.log('📦 Ready for Cloud Run deployment with:');
-console.log('   - dist/dist/index.js (server bundle)');
+console.log('   - dist/index.js (server bundle)');
 console.log('   - dist/package.json (production dependencies)');
 console.log('   - dist/public/ (static assets)');
