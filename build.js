@@ -137,7 +137,11 @@ const productionPackage = {
     "@neondatabase/serverless": "^1.0.1",
     "firebase": "^11.9.1",
     "firebase-admin": "^11.11.1",
-    "tsx": "^3.14.0"
+    "multer": "^1.4.5-lts.1",
+    "bcrypt": "^5.1.1",
+    "drizzle-orm": "^0.29.0",
+    "drizzle-zod": "^0.5.1",
+    "zod": "^3.22.4"
   },
   "engines": {
     "node": ">=18.0.0"
@@ -145,6 +149,9 @@ const productionPackage = {
 };
 
 fs.writeFileSync("dist/package.json", JSON.stringify(productionPackage, null, 2));
+
+// Note: Dependencies will be installed by Cloud Run during deployment
+console.log("📦 Dependencies will be installed during Cloud Run deployment");
 
 // Copy client public assets to dist/public
 console.log("📁 Copying client assets...");
