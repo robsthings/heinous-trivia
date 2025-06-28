@@ -18,41 +18,31 @@ fs.mkdirSync(path.join(distPath, 'public'), { recursive: true });
 console.log("🔧 Processing server files...");
 
 const transformTypeScript = (content) => {
-  // Remove TypeScript type annotations while preserving functionality
+  // Targeted TypeScript syntax removal for Node.js compatibility
   return content
-    // First, handle import statements with type
-    .replace(/import\s+type\s+\{[^}]*\}\s+from\s+["'][^"']+["'];?\s*\n?/g, '') // Remove entire type-only imports
-    .replace(/import\s+\{([^}]*,\s*)?type\s+([^,}]+)([^}]*)\}\s+from/g, 'import {$1$2$3} from') // Remove type from mixed imports
-    .replace(/,\s*type\s+/g, ', ') // Remove 'type' from middle of imports
-    .replace(/\{\s*type\s+/g, '{ ') // Remove 'type' from start of imports
+    // Handle import statements with type
+    .replace(/import\s+type\s+\{[^}]*\}\s+from\s+["'][^"']+["'];?\s*/g, '') // Remove entire type-only imports
+    .replace(/,\s*type\s+([^,}]+)/g, ', $1') // Remove 'type' from imports while preserving names
+    .replace(/\{\s*type\s+([^,}]+)/g, '{ $1') // Remove 'type' from start of imports
     
-    // Fix module paths for ES modules
+    // Fix module paths for ES modules - ONLY what's needed
     .replace(/from\s+["']@shared\/schema["']/g, 'from "./shared/schema.js"') // Convert @shared/schema to relative path
-    .replace(/from\s+["']\.\/([^"'\.]+)["']/g, 'from "./$1.js"') // Add .js extension to relative imports
-    .replace(/from\s+["']\.\.\/([^"'\.]+)["']/g, 'from "../$1.js"') // Add .js extension to parent imports
+    .replace(/from\s+["']\.\/routes["']/g, 'from "./routes.js"') // Fix routes import
+    .replace(/from\s+["']\.\/firebase["']/g, 'from "./firebase.js"') // Fix firebase import
+    .replace(/from\s+["']\.\/emailAuth["']/g, 'from "./emailAuth.js"') // Fix emailAuth import
+    .replace(/from\s+["']\.\/production["']/g, 'from "./production.js"') // Fix production import
+    .replace(/from\s+["']\.\/vite-bypass["']/g, 'from "./vite-bypass.js"') // Fix vite-bypass import
     
-    // Remove parameter type annotations
-    .replace(/([a-zA-Z_$][a-zA-Z0-9_$]*)\s*:\s*[A-Za-z<>[\]|&,\s{}'"._-]+(?=\s*[,=)])/g, '$1') // Parameter types
+    // Remove function parameter type annotations - targeted fixes
+    .replace(/function\s+([a-zA-Z_$][a-zA-Z0-9_$]*)\s*\(([^)]*?):\s*[^,)]+/g, 'function $1($2') // Function parameter types
+    .replace(/\(([a-zA-Z_$][a-zA-Z0-9_$]*)\s*:\s*[^,)]+/g, '($1') // Arrow function parameter types
+    .replace(/([a-zA-Z_$][a-zA-Z0-9_$]*)\s*:\s*[^,)=]+(?=\s*[,)])/g, '$1') // General parameter types
     
-    // Remove return type annotations
-    .replace(/\)\s*:\s*[A-Za-z<>[\]|&,\s{}'"._-]+(?=\s*[{=])/g, ')') // Function return types
+    // Remove function return type annotations
+    .replace(/\)\s*:\s*[^{=]+(?=\s*[{=])/g, ')') // Function return types
     
     // Remove variable type annotations
-    .replace(/:\s*[A-Za-z<>[\]|&,\s{}'"._-]+(?=\s*[=;,)])/g, '') // Variable type annotations
-    
-    // Remove optional markers
-    .replace(/\?\s*:/g, ':') // Remove optional markers
-    
-    // Remove 'as' type assertions
-    .replace(/as\s+[A-Za-z<>[\]|&,\s{}'"._-]+/g, '') // Remove 'as' type assertions
-    
-    // Remove generic type parameters
-    .replace(/<[A-Za-z<>[\]|&,\s{}'"._-]*>/g, '') // Remove generic type parameters
-    
-    // Clean up any double spaces or trailing commas
-    .replace(/,\s*,/g, ',') // Remove double commas
-    .replace(/\s+/g, ' ') // Normalize whitespace
-    .replace(/,\s*\}/g, '}') // Remove trailing commas in objects
+    .replace(/:\s*[A-Za-z<>[\]|&\s]+(?=\s*=)/g, '') // Variable declarations with types
 };
 
 if (fs.existsSync("server/index.ts")) {
