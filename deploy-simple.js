@@ -156,7 +156,7 @@ if (fs.existsSync('public')) {
 // Create basic index.html if it doesn't exist
 const indexHtmlPath = path.join(distPath, 'public', 'index.html');
 if (!fs.existsSync(indexHtmlPath)) {
-  const basicHtml = \`<!DOCTYPE html>
+  const basicHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
