@@ -33,14 +33,30 @@ const upload = multer({
 export async function registerRoutes(app: Express): Promise<Server> {
   const server = createServer(app);
   
-  // Health check endpoint
+  // Health check endpoint for Cloud Run
   app.get("/api/health", (req, res) => {
     res.json({ 
       status: 'healthy', 
       timestamp: new Date().toISOString(),
       uptime: process.uptime(),
-      mode: 'development'
+      mode: process.env.NODE_ENV || 'production',
+      port: process.env.PORT || 5000
     });
+  });
+
+  // Root health check for Cloud Run
+  app.get("/", (req, res) => {
+    if (req.headers['user-agent']?.includes('GoogleHC')) {
+      // Google Cloud health check
+      res.status(200).send('OK');
+    } else {
+      // Regular user request - serve static content
+      res.status(200).json({ 
+        message: 'Heinous Trivia API Server', 
+        status: 'running',
+        health: '/api/health'
+      });
+    }
   });
   
   // Specific route for launcher (without .html extension) - must come before static serving
