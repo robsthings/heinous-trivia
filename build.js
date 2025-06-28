@@ -14,48 +14,83 @@ if (fs.existsSync(distPath)) {
 fs.mkdirSync(distPath, { recursive: true });
 fs.mkdirSync(path.join(distPath, 'public'), { recursive: true });
 
-// Compile TypeScript files to JavaScript
-console.log("🔧 Compiling TypeScript server files...");
-try {
-  // Use tsx to compile server files
-  execSync("npx tsx --build server/index.ts --outDir dist", { stdio: "pipe" });
-  console.log("✅ Compiled server/index.ts to dist/index.js");
-} catch (error) {
-  // Fallback: Copy files and update package.json to use tsx
-  console.log("⚠️ TypeScript compilation failed, using tsx runtime...");
-  
-  if (fs.existsSync("server/index.ts")) {
-    fs.copyFileSync("server/index.ts", "dist/index.js");
-    console.log("✅ Copied server/index.ts to dist/index.js");
-  } else {
-    console.error("❌ No server/index.ts found");
-    process.exit(1);
+// Copy server files and transform TypeScript syntax for Node.js compatibility
+console.log("🔧 Processing server files...");
+
+const transformTypeScript = (content) => {
+  // Remove TypeScript type annotations while preserving functionality
+  return content
+    // First, handle import statements with type
+    .replace(/import\s+type\s+\{[^}]*\}\s+from\s+["'][^"']+["'];?\s*\n?/g, '') // Remove entire type-only imports
+    .replace(/import\s+\{([^}]*,\s*)?type\s+([^,}]+)([^}]*)\}\s+from/g, 'import {$1$2$3} from') // Remove type from mixed imports
+    .replace(/,\s*type\s+/g, ', ') // Remove 'type' from middle of imports
+    .replace(/\{\s*type\s+/g, '{ ') // Remove 'type' from start of imports
+    
+    // Fix module paths for ES modules
+    .replace(/from\s+["']\.\/([^"']+?)["']/g, 'from "./$1.js"') // Add .js extension to relative imports
+    .replace(/from\s+["']\.\.\/([^"']+?)["']/g, 'from "../$1.js"') // Add .js extension to parent imports
+    
+    // Remove parameter type annotations
+    .replace(/([a-zA-Z_$][a-zA-Z0-9_$]*)\s*:\s*[A-Za-z<>[\]|&,\s{}'"._-]+(?=\s*[,=)])/g, '$1') // Parameter types
+    
+    // Remove return type annotations
+    .replace(/\)\s*:\s*[A-Za-z<>[\]|&,\s{}'"._-]+(?=\s*[{=])/g, ')') // Function return types
+    
+    // Remove variable type annotations
+    .replace(/:\s*[A-Za-z<>[\]|&,\s{}'"._-]+(?=\s*[=;,)])/g, '') // Variable type annotations
+    
+    // Remove optional markers
+    .replace(/\?\s*:/g, ':') // Remove optional markers
+    
+    // Remove 'as' type assertions
+    .replace(/as\s+[A-Za-z<>[\]|&,\s{}'"._-]+/g, '') // Remove 'as' type assertions
+    
+    // Remove generic type parameters
+    .replace(/<[A-Za-z<>[\]|&,\s{}'"._-]*>/g, '') // Remove generic type parameters
+    
+    // Clean up any double spaces or trailing commas
+    .replace(/,\s*,/g, ',') // Remove double commas
+    .replace(/\s+/g, ' ') // Normalize whitespace
+    .replace(/,\s*\}/g, '}') // Remove trailing commas in objects
+};
+
+if (fs.existsSync("server/index.ts")) {
+  let content = fs.readFileSync("server/index.ts", "utf8");
+  content = transformTypeScript(content);
+  fs.writeFileSync("dist/index.js", content);
+  console.log("✅ Processed server/index.ts to dist/index.js");
+} else {
+  console.error("❌ No server/index.ts found");
+  process.exit(1);
+}
+
+// Process additional server files
+const serverFiles = [
+  { src: "server/routes.ts", dest: "dist/routes.js" },
+  { src: "server/firebase.ts", dest: "dist/firebase.js" },
+  { src: "server/emailAuth.ts", dest: "dist/emailAuth.js" },
+  { src: "server/production.ts", dest: "dist/production.js" },
+  { src: "server/vite-bypass.ts", dest: "dist/vite-bypass.js" }
+];
+
+serverFiles.forEach(({ src, dest }) => {
+  if (fs.existsSync(src)) {
+    let content = fs.readFileSync(src, "utf8");
+    content = transformTypeScript(content);
+    fs.writeFileSync(dest, content);
+    console.log(`✅ Processed ${src} to ${dest}`);
   }
+});
 
-  // Copy additional server files needed
-  const serverFiles = [
-    { src: "server/routes.ts", dest: "dist/routes.js" },
-    { src: "server/firebase.ts", dest: "dist/firebase.js" },
-    { src: "server/emailAuth.ts", dest: "dist/emailAuth.js" },
-    { src: "server/production.ts", dest: "dist/production.js" },
-    { src: "server/vite-bypass.ts", dest: "dist/vite-bypass.js" }
-  ];
-
-  serverFiles.forEach(({ src, dest }) => {
-    if (fs.existsSync(src)) {
-      fs.copyFileSync(src, dest);
-      console.log(`✅ Copied ${src} to ${dest}`);
-    }
-  });
-
-  // Copy shared schema
-  if (fs.existsSync("shared/schema.ts")) {
-    if (!fs.existsSync("dist/shared")) {
-      fs.mkdirSync("dist/shared", { recursive: true });
-    }
-    fs.copyFileSync("shared/schema.ts", "dist/shared/schema.js");
-    console.log("✅ Copied shared/schema.ts to dist/shared/schema.js");
+// Process shared schema
+if (fs.existsSync("shared/schema.ts")) {
+  if (!fs.existsSync("dist/shared")) {
+    fs.mkdirSync("dist/shared", { recursive: true });
   }
+  let content = fs.readFileSync("shared/schema.ts", "utf8");
+  content = transformTypeScript(content);
+  fs.writeFileSync("dist/shared/schema.js", content);
+  console.log("✅ Processed shared/schema.ts to dist/shared/schema.js");
 }
 
 // Create production package.json
@@ -66,7 +101,7 @@ const productionPackage = {
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "npx tsx index.js"
+    "start": "node index.js"
   },
   "dependencies": {
     "express": "^4.18.2",
