@@ -15,6 +15,11 @@ if (!fs.existsSync('dist')) {
   fs.mkdirSync('dist', { recursive: true });
 }
 
+// Ensure dist/dist directory exists for Cloud Run compatibility
+if (!fs.existsSync('dist/dist')) {
+  fs.mkdirSync('dist/dist', { recursive: true });
+}
+
 // Step 1: Build server bundle with esbuild
 console.log('📦 Building server bundle...');
 try {
@@ -24,7 +29,7 @@ try {
     platform: 'node',
     target: 'node18',
     format: 'esm',
-    outfile: 'dist/index.js',
+    outfile: 'dist/dist/index.js',
     external: [
       // Core Node modules
       'fs', 'path', 'url', 'os', 'crypto', 'events', 'stream', 'util',
@@ -74,7 +79,7 @@ const productionPackage = {
   type: "module",
   main: "index.js",
   scripts: {
-    start: "NODE_ENV=production node index.js"
+    start: "NODE_ENV=production node dist/index.js"
   },
   dependencies: {
     "@neondatabase/serverless": "^1.0.1",
