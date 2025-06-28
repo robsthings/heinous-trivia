@@ -1,0 +1,15 @@
+#!/usr/bin/env node
+
+// Deployment build script that calls the working build-simple.js
+const { execSync } = require('child_process');
+
+console.log('🚀 Starting deployment build...');
+
+try {
+  // Execute the proven build-simple.js script
+  execSync('node build-simple.js', { stdio: 'inherit' });
+  console.log('✅ Deployment build completed successfully!');
+} catch (error) {
+  console.error('❌ Deployment build failed:', error.message);
+  process.exit(1);
+}
