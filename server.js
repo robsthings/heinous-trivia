@@ -4,7 +4,8 @@ const { spawn } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 
-const PORT = process.env.PORT || 5000;
+// Cloud Run uses PORT environment variable, with fallback for local development
+const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 5000;
 
 function log(message, source = "deployment") {
   const formattedTime = new Date().toLocaleTimeString("en-US", {

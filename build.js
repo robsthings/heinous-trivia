@@ -131,15 +131,17 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Internal server error' });
 });
 
+// Cloud Run uses PORT environment variable, fallback to 5000 for local
 const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 5000;
 const host = "0.0.0.0";
 
 // Enhanced error handling for server startup
 try {
   server.listen(port, host, () => {
-    log(\`✅ Server running on \${host}:\${port}\`);
+    log(\`✅ Production server running on \${host}:\${port}\`);
     log(\`🌐 Health check: http://\${host}:\${port}/api/health\`);
-    log(\`📊 Environment: \${process.env.NODE_ENV || 'development'}\`);
+    log(\`📊 Environment: \${process.env.NODE_ENV || 'production'}\`);
+    log(\`🚀 Ready for Cloud Run deployment\`);
   });
 } catch (error) {
   log(\`❌ Failed to start server: \${error.message}\`);
@@ -179,9 +181,9 @@ process.on('unhandledRejection', (reason, promise) => {
 
 fs.writeFileSync(path.join(distPath, 'index.js'), serverCode);
 
-// Create package.json with proper module configuration
+// Create package.json with proper module configuration for Cloud Run
 const packageJson = {
-  "name": "heinous-trivia-production",
+  "name": "heinous-trivia-production", 
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
@@ -192,7 +194,9 @@ const packageJson = {
     "express": "^4.18.2",
     "cors": "^2.8.5",
     "firebase": "^11.9.1",
-    "firebase-admin": "^11.11.1"
+    "firebase-admin": "^11.11.1",
+    "@neondatabase/serverless": "^1.0.1",
+    "dotenv": "^16.3.1"
   },
   "engines": {
     "node": ">=18.0.0"
