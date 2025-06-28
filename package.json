@@ -6,7 +6,7 @@
   "scripts": {
     "start": "NODE_ENV=production npx tsx server/index.ts",
     "dev": "NODE_ENV=development npx tsx server/index.ts",
-    "build": "node simple-start.js"
+    "build": "node quick-build.js"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.1",
