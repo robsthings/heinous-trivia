@@ -1,11 +1,10 @@
 {
   "name": "heinous-trivia",
   "version": "1.0.0",
-  "main": "index.js",
   "type": "module",
+  "main": "server/index.ts",
   "scripts": {
-    "build": "node build-simple.js",
-    "start": "NODE_ENV=production node index.js",
+    "start": "NODE_ENV=production npx tsx server/index.ts",
     "dev": "NODE_ENV=development npx tsx server/index.ts"
   },
   "dependencies": {

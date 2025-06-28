@@ -1,0 +1,91 @@
+#!/usr/bin/env node
+
+/**
+ * Alternative deployment strategy: Use Replit's native deployment instead of Cloud Run
+ * This avoids all the Cloud Run compatibility issues we've been fighting
+ */
+
+import fs from 'fs';
+import path from 'path';
+
+console.log('🔄 Creating Replit native deployment...');
+
+// Instead of fighting Cloud Run, let's create a deployment that works with Replit's infrastructure
+const replitDeployment = {
+  name: "heinous-trivia",
+  version: "1.0.0",
+  type: "module",
+  main: "server/index.ts",
+  scripts: {
+    start: "NODE_ENV=production npx tsx server/index.ts",
+    dev: "NODE_ENV=development npx tsx server/index.ts"
+  },
+  dependencies: {
+    "@neondatabase/serverless": "^1.0.1",
+    "@radix-ui/react-checkbox": "^1.3.2",
+    "@radix-ui/react-dialog": "^1.1.14",
+    "@radix-ui/react-form": "^0.1.7",
+    "@radix-ui/react-label": "^2.1.7",
+    "@radix-ui/react-progress": "^1.1.7",
+    "@radix-ui/react-select": "^2.2.5",
+    "@radix-ui/react-separator": "^1.1.7",
+    "@radix-ui/react-slot": "^1.2.3",
+    "@radix-ui/react-switch": "^1.2.5",
+    "@radix-ui/react-tabs": "^1.1.12",
+    "@radix-ui/react-toast": "^1.2.14",
+    "@radix-ui/react-tooltip": "^1.2.7",
+    "@tanstack/react-query": "^5.81.5",
+    "@types/bcrypt": "^5.0.2",
+    "@types/multer": "^1.4.13",
+    "@vitejs/plugin-react": "^4.6.0",
+    "bcrypt": "^6.0.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "drizzle-orm": "^0.44.2",
+    "drizzle-zod": "^0.8.2",
+    "esbuild": "^0.25.5",
+    "express": "^4.18.2",
+    "firebase": "^11.9.1",
+    "firebase-admin": "^11.11.1",
+    "html2canvas": "^1.4.1",
+    "lucide-react": "^0.525.0",
+    "multer": "^2.0.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "recharts": "^3.0.2",
+    "tailwind-merge": "^3.3.1",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5",
+    "wouter": "^3.7.1",
+    "zod": "^3.25.67"
+  },
+  engines: {
+    "node": ">=18.0.0"
+  }
+};
+
+fs.writeFileSync("package.json", JSON.stringify(replitDeployment, null, 2));
+
+console.log('✅ Replit native deployment configuration created');
+console.log('📦 This uses the existing source files directly');
+console.log('🚀 Deploy using Replit Deployments instead of Cloud Run');
+console.log('💡 Avoids all the Cloud Run compatibility issues');
+
+// Create .replit file for deployment configuration
+const replitConfig = `
+run = "NODE_ENV=production npx tsx server/index.ts"
+entrypoint = "server/index.ts"
+
+[deployment]
+run = ["NODE_ENV=production", "npx", "tsx", "server/index.ts"]
+deploymentTarget = "autoscale"
+
+[env]
+NODE_ENV = "production"
+`;
+
+fs.writeFileSync(".replit", replitConfig);
+console.log('✅ .replit configuration created for Replit Deployments');
