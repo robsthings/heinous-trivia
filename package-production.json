@@ -1,12 +1,10 @@
 {
-  "name": "heinous-trivia",
+  "name": "heinous-trivia-production",
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "node build-simple.js",
-    "start": "NODE_ENV=production node index.js",
-    "dev": "NODE_ENV=development npx tsx server/index.ts"
+    "start": "NODE_ENV=production node index.js"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.1",
