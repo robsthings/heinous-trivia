@@ -1,11 +1,9 @@
 
-// Production deployment server - delegates to built application
-import { spawn } from 'child_process';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+// Production deployment - uses CommonJS for compatibility
+const { spawn } = require('child_process');
+const fs = require('fs');
+const path = require('path');
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.PORT || 5000;
 
 function log(message, source = "deployment") {
@@ -41,6 +39,17 @@ if (distIndexExists) {
   serverProcess.on('error', (err) => {
     log(`Failed to start production server: ${err.message}`);
     process.exit(1);
+  });
+  
+  // Graceful shutdown
+  process.on('SIGTERM', () => {
+    log('SIGTERM received, shutting down...');
+    serverProcess.kill('SIGTERM');
+  });
+  
+  process.on('SIGINT', () => {
+    log('SIGINT received, shutting down...');
+    serverProcess.kill('SIGINT');
   });
   
 } else {

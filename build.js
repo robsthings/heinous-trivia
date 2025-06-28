@@ -179,7 +179,7 @@ process.on('unhandledRejection', (reason, promise) => {
 
 fs.writeFileSync(path.join(distPath, 'index.js'), serverCode);
 
-// Create package.json
+// Create package.json with proper module configuration
 const packageJson = {
   "name": "heinous-trivia-production",
   "version": "1.0.0",
@@ -190,7 +190,12 @@ const packageJson = {
   },
   "dependencies": {
     "express": "^4.18.2",
-    "cors": "^2.8.5"
+    "cors": "^2.8.5",
+    "firebase": "^11.9.1",
+    "firebase-admin": "^11.11.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 };
 
