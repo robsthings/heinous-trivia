@@ -3,7 +3,7 @@
 // npm run build alternative for deployment systems
 console.log('🚀 Executing npm run build alternative...');
 
-const { execSync } = require('child_process');
+import { execSync } from 'child_process';
 
 try {
   execSync('node build-simple.js', { stdio: 'inherit' });
