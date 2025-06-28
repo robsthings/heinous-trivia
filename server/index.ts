@@ -84,19 +84,10 @@ app.use((req, res, next) => {
     res.sendFile(path.resolve(process.cwd(), "client", "public", "launcher.html"));
   });
 
+  // Register API routes first
   const server = await registerRoutes(app);
 
-  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
-    const status = err.status || err.statusCode || 500;
-    const message = err.message || "Internal Server Error";
-
-    res.status(status).json({ message });
-    throw err;
-  });
-
-  // importantly only setup vite in development and after
-  // setting up all the other routes so the catch-all route
-  // doesn't interfere with the other routes
+  // Setup static file serving after API routes
   if (process.env.NODE_ENV === "development") {
     try {
       const { setupVite } = await import("./vite.js");
@@ -110,6 +101,15 @@ app.use((req, res, next) => {
     const { serveStatic } = await import("./production.js");
     serveStatic(app);
   }
+
+  // Error handling middleware should come last
+  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+    const status = err.status || err.statusCode || 500;
+    const message = err.message || "Internal Server Error";
+
+    res.status(status).json({ message });
+    throw err;
+  });
 
   // Use PORT environment variable for Cloud Run compatibility, default to 5000
   const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 5000;

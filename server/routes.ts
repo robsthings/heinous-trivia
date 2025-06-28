@@ -32,6 +32,17 @@ const upload = multer({
 
 export async function registerRoutes(app: Express): Promise<Server> {
   const server = createServer(app);
+  
+  // Health check endpoint
+  app.get("/api/health", (req, res) => {
+    res.json({ 
+      status: 'healthy', 
+      timestamp: new Date().toISOString(),
+      uptime: process.uptime(),
+      mode: 'development'
+    });
+  });
+  
   // Specific route for launcher (without .html extension) - must come before static serving
   app.get("/launcher", (req, res) => {
     res.sendFile(path.resolve(process.cwd(), "client", "public", "launcher.html"));
