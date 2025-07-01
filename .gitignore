@@ -1,21 +1,14 @@
 # Dependencies
 node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+.pnp
+.pnp.js
 
-# Build output
+# Production builds
 dist/
 build/
-.next/
-out/
+*.tsbuildinfo
 
-# Cache directories
-.turbo/
-.cache/
-.parcel-cache/
-
-# Environment variables
+# Environment files
 .env
 .env.local
 .env.development.local
@@ -23,8 +16,10 @@ out/
 .env.production.local
 
 # Logs
-*.log
-logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
 
 # Runtime data
 pids
@@ -34,62 +29,47 @@ pids
 
 # Coverage directory used by tools like istanbul
 coverage/
+*.lcov
 
 # nyc test coverage
 .nyc_output
 
-# Dependency directories
-jspm_packages/
+# Temporary folders
+tmp/
+temp/
 
-# Optional npm cache directory
-.npm
+# macOS
+.DS_Store
 
-# Optional REPL history
-.node_repl_history
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
 
-# Output of 'npm pack'
-*.tgz
-
-# Yarn Integrity file
-.yarn-integrity
-
-# dotenv environment variables file
-.env
-
-# IDE files
-.vscode/
-.idea/
-*.swp
-*.swo
+# Linux
 *~
 
-# OS generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
+# VSCode
+.vscode/
 
-# Temporary files
-temp/
-tmp/
-*.tmp
-*.temp
+# JetBrains
+.idea/
 
-# Attached assets and debugging files
-attached_assets/
-cleanup_log.txt
-asset_cleanup_log.txt
-headers.txt
-temp_files_list.txt
-total_space.txt
-unused_assets.txt
+# Replit specific
+.replit
+replit.nix
 
-# Firebase cache
-.firebase/
+# Generated files
+*.map
+*.min.js
+*.min.css
 
-# Replit specific (keep these for deployment)
-# .replit
-# replit.nix
+# Backup files
+*.backup
+package*.backup
+
+# Deployment specific files
+Dockerfile*
+docker-compose*.yml
+deploy*.js
+build*.js
