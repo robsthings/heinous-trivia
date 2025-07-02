@@ -19,7 +19,7 @@ export function serveStatic(app: Express) {
   const topPublicPath = path.resolve(process.cwd(), "public");
   
   // Fallback paths for different deployment scenarios
-  const distPublicPath = path.resolve(process.cwd(), "dist", "public");
+  const distPublicPath = path.resolve(process.cwd(), "dist");
   const clientPublicPath = path.resolve(process.cwd(), "client", "public");
   
   let staticPath;
