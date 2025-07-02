@@ -37,7 +37,7 @@ export function serveStatic(app: Express) {
     return;
   }
 
-  log(`✅ Serving static files from: ${staticPath}`);
+  log(`Serving static files from: ${staticPath}`, "production");
   app.use(express.static(staticPath));
 
   // Serve index.html for SPA fallback (i.e. React Router)
