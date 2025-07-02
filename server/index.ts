@@ -1,7 +1,8 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import path from "path";
-import { serveStatic } from "./serveStatic";
+import { serveStaticFiles } from "./serveStatic.js";
+;
 
 // Simple logging function for both dev and production
 function log(message: string, source = "express") {
