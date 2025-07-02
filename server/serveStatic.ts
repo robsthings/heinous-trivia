@@ -7,7 +7,7 @@ import { log } from "./log";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export function serveStatic(app: express.Express) {
+export function serveStaticFiles(app: express.Express) {
   const publicPath = path.resolve(__dirname, "public");
   const distPublicPath = path.resolve(__dirname, "..", "dist", "public");
   const clientPublicPath = path.resolve(__dirname, "..", "client", "public");
