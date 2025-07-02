@@ -29,8 +29,9 @@ export function serveStatic(app: Express) {
     }
   }
 
-  if (!staticPath) {
-    log(`⚠️ No static directory found. Checked: ${candidatePaths.join(", ")}`);
+if (!staticPath) {
+  log(`Warning: No static directory found. Checked: ${publicPath}, ${distPublicPath}, ${clientPublicPath}`, "production");
+
     app.use("*", (_req, res) => {
       res.status(200).json({ message: "Heinous Trivia API Server Running", status: "ok" });
     });
