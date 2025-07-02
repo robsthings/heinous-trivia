@@ -2,52 +2,47 @@ import express, { type Express } from "express";
 import fs from "fs";
 import path from "path";
 
-export function log(message: string, source = "express") {
+export function log(message: string, source = "production") {
   const formattedTime = new Date().toLocaleTimeString("en-US", {
     hour: "numeric",
     minute: "2-digit", 
     second: "2-digit",
     hour12: true,
   });
-
   console.log(`${formattedTime} [${source}] ${message}`);
 }
 
 export function serveStatic(app: Express) {
-  // In Cloud Run deployment, we're running from the dist directory
-  // So static files are in ./public relative to the dist/index.js
-  const publicPath = path.resolve(process.cwd(), "public");
-  
-  // Fallback paths for different deployment scenarios
-  const distPublicPath = path.resolve(process.cwd(), "dist", "public");
-  const clientPublicPath = path.resolve(process.cwd(), "client", "public");
-  
-  let staticPath;
-  if (fs.existsSync(publicPath)) {
-    staticPath = publicPath;
-  } else if (fs.existsSync(distPublicPath)) {
-    staticPath = distPublicPath;
-  } else if (fs.existsSync(clientPublicPath)) {
-    staticPath = clientPublicPath;
-  } else {
-    staticPath = null;
+  // Define the possible locations of the built static files
+  const candidatePaths = [
+    path.resolve(process.cwd(), "dist", "public"), // <- Most likely correct
+    path.resolve(process.cwd(), "client", "public"),
+    path.resolve(process.cwd(), "public"),
+  ];
+
+  let staticPath: string | null = null;
+
+  for (const candidate of candidatePaths) {
+    if (fs.existsSync(candidate)) {
+      staticPath = candidate;
+      break;
+    }
   }
 
   if (!staticPath) {
-    log(`Warning: No static directory found. Checked: ${publicPath}, ${distPublicPath}, ${clientPublicPath}`, "production");
-    // Create a minimal fallback
+    log(`⚠️ No static directory found. Checked: ${candidatePaths.join(", ")}`);
     app.use("*", (_req, res) => {
       res.status(200).json({ message: "Heinous Trivia API Server Running", status: "ok" });
     });
     return;
   }
 
-  log(`Serving static files from: ${staticPath}`, "production");
+  log(`✅ Serving static files from: ${staticPath}`);
   app.use(express.static(staticPath));
 
-  // fall through to index.html if the file doesn't exist
+  // Serve index.html for SPA fallback (i.e. React Router)
   app.use("*", (_req, res) => {
-    const indexPath = path.resolve(staticPath, "index.html");
+    const indexPath = path.join(staticPath!, "index.html");
     if (fs.existsSync(indexPath)) {
       res.sendFile(indexPath);
     } else {
