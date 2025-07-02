@@ -113,3 +113,5 @@ app.use((req, res, next) => {
     log(`serving on ${host}:${port}`);
   });
 })();
+// Add this at the top or bottom temporarily
+console.log("🐛 Debug: forcing rebuild");
