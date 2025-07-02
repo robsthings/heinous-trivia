@@ -1,7 +1,6 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import path from "path";
-import fs from "fs";
 
 // Simple logging function for both dev and production
 function log(message: string, source = "express") {
@@ -18,12 +17,11 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Add CORS headers for Firebase Storage and API access
+// Add CORS headers
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-  
   if (req.method === 'OPTIONS') {
     res.sendStatus(200);
   } else {
@@ -31,18 +29,19 @@ app.use((req, res, next) => {
   }
 });
 
-// Add cache-busting headers for development
+// Dev-only cache busting
 app.use((req, res, next) => {
   if (process.env.NODE_ENV === 'development') {
     res.set({
       'Cache-Control': 'no-cache, no-store, must-revalidate',
       'Pragma': 'no-cache',
-      'Expires': '0'
+      'Expires': '0',
     });
   }
   next();
 });
 
+// Request logging for API routes
 app.use((req, res, next) => {
   const start = Date.now();
   const path = req.path;
@@ -61,11 +60,9 @@ app.use((req, res, next) => {
       if (capturedJsonResponse) {
         logLine += ` :: ${JSON.stringify(capturedJsonResponse)}`;
       }
-
       if (logLine.length > 80) {
         logLine = logLine.slice(0, 79) + "…";
       }
-
       log(logLine);
     }
   });
@@ -74,20 +71,19 @@ app.use((req, res, next) => {
 });
 
 (async () => {
-  // Add launcher routes before other routes to ensure they take priority
+  // Launcher routes
   app.get("/launcher", (req, res) => {
     res.sendFile(path.resolve(process.cwd(), "client", "public", "launcher.html"));
   });
 
-  // Haunt-specific launcher route
   app.get("/launcher/:hauntId", (req, res) => {
     res.sendFile(path.resolve(process.cwd(), "client", "public", "launcher.html"));
   });
 
-  // Register API routes first
+  // Register all API routes
   const server = await registerRoutes(app);
 
-  // Setup static file serving after API routes
+  // Serve frontend based on environment
   if (process.env.NODE_ENV === "development") {
     try {
       const { setupVite } = await import("./vite.js");
@@ -98,23 +94,20 @@ app.use((req, res, next) => {
       await setupVite(app, server);
     }
   } else {
-    const { serveStatic } = await import("./production.js");
+    const { serveStatic } = await import("./production");
     serveStatic(app);
   }
 
-  // Error handling middleware should come last
+  // Error handler
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";
-
     res.status(status).json({ message });
     throw err;
   });
 
-  // Use PORT environment variable for Cloud Run compatibility, default to 5000
   const port = process.env.PORT ? parseInt(process.env.PORT, 10) : 5000;
   const host = "0.0.0.0";
-  
   server.listen(port, host, () => {
     log(`serving on ${host}:${port}`);
   });
