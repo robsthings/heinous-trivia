@@ -2,7 +2,6 @@ import express from "express";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import { log } from "./log";
 
 // Safely resolve __dirname in ESM
 const __filename = fileURLToPath(import.meta.url);
@@ -23,14 +22,13 @@ export function serveStatic(app: express.Express) {
       : null;
 
   if (!staticPath) {
-    log(
-      `Warning: No static directory found. Checked: ${publicPath}, ${distPublicPath}, ${clientPublicPath}`,
-      "production"
+    console.warn(
+      `⚠️ Warning: No static directory found. Checked: ${publicPath}, ${distPublicPath}, ${clientPublicPath}`
     );
     return;
   }
 
-  log(`Serving static files from: ${staticPath}`, "production");
+  console.log(`✅ Serving static files from: ${staticPath}`);
   app.use(express.static(staticPath));
   app.get("*", (_req, res) => {
     res.sendFile(path.join(staticPath, "index.html"));
