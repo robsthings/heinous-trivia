@@ -97,7 +97,7 @@ app.use((req, res, next) => {
     }
   } else {
     const { serveStatic } = await import("./production");
-    serveStatic(app);
+    serveStaticFiles(app);
   }
 
   // Error handler
